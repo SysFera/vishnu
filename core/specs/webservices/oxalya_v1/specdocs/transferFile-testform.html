@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>transferFile test form</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Test form for the transferFile function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<script type="text/javascript" src="testforms.js"> </script>
+<link rel="top" href="../index.html" title="API index">
+</head>
+<body onload="selectEnv();">
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <a href="transferFile.html" title="Function">Function</a> | <span class="active">Test form</span> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>transferFile</em> test form</h1>
+<form method="GET" action="http://127.0.0.1:8080/ResourceProxy/" target="xmlOutputFrame" onsubmit="this.action=this._environment.value;setEnvCookie(this);return doRequest(this)">
+<p>
+<input name="_function" type="hidden" value="transferFile"><input name="_convention" value="_xins-std" type="hidden">Execution environment: <select name="_environment" class="required"><option value="http://127.0.0.1:8080/ResourceProxy/">localhost</option><option value="http://collab-edf.oxalya.com/soap/ResourceProxy/">collab-edf.oxalya</option></select>
+</p>
+<script type="text/javascript">
+function fillExample(selectedExample) {
+  if (selectedExample == '') {
+    var currentEnv = document.forms[0]._environment.value;
+    document.forms[0].reset();
+    document.forms[0]._environment.value = currentEnv;
+  } else if (selectedExample == 1) {
+    document.forms[0].fromMachineId.value = '98d7ea36b6e2e1cb987986fe2a6073e30199be5b';
+    document.forms[0].fromUid.value = 'hpctransit';
+    document.forms[0].fromPassword.value = 'a1dFxzY';
+    document.forms[0].fromPath.value = '/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip';
+    document.forms[0].toMachineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].toPath.value = '/home/jsmith/data/archive.zip';
+    document.forms[0].toUid.value = 'dupond';
+    document.forms[0].toPassword.value = 'ykxlzd9';
+    document.forms[0].action.value = 'move';
+  } else if (selectedExample == 2) {
+    document.forms[0].fromMachineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].fromPath.value = '/home/jsmith/data/archive.zip';
+    document.forms[0].fromUid.value = 'jsmith';
+    document.forms[0].fromPassword.value = 'vaUkyYI';
+    document.forms[0].toMachineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].toPath.value = '/home/jsmith/data/backup.zip';
+    document.forms[0].toUid.value = 'jsmith';
+    document.forms[0].toPassword.value = 'vaUkyYI';
+    document.forms[0].action.value = 'move';
+  } else if (selectedExample == 3) {
+    document.forms[0].fromMachineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].fromPath.value = '/home/jsmith/data/archive.zip';
+    document.forms[0].fromUid.value = 'jsmith';
+    document.forms[0].fromPassword.value = 'vaUkyYI';
+    document.forms[0].toMachineId.value = 'cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f';
+    document.forms[0].toPath.value = '/scratch/jsmith/data/archive.zip';
+    document.forms[0].toUid.value = 'johnsmith';
+    document.forms[0].toPassword.value = 'HmVWaDC';
+    document.forms[0].action.value = 'copy';
+  }
+}
+				</script>
+<p>Auto-fill the form with: <select name="_autofill" class="optional" onchange="fillExample(this.value)"><option value="">-- blank --</option><option value="1">Example 1</option><option value="2">Example 2</option><option value="3">Example 3</option></select>
+</p>
+<h2>Test form</h2>
+<table>
+<tr>
+<td class="name"><span title="Machine hash key">fromMachineId</span> (<a href="MachineId.html" title="Sha1 unique reference">MachineId</a>)</td><td class="value"><input type="text" name="fromMachineId" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Path on HPCPortal host">fromPath</span> (<span title="Plain text">_text</span>)</td><td class="value"><input type="text" name="fromPath" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Username">fromUid</span> (<a href="Uid.html" title="UID of a person">Uid</a>)</td><td class="value"><input type="text" name="fromUid" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Password">fromPassword</span> (<a href="Password.html" title="The password of the user accessing this machine">Password</a>)</td><td class="value"><input type="text" name="fromPassword" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Machine hash key">toMachineId</span> (<a href="MachineId.html" title="Sha1 unique reference">MachineId</a>)</td><td class="value"><input type="text" name="toMachineId" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Path on destination host">toPath</span> (<span title="Plain text">_text</span>)</td><td class="value"><input type="text" name="toPath" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Username">toUid</span> (<a href="Uid.html" title="UID of a person">Uid</a>)</td><td class="value"><input type="text" name="toUid" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Password">toPassword</span> (<a href="Password.html" title="The password of the user accessing this machine">Password</a>)</td><td class="value"><input type="text" name="toPassword" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Move or copy">action</span> (<a href="FileTransferAction.html" title="Move or copy">FileTransferAction</a>)</td><td class="value"><select name="_action" class="required"><option></option><option value="move">MOVE</option><option value="copy">copy</option></select> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Schedule the file transfer for the specified start date (timestamp value)">startDate</span> (<span title="Signed integer number, 64 bit">_int64</span>)</td><td class="value"><input type="text" name="startDate" class="optional"></td>
+</tr>
+<tr>
+<td align="right" colspan="2"><input class="submit" type="submit" value="Submit"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr>
+</td>
+</tr>
+</table>
+</form>
+<div class="url" style="padding-bottom: 5pt" id="query"> 
+</div>
+<iframe height="500" id="xmlOutputFrame" name="xmlOutputFrame" src="about:blank" width="100%"></iframe>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

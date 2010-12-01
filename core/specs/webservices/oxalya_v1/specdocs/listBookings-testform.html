@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>listBookings test form</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Test form for the listBookings function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<script type="text/javascript" src="testforms.js"> </script>
+<link rel="top" href="../index.html" title="API index">
+</head>
+<body onload="selectEnv();">
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <a href="listBookings.html" title="Function">Function</a> | <span class="active">Test form</span> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listBookings</em> test form</h1>
+<form method="GET" action="http://127.0.0.1:8080/ResourceProxy/" target="xmlOutputFrame" onsubmit="this.action=this._environment.value;setEnvCookie(this);return doRequest(this)">
+<p>
+<input name="_function" type="hidden" value="listBookings"><input name="_convention" value="_xins-std" type="hidden">Execution environment: <select name="_environment" class="required"><option value="http://127.0.0.1:8080/ResourceProxy/">localhost</option><option value="http://collab-edf.oxalya.com/soap/ResourceProxy/">collab-edf.oxalya</option></select>
+</p>
+<script type="text/javascript">
+function fillExample(selectedExample) {
+  if (selectedExample == '') {
+    var currentEnv = document.forms[0]._environment.value;
+    document.forms[0].reset();
+    document.forms[0]._environment.value = currentEnv;
+  } else if (selectedExample == 1) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+  }
+}
+				</script>
+<p>Auto-fill the form with: <select name="_autofill" class="optional" onchange="fillExample(this.value)"><option value="">-- blank --</option><option value="1">Example 1</option></select>
+</p>
+<h2>Test form</h2>
+<table>
+<tr>
+<td class="name"><span title="Machine hash key">machineId</span> (<a href="MachineId.html" title="Sha1 unique reference">MachineId</a>)</td><td class="value"><input type="text" name="machineId" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Filter by number of CPU">nbCpu</span> (<span title="Signed integer number, 32 bit">_int32</span>)</td><td class="value"><input type="text" name="nbCpu" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Getting bookings beginning after this date (timestamp)">startDate</span> (<span title="Signed integer number, 64 bit">_int64</span>)</td><td class="value"><input type="text" name="startDate" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Getting bookings ending before this date (timestamp)">endDate</span> (<span title="Signed integer number, 64 bit">_int64</span>)</td><td class="value"><input type="text" name="endDate" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="data section of the request">
+						Data section
+					</span></td><td class="value"><textarea name="_data" rows="6" cols="40" class="optional"></textarea></td>
+</tr>
+<tr>
+<td align="right" colspan="2"><input class="submit" type="submit" value="Submit"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr>
+</td>
+</tr>
+</table>
+</form>
+<div class="url" style="padding-bottom: 5pt" id="query"> 
+</div>
+<iframe height="500" id="xmlOutputFrame" name="xmlOutputFrame" src="about:blank" width="100%"></iframe>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

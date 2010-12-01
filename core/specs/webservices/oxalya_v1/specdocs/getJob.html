@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>getJob</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the getJob function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="getJob-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>getJob</em>
+</h1>Get job on the machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_jobId"></a>jobId</td><td class="type"><a href="JobId.html" title="Sha1 unique reference">JobId</a></td><td class="description">Job hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">no</td>
+</tr>
+</table>
+<h4>Additional constraints</h4>The following constraint applies to the input parameters, additional to the input parameters marked as required. A violation of this constraint will result in an unsuccessful result with the error code <em>_InvalidRequest</em>.<ul>
+<li>Either <em>all</em> of these parameters must be set, or <em>none</em> of them can be set: <em>uid</em> and <em>password</em>.</li>
+</ul>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownJob.html">UnknownJob</a></td><td class="description">Job is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_jobId"></a>jobId</td><td class="type"><a href="JobId.html" title="Sha1 unique reference">JobId</a></td><td class="description">Job hash ID.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_bookingId"></a>bookingId</td><td class="type"><a href="BookingId.html" title="Sha1 unique reference">BookingId</a></td><td class="description">Booking hash ID.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_name"></a>name</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Job name.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_jobPath"></a>jobPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Job path.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Submitter.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_priority"></a>priority</td><td class="type"><a href="JobPriority.html" title="Define the priority of a job">JobPriority</a></td><td class="description">Priority.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_status"></a>status</td><td class="type"><a href="JobStatus.html" title="Define the status of a job">JobStatus</a></td><td class="description">Status.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_queue"></a>queue</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Queue name.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_wallTime"></a>wallTime</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Wall time (seconds).</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_memory"></a>memory</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Memory.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_nbCpu"></a>nbCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of CPU.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_nbCorePerCpu"></a>nbCorePerCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of core required per CPU</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_smp"></a>smp</td><td class="type"><span title="Boolean">_boolean</span></td><td class="description">Share memory</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_queueDate"></a>queueDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Set in queue date (unix timestamp value)</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_runDate"></a>runDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Run date (unix timestamp value)</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_endDate"></a>endDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">End date (unix timestamp value)</td><td class="required">no</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>The data section may contain the elements </em><code>&lt;jobAdditionalInfo/&gt;</code><em> and </em><code>&lt;jobAcl/&gt;</code>.</p>
+<h4>Element <em>&lt;jobAdditionalInfo/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Additional information for Job. Most of them should be readable only if uid/password are provided.</td>
+</tr>
+<tr>
+<th>Contains:</th><td>Character data.</td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="jobAdditionalInfo_type"></a>type</td><td><a href="AdditionalInfoType.html" title="Define the argument type of additional information">AdditionalInfoType</a></td><td>Attribute type.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="jobAdditionalInfo_key"></a>key</td><td><span title="Plain text">_text</span></td><td>Key name.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="jobAdditionalInfo_val"></a>val</td><td><span title="Plain text">_text</span></td><td>Value.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;jobAcl/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>If uid/password provided, define the action rights. No provided acls are implicitly recognized as false.</td>
+</tr>
+<tr>
+<th>Contains:</th><td>Character data.</td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="jobAcl_type"></a>type</td><td><a href="JobAclType.html" title="Define the possible acl application on a job object">JobAclType</a></td><td>Can re submit job.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="jobAcl_grant"></a>grant</td><td><span title="Boolean">_boolean</span></td><td>Can perform action.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Get job ID 9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">getJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="jobId: 9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb"><span class="name">jobId</span>=<span class="value">9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobId"</span></span>&gt;</span><span class="pcdata">9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"name"</span></span>&gt;</span><span class="pcdata">My first job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobPath"</span></span>&gt;</span><span class="pcdata">/data/jobs/9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb/sub.job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"uid"</span></span>&gt;</span><span class="pcdata">jsmith</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"priority"</span></span>&gt;</span><span class="pcdata">100</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"status"</span></span>&gt;</span><span class="pcdata">completed</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"queue"</span></span>&gt;</span><span class="pcdata">default</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"wallTime"</span></span>&gt;</span><span class="pcdata">3600</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"memory"</span></span>&gt;</span><span class="pcdata">1024</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"nbCpu"</span></span>&gt;</span><span class="pcdata">2</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"nbCorePerCpu"</span></span>&gt;</span><span class="pcdata">4</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"queueDate"</span></span>&gt;</span><span class="pcdata">1259837450</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"runDate"</span></span>&gt;</span><span class="pcdata">1259838474</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"endDate"</span></span>&gt;</span><span class="pcdata">1259840475</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=getJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;jobId=9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=getJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;jobId=9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Get job ID 9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248 for user jsmith.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">getJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="jobId: 9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb"><span class="name">jobId</span>=<span class="value">9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobId"</span></span>&gt;</span><span class="pcdata">9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"name"</span></span>&gt;</span><span class="pcdata">My first job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobPath"</span></span>&gt;</span><span class="pcdata">/data/jobs/9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb/sub.job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"uid"</span></span>&gt;</span><span class="pcdata">jsmith</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"priority"</span></span>&gt;</span><span class="pcdata">100</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"status"</span></span>&gt;</span><span class="pcdata">completed</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"queue"</span></span>&gt;</span><span class="pcdata">default</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"wallTime"</span></span>&gt;</span><span class="pcdata">3600</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"memory"</span></span>&gt;</span><span class="pcdata">1024</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"nbCpu"</span></span>&gt;</span><span class="pcdata">2</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"nbCorePerCpu"</span></span>&gt;</span><span class="pcdata">4</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"queueDate"</span></span>&gt;</span><span class="pcdata">1259837450</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"runDate"</span></span>&gt;</span><span class="pcdata">1259838474</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"endDate"</span></span>&gt;</span><span class="pcdata">1259840475</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">jobAdditionalInfo</span> <span class="attr"><span class="name">type</span>=<span class="value">"string"</span></span> <span class="attr"><span class="name">key</span>=<span class="value">"application"</span></span> <span class="attr"><span class="name">val</span>=<span class="value">"salome"</span></span>&gt;</span>SALOME is an open-source software that provides a generic platform for Pre- and Post-Processing for numerical simulation. It is based on an open and flexible architecture made of reusable components.<span class="elem">&lt;/<span class="name">jobAdditionalInfo</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">jobAdditionalInfo</span> <span class="attr"><span class="name">type</span>=<span class="value">"double"</span></span> <span class="attr"><span class="name">key</span>=<span class="value">"version"</span></span> <span class="attr"><span class="name">val</span>=<span class="value">"5.1.2"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">jobAdditionalInfo</span> <span class="attr"><span class="name">type</span>=<span class="value">"string"</span></span> <span class="attr"><span class="name">key</span>=<span class="value">"configPath"</span></span> <span class="attr"><span class="name">val</span>=<span class="value">"/opt/VisuPortal/lib/handlers/VPSessionDesktopHandler/plugins/kde/VPKDEDesktopHandler/resources/kde"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">jobAcl</span> <span class="attr"><span class="name">type</span>=<span class="value">"cancel"</span></span> <span class="attr"><span class="name">grant</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">jobAcl</span> <span class="attr"><span class="name">type</span>=<span class="value">"changePriority"</span></span> <span class="attr"><span class="name">grant</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">jobAcl</span> <span class="attr"><span class="name">type</span>=<span class="value">"reSubmit"</span></span> <span class="attr"><span class="name">grant</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=getJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;jobId=9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=getJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;jobId=9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

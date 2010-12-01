@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>writeFile test form</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Test form for the writeFile function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<script type="text/javascript" src="testforms.js"> </script>
+<link rel="top" href="../index.html" title="API index">
+</head>
+<body onload="selectEnv();">
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <a href="writeFile.html" title="Function">Function</a> | <span class="active">Test form</span> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>writeFile</em> test form</h1>
+<form method="GET" action="http://127.0.0.1:8080/ResourceProxy/" target="xmlOutputFrame" onsubmit="this.action=this._environment.value;setEnvCookie(this);return doRequest(this)">
+<p>
+<input name="_function" type="hidden" value="writeFile"><input name="_convention" value="_xins-std" type="hidden">Execution environment: <select name="_environment" class="required"><option value="http://127.0.0.1:8080/ResourceProxy/">localhost</option><option value="http://collab-edf.oxalya.com/soap/ResourceProxy/">collab-edf.oxalya</option></select>
+</p>
+<script type="text/javascript">
+function fillExample(selectedExample) {
+  if (selectedExample == '') {
+    var currentEnv = document.forms[0]._environment.value;
+    document.forms[0].reset();
+    document.forms[0]._environment.value = currentEnv;
+  } else if (selectedExample == 1) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].path.value = '/home02/jsmith/archives/';
+    document.forms[0].isDirectory.value = 'true';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+  } else if (selectedExample == 2) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].path.value = '/home02/jsmith/archives/';
+    document.forms[0].isDirectory.value = 'true';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+  } else if (selectedExample == 3) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].path.value = '/home02/jsmith/job1.out';
+    document.forms[0].isDirectory.value = 'false';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+    document.forms[0].content.value = 'UTI5dWJtVmpkR2x2YmlCMGJ5QXhPVEl1TVRZNExqRXhNUzQzTUNCamJHOXpaV1F1Q25Ca1pYQmhaWEJsUUhCa1pYQmhaWEJsTFd4aGNIUnZjRHArSkNCMmFTQXZaWFJqTDNOb1lXUnZkd3B3WkdWd1lXVndaVUJ3WkdWd1lXVndaUzFzWVhCMGIzQTZmaVFnYzNOb0lHcGliM056UURFNU1pNHhOamd1TVRFeExqY3dDbXBpYjNOelFERTVNaTR4TmpndU1URXhMamN3SjNNZ2NHRnpjM2R2Y21RNkNncHdaR1Z3WVdWd1pVQndaR1Z3WVdWd1pTMXNZWEIwYjNBNmZpUWdjM05vSUdwaWIzTnpRREU1TWk0eE5qZ3VNVEV4TGpjd0NtcGliM056UURFNU1pNHhOamd1TVRFeExqY3dKM01nY0dGemMzZHZjbVE2Q2t4aGMzUWdiRzluYVc0NklGUm9kU0JFWldNZ0lETWdNVEk2TXpZNk5EQWdNakF3T1NCbWNtOXRJSEF0WkdWd1lXVndaUzF3ZEdod0xtOTRZV3g1WVM1bWNncFNiMk5yY3lBMUxqRWdLRll1U1NrS1VISnZabWxzWlNCaWRXbHNkQ0F4TURveU5pQXhPUzFOWVhJdE1qQXdPUW9LUzJsamEzTjBZWEowWldRZ01URTZORElnTVRrdFRXRnlMVEl3TURrS1cycGliM056UUhacGMzVndiM0owWVd3Z2ZsMGtJSE4xSUMwS1VHRnpjM2R2Y21RNkNsdHliMjkwUUhacGMzVndiM0owWVd3Z2ZsMGpJSFpwSUM5bGRHTXZjMmhoWkc5M0NsdHliMjkwUUhacGMzVndiM0owWVd3Z2ZsMGpJR2xrSUdwaWIzTnpDblZwWkQwMU1ERW9hbUp2YzNNcElHZHBaRDAxTURFb2FtSnZjM01wSUdkeWIzVndjejAxTURFb2FtSnZjM01wQ2x0eWIyOTBRSFpwYzNWd2IzSjBZV3dnZmwwaklHMWhiaUJwWkFwWmIzVWdhR0YyWlNCdFlXbHNJR2x1SUM5MllYSXZjM0J2YjJ3dmJXRnBiQzl5YjI5MENsdHliMjkwUUhacGMzVndiM0owWVd3Z2ZsMGpJSE4xSUMwZ2FtSnZjM01LVzJwaWIzTnpRSFpwYzNWd2IzSjBZV3dnZmwwa0lHTmtDbHRxWW05emMwQjJhWE4xY0c5eWRHRnNJSDVkSkNCalpDQldhWE4xVUc5eWRHRnNDbHRxWW05emMwQjJhWE4xY0c5eWRHRnNJRlpwYzNWUWIzSjBZV3hkSkNCc2N3cGlkV2xzWkMxa1pYWXVjSEp2Y0dWeWRHbGxjeUFnSUdKMWFXeGtMbkJ5YjNCbGNuUnBaWE1nSUdSbFluVm5MV3BpYjNOekxWWnBjM1ZRYjNKMFlXd3ViR0YxYm1Ob0lDQmtaWEJzYjNsbFpDMXFZWEp6TFdWaGNpNXNhWE4wSUNCa2FYTjBJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ1pYaHdiRzlrWlM1c1lYVnVZMmdnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdhWFo1TG1KMWFXeGtMbmh0YkNBZ0lDQWdhWFo1TG5odGJDQWdjbVZ6YjNWeVkyVnpJQ0FnSUNBZ0lDQWdJQ0FnYzNKaklDQWdWbWx6ZFZCdmNuUmhiQzVzWVhWdVkyZ0tZblZwYkdRdGNISnZaQzV3Y205d1pYSjBhV1Z6SUNCaWRXbHNaQzU0Yld3Z0lDQWdJQ0FnSUNCa1pYQnNiM2tnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdaR1Z3Ykc5NVpXUXRhbUZ5Y3kxM1lYSXViR2x6ZENBZ1pYaHdiRzlrWldRdFlYSmphR2wyWlhNZ0lHaHBZbVZ5Ym1GMFpTMWpiMjV6YjJ4bExuQnliM0JsY25ScFpYTWdJR2wyZVM1elpYUjBhVzVuY3k1NGJXd2dJR3hwWWlBZ0lDQWdJSE5sWVcwdFoyVnVMbkJ5YjNCbGNuUnBaWE1nSUhacFpYY0tXMnBpYjNOelFIWnBjM1Z3YjNKMFlXd2dWbWx6ZFZCdmNuUmhiRjBrSUdacGJHVWdMV2tnZG1sbGR5OXBiV2N2Q2tScGMzQnNZWGtnWVd4c0lERTRNQ0J3YjNOemFXSnBiR2wwYVdWelB5QW9lU0J2Y2lCdUtRcGJhbUp2YzNOQWRtbHpkWEJ2Y25SaGJDQldhWE4xVUc5eWRHRnNYU1FnWm1sc1pTQXRhU0IyYVdWM0wybHRaeTloQ21Ga1pHWnBiR1V1Y0c1bklDQWdJQ0JoWkdSZmNHRm5aUzV3Ym1jZ0lDQWdZV1JrWDNWelpYSXVjRzVuSUNBZ0lHRmtiV2x1TG1kcFppQWdJQ0FnSUNCaFpHMXBiaTV3Ym1jZ0lDQWdJQ0FnWVdkMFgyWmhiV2xzZVM1d2JtY2dJRUZ3Y0d4cExtcHdad3BiYW1KdmMzTkFkbWx6ZFhCdmNuUmhiQ0JXYVhOMVVHOXlkR0ZzWFNRZ1ptbHNaU0F0YVNCMmFXVjNMMmx0Wnk5aFpHMXBiaTVuYVdZS2RtbGxkeTlwYldjdllXUnRhVzR1WjJsbU9pQnBiV0ZuWlM5bmFXWUtXMnBpYjNOelFIWnBjM1Z3YjNKMFlXd2dWbWx6ZFZCdmNuUmhiRjBrSUdacGJHVWdMV2tnWW5WcGJHUXVlRzFzQ21KMWFXeGtMbmh0YkRvS1cycGliM056UUhacGMzVndiM0owWVd3Z1ZtbHpkVkJ2Y25SaGJGMGtJR1pwYkdVZ0xXa2dkbWxsZHk5eVpRcHlaWEJ2Y25ScGJtY3VlR2gwYld3Z0lISmxjMjkxY21ObGN5NTRhSFJ0YkFwYmFtSnZjM05BZG1semRYQnZjblJoYkNCV2FYTjFVRzl5ZEdGc1hTUWdabWxzWlNBdGFTQjJhV1YzTDNKbGMyOTFjbU5sY3k1NGFIUnRiQXAyYVdWM0wzSmxjMjkxY21ObGN5NTRhSFJ0YkRvZ2RHVjRkQzl3YkdGcGJqc2dZMmhoY25ObGREMTFjeTFoYzJOcGFRcGJhbUp2YzNOQWRtbHpkWEJ2Y25SaGJDQldhWE4xVUc5eWRHRnNYU1FnWm1sc1pTQXRhU0J5WlhOdmRYSmpaWE12Q2tGc1pYSjBVRzl5ZEdGc0x5QWdJQ0FnSUNBZ0lDQWdJR2x0Y0c5eWRDMWtaWFl1YzNGc0lDQWdJQ0FnSUNBZ0lHMWxjM05oWjJWelgySm5MbkJ5YjNCbGNuUnBaWE1nSUcxbGMzTmhaMlZ6WDJaeUxuQnliM0JsY25ScFpYTWdJSE5sWVcwdFoyVnVMbkpsZG1WdVp5NTRiV3dnSUNBZ0lIWmxjbk5wYjI1ekxuQnliM0JsY25ScFpYTWdJQ0FnSUZkRlFpMUpUa1l2Q21OdmJYQnZibVZ1ZEhNdWNISnZjR1Z5ZEdsbGN5QWdJR2x0Y0c5eWRDMXdjbTlrTG5OeGJDQWdJQ0FnSUNBZ0lHMWxjM05oWjJWelgyUmxMbkJ5YjNCbGNuUnBaWE1nSUcxbGMzTmhaMlZ6WDNSeUxuQnliM0JsY25ScFpYTWdJSE5sWVcwdWNISnZjR1Z5ZEdsbGN5QWdJQ0FnSUNBZ0lGWnBjM1ZRYjNKMFlXd3RaR1YyTFdSekxuaHRiQXBFYVhKbFkzUnZjbmxRYjNKMFlXd3VlRzFzSUNBZ0lDQnBiWEJ2Y25RdGRHVnpkQzV6Y1d3Z0lDQWdJQ0FnSUNCdFpYTnpZV2RsYzE5bGJpNXdjbTl3WlhKMGFXVnpJQ0JOUlZSQkxVbE9SaThnSUNBZ0lDQWdJQ0FnSUNBZ0lDQnpaV04xY21sMGVTNWtjbXdnSUNBZ0lDQWdJQ0FnSUNCV2FYTjFVRzl5ZEdGc0xYQnliMlF0WkhNdWVHMXNDbHRxWW05emMwQjJhWE4xY0c5eWRHRnNJRlpwYzNWUWIzSjBZV3hkSkNCbWFXeGxJQzFwSUhKbGMyOTFjbU5sY3k5RWFYSmxZM1J2Y25sUWIzSjBZV3d1ZUcxc0NuSmxjMjkxY21ObGN5OUVhWEpsWTNSdmNubFFiM0owWVd3dWVHMXNPZ3BiYW1KdmMzTkFkbWx6ZFhCdmNuUmhiQ0JXYVhOMVVHOXlkR0ZzWFNRZ1ptbHNaU0F0YVNCeVpYTnZkWEpqWlhNdlZtbHpkVkJ2Y25SaGJDMWtaWFl0WkhNdWVHMXNDbkpsYzI5MWNtTmxjeTlXYVhOMVVHOXlkR0ZzTFdSbGRpMWtjeTU0Yld3NkNsdHFZbTl6YzBCMmFYTjFjRzl5ZEdGc0lGWnBjM1ZRYjNKMFlXeGRKQT09';
+  }
+}
+				</script>
+<p>Auto-fill the form with: <select name="_autofill" class="optional" onchange="fillExample(this.value)"><option value="">-- blank --</option><option value="1">Example 1</option><option value="2">Example 2</option><option value="3">Example 3</option></select>
+</p>
+<h2>Test form</h2>
+<table>
+<tr>
+<td class="name"><span title="Machine hash key">machineId</span> (<a href="MachineId.html" title="Sha1 unique reference">MachineId</a>)</td><td class="value"><input type="text" name="machineId" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="File path">path</span> (<span title="Plain text">_text</span>)</td><td class="value"><input type="text" name="path" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="True if it's a directory">isDirectory</span> (<span title="Boolean">_boolean</span>)</td><td class="value"><select name="isDirectory"><option></option><option value="true">true</option><option value="false">false</option></select> *</td>
+</tr>
+<tr>
+<td class="name"><span title="File content">content</span> (<span title="Byte Array, Base 64 encoded">_base64</span>)</td><td class="value"><input type="text" name="content" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Username">uid</span> (<a href="Uid.html" title="UID of a person">Uid</a>)</td><td class="value"><input type="text" name="uid" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Password">password</span> (<a href="Password.html" title="The password of the user accessing this machine">Password</a>)</td><td class="value"><input type="text" name="password" class="required"> *</td>
+</tr>
+<tr>
+<td align="right" colspan="2"><input class="submit" type="submit" value="Submit"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr>
+</td>
+</tr>
+</table>
+</form>
+<div class="url" style="padding-bottom: 5pt" id="query"> 
+</div>
+<iframe height="500" id="xmlOutputFrame" name="xmlOutputFrame" src="about:blank" width="100%"></iframe>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

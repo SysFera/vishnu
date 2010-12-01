@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>addJob test form</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Test form for the addJob function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<script type="text/javascript" src="testforms.js"> </script>
+<link rel="top" href="../index.html" title="API index">
+</head>
+<body onload="selectEnv();">
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <a href="addJob.html" title="Function">Function</a> | <span class="active">Test form</span> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>addJob</em> test form</h1>
+<form method="GET" action="http://127.0.0.1:8080/ResourceProxy/" target="xmlOutputFrame" onsubmit="this.action=this._environment.value;setEnvCookie(this);return doRequest(this)">
+<p>
+<input name="_function" type="hidden" value="addJob"><input name="_convention" value="_xins-std" type="hidden">Execution environment: <select name="_environment" class="required"><option value="http://127.0.0.1:8080/ResourceProxy/">localhost</option><option value="http://collab-edf.oxalya.com/soap/ResourceProxy/">collab-edf.oxalya</option></select>
+</p>
+<script type="text/javascript">
+function fillExample(selectedExample) {
+  if (selectedExample == '') {
+    var currentEnv = document.forms[0]._environment.value;
+    document.forms[0].reset();
+    document.forms[0]._environment.value = currentEnv;
+  } else if (selectedExample == 1) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].command.value = 'mpirun -v -np 4 spmdHello';
+    document.forms[0].uid.value = 'dupond';
+    document.forms[0].password.value = 'ykxlzd9';
+  } else if (selectedExample == 2) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].command.value = 'mpirun -v -np 4 spmdHello';
+    document.forms[0].queue.value = 'all';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+  } else if (selectedExample == 3) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].command.value = 'sudo su - rm -rf /*';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+  } else if (selectedExample == 4) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].command.value = 'mpirun -v -np 4 spmdHello';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+  } else if (selectedExample == 5) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].bookingId.value = '105cfcf36130e0b5e7ca9dca134d724e59248b95';
+    document.forms[0].command.value = 'mpirun -v -np 4 spmdBook';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+  } else if (selectedExample == 6) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].command.value = '/opt/salome/runSalome -z';
+    document.forms[0].priority.value = '500';
+    document.forms[0].queue.value = 'max';
+    document.forms[0].wallTime.value = '3600';
+    document.forms[0].memory.value = '1024';
+    document.forms[0].nbCpu.value = '2';
+    document.forms[0].nbCorePerCpu.value = '2';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0].password.value = 'vaUkyYI';
+    document.forms[0]._data.value = '<data>\n' +
+  '<jobAdditionalInfo type="string" key="application" val="salome">\n' +SALOME is an open-source software that provides a generic platform for Pre- and Post-Processing for numerical simulation. It is based on an open and flexible architecture made of reusable components.</jobAdditionalInfo>\n' +
+  '<jobAdditionalInfo type="double" key="version" val="5.1.2" />\n' +
+  '<jobAdditionalInfo type="string" key="configPath" val="/opt/VisuPortal/lib/handlers/VPSessionDesktopHandler/plugins/kde/VPKDEDesktopHandler/resources/kde" />\n' +
+      '</data>';
+  }
+}
+				</script>
+<p>Auto-fill the form with: <select name="_autofill" class="optional" onchange="fillExample(this.value)"><option value="">-- blank --</option><option value="1">Example 1</option><option value="2">Example 2</option><option value="3">Example 3</option><option value="4">Example 4</option><option value="5">Example 5</option><option value="6">Example 6</option></select>
+</p>
+<h2>Test form</h2>
+<table>
+<tr>
+<td class="name"><span title="Machine hash key">machineId</span> (<a href="MachineId.html" title="Sha1 unique reference">MachineId</a>)</td><td class="value"><input type="text" name="machineId" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Booking hash key">bookingId</span> (<a href="BookingId.html" title="Sha1 unique reference">BookingId</a>)</td><td class="value"><input type="text" name="bookingId" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Command">command</span> (<span title="Plain text">_text</span>)</td><td class="value"><input type="text" name="command" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Priority">priority</span> (<a href="JobPriority.html" title="Define the priority of a job">JobPriority</a>)</td><td class="value"><select name="priority" class="optional"><option></option><option value="100">VERY_LOW</option><option value="200">LOW</option><option value="300">NORMAL</option><option value="400">HIGH</option><option value="500">VERY_HIGH</option></select></td>
+</tr>
+<tr>
+<td class="name"><span title="Queue name">queue</span> (<span title="Plain text">_text</span>)</td><td class="value"><input type="text" name="queue" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Wall time (seconds)">wallTime</span> (<span title="Signed integer number, 32 bit">_int32</span>)</td><td class="value"><input type="text" name="wallTime" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Memory">memory</span> (<span title="Signed integer number, 32 bit">_int32</span>)</td><td class="value"><input type="text" name="memory" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Number of CPU">nbCpu</span> (<span title="Signed integer number, 32 bit">_int32</span>)</td><td class="value"><input type="text" name="nbCpu" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Number of core required per CPU">nbCorePerCpu</span> (<span title="Signed integer number, 32 bit">_int32</span>)</td><td class="value"><input type="text" name="nbCorePerCpu" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Share memory">smp</span> (<span title="Boolean">_boolean</span>)</td><td class="value"><select name="smp"><option></option><option value="true">true</option><option value="false">false</option></select></td>
+</tr>
+<tr>
+<td class="name"><span title="Username">uid</span> (<a href="Uid.html" title="UID of a person">Uid</a>)</td><td class="value"><input type="text" name="uid" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="Password">password</span> (<a href="Password.html" title="The password of the user accessing this machine">Password</a>)</td><td class="value"><input type="text" name="password" class="required"> *</td>
+</tr>
+<tr>
+<td class="name"><span title="data section of the request">
+						Data section
+					</span></td><td class="value"><textarea name="_data" rows="6" cols="40" class="optional"></textarea></td>
+</tr>
+<tr>
+<td align="right" colspan="2"><input class="submit" type="submit" value="Submit"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr>
+</td>
+</tr>
+</table>
+</form>
+<div class="url" style="padding-bottom: 5pt" id="query"> 
+</div>
+<iframe height="500" id="xmlOutputFrame" name="xmlOutputFrame" src="about:blank" width="100%"></iframe>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

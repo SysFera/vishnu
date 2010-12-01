@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>listFiles</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the listFiles function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="listFiles-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listFiles</em>
+</h1>Browse files for selected path on provided machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine ID</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_path"></a>path</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Path requested</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidPath.html">InvalidPath</a></td><td class="description">Path provided is not reachable or is invalid.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;entry/&gt;</code>.</p>
+<h4>Element <em>&lt;entry/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Define a file or a directory.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="entry_isDirectory"></a>isDirectory</td><td><span title="Boolean">_boolean</span></td><td>True if it's a directory</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_owner"></a>owner</td><td><a href="Uid.html" title="UID of a person">Uid</a></td><td>Owner of this object</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_group"></a>group</td><td><span title="Plain text">_text</span></td><td>Group membership of this object</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_name"></a>name</td><td><span title="Plain text">_text</span></td><td>Name</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_size"></a>size</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>File size (Bytes)</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_date"></a>date</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Last modification (unix timestamp)</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_mime"></a>mime</td><td><span title="Plain text">_text</span></td><td>Mime type</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_canRead"></a>canRead</td><td><span title="Boolean">_boolean</span></td><td>True if provided uid can read it</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_canWrite"></a>canWrite</td><td><span title="Boolean">_boolean</span></td><td>True if provided uid can write on it</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="entry_canExecute"></a>canExecute</td><td><span title="Boolean">_boolean</span></td><td>True if provided uid can execute it</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Additional constraints</h4>The following constraint applies to the element attributes, additional to the element attributes marked as required. A violation of this constraint will result in an unsuccessful result with the error code <em>_InvalidResponse</em>.<ul>
+<li>At <em>least</em> one of these attributes must be set: <em>isDirectory</em> with the value 'false', <em>size</em>, <em>mime</em>.</li>
+</ul>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: List files from path /home/jsmith/vp/ with user jsmith.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFiles</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb"><span class="name">machineId</span>=<span class="value">9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb</span></span>&amp;<span class="param" title="path: /home/jsmith/vp/"><span class="name">path</span>=<span class="value">%2Fhome%2Fjsmith%2Fvp%2F</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"build-dev.properties"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"34"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"build-prod.properties"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"15"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"build.properties"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"816"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1259775639"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"build.xml"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"19457"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1257261309"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"debug-jboss-VisuPortal.launch"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"957"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"deploy"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"34"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829134"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"deployed-jars-ear.list"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"329"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"deployed-jars-war.list"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"207"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"dist"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1259775766"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"exploded-archives"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1259775759"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"explode.launch"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"1647"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"hibernate-console.properties"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"517"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"ivy.build.xml"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"5014"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1257259519"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"ivy.settings.xml"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"1730"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"ivy.xml"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"9393"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1259775646"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"lib"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1259071516"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"resources"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1258989896"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"seam-gen.properties"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"775"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"src"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256828994"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"view"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1259323691"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">entry</span> <span class="attr"><span class="name">isDirectory</span>=<span class="value">"false"</span></span> <span class="attr"><span class="name">owner</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">group</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"VisuPortal.launch"</span></span> <span class="attr"><span class="name">size</span>=<span class="value">"500"</span></span> <span class="attr"><span class="name">date</span>=<span class="value">"1256829022"</span></span> <span class="attr"><span class="name">mime</span>=<span class="value">"text"</span></span> <span class="attr"><span class="name">canRead</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canWrite</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">canExecute</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFiles&amp;_convention=_xins-std&amp;machineId=9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb&amp;path=%2Fhome%2Fjsmith%2Fvp%2F&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFiles&amp;_convention=_xins-std&amp;machineId=9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb&amp;path=%2Fhome%2Fjsmith%2Fvp%2F&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

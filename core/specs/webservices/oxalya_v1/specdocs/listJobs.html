@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>listJobs</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the listJobs function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="listJobs-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listJobs</em>
+</h1>List jobs on the machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCpu"></a>nbCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Filter by number of CPU.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromSubmitDate"></a>fromSubmitDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Get results from submit date (timestamp)</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_toSubmitDate"></a>toSubmitDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Get results to submit date (timestamp)</td><td class="required">no</td>
+</tr>
+</table>
+<h4>Additional constraints</h4>The following constraint applies to the input parameters, additional to the input parameters marked as required. A violation of this constraint will result in an unsuccessful result with the error code <em>_InvalidRequest</em>.<ul>
+<li>Either <em>all</em> of these parameters must be set, or <em>none</em> of them can be set: <em>fromSubmitDate</em> and <em>toSubmitDate</em>.</li>
+</ul>
+<h3>Data section</h3>
+<p>
+<em>The data section may contain the elements </em><code>&lt;booking/&gt;</code>, <code>&lt;owner/&gt;</code>, <code>&lt;jobStatus/&gt;</code><em> and </em><code>&lt;jobPriority/&gt;</code>.</p>
+<h4>Element <em>&lt;booking/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Filter list by 1/m bookings.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="booking_bookingId"></a>bookingId</td><td><a href="BookingId.html" title="Sha1 unique reference">BookingId</a></td><td>Booking hash key</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;owner/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Filter list by 1/m owners.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="owner_uid"></a>uid</td><td><a href="Uid.html" title="UID of a person">Uid</a></td><td>Username</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;jobStatus/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Filter list by 1/m jobStatus.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="jobStatus_jobStatus"></a>jobStatus</td><td><a href="JobStatus.html" title="Define the status of a job">JobStatus</a></td><td>Job status</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;jobPriority/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Filter list by 1/m jobPriority.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="jobPriority_jobPriority"></a>jobPriority</td><td><a href="JobPriority.html" title="Define the priority of a job">JobPriority</a></td><td>Job priority</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownBooking.html">UnknownBooking</a></td><td class="description">Booking is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;job/&gt;</code>.</p>
+<h4>Element <em>&lt;job/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Job object.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="job_jobId"></a>jobId</td><td><a href="JobId.html" title="Sha1 unique reference">JobId</a></td><td>Job hash ID.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="job_bookingId"></a>bookingId</td><td><a href="BookingId.html" title="Sha1 unique reference">BookingId</a></td><td>Booking hash ID.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_name"></a>name</td><td><span title="Plain text">_text</span></td><td>Job name.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_jobPath"></a>jobPath</td><td><span title="Plain text">_text</span></td><td>Job path.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="job_uid"></a>uid</td><td><a href="Uid.html" title="UID of a person">Uid</a></td><td>Submitter.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="job_priority"></a>priority</td><td><a href="JobPriority.html" title="Define the priority of a job">JobPriority</a></td><td>Priority.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_status"></a>status</td><td><a href="JobStatus.html" title="Define the status of a job">JobStatus</a></td><td>Status.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="job_queue"></a>queue</td><td><span title="Plain text">_text</span></td><td>Queue name.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_wallTime"></a>wallTime</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Wall time (seconds).</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_memory"></a>memory</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Memory.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_nbCpu"></a>nbCpu</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Number of CPU.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_nbCorePerCpu"></a>nbCorePerCpu</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Number of core required per CPU</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_smp"></a>smp</td><td><span title="Boolean">_boolean</span></td><td>Share memory</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_queueDate"></a>queueDate</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Set in queue date (unix timestamp value)</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="job_runDate"></a>runDate</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Run date (unix timestamp value)</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="job_endDate"></a>endDate</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>End date (unix timestamp value)</td><td>no</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: List jobs on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listJobs</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">job</span> <span class="attr"><span class="name">jobId</span>=<span class="value">"9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"My first job"</span></span> <span class="attr"><span class="name">jobPath</span>=<span class="value">"/data/jobs/9d7202f1b699b9fe3ac2c05f83eb302f2a6315eb/sub.job"</span></span> <span class="attr"><span class="name">uid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">priority</span>=<span class="value">"100"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"completed"</span></span> <span class="attr"><span class="name">queue</span>=<span class="value">"default"</span></span> <span class="attr"><span class="name">wallTime</span>=<span class="value">"3600"</span></span> <span class="attr"><span class="name">memory</span>=<span class="value">"1024"</span></span> <span class="attr"><span class="name">nbCpu</span>=<span class="value">"2"</span></span> <span class="attr"><span class="name">nbCorePerCpu</span>=<span class="value">"4"</span></span> <span class="attr"><span class="name">smp</span>=<span class="value">"true"</span></span> <span class="attr"><span class="name">queueDate</span>=<span class="value">"1259837450"</span></span> <span class="attr"><span class="name">runDate</span>=<span class="value">"1259838474"</span></span> <span class="attr"><span class="name">endDate</span>=<span class="value">"1259840475"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">job</span> <span class="attr"><span class="name">jobId</span>=<span class="value">"293a87bda3782b47174e09f386861ac381d15b98"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"An other job"</span></span> <span class="attr"><span class="name">jobPath</span>=<span class="value">"/data/jobs/293a87bda3782b47174e09f386861ac381d15b98/sub.job"</span></span> <span class="attr"><span class="name">uid</span>=<span class="value">"jdupond"</span></span> <span class="attr"><span class="name">priority</span>=<span class="value">"400"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"queued"</span></span> <span class="attr"><span class="name">queue</span>=<span class="value">"max"</span></span> <span class="attr"><span class="name">memory</span>=<span class="value">"2048"</span></span> <span class="attr"><span class="name">nbCpu</span>=<span class="value">"4"</span></span> <span class="attr"><span class="name">nbCorePerCpu</span>=<span class="value">"8"</span></span> <span class="attr"><span class="name">queueDate</span>=<span class="value">"1259837450"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listJobs&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listJobs&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: List jobs on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248 for booking 105cfcf36130e0b5e7ca9dca134d724e59248b95.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listJobs</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="Data section: <data><booking bookingId=&quot;105cfcf36130e0b5e7ca9dca134d724e59248b95&quot; /></data>"><span class="name">_data</span>=<span class="value">%3Cdata%3E%3Cbooking+bookingId%3D%22105cfcf36130e0b5e7ca9dca134d724e59248b95%22+%2F%3E%3C%2Fdata%3E</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">job</span> <span class="attr"><span class="name">jobId</span>=<span class="value">"801e372c05beffd0744bdf82af7d2e52d29edb71"</span></span> <span class="attr"><span class="name">bookingId</span>=<span class="value">"105cfcf36130e0b5e7ca9dca134d724e59248b95"</span></span> <span class="attr"><span class="name">jobPath</span>=<span class="value">"/data/jobs/801e372c05beffd0744bdf82af7d2e52d29edb71/sub.job"</span></span> <span class="attr"><span class="name">uid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"queued"</span></span> <span class="attr"><span class="name">queue</span>=<span class="value">"default"</span></span> <span class="attr"><span class="name">queueDate</span>=<span class="value">"1259837450"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listJobs&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;_data=%3Cdata%3E%3Cbooking+bookingId%3D%22105cfcf36130e0b5e7ca9dca134d724e59248b95%22+%2F%3E%3C%2Fdata%3E">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listJobs&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;_data=%3Cdata%3E%3Cbooking+bookingId%3D%22105cfcf36130e0b5e7ca9dca134d724e59248b95%22+%2F%3E%3C%2Fdata%3E">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

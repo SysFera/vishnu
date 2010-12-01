@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>readFile</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the readFile function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="readFile-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>readFile</em>
+</h1>Return the content of a file only if its size is less than 1048576 (1 mb) and its mime match text.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_path"></a>path</td><td class="type"><span title="Plain text">_text</span></td><td class="description">File path.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidPath.html">InvalidPath</a></td><td class="description">Path provided is not reachable or is invalid.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnreadableFile.html">UnreadableFile</a></td><td class="description">Provided file is unreadable. Reasons might be: not supported mime type or exceeding allowed content size.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_content"></a>content</td><td class="type"><span title="Byte Array, Base 64 encoded">_base64</span></td><td class="description">File content.</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Not allowed read file on /etc/shadow</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">readFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="path: /etc/shadow"><span class="name">path</span>=<span class="value">%2Fetc%2Fshadow</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"NotAllowed"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"uid"</span></span>&gt;</span><span class="pcdata">jsmith</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"operation"</span></span>&gt;</span><span class="pcdata">readFile /etc/shadow</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fetc%2Fshadow&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fetc%2Fshadow&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Invalid path exception for directory /home02/jsmith/</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">readFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="path: /home02/jsmith/"><span class="name">path</span>=<span class="value">%2Fhome02%2Fjsmith%2F</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"InvalidPath"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"path"</span></span>&gt;</span><span class="pcdata">/home02/jsmith/</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"invalidReason"</span></span>&gt;</span><span class="pcdata">Path provided is a directory</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2F&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2F&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 3: Unreadable file exception for image file /home02/jsmith/me.jpg</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">readFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="path: /home02/jsmith/me.jpg"><span class="name">path</span>=<span class="value">%2Fhome02%2Fjsmith%2Fme.jpg</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"UnreadableFile"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"path"</span></span>&gt;</span><span class="pcdata">/home02/jsmith/me.jpg</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"unreadableReason"</span></span>&gt;</span><span class="pcdata">The specified file is not plain text. Read operation is denied.</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2Fme.jpg&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2Fme.jpg&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 4: Unreadable file exception for huge text file /home02/jsmith/huge.txt</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">readFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="path: /home02/jsmith/huge.txt"><span class="name">path</span>=<span class="value">%2Fhome02%2Fjsmith%2Fhuge.txt</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"UnreadableFile"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"path"</span></span>&gt;</span><span class="pcdata">/home02/jsmith/huge.txt</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"unreadableReason"</span></span>&gt;</span><span class="pcdata">The specified file is too large for any edition operation.</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2Fhuge.txt&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2Fhuge.txt&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 5: Read file /home02/jsmith/job1.out</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">readFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="path: /home02/jsmith/job1.out"><span class="name">path</span>=<span class="value">%2Fhome02%2Fjsmith%2Fjob1.out</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"content"</span></span>&gt;</span><span class="pcdata">UTI5dWJtVmpkR2x2YmlCMGJ5QXhPVEl1TVRZNExqRXhNUzQzTUNCamJHOXpaV1F1Q25Ca1pYQmhaWEJsUUhCa1pYQmhaWEJsTFd4aGNIUnZjRHArSkNCMmFTQXZaWFJqTDNOb1lXUnZkd3B3WkdWd1lXVndaVUJ3WkdWd1lXVndaUzFzWVhCMGIzQTZmaVFnYzNOb0lHcGliM056UURFNU1pNHhOamd1TVRFeExqY3dDbXBpYjNOelFERTVNaTR4TmpndU1URXhMamN3SjNNZ2NHRnpjM2R2Y21RNkNncHdaR1Z3WVdWd1pVQndaR1Z3WVdWd1pTMXNZWEIwYjNBNmZpUWdjM05vSUdwaWIzTnpRREU1TWk0eE5qZ3VNVEV4TGpjd0NtcGliM056UURFNU1pNHhOamd1TVRFeExqY3dKM01nY0dGemMzZHZjbVE2Q2t4aGMzUWdiRzluYVc0NklGUm9kU0JFWldNZ0lETWdNVEk2TXpZNk5EQWdNakF3T1NCbWNtOXRJSEF0WkdWd1lXVndaUzF3ZEdod0xtOTRZV3g1WVM1bWNncFNiMk5yY3lBMUxqRWdLRll1U1NrS1VISnZabWxzWlNCaWRXbHNkQ0F4TURveU5pQXhPUzFOWVhJdE1qQXdPUW9LUzJsamEzTjBZWEowWldRZ01URTZORElnTVRrdFRXRnlMVEl3TURrS1cycGliM056UUhacGMzVndiM0owWVd3Z2ZsMGtJSE4xSUMwS1VHRnpjM2R2Y21RNkNsdHliMjkwUUhacGMzVndiM0owWVd3Z2ZsMGpJSFpwSUM5bGRHTXZjMmhoWkc5M0NsdHliMjkwUUhacGMzVndiM0owWVd3Z2ZsMGpJR2xrSUdwaWIzTnpDblZwWkQwMU1ERW9hbUp2YzNNcElHZHBaRDAxTURFb2FtSnZjM01wSUdkeWIzVndjejAxTURFb2FtSnZjM01wQ2x0eWIyOTBRSFpwYzNWd2IzSjBZV3dnZmwwaklHMWhiaUJwWkFwWmIzVWdhR0YyWlNCdFlXbHNJR2x1SUM5MllYSXZjM0J2YjJ3dmJXRnBiQzl5YjI5MENsdHliMjkwUUhacGMzVndiM0owWVd3Z2ZsMGpJSE4xSUMwZ2FtSnZjM01LVzJwaWIzTnpRSFpwYzNWd2IzSjBZV3dnZmwwa0lHTmtDbHRxWW05emMwQjJhWE4xY0c5eWRHRnNJSDVkSkNCalpDQldhWE4xVUc5eWRHRnNDbHRxWW05emMwQjJhWE4xY0c5eWRHRnNJRlpwYzNWUWIzSjBZV3hkSkNCc2N3cGlkV2xzWkMxa1pYWXVjSEp2Y0dWeWRHbGxjeUFnSUdKMWFXeGtMbkJ5YjNCbGNuUnBaWE1nSUdSbFluVm5MV3BpYjNOekxWWnBjM1ZRYjNKMFlXd3ViR0YxYm1Ob0lDQmtaWEJzYjNsbFpDMXFZWEp6TFdWaGNpNXNhWE4wSUNCa2FYTjBJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ1pYaHdiRzlrWlM1c1lYVnVZMmdnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdhWFo1TG1KMWFXeGtMbmh0YkNBZ0lDQWdhWFo1TG5odGJDQWdjbVZ6YjNWeVkyVnpJQ0FnSUNBZ0lDQWdJQ0FnYzNKaklDQWdWbWx6ZFZCdmNuUmhiQzVzWVhWdVkyZ0tZblZwYkdRdGNISnZaQzV3Y205d1pYSjBhV1Z6SUNCaWRXbHNaQzU0Yld3Z0lDQWdJQ0FnSUNCa1pYQnNiM2tnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdaR1Z3Ykc5NVpXUXRhbUZ5Y3kxM1lYSXViR2x6ZENBZ1pYaHdiRzlrWldRdFlYSmphR2wyWlhNZ0lHaHBZbVZ5Ym1GMFpTMWpiMjV6YjJ4bExuQnliM0JsY25ScFpYTWdJR2wyZVM1elpYUjBhVzVuY3k1NGJXd2dJR3hwWWlBZ0lDQWdJSE5sWVcwdFoyVnVMbkJ5YjNCbGNuUnBaWE1nSUhacFpYY0tXMnBpYjNOelFIWnBjM1Z3YjNKMFlXd2dWbWx6ZFZCdmNuUmhiRjBrSUdacGJHVWdMV2tnZG1sbGR5OXBiV2N2Q2tScGMzQnNZWGtnWVd4c0lERTRNQ0J3YjNOemFXSnBiR2wwYVdWelB5QW9lU0J2Y2lCdUtRcGJhbUp2YzNOQWRtbHpkWEJ2Y25SaGJDQldhWE4xVUc5eWRHRnNYU1FnWm1sc1pTQXRhU0IyYVdWM0wybHRaeTloQ21Ga1pHWnBiR1V1Y0c1bklDQWdJQ0JoWkdSZmNHRm5aUzV3Ym1jZ0lDQWdZV1JrWDNWelpYSXVjRzVuSUNBZ0lHRmtiV2x1TG1kcFppQWdJQ0FnSUNCaFpHMXBiaTV3Ym1jZ0lDQWdJQ0FnWVdkMFgyWmhiV2xzZVM1d2JtY2dJRUZ3Y0d4cExtcHdad3BiYW1KdmMzTkFkbWx6ZFhCdmNuUmhiQ0JXYVhOMVVHOXlkR0ZzWFNRZ1ptbHNaU0F0YVNCMmFXVjNMMmx0Wnk5aFpHMXBiaTVuYVdZS2RtbGxkeTlwYldjdllXUnRhVzR1WjJsbU9pQnBiV0ZuWlM5bmFXWUtXMnBpYjNOelFIWnBjM1Z3YjNKMFlXd2dWbWx6ZFZCdmNuUmhiRjBrSUdacGJHVWdMV2tnWW5WcGJHUXVlRzFzQ21KMWFXeGtMbmh0YkRvS1cycGliM056UUhacGMzVndiM0owWVd3Z1ZtbHpkVkJ2Y25SaGJGMGtJR1pwYkdVZ0xXa2dkbWxsZHk5eVpRcHlaWEJ2Y25ScGJtY3VlR2gwYld3Z0lISmxjMjkxY21ObGN5NTRhSFJ0YkFwYmFtSnZjM05BZG1semRYQnZjblJoYkNCV2FYTjFVRzl5ZEdGc1hTUWdabWxzWlNBdGFTQjJhV1YzTDNKbGMyOTFjbU5sY3k1NGFIUnRiQXAyYVdWM0wzSmxjMjkxY21ObGN5NTRhSFJ0YkRvZ2RHVjRkQzl3YkdGcGJqc2dZMmhoY25ObGREMTFjeTFoYzJOcGFRcGJhbUp2YzNOQWRtbHpkWEJ2Y25SaGJDQldhWE4xVUc5eWRHRnNYU1FnWm1sc1pTQXRhU0J5WlhOdmRYSmpaWE12Q2tGc1pYSjBVRzl5ZEdGc0x5QWdJQ0FnSUNBZ0lDQWdJR2x0Y0c5eWRDMWtaWFl1YzNGc0lDQWdJQ0FnSUNBZ0lHMWxjM05oWjJWelgySm5MbkJ5YjNCbGNuUnBaWE1nSUcxbGMzTmhaMlZ6WDJaeUxuQnliM0JsY25ScFpYTWdJSE5sWVcwdFoyVnVMbkpsZG1WdVp5NTRiV3dnSUNBZ0lIWmxjbk5wYjI1ekxuQnliM0JsY25ScFpYTWdJQ0FnSUZkRlFpMUpUa1l2Q21OdmJYQnZibVZ1ZEhNdWNISnZjR1Z5ZEdsbGN5QWdJR2x0Y0c5eWRDMXdjbTlrTG5OeGJDQWdJQ0FnSUNBZ0lHMWxjM05oWjJWelgyUmxMbkJ5YjNCbGNuUnBaWE1nSUcxbGMzTmhaMlZ6WDNSeUxuQnliM0JsY25ScFpYTWdJSE5sWVcwdWNISnZjR1Z5ZEdsbGN5QWdJQ0FnSUNBZ0lGWnBjM1ZRYjNKMFlXd3RaR1YyTFdSekxuaHRiQXBFYVhKbFkzUnZjbmxRYjNKMFlXd3VlRzFzSUNBZ0lDQnBiWEJ2Y25RdGRHVnpkQzV6Y1d3Z0lDQWdJQ0FnSUNCdFpYTnpZV2RsYzE5bGJpNXdjbTl3WlhKMGFXVnpJQ0JOUlZSQkxVbE9SaThnSUNBZ0lDQWdJQ0FnSUNBZ0lDQnpaV04xY21sMGVTNWtjbXdnSUNBZ0lDQWdJQ0FnSUNCV2FYTjFVRzl5ZEdGc0xYQnliMlF0WkhNdWVHMXNDbHRxWW05emMwQjJhWE4xY0c5eWRHRnNJRlpwYzNWUWIzSjBZV3hkSkNCbWFXeGxJQzFwSUhKbGMyOTFjbU5sY3k5RWFYSmxZM1J2Y25sUWIzSjBZV3d1ZUcxc0NuSmxjMjkxY21ObGN5OUVhWEpsWTNSdmNubFFiM0owWVd3dWVHMXNPZ3BiYW1KdmMzTkFkbWx6ZFhCdmNuUmhiQ0JXYVhOMVVHOXlkR0ZzWFNRZ1ptbHNaU0F0YVNCeVpYTnZkWEpqWlhNdlZtbHpkVkJ2Y25SaGJDMWtaWFl0WkhNdWVHMXNDbkpsYzI5MWNtTmxjeTlXYVhOMVVHOXlkR0ZzTFdSbGRpMWtjeTU0Yld3NkNsdHFZbTl6YzBCMmFYTjFjRzl5ZEdGc0lGWnBjM1ZRYjNKMFlXeGRKQT09</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2Fjob1.out&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=readFile&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;path=%2Fhome02%2Fjsmith%2Fjob1.out&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

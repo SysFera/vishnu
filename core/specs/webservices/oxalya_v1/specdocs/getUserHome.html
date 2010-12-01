@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>getUserHome</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the getUserHome function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="getUserHome-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>getUserHome</em>
+</h1>Return the user home path on te provided machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_path"></a>path</td><td class="type"><span title="Plain text">_text</span></td><td class="description">User home path.</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Get user home path for jsmith.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">getUserHome</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"path"</span></span>&gt;</span><span class="pcdata">/home02/jsmith/</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=getUserHome&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=getUserHome&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

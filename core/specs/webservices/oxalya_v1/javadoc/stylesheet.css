@@ -1,0 +1,119 @@
+/*
+ $Id: style.css,v 1.5 2006/03/21 13:00:50 agoubard Exp $
+*/
+
+body {
+	background-color: #FFFFFF;
+}
+
+@media screen {
+body {
+	font-family: sans-serif;
+}
+}
+
+@media print {
+body {
+	font-family: serif;
+}
+}
+
+blockquote, dd {
+	margin-left: 3em;
+}
+
+ul, ol {
+	padding-left: 3em;
+}
+
+li {
+	margin-left: 1em;
+}
+
+.TableHeadingColor {
+	background: #CCCCFF;
+}
+
+.TableSubHeadingColor {
+	background: #EEEEFF;
+}
+
+.TableRowColor {
+	background: #FFFFFF;
+}
+
+.FrameTitleFont {
+	font-size: normal;
+	font-family: normal;
+}
+
+.FrameHeadingFont {
+	font-size: normal;
+	font-family: normal;
+}
+
+.FrameItemFont {
+	font-size: normal;
+	font-family: normal;
+}
+
+.NavBarCell1 {
+	background-color: #EEEEFF;
+}
+
+.NavBarCell1Rev {
+	background-color: #00008B;
+}
+
+.NavBarFont1 {
+	color: #000000;
+}
+
+.NavBarFont1Rev {
+	color: #FFFFFF;
+}
+
+.NavBarCell2 {
+	background-color: #FFFFFF;
+}
+
+.NavBarCell3 {
+	background-color: #FFFFFF;
+}
+
+
+table.states {
+	border-collapse: collapse;
+}
+
+table.states tr th {
+	background-color: #CCCCFF;
+	font-weight: bold;
+	text-align: left;
+	padding: 2px;
+}
+
+table.states tr td {
+	width: 70px;
+	padding: 2px;
+}
+
+table.states tr td.err {
+	background-color: #FFCCCC;
+}
+
+table.APIServlet_HTTP_response_codes {
+	border-collapse: collapse;
+	margin-left: 3em;
+}
+
+table.APIServlet_HTTP_response_codes tr th {
+	background-color: #CCCCFF;
+	font-weight: bold;
+	text-align: left;
+	padding: 2px;
+}
+
+table.APIServlet_HTTP_response_codes tr td {
+	padding: 2px;
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>listBookings</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the listBookings function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="listBookings-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listBookings</em>
+</h1>List bookings on the machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCpu"></a>nbCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Filter by number of CPU.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_startDate"></a>startDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Getting bookings beginning after this date (timestamp)</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_endDate"></a>endDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Getting bookings ending before this date (timestamp)</td><td class="required">no</td>
+</tr>
+</table>
+<h4>Additional constraints</h4>The following constraint applies to the input parameters, additional to the input parameters marked as required. A violation of this constraint will result in an unsuccessful result with the error code <em>_InvalidRequest</em>.<ul>
+<li>Either <em>all</em> of these parameters must be set, or <em>none</em> of them can be set: <em>startDate</em> and <em>endDate</em>.</li>
+</ul>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;owner/&gt;</code>.</p>
+<h4>Element <em>&lt;owner/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Filter list by 1/m owners.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="owner_uid"></a>uid</td><td><a href="Uid.html" title="UID of a person">Uid</a></td><td>Username</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;booking/&gt;</code>.</p>
+<h4>Element <em>&lt;booking/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Booking object.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="booking_bookingId"></a>bookingId</td><td><a href="JobId.html" title="Sha1 unique reference">JobId</a></td><td>Booking hash ID.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_uid"></a>uid</td><td><a href="Uid.html" title="UID of a person">Uid</a></td><td>Submitter.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_start"></a>start</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Starting date (unix timestamp).</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_duration"></a>duration</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Booking duration (seconds).</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_memory"></a>memory</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Memory.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_nbCpu"></a>nbCpu</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Number of CPU.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_nbCorePerCpu"></a>nbCorePerCpu</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Number of core required per CPU</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="booking_smp"></a>smp</td><td><span title="Boolean">_boolean</span></td><td>Share memory</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: List bookings on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listBookings</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">booking</span> <span class="attr"><span class="name">bookingId</span>=<span class="value">"105cfcf36130e0b5e7ca9dca134d724e59248b95"</span></span> <span class="attr"><span class="name">uid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">start</span>=<span class="value">"1260825008"</span></span> <span class="attr"><span class="name">duration</span>=<span class="value">"3600"</span></span> <span class="attr"><span class="name">nbCpu</span>=<span class="value">"4"</span></span> <span class="attr"><span class="name">nbCorePerCpu</span>=<span class="value">"2"</span></span> <span class="attr"><span class="name">smp</span>=<span class="value">"true"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listBookings&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listBookings&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

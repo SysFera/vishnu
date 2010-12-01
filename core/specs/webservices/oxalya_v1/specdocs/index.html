@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>API overview: ResourceProxy</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="../index.html" title="API index">
+<link rel="first" href="../ResourceProxy/index.html">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <span class="active">Overview</span> | <span class="disabled">Function</span> | <span class="disabled">Test form</span> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>API overview <em>ResourceProxy</em><font size="-1">
+					(<a href="ResourceProxy-client.zip" title="Download the client API (Javadoc, jar, sources, specdocs) if available">Download</a>)
+						</font>
+</h1>
+<p>Unified access gateway</p>
+<h2>Categories</h2>
+<table class="functionlist">
+<tr>
+<th>Category</th><th>Description</th>
+</tr>
+<tr>
+<td><a href="MachineFunctions.html">MachineFunctions</a></td><td>Machine section related functions</td>
+</tr>
+<tr>
+<td><a href="JobManagement.html">JobManagement</a></td><td>Job management section related functions</td>
+</tr>
+<tr>
+<td><a href="BookingManagement.html">BookingManagement</a></td><td>Booking management section related functions</td>
+</tr>
+<tr>
+<td><a href="FileFunctions.html">FileFunctions</a></td><td>File operations</td>
+</tr>
+<tr>
+<td><a href="RemoteExecution.html">RemoteExecution</a></td><td>Remote execution section related functions</td>
+</tr>
+</table>
+<h2>Functions</h2>
+<table class="functionlist">
+<tr>
+<th>Function</th><th>Version</th><th>Status</th><th>Description</th>
+</tr>
+<tr>
+<td><a href="registerMachine.html">registerMachine</a></td><td>1.0</td><td class="status"></td><td>Register a machine</td>
+</tr>
+<tr>
+<td><a href="listMachines.html">listMachines</a></td><td>1.0</td><td class="status"></td><td>List all supported machines</td>
+</tr>
+<tr>
+<td><a href="listQueues.html">listQueues</a></td><td>1.0</td><td class="status"></td><td>List available submission queues for provided machine</td>
+</tr>
+<tr>
+<td><a href="listJobs.html">listJobs</a></td><td>1.0</td><td class="status"></td><td>List jobs on the machine</td>
+</tr>
+<tr>
+<td><a href="getJob.html">getJob</a></td><td>1.0</td><td class="status"></td><td>Get job on the machine</td>
+</tr>
+<tr>
+<td><a href="addJob.html">addJob</a></td><td>1.0</td><td class="status"></td><td>Submit job on the machine</td>
+</tr>
+<tr>
+<td><a href="reSubmitJob.html">reSubmitJob</a></td><td>1.0</td><td class="status"></td><td>Re submit a job on the machine</td>
+</tr>
+<tr>
+<td><a href="cancelJob.html">cancelJob</a></td><td>1.0</td><td class="status"></td><td>Cancel job on the machine</td>
+</tr>
+<tr>
+<td><a href="changePriorityForJob.html">changePriorityForJob</a></td><td>1.0</td><td class="status"></td><td>Change the priority for job on the machine</td>
+</tr>
+<tr>
+<td><a href="listBookingAvailabilities.html">listBookingAvailabilities</a></td><td>1.0</td><td class="status"></td><td>List availabilities for submited criterias on selected machine</td>
+</tr>
+<tr>
+<td><a href="listBookings.html">listBookings</a></td><td>1.0</td><td class="status"></td><td>List bookings on the machine</td>
+</tr>
+<tr>
+<td><a href="getBooking.html">getBooking</a></td><td>1.0</td><td class="status"></td><td>Get booking on the machine</td>
+</tr>
+<tr>
+<td><a href="addBooking.html">addBooking</a></td><td>1.0</td><td class="status"></td><td>Add booking on the machine</td>
+</tr>
+<tr>
+<td><a href="modifyBooking.html">modifyBooking</a></td><td>1.0</td><td class="status"></td><td>Modify booking action</td>
+</tr>
+<tr>
+<td><a href="cancelBooking.html">cancelBooking</a></td><td>1.0</td><td class="status"></td><td>Cancel booking on the machine</td>
+</tr>
+<tr>
+<td><a href="getUserHome.html">getUserHome</a></td><td>1.0</td><td class="status"></td><td>Return the user home path on te provided machine</td>
+</tr>
+<tr>
+<td><a href="listFiles.html">listFiles</a></td><td>1.0</td><td class="status"></td><td>Browse files for selected path on provided machine</td>
+</tr>
+<tr>
+<td><a href="listFileProcesses.html">listFileProcesses</a></td><td>1.0</td><td class="status"></td><td>List file processes</td>
+</tr>
+<tr>
+<td><a href="transferFile.html">transferFile</a></td><td>1.0</td><td class="status"></td><td>Transfer file from a machine to an other</td>
+</tr>
+<tr>
+<td><a href="cancelFileProcess.html">cancelFileProcess</a></td><td>1.0</td><td class="status"></td><td>Cancel a file process</td>
+</tr>
+<tr>
+<td><a href="readFile.html">readFile</a></td><td>1.0</td><td class="status"></td><td>Return the content of a file only if its size is less than 1048576 (1 mb) and its mime match text</td>
+</tr>
+<tr>
+<td><a href="writeFile.html">writeFile</a></td><td>1.0</td><td class="status"></td><td>Create a file or a directory</td>
+</tr>
+<tr>
+<td><a href="removeFile.html">removeFile</a></td><td>1.0</td><td class="status"></td><td>Remove file or a directory</td>
+</tr>
+<tr>
+<td><a href="executeX11.html">executeX11</a></td><td>1.0</td><td class="status"></td><td>Execute X11 application</td>
+</tr>
+<tr>
+<td><a href="executeCommand.html">executeCommand</a></td><td>1.0</td><td class="status"></td><td>Execute a command remotely</td>
+</tr>
+</table>
+<h2>Types</h2>
+<table class="functionlist">
+<tr>
+<th>Type</th><th>Version</th><th>Status</th><th>Description</th>
+</tr>
+<tr>
+<td><a href="Uid.html">Uid</a></td><td>1.0</td><td class="status"></td><td>UID of a person</td>
+</tr>
+<tr>
+<td><a href="Password.html">Password</a></td><td>1.0</td><td class="status"></td><td>The password of the user accessing this machine</td>
+</tr>
+<tr>
+<td><a href="MachineId.html">MachineId</a></td><td>1.0</td><td class="status"></td><td>Sha1 unique reference</td>
+</tr>
+<tr>
+<td><a href="JobId.html">JobId</a></td><td>1.0</td><td class="status"></td><td>Sha1 unique reference</td>
+</tr>
+<tr>
+<td><a href="JobPriority.html">JobPriority</a></td><td>1.0</td><td class="status"></td><td>Define the priority of a job</td>
+</tr>
+<tr>
+<td><a href="JobStatus.html">JobStatus</a></td><td>1.0</td><td class="status"></td><td>Define the status of a job</td>
+</tr>
+<tr>
+<td><a href="JobAclType.html">JobAclType</a></td><td>1.0</td><td class="status"></td><td>Define the possible acl application on a job object</td>
+</tr>
+<tr>
+<td><a href="AdditionalInfoType.html">AdditionalInfoType</a></td><td>1.0</td><td class="status"></td><td>Define the argument type of additional information</td>
+</tr>
+<tr>
+<td><a href="BookingId.html">BookingId</a></td><td>1.0</td><td class="status"></td><td>Sha1 unique reference</td>
+</tr>
+<tr>
+<td><a href="BookingAclType.html">BookingAclType</a></td><td>1.0</td><td class="status"></td><td>Define the possible acl application on a booking object</td>
+</tr>
+<tr>
+<td><a href="FileTransferStatus.html">FileTransferStatus</a></td><td>1.0</td><td class="status"></td><td>Define the status of a file transfer</td>
+</tr>
+<tr>
+<td><a href="FileTransferAction.html">FileTransferAction</a></td><td>1.0</td><td class="status"></td><td>Move or copy</td>
+</tr>
+<tr>
+<td><a href="Pid.html">Pid</a></td><td>1.0</td><td class="status"></td><td>Sha1 unique reference</td>
+</tr>
+</table>
+<h2>Result codes</h2>
+<table class="functionlist">
+<tr>
+<th>Result code</th><th>Version</th><th>Status</th><th>Description</th>
+</tr>
+<tr>
+<td><a href="UnknownMachine.html">UnknownMachine</a></td><td>1.0</td><td class="status"></td><td>Machine is not known</td>
+</tr>
+<tr>
+<td><a href="UnknownJob.html">UnknownJob</a></td><td>1.0</td><td class="status"></td><td>Job is not known</td>
+</tr>
+<tr>
+<td><a href="UnknownQueue.html">UnknownQueue</a></td><td>1.0</td><td class="status"></td><td>Queue is not known on the machine</td>
+</tr>
+<tr>
+<td><a href="UnknownBooking.html">UnknownBooking</a></td><td>1.0</td><td class="status"></td><td>Booking is not known</td>
+</tr>
+<tr>
+<td><a href="UnknownUser.html">UnknownUser</a></td><td>1.0</td><td class="status"></td><td>User is not known</td>
+</tr>
+<tr>
+<td><a href="UnknownPid.html">UnknownPid</a></td><td>1.0</td><td class="status"></td><td>Process id is not known</td>
+</tr>
+<tr>
+<td><a href="IncorrectPassword.html">IncorrectPassword</a></td><td>1.0</td><td class="status"></td><td>Indicates the specified password is incorrect for the provided uid</td>
+</tr>
+<tr>
+<td><a href="NotAllowed.html">NotAllowed</a></td><td>1.0</td><td class="status"></td><td>Requested operation is not allowed for provided user</td>
+</tr>
+<tr>
+<td><a href="InvalidCommand.html">InvalidCommand</a></td><td>1.0</td><td class="status"></td><td>Invalid command submitted</td>
+</tr>
+<tr>
+<td><a href="InvalidOperation.html">InvalidOperation</a></td><td>1.0</td><td class="status"></td><td>Operation is not valid</td>
+</tr>
+<tr>
+<td><a href="InvalidResource.html">InvalidResource</a></td><td>1.0</td><td class="status"></td><td>Resource is not valid</td>
+</tr>
+<tr>
+<td><a href="InvalidPath.html">InvalidPath</a></td><td>1.0</td><td class="status"></td><td>Path provided is not reachable or is invalid</td>
+</tr>
+<tr>
+<td><a href="UnreadableFile.html">UnreadableFile</a></td><td>1.0</td><td class="status"></td><td>Provided file is unreadable</td>
+</tr>
+<tr>
+<td><a href="DirectoryAlreadyExists.html">DirectoryAlreadyExists</a></td><td>1.0</td><td class="status"></td><td>Directory path provided already exists</td>
+</tr>
+<tr>
+<td><a href="MachineAlreadyRegistered.html">MachineAlreadyRegistered</a></td><td>1.0</td><td class="status"></td><td>Machine had been already registered</td>
+</tr>
+<tr>
+<td><a href="MachineNotReachable.html">MachineNotReachable</a></td><td>1.0</td><td class="status"></td><td>Provided machine cannot be reached by ResourceProxy</td>
+</tr>
+<tr>
+<td><a href="NotAvailable.html">NotAvailable</a></td><td>1.0</td><td class="status"></td><td>Resources are not available for this period</td>
+</tr>
+<tr>
+<td><a href="IncompatibleNetworks.html">IncompatibleNetworks</a></td><td>1.0</td><td class="status"></td><td>Networks provided are not compatible</td>
+</tr>
+</table>
+<h2>API Owner</h2>
+<p>Pierre De Paepe (<a href="mailto:pdepaepe@oxalya.com">pdepaepe@oxalya.com</a>)</p>
+<h2>Environments</h2>
+<ul>
+<li>localhost<font size="-1"> (<a href="http://127.0.0.1:8080/ResourceProxy/?_function=_GetVersion&_convention=_xins-std">version</a> <a href="http://127.0.0.1:8080/ResourceProxy/?_function=_GetStatistics&_convention=_xins-std&detailed=true">statistics</a> <a href="http://127.0.0.1:8080/ResourceProxy/?_function=_GetSettings&_convention=_xins-std">settings</a>)</font>
+</li>
+<li>collab-edf.oxalya<font size="-1"> (<a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=_GetVersion&_convention=_xins-std">version</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=_GetStatistics&_convention=_xins-std&detailed=true">statistics</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=_GetSettings&_convention=_xins-std">settings</a>)</font>
+</li>
+</ul>
+<h2>Properties</h2>
+<p>
+<em>No runtime properties have been defined for the default implementation.</em>
+</p>
+<h2>Logdoc</h2>
+<p>
+<em>No logdoc have been defined for the default implementation.</em>
+</p>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

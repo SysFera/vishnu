@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>executeCommand</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the executeCommand function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="executeCommand-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>executeCommand</em>
+</h1>Execute a command remotely.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromPath"></a>fromPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Execute from this path.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_command"></a>command</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Command.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidCommand.html">InvalidCommand</a></td><td class="description">Invalid command submitted.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidPath.html">InvalidPath</a></td><td class="description">Path provided is not reachable or is invalid.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_stdOut"></a>stdOut</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Standard output.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_stdErr"></a>stdErr</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Standard error.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="output_codeErr"></a>codeErr</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">O if ok.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_join"></a>join</td><td class="type"><span title="Boolean">_boolean</span></td><td class="description">True if stdOut and stdErr are joined.</td><td class="required">no (Default is false)</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Invalid command exception.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">executeCommand</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2F</span></span>&amp;<span class="param" title="command: elle s moins elle hache"><span class="name">command</span>=<span class="value">elle+s+moins+elle+hache</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"InvalidCommand"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"invalidReason"</span></span>&gt;</span><span class="pcdata">elle s moins elle hache</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"invalidReason"</span></span>&gt;</span><span class="pcdata">Command elle unknown</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=executeCommand&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;command=elle+s+moins+elle+hache&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=executeCommand&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;command=elle+s+moins+elle+hache&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Not allowed exception.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">executeCommand</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2F</span></span>&amp;<span class="param" title="command: rm -rf /*"><span class="name">command</span>=<span class="value">rm+-rf+%2F%2A</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"NotAllowed"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"uid"</span></span>&gt;</span><span class="pcdata">jsmith</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"operation"</span></span>&gt;</span><span class="pcdata">execute</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=executeCommand&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;command=rm+-rf+%2F%2A&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=executeCommand&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;command=rm+-rf+%2F%2A&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 3: Request ls on machine 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">executeCommand</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2F</span></span>&amp;<span class="param" title="command: ls -lh /tmp"><span class="name">command</span>=<span class="value">ls+-lh+%2Ftmp</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"stdOut"</span></span>&gt;</span><span class="pcdata">total 3.5M
+drwxrwxr-x  3 jboss  jboss  4.0K Nov  2 17:20 ap
+drwxrwxr-x  2 jboss  jboss  4.0K Nov 19 16:57 bak
+drwxrwxr-x  6 cedric cedric 4.0K Dec  8 10:13 base
+-rw-r--r--  1 root   root   149K Dec  1 20:46 CMakeCache.txt
+-rw-r--r--  1 root   root   148K Dec  2 00:39 CMakeCache.txt.nogood
+drwxrwxr-x  3 jboss  jboss  4.0K Nov 25 11:45 consume
+drwxr-xr-x  3 cedric cedric 4.0K Nov  3 15:49 djangorecipe-0.19.2
+-rw-r--r--  1 root   root    30K Dec  8 15:36 dstate
+drwxrwxr-x  2 cedric cedric 4.0K Nov  3 15:47 EGG-INFO
+drwxrwxr-x  4 root   root   4.0K Dec  2 11:05 ensight-8.2
+drwxrwxr-x  5 cedric cedric 4.0K Dec  2 11:50 ensight-9.0
+drwxr-xr-x  4 root   root   4.0K Apr  8  2009 gnome
+drwxrwxr-x  2 jboss  jboss  4.0K Nov 24 13:01 gov
+drwxr-xr-x  2 daemon daemon 4.0K Nov 16 13:24 hsperfdata_daemon
+drwxr-xr-x  2 jboss  jboss  4.0K Dec  3 17:22 hsperfdata_jboss
+drwxr-xr-x  2 root   root   4.0K Dec  1 20:03 hsperfdata_root
+drwxr-xr-x  3 root   root   4.0K Jul  2 18:21 install
+drwxr-xr-x  3 daemon daemon 4.0K Nov 16 13:24 Jetty_0_0_0_0_9090_webapp____-dnguxu
+drwxrwxrwx  3 root   root   4.0K Dec  2 11:16 logs
+drwxrwxr-x  2 cedric cedric  36K Nov  6 18:42 msgs
+drwxrwxr-x 11 jboss  jboss  4.0K Nov 23 16:25 myproject
+drwxr-xr-x  9 root   root   4.0K Apr  8  2009 nabos
+drwxrwxr-x  2 cedric cedric 4.0K Nov 16 10:47 nabos-ap
+drwxr-xr-x  5 root   root   4.0K Dec  4 10:35 nabos.basehandler.application
+drwxr-xr-x  5 root   root   4.0K Dec  4 10:44 nabos.basehandler.license
+drwxrwxr-x  2 cedric cedric 4.0K Nov  3 18:54 nabos-test
+drwxr-xr-x  3 root   root   4.0K Jul  3 12:54 nabos-tests
+drwxrwxr-x  3 jboss  jboss  4.0K Dec  3 12:37 output
+drwxrwxr-x  6 cedric cedric 4.0K Nov 27 13:08 oxalya.xml
+drwxr-xr-x  3 root   root   4.0K Jul  3 12:56 pythons
+drwxr-xr-x  2 root   root   4.0K Mar 19  2009 RCS
+-rw-r--r--  1 jboss  jboss  5.0K Dec  3 12:36 ResourceProxy.wsdl
+-r--r--r--  1 root   root   3.2K Mar 19  2009 rocks-wp.sql
+-rw-r--r--  1 root   root      0 Dec  2 11:16 root_notifd.debug
+-rw-r--r--  1 root   root   2.6M Dec  8 15:32 root_notifd.report
+-rw-r--r--  1 root   root    332 Dec  2 11:32 root_rdichan.ior
+-rw-r--r--  1 root   root    340 Dec  2 11:32 root_rdifact.ior
+-r--r--r--  1 root   root    279 Mar 19  2009 routes.sql
+drwxrwxr-x  4 cedric cedric 4.0K Nov  3 15:48 setuptools
+-rw-rw-r--  1 cedric cedric 326K Nov  3 15:46 setuptools-0.6c11-py2.5.egg
+-rw-------  1 root   root     97 Dec  1 18:35 sh-thd-1259697648
+-r--------  1 root   root   2.7K Mar 19  2009 site.xml
+drwxr-xr-x  2 root   root   4.0K Nov 12 03:52 suds
+drwxrwxr-x  4 cedric cedric 4.0K Nov 10 14:03 suds-0.3.7-py2.5.egg
+-rw-rw-rw-  1 root   root     38 Dec  2 09:01 tmpsW-fdb
+drwxrwxr-x  5 cedric cedric 4.0K Nov 16 14:55 traductions
+drwxr-xr-x  4 root   root   4.0K Dec  2 17:18 trunk
+drwxr-xr-x  5 root   root   4.0K Apr 10  2009 VisuPortal
+drwxr-xr-x  6 root   root   4.0K Dec  3 16:32 x11vnc-0.9-svn
+</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"codeErr"</span></span>&gt;</span><span class="pcdata">0</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=executeCommand&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;command=ls+-lh+%2Ftmp&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=executeCommand&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;command=ls+-lh+%2Ftmp&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

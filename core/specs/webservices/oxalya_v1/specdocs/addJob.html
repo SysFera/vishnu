@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>addJob</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the addJob function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="addJob-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>addJob</em>
+</h1>Submit job on the machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_bookingId"></a>bookingId</td><td class="type"><a href="BookingId.html" title="Sha1 unique reference">BookingId</a></td><td class="description">Booking hash key</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_command"></a>command</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Command.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_priority"></a>priority</td><td class="type"><a href="JobPriority.html" title="Define the priority of a job">JobPriority</a></td><td class="description">Priority.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_queue"></a>queue</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Queue name.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_wallTime"></a>wallTime</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Wall time (seconds).</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_memory"></a>memory</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Memory.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCpu"></a>nbCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of CPU.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCorePerCpu"></a>nbCorePerCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of core required per CPU</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_smp"></a>smp</td><td class="type"><span title="Boolean">_boolean</span></td><td class="description">Share memory</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;jobAdditionalInfo/&gt;</code>.</p>
+<h4>Element <em>&lt;jobAdditionalInfo/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Additional information for Job.</td>
+</tr>
+<tr>
+<th>Contains:</th><td>Character data.</td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="jobAdditionalInfo_type"></a>type</td><td><a href="AdditionalInfoType.html" title="Define the argument type of additional information">AdditionalInfoType</a></td><td>Attribute type.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="jobAdditionalInfo_key"></a>key</td><td><span title="Plain text">_text</span></td><td>Key name.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="jobAdditionalInfo_val"></a>val</td><td><span title="Plain text">_text</span></td><td>Value.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownQueue.html">UnknownQueue</a></td><td class="description">Queue is not known on the machine.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownBooking.html">UnknownBooking</a></td><td class="description">Booking is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidCommand.html">InvalidCommand</a></td><td class="description">Invalid command submitted.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_jobId"></a>jobId</td><td class="type"><a href="JobId.html" title="Sha1 unique reference">JobId</a></td><td class="description">Job hash ID.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="output_jobPath"></a>jobPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Job path.</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Not allowed exception for submission on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="command: mpirun -v -np 4 spmdHello"><span class="name">command</span>=<span class="value">mpirun+-v+-np+4+spmdHello</span></span>&amp;<span class="param" title="uid: dupond"><span class="name">uid</span>=<span class="value">dupond</span></span>&amp;<span class="param" title="password: ykxlzd9"><span class="name">password</span>=<span class="value">ykxlzd9</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"NotAllowed"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"uid"</span></span>&gt;</span><span class="pcdata">dupond</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"operation"</span></span>&gt;</span><span class="pcdata">addJob</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=mpirun+-v+-np+4+spmdHello&amp;uid=dupond&amp;password=ykxlzd9">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=mpirun+-v+-np+4+spmdHello&amp;uid=dupond&amp;password=ykxlzd9">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Unknown queue exception for submission on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="command: mpirun -v -np 4 spmdHello"><span class="name">command</span>=<span class="value">mpirun+-v+-np+4+spmdHello</span></span>&amp;<span class="param" title="queue: all"><span class="name">queue</span>=<span class="value">all</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"UnknownQueue"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"queue"</span></span>&gt;</span><span class="pcdata">all</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=mpirun+-v+-np+4+spmdHello&amp;queue=all&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=mpirun+-v+-np+4+spmdHello&amp;queue=all&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 3: Invalid command exception for submission on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="command: sudo su - rm -rf /*"><span class="name">command</span>=<span class="value">sudo+su+-+rm+-rf+%2F%2A</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"InvalidCommand"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"command"</span></span>&gt;</span><span class="pcdata">sudo su - rm -rf /*</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"invalidReason"</span></span>&gt;</span><span class="pcdata">Unknown command sudo</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=sudo+su+-+rm+-rf+%2F%2A&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=sudo+su+-+rm+-rf+%2F%2A&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 4: Add simple job on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="command: mpirun -v -np 4 spmdHello"><span class="name">command</span>=<span class="value">mpirun+-v+-np+4+spmdHello</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobId"</span></span>&gt;</span><span class="pcdata">dee10c69a5a98dfd571e4fc2642fc29326000f9e</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobPath"</span></span>&gt;</span><span class="pcdata">/data/jobs/dee10c69a5a98dfd571e4fc2642fc29326000f9e/sub.job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=mpirun+-v+-np+4+spmdHello&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=mpirun+-v+-np+4+spmdHello&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 5: Add simple job on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248 for booking context 105cfcf36130e0b5e7ca9dca134d724e59248b95.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="bookingId: 105cfcf36130e0b5e7ca9dca134d724e59248b95"><span class="name">bookingId</span>=<span class="value">105cfcf36130e0b5e7ca9dca134d724e59248b95</span></span>&amp;<span class="param" title="command: mpirun -v -np 4 spmdBook"><span class="name">command</span>=<span class="value">mpirun+-v+-np+4+spmdBook</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobId"</span></span>&gt;</span><span class="pcdata">801e372c05beffd0744bdf82af7d2e52d29edb71</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobPath"</span></span>&gt;</span><span class="pcdata">/data/jobs/801e372c05beffd0744bdf82af7d2e52d29edb71/sub.job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;bookingId=105cfcf36130e0b5e7ca9dca134d724e59248b95&amp;command=mpirun+-v+-np+4+spmdBook&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;bookingId=105cfcf36130e0b5e7ca9dca134d724e59248b95&amp;command=mpirun+-v+-np+4+spmdBook&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 6: Add extended job on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addJob</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="command: /opt/salome/runSalome -z"><span class="name">command</span>=<span class="value">%2Fopt%2Fsalome%2FrunSalome+-z</span></span>&amp;<span class="param" title="priority: 500"><span class="name">priority</span>=<span class="value">500</span></span>&amp;<span class="param" title="queue: max"><span class="name">queue</span>=<span class="value">max</span></span>&amp;<span class="param" title="wallTime: 3600"><span class="name">wallTime</span>=<span class="value">3600</span></span>&amp;<span class="param" title="memory: 1024"><span class="name">memory</span>=<span class="value">1024</span></span>&amp;<span class="param" title="nbCpu: 2"><span class="name">nbCpu</span>=<span class="value">2</span></span>&amp;<span class="param" title="nbCorePerCpu: 2"><span class="name">nbCorePerCpu</span>=<span class="value">2</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span>&amp;<span class="param" title="Data section: <data><jobAdditionalInfo type=&quot;string&quot; key=&quot;application&quot; val=&quot;salome&quot;>SALOME is an open-source software that provides a generic platform for Pre- and Post-Processing for numerical simulation. It is based on an open and flexible architecture made of reusable components.</jobAdditionalInfo><jobAdditionalInfo type=&quot;double&quot; key=&quot;version&quot; val=&quot;5.1.2&quot; /><jobAdditionalInfo type=&quot;string&quot; key=&quot;configPath&quot; val=&quot;/opt/VisuPortal/lib/handlers/VPSessionDesktopHandler/plugins/kde/VPKDEDesktopHandler/resources/kde&quot; /></data>"><span class="name">_data</span>=<span class="value">%3Cdata%3E%3CjobAdditionalInfo+type%3D%22string%22+key%3D%22application%22+val%3D%22salome%22%3ESALOME+is+an+open-source+software+that+provides+a+generic+platform+for+Pre-+and+Post-Processing+for+numerical+simulation.+It+is+based+on+an+open+and+flexible+architecture+made+of+reusable+components.%3C%2FjobAdditionalInfo%3E%3CjobAdditionalInfo+type%3D%22double%22+key%3D%22version%22+val%3D%225.1.2%22+%2F%3E%3CjobAdditionalInfo+type%3D%22string%22+key%3D%22configPath%22+val%3D%22%2Fopt%2FVisuPortal%2Flib%2Fhandlers%2FVPSessionDesktopHandler%2Fplugins%2Fkde%2FVPKDEDesktopHandler%2Fresources%2Fkde%22+%2F%3E%3C%2Fdata%3E</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobId"</span></span>&gt;</span><span class="pcdata">047e60516292f70e263429997dd99f335181f423</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"jobPath"</span></span>&gt;</span><span class="pcdata">/data/jobs/047e60516292f70e263429997dd99f335181f423/sub.job</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=%2Fopt%2Fsalome%2FrunSalome+-z&amp;priority=500&amp;queue=max&amp;wallTime=3600&amp;memory=1024&amp;nbCpu=2&amp;nbCorePerCpu=2&amp;uid=jsmith&amp;password=vaUkyYI&amp;_data=%3Cdata%3E%3CjobAdditionalInfo+type%3D%22string%22+key%3D%22application%22+val%3D%22salome%22%3ESALOME+is+an+open-source+software+that+provides+a+generic+platform+for+Pre-+and+Post-Processing+for+numerical+simulation.+It+is+based+on+an+open+and+flexible+architecture+made+of+reusable+components.%3C%2FjobAdditionalInfo%3E%3CjobAdditionalInfo+type%3D%22double%22+key%3D%22version%22+val%3D%225.1.2%22+%2F%3E%3CjobAdditionalInfo+type%3D%22string%22+key%3D%22configPath%22+val%3D%22%2Fopt%2FVisuPortal%2Flib%2Fhandlers%2FVPSessionDesktopHandler%2Fplugins%2Fkde%2FVPKDEDesktopHandler%2Fresources%2Fkde%22+%2F%3E%3C%2Fdata%3E">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addJob&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;command=%2Fopt%2Fsalome%2FrunSalome+-z&amp;priority=500&amp;queue=max&amp;wallTime=3600&amp;memory=1024&amp;nbCpu=2&amp;nbCorePerCpu=2&amp;uid=jsmith&amp;password=vaUkyYI&amp;_data=%3Cdata%3E%3CjobAdditionalInfo+type%3D%22string%22+key%3D%22application%22+val%3D%22salome%22%3ESALOME+is+an+open-source+software+that+provides+a+generic+platform+for+Pre-+and+Post-Processing+for+numerical+simulation.+It+is+based+on+an+open+and+flexible+architecture+made+of+reusable+components.%3C%2FjobAdditionalInfo%3E%3CjobAdditionalInfo+type%3D%22double%22+key%3D%22version%22+val%3D%225.1.2%22+%2F%3E%3CjobAdditionalInfo+type%3D%22string%22+key%3D%22configPath%22+val%3D%22%2Fopt%2FVisuPortal%2Flib%2Fhandlers%2FVPSessionDesktopHandler%2Fplugins%2Fkde%2FVPKDEDesktopHandler%2Fresources%2Fkde%22+%2F%3E%3C%2Fdata%3E">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

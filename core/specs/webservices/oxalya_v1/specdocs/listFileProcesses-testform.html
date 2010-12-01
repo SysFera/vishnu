@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>listFileProcesses test form</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Test form for the listFileProcesses function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<script type="text/javascript" src="testforms.js"> </script>
+<link rel="top" href="../index.html" title="API index">
+</head>
+<body onload="selectEnv();">
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <a href="listFileProcesses.html" title="Function">Function</a> | <span class="active">Test form</span> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listFileProcesses</em> test form</h1>
+<form method="GET" action="http://127.0.0.1:8080/ResourceProxy/" target="xmlOutputFrame" onsubmit="this.action=this._environment.value;setEnvCookie(this);return doRequest(this)">
+<p>
+<input name="_function" type="hidden" value="listFileProcesses"><input name="_convention" value="_xins-std" type="hidden">Execution environment: <select name="_environment" class="required"><option value="http://127.0.0.1:8080/ResourceProxy/">localhost</option><option value="http://collab-edf.oxalya.com/soap/ResourceProxy/">collab-edf.oxalya</option></select>
+</p>
+<script type="text/javascript">
+function fillExample(selectedExample) {
+  if (selectedExample == '') {
+    var currentEnv = document.forms[0]._environment.value;
+    document.forms[0].reset();
+    document.forms[0]._environment.value = currentEnv;
+  } else if (selectedExample == 1) {
+    document.forms[0]._data.value = '<data>\n' +
+  '<fileProcess pid="aac31ff92ede674121a1f92ef979ab7865d6b94c" />\n' +
+      '</data>';
+  } else if (selectedExample == 2) {
+    document.forms[0].uid.value = 'jsmith';
+  } else if (selectedExample == 3) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+  } else if (selectedExample == 4) {
+    document.forms[0].machineId.value = '96d88a707c3ca2ab203348a64cc55cd41e800248';
+    document.forms[0].uid.value = 'jsmith';
+    document.forms[0]._data.value = '<data>\n' +
+  '<fileTransferStatus status="pending" />\n' +
+      '</data>';
+  } else if (selectedExample == 5) {
+    document.forms[0]._data.value = '<data>\n' +
+  '<fileProcess pid="e411f5c208942f771d8af25a6edeb75f0676cb55" />\n' +
+      '</data>';
+  } else if (selectedExample == 6) {
+    document.forms[0]._data.value = '<data>\n' +
+  '<fileProcess pid="d68049bb85454c0b8c56ffbb73c45e8adee41b21" />\n' +
+      '</data>';
+  }
+}
+				</script>
+<p>Auto-fill the form with: <select name="_autofill" class="optional" onchange="fillExample(this.value)"><option value="">-- blank --</option><option value="1">Example 1</option><option value="2">Example 2</option><option value="3">Example 3</option><option value="4">Example 4</option><option value="5">Example 5</option><option value="6">Example 6</option></select>
+</p>
+<h2>Test form</h2>
+<table>
+<tr>
+<td class="name"><span title="Filter by machine">machineId</span> (<a href="MachineId.html" title="Sha1 unique reference">MachineId</a>)</td><td class="value"><input type="text" name="machineId" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="Filter by username">uid</span> (<a href="Uid.html" title="UID of a person">Uid</a>)</td><td class="value"><input type="text" name="uid" class="optional"></td>
+</tr>
+<tr>
+<td class="name"><span title="data section of the request">
+						Data section
+					</span></td><td class="value"><textarea name="_data" rows="6" cols="40" class="optional"></textarea></td>
+</tr>
+<tr>
+<td align="right" colspan="2"><input class="submit" type="submit" value="Submit"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr>
+</td>
+</tr>
+</table>
+</form>
+<div class="url" style="padding-bottom: 5pt" id="query"> 
+</div>
+<iframe height="500" id="xmlOutputFrame" name="xmlOutputFrame" src="about:blank" width="100%"></iframe>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

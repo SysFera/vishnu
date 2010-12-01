@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>listBookingAvailabilities</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the listBookingAvailabilities function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="listBookingAvailabilities-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listBookingAvailabilities</em>
+</h1>List availabilities for submited criterias on selected machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromDate"></a>fromDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Search availabilities from date (unix timestamp).</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_toDate"></a>toDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Search availabilities to date (unix timestamp).</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_duration"></a>duration</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Booking duration (seconds).</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_step"></a>step</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Return a solution for every (step) minutes</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_memory"></a>memory</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Memory.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCpu"></a>nbCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of CPU.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCorePerCpu"></a>nbCorePerCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of core required per CPU</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_smp"></a>smp</td><td class="type"><span title="Boolean">_boolean</span></td><td class="description">Share memory</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidResource.html">InvalidResource</a></td><td class="description">Resource is not valid.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;availability/&gt;</code>.</p>
+<h4>Element <em>&lt;availability/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Availability.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="availability_startDate"></a>startDate</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Start date (unix timestamp).</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="availability_available"></a>available</td><td><span title="Boolean">_boolean</span></td><td>Resources available for this period.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Invalid resource example.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listBookingAvailabilities</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromDate: 1260791803"><span class="name">fromDate</span>=<span class="value">1260791803</span></span>&amp;<span class="param" title="toDate: 1260878203"><span class="name">toDate</span>=<span class="value">1260878203</span></span>&amp;<span class="param" title="duration: 3600"><span class="name">duration</span>=<span class="value">3600</span></span>&amp;<span class="param" title="step: 15"><span class="name">step</span>=<span class="value">15</span></span>&amp;<span class="param" title="nbCpu: 234"><span class="name">nbCpu</span>=<span class="value">234</span></span>&amp;<span class="param" title="nbCorePerCpu: 4"><span class="name">nbCorePerCpu</span>=<span class="value">4</span></span>&amp;<span class="param" title="smp: true"><span class="name">smp</span>=<span class="value">true</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"InvalidResource"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"resource"</span></span>&gt;</span><span class="pcdata">nbCpu</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"invalidReason"</span></span>&gt;</span><span class="pcdata">Number of CPU submitted exceed the machine capacity.</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"minAllowed"</span></span>&gt;</span><span class="pcdata">1</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"maxAllowed"</span></span>&gt;</span><span class="pcdata">4</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listBookingAvailabilities&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromDate=1260791803&amp;toDate=1260878203&amp;duration=3600&amp;step=15&amp;nbCpu=234&amp;nbCorePerCpu=4&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listBookingAvailabilities&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromDate=1260791803&amp;toDate=1260878203&amp;duration=3600&amp;step=15&amp;nbCpu=234&amp;nbCorePerCpu=4&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: List 24h availabilities on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248 for a one-hour-booking duration.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listBookingAvailabilities</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromDate: 1260794408"><span class="name">fromDate</span>=<span class="value">1260794408</span></span>&amp;<span class="param" title="toDate: 1260879008"><span class="name">toDate</span>=<span class="value">1260879008</span></span>&amp;<span class="param" title="duration: 3600"><span class="name">duration</span>=<span class="value">3600</span></span>&amp;<span class="param" title="step: 15"><span class="name">step</span>=<span class="value">15</span></span>&amp;<span class="param" title="nbCpu: 4"><span class="name">nbCpu</span>=<span class="value">4</span></span>&amp;<span class="param" title="nbCorePerCpu: 4"><span class="name">nbCorePerCpu</span>=<span class="value">4</span></span>&amp;<span class="param" title="smp: true"><span class="name">smp</span>=<span class="value">true</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260794408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260795308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260796208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260797108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260798008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260798908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260799808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260800708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260801608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260802508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260803408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260804308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260805208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260806108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260807008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260807908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260808808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260809708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260810608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260811508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260812408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260813308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260814208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260815108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260816008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260816908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260817808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260818708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260819608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260820508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260821408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260822308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260823208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260824108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260825008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260825908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260826808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260827708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260828608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260829508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260830408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260831308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260832208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260833108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260834008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260834908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260835808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260836708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260837608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260838508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260839408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260840308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260841208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260842108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260843008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260843908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260844808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260845708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260846608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260847508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260848408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260849308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260850208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260851108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260852008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260852908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260853808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260854708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260855608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260856508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260857408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260858308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260859208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260860108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260861008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260861908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260862808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260863708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260864608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260865508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260866408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260867308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260868208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260869108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260870008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260870908"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260871808"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260872708"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260873608"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260874508"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260875408"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260876308"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260877208"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260878108"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">availability</span> <span class="attr"><span class="name">startDate</span>=<span class="value">"1260879008"</span></span> <span class="attr"><span class="name">available</span>=<span class="value">"1"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listBookingAvailabilities&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromDate=1260794408&amp;toDate=1260879008&amp;duration=3600&amp;step=15&amp;nbCpu=4&amp;nbCorePerCpu=4&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listBookingAvailabilities&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromDate=1260794408&amp;toDate=1260879008&amp;duration=3600&amp;step=15&amp;nbCpu=4&amp;nbCorePerCpu=4&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

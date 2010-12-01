@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>transferFile</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the transferFile function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="transferFile-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>transferFile</em>
+</h1>Transfer file from a machine to an other. If one of the target machine is null, it have to be considered as the machine hosting HPCPortal. This method must be asynchronous and return a pid (process ID).<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_fromMachineId"></a>fromMachineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key. If null, it's HPCPortal host.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromPath"></a>fromPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Path on HPCPortal host</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromUid"></a>fromUid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromPassword"></a>fromPassword</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_toMachineId"></a>toMachineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key. If null, it's HPCPortal host.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_toPath"></a>toPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Path on destination host</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_toUid"></a>toUid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_toPassword"></a>toPassword</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_action"></a>action</td><td class="type"><a href="FileTransferAction.html" title="Move or copy">FileTransferAction</a></td><td class="description">Move or copy. Rename is implicit.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_startDate"></a>startDate</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Schedule the file transfer for the specified start date (timestamp value). Default is now.</td><td class="required">no</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_pid"></a>pid</td><td class="type"><a href="Pid.html" title="Sha1 unique reference">Pid</a></td><td class="description">Process ID</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Not allowed exception for user dupond while transfering document archive.zip from HPCPortal (98d7ea36b6e2e1cb987986fe2a6073e30199be5b) to machine 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">transferFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="fromMachineId: 98d7ea36b6e2e1cb987986fe2a6073e30199be5b"><span class="name">fromMachineId</span>=<span class="value">98d7ea36b6e2e1cb987986fe2a6073e30199be5b</span></span>&amp;<span class="param" title="fromUid: hpctransit"><span class="name">fromUid</span>=<span class="value">hpctransit</span></span>&amp;<span class="param" title="fromPassword: a1dFxzY"><span class="name">fromPassword</span>=<span class="value">a1dFxzY</span></span>&amp;<span class="param" title="fromPath: /opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"><span class="name">fromPath</span>=<span class="value">%2Fopt%2FHpcPortal%2Fworkdir%2Fbcc939d2c3633991e440e2f4c324316ecf6892cb.zip</span></span>&amp;<span class="param" title="toMachineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">toMachineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="toPath: /home/jsmith/data/archive.zip"><span class="name">toPath</span>=<span class="value">%2Fhome%2Fjsmith%2Fdata%2Farchive.zip</span></span>&amp;<span class="param" title="toUid: dupond"><span class="name">toUid</span>=<span class="value">dupond</span></span>&amp;<span class="param" title="toPassword: ykxlzd9"><span class="name">toPassword</span>=<span class="value">ykxlzd9</span></span>&amp;<span class="param" title="action: move"><span class="name">action</span>=<span class="value">move</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"NotAllowed"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"uid"</span></span>&gt;</span><span class="pcdata">dupond</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"operation"</span></span>&gt;</span><span class="pcdata">transferFile</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=transferFile&amp;_convention=_xins-std&amp;fromMachineId=98d7ea36b6e2e1cb987986fe2a6073e30199be5b&amp;fromUid=hpctransit&amp;fromPassword=a1dFxzY&amp;fromPath=%2Fopt%2FHpcPortal%2Fworkdir%2Fbcc939d2c3633991e440e2f4c324316ecf6892cb.zip&amp;toMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;toPath=%2Fhome%2Fjsmith%2Fdata%2Farchive.zip&amp;toUid=dupond&amp;toPassword=ykxlzd9&amp;action=move">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=transferFile&amp;_convention=_xins-std&amp;fromMachineId=98d7ea36b6e2e1cb987986fe2a6073e30199be5b&amp;fromUid=hpctransit&amp;fromPassword=a1dFxzY&amp;fromPath=%2Fopt%2FHpcPortal%2Fworkdir%2Fbcc939d2c3633991e440e2f4c324316ecf6892cb.zip&amp;toMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;toPath=%2Fhome%2Fjsmith%2Fdata%2Farchive.zip&amp;toUid=dupond&amp;toPassword=ykxlzd9&amp;action=move">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Rename document archive.zip to backup.zip on machine 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">transferFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="fromMachineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">fromMachineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/data/archive.zip"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2Fdata%2Farchive.zip</span></span>&amp;<span class="param" title="fromUid: jsmith"><span class="name">fromUid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="fromPassword: vaUkyYI"><span class="name">fromPassword</span>=<span class="value">vaUkyYI</span></span>&amp;<span class="param" title="toMachineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">toMachineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="toPath: /home/jsmith/data/backup.zip"><span class="name">toPath</span>=<span class="value">%2Fhome%2Fjsmith%2Fdata%2Fbackup.zip</span></span>&amp;<span class="param" title="toUid: jsmith"><span class="name">toUid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="toPassword: vaUkyYI"><span class="name">toPassword</span>=<span class="value">vaUkyYI</span></span>&amp;<span class="param" title="action: move"><span class="name">action</span>=<span class="value">move</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"pid"</span></span>&gt;</span><span class="pcdata">055bc39f77d29bad9e38463be1c1e3251b5cae2d</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=transferFile&amp;_convention=_xins-std&amp;fromMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2Fdata%2Farchive.zip&amp;fromUid=jsmith&amp;fromPassword=vaUkyYI&amp;toMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;toPath=%2Fhome%2Fjsmith%2Fdata%2Fbackup.zip&amp;toUid=jsmith&amp;toPassword=vaUkyYI&amp;action=move">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=transferFile&amp;_convention=_xins-std&amp;fromMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2Fdata%2Farchive.zip&amp;fromUid=jsmith&amp;fromPassword=vaUkyYI&amp;toMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;toPath=%2Fhome%2Fjsmith%2Fdata%2Fbackup.zip&amp;toUid=jsmith&amp;toPassword=vaUkyYI&amp;action=move">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 3: Copy document archive.zip from machine 96d88a707c3ca2ab203348a64cc55cd41e800248 to machine cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">transferFile</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="fromMachineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">fromMachineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/data/archive.zip"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2Fdata%2Farchive.zip</span></span>&amp;<span class="param" title="fromUid: jsmith"><span class="name">fromUid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="fromPassword: vaUkyYI"><span class="name">fromPassword</span>=<span class="value">vaUkyYI</span></span>&amp;<span class="param" title="toMachineId: cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f"><span class="name">toMachineId</span>=<span class="value">cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f</span></span>&amp;<span class="param" title="toPath: /scratch/jsmith/data/archive.zip"><span class="name">toPath</span>=<span class="value">%2Fscratch%2Fjsmith%2Fdata%2Farchive.zip</span></span>&amp;<span class="param" title="toUid: johnsmith"><span class="name">toUid</span>=<span class="value">johnsmith</span></span>&amp;<span class="param" title="toPassword: HmVWaDC"><span class="name">toPassword</span>=<span class="value">HmVWaDC</span></span>&amp;<span class="param" title="action: copy"><span class="name">action</span>=<span class="value">copy</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"pid"</span></span>&gt;</span><span class="pcdata">92c316f12552b3ac7325f1ecc66b46d8a339919d</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=transferFile&amp;_convention=_xins-std&amp;fromMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2Fdata%2Farchive.zip&amp;fromUid=jsmith&amp;fromPassword=vaUkyYI&amp;toMachineId=cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f&amp;toPath=%2Fscratch%2Fjsmith%2Fdata%2Farchive.zip&amp;toUid=johnsmith&amp;toPassword=HmVWaDC&amp;action=copy">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=transferFile&amp;_convention=_xins-std&amp;fromMachineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2Fdata%2Farchive.zip&amp;fromUid=jsmith&amp;fromPassword=vaUkyYI&amp;toMachineId=cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f&amp;toPath=%2Fscratch%2Fjsmith%2Fdata%2Farchive.zip&amp;toUid=johnsmith&amp;toPassword=HmVWaDC&amp;action=copy">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

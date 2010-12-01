@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>addBooking</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the addBooking function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="addBooking-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>addBooking</em>
+</h1>Add booking on the machine.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_start"></a>start</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Starting date (unix timestamp).</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_duration"></a>duration</td><td class="type"><span title="Signed integer number, 64 bit">_int64</span></td><td class="description">Booking duration (seconds).</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_memory"></a>memory</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Memory.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCpu"></a>nbCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of CPU.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_nbCorePerCpu"></a>nbCorePerCpu</td><td class="type"><span title="Signed integer number, 32 bit">_int32</span></td><td class="description">Number of core required per CPU</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_smp"></a>smp</td><td class="type"><span title="Boolean">_boolean</span></td><td class="description">Share memory</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;bookingAdditionalInfo/&gt;</code>.</p>
+<h4>Element <em>&lt;bookingAdditionalInfo/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Additional information for booking.</td>
+</tr>
+<tr>
+<th>Contains:</th><td>Character data.</td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="bookingAdditionalInfo_type"></a>type</td><td><a href="AdditionalInfoType.html" title="Define the argument type of additional information">AdditionalInfoType</a></td><td>Attribute type.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="bookingAdditionalInfo_key"></a>key</td><td><span title="Plain text">_text</span></td><td>Key name.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="bookingAdditionalInfo_val"></a>val</td><td><span title="Plain text">_text</span></td><td>Value.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidResource.html">InvalidResource</a></td><td class="description">Resource is not valid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAvailable.html">NotAvailable</a></td><td class="description">Resources are not available for this period.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_bookingId"></a>bookingId</td><td class="type"><a href="BookingId.html" title="Sha1 unique reference">BookingId</a></td><td class="description">Booking hash ID.</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Not available example.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addBooking</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="start: 1260810608"><span class="name">start</span>=<span class="value">1260810608</span></span>&amp;<span class="param" title="duration: 3600"><span class="name">duration</span>=<span class="value">3600</span></span>&amp;<span class="param" title="nbCpu: 4"><span class="name">nbCpu</span>=<span class="value">4</span></span>&amp;<span class="param" title="nbCorePerCpu: 2"><span class="name">nbCorePerCpu</span>=<span class="value">2</span></span>&amp;<span class="param" title="smp: true"><span class="name">smp</span>=<span class="value">true</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"NotAvailable"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"start"</span></span>&gt;</span><span class="pcdata">1260810608</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"duration"</span></span>&gt;</span><span class="pcdata">3600</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"notAvailableReason"</span></span>&gt;</span><span class="pcdata">Not enough CPU available for this period.</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addBooking&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;start=1260810608&amp;duration=3600&amp;nbCpu=4&amp;nbCorePerCpu=2&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addBooking&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;start=1260810608&amp;duration=3600&amp;nbCpu=4&amp;nbCorePerCpu=2&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Book on machine ID 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">addBooking</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="start: 1260825008"><span class="name">start</span>=<span class="value">1260825008</span></span>&amp;<span class="param" title="duration: 3600"><span class="name">duration</span>=<span class="value">3600</span></span>&amp;<span class="param" title="nbCpu: 4"><span class="name">nbCpu</span>=<span class="value">4</span></span>&amp;<span class="param" title="nbCorePerCpu: 2"><span class="name">nbCorePerCpu</span>=<span class="value">2</span></span>&amp;<span class="param" title="smp: true"><span class="name">smp</span>=<span class="value">true</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"bookingId"</span></span>&gt;</span><span class="pcdata">105cfcf36130e0b5e7ca9dca134d724e59248b95</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=addBooking&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;start=1260825008&amp;duration=3600&amp;nbCpu=4&amp;nbCorePerCpu=2&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=addBooking&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;start=1260825008&amp;duration=3600&amp;nbCpu=4&amp;nbCorePerCpu=2&amp;smp=true&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

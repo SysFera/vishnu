@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Type Pid</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the Pid type of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+<script type="text/javascript">
+						function testPattern(pattern, input) {
+							var result = document.getElementById('result');
+							var resultMessage = '';
+							try {
+								resultMessage = 'The string <b style="color:blue">' + input + '</b> ';
+								resultMessage += input.match(pattern) ? '<b style="color:blue">matches</b>' : '<b style="color:red">does not match</b>';
+								resultMessage += ' the pattern.';
+						  } catch (ex) {
+								resultMessage = 'The pattern <b style="color:blue">' + pattern + '</b> ';
+								resultMessage += 'is <b style="color:red">invalid</b>.';
+							}
+							result.innerHTML = resultMessage;
+							return false;
+						}
+					</script>
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="disabled">Function</span> | <span class="disabled">Test form</span> | <span class="active">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Type <em>Pid</em>
+</h1>
+<br>Sha1 unique reference<p></p>This is a <em>pattern type</em>. Allowed values must match the following pattern:<blockquote>
+<code id="pattern">[^\s]{40,40}</code>
+</blockquote>
+<p></p>
+<form onsubmit="return testPattern(elements['pattern'].value, elements['input'].value)">
+<input name="pattern" type="text" size="50" value="^[^\s]{40,40}$"> <input type="button" value="<- Original pattern" onclick="javascript:elements['pattern'].value='^' + document.getElementById('pattern').innerHTML + '$'">
+<br>
+<input name="input" type="text" size="50"> <input type="submit" value="Test this pattern">
+<div id="result"> 
+</div>
+</form>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

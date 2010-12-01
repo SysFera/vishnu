@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>listFileProcesses</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the listFileProcesses function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="listFileProcesses-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listFileProcesses</em>
+</h1>List file processes.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Filter by machine</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Filter by username</td><td class="required">no</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>The data section may contain the elements </em><code>&lt;fileProcess/&gt;</code><em> and </em><code>&lt;fileTransferStatus/&gt;</code>.</p>
+<h4>Element <em>&lt;fileProcess/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Process ID.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_pid"></a>pid</td><td><a href="Pid.html" title="Sha1 unique reference">Pid</a></td><td>Process ID</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;fileTransferStatus/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>File transfer status.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="fileTransferStatus_status"></a>status</td><td><a href="FileTransferStatus.html" title="Define the status of a file transfer">FileTransferStatus</a></td><td>File Transfer status</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownPid.html">UnknownPid</a></td><td class="description">Process id is not known.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;fileProcess/&gt;</code>.</p>
+<h4>Element <em>&lt;fileProcess/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>File transfer process.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_pid"></a>pid</td><td><a href="Pid.html" title="Sha1 unique reference">Pid</a></td><td>Process ID</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_fromMachineId"></a>fromMachineId</td><td><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td>Machine hash key. If null, it's HPCPortal host.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_fromPath"></a>fromPath</td><td><span title="Plain text">_text</span></td><td>From path</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_fromUid"></a>fromUid</td><td><a href="Uid.html" title="UID of a person">Uid</a></td><td>Username used for source host</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_toMachineId"></a>toMachineId</td><td><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td>Machine hash key. If null, it's HPCPortal host.</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_toPath"></a>toPath</td><td><span title="Plain text">_text</span></td><td>To path</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_toUid"></a>toUid</td><td><span title="Plain text">_text</span></td><td>Username used for target host</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_status"></a>status</td><td><a href="FileTransferStatus.html" title="Define the status of a file transfer">FileTransferStatus</a></td><td>File Transfer status</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_startDate"></a>startDate</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Start date (timestamp)</td><td>no</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_eta"></a>eta</td><td><span title="Signed integer number, 64 bit">_int64</span></td><td>Estimated remaining time (seconds)</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_percent"></a>percent</td><td><span title="Signed integer number, 32 bit">_int32</span></td><td>Percentage done in the file transfer operation</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="fileProcess_failure"></a>failure</td><td><span title="Plain text">_text</span></td><td>Short message explaining the failure reason.</td><td>no</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Additional constraints</h4>The following constraints apply to the element attributes, additional to the element attributes marked as required. A violation of any of these constraints will result in an unsuccessful result with the error code <em>_InvalidResponse</em>.<ul>
+<li>At <em>least</em> one of these attributes must be set: <em>fromMachineId</em>, <em>toMachineId</em>.</li>
+<li>Either <em>all</em> of these attributes must be set, or <em>none</em> of them can be set: <em>fromMachineId</em>, <em>fromUid</em>.</li>
+<li>Either <em>all</em> of these attributes must be set, or <em>none</em> of them can be set: <em>toMachineId</em>, <em>toUid</em>.</li>
+<li>At <em>least</em> one of these attributes must be set: <em>status</em> with the value 'failed', <em>failure</em>.</li>
+</ul>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Unknown process exception for PID aac31ff92ede674121a1f92ef979ab7865d6b94c.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFileProcesses</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="Data section: <data><fileProcess pid=&quot;aac31ff92ede674121a1f92ef979ab7865d6b94c&quot; /></data>"><span class="name">_data</span>=<span class="value">%3Cdata%3E%3CfileProcess+pid%3D%22aac31ff92ede674121a1f92ef979ab7865d6b94c%22+%2F%3E%3C%2Fdata%3E</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"UnknownPid"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"pid"</span></span>&gt;</span><span class="pcdata">aac31ff92ede674121a1f92ef979ab7865d6b94c</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;_data=%3Cdata%3E%3CfileProcess+pid%3D%22aac31ff92ede674121a1f92ef979ab7865d6b94c%22+%2F%3E%3C%2Fdata%3E">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;_data=%3Cdata%3E%3CfileProcess+pid%3D%22aac31ff92ede674121a1f92ef979ab7865d6b94c%22+%2F%3E%3C%2Fdata%3E">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: List file transfer processes for user jsmith.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFileProcesses</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"e411f5c208942f771d8af25a6edeb75f0676cb55"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"running"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"128"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"13"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"9b587290e0edba4306f9ea77931e81a5cca222e4"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"pending"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"348"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">fromMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">fromUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/scratch/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"johnsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"done"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"0"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"100"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;uid=jsmith">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;uid=jsmith">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 3: List file transfer processes for machine 96d88a707c3ca2ab203348a64cc55cd41e800248.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFileProcesses</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"e411f5c208942f771d8af25a6edeb75f0676cb55"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"running"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"128"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"13"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"9b587290e0edba4306f9ea77931e81a5cca222e4"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"pending"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"348"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"92c316f12552b3ac7325f1ecc66b46d8a339919d"</span></span> <span class="attr"><span class="name">fromMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">fromUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/scratch/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"johnsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"done"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"0"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"100"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 4: List file transfer processes for machine 96d88a707c3ca2ab203348a64cc55cd41e800248, user jsmith and status pending.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFileProcesses</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="Data section: <data><fileTransferStatus status=&quot;pending&quot; /></data>"><span class="name">_data</span>=<span class="value">%3Cdata%3E%3CfileTransferStatus+status%3D%22pending%22+%2F%3E%3C%2Fdata%3E</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"9b587290e0edba4306f9ea77931e81a5cca222e4"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"pending"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"348"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"0"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;uid=jsmith&amp;_data=%3Cdata%3E%3CfileTransferStatus+status%3D%22pending%22+%2F%3E%3C%2Fdata%3E">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;uid=jsmith&amp;_data=%3Cdata%3E%3CfileTransferStatus+status%3D%22pending%22+%2F%3E%3C%2Fdata%3E">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 5: Get file process e411f5c208942f771d8af25a6edeb75f0676cb55.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFileProcesses</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="Data section: <data><fileProcess pid=&quot;e411f5c208942f771d8af25a6edeb75f0676cb55&quot; /></data>"><span class="name">_data</span>=<span class="value">%3Cdata%3E%3CfileProcess+pid%3D%22e411f5c208942f771d8af25a6edeb75f0676cb55%22+%2F%3E%3C%2Fdata%3E</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"e411f5c208942f771d8af25a6edeb75f0676cb55"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/bcc939d2c3633991e440e2f4c324316ecf6892cb.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/jsmith/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"jsmith"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"running"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"128"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"13"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;_data=%3Cdata%3E%3CfileProcess+pid%3D%22e411f5c208942f771d8af25a6edeb75f0676cb55%22+%2F%3E%3C%2Fdata%3E">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;_data=%3Cdata%3E%3CfileProcess+pid%3D%22e411f5c208942f771d8af25a6edeb75f0676cb55%22+%2F%3E%3C%2Fdata%3E">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 6: Get (failed) file process d68049bb85454c0b8c56ffbb73c45e8adee41b21.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listFileProcesses</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="Data section: <data><fileProcess pid=&quot;d68049bb85454c0b8c56ffbb73c45e8adee41b21&quot; /></data>"><span class="name">_data</span>=<span class="value">%3Cdata%3E%3CfileProcess+pid%3D%22d68049bb85454c0b8c56ffbb73c45e8adee41b21%22+%2F%3E%3C%2Fdata%3E</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">fileProcess</span> <span class="attr"><span class="name">pid</span>=<span class="value">"d68049bb85454c0b8c56ffbb73c45e8adee41b21"</span></span> <span class="attr"><span class="name">fromPath</span>=<span class="value">"/opt/HpcPortal/workdir/e0b9fa27f127fdcb069029fe6aa28e8ad3feb688.zip"</span></span> <span class="attr"><span class="name">toMachineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">toPath</span>=<span class="value">"/home/dupond/data/archive.zip"</span></span> <span class="attr"><span class="name">toUid</span>=<span class="value">"dupond"</span></span> <span class="attr"><span class="name">status</span>=<span class="value">"failed"</span></span> <span class="attr"><span class="name">eta</span>=<span class="value">"0"</span></span> <span class="attr"><span class="name">percent</span>=<span class="value">"92"</span></span> <span class="attr"><span class="name">failure</span>=<span class="value">"No space left on device"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;_data=%3Cdata%3E%3CfileProcess+pid%3D%22d68049bb85454c0b8c56ffbb73c45e8adee41b21%22+%2F%3E%3C%2Fdata%3E">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listFileProcesses&amp;_convention=_xins-std&amp;_data=%3Cdata%3E%3CfileProcess+pid%3D%22d68049bb85454c0b8c56ffbb73c45e8adee41b21%22+%2F%3E%3C%2Fdata%3E">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>listMachines</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the listMachines function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="listMachines-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>listMachines</em>
+</h1>List all supported machines.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<p>
+<em>This function defines no input parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>The data section may only contain the element </em><code>&lt;machine/&gt;</code>.</p>
+<h4>Element <em>&lt;machine/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Machine object.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><code>&lt;machineDescription/&gt;</code>, <code>&lt;network/&gt;</code></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="machine_machineId"></a>machineId</td><td><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td>Machine hash ID.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="machine_name"></a>name</td><td><span title="Plain text">_text</span></td><td>Machine name.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="machine_publicUse"></a>publicUse</td><td><span title="Boolean">_boolean</span></td><td>Private or accessible to users.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;machineDescription/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Internationalized description.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="machineDescription_content"></a>content</td><td><span title="Plain text">_text</span></td><td>Short description of the machine.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="machineDescription_locale"></a>locale</td><td><span title="Plain text">_text</span></td><td>Locale representation</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;network/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Networks belonging.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="network_name"></a>name</td><td><span title="Plain text">_text</span></td><td>Network name. Must match with the client network property for allowing X11 functionality.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: List machines example.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">listMachines</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">data</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"96d88a707c3ca2ab203348a64cc55cd41e800248"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"Clamart"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"true"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Clamart est une commune fran&ccedil;aise, du d&eacute;partement des Hauts-de-Seine de la r&eacute;gion &Icirc;le-de-France, dans l'arrondissement d'Antony, au sud-ouest de Paris, et fait partie de la communaut&eacute; d&rsquo;agglom&eacute;ration Sud de Seine cr&eacute;&eacute;e en 2005."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"fr_FR"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Clamart is a commune in the south-western suburbs of Paris, France. It is located 8.7 km (5.4 miles) from the center of Paris. The city is divided into two parts, separated by a forest: bas Clamart, the historical centre, and petit Clamart with urbanization developed in the 1960s replacing pea fields."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"en_EN"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">network</span> <span class="attr"><span class="name">name</span>=<span class="value">"edf"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">machine</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"cac7b5779cde5700b65e4bd3b6285d81dc3f9d8f"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"Chatou"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"true"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Chatou est une commune fran&ccedil;aise situ&eacute;e dans le d&eacute;partement des Yvelines et la r&eacute;gion &Icirc;le-de-France."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"fr_FR"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">network</span> <span class="attr"><span class="name">name</span>=<span class="value">"edf"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">machine</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"8a9023683ff7a725dde4eac71561a517f0de9ebf"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"Renardieres"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"true"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Les Renardi&egrave;res, situ&eacute; &agrave; &Eacute;cuelles (Seine-et-Marne), non loin de la route nationale 6, est un des trois centres de recherche d'&Eacute;lectricit&eacute; de France, les deux autres &eacute;tant situ&eacute;s &agrave; Chatou et Clamart.Le site poss&egrave;de de nombreux laboratoires de recherches, notamment ceux du Laboratoire de G&eacute;nie &Eacute;lectrique (LGE).Le site des Renardi&egrave;res a poss&eacute;d&eacute;, pendant plus de trente ans, un des plus grands laboratoires d'essais di&eacute;lectriques au monde. Il avait &eacute;t&eacute; inaugur&eacute; en mai 1971 par Georges Pompidou, pr&eacute;sident de la r&eacute;publique fran&ccedil;aise. Dans ce laboratoire de tr&egrave;s grandes dimensions, il &eacute;tait possible de faire des essais de tenue de mat&eacute;riels aux chocs de foudre, par exemple de disjoncteurs &agrave; haute-tension, avions, etc.Sur l'autre rive de la Seine, &agrave; quelques centaines de m&egrave;tres &agrave; vol d'oiseau, se trouve la centrale &eacute;lectrique de Montereau (en fait &agrave; Vernou-la-Celle-sur-Seine), qui a parfois servi de &laquo; source &raquo; pour les essais de forte puissance r&eacute;alis&eacute;s aux Renardi&egrave;res."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"fr_FR"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">network</span> <span class="attr"><span class="name">name</span>=<span class="value">"edf"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">machine</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"64794ec74b4215ed84bbb8abebce835389cc6c69"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"BlueGene/L"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"true"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Blue Gene est, en juin 2009, le troisi&egrave;me superordinateur le plus rapide au monde apr&egrave;s le Jaguar et le Roadrunner. Le projet est cofinanc&eacute; par le D&eacute;partement de l'&Eacute;nergie des &Eacute;tats-Unis et d&eacute;velopp&eacute; par IBM. Il avait d&eacute;j&agrave; tenu le record du 16 septembre 2004 au 26 octobre 2004 (dans une version non finalis&eacute;e), avec 36,01 t&eacute;raflops au test Linpack. Le record &eacute;tait pr&eacute;c&eacute;demment d&eacute;tenu par le NEC Earth Simulator de 35,86 t&eacute;raflops. Blue Gene a lui-m&ecirc;me &eacute;t&eacute; d&eacute;pass&eacute; par le supercalculateur Columbia (42,7 t&eacute;raflops) avant de reprendre l'avantage, le m&ecirc;me mois, avec 70,7 t&eacute;raflops (32 768 processeurs &agrave; 700 MHz). Il poss&egrave;de d&eacute;sormais une confortable avance gr&acirc;ce &agrave; ses 367 t&eacute;raflops (record r&eacute;alis&eacute; avec 131 072 processeurs). En juin 2008, il perd &agrave; nouveau son titre face &agrave; un ordinateur militaire, Roadrunner, construit &agrave; base de processeurs Cell destin&eacute;s &agrave; la base pour la playstation 3."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"fr_FR"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Blue Gene is a computer architecture project designed to produce several supercomputers, designed to reach operating speeds in the PFLOPS (petaFLOPS) range, and currently reaching sustained speeds of nearly 500 TFLOPS (teraFLOPS). It is a cooperative project among IBM (particularly IBM Rochester and the Thomas J. Watson Research Center), the Lawrence Livermore National Laboratory, the United States Department of Energy (which is partially funding the project), and academia."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"en_EN"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"BlueGene ist ein Projekt, eine High-End-Computertechnik zu entwerfen und zu bauen. Laut IBM sowohl zur Erforschung der Grenzen des Supercomputing: in der Computerarchitektur, der zur Programmierung und Kontrolle massiv paralleler Systeme n&ouml;tigen Software und um die Rechenkraft zur Erlangung eines besseren Verst&auml;ndnisses biologischer Prozesse wie etwa der Proteinfaltung zu nutzen. Letzteres war auch f&uuml;r die Namensgebung verantwortlich."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"de_DE"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">network</span> <span class="attr"><span class="name">name</span>=<span class="value">"edf"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">machine</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"e8b641bcf014883726da7026ee2af3c3f046f3f6"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"BlueGene/P"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"true"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"On June 26, 2007, IBM unveiled Blue Gene/P, the second generation of the Blue Gene supercomputer. Designed to run continuously at 1 PFLOPS (petaFLOPS), it can be configured to reach speeds in excess of 3 PFLOPS. Furthermore, it is at least seven times more energy efficient than any other supercomputer, accomplished by using many small, low-power chips connected through five specialized networks. Four 850 MHz PowerPC 450 processors are integrated on each Blue Gene/P chip. The 1-PFLOPS Blue Gene/P configuration is a 294,912-processor, 72-rack system harnessed to a high-speed, optical network. Blue Gene/P can be scaled to an 884,736-processor, 216-rack cluster to achieve 3-PFLOPS performance. A standard Blue Gene/P configuration will house 4,096 processors per rack. On November 12, 2007, the first system, JUGENE, with 65536 processors is running in the J&uuml;lich Research Centre in Germany with a performance of 167 TFLOPS. It is the fastest supercomputer in Europe and the sixth fastest in the world. The first laboratory in the United States to receive the Blue Gene/P was Argonne National Laboratory. The first racks of the Blue Gene/P shipped in fall 2007. The first installment was a 111-teraflops system, which has approximately 32,000 processors, and was operational for the US research community in spring 2008. The full Intrepid system is ranked #3 on the June 2008 Top 500 list. Another Blue Gene/P has been installed on September 9, 2008 in Sofia, the capital of Bulgaria, and is operated by the Bulgarian Academy of Sciences and the Sofia University. In February 2009 it was announced that JUGENE will be upgraded to reach petaflops performance in June 2009, making it the first petascale supercomputer in Europe. The new configuration has started at April 6, the system will go into production end of June 2009. The new configuration will include 294 912 processor cores, 144 terabyte memory, 6 petabyte storage in 72 racks. The new configuaration will incorporate a new water cooling system that will reduce the cooling cost substantially."</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"en_EN"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">network</span> <span class="attr"><span class="name">name</span>=<span class="value">"edf"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">machine</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"98d7ea36b6e2e1cb987986fe2a6073e30199be5b"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"HPCPortal"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"false"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machine</span> <span class="attr"><span class="name">machineId</span>=<span class="value">"91946610b82595ba3da64cb8dff91ab7d96c7d28"</span></span> <span class="attr"><span class="name">name</span>=<span class="value">"Platine"</span></span> <span class="attr"><span class="name">publicUse</span>=<span class="value">"true"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">machineDescription</span> <span class="attr"><span class="name">content</span>=<span class="value">"Ce calculateur, fourni par BULL, a &eacute;t&eacute; install&eacute; sur le CCRT d&eacute;but 2007. Il permet aux partenaires du CCRT de disposer d&egrave;s Octobre 2007 d'une puissance de calcul scalaire de l'ordre de 48 Tflops. "</span></span> <span class="attr"><span class="name">locale</span>=<span class="value">"fr_FR"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">network</span> <span class="attr"><span class="name">name</span>=<span class="value">"ccrt"</span></span> /&gt;</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">machine</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;/<span class="name">data</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=listMachines&amp;_convention=_xins-std">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=listMachines&amp;_convention=_xins-std">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>executeX11</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the executeX11 function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="executeX11-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>executeX11</em>
+</h1>Execute X11 application. Local and target networks must match.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_fromPath"></a>fromPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Execute from this path.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_applicationPath"></a>applicationPath</td><td class="type"><span title="Plain text">_text</span></td><td class="description">If not provided, open a common terminal.</td><td class="required">no</td>
+</tr>
+<tr>
+<td class="name"><a name="input_clientNetwork"></a>clientNetwork</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Client network</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_clientAddress"></a>clientAddress</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Client address</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_clientDisplay"></a>clientDisplay</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Client display</td><td class="required">no (Default is 0,0)</td>
+</tr>
+<tr>
+<td class="name"><a name="input_uid"></a>uid</td><td class="type"><a href="Uid.html" title="UID of a person">Uid</a></td><td class="description">Username</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_password"></a>password</td><td class="type"><a href="Password.html" title="The password of the user accessing this machine">Password</a></td><td class="description">Password</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no input data section.</em>
+</p>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownMachine.html">UnknownMachine</a></td><td class="description">Machine is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="UnknownUser.html">UnknownUser</a></td><td class="description">User is not known.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncorrectPassword.html">IncorrectPassword</a></td><td class="description">Indicates the specified password is incorrect for the provided uid.</td>
+</tr>
+<tr>
+<td class="value"><a href="NotAllowed.html">NotAllowed</a></td><td class="description">Requested operation is not allowed for provided user.</td>
+</tr>
+<tr>
+<td class="value"><a href="InvalidPath.html">InvalidPath</a></td><td class="description">Path provided is not reachable or is invalid.</td>
+</tr>
+<tr>
+<td class="value"><a href="IncompatibleNetworks.html">IncompatibleNetworks</a></td><td class="description">Networks provided are not compatible.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<p>
+<em>This function defines no output parameters.</em>
+</p>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Incompatible networks exception while trying to connect on machine 91946610b82595ba3da64cb8dff91ab7d96c7d28 (platine)</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">executeX11</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 91946610b82595ba3da64cb8dff91ab7d96c7d28"><span class="name">machineId</span>=<span class="value">91946610b82595ba3da64cb8dff91ab7d96c7d28</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2F</span></span>&amp;<span class="param" title="clientNetwork: edf"><span class="name">clientNetwork</span>=<span class="value">edf</span></span>&amp;<span class="param" title="clientAddress: 192.168.107.118"><span class="name">clientAddress</span>=<span class="value">192.168.107.118</span></span>&amp;<span class="param" title="clientDisplay: 0,1"><span class="name">clientDisplay</span>=<span class="value">0%2C1</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"IncompatibleNetworks"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"clientNetwork"</span></span>&gt;</span><span class="pcdata">edf</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"targetNetwork"</span></span>&gt;</span><span class="pcdata">ccrt</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=executeX11&amp;_convention=_xins-std&amp;machineId=91946610b82595ba3da64cb8dff91ab7d96c7d28&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;clientNetwork=edf&amp;clientAddress=192.168.107.118&amp;clientDisplay=0%2C1&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=executeX11&amp;_convention=_xins-std&amp;machineId=91946610b82595ba3da64cb8dff91ab7d96c7d28&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;clientNetwork=edf&amp;clientAddress=192.168.107.118&amp;clientDisplay=0%2C1&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Open X11 on machine 96d88a707c3ca2ab203348a64cc55cd41e800248</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">executeX11</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="machineId: 96d88a707c3ca2ab203348a64cc55cd41e800248"><span class="name">machineId</span>=<span class="value">96d88a707c3ca2ab203348a64cc55cd41e800248</span></span>&amp;<span class="param" title="fromPath: /home/jsmith/"><span class="name">fromPath</span>=<span class="value">%2Fhome%2Fjsmith%2F</span></span>&amp;<span class="param" title="clientNetwork: edf"><span class="name">clientNetwork</span>=<span class="value">edf</span></span>&amp;<span class="param" title="clientAddress: 192.168.107.118"><span class="name">clientAddress</span>=<span class="value">192.168.107.118</span></span>&amp;<span class="param" title="clientDisplay: 0,1"><span class="name">clientDisplay</span>=<span class="value">0%2C1</span></span>&amp;<span class="param" title="uid: jsmith"><span class="name">uid</span>=<span class="value">jsmith</span></span>&amp;<span class="param" title="password: vaUkyYI"><span class="name">password</span>=<span class="value">vaUkyYI</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> /&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=executeX11&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;clientNetwork=edf&amp;clientAddress=192.168.107.118&amp;clientDisplay=0%2C1&amp;uid=jsmith&amp;password=vaUkyYI">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=executeX11&amp;_convention=_xins-std&amp;machineId=96d88a707c3ca2ab203348a64cc55cd41e800248&amp;fromPath=%2Fhome%2Fjsmith%2F&amp;clientNetwork=edf&amp;clientAddress=192.168.107.118&amp;clientDisplay=0%2C1&amp;uid=jsmith&amp;password=vaUkyYI">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>

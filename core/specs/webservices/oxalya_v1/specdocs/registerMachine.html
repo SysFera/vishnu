@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>registerMachine</title>
+<meta name="generator" content="XINS">
+<meta name="description" content="Specification of the registerMachine function of the ResourceProxy API.">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="top" href="../index.html" title="API index">
+<link rel="up" href="index.html" title="Overview of this API">
+</head>
+<body>
+<table class="headerlinks">
+<tr>
+<td><a href="../index.html" title="Overview of all API specifications">API Index</a> | <a href="index.html" title="Overview of the current API">Overview</a> | <span class="active">Function</span> | <a href="registerMachine-testform.html" title="Test form for this function">Test form</a> | <span class="disabled">Type</span> | <span class="disabled">Result code</span></td>
+</tr>
+</table>
+<h1>Function <em>registerMachine</em>
+</h1>Register a machine. If name/publicAddress already knowns, return MachineAlreadyRegistered exception.<h2>Input section</h2>
+<blockquote>
+<h3>Input parameters</h3>
+<table class="inputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="input_name"></a>name</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Command.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_publicUse"></a>publicUse</td><td class="type"><span title="Boolean">_boolean</span></td><td class="description">Private or accessible to users.</td><td class="required">yes</td>
+</tr>
+<tr>
+<td class="name"><a name="input_publicAddress"></a>publicAddress</td><td class="type"><span title="Plain text">_text</span></td><td class="description">Address. Have to be resolved by ResourceProxy.</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>The data section may contain the elements </em><code>&lt;machineDescription/&gt;</code><em> and </em><code>&lt;network/&gt;</code>.</p>
+<h4>Element <em>&lt;machineDescription/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Internationalized description.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="machineDescription_content"></a>content</td><td><span title="Plain text">_text</span></td><td>Short description of the machine.</td><td>yes</td>
+</tr>
+<tr>
+<td class="value"><a name="machineDescription_locale"></a>locale</td><td><span title="Plain text">_text</span></td><td>Locale representation</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h4>Element <em>&lt;network/&gt;</em>
+</h4>
+<table class="element_details">
+<tr>
+<th>Description:</th><td>Networks belonging.</td>
+</tr>
+<tr>
+<th>Contains:</th><td><em>Nothing.</em></td>
+</tr>
+<tr>
+<th>Attributes:</th><td>
+<table class="parameters">
+<tr>
+<th>Name</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="value"><a name="network_name"></a>name</td><td><span title="Plain text">_text</span></td><td>Network name. Must match with the client network property for allowing X11 functionality.</td><td>yes</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</blockquote>
+<h2>Output section</h2>
+<blockquote>
+<h3>Result codes</h3>
+<em>An error code is returned when an error occurs during the execution of the implementation.</em>
+<table class="resultcodes">
+<tr>
+<th>Name</th><th>Description</th>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_DisabledFunction</span></td><td class="description">The function is currently disabled.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InternalError</span></td><td class="description">There was an internal error.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidRequest</span></td><td class="description">Indicates that the request is considered invalid since it does not match the criteria defined by the specification.</td>
+</tr>
+<tr class="default">
+<td class="value"><span title="This result code is generic, not specific to this API">_InvalidResponse</span></td><td class="description">Indicates that the implementation produced a response that does not match the criteria defined by the specification. Typical callers should treat this like an internal error.</td>
+</tr>
+<tr>
+<td class="value"><a href="MachineNotReachable.html">MachineNotReachable</a></td><td class="description">Provided machine cannot be reached by ResourceProxy.</td>
+</tr>
+<tr>
+<td class="value"><a href="MachineAlreadyRegistered.html">MachineAlreadyRegistered</a></td><td class="description">Machine had been already registered.</td>
+</tr>
+</table>
+<h3>Output parameters</h3>
+<table class="outputparameters">
+<tr>
+<th>Parameter</th><th>Type</th><th>Description</th><th>Required</th>
+</tr>
+<tr>
+<td class="name"><a name="output_machineId"></a>machineId</td><td class="type"><a href="MachineId.html" title="Sha1 unique reference">MachineId</a></td><td class="description">Machine hash key</td><td class="required">yes</td>
+</tr>
+</table>
+<h3>Data section</h3>
+<p>
+<em>This function defines no output data section.</em>
+</p>
+</blockquote>
+<h2>Examples section</h2>
+<blockquote>
+<table class="example">
+<tr>
+<td colspan="2" class="header">
+<h3>Example 1: Register Clamart machine.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">registerMachine</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="name: Clamart"><span class="name">name</span>=<span class="value">Clamart</span></span>&amp;<span class="param" title="publicUse: true"><span class="name">publicUse</span>=<span class="value">true</span></span>&amp;<span class="param" title="publicAddress: 192.168.111.208"><span class="name">publicAddress</span>=<span class="value">192.168.111.208</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"MachineAlreadyRegistered"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"machineId"</span></span>&gt;</span><span class="pcdata">96d88a707c3ca2ab203348a64cc55cd41e800248</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=registerMachine&amp;_convention=_xins-std&amp;name=Clamart&amp;publicUse=true&amp;publicAddress=192.168.111.208">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=registerMachine&amp;_convention=_xins-std&amp;name=Clamart&amp;publicUse=true&amp;publicAddress=192.168.111.208">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 2: Trying to register PC SK.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">registerMachine</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="name: PC SK"><span class="name">name</span>=<span class="value">PC+SK</span></span>&amp;<span class="param" title="publicUse: true"><span class="name">publicUse</span>=<span class="value">true</span></span>&amp;<span class="param" title="publicAddress: 192.0.1.1"><span class="name">publicAddress</span>=<span class="value">192.0.1.1</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span> <span class="attr" title=""><span class="name">errorcode</span>=<span class="value">"MachineNotReachable"</span></span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"fromAddress"</span></span>&gt;</span><span class="pcdata">192.168.10.6</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"publicAddress"</span></span>&gt;</span><span class="pcdata">192.0.1.1</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=registerMachine&amp;_convention=_xins-std&amp;name=PC+SK&amp;publicUse=true&amp;publicAddress=192.0.1.1">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=registerMachine&amp;_convention=_xins-std&amp;name=PC+SK&amp;publicUse=true&amp;publicAddress=192.0.1.1">collab-edf.oxalya</a> </td>
+</tr>
+<tr>
+<td colspan="2" class="header">
+<h3>Example 3: Register HPCPortal machine.</h3>
+</td>
+</tr>
+<tr>
+<th>Request:</th><td><span class="url"><span class="protocol">http</span>://<span class="host">API_PATH</span>?<span class="functionparam"><span class="name">_function</span>=<span class="value">registerMachine</span></span>&amp;<span class="param"><span class="name">_convention</span>=<span class="value">_xins-std</span></span>&amp;<span class="param" title="name: HPCPortal"><span class="name">name</span>=<span class="value">HPCPortal</span></span>&amp;<span class="param" title="publicUse: false"><span class="name">publicUse</span>=<span class="value">false</span></span>&amp;<span class="param" title="publicAddress: 192.168.111.70"><span class="name">publicAddress</span>=<span class="value">192.168.111.70</span></span></span></td>
+</tr>
+<tr>
+<th>Response:</th><td><span class="xml"><span class="decl">&lt;?<span class="elem"><span class="name">xml</span></span> <span class="attr"><span class="name">version</span>=<span class="value">"1.0"</span></span> <span class="attr"><span class="name">encoding</span>=<span class="value">"UTF-8"</span></span>?&gt;
+</span><span class="elem">&lt;<span class="name">result</span>&gt;</span>
+&nbsp;&nbsp;&nbsp;<span class="elem">&lt;<span class="name">param</span> <span class="attr"><span class="name">name</span>=<span class="value">"machineId"</span></span>&gt;</span><span class="pcdata">98d7ea36b6e2e1cb987986fe2a6073e30199be5b</span><span class="elem">&lt;/<span class="name">param</span>&gt;</span><span class="elem">
+&lt;/<span class="name">result</span>&gt;</span></span></td>
+</tr>
+<tr>
+<th>Test on:</th><td><a href="http://127.0.0.1:8080/ResourceProxy/?_function=registerMachine&amp;_convention=_xins-std&amp;name=HPCPortal&amp;publicUse=false&amp;publicAddress=192.168.111.70">localhost</a> <a href="http://collab-edf.oxalya.com/soap/ResourceProxy/?_function=registerMachine&amp;_convention=_xins-std&amp;name=HPCPortal&amp;publicUse=false&amp;publicAddress=192.168.111.70">collab-edf.oxalya</a> </td>
+</tr>
+</table>
+</blockquote>
+<div class="footer" title="Version 1.0 (2009.11.30, 15:42)">Version 1.0.Generated using <a href="http://www.xins.org/">XINS</a> 2.3-alpha2.</div>
+</body>
+</html>
