@@ -1,0 +1,5 @@
+#generation en anglais
+dblatex -s docbook-sysfera.sty ../docbook/SpecGen.docbook
+
+#generation en français
+dblatex -s docbook-sysfera.sty -P latex.babel.language=french ../docbook/SpecGen.docbook
