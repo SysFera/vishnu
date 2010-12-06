@@ -25,17 +25,16 @@
         </revision>
       </revhistory>
     </info>
-    <!-- GENERATED PART -->
   <chapter>
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
       <para>This document presents the external specifications of the Vishnu system at a general
         level. At this level, we describe the interaction of a user with the system without
-        providing implementation details. The different steps that make the scenario are detailed as
-        well as the content of the messages exchanged. The main objective is to describe the system
-        from the user point of view.</para>
-      <para>These general specifications are a prerequisite for the detailed specification step in
+        providing implementation details. The different steps that constitute the scenario are
+        detailed as well as the content of the messages exchanged. The main objective is to describe
+        the system from the user point of view.</para>
+      <para>These general specifications are a prerequisite for the detailed specifications step in
         the software development process.</para>
     </section>
     <section>
@@ -58,7 +57,7 @@
       </itemizedlist>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains two sections:<itemizedlist>
           <listitem>
-            <para>A first section containing "Use case description" that follow the standard UML
+            <para>A first section containing "Use case descriptions" that follow the standard UML
               description of a use case</para>
           </listitem>
           <listitem>
@@ -76,6 +75,7 @@
       <para/>
     </section>
   </chapter>
+    <!-- GENERATED PART -->
     <chapter>
       <title> Use cases for Users Management System (UMS) </title>
       <section>
