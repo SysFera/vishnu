@@ -16,13 +16,13 @@
     </author>
       <revhistory>
         <revision>
-          <revnumber>01</revnumber>
-          <date>02/12/2010</date>
-          <authorinitials>B.Isnard</authorinitials>
-          <revdescription>
-                <para>Formatting example</para>
-          </revdescription>
-        </revision>
+        <revnumber>01</revnumber>
+        <date>05/12/2010</date>
+        <authorinitials>B.Isnard</authorinitials>
+        <revdescription>
+          <para>Formatting example</para>
+        </revdescription>
+      </revision>
       </revhistory>
     </info>
   <chapter>
@@ -77,9 +77,12 @@
   </chapter>
     <!-- GENERATED PART -->
     <chapter>
-      <title> Use cases for Users Management System (UMS) </title>
+      <title>
+Use cases for Users Management System (UMS)      </title>
       <section>
-        <title> Use case descriptions </title>
+        <title>
+Use case descriptions
+        </title>
         <section>
           <title>
 U1 - Session with manual closure          </title>
@@ -123,7 +126,7 @@ Precondition                    </para>
                   </entry>
                   <entry>
                     <para>
-- the user is authentificated                    </para>
+- the user is authenticated                    </para>
                     <para>
 - VISHNU is installed and running on the client system                    </para>
                   </entry>
@@ -139,7 +142,7 @@ Postcondition                    </para>
                     <para>
 - a session log has been created                    </para>
                     <para>
-- all user requests submitted within the session are complete                    </para>
+- all user requests submitted within the session are completed                    </para>
                   </entry>
                 </row>
                 <row>
@@ -175,7 +178,7 @@ Exception sequence                    </para>
                     <para>
 1a. include::U1.1 exceptions                    </para>
                     <para>
-3a. if session cannot be closed due to running command, user must wait until all commands are completed before trying step 3 again                    </para>
+3a. if session cannot be closed due to running commands, user must wait until all commands are completed before trying step 3 again                    </para>
                   </entry>
                 </row>
                 <row>
@@ -263,7 +266,7 @@ Base sequence                    </para>
                     <para>
 1. User provides login and password to the &quot;connect&quot; command                    </para>
                     <para>
-2. System validates login and password (User is authentificated)                    </para>
+2. System validates login and password (User is authenticated)                    </para>
                     <para>
 3. System creates the session and activates it                    </para>
                     <para>
@@ -289,11 +292,11 @@ Exception sequence                    </para>
                     <para>
 2a. user login is unknown                    </para>
                     <para>
-2a1. system returns an error message                    </para>
+2a1. the System returns an error message                    </para>
                     <para>
 2b. user password is invalid                    </para>
                     <para>
-2b1. system returns an error message                    </para>
+2b1. the System returns an error message                    </para>
                     <para>
 2b2. if nb of login failures &lt; max nb, the system increments the login failures counter for the user                    </para>
                     <para>
@@ -301,11 +304,11 @@ Exception sequence                    </para>
                     <para>
 2c. user account is blocked                    </para>
                     <para>
-2c1. the system returns an error message                    </para>
+2c1. the System returns an error message                    </para>
                     <para>
 2d. vishnu infrastructure is unreachable or unavailable                    </para>
                     <para>
-2d1. the system returns an error message                    </para>
+2d1. the System returns an error message                    </para>
                     <para>
 2e. user password is temporary and request is non-interactive: the System returns an error message                    </para>
                   </entry>
@@ -373,7 +376,7 @@ Postcondition                    </para>
                     <para>
 - a session log has been created                    </para>
                     <para>
-- all user requests submitted during the session are complete                    </para>
+- all user requests submitted during the session are completed                    </para>
                   </entry>
                 </row>
                 <row>
@@ -383,11 +386,11 @@ Base sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-1. the system checks that there are no running commands within the session                    </para>
+1. the System checks that there are no running commands within the session                    </para>
                     <para>
-2. the system closes the session                    </para>
+2. the System closes the session                    </para>
                     <para>
-3. the system informs the user that the session was closed                    </para>
+3. the System informs the user that the session has been closed                    </para>
                   </entry>
                 </row>
                 <row>
@@ -434,7 +437,7 @@ Summary                    </para>
                   </entry>
                   <entry>
                     <para>
-User submits a synchronous request to the system                    </para>
+User submits a synchronous request to the System                    </para>
                   </entry>
                 </row>
                 <row>
@@ -476,7 +479,7 @@ Base sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-1. User sends the request to the system                    </para>
+1. User sends the request to the System                    </para>
                     <para>
 2. System returns the results to the user                    </para>
                   </entry>
@@ -503,7 +506,7 @@ Permission denied (admin request issued by normal user)                    </par
                     <para>
 Ressource not available                    </para>
                     <para>
-VISHNU system crashed                    </para>
+VISHNU System crashed                    </para>
                   </entry>
                 </row>
                 <row>
@@ -526,7 +529,9 @@ U2 - Session with automatic closure on timeout                    </para>
         </section>
       </section>
       <section>
-        <title> Use case diagrams</title>
+        <title>
+Use case diagrams
+        </title>
         <section>
           <title> UC UMS User Manual </title>
           <figure>
@@ -553,9 +558,12 @@ U2 - Session with automatic closure on timeout                    </para>
     </chapter>
 
 <chapter>
-      <title> Use cases for Tasks Management System (TMS)</title>
+      <title>
+Use cases for Tasks Management System (TMS)      </title>
       <section>
-        <title> Use case descriptions</title>
+        <title>
+Use case descriptions
+        </title>
         <section>
           <title>
 U2.1-SubmitJob           </title>
@@ -599,9 +607,7 @@ Precondition                    </para>
                   </entry>
                   <entry>
                     <para>
-- User has a valid session Id                    </para>
-                    <para>
-- The machine to submit the job is available                    </para>
+- User has an active open session                    </para>
                     <para>
                         </para>
                   </entry>
@@ -627,7 +633,7 @@ Base sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-1 The path contatining the characteristics of the job is verified                    </para>
+1. The path contatining the characteristics of the job is verified                    </para>
                     <para>
 2. The TMS server on the given machine is contacted                    </para>
                     <para>
@@ -635,7 +641,7 @@ Base sequence                    </para>
                     <para>
 4. The job is submited by the TMS server to the batch scheduler                    </para>
                     <para>
-5. The id of the submited job is returned to the user.                    </para>
+5. The id of the submitted job is returned to the user.                    </para>
                   </entry>
                 </row>
                 <row>
@@ -643,34 +649,7 @@ Base sequence                    </para>
                     <para>
 Branch sequence                    </para>
                   </entry>
-                  <entry>
-                    <para>
-1a. The path containing the characteristics of the job is not found                    </para>
-                    <para>
-   - The system prints an error message that informs                      </para>
-                    <para>
-   - The user revises the path                    </para>
-                    <para>
-   - The UserCase goes to the action 1                    </para>
-                    <para>
-2a The name of the given machine is unknown                    </para>
-                    <para>
-    -The system prints an error message that informs     the user                    </para>
-                    <para>
-    -The UserCase goes to the action 2 of the base                       </para>
-                    <para>
-    sequence.                    </para>
-                    <para>
-3a The session id is not valid                    </para>
-                    <para>
-   - The system prints an error message that informs the user.                    </para>
-                    <para>
-   - The user revises the id.                    </para>
-                    <para>
-   - The UserCase goes to the action 3 of the base                       </para>
-                    <para>
-    sequence.                    </para>
-                  </entry>
+                  <entry/>
                 </row>
                 <row>
                   <entry>
@@ -679,7 +658,33 @@ Exception sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-1a The TMS server is unavailable                    </para>
+1a. The path containing the characteristics of the job is not found                    </para>
+                    <para>
+   - The system prints an error message that informs user                     </para>
+                    <para>
+   - The user revises the path                    </para>
+                    <para>
+   - The UseCase goes to the action 1                    </para>
+                    <para>
+2a. The name of the given machine is unknown                    </para>
+                    <para>
+    -The system prints an error message that informs     the user                    </para>
+                    <para>
+    -The UseCase goes to the action 2 of the base                       </para>
+                    <para>
+    sequence.                    </para>
+                    <para>
+3a. The session id is not valid                    </para>
+                    <para>
+   - The system prints an error message that informs the user.                    </para>
+                    <para>
+   - The user revises the id.                    </para>
+                    <para>
+   - The UseCase goes to the action 3 of the base                       </para>
+                    <para>
+    sequence.                    </para>
+                    <para>
+4a. The TMS server is unavailable                    </para>
                     <para>
  - The system returns an error message                     </para>
                   </entry>
@@ -711,7 +716,7 @@ Summary                    </para>
                   </entry>
                   <entry>
                     <para>
-User requests the TMS server for getting some informations of a specific job                    </para>
+User requests the TMS server for getting some information of a specific job                    </para>
                   </entry>
                 </row>
                 <row>
@@ -731,7 +736,7 @@ Precondition                    </para>
                   </entry>
                   <entry>
                     <para>
-- User  has a valid session id                    </para>
+- User has an active open session                    </para>
                   </entry>
                 </row>
                 <row>
@@ -743,7 +748,7 @@ Postcondition                    </para>
                     <para>
 - The user receives all features of a specific job                    </para>
                     <para>
--  The system registers all job informations  in the system's log                    </para>
+- The system registers all job information  in the system's log                    </para>
                   </entry>
                 </row>
                 <row>
@@ -765,6 +770,13 @@ Base sequence                    </para>
                     <para>
 Branch sequence                    </para>
                   </entry>
+                  <entry/>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+Exception sequence                    </para>
+                  </entry>
                   <entry>
                     <para>
 1a. The session id is not a valid id                    </para>
@@ -773,17 +785,17 @@ Branch sequence                    </para>
                     <para>
    - The user revises the id.                    </para>
                     <para>
-   - The UserCase goes to the action 1 of the base                       </para>
+   - The UseCase goes to the action 1 of the base                       </para>
                     <para>
     sequence.                    </para>
                     <para>
-1a The job id is not a valid id                    </para>
+2a. The job id is not a valid id                    </para>
                     <para>
    - The system prints an error message that informs     the user.                    </para>
                     <para>
    - The user revises the id.                    </para>
                     <para>
-   - The UserCase goes to the action 1 of the base                       </para>
+   - The UseCase goes to the action 1 of the base                       </para>
                     <para>
     sequence.                    </para>
                     <para>
@@ -793,19 +805,11 @@ Branch sequence                    </para>
                     <para>
     -User gives a correct name.                    </para>
                     <para>
-    -The UserCase goes to the action 5 of the base                       </para>
+    -The UseCase goes to the action 5 of the base                       </para>
                     <para>
     sequence.                    </para>
-                  </entry>
-                </row>
-                <row>
-                  <entry>
                     <para>
-Exception sequence                    </para>
-                  </entry>
-                  <entry>
-                    <para>
-1a The TMS server is unavailable                    </para>
+4a. The TMS server is unavailable                    </para>
                     <para>
  - The system returns an error message                     </para>
                   </entry>
@@ -867,7 +871,7 @@ Precondition                    </para>
                   </entry>
                   <entry>
                     <para>
--User has a valid session id                    </para>
+-User has an active open session                    </para>
                     <para>
                         </para>
                   </entry>
@@ -879,9 +883,9 @@ Postcondition                    </para>
                   </entry>
                   <entry>
                     <para>
-- The System sends informations on all jobs to the user                    </para>
+- The System sends information on all jobs to the user                    </para>
                     <para>
-- The System registers informations on all jobs in the system's log                    </para>
+- The System registers information on all jobs in the system's log                    </para>
                   </entry>
                 </row>
                 <row>
@@ -903,26 +907,7 @@ Base sequence                    </para>
                     <para>
 Branch sequence                    </para>
                   </entry>
-                  <entry>
-                    <para>
-1a The name of the given machine is unknown                    </para>
-                    <para>
-    -The system prints an error message that informs     the user                    </para>
-                    <para>
-    -The UserCase goes to the action 2 of the base                       </para>
-                    <para>
-    sequence.                    </para>
-                    <para>
-2a The session id is not valid                    </para>
-                    <para>
-   - The system prints an error message that informs the user.                    </para>
-                    <para>
-   - The user revises the id.                    </para>
-                    <para>
-   - The UserCase goes to the action 2 of the base                       </para>
-                    <para>
-    sequence.                    </para>
-                  </entry>
+                  <entry/>
                 </row>
                 <row>
                   <entry>
@@ -931,7 +916,25 @@ Exception sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-1a The TMS server is unavailable                    </para>
+1a. The name of the given machine is unknown                    </para>
+                    <para>
+    -The system prints an error message that informs     the user                    </para>
+                    <para>
+    -The UseCase goes to the action 2 of the base                       </para>
+                    <para>
+    sequence.                    </para>
+                    <para>
+2a. The session id is not valid                    </para>
+                    <para>
+   - The system prints an error message that informs the user.                    </para>
+                    <para>
+   - The user revises the id.                    </para>
+                    <para>
+   - The UseCase goes to the action 2 of the base                       </para>
+                    <para>
+    sequence.                    </para>
+                    <para>
+3a. The TMS server is unavailable                    </para>
                     <para>
  - The system returns an error message                     </para>
                   </entry>
@@ -983,7 +986,7 @@ Precondition                    </para>
                   </entry>
                   <entry>
                     <para>
--User has a valid session id                    </para>
+-User has an active open session                    </para>
                   </entry>
                 </row>
                 <row>
@@ -995,7 +998,7 @@ Postcondition                    </para>
                     <para>
 -The system collects  the informations on each queue or classes.                      </para>
                     <para>
--The  system send the list contained  the informations on all queues  to the user.                    </para>
+-The  system send the list contained  the information on all queues  to the user.                    </para>
                   </entry>
                 </row>
                 <row>
@@ -1017,26 +1020,7 @@ Base sequence                    </para>
                     <para>
 Branch sequence                    </para>
                   </entry>
-                  <entry>
-                    <para>
-1a The name of the given machine is unknown                    </para>
-                    <para>
-    -The system prints an error message that informs     the user                    </para>
-                    <para>
-    -The UserCase goes to the action 2 of the base                       </para>
-                    <para>
-    sequence.                    </para>
-                    <para>
-2a The session id is not valid                    </para>
-                    <para>
-   - The system prints an error message that informs the user.                    </para>
-                    <para>
-   - The user revises the id.                    </para>
-                    <para>
-   - The UserCase goes to the action 2 of the base                       </para>
-                    <para>
-    sequence.                    </para>
-                  </entry>
+                  <entry/>
                 </row>
                 <row>
                   <entry>
@@ -1045,7 +1029,25 @@ Exception sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-1a The TMS server is unavailable                    </para>
+1a. The name of the given machine is unknown                    </para>
+                    <para>
+    -The system prints an error message that informs     the user                    </para>
+                    <para>
+    -The UseCase goes to the action 2 of the base                       </para>
+                    <para>
+    sequence.                    </para>
+                    <para>
+2a. The session id is not valid                    </para>
+                    <para>
+   - The system prints an error message that informs the user.                    </para>
+                    <para>
+   - The user revises the id.                    </para>
+                    <para>
+   - The UseCase goes to the action 2 of the base                       </para>
+                    <para>
+    sequence.                    </para>
+                    <para>
+3a. The TMS server is unavailable                    </para>
                     <para>
  - The system returns an error message                     </para>
                   </entry>
@@ -1056,7 +1058,9 @@ Exception sequence                    </para>
         </section>
       </section>
       <section>
-        <title> Use case diagrams </title>
+        <title>
+Use case diagrams
+        </title>
         <section>
           <title>
 GetJob          </title>
@@ -1106,5 +1110,6 @@ SubmitJob          </title>
           </figure>
         </section>
       </section>
+      
     </chapter>
   </book>
