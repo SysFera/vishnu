@@ -17,7 +17,7 @@
       <revhistory>
         <revision>
         <revnumber>01</revnumber>
-        <date>05/12/2010</date>
+        <date>07/12/2010</date>
         <authorinitials>B.Isnard</authorinitials>
         <revdescription>
           <para>Formatting example</para>
@@ -76,7 +76,7 @@
     </section>
   </chapter>
     <!-- GENERATED PART -->
-    <chapter>
+<chapter>
       <title>
 Use cases for Users Management System (UMS)      </title>
       <section>
@@ -498,15 +498,15 @@ Exception sequence                    </para>
                   </entry>
                   <entry>
                     <para>
-Invalid session (bad session certificate or unavailable session)                    </para>
+1.a Invalid session (bad session certificate or unavailable session)                    </para>
                     <para>
-Invalid request                    </para>
+1.b Invalid request                    </para>
                     <para>
-Permission denied (admin request issued by normal user)                    </para>
+1.c Permission denied (admin request issued by normal user)                    </para>
                     <para>
-Ressource not available                    </para>
+1.d Ressource not available                    </para>
                     <para>
-VISHNU System crashed                    </para>
+1.e VISHNU System crashed                    </para>
                   </entry>
                 </row>
                 <row>
@@ -533,31 +533,32 @@ U2 - Session with automatic closure on timeout                    </para>
 Use case diagrams
         </title>
         <section>
-          <title> UC UMS User Manual </title>
+          <title>
+UC UMS User Manual          </title>
           <figure>
-            <title> UC UMS User Manual </title>
+            <title>UC UMS User Manual </title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/Fig2 - UC UMS User Manual.png" align="center" scale="40"/>
+                <imagedata fileref="images/UC UMS User Manual.png" align="center" scale="40"/>
               </imageobject>
             </mediaobject>
           </figure>
         </section>
-        <section>
+      <section>
+        <title> UC UMS Admin </title>
+        <figure>
           <title> UC UMS Admin </title>
-          <figure>
-            <title> UC UMS Admin </title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/Fig4 - UC UMS Admin.png" align="center" scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/UC UMS Admin.png" align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
       </section>
-    </chapter>
-
-<chapter>
+      </section>
+</chapter>
+    
+    <chapter>
       <title>
 Use cases for Tasks Management System (TMS)      </title>
       <section>
@@ -639,7 +640,7 @@ Base sequence                    </para>
                     <para>
 3. The session id is ckecked by the TMS server                    </para>
                     <para>
-4. The job is submited by the TMS server to the batch scheduler                    </para>
+4. The job is submitted by the TMS server to the batch scheduler                    </para>
                     <para>
 5. The id of the submitted job is returned to the user.                    </para>
                   </entry>
@@ -943,6 +944,7 @@ Exception sequence                    </para>
             </tgroup>
           </informaltable>
         </section>
+        
         <section>
           <title>
 U2.5-ListQueue          </title>
@@ -1056,16 +1058,26 @@ Exception sequence                    </para>
             </tgroup>
           </informaltable>
         </section>
+        
+        
+        
+        
+        
+        
+        
+        
       </section>
       <section>
         <title>
 Use case diagrams
         </title>
+        
         <section>
           <title>
 GetJob          </title>
           <figure>
-            <title> GetJob </title>
+            <title>
+GetJob            </title>
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/GetJob.png" align="center" scale="40"/>
@@ -1077,7 +1089,8 @@ GetJob          </title>
           <title>
 ListJobs          </title>
           <figure>
-            <title> ListJobs </title>
+            <title>
+ListJobs            </title>
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/ListJobs.png" align="center" scale="40"/>
@@ -1089,7 +1102,8 @@ ListJobs          </title>
           <title>
 ListQueue          </title>
           <figure>
-            <title> ListQueue </title>
+            <title>
+ListQueue            </title>
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/ListQueue.png" align="center" scale="40"/>
@@ -1101,7 +1115,8 @@ ListQueue          </title>
           <title>
 SubmitJob          </title>
           <figure>
-            <title> SubmitJob </title>
+            <title>
+SubmitJob            </title>
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/SubmitJob.png" align="center" scale="40"/>
