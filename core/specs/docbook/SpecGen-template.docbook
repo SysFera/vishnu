@@ -76,12 +76,8 @@
     </section>
   </chapter>
     <!-- GENERATED PART -->
-  <chapter annotations="UMS/specs/UMS.asta#UC">
-      <title>Use cases for Users Management System (UMS)</title>
-  </chapter>
-    
-  <chapter annotations="TMS/specs/TMS.asta#UC">
-      <title>Use cases for Tasks Management System (TMS)</title>
+  <chapter annotations="UMS/specs/UMS.asta#UCDESC+UCDIAG+DICT(UMS Analyse/DATA_DICTIONARY)">
+    <title>User Management System (UMS)</title>
   </chapter>
     
 </book>
