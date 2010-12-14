@@ -14,12 +14,20 @@
       <revhistory>
         <revision>
         <revnumber>01</revnumber>
-        <date>13/12/2010</date>
+        <date>07/12/2010</date>
         <authorinitials>B.Isnard</authorinitials>
         <revdescription>
           <para>Formatting example</para>
         </revdescription>
-      </revision>
+        </revision>
+        <revision>
+          <revnumber>02</revnumber>
+          <date>13/12/2010</date>
+          <authorinitials>B.Isnard</authorinitials>
+          <revdescription>
+            <para>Pre-delivrable</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
