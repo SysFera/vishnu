@@ -109,7 +109,15 @@
     
   </chapter>
   <chapter annotations="core/specs/stb/STB_Performance.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
-    <title>Sécurité du système et des données</title>
+    <title>Performances, fiabilité et robustesse</title>
     
+  </chapter>
+  <chapter>
+    <title>Environnement matériel et logiciel</title>
+    <para>TODO</para>
+  </chapter>
+  <chapter>
+    <title>Installation et maintenance</title>
+    <para>TODO</para>
   </chapter>
 </book>
