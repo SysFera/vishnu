@@ -4,6 +4,18 @@
   <info>
     <author>
       <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Eugène</firstname>
         <surname>Pamba Capo-Chichi</surname>
       </personname>
@@ -423,5 +435,13 @@
           </listitem>
         </itemizedlist></para>
     </section>
+  </chapter>
+  <chapter>
+    <title>Environnement matériel et logiciel</title>
+    <para>TODO</para>
+  </chapter>
+  <chapter>
+    <title>Installation et maintenance</title>
+    <para>TODO</para>
   </chapter>
 </book>
