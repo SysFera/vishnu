@@ -20,6 +20,12 @@
         <surname>Pamba Capo-Chichi</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
     <title>VISHNU D1.0 - General specifications</title>
     <revhistory>
       <revision>
@@ -1226,6 +1232,129 @@
           </tgroup>
         </informaltable>
       </section>
+      <section>
+        <title>UA6.1 Add a machine</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>UA6.1 Add a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>An administrator registers a new machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The infrastructure has one more machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The administrator add a machine at the infrastructure giving :</para><para>  - The machine name</para><para>  - The machine state (private or accessible to users)</para><para>  - The public adress (IP)</para><para>  - A structure describing the machine state</para><para>  - A structure describing the network</para><para>2) The machine is added to the infrastructure and the machine ID is returned.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>For base sequence :</para><para>* A machine with the same name exists, the ALREADYREGISTERED exception is raised.</para><para>* A machine with the same public adress already exists, the ALREADYREGISTERED exception is raised</para><para>* The machine is not reachable, the NOTREACHABLE exception is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>UA6.2 Remove a machine</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>UA6.2 Remove a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>An administrator unregisters a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>- the machine is registered in the system</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>- ?? preciser l'état de la BDD</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The administrator remove a machine from the infrastructure giving the machine id</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>For remove :</para><para>* The public adress is unknown, the UNNOWNMACHINE exception is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>UA6.3 Display machines</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>UA6.3 Display machines</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
     </section>
     <section>
       <title>Use case diagrams
@@ -1237,6 +1366,18 @@
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/UC UMS Admin.png" align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>UC UMS Admin Machines</title>
+        <figure>
+          <title>UC UMS Admin Machines</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UC UMS Admin Machines.png" align="center"
+                  scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
@@ -1796,6 +1937,705 @@ for each option is defined by the administrator. This features can be used by al
             <para><emphasis role="bold">TMS</emphasis> : Task Management System</para>
           </listitem>
         </itemizedlist></para>
+    </section>
+  </chapter>
+  <chapter annotations="IMS/specs/IMS.asta#UCDESC+UCDIAG+DICT(IMS Analyse/DATA_DICTIONARY)">
+    <title>Use cases for Information Management System (IMS)</title>
+    <section>
+      <title>Use case descriptions
+</title>
+      <section>
+        <title>I1. Get the update frequency</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>I1. Get the update frequency</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The user gets how often the IMS database is updated</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>User</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The user calls the function to know how often the IMS database is automatically updated</para><para>2) The System returns the value in second</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>The frequency is not defined by the admins, he gets the default value used.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>I2 Get metric data</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>I2 Get metric data</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The user gets data concerning the metrics on a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>User</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The user calls to get the metrics data. on a machine identified by a machine id, for a metric type, from start time up to duration seconds. The metrics are within {number of cpu, number of free cpu, total diskSpace, free diskSpace, total RAM, free RAM, number of processes running}</para><para>2) The System returns the results by groups (metric,value, time).</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>Fail to get the metrics, an UNREACHABLECOMPONENT exception is raised</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>I3. Export and replay commands</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>I3. Export and replay commands</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The user exports and replays a sequence of commands made during a session.</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>User</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>All the commands submitted during a session have been re-executed keeping the same order they were originally launched.</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The user calls to export the history of a session identified by an id in python format</para><para>2) The System provides a python script containing all the commands of the session with the same parameters as provided initially by the user (including file paths, numbers, strings, options)</para><para>3) The user executes the python script in VISHNU</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry><para>1a) The user calls to export the history of a session identified by an id in shell format.</para><para>2a) The System provides a shell script containing all the commands of the session with the same parameters as provided initially by the user (including file paths, numbers, strings, options)</para><para>3a) The user executes the shell script in a shell</para></entry>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>1 -> The session id is invalid, an INVALIDPARAMETER exception is raised.</para><para>3 -> A command in the execution fails, a COMMANDERROR is raised</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>I4. Get data on the infrastructure</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>I4. Get data on the infrastructure</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The user gets System information about the machines</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>User</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>B1 * The user calls to get the use of the CPUs on a machine identified by an ID. </para><para>      * The System returns him the use of the CPUs on the machine in percentage.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry><para>B2 * The user calls to get the number of CPUs on a machine identified by an ID. </para><para>      * The System returns him the number of CPUs on the machine.</para><para>---</para><para>B3 * The user calls to get the total diskSpace.</para><para>     * The System returns him the value.</para><para>---</para><para>B4 * The user calls to get the free diskSpace.</para><para>     * The System returns him the value.</para><para>---</para><para>B5 * The user calls to get the total RAM on a machine identified by an id.</para><para>     * The System returns him an id.</para><para>---</para><para>B6 * The user calls to get the free RAM on a machine identified by an id.</para><para>     * The System returns him the value</para></entry>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>The machine id is invalid, an INVALIDPARAMETER exception is raised</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA1. Get the running processes</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA1. Get the running processes</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The admin gets the list of the running processes on a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The admin calls to get the list of the processes on a machine referenced by a machine id</para><para>2) The System returns a list of processes</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry><para>2 -> No process is running on the machine, the admin gets an empty list</para></entry>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>1 -> machineId is invalid, an INVALIDPARAMETER exception is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA2. Define a system load treshold</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA2. Define a system load treshold</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The administrator defines a system load treshold for a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The system load treshold is added to the System database</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1a) The administrator calls to define the limit size of the diskSpace to use with a machine id, a treshold value and an admin id</para><para>2a) The System updates the database</para><para>OR------------------------</para><para>1b) The administrator calls to define the limit of RAM available to he user with a machine id, a treshold value and an admin id</para><para>2b) The System updates the database</para><para>OR------------------------</para><para>1c) The administrator calls to define the number of processes treshold on a machine with a machine id, a treshold value and an admin id</para><para>2c) The System updates the database</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>* The admin ID is invalid, the database is not updated and a INVALIDPARAMETER exception is raised</para><para>* The modification of the database fails, a DATABASEEXCEPTION is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA2.1 Get a system load treshold</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA2.1 Get a system load treshold</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The user wants to get the tresholds on a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The user calls to get the defined limit on a machine identified by an id. These limits are within {free diskSpace,  free RAM, number of processes running}</para><para>2) The System returns the value.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>* No limit is defined for this machine, the user gets an empty list.</para><para>* The machine id is invalid, the user gets an INVALIDPARAMETER exception</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA3. Define the identifiers</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA3. Define the identifiers</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The administrator defines the format of the automatic identifiers defined for the System objects.</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>A new format will be used to create the new identifiers</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The administrator has a list of variables to define the identifiers shape. He has a method by kind of object (an object is either a user or a machine or a task or a file transfer).</para><para>Available variables are :</para><para>  YEAR : the last two digits, (e.g. 10 for 2010)</para><para>  MONTH : Numerical value of the month (from 1 to 12)</para><para>  DAY : Day number, from 1 to 31</para><para>  TYPE : The object kind</para><para>  SITE : The place for machine/users</para><para>  NAME : Username or machine name</para><para>  CPT : A counter automatically increased (each kind of object has its counter).</para><para>2) He calls the function to redefine the format with some of the previous parameters in a string. For example, &quot;$TYPE$DAY$MONTH$YEAR$CPT&quot;</para><para>3) The System database is updated, the System does not check if the given format creates unique identifiers. If the same identifier is created, it will degenerate the database (the key will not be unique)</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry><para>2-> An invalid variable is given, an INVALIDPARAMETER exception is raised and the old format is still used</para></entry>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA4. Hard delestage</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA4. Hard delestage</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>Abruptly stop the processes running on a machine (the waiting actions are cancelled and the running ones are cut).</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The whole machine is flushed</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The admin launches the hard delestage function on a machine identified by an id.</para><para>2) The System flushes all the waiting action.</para><para>3) The System stops all the running processes on this machine.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA5. Soft delestage</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA5. Soft delestage</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The admin purges all the waiting actions and stops the running ones</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>No jobs are waiting to run or running</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The admin calls the soft delestage function on the machine identified by an id.</para><para>2) The System flushes the waiting jobs and stops the running ones. They are stored and can be restarted later </para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA6. Set the update frequency</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA6. Set the update frequency</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The administrator sets the update frequency</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The System updates the IMS database at the new frequency</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The administrator calls to set the update frequency in seconds</para><para>2) The System updates its database update frequency value</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>The database is is not reachable. A DATABASEERROR is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA7. Notification of limit overflow</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA7. Notification of limit overflow</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The admin is informed of a limit overflow</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>A machine on the System has a limit overflow</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The System gets the email adress of the admin to contact</para><para>2) The System sends a mail to the admin concerning the overflow. The mail contains the name of the machine and the treshold concerned.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>Sending the mail fails, a MAILERROR exception is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA8. Restart the System</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA8. Restart the System</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>Restart all the servers, agents, and daemons of the System. The started actions are restarted again.</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>The System platforms needs to be restarted</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The System is running with the same server, agents and daemons that were running before the crash. The interrupted actions are restarted from the beginning.</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) An admin detects a problem</para><para>2) An admin calls to restart the System</para><para>3) The System saves the current actions</para><para>4) The System restarts components and restarts the stopped action from the beginning</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>4-> Fail to relaunch a component (server, client, agent), an UNREACHABLECOMPONENT exception is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA9. Automatic restart</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA9. Automatic restart</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>A component is restarted</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>A component of the platform is down</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The component is up and running again</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) An admin detects a component has stopped for unknown reasons (a component = server, daemon, agent)</para><para>2) The admin calls the System to relaunche the component with its name</para><para>3) The System relauches the component</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>3-> Fail to restart the component, an UNREACHABLECOMPONENT exception is raised.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>U1.3 Execute synchronous request</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>U1.3 Execute synchronous request</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The user subsmits a synchronous request to the System. c.f. the UMS use case description (U1.3)</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>User, Admin, Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Use case diagrams
+</title>
+      <section>
+        <title>Consult</title>
+        <figure>
+          <title>Consult</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/Consult.png" align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>Fonctionnalities Global</title>
+        <figure>
+          <title>Fonctionnalities Global</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/Fonctionnalities Global.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>PlatformManagement</title>
+        <figure>
+          <title>PlatformManagement</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/PlatformManagement.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>Replay</title>
+        <figure>
+          <title>Replay</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/Replay.png" align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>Stop/Restart sequences</title>
+        <figure>
+          <title>Stop/Restart sequences</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/Stop/Restart sequences.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>UseCase Diagram0</title>
+        <figure>
+          <title>UseCase Diagram0</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UseCase Diagram0.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
+    <section>
+      <title>Data dictionary</title>
     </section>
   </chapter>
 </book>
