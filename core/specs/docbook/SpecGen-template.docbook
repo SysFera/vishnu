@@ -11,6 +11,9 @@
       <author>
         <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
       </author>
+      <author>
+        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
       <revhistory>
         <revision>
         <revnumber>01</revnumber>
@@ -85,6 +88,9 @@
     <title>Use cases for User Management System (UMS)</title>
   </chapter>
   <chapter annotations="TMS/specs/TMS.asta#UCDESC+UCDIAG+DICT(TMS Analyse/DATA_DICTIONARY)">
+    <title>Use cases for Tasks Management System (TMS)</title>
+  </chapter>
+  <chapter annotations="IMS/specs/IMS.asta#UCDESC+UCDIAG+DICT(IMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for Tasks Management System (TMS)</title>
   </chapter>
 </book>
