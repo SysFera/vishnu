@@ -11,6 +11,10 @@
 #include "Database.hh"
 #include "mysql.h"
 
+/**
+ * \class MYSQLDatabase
+ * \brief MYSQL implementation of the Database
+ */
 class MYSQLDatabase : public Database{
 public :
   static const int DATABASENOTCONNECTED = -1;
