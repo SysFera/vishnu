@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+    <info>
+      <title>VISHNU D1.0 - api specifications</title>
+      <author>
+        <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
+      <revhistory>
+        <revision>
+        <revnumber>01</revnumber>
+        <date>21/12/2010</date>
+        <authorinitials>B.Isnard</authorinitials>
+        <revdescription>
+          <para>Formatting example</para>
+        </revdescription>
+        </revision>
+        <revision>
+          <revnumber>02</revnumber>
+          <date>21/12/2010</date>
+          <authorinitials>B.Isnard</authorinitials>
+          <revdescription>
+            <para>Pre-delivrable</para>
+          </revdescription>
+        </revision>
+      </revhistory>
+    </info>
+  <chapter>
+    <title>Document presentation</title>
+    <section>
+      <title>Document objectives</title>
+      <para>This document presents the external specifications of the Vishnu system at a general
+        level. At this level, we describe .</para>
+      <para>These general specifications are a prerequisite for the detailed specifications step in
+        the software development process.</para>
+    </section>
+    <section>
+      <title>Document structure</title>
+      <para>The document is divided into 4 parts corresponding to the 4 modules that compose the
+        Vishnu system:</para>
+      <para><itemizedlist>
+        <listitem>
+          <para>UMS: Users Management System</para>
+        </listitem>
+        <listitem>
+          <para>TMS: Tasks Management System</para>
+        </listitem>
+        <listitem>
+          <para>FMS: Files Management System</para>
+        </listitem>
+        <listitem>
+          <para>IMS: Information Management System</para>
+        </listitem>
+      </itemizedlist></para>
+      <para>Each module  corresponds to a chapter in the document, and each chapter contains two sections:<itemizedlist>
+          <listitem>
+            <para>A first section containing "TMS api descriptions" </para>
+          </listitem>
+          <listitem>
+            <para>A second section containing "UMS api descriptions" </para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>References</title>
+      <para/>
+    </section>
+    <section>
+      <title>Glossary</title>
+      <para/>
+    </section>
+  </chapter>
+    <!-- GENERATED PART -->
+  <chapter annotations="EDF-API/UMS.apim#UMS">
+    <title>API specification  for User Management System (UMS)</title>
+  </chapter> 
+  <chapter annotations="TMS_APIM/model/TMS.apim#TMS">
+    <title>API specification  for Tasks Management System (TMS)</title>
+  </chapter>
+  <chapter annotations="IMS_API/model/IMS.apim#IMS">
+    <title>API specification for Information Management System (IMS)</title>
+  </chapter>
+</book>
+  
