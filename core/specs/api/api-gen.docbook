@@ -26,6 +26,12 @@
         <surname>Coulomb</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cissé</surname>
+      </personname>
+    </author>
     <title>VISHNU D1.0 - api specifications</title>
     <revhistory>
       <revision>
@@ -6319,6 +6325,139 @@
               <row>
                 <entry><para>HARD</para></entry>
                 <entry><para>1</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+  </chapter>
+  <chapter annotations="EDF-API/FMS.apim#FMS">
+    <title>API specification for File Management System (FMS)</title>
+    <section>
+      <title>FMS specification
+</title>
+      <section>
+        <title>createFile</title>
+      </section>
+      <para><emphasis role="bold">Parameters</emphasis></para>
+      <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>Parameter
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+              <entry>Mode
+</entry>
+              <entry>Required
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The machine identifier</para></entry>
+              <entry><para>IN</para></entry>
+              <entry><para>yes</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The session id</para></entry>
+              <entry><para>IN</para></entry>
+              <entry><para>yes</para></entry>
+            </row>
+            <row>
+              <entry><para>path</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The path tof the created  file</para></entry>
+              <entry><para>IN</para></entry>
+              <entry><para>yes</para></entry>
+            </row>
+            <row>
+              <entry><para>file_type</para></entry>
+              <entry><para><link linkend="file_type_t">file_type_t</link></para></entry>
+              <entry/>
+              <entry><para>OUT</para></entry>
+              <entry><para>yes</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="bold">Description </emphasis></para>
+      <para>The createFile() function creates a file on a remote machine</para>
+      <para><emphasis role="bold">Return Value </emphasis></para>
+      <para>An error code is returned when an error occurs during the execution of the function.</para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="8.5cm"/>
+          <colspec colwidth="9cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody/>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="bold">Signature </emphasis></para>
+      <funcsynopsis><funcprototype><funcdef>int <function>createFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>file_type_t&amp; <parameter>file_type</parameter></paramdef></funcprototype></funcsynopsis>
+      <section>
+        <title>Class definitions</title>
+        <para id="file_type_t"><emphasis role="bold">file_type_t Enumeration Type</emphasis></para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="4cm"/>
+            <colspec colwidth="4cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Value
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>block</para></entry>
+                <entry><para>0</para></entry>
+              </row>
+              <row>
+                <entry><para>character</para></entry>
+                <entry><para>1</para></entry>
+              </row>
+              <row>
+                <entry><para>directory</para></entry>
+                <entry><para>2</para></entry>
+              </row>
+              <row>
+                <entry><para>symboliclink</para></entry>
+                <entry><para>3</para></entry>
+              </row>
+              <row>
+                <entry><para>sckt</para></entry>
+                <entry><para>4</para></entry>
+              </row>
+              <row>
+                <entry><para>fifo</para></entry>
+                <entry><para>5</para></entry>
+              </row>
+              <row>
+                <entry><para>regular</para></entry>
+                <entry><para>6</para></entry>
               </row>
             </tbody>
           </tgroup>
