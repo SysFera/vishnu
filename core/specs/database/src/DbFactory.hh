@@ -19,6 +19,10 @@ static const int MYSQLDB   = 1;
  */
 static const int POSTGREDB = 2;
 
+/**
+ * \class DbFactory
+ * \brief Database factory
+ */
 class DbFactory{
 
 public :

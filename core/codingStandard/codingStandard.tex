@@ -1,0 +1,467 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{url}
+\usepackage{color}
+
+\begin{document}
+\section*{Introduction}
+The aim of this document is to present a set of coding standards for the EDF's
+ project in the Sysfera company.\\
+These standards are based upon the \textit{Programmer's guide} document used
+ to develop the DIET middleware, and also inspired by the Qt coding style.
+
+\section{File structure}
+
+\subsection{Headers}
+
+Each file begins with the DIET header, where are precised:\\
+\begin{tabular}{l}
+- a short title (in one line)  that explains the role of this file,\\
+- the authors of the file,\\
+- A license field that will be automatically filled in.\\
+\end{tabular}
+
+As an example, here is the header of the \LaTeX\ source of this document
+%\footnotesize
+\begin{verbatim}
+/**
+ * \file Name of the file
+ * \brief A one line description
+ * \author author(s) of the file
+ * \section
+ *   <licence>
+ */
+\end{verbatim}
+
+The CMakeLists.txt are not submitted to this header marking (since it was
+considered that there is no technical value attached to them).
+
+
+These CVS fields are removed by a shell script when a distribution is built. The
+\texttt{\$LICENSE\$} line will also be processed automatically, and replaced by
+a short version of the DIET license, so please be very careful to put one and
+only one space between the \texttt{\%*} and the \texttt{\$}, between 
+\texttt{\$LICENSE\$} and the final \texttt{*\%}, and NO space after the last
+significant character of this lines.
+
+\subsection{C++}
+Each header must start with a:
+\begin{verbatim}
+#ifndef _CLASSNAME_HH_ 
+#define _CLASSNAME_HH_ 
+\end{verbatim}
+and ends with a $\#endif$.
+A header must contain only one class (unless there are some inner classes/nested
+ classes required) and its name must be \textit{ClassName.hh}. The implementation
+ class must be \textit{ClassName.cc} and must contain the implementation of the
+ functions of the hh file.
+
+In a class declaration, the public part comes first, then the protected one and 
+last the private one. These keywords must always be, event if no protected item.
+Each inner part declares the fields first, and all methods then.
+
+The include files follow this order:
+\begin{itemize}
+\item The system include
+\item The DIET include
+\item The local include
+\end{itemize}
+Warning, in C++ include the C++ files (cstdio and not stdio)
+
+See the C++ header example file.
+
+\subsection{C}
+Each header must start with a:
+\begin{verbatim}
+#ifndef _FILENAME_H_ 
+#define _FILENAME_H_ 
+\end{verbatim}
+and ends with a $\#endif$.
+A header must contain the prototypes of the functions linked to the file
+ its name must be \textit{fileName.h}. The implementation
+ file must be \textit{fileName.c} and must contain the implementation of the
+ functions of the header file.
+
+
+The include files follow this order:
+\begin{itemize}
+\item The system include
+\item The DIET include
+\item The local include
+\end{itemize}
+Warning, in C include the C files (stdio and not cstdio)
+
+See the C header example file.
+
+\subsection{JAVA}
+A header must contain only one class (unless there are some inner classes/nested
+ classes required) and its name must be \textit{ClassName.java}.
+
+In a class declaration, the public part comes first, then the protected one and 
+last the private one. These keywords must always be, event if no protected item.
+Each inner part declares the fields first, and all methods then.
+
+The imported files follow this order:
+\begin{itemize}
+\item The system import
+\item The DIET import
+\item The local import
+\end{itemize}
+
+See the JAVA header example file.
+
+
+\section{Naming}
+\subsection{JAVA/C++}
+\begin{itemize}
+\item All names must be English
+\item Class names should be nouns, in mixed case with the first letter of each
+ internal word capitalized. Try to keep your class names simple and descriptive.
+ Use whole words-avoid acronyms and abbreviations (unless the abbreviation is
+ much more widely used than the long form, such as URL or HTML). Acronyms must
+be uppercase.
+\begin{verbatim}
+Wrong:
+class lapin
+class 3nutella
+class Lehomard
+class HtmlParser
+
+Right:
+class HTMLParser
+class AgentImpl
+class Toto
+class LinusTorvald
+\end{verbatim}
+
+\item Methods should be verbs, in mixed case with the first letter lowercase,
+ with the first letter of each internal word capitalized.
+\begin{verbatim}
+Wrong:
+  addservice();
+  chocolat();
+
+Right:
+  run();
+  addService();
+\end{verbatim}
+Here is a set of useful verbs \textit{add, run, launch, submit, send, receive,
+start, stop, get, set, have, is, emit, call}
+\item Member variable names should be short yet meaningful. The choice of a
+ variable name should be mnemonic - that is, designed to indicate to the
+ casual observer the intent of its use. Moreover, each member
+ variable must be pre-fixed using the 'm' letter. m stands for member. 
+Ne pas utiliser 'this' par la suite dans le code pour désigner ces variables.
+\begin{verbatim}
+Wrong:
+  float minimum;
+  int size;
+  char *name;
+
+Right:
+  float mminimum;
+  int msize;
+  char *mname;
+\end{verbatim}
+\item All instance, class, and class constants are in mixed case with a
+ lowercase first letter. Internal words start with capital letters. Variable
+ names should not start with underscore \texttt{\_} or dollar sign \texttt{\$}
+ characters, even though both are allowed. They must follow the members naming
+ conventions.
+One-character variable names should be avoided except for temporary "throwaway"
+ variables. Common names for temporary variables are i, j, k, m, and n for
+ integers; c, d, and e for characters.\\
+  Example: int i, char* name, ...
+\item The names class constant variables and of ANSI constants,
+ of macros and enum constants should all be uppercase with words
+ separated by underscores. ANSI constants should be avoided, for ease of
+ debugging. They must be in the langage
+\begin{verbatim}
+Wrong:
+  #define SIZE           10
+  static const char *Nom "TOTO"
+
+Right:
+  static const char *NOM "TOTO"
+  const int TAILLE_CHAT  75
+\end{verbatim}
+
+\item Type names must be suffixed with \texttt{\_t}: \\
+\begin{verbatim}
+Wrong:
+  diet_type
+
+Right:
+  diet_type_t
+\end{verbatim}
+\item Getter/setter/boolean functions must start with get/set/is(or have).
+If they just return/set something, they must be implemented in the header
+file.
+\begin{verbatim}
+Wrong:
+  bool local();
+  int child();
+  void size(int s);
+
+Right:
+  bool isLocal() {return mlocal;} 
+  int  getNumberChildren() {return mchildren;}
+  void setSize(int s) {msize = s;}
+\end{verbatim}
+
+\end{itemize}
+
+\subsection{C}
+The C code must follow the C naming rules:
+ with lowercase only and words separated by underscores.
+The names of variables declared class constants and of ANSI constants,
+ the names of macros and enum constants should be all uppercase with words
+ separated by underscores. ANSI constants should be avoided, for ease of
+ debugging.
+\begin{verbatim}
+Wrong:
+  #define Size           10
+  #define NOMDECONSTANTE "TOTO"
+
+Right:
+  #define TRACE_STRUCTURES 10
+  #define SIZE             1024
+\end{verbatim}
+
+Type names must be suffixed with \textit{\_t}
+\begin{verbatim}
+Wrong:
+  diet_type
+
+Right:
+  diet_type_t
+\end{verbatim}
+
+\section{Comments and Documentation}
+\begin{itemize}
+\item All comments and the documentation must be in English.
+\item Both C++ types of comments are allowed.\\
+  Example: \begin{itemize}
+  \item // This is a comment
+  \item /* This is a comment */
+  \end{itemize}
+\item Comments are on the line before, or on the same line as the code they
+ comment.
+\item /**/ comments must not have code after them on the same 
+line.\\
+\begin{verbatim}
+Wrong:
+  int size /* size of object */, length /* length of object */;
+
+Right:
+  int size;   /* Size of the object */
+  int length; /* Length of the object */
+\end{verbatim}
+\item Each method, function, variable, class must be commented with Doxygen 
+comments. See \url{http://www.stack.nl/~dimitri/doxygen/}
+Some usefull doxygen keywords: \textit{author, param, return, fn, brief, var,
+ namespace, class, throws}
+\item Doxygen supports C, C++, JAVA, Python, IDL and PHP. If we use an other
+language (for WS), we need to specify how to comment automatically.\\
+Doxygen style to use:
+\begin{verbatim}
+C/C++/JAVA:
+/**
+ * \brief
+ * \fn
+ * \param
+ */
+\end{verbatim}
+\end{itemize}
+
+\section{Manuals}
+The developers must maintain a user manual and a technical manual up to date to
+ explain to the users how to use the code and the future developers how to 
+maintain the code.
+
+\section{Indentation}
+
+Do not use tabs inside the code, and wrap lines after the 80th
+character in a line. We do not like tabs because different editors and editor
+settings always lead to different displays.
+A tab is 4 spaces characters.
+
+Lines have to be indented by two spaces for each code block level.
+
+Due to cmake's syntax design choices, \texttt{CMakeLists.txt} tend to
+quickly feed the 80 characters width of a line. For \texttt{CMakeLists.txt}
+files it was thus chosen to use a 2 or 3 characters indentation width.
+If we strictly conform to the above limited-tabs recommendation,
+\texttt{CMakeLists.txt} should thus remain tab free.
+
+\textcolor{red}{ADDED}\\
+In the CMakeLists.txt files the following standards are to be followed :
+\begin{itemize}
+\item The function/macro commands are to be written in lower case \\
+\begin{verbatim}
+  WRONG add_Dependencies, ADD_DEPENDENCIES, ...
+  RIGHT add_library, add_custom_command, ...
+\end{verbatim}
+\item The parameters are to be in upper case with a space between the first 
+  parameter and the opening bracket, and no space between the command and
+  the bracket. There is a space between the last parameter nad the closing 
+  bracket.
+\begin{verbatim}
+  WRONG add_library ( TOTO ), add_executable(TITI)
+  RIGHT target_link_libraries ( myLib,
+                                toto )
+\end{verbatim}                                
+\item If a variable is hidden to the user in ccmake, there must be an 
+  explanation in the CMakeLists.txt file.
+\end{itemize}
+\textcolor{red}{END ADDED}
+
+\section{Declaration}
+\begin{itemize}
+\item Pointers must be initialized at the declaration
+\item  For the asterisk of a pointer declaration and the \texttt{\&} of a 
+reference the space has to be put in between the \texttt{*} or the 
+\texttt{\&} and the type name.
+ \begin{verbatim}
+Wrong:
+  char* toto;
+  int \& titi;
+
+Right:
+  char *toto;
+  int \&titi;
+\end{itemize}
+\item All keywords (extern, static, export, explicit,
+ inline, ...) and the return type must be on the line line the function
+ declaration. In the header and the implementation.
+\begin{verbatim}
+Wrong:
+  static int run(); 
+  extern void jump();
+
+Right:
+  void
+  myFunction();
+  static const int
+  run();
+\end{verbatim}
+\item Exceptions marker must be always present, and the throw statement
+must be on the line after the function name.
+\begin{verbatim}
+Wrong:
+void 
+launch() throws()
+
+Right:
+void
+launch()
+throws()
+\end{verbatim}
+
+\item If the parameters do not fit on the same line, they can be split on 
+various lines
+\item There must be a space between the opening brace and the closing
+ parenthesis for functions and keywords, on the same line.
+\begin{verbatim}
+Wrong:
+  void run(){
+  for (;;){
+
+Right:
+  void run() {
+  for (;;) {
+\end{verbatim}
+
+\item The closing brace must always be on a new line. If it ends a huge 
+block, the starting point should be precised in a short comment.
+\begin{verbatim}
+Wrong:
+  return;}
+
+Right:
+  return;
+}// End: run()
+\end{verbatim}
+\item There is never any space between after an openning
+ parenthesis and before a closing parenthesis.
+\begin{verbatim}
+Wrong:
+  if ( a < b )
+
+Right: 
+  int run(int a);
+  while (a < 5) {
+\end{verbatim}
+\item Fragments of arithmetic expressions must be with
+ spaces.
+\begin{verbatim}
+Wrong: 
+  a = 3<4;
+  b = 5*2;
+
+Right:
+  a = 3 * 4;
+  b = 5 * 2;
+\end{verbatim}
+\item Boolean links must have a space before and after.
+\begin{verbatim}
+Wrong:
+  (3 * 4)&&(2 + 3)
+Right:
+ (3 < 4) && (2>3), run(3) && (a>2*4)
+\end{verbatim}
+\item There always are spaces around the $=$ symbol.
+\item There must not be hard coded variables.
+\item In C, the declaration of the variables must always be
+at the beginning of a block.
+\item Use only C++ cast in C++.
+\begin{verbatim}
+Wrong:
+  size = (int) getSize();
+
+Right: (depending on the situation)
+  size = static_cast<int>(getSize())
+  size = dynamic_cast<int>(getSize())
+  size = reinterpret_cast<int>(getSize())
+  size = const_cast<int>(getSize())
+\end{verbatim}
+\item Use parentheses to group expressions.
+\begin{verbatim}
+Wrong:
+  a + b & c
+  if (a && b || c)
+
+Right:
+  if ((a && b) || c)
+  (a + b) & c
+\end{verbatim}
+\item Use curly braces when the body of a conditionnal statement contains more than one line.
+If there is a else on several lines, then use braces.
+\begin{verbatim}
+Wrong:
+  if (true) {
+    return;
+  }
+
+  if (true) 
+    return a;
+  else {
+    i++;
+    printError(msg);
+  }
+
+Right:
+  if (true)
+    return;
+
+  if (true) {
+    return a;
+  }
+  else {
+    i++;
+    printError(msg);
+  }
+\end{verbatim} 
+\item \textcolor{red}{DO NOT USE GOTO OR LABEL}
+\end{itemize}
+\end{document}

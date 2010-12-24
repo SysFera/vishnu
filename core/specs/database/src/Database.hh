@@ -2,7 +2,8 @@
  * \file Database.hh
  * \brief This file presents an abstract database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
- * \date 15/12/10 */
+ * \date 15/12/10 
+ */
 
 #ifndef _ABSTRACTDATABASE_H_
 #define _ABSTRACTDATABASE_H_
@@ -10,7 +11,10 @@
 #include <string>
 #include <vector>
 
-
+/**
+ * \class Database
+ * \brief This class describes a database
+ */
 class Database{
 public :
   /**
