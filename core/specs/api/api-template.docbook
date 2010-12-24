@@ -82,10 +82,10 @@
   <chapter annotations="EDF-API/UMS.apim#UMS">
     <title>API specification  for User Management System (UMS)</title>
   </chapter> 
-  <chapter annotations="TMS_APIM/model/TMS.apim#TMS">
+  <chapter annotations="EDF-API/TMS.apim#TMS">
     <title>API specification  for Tasks Management System (TMS)</title>
   </chapter>
-  <chapter annotations="IMS_API/model/IMS.apim#IMS">
+  <chapter annotations="EDF-API/IMS.apim#IMS">
     <title>API specification for Information Management System (IMS)</title>
   </chapter>
 </book>
