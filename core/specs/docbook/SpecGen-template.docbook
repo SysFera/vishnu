@@ -14,6 +14,9 @@
       <author>
         <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
       </author>
+       <author>
+        <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+      </author>
       <revhistory>
         <revision>
         <revnumber>01</revnumber>
@@ -92,6 +95,9 @@
   </chapter>
   <chapter annotations="IMS/specs/IMS.asta#UCDESC+UCDIAG+DICT(IMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for Information Management System (IMS)</title>
+  </chapter>
+  <chapter annotations="FMS/specs/FMS.asta#UCDESC+UCDIAG+DICT(FMS Analyse/DATA_DICTIONARY)">
+    <title>Use cases for File Management System (FMS)</title>
   </chapter>
 </book>
   
