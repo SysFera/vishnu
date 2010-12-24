@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+    <info>
+        <title>VISHNU D1.0 - Spécifications techniques des besoins</title>
+        <author>
+            <personname>
+                <firstname>Benjamin</firstname>
+                <surname>Isnard</surname>
+            </personname>
+        </author>
+        <author>
+            <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+        </author>
+        <author>
+            <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+        </author>
+        <revhistory>
+            <revision>
+                <revnumber>01</revnumber>
+                <date>07/12/2010</date>
+                <authorinitials>B.Isnard</authorinitials>
+                <revdescription>
+                    <para>Exemple pour validation du format</para>
+                </revdescription>
+            </revision>
+          <revision>
+            <revnumber>02</revnumber>
+            <date>13/12/2010</date>
+            <authorinitials>B.Isnard</authorinitials>
+            <revdescription>
+              <para>Pre-delivrable</para>
+            </revdescription>
+          </revision>
+        </revhistory>
+    </info>
+    <chapter>
+        <title>Présentation du document</title>
+        <section>
+            <title>Objectifs</title>
+            <para>Ce document présente les spécifications techniques des besoins pour le système
+                Vishnu. Ces spécifications décrivent les caractéristiques techniques du système à
+                réaliser du point de vue des utilisateurs d'une part et des administrateurs du
+                système d'autre part. Elles sont basées sur les documents de Cahier des charges du
+                système Vishnu (voir Références) et sur la proposition technique de la société
+                Sysfera. Ces spécifications incluent également les contraintes d'implémentation du
+                logiciel. L'objectif principal de ces spécifications est de valider l'adéquation de
+                la solution proposée par rapport aux besoins des utilisateurs du système
+                d'information et de ses administrateurs d'une part, et aux contraintes de
+                l'environnement d'utilisation d'autre part.</para>
+            <para>Ce document pourra également contenir des prévisions sur les évolutions futures du
+                logiciel et préciser quelles fonctions devraient être faciles à ajouter ou
+                supprimer.</para>
+            <para>Ces spécifications techniques des besoins sont un prérequis pour les
+                spécifications générales dans le processus de développement suivi pour le projet
+                Vishnu.</para>
+        </section>
+        <section>
+            <title>Structure du document</title>
+            <para>Le document est composé de 4 parties correspondant à des domaines techniques
+                différents:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Besoins liés à la sécurité du système et des données</para>
+                </listitem>
+                <listitem>
+                    <para>Besoins liés à l'environnement matériel et logiciel</para>
+                </listitem>
+                <listitem>
+                    <para>Besoins en performance, fiabilité et robustesse</para>
+                </listitem>
+                <listitem>
+                    <para>Besoins pour l'installation et la maintenance du système</para>
+                </listitem>
+            </itemizedlist>
+            <para>Chaque partie contient un tableau des exigences qui fait l'inventaire des tous les
+                besoins techniques concernant le domaine spécifié. Ce tableau est suivi d'un
+                dictionnaire des termes techniques employés afin de les préciser le cas
+                échéant.</para>
+        </section>
+        <section>
+            <title>Références</title>
+            <para/>
+        </section>
+        <section>
+            <title>Glossaire</title>
+            <itemizedlist>
+                <listitem>
+                    <para>UMS ("User Management System"): nom du module Vishnu de gestion des
+                        sessions et des utilisateurs</para>
+                </listitem>
+                <listitem>
+                    <para>TMS ("Tasks Management System"): nom du module Vishnu de gestion des
+                        tâches</para>
+                </listitem>
+                <listitem>
+                    <para>FMS ("Files Management System"): nom du module Vishnu de gestion des
+                        transferts de fichiers</para>
+                </listitem>
+                <listitem>
+                    <para>IMS ("Information Management System"): nom du module Vishnu de gestion des
+                        informations</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </chapter>
+    <!-- GENERATED PART -->
+  <chapter annotations="core/specs/stb/STB_SECURITE.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
+    <title>Sécurité du système et des données</title>
+    
+  </chapter>
+  <chapter annotations="core/specs/stb/STB_Performance.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
+    <title>Performances, fiabilité et robustesse</title>
+    
+  </chapter>
+  <chapter>
+    <title>Environnement matériel et logiciel</title>
+    <para>TODO</para>
+  </chapter>
+  <chapter>
+    <title>Installation et maintenance</title>
+    <para>TODO</para>
+  </chapter>
+</book>
