@@ -2876,129 +2876,6 @@ for each option is defined by the administrator. This features can be used by al
       <title>Use case descriptions
 </title>
       <section>
-        <title>Execute a synchronous tranfer file</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>Execute a synchronous tranfer file</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry/>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>Execute an asynchronous copy of files</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>Execute an asynchronous copy of files</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry/>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>Execute an asynchronous tranfer file</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>Execute an asynchronous tranfer file</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry/>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
         <title>F1- Execute simple command on one remote machine</title>
         <informaltable>
           <tgroup cols="2">
@@ -3033,7 +2910,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. The given parameters are invalid for this command.</para><para>1.b The  </para><para>1b. The specified host is unknown.</para><para>2a. The command fails and a error message  is printed on the standard output of client System.</para></entry>
+                <entry><para>1a. The given parameters are invalid for this command.</para><para>1.b  The specified host is unknown. </para><para>1c. The specified host is unavailable.</para><para>1d.The specified session id is invalid. </para><para>2a. The command fails and a error message  is printed on the standard output of client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
@@ -3070,7 +2947,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the change acces rights command with the file,  the new acces rights to set and  the involved machine.</para><para>2.The client System sets the new access rights to the file. </para></entry>
+                <entry><para>1. User submits the change acces rights command with the file,  the new acces rights to set, the involved machine and session id.</para><para>2.The client System sets the new access rights to the file. </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3160,7 +3037,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. Administrator submits the change group owner command with the file , the new group to set and  the involved host.</para><para>2.The The client System sets the new group owner to the file. </para></entry>
+                <entry><para>1. Administrator submits the change group owner command with the file , the new group to set, the involved host and session id.</para><para>2.The The client System sets the new group owner to the file. </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3205,7 +3082,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the create directory command with the path of directory to create and  the involved host.</para><para>2.The client System creates a new directory with the specified path.</para></entry>
+                <entry><para>1. User submits the create directory command with the path of directory to create, the involved host and session id.</para><para>2.The client System creates a new directory with the specified path.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3250,7 +3127,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the create file command with the path of file to create and  the involved host.</para><para>2.The FMS Server creates a new file with the specified path.</para></entry>
+                <entry><para>1. User submits the create file command with the path of file to create, the involved host and session id.</para><para>2.The client System creates a new file with the specified path.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3340,7 +3217,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the delete file command with the path of file to delete and  the involved host.</para><para>2.The client System deletes the specified file from the host.</para></entry>
+                <entry><para>1. User submits the delete file command with the path of file to delete, the involved host and session id.</para><para>2.The client System deletes the specified file from the host.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3385,7 +3262,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of directory to list and  the involved host.</para><para>2.The client System displays the contents of the specified directory on its standard output.</para></entry>
+                <entry><para>1. User submits the display command with the path of directory to list, the involved host and session id.</para><para>2.The client System displays the contents of the specified directory on its standard output.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3430,7 +3307,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the file to display and  the involved host.</para><para>2.The client System deletes the specified file from the machine</para></entry>
+                <entry><para>1. User submits the display command with the path of the file to display, the involved host and session id.</para><para>2.The client System deletes the specified file from the machine</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3475,7 +3352,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the file to display and  the involved host.</para><para>2.The client System displays the first lines of the specified file on its standard output.</para></entry>
+                <entry><para>1. User submits the display command with the path of the file to display, the involved host and session id.</para><para>2.The client System displays the first lines of the specified file on its standard output.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3488,47 +3365,6 @@ for each option is defined by the administrator. This features can be used by al
               <row>
                 <entry><para>Extension of</para></entry>
                 <entry><para>F1- Execute simple command on one remote machine</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>F2- Transfer a file between two remote hosts</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>F2- Transfer a file between two remote hosts</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to execute a tranfer file command from a remote host A to another remote host B.  </para></entry>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry><para>User</para></entry>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry><para>-User is logged in the client  System.</para><para>-FMS server is installed and running on A and B .</para></entry>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry><para>-The transfer file is done successfully and a copy of the file is in the remote host B.</para><para>- The System log has been updated and contains the request parameters.</para></entry>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the tranfer file command with the path of the file to copy and  the involved two hosts.</para><para>2.The client System copy the given source file to the specified destination.</para></entry>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. The given parameters are invalid for this command.</para><para>1b. The specified hosts are unknown.</para><para>2a. The command fails and a error message  is printed on the standard output of client System.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3553,15 +3389,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>-The file transfer is full accomplished.</para></entry>
+                <entry><para>-The file transfer is full accomplished and a copy of the file source is now on the destination host.</para><para>- The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy and  the path of destination.</para><para>2.The client System copy the given source file to the specified destination.</para></entry>
+                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy(including the host), the path of destination (including the host) and session id.</para><para>2.The System copy the given source file to the specified destination.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3569,7 +3405,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. if the source file is unknown, a message is printed on the standard output of the client System.</para><para>1.c if User does not  have write permission in the parent directory, a message is also printed on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. if the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. if User does not  have write permission in the parent directory, a message is printed on the standard output of the client System.</para><para>1f. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3606,11 +3442,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-The file transfer is full accomplished.</para><para>- A copy of the file source is now on the destination host,</para><para>- and the source file is removed from the source host.</para><para>- The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy(including the host), the path of destination (including the host) and session id.</para><para>2.The System copy the given source file to the specified destination and remove the source file from the source host .</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3618,7 +3454,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. if the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. if User does not  have write permission in the parent directory, a message is  printed on the standard output of the client System.</para><para>1f. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3643,7 +3479,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case gives the possibility to  User to copy a file located on a local machine towards a remote machine  and submit another command without waiting the end of transfer file.</para><para>The three cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para></entry>
+                <entry><para>This use case allows User to copy a file  between two hosts  and submit another command without waiting the end of transfer file.</para><para>The three cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3651,15 +3487,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>-The file transfer may be on-going or completed.</para><para>-User gets an transfer id in order to check the file tranfert status.</para></entry>
+                <entry><para>-The file transfer may be on-going or completed.</para><para>-User gets an transfer id in order to check the file tranfert status.</para><para>-The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the tranfer file command with the path of the file to copy , the path of destination file, and the destination host.</para><para>2.The The client System copy the given source file to the specified destination.</para></entry>
+                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy (including the host), the path of destination (including the host) and session id.</para><para>2. The System starts the transfer of the given source file to the specified destination and sends back to User a transfer id.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3667,7 +3503,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. if the source file is unknown, a message is printed on the standard output of the client System.</para><para>1c. if User does not  have write permission in the parent directory, a message is also printed on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. if the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. if User does not  have write permission in the parent directory, a message is  printed on the standard output of the client System.</para><para>1f. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3692,7 +3528,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows User to move a file from a host to another host and submit another command without waiting the end of transfer file. Furthermore, the source file is removed from the source host. </para><para>The three cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3700,15 +3536,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-The file transfer may be on-going or completed.</para><para>-User gets an transfer id in order to check the file tranfert status.</para><para>-At the end of the transfer, the source file is removed from the source host.</para><para>The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy (including the host), the path of destination (including the host) and session id.</para><para>2. The System starts the transfer of the given source file to the specified destination and sends back to User a transfer id.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3716,7 +3552,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. if the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. if User does not  have write permission in the parent directory, a message is  printed on the standard output of the client System.</para><para>1f. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3727,17 +3563,17 @@ for each option is defined by the administrator. This features can be used by al
         </informaltable>
       </section>
       <section>
-        <title>F2.3- Suspend a file tranfer</title>
+        <title>F2.3- Stop a file tranfer</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>F2.3- Suspend a file tranfer</para></entry>
+                <entry><para>F2.3- Stop a file tranfer</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows User to stop an asynchronous file transfer by specifying its id, or stop all file transfer he submitted.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3745,15 +3581,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-The file transfer whose id is given  is stopped or all asynchronous file transfer User submitted is stopped.</para><para>The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. User submits a stop  file transfer command by specifying the session id and  by specifying (or not ) a transfer id .</para><para>2. The System stops the transfer file whose id is given or all asynchronous file transfer User submitted  .</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3761,28 +3597,28 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1.c If the tranfer id is invalid,a message is printed on the standard output of the client System.</para><para>1d. If the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>F2.3.1- Suspend all files transfer</para></entry>
+                <entry><para>F2.3.1- Stop all files transfer</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>F2.3.1- Suspend all files transfer</title>
+        <title>F2.3.1- Stop all files transfer</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>F2.3.1- Suspend all files transfer</para></entry>
+                <entry><para>F2.3.1- Stop all files transfer</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows Admin to stop all  current asynchronous file transfer of a given session.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3790,15 +3626,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>Admin has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-All file transfer submitted is stopped.</para><para>-The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. Admin submits  stop file transfer command by specifying  the session id.</para><para>2. The System stops all  transfer file of the given session.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3806,11 +3642,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>F2.3- Suspend a file tranfer</para></entry>
+                <entry><para>F2.3- Stop a file tranfer</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3827,7 +3663,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows User to list all  file transfer status he submitted (including current and completed file transfer) .</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3835,15 +3671,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-The status of all  file transfer User submitted are listed on the standard output of client System. </para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. User submits a list file transfer command by the specifying a session id.</para><para>2. The System displays  the status of all file transfer (including current and completed file transfer) User submitted.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3851,7 +3687,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. If any transfer is submitted or the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
@@ -3872,7 +3708,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows Admin to list all  file transfer status of a given session (including current and completed file transfer) .</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3880,15 +3716,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>Admin has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-All  file transfer status of a given session are listed on the standard output of client System. </para><para>-The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. Admin submits a list file transfer status command by the specifying a session id.</para><para>2. The System displays all  file transfer status (including current and completed file transfer) of a named session.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3896,7 +3732,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. If any transfer is submitted or the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3917,7 +3753,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows User to list all completed file transfer  he submitted .</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3925,15 +3761,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-All  file transfer  User submitted are listed on the standard output of client System. </para><para>-The System log has been updated and contains a request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. User submits a dispay file transfer history command by the specifying a session id.</para><para>2. The System displays all  file transfer  User submitted on the standard output of client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3941,7 +3777,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. If any transfer is submitted or the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
@@ -3962,7 +3798,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>This use case allows Admin to list all completed file transfer of a given session .</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3970,15 +3806,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>User has at least an open active session.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry/>
+                <entry><para>-All  file transfer of a named session are listed on the standard output of client System.</para><para>-The System log has been updated and contains a request parameters. </para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry/>
+                <entry><para>1. Admin submits a dispay file transfer history command by the specifying a session id.</para><para>2. The System displays all  file transfer of the named session on the standard output of client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3986,7 +3822,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry/>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the session id given is invalid, a message is printed on the standard output of the client System.</para><para>1c. If any transfer is submitted or the command fails, a message is printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3996,267 +3832,10 @@ for each option is defined by the administrator. This features can be used by al
           </tgroup>
         </informaltable>
       </section>
-      <section>
-        <title>F2.6- re-submit a suspended file transfer</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>F2.6- re-submit a suspended file transfer</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry><para>User</para></entry>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Extensions</para></entry>
-                <entry><para>F2.6.1- re-submit all suspended file transfer</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>F2.6.1- re-submit all suspended file transfer</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>F2.6.1- re-submit all suspended file transfer</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry><para>Admin</para></entry>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F2.6- re-submit a suspended file transfer</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
     </section>
     <section>
       <title>Use case diagrams
 </title>
-      <section>
-        <title>Change acces modes of files</title>
-        <figure>
-          <title>Change acces modes of files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Change acces modes of files.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Create new directories</title>
-        <figure>
-          <title>Create new directories</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Create new directories.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Create new files</title>
-        <figure>
-          <title>Create new files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Create new files.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Delete directories</title>
-        <figure>
-          <title>Delete directories</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Delete directories.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Delete files</title>
-        <figure>
-          <title>Delete files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Delete files.png" align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Display Head of files</title>
-        <figure>
-          <title>Display Head of files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Display Head of files.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Display contents of directories</title>
-        <figure>
-          <title>Display contents of directories</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Display contents of directories.png"
-                  align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Display contents of files</title>
-        <figure>
-          <title>Display contents of files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Display contents of files.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Display tail of files</title>
-        <figure>
-          <title>Display tail of files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Display tail of files.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Execute a synchronous copy of files</title>
-        <figure>
-          <title>Execute a synchronous copy of files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Execute a synchronous copy of files.png"
-                  align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Execute a synchronous tranfer file</title>
-        <figure>
-          <title>Execute a synchronous tranfer file</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Execute a synchronous tranfer file.png"
-                  align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Execute an asynchronous copy of files</title>
-        <figure>
-          <title>Execute an asynchronous copy of files</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Execute an asynchronous copy of files.png"
-                  align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Execute an asynchronous tranfer file</title>
-        <figure>
-          <title>Execute an asynchronous tranfer file</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Execute an asynchronous tranfer file.png"
-                  align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Execute command on one machine</title>
-        <figure>
-          <title>Execute command on one machine</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Execute command on one machine.png" align="center"
-                  scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
       <section>
         <title>FMS Transfert command use cases</title>
         <figure>
@@ -4277,29 +3856,6 @@ for each option is defined by the administrator. This features can be used by al
             <imageobject>
               <imagedata fileref="images/png/FMS simple command use cases.png" align="center"
                   scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>Transfer a file between two machines</title>
-        <figure>
-          <title>Transfer a file between two machines</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/Transfer a file between two machines.png"
-                  align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </section>
-      <section>
-        <title>UseCase Diagram</title>
-        <figure>
-          <title>UseCase Diagram</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/UseCase Diagram.png" align="center" scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
