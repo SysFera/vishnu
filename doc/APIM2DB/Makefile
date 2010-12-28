@@ -9,4 +9,4 @@ tuto	:
 		pdflatex apim2db.tex
 
 clean	:
-		rm *~ *.aux *.toc *.log apim2db.pdf
+		rm *~ *.aux *.toc *.log
