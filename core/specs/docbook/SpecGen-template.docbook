@@ -83,7 +83,13 @@
     </section>
     <section>
       <title>Glossary</title>
-      <para/>
+      <para>
+         <itemizedlist>
+           <listitem>
+             <para>SysferaDS: open-source middleware software used by Vishnu (former name "DIET")</para>
+           </listitem>
+         </itemizedlist>
+      </para>
     </section>
   </chapter>
     <!-- GENERATED PART -->
