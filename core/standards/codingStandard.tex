@@ -151,7 +151,8 @@ start, stop, get, set, have, is, emit, call}
  variable name should be mnemonic - that is, designed to indicate to the
  casual observer the intent of its use. Moreover, each member
  variable must be pre-fixed using the 'm' letter. m stands for member. 
-Ne pas utiliser 'this' par la suite dans le code pour désigner ces variables.
+ Do not use 'this' to use the variables.
+
 \begin{verbatim}
 Wrong:
   float minimum;
@@ -294,7 +295,6 @@ files it was thus chosen to use a 2 or 3 characters indentation width.
 If we strictly conform to the above limited-tabs recommendation,
 \texttt{CMakeLists.txt} should thus remain tab free.
 
-\textcolor{red}{ADDED}\\
 In the CMakeLists.txt files the following standards are to be followed :
 \begin{itemize}
 \item The function/macro commands are to be written in lower case \\
@@ -314,7 +314,6 @@ In the CMakeLists.txt files the following standards are to be followed :
 \item If a variable is hidden to the user in ccmake, there must be an 
   explanation in the CMakeLists.txt file.
 \end{itemize}
-\textcolor{red}{END ADDED}
 
 \section{Declaration}
 \begin{itemize}
@@ -328,8 +327,8 @@ Wrong:
   int \& titi;
 
 Right:
-  char *toto;
-  int \&titi;
+  char *toto = NULL;
+  int \&titi = myObject();
 \end{itemize}
 \item All keywords (extern, static, export, explicit,
  inline, ...) and the return type must be on the line line the function

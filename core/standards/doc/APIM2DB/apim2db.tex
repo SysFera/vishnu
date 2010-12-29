@@ -59,7 +59,12 @@ Afin de pouvoir utiliser APIM, nous avons eu besoin des \'el\'ements suivant~:
 %% SECTION FORMATAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Formatage pour docbook}
-Pour g\'en\'erer du docbook en utilisant notre g\'en\'erateur, il faut respecter un certain nombre de r\`egles.
+Pour g\'en\'erer du docbook en utilisant notre g\'en\'erateur, il faut respecter un certain nombre de r\`egles. 
+Une r\`egle g\'en\'erale concerne le nommage des services/ports, il faut suivre les conventions d\'efinies dans le document codingStandard.pdf d\'efini pour le projet EDF. Pour rappel ces conventions sont~:
+\begin{itemize}
+\item Pour un service, la premi\`ere lettre doit \^etre une minucule. Si plusieurs mots sont attach\'es uniquement la premi\`ere lettre de chaque mot (hormis le premier) est en majuscule. Le nom du service doit comporter un verbe d'action, exemple 'run, startProcess, fillData'.
+\item Pour les ports, les noms doivent \^etre en minuscule, si plusieurs mots sont accol\'es, la premi\`ere lettre de chaque mot (hormis le premier) doit \^etre en majuscule.
+\end{itemize}
 
 \subsection*{Le fichier data.ecore}
 Ce fichier ecore correspond \`a un fichier EMF qui sert \`a d\'efinir les classes/types qui seront par la suite utilis\'ees dans l'API. Bien entendu, le nom du fichier peut \^etre quelconque (ici data sert d'exemple juste).
