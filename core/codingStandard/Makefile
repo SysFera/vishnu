@@ -1,8 +1,8 @@
 all	: conv
 
 conv	: 
-		pdflatex coding.tex
-		pdflatex coding.tex
+		pdflatex codingStandard.tex
+		pdflatex codingStandard.tex
 
 clean	:
-		rm *~
+		rm *~ *.aux *.log *.toc
