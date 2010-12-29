@@ -99,7 +99,13 @@
     </section>
     <section>
       <title>Glossary</title>
-      <para/>
+      <para>
+         <itemizedlist>
+          <listitem>
+            <para>SysferaDS: open-source middleware software used by Vishnu (former name &quot;DIET&quot;)</para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </section>
   </chapter>
   <chapter annotations="UMS/specs/UMS.asta#UCDESC+UCDIAG+DICT(UMS Analyse/DATA_DICTIONARY)">
@@ -1482,13 +1488,13 @@ for each option is defined by the administrator. This features can be used by al
       <title>Use case descriptions
 </title>
       <section>
-        <title>T1 - AsyncCommandOnMachine</title>
+        <title>T1 - Asynchronous command on a machine</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T1 - AsyncCommandOnMachine</para></entry>
+                <entry><para>T1 - Asynchronous command on a machine</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1508,32 +1514,32 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User sends the request with parameters including session id and machine id</para><para>2. System checks that the machine id is valid and machine is available</para><para>3. System checks that the session id is valid</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. System returns information to the user about the request status</para><para>6. System records request information (time, user, machine, request parameters) in the system log</para></entry>
+                <entry><para>1. User sends the request</para><para>2. The System checks that the session key is valid</para><para>3. The System checks that the machine id is valid and machine is available</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. The System processes the request</para><para>6. The System returns information to the user</para><para>6. The System records request information (time, user, machine, request parameters) in the system log</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>5a. T1.1 SubmitJob</para></entry>
+                <entry><para>5a. T1.1</para><para>5b. T1.2</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. The TMS server is unavailable</para><para>   - The system returns an error message that informs the user.</para><para>2a. The name of the given machine is unknown</para><para>    -The system returns an error message that informs the user.</para><para>3a. The session id is not valid</para><para>   - The system returns an error message that informs the user.</para><para>4a. The path to a file parameter is invalid</para><para>   - The system returns an error message that informs user. </para></entry>
+                <entry><para>1a. The TMS server is unavailable</para><para>   - The system returns an error message that informs the user.</para><para>2a. The session key is invalid</para><para>   - The system returns an error message that informs the user.</para><para>3a. The name of the given machine is unknown</para><para>    -The system returns an error message that informs the user.</para><para>4a. The path to a file parameter is invalid</para><para>   - The system returns an error message that informs user. </para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T1.1 - SubmitJob </para><para>T1.2 - AsynGetJobOutPut</para></entry>
+                <entry><para>T1.1 - Submit a job </para><para>T1.2 - Get job outputs (asynchronous)</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T1.1 - SubmitJob </title>
+        <title>T1.1 - Submit a job </title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T1.1 - SubmitJob </para></entry>
+                <entry><para>T1.1 - Submit a job </para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1565,28 +1571,28 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T1 - AsyncCommandOnMachine</para></entry>
+                <entry><para>T1 - Asynchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T1.2 - AsynGetJobOutPut</title>
+        <title>T1.2 - Get job outputs (asynchronous)</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T1.2 - AsynGetJobOutPut</para></entry>
+                <entry><para>T1.2 - Get job outputs (asynchronous)</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>User  gets  the job results dynamically on a given machine</para></entry>
+                <entry><para>Output files of a user's jobs on a given machine are downloaded when any job is completed</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -1594,11 +1600,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The System sends online  the completed jobs</para></entry>
+                <entry><para>- All the jobs submitted by the User on the machine are completed</para><para>- All the jobs submitted by the User on the machine are removed from the Batch Scheduler's internal database.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The TMS server is contacted at each interval refresh period</para><para>2. The TMS server checks each submitted job state</para><para>3. The TMS server sends completed job results</para></entry>
+                <entry><para>1. The User sends the request containing the machine id</para><para>2. The System registers the request</para><para>3. The System checks the running jobs submitted by the User on the machine</para><para>4. The System sends the job outputs for all completed jobs to the client host</para><para>5. If the number of jobs submitted by the User on the machine with a waiting, queued or running status is positive, the System waits during a period defined by the administrator. If not, go to step 7</para><para>6. Go back to step 3</para><para>7. The User request is completed</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1606,24 +1612,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>-2a The TMS server is unavailable</para><para>-2b The underlying batch scheduler is unavailabe</para></entry>
+                <entry><para>2a The TMS server is unavailable</para><para>2b The underlying batch scheduler is unavailable</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T1 - AsyncCommandOnMachine</para></entry>
+                <entry><para>T1 - Asynchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2 - SyncCommandOnMachine</title>
+        <title>T2 - Synchronous command on a machine</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1643,36 +1649,36 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User sends the request with parameters including session id and machine id</para><para>2. System checks that the machine id is valid and machine is available</para><para>3. System checks that the session id is valid</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. System returns information containing the results of the request</para><para>6. System records request information (time, user, machine, request parameters) in the system log</para></entry>
+                <entry><para>1. The User sends the request with parameters including session key and machine id</para><para>2. The System checks that the session key is valid</para><para>3. The System checks that the machine id is valid and machine is available</para><para>4. If command parameters contain a file the System verifies that the file is available and readable</para><para>5. The System processes the request</para><para>6. The System returns information containing the results of the request</para><para>7. The System records request information (time, user, machine, request parameters) in the system log</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>5a. T2.1-GetJobs</para><para>5b. T2.2-CancelJob</para><para>5c. T2.3-ListQueue</para><para>5d. T2.4-ListJobs</para><para>5e. T2.5-JobProgress</para><para>5f. TA1-SetMachineRefreshRate</para><para>5g. TA2-SetMachineEnv</para></entry>
+                <entry><para>5a. T2.1</para><para>5b. T2.2</para><para>5c. T2.3</para><para>5d. T2.4</para><para>5e. T2.5</para><para>5f. TA1</para><para>5g. TA2</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. The TMS server is unavailable</para><para>   - The system returns an error message that informs the user.</para><para>2a. The name of the given machine is unknown</para><para>    -The system returns an error message that informs the user.</para><para>3a. The session id is not valid</para><para>   - The system returns an error message that informs the user.</para><para>4a. The path to a file parameter is invalid</para><para>   - The system returns an error message that informs user. </para><para>   - The user revises the path</para></entry>
+                <entry><para>1a. The TMS server is unavailable</para><para>   - The system returns an error message that informs the user.</para><para>2a. The session key is not valid</para><para>   - The system returns an error message that informs the user.</para><para>3a. The name of the given machine is unknown</para><para>    -The system returns an error message that informs the user.</para><para>4a. The path to a file parameter is invalid</para><para>   - The system returns an error message that informs user. </para><para>   - The user revises the path</para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T2.1 - GetJob</para><para>T2.2 - CancelJob</para><para>T2.3 - ListQueue</para><para>T2.4 - ListJobs</para><para>TA1 - SetMachineRefreshPeriod</para><para>TA2 - SetMachineEnv</para><para>T2.5 - JobProgress</para><para>T2.6 - GetJobOutPut</para></entry>
+                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get job outputs (synchronous)</para><para>TA1 - Set machine refresh period</para><para>TA2 - Set machine environment</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2.1 - GetJob</title>
+        <title>T2.1 - Get job information</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.1 - GetJob</para></entry>
+                <entry><para>T2.1 - Get job information</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>User requests the TMS server to get information about a job</para></entry>
+                <entry><para>User gets information about a job on a given machine</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -1688,7 +1694,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para> 1. The Systems checks the job id</para><para> 2. The TMS server on the given machine is contacted</para><para> 3. The TMS server asks job information to the batch schduler server</para><para> 4. The user receives job information</para></entry>
+                <entry><para> 1. The Systems checks the job id</para><para> 2. The TMS server on the given machine is contacted</para><para> 3. The TMS server asks job information to the batch scheduler server</para><para> 4. The User receives job information</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1700,24 +1706,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2.2 - CancelJob</title>
+        <title>T2.2 - Cancel a job</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.2 - CancelJob</para></entry>
+                <entry><para>T2.2 - Cancel a job</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The user cancels a job</para></entry>
+                <entry><para>The user cancels a job on a given machine</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -1729,11 +1735,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The job is canceled on the specified machine</para><para>- The job state and id are removed to the system's log</para><para>- An information is sent to the user</para></entry>
+                <entry><para>- The job is canceled on the specified machine</para><para>- The job state and id are removed to the system's log</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para> 1. The systems checks the job id</para><para> 2. The TMS server on the given machine is contacted</para><para> 3. The TMS server cancels the job</para><para> 4. The user receives a message </para></entry>
+                <entry><para>1. The System checks the job id</para><para>2. If the User has no admin privilege, the System checks that the User is the submitter of the job</para><para>3. The System cancels the job</para><para>4. The System returns a confirmation to the User</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1741,24 +1747,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. The job id is invalid</para><para>3a. The batch scheduler server is unavailable</para><para>3b. The batch scheduler server rejects the request</para></entry>
+                <entry><para>1a. The job id is invalid</para><para>  - The System returns an error message</para><para>2a. The User is not the submitter of the job</para><para>  - The System returns an error message</para><para>3a. The batch scheduler server is unavailable</para><para>  - The System returns an error message</para><para>3b. The batch scheduler server rejects the request</para><para>  - The System returns an error message</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2.3 - ListQueue</title>
+        <title>T2.3 - List job queues</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.3 - ListQueue</para></entry>
+                <entry><para>T2.3 - List job queues</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1774,11 +1780,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The system collects  the informations on each queue or classes</para><para>- The system records request parameters in system's log  </para><para>- The  system send the list contained  the information on all queues  to the user.</para></entry>
+                <entry/>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para> 1. The TMS server on the given machine is contacted</para><para> 2. The TMS server asks queues or classes information to the batch schduler server</para><para> 3. The System sends all queues list to the user</para></entry>
+                <entry><para> 1. The User sends the request with parameters that include the machine id</para><para> 2. The System obtains queues or classes information from the batch scheduler server running on the machine identified by the machine id</para><para> 3. The System returns the list of all queues to the user</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1790,24 +1796,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2.4 - ListJobs</title>
+        <title>T2.4 - List jobs</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.4 - ListJobs</para></entry>
+                <entry><para>T2.4 - List jobs</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>User lists all jobs submitted</para></entry>
+                <entry><para>User lists all jobs submitted on a given machine matching some search criteria</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -1815,15 +1821,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry><para>-User has an active open session</para><para>    </para></entry>
+                <entry><para>    </para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The System sends information on all jobs to the user</para><para>- The System records request parameters in the system's log</para></entry>
+                <entry/>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para> 1. The TMS server on the given machine is contacted</para><para> 2. The TMS server asks job information to the batch schduler server</para><para> 3. The System sends full information on all jobs to the user</para></entry>
+                <entry><para> 1. The User sends the request containing the machine id and the following optional search criteria: job id, number of CPUs required for the job, date of submission (from/to), job submitter, status, priority, queue, outputPath and errorPath.</para><para> 2. The System obtains jobs information from the batch scheduler server (depends on the underlying batch scheduler software)</para><para> 3. The System returns jobs information that match the search criteria to the User</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1835,20 +1841,20 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2.5 - JobProgress</title>
+        <title>T2.5 - Get jobs progression</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.5 - JobProgress</para></entry>
+                <entry><para>T2.5 - Get jobs progression</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1856,52 +1862,52 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry><para>- User has an active open session</para></entry>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry><para>- The System sends jobs information progression</para><para>- The System records request parameters in the system's log</para></entry>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry><para> 1. The TMS server on the given machine is contacted</para><para> 2. The TMS server computes each job progression</para><para> 3. The System sends all jobs progression to the user</para></entry>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
                 <entry/>
               </row>
               <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1. The User sends the request containing the machine id</para><para>2. The System computes the job progression for all jobs submitted by the User running on the machine (job progression = 100 * (current_time - run_time) / job_walltime )</para><para>3. The System sends the results to the User</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry><para>1a. The User provides a job id in the request (optional parameter)</para><para>2a. The System computes the job progression for the job corresponding to the job id</para></entry>
+              </row>
+              <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>2a. The TMS server is unavailable</para><para>    - The system returns an error message that informs the user.</para></entry>
+                <entry><para>2b. The TMS server is unavailable</para><para>    - The system returns an error message that informs the user.</para><para>2c. The provided job id is unknown on the machine</para><para>   - The system returns an error message that informs the user.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>T2.6 - GetJobOutPut</title>
+        <title>T2.6 - Get job outputs (synchronous)</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.6 - GetJobOutPut</para></entry>
+                <entry><para>T2.6 - Get job outputs (synchronous)</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry/>
+                <entry><para>Output files of a given job are downloaded on the client host</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -1909,11 +1915,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>-User  gets  the job results on a given machine</para></entry>
+                <entry><para>- The job is removed from the Batch Scheduler's internal database.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The TMS server is contacted.</para><para>2. The TMS server check the job state.</para><para>3. The TMS server sends job results if the job is completed</para></entry>
+                <entry><para>1. The User sends the request containing the job id</para><para>2. The System checks the job status</para><para>3. The System downloads the job results if the job is completed</para><para>4. The System returns the path for each downloaded file</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1921,24 +1927,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>-2a The TMS server is unavailable</para><para>-2b The underlying batch scheduler is unavailabe</para></entry>
+                <entry><para>2a. The TMS server is unavailable</para><para>2b. The batch scheduler is unavailable</para><para>2c. The job status is not 'completed'</para><para>     - The System returns a message that informs the user</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>TA1 - SetMachineRefreshPeriod</title>
+        <title>TA1 - Set machine refresh period</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>TA1 - SetMachineRefreshPeriod</para></entry>
+                <entry><para>TA1 - Set machine refresh period</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1970,24 +1976,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>TA2 - SetMachineEnv</title>
+        <title>TA2 - Set machine environment</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>TA2 - SetMachineEnv</para></entry>
+                <entry><para>TA2 - Set machine environment</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The admin sets an environment variable</para></entry>
+                <entry><para>The admin sets an environment variable on a given machine</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -1999,11 +2005,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- Environment variable is set</para></entry>
+                <entry><para>- Environment variable is set on the machine</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. System saves the environment variable for the given machine.</para><para>2. System applies the environment variable to all current jobs and future requests</para></entry>
+                <entry><para>1. The User sends the request containing the machine id and a string containing the environment variable assignments (semi-column separated list of assignments &lt;var_name>=&lt;var_value>)</para><para>2. The System saves the environment variable for the given machine.</para><para>3. The System applies the environment variable to all current jobs and future requests</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2015,20 +2021,20 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>T2 - SyncCommandOnMachine</para></entry>
+                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>TA3 - LaunchTmsServer</title>
+        <title>TA3 - Launch TMS Server</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>TA3 - LaunchTmsServer</para></entry>
+                <entry><para>TA3 - Launch TMS Server</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -2048,7 +2054,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. Admin connects to the machine as vishnu user</para><para>2. Admin updates the Vishnu configuration if necessary (database server hostname and credentials, DIET configuration, Batch scheduler configuration)</para><para>3. Admin launches the Vishnu TMS Server executable</para><para>4. System checks the connections to its peers within the Vishnu platform</para><para>5. System retrieves the list of active jobs (not completed jobs) that were launched on the same machine</para><para>6. System checks that all the active jobs (from previous step) are still running on the batch scheduler, and eventually updates the job status (for ex. from waiting to running, or from running to finished)</para><para>7. System returns a status message to the administrator</para></entry>
+                <entry><para>1. The Admin connects to the machine as vishnu user</para><para>2. The Admin updates the Vishnu configuration if necessary (database server hostname and credentials, SysferaDS configuration, Batch scheduler configuration)</para><para>3. The Admin launches the Vishnu TMS Server executable</para><para>4. The System checks the connections to its peers within the Vishnu platform</para><para>5. The System retrieves the list of active jobs (not completed jobs) that were launched on the same machine</para><para>6. The System checks that all the active jobs (from previous step) are still running on the batch scheduler, and eventually updates the job status (for ex. from waiting to running, or from running to finished)</para><para>7. The System returns a status message to the administrator</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2057,6 +2063,47 @@ for each option is defined by the administrator. This features can be used by al
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>4a. A connection to a Vishnu peer is down. System returns an error message and stops</para><para>6a. The batch scheduler does not recognize some job ids. In this case the System updates the job status to completed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>TA4 - Stop TMS Server</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>TA4 - Stop TMS Server</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>The administrator stops the VISHNU TMS server on a given machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>- The TMS Server is up and running on the given machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>- The TMS Server is down</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1. The Admin sends a request to stop the TMS Server and provides the machine id</para><para>2. The System updates the status of all active user requests (non-completed jobs)</para><para>3. The System stops all internal processes on the machine</para><para>4. The System returns an information message to the Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
               </row>
             </tbody>
           </tgroup>
@@ -2142,7 +2189,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>2 -> There is a problem with the database, the system returns a DATABASEERROR</para></entry>
+                <entry><para>2 -> There is a problem with the database, the system returns a DATABASE_ERROR</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2183,7 +2230,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The machine id is invalid, an INVALIDPARAMETER error is returned</para><para>2 -> There is a problem with the database, the system returns a DATABASEERROR</para></entry>
+                <entry><para>1 -> The machine id is invalid, an INVALID_PARAMETER error is returned</para><para>2 -> There is a problem with the database, the system returns a DATABASE_ERROR</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2212,19 +2259,19 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>All the System commands submitted during a session have been re-executed keeping the same order they were originally launched.</para></entry>
+                <entry><para>All the System commands submitted during a session have been re-executed keeping the same order they had when they were originally launched.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The user calls to export the history of a session identified by an id in python format</para><para>2) The System provides a python script containing all the commands of the session with the same parameters as provided initially by the user (including file paths, numbers, strings, options)</para><para>3) The user executes the python script in VISHNU</para></entry>
+                <entry><para>1) The user calls to export the history in python format of a session identified by an id</para><para>2) The System provides a python script containing all the commands of the session with the same parameters as provided initially by the user (including file paths, numbers, strings, options)</para><para>3) The user executes the python script in VISHNU</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>1a) The user calls to export the history of a session identified by an id in shell format.</para><para>2a) The System provides a shell script containing all the commands of the session with the same parameters as provided initially by the user (including file paths, numbers, strings, options)</para><para>3a) The user executes the shell script in a shell</para></entry>
+                <entry><para>1a) The user calls to export the history in shell format of a session identified by an id.</para><para>2a) The System provides a shell script containing all the commands of the session with the same parameters as provided initially by the user (including file paths, numbers, strings, options)</para><para>3a) The user executes the shell script in a shell</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The session id is invalid, an INVALIDPARAMETER exception is raised.</para><para>3 -> A command in the execution fails, the error of the command is returned</para></entry>
+                <entry><para>1 -> The session id is invalid, an INVALID_PARAMETER exception is raised.</para><para>3 -> A command in the execution fails, the error of the command is returned</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2257,15 +2304,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>B1 * The user calls to get the use of the CPUs on a machine identified by an ID. </para><para>      * The System returns him the use of the CPUs on the machine in percentage.</para></entry>
+                <entry><para>1) The user calls to get a current data about a machine identified by an ID. The data is within {use of cpu, number of cpu, total diskSpace, free diskSpace, total RAM, free RAM}.</para><para>2) The System returns the value of the data. In the use of cpu case, the value is in percentage.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>B2 * The user calls to get the number of CPUs on a machine identified by an ID. </para><para>      * The System returns him the number of CPUs on the machine.</para><para>---</para><para>B3 * The user calls to get the total diskSpace.</para><para>     * The System returns him the value.</para><para>---</para><para>B4 * The user calls to get the free diskSpace.</para><para>     * The System returns him the value.</para><para>---</para><para>B5 * The user calls to get the total RAM on a machine identified by an id.</para><para>     * The System returns him an id.</para><para>---</para><para>B6 * The user calls to get the free RAM on a machine identified by an id.</para><para>     * The System returns him the value</para></entry>
+                <entry/>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>The machine id is invalid, an INVALIDPARAMETER exception is raised</para></entry>
+                <entry><para>The machine id is invalid, an INVALID_PARAMETER exception is raised</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2306,7 +2353,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> machineId is invalid, an INVALIDPARAMETER is return.</para></entry>
+                <entry><para>1 -> machineId is invalid, an INVALID_PARAMETER is return.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2323,11 +2370,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>Updates the data concerning a machine (if the machine has some memory diskSpace added, some memory added, a new description)</para></entry>
+                <entry><para>Updates the data concerning a machine (e.g., if the machine has some added memory diskSpace, some added memory, a new description)</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>Admin</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -2339,7 +2386,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) An admin calls to update the data concerning a machine identified by an id giving a new diskSpace size, a new memory size, a new machine description</para><para>2) The System updates the database</para></entry>
+                <entry><para>1) An admin calls to update the data concerning a machine identified by an id giving a new diskSpace size, a new memory size and a new machine description.</para><para>2) The System updates the database</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2347,24 +2394,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The machine id is invalid, an INVALIDPARAMETER error is returned</para><para>2 -> There is an error with the database, a DATABASEERROR error is returned</para></entry>
+                <entry><para>1 -> The machine id is invalid, an INVALID_PARAMETER error is returned</para><para>2 -> There is an error with the database, a DATABASE_ERROR error is returned</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>IA2. Define a system load treshold</title>
+        <title>IA2. Define a system load threshold</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>IA2. Define a system load treshold</para></entry>
+                <entry><para>IA2. Define a system load threshold</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The administrator defines a system load treshold for a machine</para></entry>
+                <entry><para>The administrator defines a system load threshold for a machine</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2376,36 +2423,36 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>The system load treshold is added to the System database</para></entry>
+                <entry><para>The system load threshold is added to the System database</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1a) The administrator calls to define the limit size of the diskSpace to use with a machine id, a treshold value and an admin id</para><para>2a) The System updates the database</para><para>OR------------------------</para><para>1b) The administrator calls to define the limit of RAM available to he user with a machine id, a treshold value and an admin id</para><para>2b) The System updates the database</para><para>OR------------------------</para><para>1c) The administrator calls to define the number of processes treshold on a machine with a machine id, a treshold value and an admin id</para><para>2c) The System updates the database</para></entry>
+                <entry><para>1a) The administrator calls to define the limit size of the diskSpace to use with a machine id, a threshold value and an admin id</para><para>2a) The System updates the database</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry/>
+                <entry><para>1b) The administrator calls to define the limit of RAM available to he user with a machine id, a threshold value and an admin id</para><para>2b) The System updates the database</para><para>------------------------</para><para>1c) The administrator calls to define the number of processes threshold on a machine with a machine id, a treshold value and an admin id</para><para>2c) The System updates the database</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1* -> The admin ID is invalid, the database is not updated and an INVALIDPARAMETER error is returned</para><para>2* -> The modification of the database fails, a DATABASEERROR is returned.</para></entry>
+                <entry><para>1* -> The admin ID is invalid, the database is not updated and an INVALID_PARAMETER error is returned</para><para>2* -> The modification of the database fails, a DATABASE_ERROR is returned.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>IA2.1 Get a system load treshold</title>
+        <title>IA2.1 Get a system load threshold</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>IA2.1 Get a system load treshold</para></entry>
+                <entry><para>IA2.1 Get a system load threshold</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The user wants to get the tresholds on a machine</para></entry>
+                <entry><para>The user wants to get the thresholds on a machine</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2421,7 +2468,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The user calls to get the defined limit on a machine identified by an id. These limits are within {free diskSpace,  free RAM, number of processes running}</para><para>2) The System returns the value.</para></entry>
+                <entry><para>1) The admin calls to get the defined limit on a machine identified by an id. These thresholds are within {free diskSpace,  free RAM, number of processes running}</para><para>2) The System returns the value.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2429,7 +2476,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The machine id is invalid, the user gets an INVALIDPARAMETER error returned</para><para>2 -> There is a problem with the database request, a DATABASEERROR is returned</para></entry>
+                <entry><para>1 -> The machine id is invalid, the user gets an INVALID_PARAMETER error returned</para><para>2 -> There is a problem with the database request, a DATABASE_ERROR is returned</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2446,7 +2493,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The administrator defines the format of the automatic identifiers defined for the System objects.</para></entry>
+                <entry><para>The administrator defines the format of the automatic identifiers for the System objects.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2462,11 +2509,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The administrator has a list of variables to define the identifiers shape. He has a method by kind of object (an object is either a user or a machine or a task or a file transfer).</para><para>Available variables are :</para><para>  YEAR : the last two digits, (e.g. 10 for 2010)</para><para>  MONTH : Numerical value of the month (from 1 to 12)</para><para>  DAY : Day number, from 1 to 31</para><para>  TYPE : The object kind</para><para>  SITE : The place for machine/users</para><para>  NAME : Username or machine name</para><para>  CPT : A counter automatically increased (each kind of object has its counter).</para><para>2) He calls the function to redefine the format with some of the previous parameters in a string. For example, &quot;$TYPE$DAY$MONTH$YEAR$CPT&quot;</para><para>3) The System database is updated, the System does not check if the given format creates unique identifiers. If the same identifier is created, it will degenerate the database (the key will not be unique)</para></entry>
+                <entry><para>1) The administrator has a list of variables to define the identifiers shape. He has a method by kind of object (an object is either a user or a machine or a task or a file transfer).</para><para>Available variables are :</para><para>  YEAR: the last two digits, (e.g. 10 for 2010)</para><para>  MONTH: Numerical value of the month (from 1 to 12)</para><para>  DA: Day number, from 1 to 31</para><para>  TYPE: The object kind</para><para>  SITE: The place for machine/users</para><para>  NAME: Username or machine name</para><para>  CPT: A counter automatically increased (each kind of object has its counter).</para><para>2) He calls the function to redefine the format with some of the previous parameters in a string. For example, &quot;$TYPE$DAY$MONTH$YEAR$CPT&quot;</para><para>3) The System database is updated, the System does not check if the given format creates unique identifiers. If the same identifier is created, it will corrupt the database (the key will not be unique)</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>2 -> An invalid variable is given, an INVALIDPARAMETER is returned and the old format is still used</para><para>3 -> The update fails, a DATABASEERROR is returned</para></entry>
+                <entry><para>2 -> An invalid variable is given, an INVALID_PARAMETER is returned and the old format is still used</para><para>3 -> The update fails, a DATABASE_ERROR is returned</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
@@ -2477,17 +2524,17 @@ for each option is defined by the administrator. This features can be used by al
         </informaltable>
       </section>
       <section>
-        <title>IA4. Hard delestage</title>
+        <title>IA4. Hard load shedding </title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>IA4. Hard delestage</para></entry>
+                <entry><para>IA4. Hard load shedding </para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>Abruptly stop the processes running on a machine (the waiting actions are cancelled and the running ones are cut).</para></entry>
+                <entry><para>Abruptly stops the processes running on a machine (the waiting actions are cancelled and the running ones are stopped). The processes cannot be automatically restarted.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2495,7 +2542,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>Processes are running on the System</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
@@ -2503,7 +2550,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The admin launches the hard delestage function on a machine identified by an id.</para><para>2) The System flushes all the waiting action.</para><para>3) The System stops all the running processes on this machine.</para></entry>
+                <entry><para>1) The admin launches the hard load shedding function on a machine identified by an id.</para><para>2) The System flushes all the waiting action.</para><para>3) The System stops all the running processes on this machine. These processes cannot be restarted.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2511,24 +2558,24 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The id of the machine is invalid, an INVALIDPARAMETER is returned</para></entry>
+                <entry><para>1 -> The id of the machine is invalid, an INVALID_PARAMETER is returned</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>IA5. Soft delestage</title>
+        <title>IA5. Soft load shedding</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>IA5. Soft delestage</para></entry>
+                <entry><para>IA5. Soft load shedding</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The admin purges all the waiting actions and stops the running ones</para></entry>
+                <entry><para>The admin purges all the waiting actions and stops the running ones. The stopped actions can be restarted later.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2536,15 +2583,15 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry/>
+                <entry><para>Processes are running on the VISHNU system</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>No jobs are waiting to run or running</para></entry>
+                <entry><para>No jobs are waiting to run or are running</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The admin calls the soft delestage function on the machine identified by an id.</para><para>2) The System flushes the waiting jobs and stops the running ones. They are stored and can be restarted later </para></entry>
+                <entry><para>1) The admin calls the soft load shedding function on the machine identified by an id.</para><para>2) The System flushes the waiting jobs and stops the running ones. They are stored and can be restarted later </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2552,7 +2599,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The machine id is invalid, an INVALIDPARAMETER error is returned</para></entry>
+                <entry><para>1 -> The machine id is invalid, an INVALID_PARAMETER error is returned</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2593,7 +2640,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>The database is is not reachable. A DATABASEERROR is returned.</para></entry>
+                <entry><para>The database is is not reachable. A DATABASE_ERROR is returned.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2626,7 +2673,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The System gets the email adress of the admin to contact</para><para>2) The System sends a mail to the admin concerning the overflow. The mail contains the name of the machine and the treshold concerned.</para></entry>
+                <entry><para>1) The System gets the email adress of the admin to contact</para><para>2) The System sends a mail to the admin concerning the overflow. The mail contains the name of the machine and the concerned threshold.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2634,7 +2681,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The system fails getting the admin e-mail, a DATABASEERROR error is returned</para><para>2 -> Sending the mail fails, a MAILERROR error is returned.</para></entry>
+                <entry><para>1 -> The system fails getting the admin e-mail, a DATABASE_ERROR error is returned</para><para>2 -> Sending the mail fails, a MAIL_ERROR error is returned.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2651,7 +2698,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>Restart all the servers, agents, and daemons of the System. The started actions are restarted again.</para></entry>
+                <entry><para>Restart all the servers, agents, and daemons of the System. The running actions are restarted.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2659,7 +2706,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry><para>The System platforms needs to be restarted</para></entry>
+                <entry><para>The System platform needs to be restarted</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
@@ -2667,7 +2714,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) An admin detects a problem</para><para>2) An admin calls to restart the System</para><para>3) The System saves the current actions</para><para>4) The System restarts components and restarts the stopped action from the beginning</para></entry>
+                <entry><para>1) An admin detects a problem</para><para>2) An admin calls to restart the System</para><para>3) The System saves the current actions</para><para>4) The System restarts components and restarts the stopped actions from the beginning</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2675,7 +2722,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>4-> Fail to relaunch a component (SeD, daemon, agent), an UNREACHABLECOMPONENT error is returned.</para></entry>
+                <entry><para>4-> Fail to relaunch a component (server, daemon, agent), an UNREACHABLE_COMPONENT error is returned.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2708,7 +2755,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) An admin detects a component has stopped for unknown reasons (a component = server, daemon, agent)</para><para>2) The admin calls the System to relaunch the component with its name</para><para>3) The System relauches the component</para></entry>
+                <entry><para>1) An admin detects that a component has stopped for unknown reasons (a component = server, daemon, agent)</para><para>2) The admin calls the System to relaunch the component with its name</para><para>3) The System relauches the component</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2716,7 +2763,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>3-> Fail to restart the component, an UNREACHABLECOMPONENT error is returned.</para></entry>
+                <entry><para>3-> Fail to restart the component, an UNREACHABLE_COMPONENT error is returned.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2737,7 +2784,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry><para>User, Admin, Admin</para></entry>
+                <entry><para>User, Admin</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -2779,24 +2826,24 @@ for each option is defined by the administrator. This features can be used by al
         </figure>
       </section>
       <section>
-        <title>Fonctionnalities Global</title>
+        <title>Global functionnalities</title>
         <figure>
-          <title>Fonctionnalities Global</title>
+          <title>Global functionnalities</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/Fonctionnalities Global.png" align="center"
+              <imagedata fileref="images/png/Global functionnalities.png" align="center"
                   scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
       </section>
       <section>
-        <title>PlatformManagement</title>
+        <title>Platform management</title>
         <figure>
-          <title>PlatformManagement</title>
+          <title>Platform management</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/PlatformManagement.png" align="center"
+              <imagedata fileref="images/png/Platform management.png" align="center"
                   scale="40"/>
             </imageobject>
           </mediaobject>
@@ -2829,43 +2876,43 @@ for each option is defined by the administrator. This features can be used by al
       <title>Data dictionary</title>
       <para><itemizedlist>
           <listitem>
-            <para><emphasis role="bold">Actions</emphasis> : A generic naming to design both jobs and file transfers</para>
+            <para><emphasis role="bold">Actions</emphasis> : A generic naming to design both jobs and file transfers.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Agent</emphasis> : A component of the VISHNU hierarchy</para>
+            <para><emphasis role="bold">Agent</emphasis> : A component of the VISHNU hierarchy.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">CPU</emphasis> : Central Processing Unit</para>
+            <para><emphasis role="bold">CPU</emphasis> : Central Processing Unit.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Daemon</emphasis> : Daemon running on the machines.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">DiskSpace</emphasis> : File system memory (not volatile)</para>
+            <para><emphasis role="bold">DiskSpace</emphasis> : File system memory (not volatile).</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS</emphasis> : Information Management System</para>
+            <para><emphasis role="bold">IMS</emphasis> : Information Management System.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Infrastructure</emphasis> : Contains all the machine directly under the System supervision</para>
+            <para><emphasis role="bold">Infrastructure</emphasis> : Contains all the machines directly under the System supervision.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Live measure</emphasis> : Measure regularly updated</para>
+            <para><emphasis role="bold">Live measure</emphasis> : Measure regularly updated.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Memory</emphasis> : RAM (volatile)</para>
+            <para><emphasis role="bold">Memory</emphasis> : RAM (Random Access Memory, volatile).</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Objects</emphasis> : An object is an abstraction of what can be manipulated by the System (user, machine, task, file transfer)</para>
+            <para><emphasis role="bold">Objects</emphasis> : An object is an abstraction of what can be manipulated by the System (user, machine, task, file transfer).</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Process</emphasis> : Process of the system</para>
+            <para><emphasis role="bold">Process</emphasis> : Process of the system.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SeD</emphasis> : A component of the VISHNU hierarchy doing jobs for the clients</para>
+            <para><emphasis role="bold">SeD</emphasis> : A component of the VISHNU hierarchy executing jobs for the clients.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Task</emphasis> : Job submited via the TMS module</para>
+            <para><emphasis role="bold">Task</emphasis> : Job submited via the TMS module.</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -2914,20 +2961,20 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>F1.2- Change group owner of files</para><para>F1.2- Change group owner of files</para><para>F1.1- Change acces modes of files</para><para>F1.3- Create new directories</para><para>F1.4- Create new files</para><para>F1.5-  Delete directories</para><para>F1.6- Delete files</para><para>F1.6- Delete files</para><para>F1.8- Display contents of files</para><para>F1.9- Display Head of files</para><para>F1.7- Display contents of directories</para><para>F1.10- Display tail of files</para><para>F2.1- Execute a synchronous copy of files </para><para>F2.2- Execute an asynchronous copy of files </para></entry>
+                <entry><para>F1.2- Change group owner of files</para><para>F1.2- Change group owner of files</para><para>F1.1- Change acces rights of files</para><para>F1.3- Create new directories</para><para>F1.4- Create new files</para><para>F1.5-  Delete directories</para><para>F1.6- Delete files</para><para>F1.6- Delete files</para><para>F1.8- Display contents of files</para><para>F1.9- Display Head of files</para><para>F1.7- Display contents of directories</para><para>F1.10- Display tail of files</para><para>F2.1- Execute a synchronous copy of files </para><para>F2.2- Execute an asynchronous copy of files </para><para>F1.11- Get information about remote file</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>F1.1- Change acces modes of files</title>
+        <title>F1.1- Change acces rights of files</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>F1.1- Change acces modes of files</para></entry>
+                <entry><para>F1.1- Change acces rights of files</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -2947,7 +2994,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the change acces rights command with the file,  the new acces rights to set, the involved machine and session id.</para><para>2.The client System sets the new access rights to the file. </para></entry>
+                <entry><para>1. User submits the change acces rights command with the file,  the new acces rights to set, the involved machine and session id.</para><para>2.The System sets the new access rights to the file. </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2992,7 +3039,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the file to display and  the involved host.</para><para>2.The client System displays the first line of the specified file on the its standard output.</para></entry>
+                <entry><para>1. User submits the display command with the path of the file to display and  the involved host.</para><para>2.The  System displays the first line of the specified file on the its standard output.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3001,6 +3048,51 @@ for each option is defined by the administrator. This features can be used by al
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1.b if the file is unknown, a message is printed on the standard output of the client System.</para><para>1.c if User does not  have write permission in the parent directory, a message is also printed on the standard output of the client System</para></entry>
+              </row>
+              <row>
+                <entry><para>Extension of</para></entry>
+                <entry><para>F1- Execute simple command on one remote machine</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>F1.11- Get information about remote file</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>F1.11- Get information about remote file</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>This use case allows User to get information about a remote file.</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>User</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>Some information about a given file are printed on the standrad output of the client System.</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1. User submits the get information  command with the file,  the involved machine and session id.</para><para>2.The System prints the information about the specified file on the standard output of the client System.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. if the file is unknown, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3033,11 +3125,11 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>The new access permissions of the specified file is set.</para></entry>
+                <entry><para>The new group owner of the specified file is set.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. Administrator submits the change group owner command with the file , the new group to set, the involved host and session id.</para><para>2.The The client System sets the new group owner to the file. </para></entry>
+                <entry><para>1. Administrator submits the change group owner command with the file , the new group to set, the involved host and session id.</para><para>2.The  System sets the new group owner to the file. </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3082,7 +3174,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the create directory command with the path of directory to create, the involved host and session id.</para><para>2.The client System creates a new directory with the specified path.</para></entry>
+                <entry><para>1. User submits the create directory command with the path of directory to create, the involved host and session id.</para><para>2.The System creates a new directory with the specified path.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3127,7 +3219,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the create file command with the path of file to create, the involved host and session id.</para><para>2.The client System creates a new file with the specified path.</para></entry>
+                <entry><para>1. User submits the create file command with the path of file to create, the involved host and session id.</para><para>2.The System creates a new file with the specified path.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3156,7 +3248,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to removes a given directory (and its contents) located on a remote host.</para></entry>
+                <entry><para>This use case allows User to remove a given directory (and its contents) located on a remote host.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3172,7 +3264,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the delete directory command with the path of directory to delete and  the involved host.</para><para>2.The client System deletes the specified directory from the host.</para></entry>
+                <entry><para>1. User submits the delete directory command with the path of directory to delete and  the involved host.</para><para>2.The System deletes the specified directory from the host.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3217,7 +3309,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the delete file command with the path of file to delete, the involved host and session id.</para><para>2.The client System deletes the specified file from the host.</para></entry>
+                <entry><para>1. User submits the delete file command with the path of file to delete, the involved host and session id.</para><para>2.The System deletes the specified file from the host.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3262,7 +3354,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of directory to list, the involved host and session id.</para><para>2.The client System displays the contents of the specified directory on its standard output.</para></entry>
+                <entry><para>1. User submits the display command with the path of directory to list, the involved host and session id.</para><para>2.The System displays the contents of the specified directory on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3307,7 +3399,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the file to display, the involved host and session id.</para><para>2.The client System deletes the specified file from the machine</para></entry>
+                <entry><para>1. User submits the display command with the path of the file to display, the involved host and session id.</para><para>2.The  System prints the specified file on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3352,7 +3444,7 @@ for each option is defined by the administrator. This features can be used by al
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the file to display, the involved host and session id.</para><para>2.The client System displays the first lines of the specified file on its standard output.</para></entry>
+                <entry><para>1. User submits the display command with the path of the file to display, the involved host and session id.</para><para>2.The System displays the first lines of the specified file on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>

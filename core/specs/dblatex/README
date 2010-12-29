@@ -1,5 +1,8 @@
-#generation en anglais
-dblatex -s docbook-sysfera.sty ../docbook/SpecGen.docbook
+cd core/specs/docbook
 
-#generation en français
-dblatex -s docbook-sysfera.sty -P latex.babel.language=french ../docbook/SpecGen.docbook
+#generation des Spécifications générales (en anglais)
+dblatex -s ../dblatex/docbook-sysfera.sty SpecGen-gen.docbook
+
+#generation des STB (en français)
+dblatex -s ../dblatex/docbook-sysfera.sty -P latex.babel.language=french STB-gen.docbook
+
