@@ -116,7 +116,8 @@
     <title>Environnement matériel et logiciel</title>
     <para>TODO</para>
   </chapter>
-  <chapter>
+  
+   <chapter annotations="core/specs/stb/STB_Instal.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
     <title>Installation et maintenance</title>
     <para>TODO</para>
   </chapter>

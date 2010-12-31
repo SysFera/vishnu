@@ -1,0 +1,225 @@
+\documentclass{article}
+
+\usepackage{a4}
+\usepackage[french]{babel}
+
+
+\begin{document}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION INTRO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Introduction}
+Ce document a pour but de pr\'esenter l'int\'er\^et des APIM\footnote{API Mod\`ele} faites \`a l'aide d'Eclipse\footnote{Eclipse est un framework populaire pour d\'evelopper en JAVA} et leur fonctionnement. La premi\`ere partie sera consacr\'ee \`a la pr\'esentation de ce qu'est une APIM. La seconde partie est li\'ee \`a comment la construire. La derni\`ere partie pr\'esentera comment utiliser le code g\'en\'erant la documentation se basant sur l'APIM en docbook.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION APIM
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{APIM}
+\subsection*{D\'efinition}
+Une APIM correspond \`a un mod\`ele d'API, c'est \`a dire une abstraction de l'API qui doit \^etre construite. Les APIM que nous avons construites se basent sur Eclipse et plus particuli\`erement sur EMF (Eclipse Modeling Framework) qui permet de g\'erer les mod\'elisations.
+\subsection*{Buts}
+Le but de l'APIM est de fournir une abstraction de telle sorte que l'on ne manipule plus qu'une abstraction de l'API. Ainsi une modification dans le mod\`ele est automatiquement r\'epercut\'ee dans tout les documents se basant sur l'API. Cela permet d'assurer une coh\'erence entre les divers documents bas\'es sur l'API mais \'egalement une justesse des documents issus du mod\`ele. En effet les documents \'etant automatiquement extraits du mod\`ele, cela supprime le risque d'erreur humaine lors du passage d'une API aux documents qui lui sont li\'es (la documentation, les manuels, etc...). \\
+De plus, le mod\`ele APIM \'etant simple (du XML), il est facile de parser la structure pour g\'en\'erer des documents qui vont bien.
+\subsection*{Pr\'erequis}
+Afin de pouvoir utiliser APIM, nous avons eu besoin des \'el\'ements suivant~:
+\begin{itemize}
+\item[*] Eclipse version Helios (pour les futures versions, il ne devrait pas y avoir de probl\`eme de compatibilit\'e)
+\item[*] Le package EMF de Eclipse. Voici ci-dessous les manipulations \`a faire dans Eclipse pour avoir les bons packages bien configur\'es (par B. Isnard)~:
+  \begin{itemize}
+  \item[\#] La liste des packages faisant partie de la distribution Eclipse Helios (site \textit{'http://download.eclipse.org/releases/helios'}, normalement d\'ej\`a configur\'e dans la liste) n\'ecessaires:
+    \begin{itemize}
+      \item Modeling/EMF Modeling Framework SDK
+      \item General Purpose Tools/Eclipse Plug-In Development Env
+      \item Programming languages/C/C++ Development Tools
+    \end{itemize}
+  \item[\#] Pour XPand\footnote{XPand est un language sp\'ecialis\'e pour g\'en\'erer du code bas\'e sur des mod\`eles EMF}/XTend\footnote{Language li\'e aux m\'eta-mod\`eles}~:
+    \begin{itemize}
+    \item R\'ecup\'erer le .zip dans le SVN de Sysfera: SYSFERA/startup/devel/Eclipse\-/Plugins/m2t-xpand-Update-1.0.1.zip
+    \item Aller dans Help/Install New Software
+    \item Cliquer sur Add... puis ajouter un nouveau \textit{site} correspondant au .zip en cliquant sur \textit{Archive} et en indiquant le chemin vers le .zip
+    \item Le package XPand doit appara\^itre en-dessous afin de l'installer suivant la proc\'edure habituelle
+    \item Après l'installation (et red\'emarrage), il faut modifier la configuration en allant dans le menu Window$>$Preferences$>$XPand/Xtend et cliquer sur 'JavaBeans Metamodel' puis Apply
+    \end{itemize}
+
+  \item[\#] Pour le plugin APIModel:
+    \begin{itemize}
+      \item R\'ecup\'erer le .zip dans le SVN de Sysfera: SYSFERA/startup/devel/Eclipse\-/Plugins/com.sysfera.codegen.api.zip
+      \item Unzipper le fichier dans votre repertoire d'install eclipse (cela va installer le .jar ds le sous-repertoire plugins/)
+      \item redemarrer Eclipse
+    \end{itemize}
+  \item[\#] Voil\`a, il ne reste plus qu'\`a r\'ecup\'erer les sources des plugins présents dans le depôt git (eclipse\_1.git) sur graal, puis importer les projets dans votre workspace (dans le Package Explorer: click droit$>$Import...$>$Existing projects into workspace$>$Selectionner le directory de votre workspace$>$ La liste des plugins \`a importer doit appara\^itre avec des cases à cocher$>$Les selectionner puis faire Import.) Les mod\`eles existants UMS.apim, TMS.apim, IMS.apim sont dispos dans le projet EDF-API. Normalement en double-cliquant dessus dans l'explorateur d'Eclipse ça ouvre l'editeur EMF du modèle (affichage de l'arborescence)
+  \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION FORMATAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Formatage pour docbook}
+Pour g\'en\'erer du docbook en utilisant notre g\'en\'erateur, il faut respecter un certain nombre de r\`egles. 
+Une r\`egle g\'en\'erale concerne le nommage des services/ports, il faut suivre les conventions d\'efinies dans le document codingStandard.pdf d\'efini pour le projet EDF. Pour rappel ces conventions sont~:
+\begin{itemize}
+\item Pour un service, la premi\`ere lettre doit \^etre une minucule. Si plusieurs mots sont attach\'es uniquement la premi\`ere lettre de chaque mot (hormis le premier) est en majuscule. Le nom du service doit comporter un verbe d'action, exemple 'run, startProcess, fillData'.
+\item Pour les ports, les noms doivent \^etre en minuscule, si plusieurs mots sont accol\'es, la premi\`ere lettre de chaque mot (hormis le premier) doit \^etre en majuscule.
+\end{itemize}
+
+\subsection*{Le fichier data.ecore}
+Ce fichier ecore correspond \`a un fichier EMF qui sert \`a d\'efinir les classes/types qui seront par la suite utilis\'ees dans l'API. Bien entendu, le nom du fichier peut \^etre quelconque (ici data sert d'exemple juste).
+
+Pour cr\'eer une classe~:
+\begin{itemize}
+\item[*] Clic droit sur data $>$ new Child $>$ EClass
+\item[*] Un nouvel \'el\'ement doit \^etre accessible sous data
+\item[*] Remplir les champs correspondants \`a la classe~:
+  \begin{itemize}
+  \item[\#] Abstract~: Si c'est une classe abstraite
+  \item[\#] DefaultValue~: Valeur par d\'efaut s'il y en a une
+  \item[\#] ESuperType~: Type de la super classe s'il y en a une
+  \item[\#] InstanceTypeName~: Le nom de l'instance cr\'ee (apparait entre crochet \`a cot\'e du nom)
+  \item[\#] Interface~: Si c'est une interface
+  \item[\#] Name~: Nom de la classe
+  \end{itemize}
+\item[*] Maintenant la classe est pr\^ete, on peut lui ajouter un attribut
+  \begin{itemize}
+  \item[\#] Clic droit sur la classe $>$ New child $>$ EAttribute si c'est un type simple, EReference si c'est un type d\'ej\`a cr\'e\'e
+  \item[\#] Remplir les champs correspondants
+    \begin{itemize}
+    \item Default Value Literal~: La valeur literale par d\'efaut
+    \item Derived~: Si c'est un type d\'eriv\'e
+    \item EAttributeType~: Remplit automatiquement \`a la valeur de EType
+    \item EType~: Le type de l'attribut
+    \item ID~: Si c'est un ID
+    \item LowerBound~: Pour la cardinalit\'e (0 ou 1 au minimum)
+    \item Name~: Le nom de l'attribut
+    \item Ordered~: Si l'attribut est ordonn\'e
+    \item Transient~: Si l'attribut est transient
+    \item Unique~: Si l'attribut est unique
+    \item Unsettable~: Si l'attribut admet un setter
+    \item UpperBound~: 1 par d\'efaut, mettre -1 pour dire nombre ind\'etermin\'e
+    \item Volatile~: Si l'attibut est volatile
+    \end{itemize}
+  \item[\#] Ajout de la description de l'attribut
+    \begin{itemize}
+    \item Clic droit sur l'attribut $>$ New Child $>$ EAnnotation
+    \item Remplir le champs source avec la cha\^ine de caract\`ere \textit{Description}
+    \item Clic droit sur l'\'el\'ement EAnnotation $>$ New Child $>$ Details entry
+    \item Remplir le champs key avec la cha\^ine de caract\`ere \textit{content} et le champs value avec la description de l'attribut
+    \item Si l'attribut est une option d'un type non basique, ajouter un autre \textit{Details entry} avec comme champs \textit{shortOption} dans key et dans value l'option (par exemple \textbf{p} si l'option est \textit{-p})
+    \end{itemize}
+  \end{itemize}
+\item[*] Ajouter autant d'attributs et de classes que n\'ecessaire
+\end{itemize}
+
+
+Pour cr\'eer une \'enum\'eration~:
+\begin{itemize}
+\item[*] Clic droit sur data $>$ new Child $>$ EEnum
+\item[*] Un nouvel \'el\'ement doit \^etre accessible sous data
+\item[*] Remplir les champs correspondants \`a l'\'enum\'eration~:
+  \begin{itemize}
+  \item[\#] DefaultValue~: Valeur par d\'efaut, mise au premier attribut ajout\'e
+  \item[\#] InstanceTypeName~: Le nom de l'instance cr\'ee, automatiquement mis \`a la valeur de Name (sauf si l'on modifie directement ce champs)
+  \item[\#] Interface~: Si c'est une interface
+  \item[\#] Serializable~: Si l'objet est s\'erialisable
+  \end{itemize}
+\item[*] Ajouter un champs \`a l'\'enum\'eration
+  \begin{itemize}
+  \item[\#] Clic droit sur l'\'enum\'eration $>$ New Child $>$ EEnum literal
+  \item[\#] Remplir le champs Name avec le nom de l'\'el\'ement dans l'\'enum\'eration et le champs value par sa valeur
+  \end{itemize}
+\item[*] Ajouter autant de champs et d'\'enum\'erations que n\'ecessaire
+\end{itemize}
+
+
+Maintenant que l'on a tout les types de donn\'ees dans notre data.ecore, on peut mod\'eliser notre APIM.
+
+\subsection*{Mod\'elisation APIM}
+
+\begin{itemize}
+\item[*] Charger le(s) fichier(s) ecore n\'ecessaire(s)
+  \begin{itemize}
+  \item[\#] Clic droit $>$ Load Ressource ... $>$ Fournir le chemin vers le(s) ecore(s)
+  \end{itemize}
+\item[*] Ajouter d'un module
+  \begin{itemize}
+  \item[\#] Clic droit sur API $>$ New Child $>$ Module
+  \item[\#] Renseigner le champs Name du module
+  \end{itemize}
+\item[*] Ajouter les types disponibles
+  \begin{itemize}
+  \item[\#] Ajouter Type List (clic droit $>$ New Child $>$ Type List) au niveau de l'API (on a droit \`a un Type List par niveau, cela d\'efini la visibilit\'e du type)
+  \item[\#] Pour lui ajouter un type ensuite
+  \item[\#] Clic droit $>$ New Child $>$ Type
+  \item[\#] Renseigner les champs
+    \begin{itemize}
+    \item Description~: La description de ce type
+    \item EcoreType~: Le type Ecore de ce type, soit un type de base (E*), soit un type d\'efini dans un ecore de l'utilisateur (si le fichier n'a pas \'et\'e charg\'e avec le Load Ressource, les types utilisateurs ne seront pas visibles)
+    \item Multiple~: Si le type est multiple
+    \item Name~: Le nom du type
+    \end{itemize}
+  \end{itemize}
+\item[*] Ajouter les types de retour des fonctions
+  \begin{itemize}
+  \item[\#] Ajouter au module les types de retour
+  \item[\#] Clic droit $>$ New child $>$ Result code list
+  \item[\#] Ajouter un type de retour \`a la result code list
+    \begin{itemize}
+    \item Clic droit $>$ New Child $>$ Result code
+    \item Remplir les champs 
+      \begin{itemize}
+      \item[\$] Description~: Description du code de retour
+      \item[\$] Name~: Nom du code de retour
+      \item[\$] Value~: Valeur du code de retour
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\item[*] Ajouter un service (une fonction de l'API)
+  \begin{itemize}
+  \item[\#] Clic droit sur le module $>$ New Child $>$ Service
+  \item[\#] Remplir les champs
+    \begin{itemize}
+    \item Admin Only~: Si la fonction est pour tout les utilisateurs ou les admins uniquement
+    \item Description~: Une description de ce que fait la fonction, toujours la commencer par un verbe conjugu\'e \`a la 3\`eme personne du singulier car un pr\'efixe lui est automatiquement ajout\'e lors de la g\'en\'eration
+    \item Name~: Le nom de la fonction
+    \item ResultCode~: Ajouter les codes d'erreurs que peut renvoyer la fonction (ces codes proviennent de la liste Result Code pr\'ec\'edemment cit\'ee)
+    \end{itemize}
+  \item[\#] Ajouter un port (=param\`etre de la fonction)
+    \begin{itemize}
+    \item Sur le service, clic droit $>$ New Child $>$ Port
+    \item Remplir les champs utiles du port
+      \begin{itemize}
+      \item[\$] Data Type~: Le type du port
+      \item[\$] Description~: La description du port
+      \item[\$] Direction~: Si le port est en entr\'ee, en sortie, ou les deux
+      \item[\$] Name~: Le nom du port
+      \item[\$] Optionnal~: Si le param\`etre est optionnel (il a une valeur par d\'efaut qui lui est attribu\'e)
+      \item[\$] Short Option Letter~: Si ce port est une option pour la ligne de commande est qu'il est de type simple, alors on sp\'ecifie ici la lettre \`a utiliser pour l'option de ce param\`etre
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\item[*] Faire un service pour chaque fonction de l'API
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION DOCBOOK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{G\'en\'erer du docbook}
+Le code du main de g\'en\'eration du docbook se trouve dans le d\'epot git concernant eclipse dans le package~:\\
+com.sysfera.codegen.docbook.apimodel.SpecApiCreate. \\
+Il faut lancer de package avec 3 arguments principaux~:
+\begin{itemize}
+\item[*] \textit{-I} Pour indiquer que l'argument suivant contient le chemin vers la racine du d\'epot git
+\item[*] Le chemin (absolu) vers le d\'epot git
+\item[*] Le chemin (absolu) vers le template docbook. Ce fichier doit etre nomm\'e \textit{*-template.docbook}. Ce template utilisant les chemins relatifs \`a partir du d\'epot git, c'est pour cela qu'on l'a pass\'e pr\'ec\'edemment avec \textit{-I}.
+\end{itemize}
+
+Le fichier de configuration \textit{*-template.docbook} doit \^etre \'ecrit par l'utilisateur \`a la main, au format docbook (=xml particulier). Pour sp\'ecifier les \'el\'ements \`a rechercher automatiquement dans l'APIM, il faut les balises suivantes~:
+\begin{itemize}
+\item[*] \textit{chapter}, qui permet de dire que l'on a un nouveau chapitre, avec le tag \textit{annotations}, ce tag a pour valeur le fichier APIM avec son module. Le chemin donn\'e est relatif par rapport au chemin indiqu\'e pr\'ec\'edemment. Il peut \^etre absolu et \`a ce moment l\`a les 2 param\`etres pr\'ec\'edents du programme sont inutiles. Pour une meilleure portabilit\'e, il est recommand\'e d'utiliser des chemins relatifs. Ici on d\'emarre syst\'ematiquement les chemins \`a la racine du d\'epot eclipse contenant les APIM. Exemple d'annotation~:\textit{\textbf{annotations=''EDF-API/UMS.apim\#UMS''}}.
+\item[*] Dans les balises \textit{chapter}, on doit mettre la balise \textit{title} qui correspond au titre du chapitre.
+\end{itemize}
+Et cela suffit pour faire fonctionner a g\'en\'eration de code dans un fichier docbook \`a partir de l'APIM (ou des APIM, rien n'emp\^eche de mettre plusieurs chapter avec des APIM diff\'erentes dans le template).
+\end{document}
