@@ -288,7 +288,7 @@
       <title>Glossaire</title>
       <para><itemizedlist>
           <listitem>
-            <para><emphasis role="bold">SSH</emphasis> : à la fois programme exécutable et protocole de communication sécurisé utilisant un échange de clés de chiffrement en début de connexion.</para>
+            <para><emphasis role="bold">SSH</emphasis>: à la fois programme exécutable et protocole de communication sécurisé utilisant un échange de clés de chiffrement en début de connexion.</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -440,8 +440,78 @@
     <title>Environnement matériel et logiciel</title>
     <para>TODO</para>
   </chapter>
-  <chapter>
+  <chapter annotations="core/specs/stb/STB_Instal.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
     <title>Installation et maintenance</title>
     <para>TODO</para>
+    <section>
+      <title>Tableau des Exigences</title>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="10cm"/>
+          <thead>
+            <row>
+              <entry>ID
+</entry>
+              <entry>Name
+</entry>
+              <entry>Text
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>1.</para></entry>
+              <entry><para>Packaging</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1</para></entry>
+              <entry><para>Sources</para></entry>
+              <entry><para>Récupérer les sources au format .tar.gz pour pouvoir compiler et installer VISHNU</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2</para></entry>
+              <entry><para>Paquet debian</para></entry>
+              <entry><para>Récupérer le paquet debian correspondant à VISHNU</para></entry>
+            </row>
+            <row>
+              <entry><para>2.</para></entry>
+              <entry><para>Configuration</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>2.1</para></entry>
+              <entry><para>omniORB</para></entry>
+              <entry><para>Avoir un fichier de configuration de omniORB</para></entry>
+            </row>
+            <row>
+              <entry><para>2.2</para></entry>
+              <entry><para>Port</para></entry>
+              <entry><para>Utiliser des ports libres sur la machine, notamment pour déployer les forwarders</para></entry>
+            </row>
+            <row>
+              <entry><para>2.3</para></entry>
+              <entry><para>VISHNU</para></entry>
+              <entry><para>Avoir des fichiers de configuration pour les agents, SeDs, forwarders</para></entry>
+            </row>
+            <row>
+              <entry><para>2.4</para></entry>
+              <entry><para>Log</para></entry>
+              <entry><para>Avoir le log service de DIET d'installé (module indépendant)</para></entry>
+            </row>
+            <row>
+              <entry><para>3.</para></entry>
+              <entry><para>Déploiement</para></entry>
+              <entry><para>VISHNU sera deployé manuellement en lançant un à un les éléments de l'architecture</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section>
+      <title>Glossaire</title>
+    </section>
   </chapter>
 </book>

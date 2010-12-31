@@ -34,6 +34,14 @@
             <para>Pre-delivrable</para>
           </revdescription>
         </revision>
+        <revision>
+          <revnumber>03</revnumber>
+          <date>29/12/2010</date>
+          <authorinitials>B.Isnard</authorinitials>
+          <revdescription>
+            <para>Delivrable (draft)</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
@@ -83,20 +91,29 @@
     </section>
     <section>
       <title>Glossary</title>
-      <para/>
+      <para>
+         <itemizedlist>
+           <listitem>
+            <para>SysferaDS: open-source middleware software used by Vishnu (former name
+              "DIET")</para>
+          </listitem>
+          <listitem>Batch Scheduler: system used to manage batch jobs on multi-processor systems or
+            clusters.</listitem>
+         </itemizedlist>
+      </para>
     </section>
   </chapter>
     <!-- GENERATED PART -->
-  <chapter annotations="UMS/specs/UMS.asta#UCDESC+UCDIAG+DICT(UMS Analyse/DATA_DICTIONARY)">
+  <chapter annotations="UMS/specs/UMS.asta#UCDIAG+UCDESC+DICT(UMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for User Management System (UMS)</title>
   </chapter>
-  <chapter annotations="TMS/specs/TMS.asta#UCDESC+UCDIAG+DICT(TMS Analyse/DATA_DICTIONARY)">
+  <chapter annotations="TMS/specs/TMS.asta#UCDIAG+UCDESC+DICT(TMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for Tasks Management System (TMS)</title>
   </chapter>
-  <chapter annotations="IMS/specs/IMS.asta#UCDESC+UCDIAG+DICT(IMS Analyse/DATA_DICTIONARY)">
+  <chapter annotations="IMS/specs/IMS.asta#UCDIAG+UCDESC+DICT(IMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for Information Management System (IMS)</title>
   </chapter>
-  <chapter annotations="FMS/specs/FMS.asta#UCDESC+UCDIAG+DICT(FMS Analyse/DATA_DICTIONARY)">
+  <chapter annotations="FMS/specs/FMS.asta#UCDIAG+UCDESC+DICT(FMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for File Management System (FMS)</title>
   </chapter>
 </book>
