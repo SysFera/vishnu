@@ -7,7 +7,6 @@
 #define __TMSVISHNUEXCEPTION__
 
 #include "VishnuException.hh"
-#include <map>
 
 static const int TNBERR = 5;
 
