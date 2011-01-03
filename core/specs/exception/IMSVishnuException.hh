@@ -7,7 +7,7 @@
 #define __IMSVISHNUEXCEPTION__
 
 #include "VishnuException.hh"
-#include <map>
+
 static const int INBERR = 5;
 
 class IMSVishnuException: public VishnuException{

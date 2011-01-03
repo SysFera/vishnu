@@ -7,7 +7,6 @@
 #define __UMSVISHNUEXCEPTION__
 
 #include "VishnuException.hh"
-#include <map>
 
 static const int UNBERR = 5;
 

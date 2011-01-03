@@ -7,13 +7,11 @@
 #define __FMSVISHNUEXCEPTION__
 
 #include "VishnuException.hh"
-#include <map>
 
 static const int FNBERR = 5;
 
 class FMSVishnuException: public VishnuException{
 private :
-  std::map<int, std::string> mp;
 protected:
 public:
   /**
