@@ -8,7 +8,7 @@ FMS::FMS(){
 
 void FMS::copy(){
   e.setMsgComp ("The copy failed due to a diet error in toto");
-  e.setMsg(0);
+  e.setMsg(5);
   throw e;
 }
 

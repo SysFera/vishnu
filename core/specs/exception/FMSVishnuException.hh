@@ -6,11 +6,11 @@
 #ifndef __FMSVISHNUEXCEPTION__
 #define __FMSVISHNUEXCEPTION__
 
-#include "VishnuException.hh"
+#include "SystemException.hh"
 
 static const int FNBERR = 5;
 
-class FMSVishnuException: public VishnuException{
+class FMSVishnuException: public SystemException{
 private :
 protected:
 public:

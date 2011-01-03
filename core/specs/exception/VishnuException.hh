@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <exception>
+#include <map>
 
 class VishnuException :
   public std::exception {
@@ -24,9 +25,13 @@ typedef enum ExceptionType{
 } ExceptionType;
 
 private :
+
 protected :
 
-  
+  /**
+   * \brief Map containing The generic messages
+   */
+  std::map<int, std::string> mp;  
   /**
    *  \brief A complementatry message to the exception
    */
@@ -39,6 +44,8 @@ protected :
    *  \brief An exception code refereing to a generic message. -1 means no generic error message.
    */
   int           mval;
+
+
 public :
 
   /**
@@ -50,7 +57,7 @@ public :
    * \brief Copy constructor
    * \fn VishnuException(VishnuException e)
    */
-  VishnuException(VishnuException& e);
+  VishnuException(const VishnuException& e);
   /**
    * \brief Constructor
    * \fn VishnuException(int msg, string msgComp = "")
@@ -60,69 +67,75 @@ public :
    * \brief Default destructor
    * \fn ~VishnuException()
    */
-  ~VishnuException() throw(){};
+  virtual ~VishnuException() throw(){};
   /**
    * \brief To get the type of the exception in integer
-   * \fn getTypeI()
+   * \fn ExceptionType getTypeI()
    * \return Returns the type of the exception
    */
   ExceptionType
-  getTypeI(){return mtype;}
+  getTypeI() const {return mtype;}
   /**
    * \brief Function to get the exception type in string
-   * \fn getTypeS()
+   * \fn virtual std::string getTypeS()
    * \return Returns the type of the exception
    */
-  std::string
-  getTypeS();
+  virtual std::string
+  getTypeS() const {return "";};
   /**
    * \brief To get a complement to the message
-   * \fn getMsgDetail()
+   * \fn std::string getMsgDetail()
    * \return Returns a complement to the generic error message
    */
   std::string
-  getMsgComp(){return mmsgc;}
+  getMsgComp() const {return mmsgc;}
   /**
    * \brief To get the generic message
-   * \fn getMsg()
+   * \fn virtual std::string getMsg()
    * \return Returns the message
    */
   virtual std::string
-  getMsg(){return "";}
+  getMsg() const {return "";}
   /**
    * \brief Function to set the type of the exception
-   * \fn setType(ExceptionType t)
+   * \fn void setType(ExceptionType t)
    * \param t The type of the exception
    */
   void
   setType(ExceptionType t){mtype = t;}
   /**
    * \brief Function to set the complement of a message
-   * \fn setMsgComp(std::string m)
+   * \fn void setMsgComp(std::string m)
    * \param m The complement of the message
    */
   void
   setMsgComp(std::string m){mmsgc = m;}
   /**
    * \brief Function to set the generic message
-   * \fn setMsg(int val)
+   * \fn void setMsg(int val)
    * \param val The val of the msg
    */
   void
   setMsg(int val){mval = val;}
   /**
    * \brief Function to append a complement to the detailled message
-   * \fn appendMsgComp(string s)
+   * \fn void appendMsgComp(string s)
    * \param s The message to append
    */
   void
   appendMsgComp(std::string s);
   /**
    * \brief To get the mval as an int
-   * \fn getMsgI()
+   * \fn int getMsgI()
    */
   int
-  getMsgI();
+  getMsgI() const;
+  /**
+   * \brief Function to initialize all the generic messages
+   * \fn virtual void initMsg()
+   */
+  virtual void
+  initMsg() {};
 };
 
 #endif // VISHNUEXCEPTION

@@ -6,13 +6,12 @@
 #ifndef __TMSVISHNUEXCEPTION__
 #define __TMSVISHNUEXCEPTION__
 
-#include "VishnuException.hh"
+#include "SystemException.hh"
 
 static const int TNBERR = 5;
 
-class TMSVishnuException: public VishnuException{
+class TMSVishnuException: public SystemException{
 private :
-  std::map<int, std::string> mp;
 protected:
 public:
   /**
@@ -35,14 +34,6 @@ public:
    * \fn ~TMSVishnuException()
    */
   ~TMSVishnuException() throw (){};
-  /**
-   * \brief Function to get the generic message in the TMS part depending on the inherited mval integer
-   * \fn getMsg
-   * \return Returns the corresponding generic message
-   */
-  std::string getMsg();
-
-
   
 };
 

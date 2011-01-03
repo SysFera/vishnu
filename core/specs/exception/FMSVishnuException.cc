@@ -1,10 +1,10 @@
 #include "FMSVishnuException.hh"
 
-FMSVishnuException::FMSVishnuException(FMSVishnuException& e):VishnuException(e){
+FMSVishnuException::FMSVishnuException(FMSVishnuException& e):SystemException(e){
   mtype = VishnuException::FMS;
 }
 
-FMSVishnuException::FMSVishnuException(int msg, std::string msgComp):VishnuException(msg, msgComp){
+FMSVishnuException::FMSVishnuException(int msg, std::string msgComp):SystemException(msg, msgComp){
   mtype = VishnuException::FMS;
 }
 

@@ -5,40 +5,21 @@ VishnuException::VishnuException(){
   mmsgc = "";
   mtype = NONE;
   mval = -1;
+  initMsg();
 }
 
-VishnuException::VishnuException(VishnuException& e){
+VishnuException::VishnuException(const VishnuException& e){
   mmsgc = e.getMsgComp();
   mtype = e.getTypeI();
   mval  = e.getMsgI();
+  initMsg();
 }
 
 VishnuException::VishnuException(int msg, std::string msgComp){
   mval = msg;
   mmsgc = msgComp;
   mtype = NONE;
-}
-
-std::string
-VishnuException::getTypeS(){
-  switch (mtype){
-  case 0 :
-    return std::string("UMS");
-    break;
-  case 1 :
-    return std::string("TMS");
-    break;
-  case 2 :
-    return std::string("FMS");
-    break;
-  case 3 :
-    return std::string("IMS");
-    break;
-  case 4 :
-    return std::string("NONE");
-    break;
-  }
-  return std::string("->not found<-");
+  initMsg();
 }
 
 void
@@ -47,6 +28,6 @@ VishnuException::appendMsgComp(std::string s){
 }
 
 int
-VishnuException::getMsgI(){
+VishnuException::getMsgI() const{
   return mval;
 }

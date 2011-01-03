@@ -7,6 +7,7 @@
 #include "FMS.hh"
 #include "IMS.hh"
 
+#include <typeinfo>
 
 #define NBMOD 4
 
@@ -17,7 +18,6 @@ int main(int argc, char** argv){
   TMS t;
   FMS f;
   IMS i;
-  int tmp, tmp2, tmp3;
   srand (time (NULL));
 
   while (1){
@@ -25,6 +25,7 @@ int main(int argc, char** argv){
     try{
 
 #ifdef DEBUG
+      int tmp, tmp2, tmp3;
       tmp = r%NBMOD;
       tmp2 = r%7;
       tmp3 = r%5;
@@ -40,9 +41,9 @@ int main(int argc, char** argv){
       else if ((r%NBMOD) == 3)
 	i.call (rand()%5);
     }
-    catch (VishnuException* e){
+    catch (SystemException* e){
       std::cout << " Erreur dans le module : " << e->getTypeS() << std::endl;
-      std::cout << " Message generique : " << e->getMsg() << std::endl;
+      std::cout << " Message generique <-> : " << e->getMsg() << std::endl;
       std::cout << "Details supplementaires : " << e->getMsgComp() << std::endl;
     }
     sleep (2);

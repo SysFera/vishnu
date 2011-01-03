@@ -8,7 +8,7 @@ IMS::IMS(){
 
 void IMS::getCPU(){
   e->setMsgComp ("The get number of cpu failed due to a problem in the diet cori module");
-  e->setMsg(0);
+  e->setMsg(5);
   throw e;
 }
 void IMS::getTMem(){
