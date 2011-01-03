@@ -2,7 +2,7 @@ CC = g++
 LD = g++
 CCFLAGS = -g -Wall
 LDFLAGS = -g -Wall
-OBJ	= VishnuException.o UMS.o TMS.o FMS.o IMS.o IMSVishnuException.o UMSVishnuException.o FMSVishnuException.o TMSVishnuException.o main.o
+OBJ	= VishnuException.o SystemException.o UserException.o UMS.o TMS.o FMS.o IMS.o IMSVishnuException.o UMSVishnuException.o FMSVishnuException.o TMSVishnuException.o main.o
 
 all	: main
 
@@ -39,6 +39,12 @@ FMSVishnuException.o	: FMSVishnuException.cc
 		$(CC) $(CCFLAGS) -c $< -o $@
 
 TMSVishnuException.o	: TMSVishnuException.cc
+		$(CC) $(CCFLAGS) -c $< -o $@
+
+SystemException.o	: SystemException.cc
+		$(CC) $(CCFLAGS) -c $< -o $@
+
+UserException.o	: UserException.cc
 		$(CC) $(CCFLAGS) -c $< -o $@
 
 clean	:

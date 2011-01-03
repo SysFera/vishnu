@@ -25,7 +25,7 @@ void UMS::displaySession(){
 
 void UMS::addMachine(){
   e->setMsgComp ("The add machine failed because a malloc failed. ");
-  e->setMsg(0);
+  e->setMsg(5);
   throw e;
 }
 
@@ -37,7 +37,7 @@ void UMS::removeMachine(){
  
 void UMS::saveConfiguration(){
   e->setMsgComp ("The save failed because no space left on device. ");
-  e->setMsg(0);
+  e->setMsg(5);
   throw e;
 }
  
@@ -55,7 +55,7 @@ void UMS::call (int val){
       connect();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;
@@ -64,7 +64,7 @@ void UMS::call (int val){
       disconnect();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;
@@ -73,7 +73,7 @@ void UMS::call (int val){
       displayLog();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;
@@ -82,7 +82,7 @@ void UMS::call (int val){
       addMachine();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;
@@ -91,7 +91,7 @@ void UMS::call (int val){
       removeMachine();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;
@@ -100,7 +100,7 @@ void UMS::call (int val){
       saveConfiguration();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;
@@ -109,7 +109,7 @@ void UMS::call (int val){
       displaySession();
     }
     catch (UMSVishnuException* e){
-      e->appendMsgComp ("In the call \\o/ \n");
+      e->appendMsgComp ("In the call \\o/ ");
       throw e;
     }
     break;

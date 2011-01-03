@@ -6,13 +6,10 @@
 #ifndef __IMSVISHNUEXCEPTION__
 #define __IMSVISHNUEXCEPTION__
 
-#include "VishnuException.hh"
+#include "SystemException.hh"
 
-static const int INBERR = 5;
-
-class IMSVishnuException: public VishnuException{
+class IMSVishnuException: public SystemException{
 private :
-  std::map<int, std::string> mp;
 protected:
 public:
   /**
@@ -35,14 +32,6 @@ public:
    * \fn ~IMSVishnuException()
    */
   ~IMSVishnuException() throw(){};
-  /**
-   * \brief Function to get the generic message in the IMS part depending on the inherited mval integer
-   * \fn getMsg
-   * \return Returns the corresponding generic message
-   */
-  std::string getMsg();
-
-
   
 };
 

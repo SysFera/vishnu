@@ -18,7 +18,7 @@ void TMS::getJob(){
 
 void TMS::cancelJob(){
   e->setMsgComp ("Cannot cancel a job because the kill failed");
-  e->setMsg(0);
+  e->setMsg(5);
   throw e;
 }
 void TMS::listQueue(){
