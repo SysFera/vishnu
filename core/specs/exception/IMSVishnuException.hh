@@ -21,7 +21,7 @@ public:
    * \brief Copy constructor
    * \fn UMSVishnuException()
    */
-  IMSVishnuException(IMSVishnuException& e);
+  IMSVishnuException(const IMSVishnuException& e);
   /**
    * \brief Constructor
    * \fn UMSVishnuException()
