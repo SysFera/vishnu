@@ -55,10 +55,10 @@ SystemException::initMsg(){
 
 std::string
 SystemException::getMsg() const{
-  std::map<int, std::string>::const_iterator it = mp.find(mval);
-  if (it != mp.end())
-    return it->second;
-    //  if (mval>=1 && mval<=static_cast<int>(mp.size()))
-  //    return mp[mval];
+//  std::map<int, std::string>::const_iterator it = mp.find(mval);
+  //if (it != mp.end())
+   // return it->second;
+      if (mval>=1 && mval<=static_cast<int>(mp.size()))
+      return mp[mval];
   return "Unknown error code.\n";
 }

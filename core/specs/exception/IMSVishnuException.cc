@@ -1,6 +1,6 @@
 #include "IMSVishnuException.hh"
 
-IMSVishnuException::IMSVishnuException(IMSVishnuException& e):SystemException(e){
+IMSVishnuException::IMSVishnuException(const IMSVishnuException& e):SystemException(e){
   mtype = VishnuException::IMS;
 }
 

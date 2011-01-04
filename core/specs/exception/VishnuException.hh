@@ -31,7 +31,7 @@ protected :
   /**
    * \brief Map containing The generic messages
    */
-  std::map<int, std::string> mp;  
+  mutable std::map<int, std::string> mp;  
   /**
    *  \brief A complementatry message to the exception
    */

@@ -1,12 +1,18 @@
 #include "VishnuException.hh"
 #include "UMS.hh"
-
+#include <string>
+#include <sstream>
 UMS::UMS(){
   e = new UMSVishnuException();
   e->setType(VishnuException::UMS);
 }
 void UMS::connect(){
-  e->setMsgComp ("The connection failed with a database error code 666. ");
+std::ostringstream oss;
+oss << "The connection failed with a database error code 666.\n";
+oss << " Fichier:\t" << __FILE__ << std::endl;
+oss << "LIGNE:\t" << __LINE__ << std::endl;
+  e->setMsgComp(oss.str());
+
   e->setMsg(1);
   throw e;
 }
