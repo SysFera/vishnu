@@ -35,20 +35,12 @@
     <title>VISHNU D1.0 - api specifications</title>
     <revhistory>
       <revision>
-        <revnumber>01</revnumber>
-        <date>21/12/2010</date>
+        <revnumber>0</revnumber>
+        <date>05/01/2011</date>
         <authorinitials>B.Isnard</authorinitials>
         <revdescription>
           
         <para>Formatting example</para></revdescription>
-      </revision>
-      <revision>
-        <revnumber>02</revnumber>
-        <date>21/12/2010</date>
-        <authorinitials>B.Isnard</authorinitials>
-        <revdescription>
-            
-          <para>Pre-delivrable</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -56,10 +48,8 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document presents the external specifications of the Vishnu system at a general
-        level. At this level, we describe .</para>
-      <para>These general specifications are a prerequisite for the detailed specifications step in
-        the software development process.</para>
+      <para>This document presents the detailed specifications of the Vishnu C++ API.</para>
+      <para>These specifications include the definition of all methods and all data types provided by the API.</para>
     </section>
     <section>
       <title>Document structure</title>
@@ -79,29 +69,33 @@
             <para>IMS: Information Management System</para>
           </listitem>
         </itemizedlist></para>
-      <para>Each module  corresponds to a chapter in the document, and each chapter contains two sections:<itemizedlist>
+      <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:<itemizedlist>
           <listitem>
-            <para>A first section containing &quot;TMS api descriptions&quot; </para>
+            <para>A first section describing the definition of all methods provided by the library</para>
           </listitem>
           <listitem>
-            <para>A second section containing &quot;UMS api descriptions&quot; </para>
+            <para>A second section describing the definition of all data types provided by the library</para>
+          </listitem>
+          <listitem>
+            <para>TODO - A third section describing the dependencies of the library</para>
           </listitem>
         </itemizedlist></para>
     </section>
     <section>
       <title>References</title>
-      <para/>
+      <para>
+		TODO - ajouter ref. vers les specs générales
+      </para>
     </section>
     <section>
       <title>Glossary</title>
       <para/>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/UMS.apim#UMS">
-    <title>API specification  for User Management System (UMS)</title>
+  <chapter annotations="EDF-API/UMS.apim#APIOPS+APIDATA">
+    <title>API specification for User Management System (UMS)</title>
     <section>
-      <title>UMS specification
-</title>
+      <title>Definition of the functions of the API</title>
       <section>
         <title>connect</title>
       </section>
@@ -2598,728 +2592,727 @@
       </informaltable>
       <para><emphasis role="bold">Signature </emphasis></para>
       <funcsynopsis><funcprototype><funcdef>int <function>vishnuFinalize</function></funcdef></funcprototype></funcsynopsis>
-      <section>
-        <title>Class definitions</title>
-        <para id="SessionCloseType"><emphasis role="bold">SessionCloseType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+    </section>
+    <section>
+      <title>Class definitions</title>
+      <para id="SessionCloseType"><emphasis role="bold">SessionCloseType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>CLOSE_ON_DISCONNECT</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>CLOSE_ON_TIMEOUT</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ConnectOptions"><emphasis role="bold">ConnectOptions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ConnectOptions"><emphasis role="bold">ConnectOptions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionInactivityDelay</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
-              </row>
-              <row>
-                <entry><para>substituteUserId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an option which allows an admin to open a session as he/she was a specific user identified by his/her userId</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="User"><emphasis role="bold">User Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>sessionInactivityDelay</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+            </row>
+            <row>
+              <entry><para>substituteUserId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option which allows an admin to open a session as he/she was a specific user identified by his/her userId</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="User"><emphasis role="bold">User Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the login of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>password</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is the password of the user. At the beginning, an admin can give a temporary password or it is automatically generated by the System. </para></entry>
-              </row>
-              <row>
-                <entry><para>firstname</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is the firstname of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>lastname</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is the lastname of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>privilege</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>is the privilege of the user (admin or simple user)</para></entry>
-              </row>
-              <row>
-                <entry><para>email</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is the email of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>passwordState</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>is the state of the password which allows the System to inform the user to change his/her </para><para>password</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="UpdateUserOptions"><emphasis role="bold">UpdateUserOptions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the login of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>password</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the password of the user. At the beginning, an admin can give a temporary password or it is automatically generated by the System. </para></entry>
+            </row>
+            <row>
+              <entry><para>firstname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the firstname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>lastname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the lastname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>privilege</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>is the privilege of the user (admin or simple user)</para></entry>
+            </row>
+            <row>
+              <entry><para>email</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the email of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>passwordState</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>is the state of the password which allows the System to inform the user to change his/her </para><para>password</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="UpdateUserOptions"><emphasis role="bold">UpdateUserOptions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the login of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>firstname</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an option to update the firstname of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>lastname</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an option to update the lastname of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>privilege</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an option to update the privilege of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>email</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an option to update the email adress of the user</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="LocalAccount"><emphasis role="bold">LocalAccount Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the login of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>firstname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option to update the firstname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>lastname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option to update the lastname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>privilege</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option to update the privilege of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>email</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option to update the email adress of the user</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="LocalAccount"><emphasis role="bold">LocalAccount Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The userId represents the login of the user of the local user config</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The MachineId represents the identifier of the machine associated to the local user config</para></entry>
-              </row>
-              <row>
-                <entry><para>acLogin</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
-              </row>
-              <row>
-                <entry><para>sshKeyPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
-              </row>
-              <row>
-                <entry><para>HomeDirectory</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>HomeDirectory is the path of the home directory the user on the associated machine</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Configuration"><emphasis role="bold">Configuration Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The userId represents the login of the user of the local user config</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The MachineId represents the identifier of the machine associated to the local user config</para></entry>
+            </row>
+            <row>
+              <entry><para>acLogin</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
+            </row>
+            <row>
+              <entry><para>sshKeyPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
+            </row>
+            <row>
+              <entry><para>HomeDirectory</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>HomeDirectory is the path of the home directory the user on the associated machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Configuration"><emphasis role="bold">Configuration Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>descConf</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the description of the configuration</para></entry>
-              </row>
-              <row>
-                <entry><para>listConfUsers</para></entry>
-                <entry><para>List of <link linkend="User">User</link></para></entry>
-                <entry><para>is the list of users objects</para></entry>
-              </row>
-              <row>
-                <entry><para>listConfMachines</para></entry>
-                <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
-                <entry><para>is a list of machines objects</para></entry>
-              </row>
-              <row>
-                <entry><para>listConfLocalAccounts</para></entry>
-                <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
-                <entry><para>is the list of LocalAccount objects</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Machine"><emphasis role="bold">Machine Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>descConf</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the description of the configuration</para></entry>
+            </row>
+            <row>
+              <entry><para>listConfUsers</para></entry>
+              <entry><para>List of <link linkend="User">User</link></para></entry>
+              <entry><para>is the list of users objects</para></entry>
+            </row>
+            <row>
+              <entry><para>listConfMachines</para></entry>
+              <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
+              <entry><para>is a list of machines objects</para></entry>
+            </row>
+            <row>
+              <entry><para>listConfLocalAccounts</para></entry>
+              <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
+              <entry><para>is the list of LocalAccount objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Machine"><emphasis role="bold">Machine Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the identifier of the machine</para></entry>
-              </row>
-              <row>
-                <entry><para>name</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the name of the machine</para></entry>
-              </row>
-              <row>
-                <entry><para>site</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the location of the machine</para></entry>
-              </row>
-              <row>
-                <entry><para>totalDiskSpace</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the total disk space of the machine</para></entry>
-              </row>
-              <row>
-                <entry><para>totalMemory</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the total memory of the machine</para></entry>
-              </row>
-              <row>
-                <entry><para>machineDescription</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the description of the machine</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="AdminOptions"><emphasis role="bold">AdminOptions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the identifier of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the name of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>site</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the location of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>totalDiskSpace</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the total disk space of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>totalMemory</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the total memory of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>machineDescription</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the description of the machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="AdminOptions"><emphasis role="bold">AdminOptions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>AdminListOption</para></entry>
-                <entry><para><link linkend="AdminListOptionType">AdminListOptionType</link></para></entry>
-                <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
-              </row>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="AdminListOptionType"><emphasis role="bold">AdminListOptionType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>AdminListOption</para></entry>
+              <entry><para><link linkend="AdminListOptionType">AdminListOptionType</link></para></entry>
+              <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="AdminListOptionType"><emphasis role="bold">AdminListOptionType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>ALL</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListLocalAccount"><emphasis role="bold">ListLocalAccount Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>ALL</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListLocalAccount"><emphasis role="bold">ListLocalAccount Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>accounts</para></entry>
-                <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
-                <entry><para>is a list of LocalAccount objects which encapsulates local user configurations</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListMachines"><emphasis role="bold">ListMachines Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>accounts</para></entry>
+              <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
+              <entry><para>is a list of LocalAccount objects which encapsulates local user configurations</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListMachines"><emphasis role="bold">ListMachines Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machines</para></entry>
-                <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
-                <entry><para>is a list of machines objects which encapsulates the machines information</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListCommands"><emphasis role="bold">ListCommands Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machines</para></entry>
+              <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
+              <entry><para>is a list of machines objects which encapsulates the machines information</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListCommands"><emphasis role="bold">ListCommands Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>Commands</para></entry>
-                <entry><para>List of <link linkend="Command">Command</link></para></entry>
-                <entry><para>is the list of commands objects</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Command"><emphasis role="bold">Command Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Commands</para></entry>
+              <entry><para>List of <link linkend="Command">Command</link></para></entry>
+              <entry><para>is the list of commands objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Command"><emphasis role="bold">Command Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>commandId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is the identifier of a command</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionId is the identifier of the session define in the database</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machineId is the identifier of the machine used by the command</para></entry>
-              </row>
-              <row>
-                <entry><para>cmdDescription</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>cmdDescription is the description of the command</para></entry>
-              </row>
-              <row>
-                <entry><para>cmdStartTime</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>cmdStartTime is the time of the command beginning</para></entry>
-              </row>
-              <row>
-                <entry><para>cmdEndTime</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>cmdEndTime is the time of the command end</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListOptionsValue"><emphasis role="bold">ListOptionsValue Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>commandId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the identifier of a command</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The sessionId is the identifier of the session define in the database</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The machineId is the identifier of the machine used by the command</para></entry>
+            </row>
+            <row>
+              <entry><para>cmdDescription</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>cmdDescription is the description of the command</para></entry>
+            </row>
+            <row>
+              <entry><para>cmdStartTime</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>cmdStartTime is the time of the command beginning</para></entry>
+            </row>
+            <row>
+              <entry><para>cmdEndTime</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>cmdEndTime is the time of the command end</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListOptionsValue"><emphasis role="bold">ListOptionsValue Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>optionValues</para></entry>
-                <entry><para>List of <link linkend="OptionValue">OptionValue</link></para></entry>
-                <entry><para>is a list of optionValue objects which encapsulates the optionValue information</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="OptionValue"><emphasis role="bold">OptionValue Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>optionValues</para></entry>
+              <entry><para>List of <link linkend="OptionValue">OptionValue</link></para></entry>
+              <entry><para>is a list of optionValue objects which encapsulates the optionValue information</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="OptionValue"><emphasis role="bold">OptionValue Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>optionName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the name of an option</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the value of an option</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListUsers"><emphasis role="bold">ListUsers Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>optionName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the name of an option</para></entry>
+            </row>
+            <row>
+              <entry><para>value</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the value of an option</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListUsers"><emphasis role="bold">ListUsers Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>users</para></entry>
-                <entry><para>List of <link linkend="User">User</link></para></entry>
-                <entry><para>is the list of users objects</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListSessionOption"><emphasis role="bold">ListSessionOption Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>users</para></entry>
+              <entry><para>List of <link linkend="User">User</link></para></entry>
+              <entry><para>is the list of users objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListSessionOption"><emphasis role="bold">ListSessionOption Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionListOption</para></entry>
-                <entry><para><link linkend="SessionListOptionType">SessionListOptionType</link></para></entry>
-                <entry><para>is an option which precise the type of session listed (ACTIVE, INACTIVE or ALL)</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionClosePolicy</para></entry>
-                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
-                <entry><para>is an option for closing session automatically</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionInactivityDelay</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the identifier of the machine</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="SessionListOptionType"><emphasis role="bold">SessionListOptionType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>sessionListOption</para></entry>
+              <entry><para><link linkend="SessionListOptionType">SessionListOptionType</link></para></entry>
+              <entry><para>is an option which precise the type of session listed (ACTIVE, INACTIVE or ALL)</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionClosePolicy</para></entry>
+              <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+              <entry><para>is an option for closing session automatically</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionInactivityDelay</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the identifier of the machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="SessionListOptionType"><emphasis role="bold">SessionListOptionType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>ACTIVE_SESSION</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>INACTIVE_SESSION</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>ALL_SESSION</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListSessions"><emphasis role="bold">ListSessions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>ACTIVE_SESSION</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>INACTIVE_SESSION</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>ALL_SESSION</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListSessions"><emphasis role="bold">ListSessions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessions</para></entry>
-                <entry><para>List of <link linkend="Session">Session</link></para></entry>
-                <entry><para>is the list of session objects</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Session"><emphasis role="bold">Session Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>sessions</para></entry>
+              <entry><para>List of <link linkend="Session">Session</link></para></entry>
+              <entry><para>is the list of session objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Session"><emphasis role="bold">Session Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the login of the user</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>is the key of the session generated by VISHNU</para></entry>
-              </row>
-              <row>
-                <entry><para>dateLastConnect</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>is the date of the last connection to the session</para></entry>
-              </row>
-              <row>
-                <entry><para>dateCreation</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>is the date of the first connection to the session</para></entry>
-              </row>
-              <row>
-                <entry><para>state</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>is the state of the session (ACTIVE OR INACTIVE)</para></entry>
-              </row>
-              <row>
-                <entry><para>closePolicy</para></entry>
-                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
-                <entry><para>is the way to close the session</para></entry>
-              </row>
-              <row>
-                <entry><para>timeoutDate</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set (the UNIX timestamps is used)</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the login of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionKey</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the key of the session generated by VISHNU</para></entry>
+            </row>
+            <row>
+              <entry><para>dateLastConnect</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>is the date of the last connection to the session</para></entry>
+            </row>
+            <row>
+              <entry><para>dateCreation</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>is the date of the first connection to the session</para></entry>
+            </row>
+            <row>
+              <entry><para>state</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>is the state of the session (ACTIVE OR INACTIVE)</para></entry>
+            </row>
+            <row>
+              <entry><para>closePolicy</para></entry>
+              <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+              <entry><para>is the way to close the session</para></entry>
+            </row>
+            <row>
+              <entry><para>timeoutDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set (the UNIX timestamps is used)</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/TMS.apim#TMS">
-    <title>API specification  for Tasks Management System (TMS)</title>
+  <chapter annotations="EDF-API/TMS.apim#APIOPS+APIDATA">
+    <title>API specification for Tasks Management System (TMS)</title>
     <section>
-      <title>TMS specification
-</title>
+      <title>Definition of the functions of the API</title>
       <section>
         <title>submitJob</title>
       </section>
@@ -4407,742 +4400,741 @@
       </informaltable>
       <para><emphasis role="bold">Signature </emphasis></para>
       <funcsynopsis><funcprototype><funcdef>int <function>getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>Progression&amp; <parameter>progress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options=ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
-      <section>
-        <title>Class definitions</title>
-        <para id="SubmitOptions"><emphasis role="bold">SubmitOptions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+    </section>
+    <section>
+      <title>Class definitions</title>
+      <para id="SubmitOptions"><emphasis role="bold">SubmitOptions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>Name</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Assigns a job name. The default is the name of job path.</para></entry>
-              </row>
-              <row>
-                <entry><para>priority</para></entry>
-                <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-                <entry><para>Assigns priority of the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>queue</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Assigns the queue or class of the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>wallTime</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
-              </row>
-              <row>
-                <entry><para>memory</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The size of memory that the job will use.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbCpu</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The number of cpu that the job will use.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbNodesAndCpuPerNode</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The number of nodes and processors per node.</para></entry>
-              </row>
-              <row>
-                <entry><para>OutPutPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Assigns the path and file for job output.</para></entry>
-              </row>
-              <row>
-                <entry><para>ErrorPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Assigns the path and file for job error.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="JobPriority"><emphasis role="bold">JobPriority Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns a job name. The default is the name of job path.</para></entry>
+            </row>
+            <row>
+              <entry><para>priority</para></entry>
+              <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
+              <entry><para>Assigns priority of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>queue</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns the queue or class of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>wallTime</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
+            </row>
+            <row>
+              <entry><para>memory</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The size of memory that the job will use.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbCpu</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The number of cpu that the job will use.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbNodesAndCpuPerNode</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The number of nodes and processors per node.</para></entry>
+            </row>
+            <row>
+              <entry><para>OutPutPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns the path and file for job output.</para></entry>
+            </row>
+            <row>
+              <entry><para>ErrorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns the path and file for job error.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="JobPriority"><emphasis role="bold">JobPriority Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VERY_LOW</para></entry>
-                <entry><para>100</para></entry>
-              </row>
-              <row>
-                <entry><para>LOW</para></entry>
-                <entry><para>200</para></entry>
-              </row>
-              <row>
-                <entry><para>NORMAL</para></entry>
-                <entry><para>300</para></entry>
-              </row>
-              <row>
-                <entry><para>HIGH</para></entry>
-                <entry><para>400</para></entry>
-              </row>
-              <row>
-                <entry><para>VERY_HIGH</para></entry>
-                <entry><para>500</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListJobs"><emphasis role="bold">ListJobs Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>VERY_LOW</para></entry>
+              <entry><para>100</para></entry>
+            </row>
+            <row>
+              <entry><para>LOW</para></entry>
+              <entry><para>200</para></entry>
+            </row>
+            <row>
+              <entry><para>NORMAL</para></entry>
+              <entry><para>300</para></entry>
+            </row>
+            <row>
+              <entry><para>HIGH</para></entry>
+              <entry><para>400</para></entry>
+            </row>
+            <row>
+              <entry><para>VERY_HIGH</para></entry>
+              <entry><para>500</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListJobs"><emphasis role="bold">ListJobs Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>nbJobs</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Represents the total number of jobs in the list.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbRunningJobs</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Represents of  running jobs in the list.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbWaitingJobs</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Represents the total number of waiting jobs in the list.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobs</para></entry>
-                <entry><para>List of <link linkend="Job">Job</link></para></entry>
-                <entry><para>Is a list of  job information  (jobId, jobName, ...).</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Job"><emphasis role="bold">Job Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nbJobs</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents the total number of jobs in the list.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbRunningJobs</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents of  running jobs in the list.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbWaitingJobs</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents the total number of waiting jobs in the list.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobs</para></entry>
+              <entry><para>List of <link linkend="Job">Job</link></para></entry>
+              <entry><para>Is a list of  job information  (jobId, jobName, ...).</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Job"><emphasis role="bold">Job Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the id of the session that contained the job submission command</para></entry>
-              </row>
-              <row>
-                <entry><para>submitMachineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the id of the machine on which the job has been submitted.</para></entry>
-              </row>
-              <row>
-                <entry><para>submitMachineName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the name of the machine on which the job has been submitted.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the id to job.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the name assigned to the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the path to the file containing job characteristics.</para></entry>
-              </row>
-              <row>
-                <entry><para>outputPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the path to the job output results.</para></entry>
-              </row>
-              <row>
-                <entry><para>errorPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
-              </row>
-              <row>
-                <entry><para>jobPrio</para></entry>
-                <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-                <entry><para>Represents the job priority. </para></entry>
-              </row>
-              <row>
-                <entry><para>nbCpus</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the number of cpu used by the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobWorkingDir</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Indicates the directory where the job has been launched.</para></entry>
-              </row>
-              <row>
-                <entry><para>status</para></entry>
-                <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
-                <entry><para>The current status of the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>submitDate</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
-              </row>
-              <row>
-                <entry><para>endDate</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Represents the execution end date of the job (unix timestamp)</para></entry>
-              </row>
-              <row>
-                <entry><para>owner</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the job owner.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobQueue</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the name of the queue or class associated to the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>wallClockLimit</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
-              </row>
-              <row>
-                <entry><para>groupName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the job owner group name.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobDescription</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the textual description of the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>memLimit</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Represents the memory size limit of the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbNodes</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the total number of nodes used by the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbNodesAndCpuPerNode</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the number of nodes and processors per node used by the job.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="JobStatus"><emphasis role="bold">JobStatus Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>sessionId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>submitMachineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the machine on which the job has been submitted.</para></entry>
+            </row>
+            <row>
+              <entry><para>submitMachineName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the name of the machine on which the job has been submitted.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the id to job.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the name assigned to the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the file containing job characteristics.</para></entry>
+            </row>
+            <row>
+              <entry><para>outputPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the job output results.</para></entry>
+            </row>
+            <row>
+              <entry><para>errorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
+            </row>
+            <row>
+              <entry><para>jobPrio</para></entry>
+              <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
+              <entry><para>Represents the job priority. </para></entry>
+            </row>
+            <row>
+              <entry><para>nbCpus</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the number of cpu used by the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobWorkingDir</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Indicates the directory where the job has been launched.</para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
+              <entry><para>The current status of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>submitDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>endDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents the execution end date of the job (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>owner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job owner.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobQueue</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the name of the queue or class associated to the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>wallClockLimit</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
+            </row>
+            <row>
+              <entry><para>groupName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job owner group name.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobDescription</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the textual description of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>memLimit</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the memory size limit of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbNodes</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the total number of nodes used by the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbNodesAndCpuPerNode</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the number of nodes and processors per node used by the job.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="JobStatus"><emphasis role="bold">JobStatus Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>RUNNING</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>WAITING</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>COMPLETED</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-              <row>
-                <entry><para>CANCELED</para></entry>
-                <entry><para>3</para></entry>
-              </row>
-              <row>
-                <entry><para>HELD</para></entry>
-                <entry><para>4</para></entry>
-              </row>
-              <row>
-                <entry><para>QUEUED</para></entry>
-                <entry><para>5</para></entry>
-              </row>
-              <row>
-                <entry><para>FAILED</para></entry>
-                <entry><para>6</para></entry>
-              </row>
-              <row>
-                <entry><para>NOT_SUBMITTED</para></entry>
-                <entry><para>7</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListJobsOptions"><emphasis role="bold">ListJobsOptions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>RUNNING</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>WAITING</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>COMPLETED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>CANCELED</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>HELD</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+            <row>
+              <entry><para>QUEUED</para></entry>
+              <entry><para>5</para></entry>
+            </row>
+            <row>
+              <entry><para>FAILED</para></entry>
+              <entry><para>6</para></entry>
+            </row>
+            <row>
+              <entry><para>NOT_SUBMITTED</para></entry>
+              <entry><para>7</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListJobsOptions"><emphasis role="bold">ListJobsOptions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>JobId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>To list job which has this id.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbCpu</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>To list jobs which have this number of cpu.</para></entry>
-              </row>
-              <row>
-                <entry><para>fromSubmitDate</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>List jobs submitted after this date (unix timestamp).</para></entry>
-              </row>
-              <row>
-                <entry><para>toSubmitDate</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>List jobs submitted before this date (unix timestamp)</para></entry>
-              </row>
-              <row>
-                <entry><para>owner</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>To list all jobs submitted by this owner.</para></entry>
-              </row>
-              <row>
-                <entry><para>status</para></entry>
-                <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
-                <entry><para>To list jobs which have this status.</para></entry>
-              </row>
-              <row>
-                <entry><para>priority</para></entry>
-                <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-                <entry><para>To list jobs which have this priority</para></entry>
-              </row>
-              <row>
-                <entry><para>OutPutPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Gets the path and file for each job output.</para></entry>
-              </row>
-              <row>
-                <entry><para>ErrorPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Gets the path and file for each job error.</para></entry>
-              </row>
-              <row>
-                <entry><para>queue</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>To list jobs which have this queue name.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListJobResults"><emphasis role="bold">ListJobResults Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>JobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>To list job which has this id.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbCpu</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>To list jobs which have this number of cpu.</para></entry>
+            </row>
+            <row>
+              <entry><para>fromSubmitDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>List jobs submitted after this date (unix timestamp).</para></entry>
+            </row>
+            <row>
+              <entry><para>toSubmitDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>List jobs submitted before this date (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>owner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>To list all jobs submitted by this owner.</para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
+              <entry><para>To list jobs which have this status.</para></entry>
+            </row>
+            <row>
+              <entry><para>priority</para></entry>
+              <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
+              <entry><para>To list jobs which have this priority</para></entry>
+            </row>
+            <row>
+              <entry><para>OutPutPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Gets the path and file for each job output.</para></entry>
+            </row>
+            <row>
+              <entry><para>ErrorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Gets the path and file for each job error.</para></entry>
+            </row>
+            <row>
+              <entry><para>queue</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>To list jobs which have this queue name.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListJobResults"><emphasis role="bold">ListJobResults Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>nbJobs</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the number of jobs.</para></entry>
-              </row>
-              <row>
-                <entry><para>Results</para></entry>
-                <entry><para>List of <link linkend="JobResult">JobResult</link></para></entry>
-                <entry><para>Represents the list of completed jobs results.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="JobResult"><emphasis role="bold">JobResult Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nbJobs</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the number of jobs.</para></entry>
+            </row>
+            <row>
+              <entry><para>Results</para></entry>
+              <entry><para>List of <link linkend="JobResult">JobResult</link></para></entry>
+              <entry><para>Represents the list of completed jobs results.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="JobResult"><emphasis role="bold">JobResult Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>jobId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the id of the job.</para></entry>
-              </row>
-              <row>
-                <entry><para>outputPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the path to the job output results.</para></entry>
-              </row>
-              <row>
-                <entry><para>errorPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListQueues"><emphasis role="bold">ListQueues Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the id of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>outputPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the job output results.</para></entry>
+            </row>
+            <row>
+              <entry><para>errorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListQueues"><emphasis role="bold">ListQueues Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>nbQueues</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Represents the number of queues.</para></entry>
-              </row>
-              <row>
-                <entry><para>queues</para></entry>
-                <entry><para>List of <link linkend="Queue">Queue</link></para></entry>
-                <entry><para>Represents the list of queues.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Queue"><emphasis role="bold">Queue Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nbQueues</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the number of queues.</para></entry>
+            </row>
+            <row>
+              <entry><para>queues</para></entry>
+              <entry><para>List of <link linkend="Queue">Queue</link></para></entry>
+              <entry><para>Represents the list of queues.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Queue"><emphasis role="bold">Queue Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>name</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the queue name.</para></entry>
-              </row>
-              <row>
-                <entry><para>maxJobCpu</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the maximum number of Cups that a job can use.</para></entry>
-              </row>
-              <row>
-                <entry><para>maxProcCpu</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the maximum number of Cpus of the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>memory</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Represents the queue memory size.</para></entry>
-              </row>
-              <row>
-                <entry><para>wallTime</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Is the total wallTime of the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>node</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the maximum number of nodes of the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbRunningJobs</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the total running jobs in the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>nbJobsInQueue</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the total number of jobs in the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>state</para></entry>
-                <entry><para><link linkend="QueueStatus">QueueStatus</link></para></entry>
-                <entry><para>Is the status of the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>priority</para></entry>
-                <entry><para><link linkend="QueuePriority">QueuePriority</link></para></entry>
-                <entry><para>Represents the priority of the queue.</para></entry>
-              </row>
-              <row>
-                <entry><para>description</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the queue description.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="QueueStatus"><emphasis role="bold">QueueStatus Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the queue name.</para></entry>
+            </row>
+            <row>
+              <entry><para>maxJobCpu</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the maximum number of Cups that a job can use.</para></entry>
+            </row>
+            <row>
+              <entry><para>maxProcCpu</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the maximum number of Cpus of the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>memory</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the queue memory size.</para></entry>
+            </row>
+            <row>
+              <entry><para>wallTime</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Is the total wallTime of the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>node</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the maximum number of nodes of the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbRunningJobs</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the total running jobs in the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbJobsInQueue</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Is the total number of jobs in the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>state</para></entry>
+              <entry><para><link linkend="QueueStatus">QueueStatus</link></para></entry>
+              <entry><para>Is the status of the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>priority</para></entry>
+              <entry><para><link linkend="QueuePriority">QueuePriority</link></para></entry>
+              <entry><para>Represents the priority of the queue.</para></entry>
+            </row>
+            <row>
+              <entry><para>description</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the queue description.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="QueueStatus"><emphasis role="bold">QueueStatus Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>STARTED</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>RUNNING</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>NOT_STARTED</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-              <row>
-                <entry><para>NOT_AVAILABLE</para></entry>
-                <entry><para>3</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="QueuePriority"><emphasis role="bold">QueuePriority Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>STARTED</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>RUNNING</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>NOT_STARTED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>NOT_AVAILABLE</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="QueuePriority"><emphasis role="bold">QueuePriority Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Value
+              <entry>Value
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VERY_LOW</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>LOW</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>NORMAL</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-              <row>
-                <entry><para>HIGH</para></entry>
-                <entry><para>3</para></entry>
-              </row>
-              <row>
-                <entry><para>VERY_HIGH</para></entry>
-                <entry><para>4</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Progression"><emphasis role="bold">Progression Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>VERY_LOW</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>LOW</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>NORMAL</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>HIGH</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>VERY_HIGH</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Progression"><emphasis role="bold">Progression Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>jobId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the job id.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the job name.</para></entry>
-              </row>
-              <row>
-                <entry><para>wallTime</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Represents the job wall time.</para></entry>
-              </row>
-              <row>
-                <entry><para>startTime</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>Start date and time of the job (unix timestamp)</para></entry>
-              </row>
-              <row>
-                <entry><para>endTime</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>End date and time of the job (unix timestamp)</para></entry>
-              </row>
-              <row>
-                <entry><para>percent</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>Represent the job progression. </para></entry>
-              </row>
-              <row>
-                <entry><para>status</para></entry>
-                <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
-                <entry><para>Represents the job status.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ProgressOptions"><emphasis role="bold">ProgressOptions Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job id.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job name.</para></entry>
+            </row>
+            <row>
+              <entry><para>wallTime</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the job wall time.</para></entry>
+            </row>
+            <row>
+              <entry><para>startTime</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Start date and time of the job (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>endTime</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>End date and time of the job (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>percent</para></entry>
+              <entry><para>double</para></entry>
+              <entry><para>Represent the job progression. </para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
+              <entry><para>Represents the job status.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ProgressOptions"><emphasis role="bold">ProgressOptions Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
 </entry>
-                <entry>Type
+              <entry>Type
 </entry>
-                <entry>Description
+              <entry>Description
 </entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>jobId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the id of the job that the user wants to see its progression.</para></entry>
-              </row>
-              <row>
-                <entry><para>jobOwner</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Represents the owner of the job.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the id of the job that the user wants to see its progression.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobOwner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the owner of the job.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/IMS.apim#IMS">
+  <chapter annotations="EDF-API/IMS.apim#APIOPS+APIDATA">
     <title>API specification for Information Management System (IMS)</title>
     <section>
-      <title>IMS specification
-</title>
+      <title>Definition of the functions of the API</title>
       <section>
         <title>getUpdateFrequency</title>
       </section>
@@ -6449,261 +6441,254 @@
       </informaltable>
       <para><emphasis role="bold">Signature </emphasis></para>
       <funcsynopsis><funcprototype><funcdef>int <function>updateMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const CompoMachine&amp; <parameter>CompoMachine</parameter></paramdef><paramdef>const object&amp; <parameter>val</parameter></paramdef><paramdef>const string&amp; <parameter>lang</parameter></paramdef></funcprototype></funcsynopsis>
-      <section>
-        <title>Class definitions</title>
-        <para id="ExportType"><emphasis role="bold">ExportType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Value
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>PYTHON</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>SHELL</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="MetricType"><emphasis role="bold">MetricType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Value
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>CPUNBR</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>CPUUSE</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>DISKSPACE</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-              <row>
-                <entry><para>FREEDISKSPACE</para></entry>
-                <entry><para>3</para></entry>
-              </row>
-              <row>
-                <entry><para>MEMORY</para></entry>
-                <entry><para>4</para></entry>
-              </row>
-              <row>
-                <entry><para>FREEMEMORY</para></entry>
-                <entry><para>5</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListMetric"><emphasis role="bold">ListMetric Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>metric</para></entry>
-                <entry><para>List of <link linkend="Metric">Metric</link></para></entry>
-                <entry><para>The metrics of the list</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="Metric"><emphasis role="bold">Metric Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>type</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>The type of the metric</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>The value of the metric</para></entry>
-              </row>
-              <row>
-                <entry><para>time</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>The timestamp the metric had the value</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="ListProcesses"><emphasis role="bold">ListProcesses Class Content</emphasis></para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>processName</para></entry>
-                <entry><para>List of string</para></entry>
-                <entry><para>The processes of the list</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="LoadShedType"><emphasis role="bold">LoadShedType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Value
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>SOFT</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>HARD</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="RestartType"><emphasis role="bold">RestartType Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Value
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>ALL</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>SED</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>AGENT</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-              <row>
-                <entry><para>DAEMON</para></entry>
-                <entry><para>3</para></entry>
-              </row>
-              <row>
-                <entry><para>MACHINE</para></entry>
-                <entry><para>4</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para id="CompoMachine"><emphasis role="bold">CompoMachine Enumeration Type</emphasis></para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="4cm"/>
-            <colspec colwidth="4cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Value
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>DESC</para></entry>
-                <entry><para>0</para></entry>
-              </row>
-              <row>
-                <entry><para>DISKSPACE</para></entry>
-                <entry><para>1</para></entry>
-              </row>
-              <row>
-                <entry><para>RAM</para></entry>
-                <entry><para>2</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
     </section>
-  </chapter>
-  <chapter annotations="EDF-API/FMS.apim#FMS">
-    <title>API specification for File Management System (FMS)</title>
     <section>
-      <title>FMS specification
-</title>
+      <title>Class definitions</title>
+      <para id="ExportType"><emphasis role="bold">ExportType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>PYTHON</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>SHELL</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="MetricType"><emphasis role="bold">MetricType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>CPUNBR</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>CPUUSE</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>DISKSPACE</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>FREEDISKSPACE</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>MEMORY</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+            <row>
+              <entry><para>FREEMEMORY</para></entry>
+              <entry><para>5</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListMetric"><emphasis role="bold">ListMetric Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>metric</para></entry>
+              <entry><para>List of <link linkend="Metric">Metric</link></para></entry>
+              <entry><para>The metrics of the list</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="Metric"><emphasis role="bold">Metric Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+              <entry><para>The type of the metric</para></entry>
+            </row>
+            <row>
+              <entry><para>value</para></entry>
+              <entry><para>double</para></entry>
+              <entry><para>The value of the metric</para></entry>
+            </row>
+            <row>
+              <entry><para>time</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The timestamp the metric had the value</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="ListProcesses"><emphasis role="bold">ListProcesses Class Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>processName</para></entry>
+              <entry><para>List of string</para></entry>
+              <entry><para>The processes of the list</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="LoadShedType"><emphasis role="bold">LoadShedType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>SOFT</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>HARD</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="RestartType"><emphasis role="bold">RestartType Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>ALL</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>SED</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>AGENT</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>DAEMON</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>MACHINE</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para id="CompoMachine"><emphasis role="bold">CompoMachine Enumeration Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>DESC</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>DISKSPACE</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>RAM</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </section>
   </chapter>
 </book>
