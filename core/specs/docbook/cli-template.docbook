@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>VISHNU D1.0 - api specifications</title>
+      <title>VISHNU D1.0 - Command line interface specifications</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -32,8 +32,8 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document presents the detailed specifications of the Vishnu C++ API.</para>
-      <para>These specifications include the definition of all methods and all data types provided by the API.</para>
+      <para>This document presents the detailed specifications of the Vishnu command line user interface.</para>
+      <para>These specifications include the definition of all commands. ###FIXME###</para>
     </section>
     <section>
       <title>Document structure</title>
@@ -55,13 +55,10 @@
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:<itemizedlist>
           <listitem>
-            <para>A first section describing the definition of all methods provided by the library</para>
+            <para>A first section describing the definition of all commands provided by the package</para>
           </listitem>
           <listitem>
-            <para>A second section describing the definition of all data types provided by the library</para>
-          </listitem>
-          <listitem>
-            <para>TODO - A third section describing the dependencies of the library</para>
+            <para>A second section describing the definition of all data types used ###FIXME###</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -77,16 +74,16 @@
     </section>
   </chapter>
     <!-- GENERATED PART -->
-  <chapter annotations="EDF-API/UMS.apim#APIOPS+APIDATA">
+  <chapter annotations="EDF-API/UMS.apim#CLIOPS+APIDATA">
     <title>API specification for User Management System (UMS)</title>
   </chapter> 
-  <chapter annotations="EDF-API/TMS.apim#APIOPS+APIDATA">
+  <chapter annotations="EDF-API/TMS.apim#CLIOPS+APIDATA">
     <title>API specification for Tasks Management System (TMS)</title>
   </chapter>
-  <chapter annotations="EDF-API/IMS.apim#APIOPS+APIDATA">
+  <chapter annotations="EDF-API/IMS.apim#CLIOPS+APIDATA">
     <title>API specification for Information Management System (IMS)</title>
   </chapter>
- <!-- <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
+ <!-- <chapter annotations="EDF-API/FMS.apim#CLIOPS+APIDATA">
     <title>API specification for File Management System (FMS)</title>
   </chapter> -->
 </book>
