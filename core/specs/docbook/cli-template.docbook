@@ -74,16 +74,16 @@
     </section>
   </chapter>
     <!-- GENERATED PART -->
-  <chapter annotations="EDF-API/UMS.apim#CLIOPS+APIDATA">
+  <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
     <title>API specification for User Management System (UMS)</title>
   </chapter> 
-  <chapter annotations="EDF-API/TMS.apim#CLIOPS+APIDATA">
+  <chapter annotations="EDF-API/TMS.apim#CLIOPS+CLIDATA">
     <title>API specification for Tasks Management System (TMS)</title>
   </chapter>
-  <chapter annotations="EDF-API/IMS.apim#CLIOPS+APIDATA">
+  <chapter annotations="EDF-API/IMS.apim#CLIOPS+CLIDATA">
     <title>API specification for Information Management System (IMS)</title>
   </chapter>
- <!-- <chapter annotations="EDF-API/FMS.apim#CLIOPS+APIDATA">
+ <!-- <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
     <title>API specification for File Management System (FMS)</title>
   </chapter> -->
 </book>
