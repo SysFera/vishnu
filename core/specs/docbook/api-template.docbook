@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>VISHNU D1.0 - api specifications</title>
+      <title>VISHNU D1.1 - APIs specifications</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -32,12 +32,20 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document presents the detailed specifications of the Vishnu C++ API.</para>
-      <para>These specifications include the definition of all methods and all data types provided by the API.</para>
+      <para>This document presents the detailed specifications of the Vishnu APIs (Application Programming Interfaces).
+            The following APIs are included in the project:</para>
+      <itemizedlist>
+         <listitem><para>C++ API</para></listitem>
+         <listitem><para>Python (v2.x) API</para></listitem>
+         <listitem><para>Web services (WSDL 1.1) API</para></listitem>
+      </itemizedlist>
+      <para>These specifications include the definition of all methods and all data types in a format that is common
+            to all APIs. Therefore the description is not tied to a particular implementation and all implementations
+            will follow the same logic and will differ only when the language that is used imposes some constraints.</para>
     </section>
     <section>
       <title>Document structure</title>
-      <para>The document is divided into 4 parts corresponding to the 4 modules that compose the
+      <para>The document is divided into 4 parts corresponding to the four modules that compose the
         Vishnu system:</para>
       <para><itemizedlist>
         <listitem>
@@ -53,22 +61,226 @@
           <para>IMS: Information Management System</para>
         </listitem>
       </itemizedlist></para>
-      <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:<itemizedlist>
+      <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:
+        <itemizedlist>
           <listitem>
-            <para>A first section describing the definition of all methods provided by the library</para>
+            <para>A first section describing the definition of all the methods provided by the library</para>
           </listitem>
           <listitem>
-            <para>A second section describing the definition of all data types provided by the library</para>
+            <para>A second section describing the definition of all the data types provided by the library</para>
           </listitem>
           <listitem>
             <para>TODO - A third section describing the dependencies of the library</para>
           </listitem>
         </itemizedlist></para>
     </section>
+    <section> <!-- Generic definition formats presentation -->
+      <title>Generic definition formats presentation</title>
+      <para>This section presents the formats used in the following chapters to describe the methods and data types provided
+	    by the libraries. It also details the particular implementation constraints for each language.</para>
+      <section><!--Methods definition format -->
+	<title>Methods definition format</title>
+	<para>The following paragraphs show how all methods (or "operations" in the Web Services terminology) are specified
+	      in this document. First, the generic format used for each Vishnu module is explained, then the aspects that are
+	      specific to each implementation language are detailed.</para>
+	<section><!-- Generic method definition format -->
+	  <title>Generic method definition format</title>
+	  <para><emphasis role="bold">Parameters</emphasis></para>
+	  <para>The following table contain all the input and output parameters of the method, along with their type and description,
+		and their optional or required flag.</para>
+	  <informaltable>
+	    <tgroup cols="5">
+	      <colspec colwidth="2cm"/>
+	      <colspec colwidth="3cm"/>
+	      <colspec colwidth="8cm"/>
+	      <colspec colwidth="2cm"/>
+	      <colspec colwidth="1.5cm"/>
+	      <thead>
+		<row>
+		  <entry>Parameter</entry>
+		  <entry>Type</entry>
+		  <entry>Description</entry>
+		  <entry>Mode</entry>
+		  <entry>Required</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><para>sessionKey</para></entry>
+		  <entry><para>string</para></entry>
+		  <entry><para>This is an example of a required input parameter</para></entry>
+		  <entry><para>IN</para></entry>
+		  <entry><para>yes</para></entry>
+		</row>
+		<row>
+		  <entry><para>listOfJobs</para></entry>
+		  <entry><para>ListJobs</para></entry>
+		  <entry><para>This is an example of an output parameter that is always provided</para></entry>
+		  <entry><para>OUT</para></entry>
+		  <entry><para>yes</para></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	  <para><emphasis role="bold">Description </emphasis></para>
+	  <para>Here is detailed the purpose of the method 'myMethod'</para>
+	  <para><emphasis role="bold">Return Value </emphasis></para>
+	  <para>Here are detailed the different return codes provided by the method. Please note that these return codes may be implemented differently depending on the language, for example
+            by using an exception mechanism. In all implementations the library will provide a way of mapping the code to a human-readable message that will contain detailed information
+            about the context of the exception that happened.</para>
+	  <informaltable>
+	    <tgroup cols="2">
+	      <colspec colwidth="8.5cm"/>
+	      <colspec colwidth="9cm"/>
+	      <thead>
+		<row>
+		  <entry>Name</entry>
+		  <entry>Description</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><para>VISHNU_OK</para></entry>
+		  <entry><para>The service was performed  successfully.</para></entry>
+		</row>
+		<row>
+		  <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+		  <entry><para>This is the human-readable generic message that will available to the user of the API.</para></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	  <para><emphasis role="bold">Signature </emphasis></para>
+	  <para>This shows the C++ signature of the method.</para>
+	  <funcsynopsis><funcprototype><funcdef>int <function>myMethod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>jobPath</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options=SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+	</section> <!-- Generic method definition format -->
+        
+        <section> <!--C++ specific aspects (TODO) -->
+          <title>C++ specific aspects</title>
+           <itemizedlist>
+             <listitem>
+               <para>The output parameters are converted to references in the signature.</para>
+             </listitem>
+             <listitem>
+               <para>The methods will always return an integer with a default value for success.</para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+           </itemizedlist>
+        </section> <!--C++ specific aspects -->
+        
+        <section> <!--Python specific aspects (TODO) -->
+          <title>C++ specific aspects</title>
+           <itemizedlist>
+             <listitem>
+               <para>The output parameters are converted to .</para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+           </itemizedlist>
+        </section> <!--Python specific aspects -->
+        
+        <section> <!-- WS specific aspects (TODO) -->
+          <title>Web Services specific aspects</title>
+           <itemizedlist>
+             <listitem>
+               <para>The output parameters are converted to .</para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+           </itemizedlist>
+        </section> <!--WS specific aspects -->
+        
+      </section> <!--Methods definition format -->
+      
+      <section> <!-- Data types definition format -->
+      
+      <title>Data types definition format</title>
+        <para>The following paragraphs show how all data types are specified in this document. First, the generic format used for each Vishnu data type is explained,
+              then the aspects that are specific to each implementation language are detailed.</para>
+        <section><!-- Generic data definition format -->
+          <title>Generic data definition format</title>
+        </section><!-- Generic data definition format -->
+        
+        <section> <!--C++ specific aspects (TODO) -->
+          <title>C++ specific aspects</title>
+           <itemizedlist>
+             <listitem>
+               <para>To each attribute of the class will correspond a couple of getter/setter methods.</para>
+             </listitem>
+             <listitem>
+               <para>The string type will be mapped to the STL string type.</para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+           </itemizedlist>
+        </section> <!--C++ specific aspects -->
+        
+        <section> <!--Python specific aspects (TODO) -->
+          <title>C++ specific aspects</title>
+           <itemizedlist>
+             <listitem>
+               <para>To each attribute of the class will correspond a couple of getter/setter methods.</para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+           </itemizedlist>
+        </section> <!--Python specific aspects -->
+        
+        <section> <!-- WS specific aspects (TODO) -->
+          <title>Web Services specific aspects</title>
+           <itemizedlist>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+             <listitem>
+               <para></para>
+             </listitem>
+           </itemizedlist>
+        </section> <!--WS specific aspects -->
+        
+      </section> <!-- Data types definition format -->
+
+    </section> <!-- Generic definition formats presentation -->
     <section>
       <title>References</title>
       <para>
-		TODO - ajouter ref. vers les specs générales
+		TODO - ajouter ref. vers le document contenant les WSDL
       </para>
     </section>
     <section>
@@ -86,7 +298,7 @@
   <chapter annotations="EDF-API/IMS.apim#APIOPS+APIDATA">
     <title>API specification for Information Management System (IMS)</title>
   </chapter>
- <!-- <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
+<!--  <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
     <title>API specification for File Management System (FMS)</title>
   </chapter> -->
 </book>
