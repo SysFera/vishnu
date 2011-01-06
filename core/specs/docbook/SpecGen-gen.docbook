@@ -398,7 +398,7 @@
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. VISHNU infrastructure is unreachable or unavailable</para><para>2a. Invalid option name</para><para>2b. Invalid option value</para></entry>
+                <entry><para>2a. Invalid option name</para><para>2b. Invalid option value</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -562,7 +562,7 @@
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. VISHNU infrastructure is unreachable or unavailable</para></entry>
+                <entry/>
               </row>
             </tbody>
           </tgroup>
@@ -1113,6 +1113,10 @@
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. Invalid login (unknown or inactive)</para><para>3a. Invalid email address</para></entry>
               </row>
+              <row>
+                <entry><para>Notes</para></entry>
+                <entry><para>If the user has one or several active sessions when Admin requests the password reset then the sessions are not affected. Only new sessions will require the new password for authentification.</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -1194,6 +1198,10 @@
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If the Root user already has an open session, the System cannot open a second session with the Root user</para><para>3a. If the configuration file cannot be loaded, the System provides an error message. The System configuration is reset to a basic configuration with only the Root user configured.</para></entry>
+              </row>
+              <row>
+                <entry><para>Notes</para></entry>
+                <entry><para>To avoid failure during this critical operation, the reasons to go for exception 3a should be reduced as much as possible. Therefore inconsistencies between the saved configuration and the real infrastructure will not be considered as blocking for this operation.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3005,13 +3013,13 @@ in order to avoid systematic authentification</para>
         </figure>
       </section>
       <section>
-        <title>FMS Transfert command use cases</title>
+        <title>FMS transfer command use cases</title>
         <figure>
-          <title>FMS Transfert command use cases</title>
+          <title>FMS transfer command use cases</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/FMS Transfert command use cases.png"
-                  align="center" scale="40"/>
+              <imagedata fileref="images/png/FMS transfer command use cases.png" align="center"
+                  scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
@@ -3059,7 +3067,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>F1.2- Change group owner of files</para><para>F1.1- Change access rights of files</para><para>F1.3- Create new directories</para><para>F1.4- Create new files</para><para>F1.5-  Delete directories</para><para>F1.6- Delete files</para><para>F1.8- Display contents of files</para><para>F1.9- Display Head of files</para><para>F1.7- Display contents of directories</para><para>F1.10- Display tail of files</para><para>F2.1- Execute a synchronous copy of files </para><para>F2.2- Execute an asynchronous copy of files </para><para>F1.11- Get information about remote files</para></entry>
+                <entry><para>F1.2- Change group owner of files</para><para>F1.1- Change access rights of files</para><para>F1.3- Create new directories</para><para>F1.5-  Delete directories</para><para>F1.6- Delete files</para><para>F1.8- Display contents of files</para><para>F1.9- Display Head of files</para><para>F1.7- Display contents of directories</para><para>F1.10- Display tail of files</para><para>F2.1- Execute a synchronous copy of files </para><para>F2.2- Execute an asynchronous copy of files </para><para>F1.11- Get information about remote files</para><para>F1.4- Create new files</para></entry>
               </row>
             </tbody>
           </tgroup>
