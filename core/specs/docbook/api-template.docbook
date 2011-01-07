@@ -122,6 +122,8 @@
 	      </tbody>
 	    </tgroup>
 	  </informaltable>
+          <para><emphasis role="bold">Access </emphasis></para>
+	  <para>Here is detailed the access level of the method 'myMethod' (i.e. the privilege required to use this method)</para>
 	  <para><emphasis role="bold">Description </emphasis></para>
 	  <para>Here is detailed the purpose of the method 'myMethod'</para>
 	  <para><emphasis role="bold">Return Value </emphasis></para>
@@ -152,7 +154,7 @@
 	  </informaltable>
 	  <para><emphasis role="bold">Signature </emphasis></para>
 	  <para>This shows the C++ signature of the method.</para>
-	  <funcsynopsis><funcprototype><funcdef>int <function>myMethod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>jobPath</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options=SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+	  <funcsynopsis><funcprototype><funcdef>int <function>myMethod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef></funcprototype></funcsynopsis>
 	</section> <!-- Generic method definition format -->
         
         <section> <!--C++ specific aspects (TODO) -->
@@ -298,7 +300,7 @@
   <chapter annotations="EDF-API/IMS.apim#APIOPS+APIDATA">
     <title>API specification for Information Management System (IMS)</title>
   </chapter>
-<!--  <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
+  <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
     <title>API specification for File Management System (FMS)</title>
   </chapter> -->
 </book>
