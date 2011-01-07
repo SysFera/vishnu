@@ -321,12 +321,12 @@
             <row>
               <entry><para>1.1</para></entry>
               <entry><para>Réponse aux requêtes</para></entry>
-              <entry><para>Toute requête lancée à travers le système Vishnu conduit à une réponse. Cette réponse peut  être soit le résultat prévu, soit un message d'erreur. </para><para>Pour chaque message d'erreur, le système vishnu associe un code d'erreur (type entier) correspondant. Un code égal à zero correspondra à un résultat correct.</para></entry>
+              <entry><para>Toute requête lancée à travers le système Vishnu conduit à une réponse. Cette réponse peut  être soit le résultat prévu, soit un message d'erreur. </para><para>Pour chaque message d'erreur, le système vishnu associe un code d'erreur (type entier) correspondant. Un code égal à zero correspondra à un résultat correct. Les interfaces de programmation de Vishnu fourniront un mécanisme d'exceptions permettant à l'utilisateur de traiter séparément les erreurs selon leur cause.</para></entry>
             </row>
             <row>
               <entry><para>1.2</para></entry>
               <entry><para>Enregistrement des requêtes</para></entry>
-              <entry><para>Le système Vishnu conserve la trace de chaque requête utilisateur dans une base de données PostgreSQL 8.4. Cette trace comprend les identifiants de l'utilisateur et de la machine cliente, le nom de la commande ayant permis le lancement de la requête et les paramètres de la requête. Dans le cas d'une requête soumise via l'API Web Services, la machine cliente sera le serveur web lui-même.</para></entry>
+              <entry><para>Le système Vishnu conserve la trace de chaque requête utilisateur dans une base de données. Cette trace comprend les identifiants de l'utilisateur et de la machine cliente, le nom de la commande ayant permis le lancement de la requête et les paramètres de la requête. Dans le cas d'une requête soumise via l'API Web Services, la machine cliente sera le serveur web lui-même.</para></entry>
             </row>
             <row>
               <entry><para>1.3</para></entry>
@@ -391,7 +391,17 @@
             <row>
               <entry><para>3.2</para></entry>
               <entry><para>Consommation de ressources</para></entry>
-              <entry><para>La charge sur les machines serveur (hors serveur de base de données) dûe aux processus  du système Vishnu n'augmentera pas de manière significative (&lt;10% d'augmentation) la charge générée par des requêtes identiques soumises en direct (par des commandes du batch scheduler envoyées par ssh) à un gestionnaire de jobs figurant parmi les gestionnaire de jobs supportés par Vishnu.</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>3.2.1</para></entry>
+              <entry><para>Consommation moyenne des processus Vishnu</para></entry>
+              <entry><para>TODO</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2.2</para></entry>
+              <entry><para>Consommation ponctuelle pour l'exécution d'une requête utilisateur</para></entry>
+              <entry><para>L'utilisation de Vishnu pour exécuter des requêtes sur un gestionnaire de jobs (soumission de job ou interrogation) ne devra pas consommer en moyenne davantage de ressources sur le serveur que l'utilisation d'un client en ligne de commande (client &quot;lourd&quot; du gestionnaire de jobs).</para></entry>
             </row>
             <row>
               <entry><para>4</para></entry>
@@ -436,13 +446,221 @@
         </itemizedlist></para>
     </section>
   </chapter>
-  <chapter>
+  <chapter annotations="core/specs/stb/STB_SoftHardWare.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
     <title>Environnement matériel et logiciel</title>
-    <para>TODO</para>
+    <section>
+      <title>Tableau des Exigences</title>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="10cm"/>
+          <thead>
+            <row>
+              <entry>ID
+</entry>
+              <entry>Name
+</entry>
+              <entry>Text
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>1.</para></entry>
+              <entry><para>Plateformes supportées</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1</para></entry>
+              <entry><para>Machines clientes</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.3</para></entry>
+              <entry><para>Nombre de processeurs</para></entry>
+              <entry><para>Non limité</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.4</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 1Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.5</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 1Go disponible</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.6</para></entry>
+              <entry><para>Interfaces réseau</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.2</para></entry>
+              <entry><para>Serveurs de Calcul</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.2.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86 ou IBM BlueGene/P® (PPC 32-bits)</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.3</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 1Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.4</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 1Go disponible</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.5</para></entry>
+              <entry><para>Interfaces réseau</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.2.6</para></entry>
+              <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
+              <entry><para>Torque / IBM LoadLeveler</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3</para></entry>
+              <entry><para>Serveurs de stockage</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.4</para></entry>
+              <entry><para>Serveur Web (pour API Web Services)</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.4.1</para></entry>
+              <entry><para>Serveur d'applications supporté</para></entry>
+              <entry><para>L'API Web Services du système Vishnu est fournie en Java EJB, testée sur un serveur JBoss</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.2</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.3</para></entry>
+              <entry><para>Machine virtuelle Java</para></entry>
+              <entry><para>Java SDK v1.6.0 ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.4</para></entry>
+              <entry><para>Serveur JBoss et module WS</para></entry>
+              <entry><para>JBoss AS 5.1.0 ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.5</para></entry>
+              <entry><para>Module Web Services</para></entry>
+              <entry><para>Module JBossWS version Stack CXF Server 3.3.1.GA ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.6</para></entry>
+              <entry><para>Web services standard</para></entry>
+              <entry><para>WSDL 1.1</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5</para></entry>
+              <entry><para>Serveur de Base de données</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.5.1</para></entry>
+              <entry><para>Base de donnée supportée</para></entry>
+              <entry><para>Le système Vishnu supporte nativement la BDD PostGreSQL version 8.0 ou ultérieure. La conception du système doit autoriser l'ajout de plusieurs interfaces vers d'autres BDD, par exemple Oracle SQL.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.2</para></entry>
+              <entry><para>Réplication de la base de donnée</para></entry>
+              <entry><para>Afin de garantir un temps de réponse maximum aux requêtes des machines de la plateforme Vishnu, la base de donnée sera éventuellement répliquée selon une architecture maître-esclave (écriture sur un seul serveur, lecture sur plusieurs serveurs).</para></entry>
+            </row>
+            <row>
+              <entry><para>2.</para></entry>
+              <entry><para>Logiciels requis</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>2.1</para></entry>
+              <entry><para>SSH</para></entry>
+              <entry><para>serveur ssh et client ssh</para></entry>
+            </row>
+            <row>
+              <entry><para>2.2</para></entry>
+              <entry><para>CORBA</para></entry>
+              <entry><para>OmniORB v4.1.4 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>2.3</para></entry>
+              <entry><para>Librairie BOOST C++</para></entry>
+              <entry><para>v1.35 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>2.4</para></entry>
+              <entry><para>Librairies des Batch schedulers</para></entry>
+              <entry><para>Torque API / LoadLeveler API</para></entry>
+            </row>
+            <row>
+              <entry><para>2.5</para></entry>
+              <entry><para>Logiciels de transferts de fichiers</para></entry>
+              <entry><para>RSync v3.0 ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>2.6</para></entry>
+              <entry><para>SysFera-DS</para></entry>
+              <entry><para>Une version de SysFera-DS supérieure ou égale à 2.6 et strictement inférieure à la version 3.0 doit être disponible</para></entry>
+            </row>
+            <row>
+              <entry><para>3.</para></entry>
+              <entry><para>Compilation</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>3.1</para></entry>
+              <entry><para>CMake</para></entry>
+              <entry><para>CMake v2.6 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2</para></entry>
+              <entry><para>GCC</para></entry>
+              <entry><para>GCC v3.4.3 minimum</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section>
+      <title>Glossaire</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>TODO</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
   </chapter>
   <chapter annotations="core/specs/stb/STB_Instal.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
     <title>Installation et maintenance</title>
-    <para>TODO</para>
     <section>
       <title>Tableau des Exigences</title>
       <informaltable>
@@ -494,7 +712,7 @@
             <row>
               <entry><para>2.3</para></entry>
               <entry><para>VISHNU</para></entry>
-              <entry><para>Avoir des fichiers de configuration pour les agents, SeDs, forwarders</para></entry>
+              <entry><para>Avoir des fichiers de configuration pour les agents, SeDs, forwarders(ils servent à passer les firewalls)</para></entry>
             </row>
             <row>
               <entry><para>2.4</para></entry>
@@ -504,7 +722,27 @@
             <row>
               <entry><para>3.</para></entry>
               <entry><para>Déploiement</para></entry>
-              <entry><para>VISHNU sera deployé manuellement en lançant un à un les éléments de l'architecture</para></entry>
+              <entry><para>VISHNU sera deployé manuellement en lançant un à un les éléments de l'architecture, en commençant depuis la racine vers les feuilles de l'arbre formé par la hiérarchie. Le module de log service doit être lancé avant VISHNU pour qu'il note bien chaque inscription et évènement intervenant </para></entry>
+            </row>
+            <row>
+              <entry><para>3.1</para></entry>
+              <entry><para>Flags de compilation</para></entry>
+              <entry><para>VISHNU devra avoir les modules DAGDA, LOGSERVICE, DYNAMICS, CORI d'activés</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2</para></entry>
+              <entry><para>Variable d'environnement</para></entry>
+              <entry><para>Le Système a besoin de variables d'environnement</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2.1</para></entry>
+              <entry><para>Configuration VISHNU</para></entry>
+              <entry><para>VISHNU_CONF_DIR, contenant le fichier de configuration utilise par VISHNU</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2.2</para></entry>
+              <entry><para>SSH_KEYPATH</para></entry>
+              <entry><para>Chez le client, la clé SSH du serveur (chemin complet sur la clé publique) afin d'identifier le client</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -512,6 +750,11 @@
     </section>
     <section>
       <title>Glossaire</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>TODO</para>
+          </listitem>
+        </itemizedlist></para>
     </section>
   </chapter>
 </book>
