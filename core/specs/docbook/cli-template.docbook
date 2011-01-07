@@ -72,19 +72,132 @@
       <title>Glossary</title>
       <para/>
     </section>
+    
+    <section> <!-- Generic definition formats presentation -->
+      <title>Generic command definition format</title>
+      <para>This section presents the generic format used in the following chapters to describe the commands. It also details 
+	the environment variables required and the user options.</para>
+      <!--<section>Methods definition format 
+      
+      
+      <title>Methods definition format</title> -->
+	
+	<!-- <section> Generic method definition format 
+	  <title>Generic method definition format</title> -->
+	  <para> A commands is defined as follows:</para>
+      
+	  <para><emphasis role="bold">Access</emphasis></para>
+	  <para>Here is detailed the access of the command line for any VISHNU user or only for admin.</para>
+	   
+	  <para><emphasis role="bold">Description </emphasis></para>
+	  <para>Here is detailed the purpose of the command line.</para>
+	   
+	  <para><emphasis role="bold">Example of use </emphasis></para>
+	  <para>Here is detailed an example of the use of the command line which start by optional arguments preceded by a short letter and 
+	   the required arguments at the end.<emphasis role="bold"/></para>
+	  <para>myCommand -l acLogin -s sshKeyPath userId </para>
+	    
+	  <para><emphasis role="bold">Parameters</emphasis></para>
+	  <para>The following table contains all the input arguments of the command with their type and description, 
+	   their short letter for options and a required flag.</para>
+	  <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Option</entry>
+                <entry>Description</entry>
+                <entry>Required</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>This is an example of a required argument</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>acLogin</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>l</para></entry>
+                <entry><para>This is an example of an optional argument</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>sshKeyPath</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>This is an example of an optional argument</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              
+            </tbody>
+          </tgroup>
+        </informaltable>
+        
+	
+	<para>The following table contains the list of environment variables information, a required flag and a user option flag. The user option flag 
+	means that this parameter is a user option that can be define as an environment variable.</para>
+	
+	<para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name</entry>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Description</entry>
+                <entry>Required</entry>
+                <entry>User option</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>This is an example of an environment variable</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>  
+	   
+	<!--</section>  Generic method definition format -->
+	
+      
+      
+	<!--</section> Methods definition format -->
+    </section> <!-- Generic definition formats presentation -->   
   </chapter>
     <!-- GENERATED PART -->
   <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for User Management System (UMS)</title>
+    <title>Commands specification for User Management System (UMS)</title>
   </chapter> 
   <chapter annotations="EDF-API/TMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for Tasks Management System (TMS)</title>
+    <title>Commands specification for Tasks Management System (TMS)</title>
   </chapter>
   <chapter annotations="EDF-API/IMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for Information Management System (IMS)</title>
+    <title>Commands specification for Information Management System (IMS)</title>
   </chapter>
- <!-- <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
+ <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
     <title>API specification for File Management System (FMS)</title>
-  </chapter> -->
+  </chapter>
 </book>
   

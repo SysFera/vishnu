@@ -88,17 +88,110 @@
       <title>Glossary</title>
       <para/>
     </section>
+    <section>
+      <title>Generic command definition format</title>
+      <para>This section presents the generic format used in the following chapters to describe the commands. It also details 
+	the environment variables required and the user options.</para>
+      <para> A commands is defined as follows:</para>
+      <para><emphasis role="bold">Access</emphasis></para>
+      <para>Here is detailed the access of the command line for any VISHNU user or only for admin.</para>
+      <para><emphasis role="bold">Description </emphasis></para>
+      <para>Here is detailed the purpose of the command line.</para>
+      <para><emphasis role="bold">Example of use </emphasis></para>
+      <para>Here is detailed an example of the use of the command line which start by optional arguments preceded by a short letter and 
+	   the required arguments at the end.<emphasis role="bold"/></para>
+      <para>myCommand -l acLogin -s sshKeyPath userId </para>
+      <para><emphasis role="bold">Parameters</emphasis></para>
+      <para>The following table contains all the input arguments of the command with their type and description, 
+	   their short letter for options and a required flag.</para>
+      <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="1cm"/>
+          <colspec colwidth="7cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>Parameter</entry>
+              <entry>Type</entry>
+              <entry>Option</entry>
+              <entry>Description</entry>
+              <entry>Required</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry/>
+              <entry><para>This is an example of a required argument</para></entry>
+              <entry><para>YES</para></entry>
+            </row>
+            <row>
+              <entry><para>acLogin</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>l</para></entry>
+              <entry><para>This is an example of an optional argument</para></entry>
+              <entry><para>NO</para></entry>
+            </row>
+            <row>
+              <entry><para>sshKeyPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>s</para></entry>
+              <entry><para>This is an example of an optional argument</para></entry>
+              <entry><para>NO</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para>The following table contains the list of environment variables information, a required flag and a user option flag. The user option flag 
+	means that this parameter is a user option that can be define as an environment variable.</para>
+      <para><emphasis role="bold">Environment variables</emphasis></para>
+      <informaltable>
+        <tgroup cols="6">
+          <colspec colwidth="4.1cm"/>
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="2.5cm"/>
+          <colspec colwidth="4.2cm"/>
+          <colspec colwidth="1.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>Name</entry>
+              <entry>Parameter</entry>
+              <entry>Type</entry>
+              <entry>Description</entry>
+              <entry>Required</entry>
+              <entry>User option</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>VISHNU_SESSION_KEY</para></entry>
+              <entry><para>sessionKey</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>This is an example of an environment variable</para></entry>
+              <entry><para>YES</para></entry>
+              <entry><para>NO</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
   </chapter>
   <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for User Management System (UMS)</title>
+    <title>Commands specification for User Management System (UMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
         <title>connect</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The connect() function allows the user to open a session</para>
+        <para>The connect() function opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>connect  -p closePolicy -d sessionInactivityDelay -s substituteUserId   login<emphasis
+        <para>connect  -p closePolicy -d sessionInactivityDelay -s substituteUserId   userId<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -124,10 +217,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>login</para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>login represents the login of the user</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -201,10 +294,12 @@
       </section>
       <section>
         <title>reconnect</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The reconnect() function allows the user to get the sessionKey of a session in which he/she was disconnected previously without closing it</para>
+        <para>The reconnect() function returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>reconnect  login sessionId<emphasis role="bold"/></para>
+        <para>reconnect  userId  sessionId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -229,10 +324,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>login</para></entry>
+                <entry><para>userId </para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>login represents the login of the user</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -283,8 +378,10 @@
       </section>
       <section>
         <title>createUser</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createUser() function adds a new user in VISHNU</para>
+        <para>The createUser() function adds a new user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>createUser   -w password -f firstname -l lastname -p privilege -m email -s passwordState userId <emphasis
               role="bold"/></para>
@@ -315,7 +412,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>represents the login of the user</para></entry>
+                <entry><para>represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -403,8 +500,10 @@
       </section>
       <section>
         <title>updateUser</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateUser() function updates the user information in VISHNU except login and password</para>
+        <para>The updateUser() function updates the user information except the userId and password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>updateUser  -f firstname -l lastname -p privilege -m email userId  <emphasis
               role="bold"/></para>
@@ -435,35 +534,35 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>represents the login of the user</para></entry>
+                <entry><para>represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>firstname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>f</para></entry>
-                <entry><para>is an option to update the firstname of the user</para></entry>
+                <entry><para>updates the firstname of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>lastname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>is an option to update the lastname of the user</para></entry>
+                <entry><para>updates the lastname of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>privilege</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>p</para></entry>
-                <entry><para>is an option to update the privilege of the user</para></entry>
+                <entry><para>updates the privilege of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>email</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>is an option to update the email adress of the user</para></entry>
+                <entry><para>updates the email adress of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -509,10 +608,12 @@
       </section>
       <section>
         <title>deleteUser</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteUser() function removes a user  from VISHNU </para>
+        <para>The deleteUser() function removes a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>deleteUser  login<emphasis role="bold"/></para>
+        <para>deleteUser  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -537,10 +638,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>login</para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>login represents the login of the user which will be deleted from VISHNU</para></entry>
+                <entry><para>userId represents the VISHNU user identifier of the user who will be deleted from VISHNU</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -586,8 +687,10 @@
       </section>
       <section>
         <title>close</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The close() function allows a user to close a session </para>
+        <para>The close() function closes the session identfied by the session key</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>close <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -655,10 +758,12 @@
       </section>
       <section>
         <title>changePassword</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The changePassword() function allows the user to change his/her password</para>
+        <para>The changePassword() function changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>changePassword  login<emphasis role="bold"/></para>
+        <para>changePassword  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -683,10 +788,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>login</para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>login represents the login of the user</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -737,10 +842,12 @@
       </section>
       <section>
         <title>resetPassword</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The resetPassword() function allows an admin to reset the password of a user identified by his/her userId</para>
+        <para>The resetPassword() function resets the password of a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>resetPassword  login<emphasis role="bold"/></para>
+        <para>resetPassword  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -765,10 +872,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>login</para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>login represents the login of the user</para></entry>
+                <entry><para>userId represents the VISHNU user identifier of the user whose password will be reset</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -821,8 +928,10 @@
       </section>
       <section>
         <title>createLocalAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createLocalAccount() function allows the user to create a new local user config in VISHNU</para>
+        <para>The createLocalAccount() function adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>createLocalAccount   -l acLogin -s sshKeyPath -h HomeDirectory userId machineId <emphasis
               role="bold"/></para>
@@ -853,14 +962,14 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The userId represents the login of the user of the local user config</para></entry>
+                <entry><para>The userId represents the login of the user of the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The MachineId represents the identifier of the machine associated to the local user config</para></entry>
+                <entry><para>The MachineId represents the identifier of the machine associated to the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -881,7 +990,7 @@
                 <entry><para>HomeDirectory</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>h</para></entry>
-                <entry><para>HomeDirectory is the path of the home directory the user on the associated machine</para></entry>
+                <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -927,8 +1036,10 @@
       </section>
       <section>
         <title>updateLocalAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateLocalAccount() function allows the user to update his/her local user configuration in VISHNU</para>
+        <para>The updateLocalAccount() function updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>updateLocalAccount  -l acLogin -s sshKeyPath -h HomeDirectory userId machineId  <emphasis
               role="bold"/></para>
@@ -959,14 +1070,14 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The userId represents the login of the user of the local user config</para></entry>
+                <entry><para>The userId represents the login of the user of the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The MachineId represents the identifier of the machine associated to the local user config</para></entry>
+                <entry><para>The MachineId represents the identifier of the machine associated to the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -987,7 +1098,7 @@
                 <entry><para>HomeDirectory</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>h</para></entry>
-                <entry><para>HomeDirectory is the path of the home directory the user on the associated machine</para></entry>
+                <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -1033,8 +1144,10 @@
       </section>
       <section>
         <title>deleteLocalAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteLocalAccount() function allows to remove a local user configuration  from VISHNU for a given user on a given machine</para>
+        <para>The deleteLocalAccount() function removes a local user configuration (for a given user on a given machine)</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>deleteLocalAccount  userId machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1064,14 +1177,14 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>userId represents the login of the user which will be deleted according to a specific machine </para></entry>
+                <entry><para>userId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine </para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>machineId represents the identifier of the machine which will be deleted according to a specific user </para></entry>
+                <entry><para>machineId represents the identifier of the machine whose local configuration will be deleted for the given user </para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -1117,8 +1230,10 @@
       </section>
       <section>
         <title>saveConfiguration</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The saveConfiguration() function allows an admin to save the configuration of VISHNU</para>
+        <para>The saveConfiguration() function saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>saveConfiguration <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1186,8 +1301,10 @@
       </section>
       <section>
         <title>restoreConfiguration</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restoreConfiguration() function allows to restores the configuration of VISHNU</para>
+        <para>The restoreConfiguration() function restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>restoreConfiguration   -d descConf <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1263,8 +1380,10 @@
       </section>
       <section>
         <title>createMachine</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createMachine() function adds a new machine in VISHNU</para>
+        <para>The createMachine() function adds a new machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>createMachine   -n name -s site -d totalDiskSpace -m totalMemory -t machineDescription machineId <emphasis
               role="bold"/></para>
@@ -1376,8 +1495,10 @@
       </section>
       <section>
         <title>deleteMachine</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteMachine() function removes a machine  from VISHNU </para>
+        <para>The deleteMachine() function removes a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>deleteMachine  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1453,8 +1574,10 @@
       </section>
       <section>
         <title>listLocalAccount</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listLocalAccount() function allows the user to get an object which encapsulates the list of the local configuration objects according to the options selected</para>
+        <para>The listLocalAccount() function lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listLocalAccount  -a -u userId -i machineId  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1484,21 +1607,21 @@
                 <entry><para>AdminListOption</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
+                <entry><para>is an admin option for listing all local configurations of all users </para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
+                <entry><para>is an admin option for listing the local configurations of a specific user </para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>i</para></entry>
-                <entry><para>is an option which allows a user to list local user configuration on  a specific machine</para></entry>
+                <entry><para>is an option for listing local user configurations on a specific machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -1544,10 +1667,12 @@
       </section>
       <section>
         <title>listMachine</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listMachine() function allows the user to get an object which encapsulates the list of the machine objects according to the options selected</para>
+        <para>The listMachine() function lists the machines in which  local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listMachine  -m machineId -a -u userId  <emphasis role="bold"/></para>
+        <para>listMachine  -u userId -a -m machineId  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1572,24 +1697,24 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>m</para></entry>
-                <entry><para>is an option which allows a user to list local user configuration on  a specific machine</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>AdminListOption</para></entry>
-                <entry><para>boolean</para></entry>
-                <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
+                <entry><para>is an admin option for listing machines in which a specific user has a local configuration</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>ListAllOption</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>is an admin option for listing all machine defined in the database</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>is an option for listing information about a specific machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -1635,8 +1760,10 @@
       </section>
       <section>
         <title>listHistoryCmd</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listHistoryCmd() function allows the user to get an object which encapsulates the list of the  commands objects according to the options selected. By default the commands of current session identified by the session key is listed</para>
+        <para>The listHistoryCmd() function lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listHistoryCmd  -a -u userId -i sessionId -s startDateOption -e endDateOption  <emphasis
               role="bold"/></para>
@@ -1667,21 +1794,21 @@
                 <entry><para>AdminListOption</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
+                <entry><para>is an admin option for listing all commands of all users</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
+                <entry><para>is an admin option for listing commands launched by a specific user identified by his/her userId</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>sessionId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>i</para></entry>
-                <entry><para>allows the user to list all commands launched within a specific session</para></entry>
+                <entry><para>lists all commands launched within a specific session</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -1741,10 +1868,12 @@
       </section>
       <section>
         <title>listOptions</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listOptions() function allows the user to get an object which encapsulates the list of the options</para>
+        <para>The listOptions() function lists the options</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listOptions  -a -u userId -n optionName  <emphasis role="bold"/></para>
+        <para>listOptions  -u userId -n optionName  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1768,13 +1897,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>AdminListOption</para></entry>
-                <entry><para>boolean</para></entry>
-                <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
-                <entry><para>NO</para></entry>
-              </row>
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
@@ -1832,8 +1954,10 @@
       </section>
       <section>
         <title>listUsers</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listUsers() function allows the user to get an object which encapsulates the list of all users objects of VIHSNU</para>
+        <para>The listUsers() function lists users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listUsers -i userIdOption <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1909,8 +2033,10 @@
       </section>
       <section>
         <title>listSessions</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listSessions() function allows the user to get an object which encapsulates the list of the sessions objects or one session according to the options selected</para>
+        <para>The listSessions() function lists sessions</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listSessions  -t sessionListOption -p sessionClosePolicy -d sessionInactivityDelay -m machineId -a -u userId -i sessionId -s startDateOption -e endDateOption  <emphasis
               role="bold"/></para>
@@ -1941,14 +2067,14 @@
                 <entry><para>sessionListOption</para></entry>
                 <entry><para><link linkend="SessionListOptionType">SessionListOptionType</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>is an option which precise the type of session listed (ACTIVE, INACTIVE or ALL)</para></entry>
+                <entry><para>is an option which precise the type of session listed (ACTIVE_SESSION, INACTIVE_SESSION or ALL_SESSION)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>sessionClosePolicy</para></entry>
                 <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
                 <entry><para>p</para></entry>
-                <entry><para>is an option for closing session automatically</para></entry>
+                <entry><para>is an option for closing session automatically (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -1969,7 +2095,7 @@
                 <entry><para>AdminListOption</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all information in the database during a list API commands </para></entry>
+                <entry><para>is an admin option for listing all sessions of all users</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2043,8 +2169,10 @@
       </section>
       <section>
         <title>configureOption</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureOption() function allows the users to configure his/her options</para>
+        <para>The configureOption() function configures an option</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>configureOption   optionName value <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2127,8 +2255,10 @@
       </section>
       <section>
         <title>configureDefaultOption</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureDefaultOption() function allows an admin to configure a default option value</para>
+        <para>The configureDefaultOption() function configures a default option value</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>configureDefaultOption   optionName value <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2269,13 +2399,15 @@
     </section>
   </chapter>
   <chapter annotations="EDF-API/TMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for Tasks Management System (TMS)</title>
+    <title>Commands specification for Tasks Management System (TMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
         <title>submitJob</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob() function submits job on a machine through the use of a script (job_cmd_path). The script is a shell script which will be executed by a command shell such as sh or csh. The object opt parameter of this function allows the user to specifie  job characterisques options. Also the user can options in the script file.</para>
+        <para>The submitJob() function submits job on a machine through the use of a script (job_cmd_path). The script is a shell script which will be executed by a command shell such as sh or csh. The object opt parameter of this function allows the user to specifie  job characteristics options. Also the user can options in the script file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>submitJob  -n Name -null priority -null queue -null wallTime -null memory -null nbCpu -null nbNodesAndCpuPerNode -null OutPutPath -null ErrorPath   sessionKey machineId scriptFilePath<emphasis
               role="bold"/></para>
@@ -2313,7 +2445,7 @@
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>Is the id of the machine where the job must be submitted.</para></entry>
+                <entry><para>Is the id of the machine where the job must be submitted</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -2420,6 +2552,8 @@
       </section>
       <section>
         <title>listJobs</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listJobs() function gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2566,6 +2700,8 @@
       </section>
       <section>
         <title>getJobInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobInfo() function gets information on a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2648,6 +2784,8 @@
       </section>
       <section>
         <title>cancelJob</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The cancelJob() function cancels a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2730,6 +2868,8 @@
       </section>
       <section>
         <title>getJobOutPut</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobOutPut() function gets outputPath and errorPath of a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2812,6 +2952,8 @@
       </section>
       <section>
         <title>getAllJobsOutPut</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getAllJobsOutPut() function gets outputPath and errorPath of completed jobs dynamically</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2887,6 +3029,8 @@
       </section>
       <section>
         <title>listQueues</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listQueues() function gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2962,8 +3106,10 @@
       </section>
       <section>
         <title>setMachineEnv</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineEnv() function sets some environment variables</para>
+        <para>The setMachineEnv() function sets environment variables on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>setMachineEnv  sessionKey machineId listEnv<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3044,6 +3190,8 @@
       </section>
       <section>
         <title>setMachineRefreshPeriod</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setMachineRefreshPeriod() function sets the refresh period of output and error file content</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3089,7 +3237,7 @@
                 <entry><para>value</para></entry>
                 <entry><para>int</para></entry>
                 <entry/>
-                <entry><para>Is the refresh value</para></entry>
+                <entry><para>Is the refresh interval value (in seconds)</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -3126,6 +3274,8 @@
       </section>
       <section>
         <title>getJobProgress</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobProgress() function get the progression status of jobs.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3306,11 +3456,13 @@
     </section>
   </chapter>
   <chapter annotations="EDF-API/IMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for Information Management System (IMS)</title>
+    <title>Commands specification for Information Management System (IMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
         <title>getUpdateFrequency</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getUpdateFrequency() function gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3380,6 +3532,8 @@
       </section>
       <section>
         <title>export</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The export() function exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3464,6 +3618,8 @@
       </section>
       <section>
         <title>replay</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The replay() function replays a script of VISHNU commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3548,6 +3704,8 @@
       </section>
       <section>
         <title>getMetricVal</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricVal() function gets data from a metric</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3646,6 +3804,8 @@
       </section>
       <section>
         <title>getCurrentData</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getCurrentData() function gets data corresponding to the datatype on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3730,6 +3890,8 @@
       </section>
       <section>
         <title>getProcesses</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getProcesses() function gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3807,6 +3969,8 @@
       </section>
       <section>
         <title>setSystemThreshold</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setSystemThreshold() function sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3898,6 +4062,8 @@
       </section>
       <section>
         <title>getSystemThreshold</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getSystemThreshold() function gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3982,6 +4148,8 @@
       </section>
       <section>
         <title>defineUserIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineUserIdentifier() function defines the shape of the identifiers automatically generated for the users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4059,6 +4227,8 @@
       </section>
       <section>
         <title>defineMachineIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineMachineIdentifier() function defines the shape of the identifiers automatically generated for the machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4136,6 +4306,8 @@
       </section>
       <section>
         <title>defineJobIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineJobIdentifier() function defines the shape of the identifiers automatically generated for the jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4213,6 +4385,8 @@
       </section>
       <section>
         <title>defineTransferIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineTransferIdentifier() function defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4290,6 +4464,8 @@
       </section>
       <section>
         <title>loadShed</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The loadShed() function loads shed a machine, 2 modes are available, soft or hard. Soft flushes the machine, hard stops the machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4374,6 +4550,8 @@
       </section>
       <section>
         <title>setUpdateFrequency</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setUpdateFrequency() function sets the update frequency of the IMS tables</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4450,82 +4628,9 @@
         </informaltable>
       </section>
       <section>
-        <title>notifyOverflow</title>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The notifyOverflow() function sends a mail to the admin responsible for the limite whose treshold has been reached</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>notifyOverflow  machineId message<emphasis role="bold"/></para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The id of the machine with an overflow</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>message</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The message to send</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
         <title>restart</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restart() function restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4610,8 +4715,10 @@
       </section>
       <section>
         <title>updateMachine</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateMachine() function updates the machines information in the database (diskspace and memory)</para>
+        <para>The updateMachine() function updates the machines information in the database (description, diskspace or memory)</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>updateMachine -l lang  machineId CompoMachine  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4859,6 +4966,1906 @@
           </tbody>
         </tgroup>
       </informaltable>
+    </section>
+  </chapter>
+  <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
+    <title>API specification for File Management System (FMS)</title>
+    <section>
+      <title>Command definitions</title>
+      <section>
+        <title>createFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The createFile() function creates  files on  remote machines.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>createFile -m mode  machineId sessionKey  - listOfStrings <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>mode</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the file access permissions.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>createDir</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The createDir() function creates directories on remote machines.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>createDir -m mode  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session idientifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>mode</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the new directories permission access.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>removeFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The removeFile() function removes files from  remote hosts.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>removeFile  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>removeDir</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The removeDir() function removes a directory from a remote machine</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>removeDir  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>headOfFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The headOfFile() function displays a few first lines of  file located on a remote machine</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>headOfFile -n nLine  machineId sessionKey  - listOfStrings <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nLine</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>number of lines to display</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>tailOfFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The tailOfFile() function displays a few last lines of  file located on a remote machine</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>tailOfFile -n nLine  machineId sessionKey  - listOfStrings <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nLine</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>number of lines to display</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>chGrpOfFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The chGrpOfFile() function changes group owner of a remote file. </para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>chGrpOfFile  machineId sessionKey  - listOfStrings  group<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>group</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the new group owner of file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>chModOfFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The chModOfFile() function changes a acces rights of  a remote file.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>chModOfFile  machineId sessionKey  - listOfStrings  mode<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>mode</para></entry>
+                <entry><para>long</para></entry>
+                <entry/>
+                <entry><para> the access rigths of a file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>listDir</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listDir() function displays  the contents of remote directory. </para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listDir  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>copyFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The copyFile() function executes a synchronous copy of file.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>copyFile  - listOfStrings   machineId sessionKey  - listOfStrings  dest<emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session ididentifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>copyAsyncFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The copyAsyncFile() function executes an asynchronous copy of file.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>copyAsyncFile  machineId sessionKey  - listOfStrings  dest<emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>moveFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The moveFile() function executes a synchronous move of file.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>moveFile  machineId sessionKey  - listOfStrings  dest<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>moveAsyncFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The moveAsyncFile() function executes an asynchronous move of file.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>moveAsyncFile  machineId sessionKey  - listOfStrings  dest<emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>stopFileTransfer</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The stopFileTransfer() function stops an execution of an set of file transfer.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>stopFileTransfer  machineId sessionKey  - listOfLongs <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfLongs</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>stopAllFileTransfer</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The stopAllFileTransfer() function stops all  file transfer in a session.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>stopAllFileTransfer  machineId sessionKey<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>stopAllUsersFileTransfer</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The stopAllUsersFileTransfer() function stops all  users file transfer.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>stopAllUsersFileTransfer  machineId sessionKey<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>getFileTransferStatus</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The getFileTransferStatus() function gives the status of a list of file transfer.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>getFileTransferStatus  machineId sessionKey  - listOfLongs <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfLongs</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>listFilesTransferStatus</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listFilesTransferStatus() function displays the status of all files transfer submitted by User.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listFilesTransferStatus  machineId sessionKey<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>listAllUsersFilesTransferStatus</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listAllUsersFilesTransferStatus() function displays the status of all files transfer submitted by User.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listAllUsersFilesTransferStatus  machineId sessionKey<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>DisplayFilesTransferHistory</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The DisplayFilesTransferHistory() function displays the history of all files transfer submitted by User.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>DisplayFilesTransferHistory  machineId sessionKey  - listOfLongs <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfLongs</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>DisplayAllUsersFilesTransferHistory</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The DisplayAllUsersFilesTransferHistory() function displays the history of all files transfer submitted by all Users.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>DisplayAllUsersFilesTransferHistory  machineId sessionKey<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>GetFilesInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The GetFilesInfo() function displays the information  of  files.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>GetFilesInfo  machineId sessionKey<emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Parameters definitions</title>
     </section>
   </chapter>
 </book>
