@@ -2499,47 +2499,6 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>IA10. Update machine description</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>IA10. Update machine description</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry><para>Updates the data concerning a machine (e.g., if the machine has some added memory diskSpace, some added memory, a new description)</para></entry>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry><para>Admin</para></entry>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry><para>The description of the machine in the database is updated</para></entry>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry><para>1) An admin calls to update the data concerning a machine identified by an id giving a new diskSpace size, a new memory size and a new machine description.</para><para>2) The System updates the database</para></entry>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry><para>1 -> The machine id is invalid, an INVALID_PARAMETER error is returned</para><para>2 -> There is an error with the database, a DATABASE_ERROR error is returned</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
         <title>IA2. Define a system load threshold</title>
         <informaltable>
           <tgroup cols="2">
@@ -2663,13 +2622,13 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>IA4. Hard load shedding </title>
+        <title>IA4.1 Hard load shedding </title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>IA4. Hard load shedding </para></entry>
+                <entry><para>IA4.1 Hard load shedding </para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -2704,13 +2663,13 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>IA5. Soft load shedding</title>
+        <title>IA4.2 Soft load shedding</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>IA5. Soft load shedding</para></entry>
+                <entry><para>IA4.2 Soft load shedding</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -2739,6 +2698,47 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1 -> The machine id is invalid, an INVALID_PARAMETER error is returned</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IA5. Update machine description</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA5. Update machine description</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>Updates the data concerning a machine (e.g., if the machine has some added memory diskSpace, some added memory, a new description)</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>The description of the machine in the database is updated</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) An admin calls to update the data concerning a machine identified by an id giving a new diskSpace size, a new memory size and a new machine description.</para><para>2) The System updates the database</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>1 -> The machine id is invalid, an INVALID_PARAMETER error is returned</para><para>2 -> There is an error with the database, a DATABASE_ERROR error is returned</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3001,25 +3001,25 @@ in order to avoid systematic authentification</para>
       <title>Use case diagrams
 </title>
       <section>
-        <title>FMS simple command use cases</title>
+        <title>UC FMS simple command use cases</title>
         <figure>
-          <title>FMS simple command use cases</title>
+          <title>UC FMS simple command use cases</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/FMS simple command use cases.png" align="center"
-                  scale="40"/>
+              <imagedata fileref="images/png/UC FMS simple command use cases.png"
+                  align="center" scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
       </section>
       <section>
-        <title>FMS transfer command use cases</title>
+        <title>UC FMS transfer command use cases</title>
         <figure>
-          <title>FMS transfer command use cases</title>
+          <title>UC FMS transfer command use cases</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/FMS transfer command use cases.png" align="center"
-                  scale="40"/>
+              <imagedata fileref="images/png/UC FMS transfer command use cases.png"
+                  align="center" scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
@@ -3063,11 +3063,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. The given parameters are invalid for this command.</para><para>2a. The specified session id is invalid. </para><para>3a.  The specified host is unknown. </para><para>3b. The specified host is unavailable.</para><para>4a. The command fails and an error message  is printed out on the standard output of the client System.</para></entry>
+                <entry><para>1a. The given parameters are invalid for this command.</para><para>2a. The specified session id is invalid. </para><para>3a.  The specified host is unknown. </para><para>3b. The specified host is unavailable.</para><para>4a. The command fails and an error message is displayed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>F1.2- Change group owner of files</para><para>F1.1- Change access rights of files</para><para>F1.3- Create new directories</para><para>F1.5-  Delete directories</para><para>F1.6- Delete files</para><para>F1.8- Display contents of files</para><para>F1.9- Display Head of files</para><para>F1.7- Display contents of directories</para><para>F1.10- Display tail of files</para><para>F2.1- Execute a synchronous copy of files </para><para>F2.2- Execute an asynchronous copy of files </para><para>F1.11- Get information about remote files</para><para>F1.4- Create new files</para></entry>
+                <entry><para>F1.2- Change group owner of files</para><para>F1.1- Change access rights of files</para><para>F1.3- Create new directories</para><para>F1.5-  Delete directories</para><para>F1.6- Delete files</para><para>F1.8- Display contents of files</para><para>F1.9- Display Head of files</para><para>F1.7- Display contents of directories</para><para>F1.10- Display tail of files</para><para>F1.11- Get information about remote files</para><para>F1.4- Create new files</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3088,7 +3088,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3100,7 +3100,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the change access rights command with the files, the new access rights to set, the involved hosts and the session key.</para><para>2. The System sets the new access rights to the files. </para></entry>
+                <entry><para>1. User submits the change access rights command with the files, the new access rights to set, the involved hosts.</para><para>2. The System sets the new access rights to the files. </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3108,7 +3108,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If a file is unknown, a message is also printed out on the standard output of the client System.</para><para>1c. If User does not have execute permission in a parent    directory or if User is not the file owner or Admin,  a permission denied message is displayed on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, an error message  is returned.</para><para>1b. If a file is unknown, an error message is displayed on the standard output of the client System.</para><para>1c. If User does not have execute permission in a parent    directory or if User is not the file owner or Admin,  a permission denied message is displayed on the standard output of the client System..</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3133,7 +3133,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3145,7 +3145,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the files to display, the involved hosts and the session key.</para><para>2. The System displays the last lines of the specified files on the  standard output of the client System.</para></entry>
+                <entry><para>1. User submits the display command with the path of the files to display, the involved hosts.</para><para>2. The System displays the last lines of the specified files on the  standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3174,7 +3174,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to get information about each named  remote file. It is equivalent to  &quot;stat&quot; bash command.</para></entry>
+                <entry><para>This use case allows User to get information  about each named  remote file (the path, the owner, the group, the access permissions, the owner numeric identifier, the group numeric identifier, the size, the last access time, the last modification time, the last inode change time ). It is equivalent to  &quot;stat&quot; bash command.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3186,11 +3186,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>Some information  (like the size, the owner user id, the owner group  id, the type of file... ) about given files are printed out on the standard output of the client System.</para></entry>
+                <entry><para>Some information about given files are printed out on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the get information  command with the files,  the involved hosts and the session key.</para><para>2. The System prints out the information about the specified files on the standard output of the client System.</para></entry>
+                <entry><para>1. User submits the get information  command with the files,  the involved hosts.</para><para>2. The System prints out the information about the specified files on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3223,7 +3223,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3235,7 +3235,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the change group owner command with the files , the new group to set, the involved hosts and the session key.</para><para>2. The  System sets the new group owner to the file. </para></entry>
+                <entry><para>1. User submits the change group owner command with the files , the new group to set, the involved hosts.</para><para>2. The  System sets the new group owner to the file. </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3268,7 +3268,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3276,11 +3276,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>The new directories are created in the specified hosts.</para></entry>
+                <entry><para>The new directories are created in the specified host and are owned by User and his group.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the create directory command with the paths of directories to create, the involved hosts and the session key.</para><para>2. The System creates  new directories with the specified paths.</para></entry>
+                <entry><para>1. User submits the create directory command with the paths of directories to create, the involved hosts.</para><para>2. The System creates  new directories with the specified paths.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3288,7 +3288,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If User does not have read or write permission in a parent directory, a message is also printed on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the a specified directory already exists, a message is printed out on the standard output of the client System.</para><para>1c. If User does not have read or write permission in a parent directory, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3313,7 +3313,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3321,11 +3321,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>The new files are created in the specified hosts.</para></entry>
+                <entry><para>The new files are created in the specified hosts and are owned by User and his group.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the create file command with the paths of files to create, the involved hosts and the session key.</para><para>2. The System creates  new files with the specified paths.</para></entry>
+                <entry><para>1. User submits the create file command with the paths of files to create, the involved hosts.</para><para>2. The System creates  new files with the specified paths.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3333,7 +3333,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If User does not  have execute or write permission in a parent directory, a message is also printed out on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If a specified file already exists, a message is printed out on the standard output of the client System.</para><para>1c. If User does not  have execute or write permission in a parent directory, a message is also printed out on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3358,7 +3358,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3370,7 +3370,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the delete directory command with the paths of directories to delete, the involved hosts and the session key.</para><para>2. The System deletes the specified directories from the hosts.</para></entry>
+                <entry><para>1. User submits the delete directory command with the paths of directories to delete, the involved hosts.</para><para>2. The System deletes the specified directories from the hosts.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3378,7 +3378,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If a file is unknown, a message is printed on the standard output of the client System.</para><para>1.c If User does not  have execute or  write permission in a parent directory, a message is also printed out on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If a specified path is not a directory or a directory is unknown, a message is printed on the standard output of the client System.</para><para>1c. If User does not  have execute or  write permission in a parent directory,or if a specified directory contains a file which can not be removed, a permission denied message is also printed out on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3403,7 +3403,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3415,7 +3415,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the delete file command with the paths of files to delete, the involved hosts and the session key.</para><para>2. The System deletes the specified files from the hosts.</para></entry>
+                <entry><para>1. User submits the delete file command with the paths of files to delete, the involved hosts.</para><para>2. The System deletes the specified files from the hosts.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3423,7 +3423,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the file is unknown, a message is  printed out on the standard output of the client System.</para><para>1.c If User does not  have execute or write permission in the parent directory, a message is also printed out on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If a specified path is not a file or if a file is unknown, a message is  printed out on the standard output of the client System.</para><para>1c. If User does not  have execute or write permission in the parent directory, a message is also printed out on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3448,7 +3448,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3460,7 +3460,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the paths of directories to list, the involved hosts and the session key.</para><para>2. The System displays the contents of the specified directories on the standard output of the client System.</para></entry>
+                <entry><para>1. User submits the display command with the paths of directories to list, the involved hosts.</para><para>2. The System displays the contents of the specified directories on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3493,7 +3493,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3505,7 +3505,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the path of the file to display, the involved hosts and the session key.</para><para>2. The  System prints the specified file on the standard output of the client System.</para></entry>
+                <entry><para>1. User submits the display command with the path of the file to display, the involved hosts.</para><para>2. The  System prints the specified file on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3538,7 +3538,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry/>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3550,7 +3550,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the display command with the paths of the files to display, the involved hosts and the session key.</para><para>2. The System displays the first lines of the specified files on the standard output of the client System.</para></entry>
+                <entry><para>1. User submits the display command with the paths of the files to display, the involved hosts.</para><para>2. The System displays the first lines of the specified files on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3579,7 +3579,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to copy a file  between two hosts.</para><para> It is the equivalent of the &quot;cp&quot; bash command.  The four cases of transfer are covered by this use case :</para><para>- inside the same host which can be local or remote,</para><para>- from local host to remote host, </para><para>- from remote host to local host,</para><para>- from remote host to another remote host.</para></entry>
+                <entry><para>This use case allows User to copy a file  between two hosts.</para><para> It is the equivalent of the &quot;cp&quot; bash command. This use case allows the transfer of several source files but towards one source destination (which must be a directory).The four cases of transfer are covered by this use case :</para><para>- inside the same host which can be local or remote,</para><para>- from local host to remote host, </para><para>- from remote host to local host,</para><para>- from remote host to another remote host.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3587,7 +3587,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry><para>User has at least an open active session.</para></entry>
+                <entry><para>User has an open active VISHNU session on the client.</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
@@ -3595,7 +3595,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy (including the host), the path of destination (including the host) and the session key.</para><para>2.The System copies the given source file to the specified destination.</para></entry>
+                <entry><para>1. User submits the tranfer file  command with the path of the source files to copy (including the hosts), the path of destination (including the hosts) and the session key.</para><para>2.The System copies the given source file to the specified destination.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3603,11 +3603,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>1f. If the file transfer  fails, a message is also printed on the standard output of the client System.</para></entry>
-              </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F1- Execute simple command on a remote host</para><para>F2.1.1- Execute a synchronous move of files</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If a source file or a host is unknown, a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System.</para><para>1e. If a list of arguments is provided and the final argument in the sequence is not the name of an existing directory, a message is printend out on the standard output of the ckient System.</para><para>1f. If the source path is the same than the destination path,</para><para>a message is returned.</para><para>1g. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>2a. If  a host is unreachable during a file transfer, the file transfer is cancelled and will restart when the connexion will be restored. </para><para>2b. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
@@ -3628,7 +3624,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to move a file from a host to another host. Furthermore, the source file is removed from the source host. </para><para>The four cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para><para>- and from remote host to another remote host.</para></entry>
+                <entry><para>This use case allows User to copy a file from a host to another host. Furthermore, the source file is removed from the source host. This use case allows the transfer of several source files but towards one source destination (which must be a directory).</para><para>The four cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para><para>- and from remote host to another remote host.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3644,7 +3640,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy(including the host), the path of destination (including the host) and the session key.</para><para>2. The System makes a copy of  the given source file to the specified destination and remove the source file from the source host .</para></entry>
+                <entry><para>1. User submits the tranfer file  command with the path of the source file to copy(including the host), the path of destination (including the host) and the session key.</para><para>2. The System makes a copy of  the given source files to the specified destination and remove the source files from the source hosts.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3652,14 +3648,10 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>1f. If the file transfer fails, a message is also printed on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If a source file or a host is unknown, a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System.</para><para>1e. If a list of arguments is provided and the final argument in the sequence is not the name of an existing directory, a message is printed out on the standard output of the client System. </para><para>1f. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>2a. If  a host is unreachable during a file transfer, the file transfer is cancelled and will restart when the connexion will be restored. </para><para>2b. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>F2.1- Execute a synchronous copy of files </para></entry>
-              </row>
-              <row>
-                <entry><para>Extensions</para></entry>
                 <entry><para>F2.1- Execute a synchronous copy of files </para></entry>
               </row>
             </tbody>
@@ -3677,7 +3669,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to copy a file  between two hosts  and submit another command without waiting the end of transfer file.</para><para>The four cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para><para>- from remote host to another remote host. </para></entry>
+                <entry><para>This use case allows User to copy files  between two hosts  and submit another command without waiting the end of transfer file. This use case allows the transfer of several source files but towards one source destination (which must be a directory).</para><para>The four cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para><para>- from remote host to another remote host. </para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3685,15 +3677,15 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
-                <entry><para>User has at least an open active session.</para></entry>
+                <entry><para>User has an active open session on the client</para></entry>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The file transfer may be on-going or completed.</para><para>- User gets a transfer id in order to check the file tranfert status.</para><para>- The log System  has been updated and contains request parameters.</para></entry>
+                <entry><para>- The file transfers are fully  accomplished and a copy of the source files is now on the destination host.</para><para>- The log System  has been updated and contains request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the file tranfer command with the path of the source file to copy (including the host), the path of destination (including the host) and the session key.</para><para>2. The System starts the transfer of the given source file to the specified destination and sends back to User a transfer id.</para></entry>
+                <entry><para>1. User submits the file tranfer command with the paths of the source files to copy (including the host), the path of destination (including the host) and the session key.</para><para>2. The System starts the transfer of the given source file to the specified destination and sends back to User a transfer id.</para><para>3. When a transfer file ends, the log System is updated.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3701,11 +3693,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>1f. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
-              </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F1- Execute simple command on a remote host</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If a source file or a host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System.</para><para>1e. If a list of arguments is provided and the final argument in the sequence is not the name of an existing directory, a message is printend out on the standard output of the ckient System.</para><para>1f. If the source path is the same than the destination path,</para><para>a message is returned. </para><para>1g. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>2a. If  a host is unreachable during a file transfer, the file transfer is cancelled and will restart when the connexion will be restored. </para><para>2b. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
@@ -3726,7 +3714,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to move a file from a host to another host and submit another command without waiting the end of file transfer. Furthermore, the source file is removed from the source host. </para><para>The four cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para><para>- and from remote host to another remote host.</para></entry>
+                <entry><para>This use case allows User to move files from hosts to another host and submit another command without waiting the end of file transfer. Furthermore, the source files are removed from the source hosts. This use case allows the transfer of several source files but towards one source destination (which must be a directory).</para><para>The four cases of transfer are covered this use case :</para><para>- inside the same host which can be local or remote</para><para>- from local host to remote host</para><para>- from remote host to local host</para><para>- and from remote host to another remote host.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3738,11 +3726,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>-The file transfer may be on-going or completed.</para><para>-User gets an transfer id in order to check the file tranfert status.</para><para>-At the end of the transfer, the source file is removed from the source host.</para><para>The System log has been updated and contains request parameters.</para></entry>
+                <entry><para>- The file transfers are in completed status.</para><para>- The source files are removed from the source hosts.</para><para>- The System log has been updated and contains request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits the file tranfer command with the path of the source file to copy (including the host), the path of destination (including the host) and the session key.</para><para>2. The System starts the transfer of the given source file to the specified destination and sends back to User a transfer id.</para></entry>
+                <entry><para>1. User submits the file tranfer command with the paths of the source files to copy (including the hosts), the path of destination (including the host) and the session key.</para><para>2. The System starts the transfers of the given source files to the specified destination and sends back to User a transfer id.</para><para>3. At the end of a transfer, the log System is updated.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3750,7 +3738,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>1f. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the source file or the host is unknown , a message is printed on the standard output of the client System. </para><para>1d. If the destination path is invalid, a message is printed on standard output of the client System. </para><para>1e. If</para><para>- User does not  have execute permission in the source or destination file parent,</para><para>- or he does not have read permission on a source file,</para><para>- or  he does not have write permission in the destination parent directory,</para><para>a message is printed out on the standard output of the client System.</para><para>2a. If  a host is unreachable during a file transfer, the file transfer is cancelled and will restart when the connexion will be restored. </para><para>2b. If the transfer file fails, a message is also printed on the standard output of the client System.</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -3797,10 +3785,6 @@ in order to avoid systematic authentification</para>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key  is invalid, a message is printed out on the standard output of the client System.</para><para>1.c If the tranfer id is invalid or if User did not submit a named file tranfer,a message is printed out on the standard output of the client System.</para><para>1d. If the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
-              <row>
-                <entry><para>Extensions</para></entry>
-                <entry><para>F2.3.2- Stop all users file transfer</para><para>F2.3.1- Stop all file tranfer</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -3820,7 +3804,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry><para>User</para></entry>
+                <entry><para>User, User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3841,10 +3825,6 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key  is invalid or if User did not submit one of named file tranfers, a message is printed out on the standard output of the client System.</para><para>1c. If the command fails, a message is printed out on the standard output of the client System. </para></entry>
-              </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F2.3- Stop a file tranfer</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3887,10 +3867,6 @@ in order to avoid systematic authentification</para>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key  is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the command fails, a message is printed on the standard output of the client System. </para></entry>
               </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F2.3- Stop a file tranfer</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -3906,7 +3882,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to get an asynchronous file transfer status he submitted.</para></entry>
+                <entry><para>This use case allows User to get the status of each given  asynchronous file transfers  he submitted. Four main status are defined for a file tranfer:</para><para>- in Progress: the file tranfer is on-going</para><para>- completed: the file transfer is completed</para><para>- cancelled: the file transfer is cancelled</para><para>- failed : the file transfer failed. </para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3918,23 +3894,19 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The status of the specified file transfer is displayed on the standard output of client System. </para></entry>
+                <entry><para>- The status of the specified file transfers is displayed on the standard output of client System. </para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits a get file transfer command by specifying a session key and the transfer id.</para><para>2. The System displays  the status of the specified file transfer .</para></entry>
+                <entry><para>1. User submits a get file transfer command by specifying a session key and the transfer identifiers.</para><para>2. The System displays  the status of all specified file transfers .</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry/>
+                <entry><para>2a. Futhermore, the System will display the progression of all  in Progress file transfers. But that information will depend on the process used by the file transfer.</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If the specified transfer id is invalid or User did not submit a named file tranfer, a message is printed out on the standard output of the client System.</para><para>1d. If the command fails, a message is printed out on the standard output of the client System. </para></entry>
-              </row>
-              <row>
-                <entry><para>Extensions</para></entry>
-                <entry><para>F2.4.2- List all users file transfer status</para><para>F2.4.1- List files transfer status</para></entry>
+                <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If a specified transfer id is invalid or User did not submit a named file tranfer, a message is printed out on the standard output of the client System.</para><para>1d. If the command fails, a message is printed out on the standard output of the client System. </para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3951,11 +3923,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to list all  file transfer status he submitted (including current and completed file transfer) .</para></entry>
+                <entry><para>This use case allows User to list all  file transfer status he submitted.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry><para>User</para></entry>
+                <entry><para>User, User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -3978,10 +3950,6 @@ in order to avoid systematic authentification</para>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed out on the standard output of the client System.</para><para>1c. If no transfer was submitted or if the command fails, a message is printed out on the standard output of the client System. </para></entry>
               </row>
               <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F2.4.- Get a file transfer status</para></entry>
-              </row>
-              <row>
                 <entry><para>Extensions</para></entry>
                 <entry><para>F2.4.2- List all users file transfer status</para></entry>
               </row>
@@ -4000,7 +3968,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows Admin to list all  file transfer status of a given session (including current and completed file transfer) .</para></entry>
+                <entry><para>This use case allows Admin to list all  file transfer status of a given session.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -4028,7 +3996,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>F2.4.1- List files transfer status</para><para>F2.4.- Get a file transfer status</para></entry>
+                <entry><para>F2.4.1- List files transfer status</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4045,7 +4013,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to list all  file transfer  he submitted .</para></entry>
+                <entry><para>This use case allows User to list all  file transfer  he submitted.</para><para>User can specify an optinal search criteria:</para><para>- status</para><para>- source host or destination host.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -4061,7 +4029,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits a dispay file transfer history command by  specifying a session key.</para><para>2. The System displays all  file transfer  User submitted on the standard output of client System.</para></entry>
+                <entry><para>1. User submits a display file transfer history command by specifying a session key.</para><para>2. The System displays all  file transfer  User submitted on the standard output of client System.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -4070,10 +4038,6 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given session key is invalid, a message is printed on the standard output of the client System.</para><para>1c. If no transfer was submitted or if the command fails, a message is printed on the standard output of the client System. </para></entry>
-              </row>
-              <row>
-                <entry><para>Extensions</para></entry>
-                <entry><para>F2.5.1-Display all file transfer history list</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4090,7 +4054,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows Admin to list all  file transfer of a given session .</para></entry>
+                <entry><para>This use case allows Admin to list all  file transfer of a given session. Admin can specify an optinal search criteria:</para><para>- status</para><para>- source host or destination host. </para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -4116,9 +4080,87 @@ in order to avoid systematic authentification</para>
                 <entry><para>Exception sequence</para></entry>
                 <entry><para>1a. If there are missing parameters, a message that contains the way to use the command, is displayed on the standard output of the client System.</para><para>1b. If the given  session key is invalid, a message is printed out on the standard output of the client System.</para><para>1c. If no transfer was submitted or if the command fails, a message is printed out on the standard output of the client System.</para></entry>
               </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>F3. Launch FMS server</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
               <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>F2.5- Display the file transfer history list</para></entry>
+                <entry><para>Title</para></entry>
+                <entry><para>F3. Launch FMS server</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>This use case allows Admin to launch the VISHNU FMS server on a given host.</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>- The VISHNU server software (FMS Module and dependencies) is installed on the host</para><para>- The host is configured in the VISHNU System database</para><para>- The network connection between the host and the VISHNU database server is up and running.</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>- The FMS server is up and running.</para><para>- A server log has been created.</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1.  Admin logs in the host as VISHNU user</para><para>2.  Admin updates the VISHNU configuration if necessary (database server hostname and credentials, SysferaDS configuration )</para><para>3.  Admin launches the VISHNU FMS Server executable</para><para>4. The System checks the connections to its peers within the VISHNU platform.</para><para>5. The System retrieves the list of active file transfer (not completed file transfer) that were launched on the same host.</para><para>6. The System checks that all the active file transfer (from previous step) are still running, and eventually updates the file transfer status (for ex. from failed to in progress).</para><para>7. The System returns a status message to Admin.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>4a. A connection to a VISHNU peer is down. System returns an error message and stops.</para><para>6a. The batch scheduler does not recognize some job ids. In this case the System updates the job status to completed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>F4. Stop FMS server</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>F4. Stop FMS server</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>This use case allows Admin to stop the VISHNU FMS server on a given host.</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry><para>- The FMS Server is up and running on the given host.</para></entry>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry><para>- The FMS Server is down.</para></entry>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1.  Admin sends a request to stop the FMS Server and provides the host identifier.</para><para>2. The System updates the status of all on-going file transfer requests.</para><para>3. The System stops all internal processes on the host.</para><para>4. The System returns an information message to Admin.</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
               </row>
             </tbody>
           </tgroup>
@@ -4132,13 +4174,27 @@ in order to avoid systematic authentification</para>
             <para>FMS: File Management System</para>
           </listitem>
           <listitem>
-            <para>Host:</para>
+            <para><emphasis role="bold">Host:</emphasis>:  Computer connected to other computers or terminals to which it provides data or computing services via a network.</para>
           </listitem>
           <listitem>
-            <para>Path:</para>
+            <para><emphasis role="bold">Inode:</emphasis></para>
+            <itemizedlist>
+              <listitem>
+                <para>An inode is a data structure on a filesystem on Linux and other Unix-like operating systems that stores all the information about a file except its name and its actual data.</para>
+              </listitem>
+              <listitem>
+                <para>When a file is created, it is assigned both a name and an inode number, which is an integer that is unique within the filesystem. </para>
+              </listitem>
+              <listitem>
+                <para> An inode contains all information describing a file. </para>
+              </listitem>
+              <listitem>
+                <para>This  includes (1) the size of the file (in bytes) and its physical location (i.e., the addresses of the blocks of storage containing the file's data on a HDD), (2) the file's owner and group, (3) the file's access permissions, (4) timestamps telling when the inode was created, last modified and last accessed and (5) a reference count telling how many hard links point to the inode. </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
-            <para>Topic1</para>
+            <para><emphasis role="bold">Path:</emphasis>: String of characters denoting the complete location of a file or folder (directory) in the host's data filing system.</para>
           </listitem>
         </itemizedlist></para>
     </section>
