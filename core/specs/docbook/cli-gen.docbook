@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -185,11 +185,11 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>connect</title>
+        <title>UMS connect</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The connect() function opens a session</para>
+        <para>The connect command line opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>connect  -p closePolicy -d sessionInactivityDelay -s substituteUserId   userId<emphasis
               role="bold"/></para>
@@ -293,11 +293,11 @@
         </informaltable>
       </section>
       <section>
-        <title>reconnect</title>
+        <title>UMS reconnect</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The reconnect() function returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
+        <para>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>reconnect  userId  sessionId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -377,13 +377,13 @@
         </informaltable>
       </section>
       <section>
-        <title>createUser</title>
+        <title>UMS addVishnuUser</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createUser() function adds a new user</para>
+        <para>The addVishnuUser command line adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createUser   -w password -f firstname -l lastname -p privilege -m email -s passwordState userId <emphasis
+        <para>addVishnuUser   -w password -f firstname -l lastname -p privilege -m email userId <emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -450,13 +450,6 @@
                 <entry><para>is the email of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
-              <row>
-                <entry><para>passwordState</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>s</para></entry>
-                <entry><para>is the state of the password which allows the System to inform the user to change his/her </para><para>password</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -499,13 +492,13 @@
         </informaltable>
       </section>
       <section>
-        <title>updateUser</title>
+        <title>UMS updateUser</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateUser() function updates the user information except the userId and password</para>
+        <para>The updateUser command line updates the user information except the userId and password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>updateUser  -f firstname -l lastname -p privilege -m email userId  <emphasis
+        <para>updateUser  -f firstname -l lastname -p privilege -m email   userId<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -531,39 +524,39 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>represents the VISHNU user identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>firstname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>f</para></entry>
-                <entry><para>updates the firstname of the user</para></entry>
+                <entry><para>represents the updated firstname of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>lastname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>updates the lastname of the user</para></entry>
+                <entry><para>represents the updated lastname of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>privilege</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>p</para></entry>
-                <entry><para>updates the privilege of the user</para></entry>
+                <entry><para>represents the updated privilege of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>email</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>updates the email adress of the user</para></entry>
+                <entry><para>represents the updated email adress of the user</para></entry>
                 <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -607,11 +600,11 @@
         </informaltable>
       </section>
       <section>
-        <title>deleteUser</title>
+        <title>UMS deleteUser</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteUser() function removes a user</para>
+        <para>The deleteUser command line removes a user from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>deleteUser  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -686,38 +679,15 @@
         </informaltable>
       </section>
       <section>
-        <title>close</title>
+        <title>UMS close</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The close() function closes the session identfied by the session key</para>
+        <para>The close command line closes the session identfied by the session key</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>close <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
           <tgroup cols="6">
@@ -757,11 +727,11 @@
         </informaltable>
       </section>
       <section>
-        <title>changePassword</title>
+        <title>UMS changePassword</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The changePassword() function changes the password</para>
+        <para>The changePassword command line changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>changePassword  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -841,11 +811,11 @@
         </informaltable>
       </section>
       <section>
-        <title>resetPassword</title>
+        <title>UMS resetPassword</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The resetPassword() function resets the password of a user</para>
+        <para>The resetPassword command line resets the password of a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>resetPassword  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -878,13 +848,6 @@
                 <entry><para>userId represents the VISHNU user identifier of the user whose password will be reset</para></entry>
                 <entry><para>YES</para></entry>
               </row>
-              <row>
-                <entry><para>passwordReset</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>passwordReset represents the new value of the password to be reset, it is an interactive parameter</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -927,13 +890,13 @@
         </informaltable>
       </section>
       <section>
-        <title>createLocalAccount</title>
+        <title>UMS addLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createLocalAccount() function adds a new local user configuration </para>
+        <para>The addLocalAccount command line adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createLocalAccount   -l acLogin -s sshKeyPath -h HomeDirectory userId machineId <emphasis
+        <para>addLocalAccount   -l acLogin -s sshKeyPath -h HomeDirectory userId machineId <emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -962,7 +925,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The userId represents the login of the user of the local user configuration</para></entry>
+                <entry><para>The userId represents the VISHNU user identifier of the user of the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -1035,13 +998,13 @@
         </informaltable>
       </section>
       <section>
-        <title>updateLocalAccount</title>
+        <title>UMS updateLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateLocalAccount() function updates a local user configuration</para>
+        <para>The updateLocalAccount command line updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>updateLocalAccount  -l acLogin -s sshKeyPath -h HomeDirectory userId machineId  <emphasis
+        <para>updateLocalAccount   -l acLogin -s sshKeyPath -h HomeDirectory userId machineId <emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1070,7 +1033,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The userId represents the login of the user of the local user configuration</para></entry>
+                <entry><para>The userId represents the VISHNU user identifier of the user of the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -1143,11 +1106,11 @@
         </informaltable>
       </section>
       <section>
-        <title>deleteLocalAccount</title>
+        <title>UMS deleteLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteLocalAccount() function removes a local user configuration (for a given user on a given machine)</para>
+        <para>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>deleteLocalAccount  userId machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1229,38 +1192,15 @@
         </informaltable>
       </section>
       <section>
-        <title>saveConfiguration</title>
+        <title>UMS saveConfiguration</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The saveConfiguration() function saves the configuration of VISHNU</para>
+        <para>The saveConfiguration command line saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>saveConfiguration <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
           <tgroup cols="6">
@@ -1300,11 +1240,11 @@
         </informaltable>
       </section>
       <section>
-        <title>restoreConfiguration</title>
+        <title>UMS restoreConfiguration</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restoreConfiguration() function restores the configuration of VISHNU</para>
+        <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>restoreConfiguration   -d descConf <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1379,13 +1319,13 @@
         </informaltable>
       </section>
       <section>
-        <title>createMachine</title>
+        <title>UMS addMachine</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createMachine() function adds a new machine</para>
+        <para>The addMachine command line adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createMachine   -n name -s site -d totalDiskSpace -m totalMemory -t machineDescription machineId <emphasis
+        <para>addMachine   -n name -s site -d totalDiskSpace -m totalMemory -t machineDescription -l language machineId <emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1452,6 +1392,13 @@
                 <entry><para>represents the description of the machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
+              <row>
+                <entry><para>language</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>l</para></entry>
+                <entry><para>represents the language in which the description has been done</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -1494,11 +1441,11 @@
         </informaltable>
       </section>
       <section>
-        <title>deleteMachine</title>
+        <title>UMS deleteMachine</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteMachine() function removes a machine</para>
+        <para>The deleteMachine command line removes a machine from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>deleteMachine  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1573,11 +1520,11 @@
         </informaltable>
       </section>
       <section>
-        <title>listLocalAccount</title>
+        <title>UMS listLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listLocalAccount() function lists the local user configurations</para>
+        <para>The listLocalAccount command line lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listLocalAccount  -a -u userId -i machineId  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1666,11 +1613,11 @@
         </informaltable>
       </section>
       <section>
-        <title>listMachine</title>
+        <title>UMS listMachine</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listMachine() function lists the machines in which  local user configurations are defined for the given user</para>
+        <para>The listMachine command line lists the machines in which  local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listMachine  -u userId -a -m machineId  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1759,11 +1706,104 @@
         </informaltable>
       </section>
       <section>
-        <title>listHistoryCmd</title>
+        <title>UMS listOptions</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listHistoryCmd() function lists the commands</para>
+        <para>The listOptions command line lists the options of the user</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listOptions  -a -u userId -n optionName  <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>AdminListOption</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>is an admin option for listing all user options defined in VISHNU</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is an admin option for listing the options of a specific user</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>optionName</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para> allows the user to list a specific option identified by its name  </para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>UMS listHistoryCmd</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listHistoryCmd command line lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listHistoryCmd  -a -u userId -i sessionId -s startDateOption -e endDateOption  <emphasis
               role="bold"/></para>
@@ -1867,97 +1907,11 @@
         </informaltable>
       </section>
       <section>
-        <title>listOptions</title>
+        <title>UMS listUsers</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listOptions() function lists the options</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listOptions  -u userId -n optionName  <emphasis role="bold"/></para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>u</para></entry>
-                <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>optionName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n</para></entry>
-                <entry><para> allows the user to list a specific option identified by its name  </para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>listUsers</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listUsers() function lists users</para>
+        <para>The listUsers command line lists users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listUsers -i userIdOption <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2032,11 +1986,11 @@
         </informaltable>
       </section>
       <section>
-        <title>listSessions</title>
+        <title>UMS listSessions</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listSessions() function lists sessions</para>
+        <para>The listSessions command line lists all sessions of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listSessions  -t sessionListOption -p sessionClosePolicy -d sessionInactivityDelay -m machineId -a -u userId -i sessionId -s startDateOption -e endDateOption  <emphasis
               role="bold"/></para>
@@ -2065,30 +2019,30 @@
             <tbody>
               <row>
                 <entry><para>sessionListOption</para></entry>
-                <entry><para><link linkend="SessionListOptionType">SessionListOptionType</link></para></entry>
+                <entry><para><link linkend="SessionStateType">SessionStateType</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>is an option which precise the type of session listed (ACTIVE_SESSION, INACTIVE_SESSION or ALL_SESSION)</para></entry>
+                <entry><para>specifies the type of the sessions which will be listed (INACTIVE or ACTIVE)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>sessionClosePolicy</para></entry>
                 <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
                 <entry><para>p</para></entry>
-                <entry><para>is an option for closing session automatically (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)</para></entry>
+                <entry><para>specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>sessionInactivityDelay</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+                <entry><para>specifies the inactivity delay of the sessions which will be listed</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>allows a user to list sessions opened on a specific machine</para></entry>
+                <entry><para>allows the user to list sessions opened on a specific machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2102,7 +2056,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>is an admin option for listing information about a specific user identified by his/her userId</para></entry>
+                <entry><para>is an admin option for listing sessions opened by a specific user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2168,11 +2122,11 @@
         </informaltable>
       </section>
       <section>
-        <title>configureOption</title>
+        <title>UMS configureOption</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureOption() function configures an option</para>
+        <para>The configureOption command line configures an option</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>configureOption   optionName value <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2254,11 +2208,11 @@
         </informaltable>
       </section>
       <section>
-        <title>configureDefaultOption</title>
+        <title>UMS configureDefaultOption</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureDefaultOption() function configures a default option value</para>
+        <para>The configureDefaultOption command line configures a default option value</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>configureDefaultOption   optionName value <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2342,7 +2296,7 @@
     </section>
     <section>
       <title>Parameters definitions</title>
-      <para id="SessionCloseType"><emphasis role="bold">SessionCloseType Enumeration Type</emphasis></para>
+      <para xml:id="SessionCloseType"><emphasis role="bold">Enumeration UMS::SessionCloseType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -2367,7 +2321,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para id="SessionListOptionType"><emphasis role="bold">SessionListOptionType Enumeration Type</emphasis></para>
+      <para xml:id="SessionStateType"><emphasis role="bold">Enumeration UMS::SessionStateType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -2382,16 +2336,12 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>ACTIVE_SESSION</para></entry>
+              <entry><para>INACTIVE</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>INACTIVE_SESSION</para></entry>
+              <entry><para>ACTIVE</para></entry>
               <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>ALL_SESSION</para></entry>
-              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -2403,13 +2353,13 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>submitJob</title>
+        <title>TMS submitJob</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob() function submits job on a machine through the use of a script (job_cmd_path). The script is a shell script which will be executed by a command shell such as sh or csh. The object opt parameter of this function allows the user to specifie  job characteristics options. Also the user can options in the script file.</para>
+        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>submitJob  -n Name -null priority -null queue -null wallTime -null memory -null nbCpu -null nbNodesAndCpuPerNode -null OutPutPath -null ErrorPath   sessionKey machineId scriptFilePath<emphasis
+        <para>submitJob  -n name -p priority -q queue -t wallTime -m memory -P nbCpu -N nbNodesAndCpuPerNode -o OutPutPath -e ErrorPath   machineId scriptFilePath<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2435,13 +2385,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
@@ -2456,7 +2399,7 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>Name</para></entry>
+                <entry><para>name</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n</para></entry>
                 <entry><para>Assigns a job name. The default is the name of job path.</para></entry>
@@ -2465,56 +2408,56 @@
               <row>
                 <entry><para>priority</para></entry>
                 <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-                <entry/>
+                <entry><para>p</para></entry>
                 <entry><para>Assigns priority of the job.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>queue</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>q</para></entry>
                 <entry><para>Assigns the queue or class of the job.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>wallTime</para></entry>
                 <entry><para>int</para></entry>
-                <entry/>
+                <entry><para>t</para></entry>
                 <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>memory</para></entry>
                 <entry><para>int</para></entry>
-                <entry/>
+                <entry><para>m</para></entry>
                 <entry><para>The size of memory that the job will use.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nbCpu</para></entry>
                 <entry><para>int</para></entry>
-                <entry/>
+                <entry><para>P</para></entry>
                 <entry><para>The number of cpu that the job will use.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nbNodesAndCpuPerNode</para></entry>
                 <entry><para>int</para></entry>
-                <entry/>
+                <entry><para>N</para></entry>
                 <entry><para>The number of nodes and processors per node.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>OutPutPath</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>o</para></entry>
                 <entry><para>Assigns the path and file for job output.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>ErrorPath</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>e</para></entry>
                 <entry><para>Assigns the path and file for job error.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -2546,18 +2489,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>listJobs</title>
+        <title>TMS listJobs</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listJobs() function gets a list of all submitted jobs</para>
+        <para>The listJobs command line gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listJobs  -null JobId -null nbCpu -null fromSubmitDate -null toSubmitDate -null owner -null status -null priority -null OutPutPath -null ErrorPath -null queue   sessionKey machineId<emphasis
+        <para>listJobs  -i JobId -P nbCpu -d fromSubmitDate -D toSubmitDate -u owner -s status -p priority -o OutPutPath -e ErrorPath -q queue   machineId<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2583,13 +2535,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
@@ -2599,70 +2544,70 @@
               <row>
                 <entry><para>JobId</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>i</para></entry>
                 <entry><para>To list job which has this id.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nbCpu</para></entry>
                 <entry><para>int</para></entry>
-                <entry/>
+                <entry><para>P</para></entry>
                 <entry><para>To list jobs which have this number of cpu.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>fromSubmitDate</para></entry>
                 <entry><para>long</para></entry>
-                <entry/>
+                <entry><para>d</para></entry>
                 <entry><para>List jobs submitted after this date (unix timestamp).</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>toSubmitDate</para></entry>
                 <entry><para>long</para></entry>
-                <entry/>
+                <entry><para>D</para></entry>
                 <entry><para>List jobs submitted before this date (unix timestamp)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>owner</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>u</para></entry>
                 <entry><para>To list all jobs submitted by this owner.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>status</para></entry>
                 <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
-                <entry/>
+                <entry><para>s</para></entry>
                 <entry><para>To list jobs which have this status.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>priority</para></entry>
                 <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-                <entry/>
+                <entry><para>p</para></entry>
                 <entry><para>To list jobs which have this priority</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>OutPutPath</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>o</para></entry>
                 <entry><para>Gets the path and file for each job output.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>ErrorPath</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>e</para></entry>
                 <entry><para>Gets the path and file for each job error.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>queue</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>q</para></entry>
                 <entry><para>To list jobs which have this queue name.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -2694,18 +2639,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>getJobInfo</title>
+        <title>TMS getJobInfo</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobInfo() function gets information on a job from it Id</para>
+        <para>The getJobInfo command line gets information on a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getJobInfo  sessionKey machineId jobId<emphasis role="bold"/></para>
+        <para>getJobInfo  machineId jobId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2729,13 +2683,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -2778,18 +2725,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>cancelJob</title>
+        <title>TMS cancelJob</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob() function cancels a job from it Id</para>
+        <para>The cancelJob command line cancels a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>cancelJob  sessionKey machineId jobId<emphasis role="bold"/></para>
+        <para>cancelJob  machineId jobId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2813,13 +2769,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -2862,18 +2811,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>getJobOutPut</title>
+        <title>TMS getJobOutPut</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobOutPut() function gets outputPath and errorPath of a job from it Id</para>
+        <para>The getJobOutPut command line gets outputPath and errorPath of a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getJobOutPut  sessionKey machineId jobId<emphasis role="bold"/></para>
+        <para>getJobOutPut  machineId jobId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2897,13 +2855,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -2946,18 +2897,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>getAllJobsOutPut</title>
+        <title>TMS getAllJobsOutPut</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getAllJobsOutPut() function gets outputPath and errorPath of completed jobs dynamically</para>
+        <para>The getAllJobsOutPut command line gets outputPath and errorPath of completed jobs dynamically</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getAllJobsOutPut  sessionKey machineId<emphasis role="bold"/></para>
+        <para>getAllJobsOutPut  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2981,13 +2941,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -3023,18 +2976,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>listQueues</title>
+        <title>TMS listQueues</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listQueues() function gets queues information</para>
+        <para>The listQueues command line gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listQueues  sessionKey machineId<emphasis role="bold"/></para>
+        <para>listQueues  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3058,13 +3020,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -3100,18 +3055,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>setMachineEnv</title>
+        <title>TMS setMachineEnv</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineEnv() function sets environment variables on a remote machine</para>
+        <para>The setMachineEnv command line sets environment variables on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setMachineEnv  sessionKey machineId listEnv<emphasis role="bold"/></para>
+        <para>setMachineEnv  machineId listEnv<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3135,13 +3099,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -3184,18 +3141,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>setMachineRefreshPeriod</title>
+        <title>TMS setMachineRefreshPeriod</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineRefreshPeriod() function sets the refresh period of output and error file content</para>
+        <para>The setMachineRefreshPeriod command line sets the refresh period of output and error file content</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setMachineRefreshPeriod  sessionKey machineId value<emphasis role="bold"/></para>
+        <para>setMachineRefreshPeriod  machineId value<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3219,13 +3185,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
@@ -3268,19 +3227,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>getJobProgress</title>
+        <title>TMS getJobProgress</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobProgress() function get the progression status of jobs.</para>
+        <para>The getJobProgress command line get the progression status of jobs.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getJobProgress  -null jobId -null jobOwner   sessionKey machineId<emphasis
-              role="bold"/></para>
+        <para>getJobProgress  -i jobId -u jobOwner   machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3305,13 +3272,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
@@ -3321,14 +3281,14 @@
               <row>
                 <entry><para>jobId</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>i</para></entry>
                 <entry><para>Represents the id of the job that the user wants to see its progression.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>jobOwner</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
+                <entry><para>u</para></entry>
                 <entry><para>Represents the owner of the job.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -3360,14 +3320,23 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
     </section>
     <section>
       <title>Parameters definitions</title>
-      <para id="JobPriority"><emphasis role="bold">JobPriority Enumeration Type</emphasis></para>
+      <para xml:id="JobPriority"><emphasis role="bold">Enumeration TMS::JobPriority Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -3404,7 +3373,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para id="JobStatus"><emphasis role="bold">JobStatus Enumeration Type</emphasis></para>
+      <para xml:id="JobStatus"><emphasis role="bold">Enumeration TMS::JobStatus Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -3453,6 +3422,76 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="QueuePriority"><emphasis role="bold">Enumeration TMS::QueuePriority Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>VERY_LOW</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>LOW</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>NORMAL</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>HIGH</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>VERY_HIGH</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="QueueStatus"><emphasis role="bold">Enumeration TMS::QueueStatus Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>STARTED</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>RUNNING</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>NOT_STARTED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>NOT_AVAILABLE</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </section>
   </chapter>
   <chapter annotations="EDF-API/IMS.apim#CLIOPS+CLIDATA">
@@ -3460,38 +3499,15 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>getUpdateFrequency</title>
+        <title>IMS getUpdateFrequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getUpdateFrequency() function gets the update frequency of the IMS database</para>
+        <para>The getUpdateFrequency command line gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getUpdateFrequency <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
           <tgroup cols="6">
@@ -3531,11 +3547,11 @@
         </informaltable>
       </section>
       <section>
-        <title>export</title>
+        <title>IMS export</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The export() function exports all the commands made by a user during a session</para>
+        <para>The export command line exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>export  oldSessionKey exportType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3617,11 +3633,11 @@
         </informaltable>
       </section>
       <section>
-        <title>replay</title>
+        <title>IMS replay</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The replay() function replays a script of VISHNU commands</para>
+        <para>The replay command line replays a script of VISHNU commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>replay  filename type<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3703,11 +3719,11 @@
         </informaltable>
       </section>
       <section>
-        <title>getMetricVal</title>
+        <title>IMS getMetricVal</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricVal() function gets data from a metric</para>
+        <para>The getMetricVal command line gets data from a metric</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getMetricVal  machineId startTime endTime metricType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3803,11 +3819,11 @@
         </informaltable>
       </section>
       <section>
-        <title>getCurrentData</title>
+        <title>IMS getCurrentData</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getCurrentData() function gets data corresponding to the datatype on a machine</para>
+        <para>The getCurrentData command line gets data corresponding to the datatype on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getCurrentData  machineId dataType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3889,11 +3905,11 @@
         </informaltable>
       </section>
       <section>
-        <title>getProcesses</title>
+        <title>IMS getProcesses</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getProcesses() function gets the list of the processes running over a front machine</para>
+        <para>The getProcesses command line gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getProcesses  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3968,11 +3984,11 @@
         </informaltable>
       </section>
       <section>
-        <title>setSystemThreshold</title>
+        <title>IMS setSystemThreshold</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setSystemThreshold() function sets a threshold on a machine of a system</para>
+        <para>The setSystemThreshold command line sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>setSystemThreshold  machineId tresholdType value<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4061,11 +4077,11 @@
         </informaltable>
       </section>
       <section>
-        <title>getSystemThreshold</title>
+        <title>IMS getSystemThreshold</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getSystemThreshold() function gets a System threshold on a machine</para>
+        <para>The getSystemThreshold command line gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getSystemThreshold  machineId type<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4147,11 +4163,11 @@
         </informaltable>
       </section>
       <section>
-        <title>defineUserIdentifier</title>
+        <title>IMS defineUserIdentifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineUserIdentifier() function defines the shape of the identifiers automatically generated for the users</para>
+        <para>The defineUserIdentifier command line defines the shape of the identifiers automatically generated for the users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>defineUserIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4226,11 +4242,11 @@
         </informaltable>
       </section>
       <section>
-        <title>defineMachineIdentifier</title>
+        <title>IMS defineMachineIdentifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineMachineIdentifier() function defines the shape of the identifiers automatically generated for the machines</para>
+        <para>The defineMachineIdentifier command line defines the shape of the identifiers automatically generated for the machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>defineMachineIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4305,11 +4321,11 @@
         </informaltable>
       </section>
       <section>
-        <title>defineJobIdentifier</title>
+        <title>IMS defineJobIdentifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineJobIdentifier() function defines the shape of the identifiers automatically generated for the jobs</para>
+        <para>The defineJobIdentifier command line defines the shape of the identifiers automatically generated for the jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>defineJobIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4384,11 +4400,11 @@
         </informaltable>
       </section>
       <section>
-        <title>defineTransferIdentifier</title>
+        <title>IMS defineTransferIdentifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineTransferIdentifier() function defines the shape of the identifiers automatically generated for the file transfers</para>
+        <para>The defineTransferIdentifier command line defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>defineTransferIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4463,11 +4479,11 @@
         </informaltable>
       </section>
       <section>
-        <title>loadShed</title>
+        <title>IMS loadShed</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The loadShed() function loads shed a machine, 2 modes are available, soft or hard. Soft flushes the machine, hard stops the machine</para>
+        <para>The loadShed command line loads shed a machine, 2 modes are available, soft or hard. Soft flushes the machine, hard stops the machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>loadShed  machineId loadShedType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4549,11 +4565,11 @@
         </informaltable>
       </section>
       <section>
-        <title>setUpdateFrequency</title>
+        <title>IMS setUpdateFrequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setUpdateFrequency() function sets the update frequency of the IMS tables</para>
+        <para>The setUpdateFrequency command line sets the update frequency of the IMS tables</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>setUpdateFrequency  freq<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4628,11 +4644,11 @@
         </informaltable>
       </section>
       <section>
-        <title>restart</title>
+        <title>IMS restart</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restart() function restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
+        <para>The restart command line restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>restart -n componentName  type<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4714,11 +4730,11 @@
         </informaltable>
       </section>
       <section>
-        <title>updateMachine</title>
+        <title>IMS updateMachine</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateMachine() function updates the machines information in the database (description, diskspace or memory)</para>
+        <para>The updateMachine command line updates the machines information in the database (description, diskspace or memory)</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>updateMachine -l lang  machineId CompoMachine  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4809,7 +4825,36 @@
     </section>
     <section>
       <title>Parameters definitions</title>
-      <para id="ExportType"><emphasis role="bold">ExportType Enumeration Type</emphasis></para>
+      <para xml:id="CompoMachine"><emphasis role="bold">Enumeration IMS::CompoMachine Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>DESC</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>DISKSPACE</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>RAM</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ExportType"><emphasis role="bold">Enumeration IMS::ExportType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -4834,7 +4879,32 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para id="MetricType"><emphasis role="bold">MetricType Enumeration Type</emphasis></para>
+      <para xml:id="LoadShedType"><emphasis role="bold">Enumeration IMS::LoadShedType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>SOFT</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>HARD</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="MetricType"><emphasis role="bold">Enumeration IMS::MetricType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -4875,32 +4945,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para id="LoadShedType"><emphasis role="bold">LoadShedType Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>SOFT</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>HARD</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para id="RestartType"><emphasis role="bold">RestartType Enumeration Type</emphasis></para>
+      <para xml:id="RestartType"><emphasis role="bold">Enumeration IMS::RestartType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -4937,35 +4982,6 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para id="CompoMachine"><emphasis role="bold">CompoMachine Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>DESC</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>DISKSPACE</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>RAM</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
     </section>
   </chapter>
   <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
@@ -4973,13 +4989,13 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>createFile</title>
+        <title>FMS createFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createFile() function creates  files on  remote machines.</para>
+        <para>The createFile command line creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createFile -m mode  machineId sessionKey  - listOfStrings <emphasis
+        <para>createFile -m mode  machineId sessionKey  -null listOfStrings <emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5021,8 +5037,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -5065,13 +5081,14 @@
         </informaltable>
       </section>
       <section>
-        <title>createDir</title>
+        <title>FMS createDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createDir() function creates directories on remote machines.</para>
+        <para>The createDir command line creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createDir -m mode  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para>createDir -m mode  machineId sessionKey  -null listOfStrings <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5112,8 +5129,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -5156,13 +5173,13 @@
         </informaltable>
       </section>
       <section>
-        <title>removeFile</title>
+        <title>FMS removeFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeFile() function removes files from  remote hosts.</para>
+        <para>The removeFile command line removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>removeFile  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para>removeFile  machineId sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5203,8 +5220,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5240,13 +5257,13 @@
         </informaltable>
       </section>
       <section>
-        <title>removeDir</title>
+        <title>FMS removeDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeDir() function removes a directory from a remote machine</para>
+        <para>The removeDir command line removes  directories (and subdirectories ) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>removeDir  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para>removeDir  machineId sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5287,8 +5304,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5324,13 +5341,13 @@
         </informaltable>
       </section>
       <section>
-        <title>headOfFile</title>
+        <title>FMS chGrpOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The headOfFile() function displays a few first lines of  file located on a remote machine</para>
+        <para>The chGrpOfFile command line changes group owner of  remote files. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>headOfFile -n nLine  machineId sessionKey  - listOfStrings <emphasis
+        <para>chGrpOfFile  machineId sessionKey  -null listOfStrings  group<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5372,198 +5389,15 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>nLine</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>n</para></entry>
-                <entry><para>number of lines to display</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>tailOfFile</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The tailOfFile() function displays a few last lines of  file located on a remote machine</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>tailOfFile -n nLine  machineId sessionKey  - listOfStrings <emphasis
-              role="bold"/></para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session id</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>nLine</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>n</para></entry>
-                <entry><para>number of lines to display</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>chGrpOfFile</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chGrpOfFile() function changes group owner of a remote file. </para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>chGrpOfFile  machineId sessionKey  - listOfStrings  group<emphasis role="bold"/></para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session id</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>the new group owner of file</para></entry>
+                <entry><para>the new group owner of files.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -5599,13 +5433,14 @@
         </informaltable>
       </section>
       <section>
-        <title>chModOfFile</title>
+        <title>FMS chModOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chModOfFile() function changes a acces rights of  a remote file.</para>
+        <para>The chModOfFile command line changes  access rights of   remote files.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>chModOfFile  machineId sessionKey  - listOfStrings  mode<emphasis role="bold"/></para>
+        <para>chModOfFile  machineId sessionKey  -null listOfStrings  mode<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5646,8 +5481,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -5690,13 +5525,14 @@
         </informaltable>
       </section>
       <section>
-        <title>listDir</title>
+        <title>FMS headOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listDir() function displays  the contents of remote directory. </para>
+        <para>The headOfFile command line displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listDir  machineId sessionKey  - listOfStrings <emphasis role="bold"/></para>
+        <para>headOfFile -n nLine  machineId sessionKey  -null listOfStrings <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5737,6 +5573,196 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nLine</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>number of lines to display</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>FMS tailOfFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The tailOfFile command line displays a few last lines of  files located on remote machines</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>tailOfFile -n nLine  machineId sessionKey  -null listOfStrings <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nLine</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>number of lines to display</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>FMS listDir</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listDir command line displays  the contents of remote directory. </para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listDir  machineId sessionKey  -null listOfStrings   - <emphasis role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
                 <entry><para>TO DO</para></entry>
                 <entry><para>TO DO</para></entry>
                 <entry><para>NO</para></entry>
@@ -5774,13 +5800,13 @@
         </informaltable>
       </section>
       <section>
-        <title>copyFile</title>
+        <title>FMS copyFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyFile() function executes a synchronous copy of file.</para>
+        <para>The copyFile command line executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyFile  - listOfStrings   machineId sessionKey  - listOfStrings  dest<emphasis
+        <para>copyFile  - -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5822,8 +5848,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -5834,10 +5860,17 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
                 <entry><para>TO DO</para></entry>
                 <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>c</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5868,18 +5901,27 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>copyAsyncFile</title>
+        <title>FMS copyAsyncFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyAsyncFile() function executes an asynchronous copy of file.</para>
+        <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyAsyncFile  machineId sessionKey  - listOfStrings  dest<emphasis
+        <para>copyAsyncFile  - -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5921,8 +5963,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -5931,6 +5973,20 @@
                 <entry/>
                 <entry><para>The path of the destination file</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>isRecursive</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>c</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5957,112 +6013,30 @@
                 <entry>Required
 </entry>
                 <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>moveFile</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveFile() function executes a synchronous move of file.</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>moveFile  machineId sessionKey  - listOfStrings  dest<emphasis role="bold"/></para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
 </entry>
               </row>
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
                 <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>dest</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The path of the destination file</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
       </section>
       <section>
-        <title>moveAsyncFile</title>
+        <title>FMS moveFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveAsyncFile() function executes an asynchronous move of file.</para>
+        <para>The moveFile command line executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>moveAsyncFile  machineId sessionKey  - listOfStrings  dest<emphasis
+        <para>moveFile  -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -6104,8 +6078,8 @@
               <row>
                 <entry><para>listOfStrings</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -6114,6 +6088,13 @@
                 <entry/>
                 <entry><para>The path of the destination file</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>c</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6143,16 +6124,133 @@
 </entry>
               </row>
             </thead>
-            <tbody/>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
           </tgroup>
         </informaltable>
       </section>
       <section>
-        <title>stopFileTransfer</title>
+        <title>FMS moveAsyncFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopFileTransfer() function stops an execution of an set of file transfer.</para>
+        <para>The moveAsyncFile command line executes an asynchronous move of file.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>moveAsyncFile  -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>c</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>FMS stopFileTransfer</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The stopFileTransfer command line stops an execution of an set of file transfer.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>stopFileTransfer  machineId sessionKey  - listOfLongs <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -6232,13 +6330,14 @@
         </informaltable>
       </section>
       <section>
-        <title>stopAllFileTransfer</title>
+        <title>FMS stopAllFileTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopAllFileTransfer() function stops all  file transfer in a session.</para>
+        <para>The stopAllFileTransfer command line stops all  file transfer in a session.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>stopAllFileTransfer  machineId sessionKey<emphasis role="bold"/></para>
+        <para>stopAllFileTransfer   -k sessionKey -m machineId -n nbFileTransfers -s status -u userId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6263,18 +6362,39 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbFileTransfers</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="Status">Status</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>the user identifier</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6309,13 +6429,14 @@
         </informaltable>
       </section>
       <section>
-        <title>stopAllUsersFileTransfer</title>
+        <title>FMS stopAllUsersFileTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopAllUsersFileTransfer() function stops all  users file transfer.</para>
+        <para>The stopAllUsersFileTransfer command line stops all  users file transfer.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>stopAllUsersFileTransfer  machineId sessionKey<emphasis role="bold"/></para>
+        <para>stopAllUsersFileTransfer   -k sessionKey -m machineId -n nbFileTransfers -s status -u userId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6340,18 +6461,39 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbFileTransfers</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="Status">Status</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>the user identifier</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6386,11 +6528,11 @@
         </informaltable>
       </section>
       <section>
-        <title>getFileTransferStatus</title>
+        <title>FMS getFileTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getFileTransferStatus() function gives the status of a list of file transfer.</para>
+        <para>The getFileTransferStatus command line gives the status of a list of file transfer.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getFileTransferStatus  machineId sessionKey  - listOfLongs <emphasis
               role="bold"/></para>
@@ -6471,13 +6613,14 @@
         </informaltable>
       </section>
       <section>
-        <title>listFilesTransferStatus</title>
+        <title>FMS listFilesTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFilesTransferStatus() function displays the status of all files transfer submitted by User.</para>
+        <para>The listFilesTransferStatus command line displays the status of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listFilesTransferStatus  machineId sessionKey<emphasis role="bold"/></para>
+        <para>listFilesTransferStatus   -k sessionKey -m machineId -n nbFileTransfers -s status -u userId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6502,18 +6645,39 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session id</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbFileTransfers</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="Status">Status</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>the user identifier</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6548,90 +6712,13 @@
         </informaltable>
       </section>
       <section>
-        <title>listAllUsersFilesTransferStatus</title>
+        <title>FMS listAllUsersFilesTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listAllUsersFilesTransferStatus() function displays the status of all files transfer submitted by User.</para>
+        <para>The listAllUsersFilesTransferStatus command line displays the status of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listAllUsersFilesTransferStatus  machineId sessionKey<emphasis role="bold"/></para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session id</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>DisplayFilesTransferHistory</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The DisplayFilesTransferHistory() function displays the history of all files transfer submitted by User.</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>DisplayFilesTransferHistory  machineId sessionKey  - listOfLongs <emphasis
+        <para>listAllUsersFilesTransferStatus  machineId sessionKey  -k sessionKey -m machineId -n nbFileTransfers -s status -u userId <emphasis
               role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -6671,10 +6758,38 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>listOfLongs</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbFileTransfers</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="Status">Status</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>the user identifier</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -6710,13 +6825,14 @@
         </informaltable>
       </section>
       <section>
-        <title>DisplayAllUsersFilesTransferHistory</title>
+        <title>FMS DisplayFilesTransferHistory</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The DisplayAllUsersFilesTransferHistory() function displays the history of all files transfer submitted by all Users.</para>
+        <para>The DisplayFilesTransferHistory command line displays the history of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>DisplayAllUsersFilesTransferHistory  machineId sessionKey<emphasis role="bold"/></para>
+        <para>DisplayFilesTransferHistory   -k sessionKey -m machineId -n nbFileTransfers -s status -u userId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6741,18 +6857,39 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session id</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbFileTransfers</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="Status">Status</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>the user identifier</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6787,13 +6924,112 @@
         </informaltable>
       </section>
       <section>
-        <title>GetFilesInfo</title>
+        <title>FMS DisplayAllUsersFilesTransferHistory</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The GetFilesInfo() function displays the information  of  files.</para>
+        <para>The DisplayAllUsersFilesTransferHistory command line displays the history of all files transfer submitted by all Users.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>GetFilesInfo  machineId sessionKey<emphasis role="bold"/></para>
+        <para>DisplayAllUsersFilesTransferHistory   -k sessionKey -m machineId -n nbFileTransfers -s status -u userId <emphasis
+              role="bold"/></para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbFileTransfers</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="Status">Status</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>the user identifier</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>FMS GetFilesInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The GetFilesInfo command line displays the information  of  files.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>GetFilesInfo  machineId sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6830,6 +7066,13 @@
                 <entry/>
                 <entry><para>The session id</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6866,6 +7109,109 @@
     </section>
     <section>
       <title>Parameters definitions</title>
+      <para xml:id="FileType"><emphasis role="bold">Enumeration FMS::FileType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>BLOCK</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>CHARACTER</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>DIRECTORY</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>SYMBOLICLINK</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>SCKT</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+            <row>
+              <entry><para>FIFO</para></entry>
+              <entry><para>5</para></entry>
+            </row>
+            <row>
+              <entry><para>REGULAR</para></entry>
+              <entry><para>6</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Status"><emphasis role="bold">Enumeration FMS::Status Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>INPROGRESS</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>COMPLETED</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>CANCELLED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>FAILED</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="TransferCommand"><emphasis role="bold">Enumeration FMS::TransferCommand Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>SCP</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>RSYNC</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </section>
   </chapter>
 </book>
