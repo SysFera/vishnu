@@ -112,13 +112,11 @@
     <title>Performances, fiabilité et robustesse</title>
     
   </chapter>
-  <chapter>
+  <chapter annotations="core/specs/stb/STB_SoftHardWare.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">>
     <title>Environnement matériel et logiciel</title>
-    <para>TODO</para>
   </chapter>
   
    <chapter annotations="core/specs/stb/STB_Instal.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
     <title>Installation et maintenance</title>
-    <para>TODO</para>
   </chapter>
 </book>

@@ -157,17 +157,17 @@
 	  <funcsynopsis><funcprototype><funcdef>int <function>myMethod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef></funcprototype></funcsynopsis>
 	</section> <!-- Generic method definition format -->
         
-        <section> <!--C++ specific aspects (TODO) -->
+        <section> <!--C++ specific aspects -->
           <title>C++ specific aspects</title>
            <itemizedlist>
              <listitem>
-               <para>The output parameters are converted to references in the signature.</para>
+               <para>The output parameters will be implemented as references in the method signature.</para>
              </listitem>
              <listitem>
                <para>The methods will always return an integer with a default value for success.</para>
              </listitem>
              <listitem>
-               <para></para>
+               <para>The methods will throw exceptions for each error message specified. The exception will contain additional details provided by the server.</para>
              </listitem>
              <listitem>
                <para></para>
@@ -175,17 +175,11 @@
            </itemizedlist>
         </section> <!--C++ specific aspects -->
         
-        <section> <!--Python specific aspects (TODO) -->
+        <section> <!--Python specific aspects -->
           <title>C++ specific aspects</title>
            <itemizedlist>
              <listitem>
-               <para>The output parameters are converted to .</para>
-             </listitem>
-             <listitem>
-               <para></para>
-             </listitem>
-             <listitem>
-               <para></para>
+               <para>The output parameters will be implemented as a Python tuple returned by the method.</para>
              </listitem>
              <listitem>
                <para></para>
@@ -193,17 +187,14 @@
            </itemizedlist>
         </section> <!--Python specific aspects -->
         
-        <section> <!-- WS specific aspects (TODO) -->
+        <section> <!-- WS specific aspects -->
           <title>Web Services specific aspects</title>
            <itemizedlist>
              <listitem>
-               <para>The output parameters are converted to .</para>
+               <para>The input and output parameters will be implemented as Java Beans: a "Request" bean containing the input parameters and a "Response" bean containing the output parameters.</para>
              </listitem>
              <listitem>
-               <para></para>
-             </listitem>
-             <listitem>
-               <para></para>
+               <para>The methods will throw exceptions for each error message specified. The exception will contain additional details provided by the server.</para>
              </listitem>
              <listitem>
                <para></para>
@@ -220,19 +211,43 @@
               then the aspects that are specific to each implementation language are detailed.</para>
         <section><!-- Generic data definition format -->
           <title>Generic data definition format</title>
+          
+          <para id="Command"><emphasis role="bold">Class Module::Class Content</emphasis></para>
+          <informaltable>
+            <tgroup cols="3">
+              <colspec colwidth="4cm"/>
+              <colspec colwidth="3cm"/>
+              <colspec colwidth="8cm"/>
+              <colspec colwidth="2cm"/>
+              <thead>
+                <row>
+                  <entry>Name</entry>
+                  <entry>Type</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><para>Class attribute name</para></entry>
+                  <entry><para>Class attribute type</para></entry>
+                  <entry><para>Description/usage of the attribute</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
         </section><!-- Generic data definition format -->
         
-        <section> <!--C++ specific aspects (TODO) -->
+        <section> <!--C++ specific aspects -->
           <title>C++ specific aspects</title>
            <itemizedlist>
              <listitem>
-               <para>To each attribute of the class will correspond a couple of getter/setter methods.</para>
+               <para>All attributes of the class will be private.</para>
              </listitem>
              <listitem>
-               <para>The string type will be mapped to the STL string type.</para>
+               <para>For each attribute of the class a couple of getter/setter methods will be implemented.</para>
              </listitem>
              <listitem>
-               <para></para>
+               <para>The string type will be mapped to the C++ STL string type.</para>
              </listitem>
              <listitem>
                <para></para>
@@ -240,17 +255,14 @@
            </itemizedlist>
         </section> <!--C++ specific aspects -->
         
-        <section> <!--Python specific aspects (TODO) -->
+        <section> <!--Python specific aspects -->
           <title>C++ specific aspects</title>
            <itemizedlist>
              <listitem>
-               <para>To each attribute of the class will correspond a couple of getter/setter methods.</para>
+               <para>For each attribute of the class a couple of getter/setter methods will be implemented.</para>
              </listitem>
              <listitem>
-               <para></para>
-             </listitem>
-             <listitem>
-               <para></para>
+               <para>The string type will be mapped to standard Python strings.</para>
              </listitem>
              <listitem>
                <para></para>
@@ -258,17 +270,18 @@
            </itemizedlist>
         </section> <!--Python specific aspects -->
         
-        <section> <!-- WS specific aspects (TODO) -->
+        <section> <!-- WS specific aspects -->
           <title>Web Services specific aspects</title>
            <itemizedlist>
              <listitem>
-               <para></para>
+               <para>When a single instance of object is used as input or output parameter, the attributes of the object will be mapped
+                     respectively to attributes of the 'Request' or 'Response' Java Bean.</para>
              </listitem>
              <listitem>
-               <para></para>
-             </listitem>
-             <listitem>
-               <para></para>
+               <para>When multiple instances of object are used as input or output parameter (for example list of machines or list or users)
+                     the 'Request' or 'Response' Java Bean will contain a 'data' subclass containing the instances. This follows the standard
+                     WSDL/Java mapping for Apache-CXF.
+                   </para>
              </listitem>
              <listitem>
                <para></para>
@@ -281,9 +294,20 @@
     </section> <!-- Generic definition formats presentation -->
     <section>
       <title>References</title>
-      <para>
-		TODO - ajouter ref. vers le document contenant les WSDL
-      </para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">UMS.wsdl</emphasis> : WSDL file for the UMS module</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">TMS.wsdl</emphasis> : WSDL file for the TMS module</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">FMS.wsdl</emphasis> : WSDL file for the FMS module</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">IMS.wsdl</emphasis> : WSDL file for the IMS module</para>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Glossary</title>
