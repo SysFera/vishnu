@@ -210,7 +210,7 @@
         <section><!-- Generic data definition format -->
           <title>Generic data definition format</title>
           
-          <para id="Command"><emphasis role="bold">Class Module::Class Content</emphasis></para>
+          <para><emphasis role="bold">Class Module::Class Content</emphasis></para>
           <informaltable>
             <tgroup cols="3">
               <colspec colwidth="4cm"/>
