@@ -113,7 +113,7 @@
 		<row>
 		  <entry><para>listOfJobs</para></entry>
 		  <entry><para>ListJobs</para></entry>
-		  <entry><para>This is an example of an output parameter that is always provided</para></entry>
+		  <entry><para>This is an example of an output parameter</para></entry>
 		  <entry><para>OUT</para></entry>
 		  <entry><para>yes</para></entry>
 		</row>
@@ -167,20 +167,14 @@
              <listitem>
                <para>The methods will throw exceptions for each error message specified. The exception will contain additional details provided by the server.</para>
              </listitem>
-             <listitem>
-               <para></para>
-             </listitem>
            </itemizedlist>
         </section> <!--C++ specific aspects -->
         
         <section> <!--Python specific aspects -->
-          <title>C++ specific aspects</title>
+          <title>Python specific aspects</title>
            <itemizedlist>
              <listitem>
                <para>The output parameters will be implemented as a Python tuple returned by the method.</para>
-             </listitem>
-             <listitem>
-               <para></para>
              </listitem>
            </itemizedlist>
         </section> <!--Python specific aspects -->
@@ -247,23 +241,17 @@
              <listitem>
                <para>The string type will be mapped to the C++ STL string type.</para>
              </listitem>
-             <listitem>
-               <para></para>
-             </listitem>
            </itemizedlist>
         </section> <!--C++ specific aspects -->
         
         <section> <!--Python specific aspects -->
-          <title>C++ specific aspects</title>
+          <title>Python specific aspects</title>
            <itemizedlist>
              <listitem>
                <para>For each attribute of the class a couple of getter/setter methods will be implemented.</para>
              </listitem>
              <listitem>
                <para>The string type will be mapped to standard Python strings.</para>
-             </listitem>
-             <listitem>
-               <para></para>
              </listitem>
            </itemizedlist>
         </section> <!--Python specific aspects -->
@@ -280,9 +268,6 @@
                      the 'Request' or 'Response' Java Bean will contain a 'data' subclass containing the instances. This follows the standard
                      WSDL/Java mapping for Apache-CXF.
                    </para>
-             </listitem>
-             <listitem>
-               <para></para>
              </listitem>
            </itemizedlist>
         </section> <!--WS specific aspects -->
