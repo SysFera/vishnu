@@ -87,7 +87,7 @@
 	  <para> A commands is defined as follows:</para>
       
 	  <para><emphasis role="bold">Access</emphasis></para>
-	  <para>Here is detailed the access of the command line for any VISHNU user or only for admin.</para>
+	  <para>Here is detailed the access level of the command line (i.e. the privilege required to use this command)</para>
 	   
 	  <para><emphasis role="bold">Description </emphasis></para>
 	  <para>Here is detailed the purpose of the command line.</para>
