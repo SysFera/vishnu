@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <book xmlns="http://docbook.org/ns/docbook" version="5.0"> 
- <info>
+<book
+    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <info>
     <author>
       <personname>
         <firstname>Benjamin</firstname>
