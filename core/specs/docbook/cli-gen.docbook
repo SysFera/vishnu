@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-  <book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<book
+    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -177,6 +178,8 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para><emphasis role="bold">Note:</emphasis></para>
+      <para> For each command line, the -h option can be used for help</para>
     </section>
   </chapter>
   <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
@@ -240,7 +243,7 @@
                 <entry><para>sessionInactivityDelay</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+                <entry><para>The sessionInactivityDelay is the maximum delay in seconds between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -435,7 +438,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateUser command line updates the user information except the userId and password</para>
+        <para>The updateUser command line updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>updateUser  <emphasis role="bold">-f</emphasis> firstname <emphasis
               role="bold">-l</emphasis> lastname <emphasis role="bold">-p</emphasis> privilege <emphasis
@@ -811,7 +814,7 @@
         <para>The addLocalAccount command line adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>addLocalAccount  <emphasis role="bold">-l</emphasis> acLogin <emphasis
-              role="bold">-s</emphasis> sshKeyPath <emphasis role="bold">-h</emphasis> HomeDirectory userId</para>
+              role="bold">-s</emphasis> sshKeyPath <emphasis role="bold">-d</emphasis> HomeDirectory userId</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -866,7 +869,7 @@
               <row>
                 <entry><para>HomeDirectory</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>h</para></entry>
+                <entry><para>d</para></entry>
                 <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -919,7 +922,7 @@
         <para>The updateLocalAccount command line updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>updateLocalAccount  <emphasis role="bold">-l</emphasis> acLogin <emphasis
-              role="bold">-s</emphasis> sshKeyPath <emphasis role="bold">-h</emphasis> HomeDirectory userId</para>
+              role="bold">-s</emphasis> sshKeyPath <emphasis role="bold">-d</emphasis> HomeDirectory userId</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -974,7 +977,7 @@
               <row>
                 <entry><para>HomeDirectory</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>h</para></entry>
+                <entry><para>d</para></entry>
                 <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -1112,9 +1115,40 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The saveConfiguration command line saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>saveConfiguration</para>
+        <para>saveConfiguration filePath</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <para>This command defines no arguments.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>filePath</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The filePath is the path of the file in which the VISHNU configuration will be saved</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
           <tgroup cols="6">
@@ -1160,7 +1194,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>restoreConfiguration  <emphasis role="bold">-d</emphasis> descConf </para>
+        <para>restoreConfiguration  filePath </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1185,11 +1219,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>descConf</para></entry>
+                <entry><para>filePath</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>d</para></entry>
-                <entry><para>represents the description of the configuration</para></entry>
-                <entry><para>NO</para></entry>
+                <entry/>
+                <entry><para>The filePath is the path of the VISHNU configuration file</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1296,7 +1330,7 @@
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>represents the language in which the description has been done</para></entry>
+                <entry><para>represents the language in which the description of the machine has been done</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -1404,7 +1438,7 @@
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>represents the language in which the description has been done</para></entry>
+                <entry><para>represents the language in which the description of the machine has been done</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -1534,7 +1568,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listLocalAccount command line lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listLocalAccount  <emphasis role="bold">-u</emphasis> userId <emphasis
+        <para>listLocalAccount  <emphasis role="bold">-a</emphasis> <emphasis role="bold">-u</emphasis> userId <emphasis
               role="bold">-i</emphasis> machineId </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1626,9 +1660,10 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listMachine command line lists the machines in which  local user configurations are defined for the given user</para>
+        <para>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listMachine  <emphasis role="bold">-u</emphasis> userId <emphasis role="bold">-m</emphasis> machineId </para>
+        <para>listMachine  <emphasis role="bold">-u</emphasis> userId <emphasis role="bold">-a</emphasis> <emphasis
+              role="bold">-m</emphasis> machineId </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1660,10 +1695,10 @@
                 <entry><para>NO</para></entry>
               </row>
               <row>
-                <entry><para>ListAllOption</para></entry>
+                <entry><para>listAllmachine</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all machine defined in the database</para></entry>
+                <entry><para>is an option for listing all VISHNU machines</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -1715,106 +1750,13 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listOptions</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listOptions command line lists the options of the user</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listOptions  <emphasis role="bold">-u</emphasis> userId <emphasis role="bold">-n</emphasis> optionName </para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>AdminListOption</para></entry>
-                <entry><para>boolean</para></entry>
-                <entry><para>a</para></entry>
-                <entry><para>is an admin option for listing all user options defined in VISHNU</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>u</para></entry>
-                <entry><para>is an admin option for listing the options of a specific user</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>optionName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n</para></entry>
-                <entry><para> allows the user to list a specific option identified by its name  </para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
         <title>UMS listHistoryCmd</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listHistoryCmd command line lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listHistoryCmd  <emphasis role="bold">-u</emphasis> userId <emphasis
+        <para>listHistoryCmd  <emphasis role="bold">-a</emphasis> <emphasis role="bold">-u</emphasis> userId <emphasis
               role="bold">-i</emphasis> sessionId <emphasis role="bold">-s</emphasis> startDateOption <emphasis
               role="bold">-e</emphasis> endDateOption </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1917,11 +1859,105 @@
         </informaltable>
       </section>
       <section>
+        <title>UMS listOptions</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listOptions command line lists the options of the user</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listOptions  <emphasis role="bold">-a</emphasis> <emphasis role="bold">-u</emphasis> userId <emphasis
+              role="bold">-n</emphasis> optionName </para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>AdminListOption</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>is an admin option for listing all user options defined in VISHNU</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>is an admin option for listing the options of a specific user</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>optionName</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para> allows the user to get the value of a specific option identified by its name  </para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
         <title>UMS listUsers</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listUsers command line lists users</para>
+        <para>The listUsers command line lists VISHNU users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listUsers <emphasis role="bold">-i</emphasis> userIdOption</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1951,7 +1987,7 @@
                 <entry><para>userIdOption</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>i</para></entry>
-                <entry><para>allows an admin to list one user identified by his/her userId</para></entry>
+                <entry><para>allows an admin to get information about a specific user identified by his/her userId</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2004,9 +2040,9 @@
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listSessions  <emphasis role="bold">-t</emphasis> sessionListOption <emphasis
               role="bold">-p</emphasis> sessionClosePolicy <emphasis role="bold">-d</emphasis> sessionInactivityDelay <emphasis
-              role="bold">-m</emphasis> machineId <emphasis role="bold">-u</emphasis> userId <emphasis
-              role="bold">-i</emphasis> sessionId <emphasis role="bold">-s</emphasis> startDateOption <emphasis
-              role="bold">-e</emphasis> endDateOption </para>
+              role="bold">-m</emphasis> machineId <emphasis role="bold">-a</emphasis> <emphasis
+              role="bold">-u</emphasis> userId <emphasis role="bold">-i</emphasis> sessionId <emphasis
+              role="bold">-s</emphasis> startDateOption <emphasis role="bold">-e</emphasis> endDateOption </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2048,7 +2084,7 @@
                 <entry><para>sessionInactivityDelay</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>specifies the inactivity delay of the sessions which will be listed</para></entry>
+                <entry><para>specifies the inactivity delay in seconds of the sessions which will be listed</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2139,7 +2175,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureOption command line configures an option</para>
+        <para>The configureOption command line configures an option of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>configureOption  optionName value </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2324,11 +2360,11 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
+              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
               <entry><para>1</para></entry>
             </row>
           </tbody>
@@ -2458,7 +2494,7 @@
               </row>
               <row>
                 <entry><para>nbNodesAndCpuPerNode</para></entry>
-                <entry><para>int</para></entry>
+                <entry><para>string</para></entry>
                 <entry><para>N</para></entry>
                 <entry><para>The number of nodes and processors per node.</para></entry>
                 <entry><para>NO</para></entry>
@@ -3869,7 +3905,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setSystemInfo command line updates the system information of a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setSystemInfo machineId   machineId  -null memory -null diskSpace </para>
+        <para>setSystemInfo machineId  <emphasis role="bold">-m</emphasis> memory <emphasis
+              role="bold">-d</emphasis> diskSpace </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3903,14 +3940,14 @@
               <row>
                 <entry><para>memory</para></entry>
                 <entry><para>long</para></entry>
-                <entry/>
+                <entry><para>m</para></entry>
                 <entry><para>Amount of RAM memory available on the machine (in Bytes)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>diskSpace</para></entry>
                 <entry><para>long</para></entry>
-                <entry/>
+                <entry><para>d</para></entry>
                 <entry><para>Amount of disk space available on the machine (in KBytes)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -4910,7 +4947,7 @@
                 <entry><para>mode</para></entry>
                 <entry><para>long</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>the file access permissions.</para></entry>
+                <entry><para>the file access permissions in octal system.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -4968,7 +5005,7 @@
                 <entry><para>mode</para></entry>
                 <entry><para>long</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>the new directories permission access.</para></entry>
+                <entry><para>the new directories permission access in octal system.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5128,7 +5165,7 @@
                 <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>the new group owner of files.</para></entry>
+                <entry><para>the new group owner of files/directories.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -5186,7 +5223,7 @@
                 <entry><para>mode</para></entry>
                 <entry><para>long</para></entry>
                 <entry/>
-                <entry><para> the access rigths of a file</para></entry>
+                <entry><para> the access rigths of files/directories in octal system.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -5303,6 +5340,57 @@
                 <entry><para>int</para></entry>
                 <entry><para>n</para></entry>
                 <entry><para>number of lines to display</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>FMS contentOfFile</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any Vishnu user.</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The contentOfFile command line displays content  of  files located on remote machines</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>contentOfFile sessionKey   sessionKey  -null listOfStrings </para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The session id</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfStrings</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5752,8 +5840,7 @@
         <para>The listFilesTransferStatus command line displays the status of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>listFilesTransferStatus  <emphasis role="bold">-i</emphasis> transferId <emphasis
-              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId <emphasis
-              role="bold">-s</emphasis> status </para>
+              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5798,13 +5885,6 @@
                 <entry><para>allows the admin to list file transfers initiated by a specific user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
-              <row>
-                <entry><para>status</para></entry>
-                <entry><para><link linkend="Status">Status</link></para></entry>
-                <entry><para>s</para></entry>
-                <entry><para>the file transfer status</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -5812,15 +5892,14 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS listFilesTransferHistory</title>
+        <title>FMS listFilesTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFilesTransferHistory command line displays the history of all files transfer submitted by User.</para>
+        <para>The listFilesTransfer command line displays the history of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listFilesTransferHistory  <emphasis role="bold">-i</emphasis> transferId <emphasis
-              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId <emphasis
-              role="bold">-s</emphasis> status </para>
+        <para>listFilesTransfer  <emphasis role="bold">-m</emphasis> fromMachineId <emphasis
+              role="bold">-u</emphasis> userId <emphasis role="bold">-s</emphasis> status </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5844,13 +5923,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>transferId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>i</para></entry>
-                <entry><para>a given transfer id</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
               <row>
                 <entry><para>fromMachineId</para></entry>
                 <entry><para>string</para></entry>
