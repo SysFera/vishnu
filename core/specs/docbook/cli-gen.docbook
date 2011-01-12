@@ -179,7 +179,7 @@
         </tgroup>
       </informaltable>
       <para><emphasis role="bold">Note:</emphasis></para>
-      <para> For each command line, the -h option can be used for help</para>
+      <para> For each command line the -h option can be used for help.</para>
     </section>
   </chapter>
   <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
@@ -193,8 +193,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The connect command line opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>connect  <emphasis role="bold">-p</emphasis> closePolicy <emphasis role="bold">-d</emphasis> sessionInactivityDelay <emphasis
-              role="bold">-s</emphasis> substituteUserId  userId</para>
+        <para>connect  -p closePolicy -d sessionInactivityDelay -s substituteUserId   userId<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -257,7 +257,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_CLOSE_POLICY</para></entry>
+                <entry><para>closePolicy</para></entry>
+                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+                <entry><para>is an option for closing session automatically</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>UMS reconnect</title>
@@ -266,7 +301,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>reconnect userId  sessionId</para>
+        <para>reconnect  userId  sessionId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -315,7 +350,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>UMS addVishnuUser</title>
@@ -324,9 +385,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addVishnuUser command line adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>addVishnuUser  <emphasis role="bold">-w</emphasis> password <emphasis
-              role="bold">-f</emphasis> firstname <emphasis role="bold">-l</emphasis> lastname <emphasis
-              role="bold">-p</emphasis> privilege <emphasis role="bold">-m</emphasis> email userId</para>
+        <para>addVishnuUser   -w password -f firstname -l lastname -p privilege -m email userId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -440,9 +500,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateUser command line updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>updateUser  <emphasis role="bold">-f</emphasis> firstname <emphasis
-              role="bold">-l</emphasis> lastname <emphasis role="bold">-p</emphasis> privilege <emphasis
-              role="bold">-m</emphasis> email  userId</para>
+        <para>updateUser  -f firstname -l lastname -p privilege -m email   userId<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -466,6 +525,13 @@
               </row>
             </thead>
             <tbody>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
               <row>
                 <entry><para>firstname</para></entry>
                 <entry><para>string</para></entry>
@@ -493,13 +559,6 @@
                 <entry><para>m</para></entry>
                 <entry><para>represents the updated email adress of the user</para></entry>
                 <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
-                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -549,7 +608,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteUser command line removes a user from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>deleteUser userId</para>
+        <para>deleteUser  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -628,7 +687,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The close command line closes the session identfied by the session key</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>close</para>
+        <para>close <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
@@ -676,7 +735,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The changePassword command line changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>changePassword userId</para>
+        <para>changePassword  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -725,7 +784,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>UMS resetPassword</title>
@@ -734,7 +819,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The resetPassword command line resets the password of a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>resetPassword userId</para>
+        <para>resetPassword  userId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -813,8 +898,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addLocalAccount command line adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>addLocalAccount  <emphasis role="bold">-l</emphasis> acLogin <emphasis
-              role="bold">-s</emphasis> sshKeyPath <emphasis role="bold">-d</emphasis> HomeDirectory userId</para>
+        <para>addLocalAccount   -l acLogin -s sshKeyPath -d HomeDirectory userId machineId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -921,8 +1006,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateLocalAccount command line updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>updateLocalAccount  <emphasis role="bold">-l</emphasis> acLogin <emphasis
-              role="bold">-s</emphasis> sshKeyPath <emphasis role="bold">-d</emphasis> HomeDirectory userId</para>
+        <para>updateLocalAccount   -l acLogin -s sshKeyPath -d HomeDirectory userId machineId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1029,7 +1114,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>deleteLocalAccount userId machineId</para>
+        <para>deleteLocalAccount  userId machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1115,7 +1200,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The saveConfiguration command line saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>saveConfiguration filePath</para>
+        <para>saveConfiguration  filePath<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1194,7 +1279,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>restoreConfiguration  filePath </para>
+        <para>restoreConfiguration   filePath <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1273,8 +1358,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addMachine command line adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>addMachine  <emphasis role="bold">-n</emphasis> name <emphasis role="bold">-s</emphasis> site <emphasis
-              role="bold">-t</emphasis> machineDescription <emphasis role="bold">-l</emphasis> language machineId</para>
+        <para>addMachine   -n name -s site -t machineDescription -l language machineId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1381,8 +1466,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateMachine command line updates machine description</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>updateMachine  <emphasis role="bold">-n</emphasis> name <emphasis role="bold">-s</emphasis> site <emphasis
-              role="bold">-t</emphasis> machineDescription <emphasis role="bold">-l</emphasis> language machineId</para>
+        <para>updateMachine   -n name -s site -t machineDescription -l language machineId <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1489,7 +1574,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteMachine command line removes a machine from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>deleteMachine machineId</para>
+        <para>deleteMachine  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1568,8 +1653,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listLocalAccount command line lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listLocalAccount  <emphasis role="bold">-a</emphasis> <emphasis role="bold">-u</emphasis> userId <emphasis
-              role="bold">-i</emphasis> machineId </para>
+        <para>listLocalAccount  -a -u userId -i machineId  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1662,8 +1746,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listMachine  <emphasis role="bold">-u</emphasis> userId <emphasis role="bold">-a</emphasis> <emphasis
-              role="bold">-m</emphasis> machineId </para>
+        <para>listMachine  -u userId -a -m machineId  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1756,9 +1839,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listHistoryCmd command line lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listHistoryCmd  <emphasis role="bold">-a</emphasis> <emphasis role="bold">-u</emphasis> userId <emphasis
-              role="bold">-i</emphasis> sessionId <emphasis role="bold">-s</emphasis> startDateOption <emphasis
-              role="bold">-e</emphasis> endDateOption </para>
+        <para>listHistoryCmd  -a -u userId -i sessionId -s startDateOption -e endDateOption  <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1865,8 +1947,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listOptions command line lists the options of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listOptions  <emphasis role="bold">-a</emphasis> <emphasis role="bold">-u</emphasis> userId <emphasis
-              role="bold">-n</emphasis> optionName </para>
+        <para>listOptions  -a -u userId -n optionName  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1959,7 +2040,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listUsers command line lists VISHNU users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listUsers <emphasis role="bold">-i</emphasis> userIdOption</para>
+        <para>listUsers -i userIdOption <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2038,11 +2119,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listSessions command line lists all sessions of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listSessions  <emphasis role="bold">-t</emphasis> sessionListOption <emphasis
-              role="bold">-p</emphasis> sessionClosePolicy <emphasis role="bold">-d</emphasis> sessionInactivityDelay <emphasis
-              role="bold">-m</emphasis> machineId <emphasis role="bold">-a</emphasis> <emphasis
-              role="bold">-u</emphasis> userId <emphasis role="bold">-i</emphasis> sessionId <emphasis
-              role="bold">-s</emphasis> startDateOption <emphasis role="bold">-e</emphasis> endDateOption </para>
+        <para>listSessions  -t sessionListOption -p sessionClosePolicy -d sessionInactivityDelay -m machineId -a -u userId -i sessionId -s startDateOption -e endDateOption  <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2177,7 +2255,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The configureOption command line configures an option of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>configureOption  optionName value </para>
+        <para>configureOption   optionName value <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2263,7 +2341,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The configureDefaultOption command line configures a default option value</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>configureDefaultOption  optionName value </para>
+        <para>configureDefaultOption   optionName value <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2406,13 +2484,10 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh.</para>
+        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>submitJob  <emphasis role="bold">-n</emphasis> name <emphasis role="bold">-p</emphasis> priority <emphasis
-              role="bold">-q</emphasis> queue <emphasis role="bold">-t</emphasis> wallTime <emphasis
-              role="bold">-m</emphasis> memory <emphasis role="bold">-P</emphasis> nbCpu <emphasis
-              role="bold">-N</emphasis> nbNodesAndCpuPerNode <emphasis role="bold">-o</emphasis> OutPutPath <emphasis
-              role="bold">-e</emphasis> ErrorPath  machineId scriptFilePath</para>
+        <para>submitJob  -n name -p priority -q queue -t wallTime -m memory -P nbCpu -N nbNodesAndCpuPerNode -o OutPutPath -e ErrorPath   machineId scriptFilePath<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2561,11 +2636,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listJobs command line gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listJobs  <emphasis role="bold">-i</emphasis> JobId <emphasis role="bold">-P</emphasis> nbCpu <emphasis
-              role="bold">-d</emphasis> fromSubmitDate <emphasis role="bold">-D</emphasis> toSubmitDate <emphasis
-              role="bold">-u</emphasis> owner <emphasis role="bold">-s</emphasis> status <emphasis
-              role="bold">-p</emphasis> priority <emphasis role="bold">-o</emphasis> OutPutPath <emphasis
-              role="bold">-e</emphasis> ErrorPath <emphasis role="bold">-q</emphasis> queue  machineId</para>
+        <para>listJobs  -i JobId -P nbCpu -d fromSubmitDate -D toSubmitDate -u owner -s status -p priority -o OutPutPath -e ErrorPath -q queue   machineId<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2714,7 +2786,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobInfo command line gets information on a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getJobInfo machineId jobId</para>
+        <para>getJobInfo  machineId jobId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2798,9 +2870,9 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob command line cancels a job from it Id</para>
+        <para>The cancelJob command line cancels a job from its Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>cancelJob machineId jobId</para>
+        <para>cancelJob  machineId jobId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2886,7 +2958,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobOutPut command line gets outputPath and errorPath of a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getJobOutPut machineId jobId</para>
+        <para>getJobOutPut  machineId jobId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2972,7 +3044,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getAllJobsOutPut command line gets outputPath and errorPath of completed jobs dynamically</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getAllJobsOutPut machineId</para>
+        <para>getAllJobsOutPut  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3051,7 +3123,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listQueues command line gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listQueues machineId</para>
+        <para>listQueues  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3130,7 +3202,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setMachineEnv command line sets environment variables on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setMachineEnv machineId listEnv</para>
+        <para>setMachineEnv  machineId listEnv<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3216,7 +3288,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setMachineRefreshPeriod command line sets the refresh period of output and error file content</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setMachineRefreshPeriod machineId value</para>
+        <para>setMachineRefreshPeriod  machineId value<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3300,10 +3372,9 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobProgress command line get the progression status of jobs.</para>
+        <para>The getJobProgress command line get the progression status of jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getJobProgress  <emphasis role="bold">-i</emphasis> jobId <emphasis
-              role="bold">-u</emphasis> jobOwner  machineId</para>
+        <para>getJobProgress  -i jobId -u jobOwner   machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3561,7 +3632,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The exportCommands command line exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>exportCommands oldSessionKey</para>
+        <para>exportCommands  oldSessionKey<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3640,7 +3711,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricCurrentValue command line retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getMetricCurrentValue machineId metricType</para>
+        <para>getMetricCurrentValue  machineId metricType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3726,7 +3797,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricHistory command line retrieve the history of values of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getMetricHistory machineId startTime endTime metricType</para>
+        <para>getMetricHistory  machineId startTime endTime metricType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3826,7 +3897,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getProcesses command line gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getProcesses machineId</para>
+        <para>getProcesses  machineId<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3905,8 +3976,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setSystemInfo command line updates the system information of a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setSystemInfo machineId  <emphasis role="bold">-m</emphasis> memory <emphasis
-              role="bold">-d</emphasis> diskSpace </para>
+        <para>setSystemInfo  machineId  -m memory -d diskSpace <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3999,7 +4069,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setSystemThreshold command line sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setSystemThreshold machineId tresholdType value</para>
+        <para>setSystemThreshold  machineId tresholdType value<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4092,7 +4162,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getSystemThreshold command line gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getSystemThreshold machineId type</para>
+        <para>getSystemThreshold  machineId type<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4178,7 +4248,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineUserIdentifier command line defines the shape of the identifiers automatically generated for the users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>defineUserIdentifier format</para>
+        <para>defineUserIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4257,7 +4327,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineMachineIdentifier command line defines the shape of the identifiers automatically generated for the machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>defineMachineIdentifier format</para>
+        <para>defineMachineIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4336,7 +4406,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineJobIdentifier command line defines the shape of the identifiers automatically generated for the jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>defineJobIdentifier format</para>
+        <para>defineJobIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4415,7 +4485,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineTransferIdentifier command line defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>defineTransferIdentifier format</para>
+        <para>defineTransferIdentifier  format<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4494,7 +4564,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The loadShed command line load sheds a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>loadShed machineId loadShedType</para>
+        <para>loadShed  machineId loadShedType<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4580,7 +4650,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setUpdateFrequency command line sets the update frequency of the IMS tables</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>setUpdateFrequency freq</para>
+        <para>setUpdateFrequency  freq<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4659,7 +4729,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getUpdateFrequency command line gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>getUpdateFrequency</para>
+        <para>getUpdateFrequency <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
@@ -4707,7 +4777,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restart command line restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>restart <emphasis role="bold">-n</emphasis> componentName type</para>
+        <para>restart -n componentName  type<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4905,7 +4975,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The createFile command line creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createFile <emphasis role="bold">-m</emphasis> mode sessionKey   sessionKey  -null listOfStrings </para>
+        <para>createFile -m mode  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4954,7 +5024,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS createDir</title>
@@ -4963,7 +5059,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The createDir command line creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createDir <emphasis role="bold">-m</emphasis> mode sessionKey   sessionKey  -null listOfStrings </para>
+        <para>createDir -m mode  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5012,7 +5108,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS removeFile</title>
@@ -5021,7 +5143,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The removeFile command line removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>removeFile sessionKey   sessionKey  -null listOfStrings </para>
+        <para>removeFile  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5063,7 +5185,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS removeDir</title>
@@ -5072,7 +5220,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The removeDir command line removes  directories (and subdirectories ) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>removeDir sessionKey   sessionKey  -null listOfStrings </para>
+        <para>removeDir  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5114,7 +5262,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS chGrpOfFile</title>
@@ -5123,7 +5297,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The chGrpOfFile command line changes group owner of  remote files. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>chGrpOfFile sessionKey   sessionKey  -null listOfStrings  group</para>
+        <para>chGrpOfFile  sessionKey  -null listOfStrings  group<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5172,7 +5346,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS chModOfFile</title>
@@ -5181,7 +5381,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The chModOfFile command line changes  access rights of   remote files.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>chModOfFile sessionKey   sessionKey  -null listOfStrings  mode</para>
+        <para>chModOfFile  sessionKey  -null listOfStrings  mode<emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5230,7 +5430,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS headOfFile</title>
@@ -5239,7 +5465,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The headOfFile command line displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>headOfFile <emphasis role="bold">-n</emphasis> nLine sessionKey   sessionKey  -null listOfStrings </para>
+        <para>headOfFile -n nLine  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5288,7 +5514,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS tailOfFile</title>
@@ -5297,7 +5549,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The tailOfFile command line displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>tailOfFile <emphasis role="bold">-n</emphasis> nLine sessionKey   sessionKey  -null listOfStrings </para>
+        <para>tailOfFile -n nLine  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5346,7 +5598,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS contentOfFile</title>
@@ -5355,7 +5633,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The contentOfFile command line displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>contentOfFile sessionKey   sessionKey  -null listOfStrings </para>
+        <para>contentOfFile  sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5397,7 +5675,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS listDir</title>
@@ -5406,7 +5710,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listDir command line displays  the contents of remote directory. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listDir   sessionKey   sessionKey  -null listOfStrings </para>
+        <para>listDir  - -   sessionKey  -null listOfStrings <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5462,7 +5766,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS copyFile</title>
@@ -5471,7 +5801,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyFile command line executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>copyFile  - -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5541,7 +5872,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS copyAsyncFile</title>
@@ -5550,7 +5916,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>copyAsyncFile  - -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5620,7 +5987,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS moveFile</title>
@@ -5629,7 +6031,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The moveFile command line executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>moveFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>moveFile  -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5692,7 +6095,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS moveAsyncFile</title>
@@ -5701,7 +6139,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The moveAsyncFile command line executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>moveAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>moveAsyncFile  -c transferCommand   machineId sessionKey  -null listOfStrings  dest<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5764,7 +6203,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS stopFileTransfer</title>
@@ -5773,8 +6247,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The stopFileTransfer command line stops an execution of an set of file transfer.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>stopFileTransfer  <emphasis role="bold">-i</emphasis> transferId <emphasis
-              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId  sessionKey</para>
+        <para>stopFileTransfer  -i transferId -m fromMachineId -u userId   sessionKey<emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5830,7 +6304,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS listFilesTransferStatus</title>
@@ -5839,8 +6339,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listFilesTransferStatus command line displays the status of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listFilesTransferStatus  <emphasis role="bold">-i</emphasis> transferId <emphasis
-              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId </para>
+        <para>listFilesTransferStatus  -i transferId -m fromMachineId -u userId  <emphasis
+              role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5889,7 +6389,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS listFilesTransfer</title>
@@ -5898,8 +6424,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listFilesTransfer command line displays the history of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listFilesTransfer  <emphasis role="bold">-m</emphasis> fromMachineId <emphasis
-              role="bold">-u</emphasis> userId <emphasis role="bold">-s</emphasis> status </para>
+        <para>listFilesTransfer  -m fromMachineId -u userId -s status  <emphasis role="bold"/></para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5948,7 +6473,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
       </section>
     </section>
     <section>
