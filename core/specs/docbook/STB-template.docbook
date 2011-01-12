@@ -38,25 +38,18 @@
         <section>
             <title>Objectifs</title>
             <para>Ce document présente les spécifications techniques des besoins pour le système
-                Vishnu. Ces spécifications décrivent les caractéristiques techniques du système à
-                réaliser du point de vue des utilisateurs d'une part et des administrateurs du
-                système d'autre part. Elles sont basées sur les documents de Cahier des charges du
+                Vishnu. Elles sont basées sur les documents de Cahier des charges du
                 système Vishnu (voir Références) et sur la proposition technique de la société
-                Sysfera. Ces spécifications incluent également les contraintes d'implémentation du
+                Sysfera. Ces spécifications incluent les contraintes d'implémentation du
                 logiciel. L'objectif principal de ces spécifications est de valider l'adéquation de
-                la solution proposée par rapport aux besoins des utilisateurs du système
-                d'information et de ses administrateurs d'une part, et aux contraintes de
-                l'environnement d'utilisation d'autre part.</para>
+                la solution proposée par rapport aux contraintes de l'environnement d'utilisation.</para>
             <para>Ce document pourra également contenir des prévisions sur les évolutions futures du
                 logiciel et préciser quelles fonctions devraient être faciles à ajouter ou
                 supprimer.</para>
-            <para>Ces spécifications techniques des besoins sont un prérequis pour les
-                spécifications générales dans le processus de développement suivi pour le projet
-                Vishnu.</para>
         </section>
         <section>
             <title>Structure du document</title>
-            <para>Le document est composé de 4 parties correspondant à des domaines techniques
+            <para>Le document est composé de 3 parties correspondant à des domaines techniques
                 différents:</para>
             <itemizedlist>
                 <listitem>
@@ -67,9 +60,6 @@
                 </listitem>
                 <listitem>
                     <para>Besoins en performance, fiabilité et robustesse</para>
-                </listitem>
-                <listitem>
-                    <para>Besoins pour l'installation et la maintenance du système</para>
                 </listitem>
             </itemizedlist>
             <para>Chaque partie contient un tableau des exigences qui fait l'inventaire des tous les
@@ -106,17 +96,14 @@
     <!-- GENERATED PART -->
   <chapter annotations="core/specs/stb/STB_SECURITE.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
     <title>Sécurité du système et des données</title>
-    
   </chapter>
-  <chapter annotations="core/specs/stb/STB_Performance.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
-    <title>Performances, fiabilité et robustesse</title>
-    
-  </chapter>
+
   <chapter annotations="core/specs/stb/STB_SoftHardWare.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">>
     <title>Environnement matériel et logiciel</title>
   </chapter>
-  
-   <chapter annotations="core/specs/stb/STB_Instal.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
-    <title>Installation et maintenance</title>
+
+  <chapter annotations="core/specs/stb/STB_Performance.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
+    <title>Performances, fiabilité et robustesse</title>
   </chapter>
+
 </book>
