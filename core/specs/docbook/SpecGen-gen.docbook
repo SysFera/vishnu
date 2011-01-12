@@ -1725,6 +1725,10 @@ in order to avoid systematic authentification</para>
                 <entry><para>Extension of</para></entry>
                 <entry><para>T1 - Asynchronous command on a machine</para></entry>
               </row>
+              <row>
+                <entry><para>Notes</para></entry>
+                <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -1995,6 +1999,10 @@ in order to avoid systematic authentification</para>
                 <entry><para>Extension of</para></entry>
                 <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
+              <row>
+                <entry><para>Notes</para></entry>
+                <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -2040,6 +2048,10 @@ in order to avoid systematic authentification</para>
                 <entry><para>Extension of</para></entry>
                 <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
+              <row>
+                <entry><para>Notes</para></entry>
+                <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -2084,6 +2096,10 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Extension of</para></entry>
                 <entry><para>T2 - Synchronous command on a machine</para></entry>
+              </row>
+              <row>
+                <entry><para>Notes</para></entry>
+                <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2221,22 +2237,22 @@ in order to avoid systematic authentification</para>
       <title>Data dictionary</title>
       <para><itemizedlist>
           <listitem>
-            <para><emphasis role="bold">Batch Scheduler</emphasis>: A batch scheduler is  a distributed resource manager that enables to allocate at best  the resources to the jobs on a machine according to user needs (the needs are spiciefed by the user by batch directives (batch options) in file or command line).</para>
+            <para><emphasis role="bold">Batch Scheduler</emphasis>: A batch scheduler is  a distributed resource manager that enables to allocate at best  the resources to the jobs on a machine according to user needs (the needs are specified by the user by batch directives (batch options) in file or command line).</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Job</emphasis>: A job is a sequence of instructions (included batch scheduler directives) written to launch and to perform by a specified batch scheduler.</para>
+            <para><emphasis role="bold">Job</emphasis>: A job is a sequence of instructions (included batch scheduler directives) written to be launched  by a specified batch scheduler.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Job id</emphasis>: A job id allows to identifie the job in the batch scheduler system.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">JobPath</emphasis>: A jobPath is the path to the file (script) containing the instructions (batch directives or job characteristiques, job execution command) of the job.</para>
+            <para><emphasis role="bold">JobPath</emphasis>: A jobPath is the path to the file (script) containing the instructions (batch directives or job characteristics, job execution command) of the job.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Queue ou Classe</emphasis>:  A queue or class allows to associate the resource limits (CPU wallclock time, CPU memory) and execution priorities of the jobs.</para>
+            <para><emphasis role="bold">Queue ou Class</emphasis>:  A queue or class associates the resource limits (CPU wallclock time, CPU memory) and execution priorities of the jobs.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">TMS</emphasis>: Task Management System</para>
+            <para><emphasis role="bold">TMS</emphasis>: Task Management System.</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -2381,7 +2397,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1) The user calls to get the metrics data. on a machine identified by a machine id, for a metric type, from start time up to end time. The metrics are within {number of cpu, percentage of cpu used, total diskSpace, free diskSpace, total RAM, free RAM, number of processes running}</para><para>2) The System returns the results by groups (metric,value, time).</para></entry>
+                <entry><para>1) The user calls to get the metrics data on a machine identified by a machine id, for a metric type, from start time up to end time. The metrics are within {number of cpu, percentage of cpu used, total diskSpace, free diskSpace, total RAM, free RAM}</para><para>2) The System returns the results by groups (metric,value, time).</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2939,7 +2955,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The user subsmits a synchronous request to the System. c.f. the UMS use case description (U1.3)</para></entry>
+                <entry><para>The user submits a synchronous request to the System. c.f. the UMS use case description (U1.3)</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
