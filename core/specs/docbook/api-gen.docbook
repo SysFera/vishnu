@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book
-    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <info>
+ <book xmlns="http://docbook.org/ns/docbook" version="5.0"> 
+ <info>
     <author>
       <personname>
         <firstname>Benjamin</firstname>
@@ -135,7 +134,7 @@
                 <row>
                   <entry><para>listOfJobs</para></entry>
                   <entry><para>ListJobs</para></entry>
-                  <entry><para>This is an example of an output parameter that is always provided</para></entry>
+                  <entry><para>This is an example of an output parameter</para></entry>
                   <entry><para>OUT</para></entry>
                   <entry><para>yes</para></entry>
                 </row>
@@ -188,19 +187,13 @@
             <listitem>
               <para>The methods will throw exceptions for each error message specified. The exception will contain additional details provided by the server.</para>
             </listitem>
-            <listitem>
-              <para/>
-            </listitem>
           </itemizedlist>
         </section>
         <section>
-          <title>C++ specific aspects</title>
+          <title>Python specific aspects</title>
           <itemizedlist>
             <listitem>
               <para>The output parameters will be implemented as a Python tuple returned by the method.</para>
-            </listitem>
-            <listitem>
-              <para/>
             </listitem>
           </itemizedlist>
         </section>
@@ -261,22 +254,16 @@
             <listitem>
               <para>The string type will be mapped to the C++ STL string type.</para>
             </listitem>
-            <listitem>
-              <para/>
-            </listitem>
           </itemizedlist>
         </section>
         <section>
-          <title>C++ specific aspects</title>
+          <title>Python specific aspects</title>
           <itemizedlist>
             <listitem>
               <para>For each attribute of the class a couple of getter/setter methods will be implemented.</para>
             </listitem>
             <listitem>
               <para>The string type will be mapped to standard Python strings.</para>
-            </listitem>
-            <listitem>
-              <para/>
             </listitem>
           </itemizedlist>
         </section>
@@ -292,9 +279,6 @@
                      the 'Request' or 'Response' Java Bean will contain a 'data' subclass containing the instances. This follows the standard
                      WSDL/Java mapping for Apache-CXF.
                    </para>
-            </listitem>
-            <listitem>
-              <para/>
             </listitem>
           </itemizedlist>
         </section>
@@ -446,127 +430,6 @@
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options=ConnectOptions()</parameter></paramdef><paramdef>string&amp; <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function UMS::reconnect</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId </para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>userId represents the VISHNU user identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>password</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>password represents the password of the user</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The reconnect() function returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>NOT_AUTHENTICATED</para></entry>
-                <entry><para>Unknown user</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the login is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_PASSSWORD_SIZE</para></entry>
-                <entry><para>The size of the password is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>SESSION_INCOMPATIBILITY</para></entry>
-                <entry><para>This session identifier is incompatible with the authenticated user</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_SESSION_ID</para></entry>
-                <entry><para>The session Id is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId </parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>string&amp; <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::addVishnuUser</title>
@@ -1684,7 +1547,7 @@
               <row>
                 <entry><para>newMachine</para></entry>
                 <entry><para><link linkend="Machine">Machine</link></para></entry>
-                <entry><para>newMachine is an object which encapsulates the new machine information</para></entry>
+                <entry><para>new machine information</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -1745,6 +1608,105 @@
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>addMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Machine&amp; <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function UMS::updateMachine</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>machine</para></entry>
+                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para>existing machine information</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The updateMachine() function updates machine description</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>MACHINEID_REQUIRED</para></entry>
+                <entry><para>The machineId must to be defined</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machineId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+              <row>
+                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
+                <entry><para>The  server UMS is not available</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>updateMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Machine&amp; <parameter>machine</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::deleteMachine</title>
@@ -2728,30 +2690,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody/>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no parameters.</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnuFinalize() function allows a user to go out properly from VISHNU</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
@@ -2786,592 +2725,7 @@
     </section>
     <section>
       <title>Data types definitions</title>
-      <para xml:id="ConnectOptions"><emphasis role="bold">ConnectOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>closePolicy</para></entry>
-              <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
-              <entry><para>is an option for closing session automatically</para></entry>
-            </row>
-            <row>
-              <entry><para>sessionInactivityDelay</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
-            </row>
-            <row>
-              <entry><para>substituteUserId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an option which allows an admin to open a session as he/she was a specific user identified by his/her userId</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="SessionCloseType"><emphasis role="bold">SessionCloseType Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="User"><emphasis role="bold">User Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the VISHNU user identifier</para></entry>
-            </row>
-            <row>
-              <entry><para>password</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the password of the user. At the beginning, an admin can give a temporary password or it is automatically generated by the System. </para></entry>
-            </row>
-            <row>
-              <entry><para>firstname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the firstname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>lastname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the lastname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>privilege</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>is the privilege of the user (admin or simple user)</para></entry>
-            </row>
-            <row>
-              <entry><para>email</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the email of the user</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="UpdateUserOptions"><emphasis role="bold">UpdateUserOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>firstname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated firstname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>lastname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated lastname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>privilege</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated privilege of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>email</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated email adress of the user</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="LocalAccount"><emphasis role="bold">LocalAccount Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>The userId represents the VISHNU user identifier of the user of the local user configuration</para></entry>
-            </row>
-            <row>
-              <entry><para>machineId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>The MachineId represents the identifier of the machine associated to the local user configuration</para></entry>
-            </row>
-            <row>
-              <entry><para>acLogin</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
-            </row>
-            <row>
-              <entry><para>sshKeyPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
-            </row>
-            <row>
-              <entry><para>HomeDirectory</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="Configuration"><emphasis role="bold">Configuration Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>descConf</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the description of the configuration</para></entry>
-            </row>
-            <row>
-              <entry><para>listConfUsers</para></entry>
-              <entry><para>List of <link linkend="User">User</link></para></entry>
-              <entry><para>is the list of users objects</para></entry>
-            </row>
-            <row>
-              <entry><para>listConfMachines</para></entry>
-              <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
-              <entry><para>is a list of machines objects</para></entry>
-            </row>
-            <row>
-              <entry><para>listConfLocalAccounts</para></entry>
-              <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
-              <entry><para>is the list of LocalAccount objects</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="Machine"><emphasis role="bold">Machine Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>machineId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the identifier of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>name</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the name of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>site</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the location of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>totalDiskSpace</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the total disk space of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>totalMemory</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the total memory of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>machineDescription</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the description of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>language</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the language in which the description has been done</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListLocalAccOptions"><emphasis role="bold">ListLocalAccOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>AdminListOption</para></entry>
-              <entry><para>boolean</para></entry>
-              <entry><para>is an admin option for listing all local configurations of all users </para></entry>
-            </row>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an admin option for listing the local configurations of a specific user </para></entry>
-            </row>
-            <row>
-              <entry><para>machineId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an option for listing local user configurations on a specific machine</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListLocalAccounts"><emphasis role="bold">ListLocalAccounts Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>accounts</para></entry>
-              <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
-              <entry><para>is a list of LocalAccount objects which encapsulates local user configurations</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListMachineOptions"><emphasis role="bold">ListMachineOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an admin option for listing machines in which a specific user has a local configuration</para></entry>
-            </row>
-            <row>
-              <entry><para>ListAllOption</para></entry>
-              <entry><para>boolean</para></entry>
-              <entry><para>is an admin option for listing all machine defined in the database</para></entry>
-            </row>
-            <row>
-              <entry><para>machineId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an option for listing information about a specific machine</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListMachines"><emphasis role="bold">ListMachines Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>machines</para></entry>
-              <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
-              <entry><para>is a list of machines objects which encapsulates the machines information</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListOptOptions"><emphasis role="bold">ListOptOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>AdminListOption</para></entry>
-              <entry><para>boolean</para></entry>
-              <entry><para>is an admin option for listing all user options defined in VISHNU</para></entry>
-            </row>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an admin option for listing the options of a specific user</para></entry>
-            </row>
-            <row>
-              <entry><para>optionName</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para> allows the user to list a specific option identified by its name  </para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListOptionsValues"><emphasis role="bold">ListOptionsValues Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>optionValues</para></entry>
-              <entry><para>List of <link linkend="OptionValue">OptionValue</link></para></entry>
-              <entry><para>is a list of optionValue objects which encapsulates the optionValue information</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="OptionValue"><emphasis role="bold">OptionValue Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>optionName</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the name of an option</para></entry>
-            </row>
-            <row>
-              <entry><para>value</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the value of an option</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListCmdOptions"><emphasis role="bold">ListCmdOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>AdminListOption</para></entry>
-              <entry><para>boolean</para></entry>
-              <entry><para>is an admin option for listing all commands of all users</para></entry>
-            </row>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is an admin option for listing commands launched by a specific user identified by his/her userId</para></entry>
-            </row>
-            <row>
-              <entry><para>sessionId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>lists all commands launched within a specific session</para></entry>
-            </row>
-            <row>
-              <entry><para>startDateOption</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>allows the user to organize the commands listed by providing  the start date (the UNIX timestamp of the start date is used)</para></entry>
-            </row>
-            <row>
-              <entry><para>endDateOption</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>allows the user to organize the commands listed by providing  the end date (the timestamp of the end date is used). By default, the end date is the current day</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListCommands"><emphasis role="bold">ListCommands Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Commands</para></entry>
-              <entry><para>List of <link linkend="Command">Command</link></para></entry>
-              <entry><para>is the list of commands objects</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="Command"><emphasis role="bold">Command Class Content</emphasis></para>
+      <para xml:id="Command"><emphasis role="bold">Class UMS::Command Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -3422,7 +2776,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="ListUsers"><emphasis role="bold">ListUsers Class Content</emphasis></para>
+      <para xml:id="Configuration"><emphasis role="bold">Class UMS::Configuration Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -3441,14 +2795,323 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>users</para></entry>
+              <entry><para>descConf</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the description of the configuration</para></entry>
+            </row>
+            <row>
+              <entry><para>listConfUsers</para></entry>
               <entry><para>List of <link linkend="User">User</link></para></entry>
               <entry><para>is the list of users objects</para></entry>
+            </row>
+            <row>
+              <entry><para>listConfMachines</para></entry>
+              <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
+              <entry><para>is a list of machines objects</para></entry>
+            </row>
+            <row>
+              <entry><para>listConfLocalAccounts</para></entry>
+              <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
+              <entry><para>is the list of LocalAccount objects</para></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="ListSessionOptions"><emphasis role="bold">ListSessionOptions Class Content</emphasis></para>
+      <para xml:id="ConnectOptions"><emphasis role="bold">Class UMS::ConnectOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>closePolicy</para></entry>
+              <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+              <entry><para>is an option for closing session automatically</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionInactivityDelay</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The sessionInactivityDelay is the maximum delay between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+            </row>
+            <row>
+              <entry><para>substituteUserId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option which allows an admin to open a session as he/she was a specific user identified by his/her userId</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListCmdOptions"><emphasis role="bold">Class UMS::ListCmdOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>AdminListOption</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an admin option for listing all commands of all users</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing commands launched by a specific user identified by his/her userId</para></entry>
+            </row>
+            <row>
+              <entry><para>sessionId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>lists all commands launched within a specific session</para></entry>
+            </row>
+            <row>
+              <entry><para>startDateOption</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>allows the user to organize the commands listed by providing  the start date (the UNIX timestamp of the start date is used)</para></entry>
+            </row>
+            <row>
+              <entry><para>endDateOption</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>allows the user to organize the commands listed by providing  the end date (the timestamp of the end date is used). By default, the end date is the current day</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListCommands"><emphasis role="bold">Class UMS::ListCommands Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Commands</para></entry>
+              <entry><para>List of <link linkend="Command">Command</link></para></entry>
+              <entry><para>is the list of commands objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListLocalAccOptions"><emphasis role="bold">Class UMS::ListLocalAccOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>AdminListOption</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an admin option for listing all local configurations of all users </para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing the local configurations of a specific user </para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option for listing local user configurations on a specific machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListLocalAccounts"><emphasis role="bold">Class UMS::ListLocalAccounts Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>accounts</para></entry>
+              <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
+              <entry><para>is a list of LocalAccount objects which encapsulates local user configurations</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListMachineOptions"><emphasis role="bold">Class UMS::ListMachineOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing machines in which a specific user has a local configuration</para></entry>
+            </row>
+            <row>
+              <entry><para>ListAllOption</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an admin option for listing all machine defined in the database</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an option for listing information about a specific machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListMachines"><emphasis role="bold">Class UMS::ListMachines Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machines</para></entry>
+              <entry><para>List of <link linkend="Machine">Machine</link></para></entry>
+              <entry><para>is a list of machines objects which encapsulates the machines information</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListOptOptions"><emphasis role="bold">Class UMS::ListOptOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>AdminListOption</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>is an admin option for listing all user options defined in VISHNU</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is an admin option for listing the options of a specific user</para></entry>
+            </row>
+            <row>
+              <entry><para>optionName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para> allows the user to list a specific option identified by its name  </para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListOptionsValues"><emphasis role="bold">Class UMS::ListOptionsValues Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>optionValues</para></entry>
+              <entry><para>List of <link linkend="OptionValue">OptionValue</link></para></entry>
+              <entry><para>is a list of optionValue objects which encapsulates the optionValue information</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListSessionOptions"><emphasis role="bold">Class UMS::ListSessionOptions Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -3514,32 +3177,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="SessionStateType"><emphasis role="bold">SessionStateType Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>INACTIVE</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>ACTIVE</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListSessions"><emphasis role="bold">ListSessions Class Content</emphasis></para>
+      <para xml:id="ListSessions"><emphasis role="bold">Class UMS::ListSessions Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -3565,7 +3203,156 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="Session"><emphasis role="bold">Session Class Content</emphasis></para>
+      <para xml:id="ListUsers"><emphasis role="bold">Class UMS::ListUsers Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>users</para></entry>
+              <entry><para>List of <link linkend="User">User</link></para></entry>
+              <entry><para>is the list of users objects</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LocalAccount"><emphasis role="bold">Class UMS::LocalAccount Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The userId represents the VISHNU user identifier of the user of the local user configuration</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The MachineId represents the identifier of the machine associated to the local user configuration</para></entry>
+            </row>
+            <row>
+              <entry><para>acLogin</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
+            </row>
+            <row>
+              <entry><para>sshKeyPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
+            </row>
+            <row>
+              <entry><para>HomeDirectory</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Machine"><emphasis role="bold">Class UMS::Machine Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the identifier of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the name of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>site</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the location of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>machineDescription</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the description of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>language</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the language in which the description has been done</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="OptionValue"><emphasis role="bold">Class UMS::OptionValue Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>optionName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the name of an option</para></entry>
+            </row>
+            <row>
+              <entry><para>value</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the value of an option</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Session"><emphasis role="bold">Class UMS::Session Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -3627,6 +3414,148 @@
               <entry><para>timeout</para></entry>
               <entry><para>long</para></entry>
               <entry><para>is the inactivity delay in seconds associated to the CLOSE_ON_TIMEOUT option</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="UpdateUserOptions"><emphasis role="bold">Class UMS::UpdateUserOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>firstname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the updated firstname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>lastname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the updated lastname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>privilege</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the updated privilege of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>email</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the updated email adress of the user</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="User"><emphasis role="bold">Class UMS::User Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the VISHNU user identifier</para></entry>
+            </row>
+            <row>
+              <entry><para>password</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the password of the user. At the beginning, an admin can give a temporary password or it is automatically generated by the System. </para></entry>
+            </row>
+            <row>
+              <entry><para>firstname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the firstname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>lastname</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the lastname of the user</para></entry>
+            </row>
+            <row>
+              <entry><para>privilege</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>is the privilege of the user (admin or simple user)</para></entry>
+            </row>
+            <row>
+              <entry><para>email</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>is the email of the user</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="SessionCloseType"><emphasis role="bold">Enumeration UMS::SessionCloseType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="SessionStateType"><emphasis role="bold">Enumeration UMS::SessionStateType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>INACTIVE</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>ACTIVE</para></entry>
+              <entry><para>1</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -4747,151 +4676,7 @@
     </section>
     <section>
       <title>Data types definitions</title>
-      <para xml:id="SubmitOptions"><emphasis role="bold">SubmitOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>name</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Assigns a job name. The default is the name of job path.</para></entry>
-            </row>
-            <row>
-              <entry><para>priority</para></entry>
-              <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-              <entry><para>Assigns priority of the job.</para></entry>
-            </row>
-            <row>
-              <entry><para>queue</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Assigns the queue or class of the job.</para></entry>
-            </row>
-            <row>
-              <entry><para>wallTime</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
-            </row>
-            <row>
-              <entry><para>memory</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>The size of memory that the job will use.</para></entry>
-            </row>
-            <row>
-              <entry><para>nbCpu</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>The number of cpu that the job will use.</para></entry>
-            </row>
-            <row>
-              <entry><para>nbNodesAndCpuPerNode</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>The number of nodes and processors per node.</para></entry>
-            </row>
-            <row>
-              <entry><para>OutPutPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Assigns the path and file for job output.</para></entry>
-            </row>
-            <row>
-              <entry><para>ErrorPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Assigns the path and file for job error.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="JobPriority"><emphasis role="bold">JobPriority Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>VERY_LOW</para></entry>
-              <entry><para>100</para></entry>
-            </row>
-            <row>
-              <entry><para>LOW</para></entry>
-              <entry><para>200</para></entry>
-            </row>
-            <row>
-              <entry><para>NORMAL</para></entry>
-              <entry><para>300</para></entry>
-            </row>
-            <row>
-              <entry><para>HIGH</para></entry>
-              <entry><para>400</para></entry>
-            </row>
-            <row>
-              <entry><para>VERY_HIGH</para></entry>
-              <entry><para>500</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListJobs"><emphasis role="bold">ListJobs Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>nbJobs</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>Represents the total number of jobs in the list.</para></entry>
-            </row>
-            <row>
-              <entry><para>nbRunningJobs</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>Represents of  running jobs in the list.</para></entry>
-            </row>
-            <row>
-              <entry><para>nbWaitingJobs</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>Represents the total number of waiting jobs in the list.</para></entry>
-            </row>
-            <row>
-              <entry><para>jobs</para></entry>
-              <entry><para>List of <link linkend="Job">Job</link></para></entry>
-              <entry><para>Is a list of  job information  (jobId, jobName, ...).</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="Job"><emphasis role="bold">Job Class Content</emphasis></para>
+      <para xml:id="Job"><emphasis role="bold">Class TMS::Job Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -5022,56 +4807,115 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="JobStatus"><emphasis role="bold">JobStatus Enumeration Type</emphasis></para>
+      <para xml:id="JobResult"><emphasis role="bold">Class TMS::JobResult Content</emphasis></para>
       <informaltable>
-        <tgroup cols="2">
+        <tgroup cols="3">
           <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
           <thead>
             <row>
               <entry>Name
 </entry>
-              <entry>Value
+              <entry>Type
+</entry>
+              <entry>Description
 </entry>
             </row>
           </thead>
           <tbody>
             <row>
-              <entry><para>RUNNING</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the id of the job.</para></entry>
             </row>
             <row>
-              <entry><para>WAITING</para></entry>
-              <entry><para>1</para></entry>
+              <entry><para>outputPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the job output results.</para></entry>
             </row>
             <row>
-              <entry><para>COMPLETED</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-            <row>
-              <entry><para>CANCELED</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-            <row>
-              <entry><para>HELD</para></entry>
-              <entry><para>4</para></entry>
-            </row>
-            <row>
-              <entry><para>QUEUED</para></entry>
-              <entry><para>5</para></entry>
-            </row>
-            <row>
-              <entry><para>FAILED</para></entry>
-              <entry><para>6</para></entry>
-            </row>
-            <row>
-              <entry><para>NOT_SUBMITTED</para></entry>
-              <entry><para>7</para></entry>
+              <entry><para>errorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="ListJobsOptions"><emphasis role="bold">ListJobsOptions Class Content</emphasis></para>
+      <para xml:id="ListJobResults"><emphasis role="bold">Class TMS::ListJobResults Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nbJobs</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the number of jobs.</para></entry>
+            </row>
+            <row>
+              <entry><para>Results</para></entry>
+              <entry><para>List of <link linkend="JobResult">JobResult</link></para></entry>
+              <entry><para>Represents the list of completed jobs results.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListJobs"><emphasis role="bold">Class TMS::ListJobs Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nbJobs</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents the total number of jobs in the list.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbRunningJobs</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents of  running jobs in the list.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbWaitingJobs</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents the total number of waiting jobs in the list.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobs</para></entry>
+              <entry><para>List of <link linkend="Job">Job</link></para></entry>
+              <entry><para>Is a list of  job information  (jobId, jobName, ...).</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListJobsOptions"><emphasis role="bold">Class TMS::ListJobsOptions Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -5142,74 +4986,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="ListJobResults"><emphasis role="bold">ListJobResults Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>nbJobs</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Is the number of jobs.</para></entry>
-            </row>
-            <row>
-              <entry><para>Results</para></entry>
-              <entry><para>List of <link linkend="JobResult">JobResult</link></para></entry>
-              <entry><para>Represents the list of completed jobs results.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="JobResult"><emphasis role="bold">JobResult Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>jobId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Represents the id of the job.</para></entry>
-            </row>
-            <row>
-              <entry><para>outputPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Is the path to the job output results.</para></entry>
-            </row>
-            <row>
-              <entry><para>errorPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListQueues"><emphasis role="bold">ListQueues Class Content</emphasis></para>
+      <para xml:id="ListQueues"><emphasis role="bold">Class TMS::ListQueues Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -5240,7 +5017,94 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="Queue"><emphasis role="bold">Queue Class Content</emphasis></para>
+      <para xml:id="ProgressOptions"><emphasis role="bold">Class TMS::ProgressOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the id of the job that the user wants to see its progression.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobOwner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the owner of the job.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Progression"><emphasis role="bold">Class TMS::Progression Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>jobId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job id.</para></entry>
+            </row>
+            <row>
+              <entry><para>jobName</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job name.</para></entry>
+            </row>
+            <row>
+              <entry><para>wallTime</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the job wall time.</para></entry>
+            </row>
+            <row>
+              <entry><para>startTime</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Start date and time of the job (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>endTime</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>End date and time of the job (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>percent</para></entry>
+              <entry><para>double</para></entry>
+              <entry><para>Represent the job progression. </para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
+              <entry><para>Represents the job status.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Queue"><emphasis role="bold">Class TMS::Queue Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -5316,7 +5180,73 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="QueueStatus"><emphasis role="bold">QueueStatus Enumeration Type</emphasis></para>
+      <para xml:id="SubmitOptions"><emphasis role="bold">Class TMS::SubmitOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns a job name. The default is the name of job path.</para></entry>
+            </row>
+            <row>
+              <entry><para>priority</para></entry>
+              <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
+              <entry><para>Assigns priority of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>queue</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns the queue or class of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>wallTime</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
+            </row>
+            <row>
+              <entry><para>memory</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The size of memory that the job will use.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbCpu</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The number of cpu that the job will use.</para></entry>
+            </row>
+            <row>
+              <entry><para>nbNodesAndCpuPerNode</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The number of nodes and processors per node.</para></entry>
+            </row>
+            <row>
+              <entry><para>OutPutPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns the path and file for job output.</para></entry>
+            </row>
+            <row>
+              <entry><para>ErrorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Assigns the path and file for job error.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="JobPriority"><emphasis role="bold">Enumeration TMS::JobPriority Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -5331,25 +5261,78 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>STARTED</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>VERY_LOW</para></entry>
+              <entry><para>100</para></entry>
             </row>
             <row>
-              <entry><para>RUNNING</para></entry>
-              <entry><para>1</para></entry>
+              <entry><para>LOW</para></entry>
+              <entry><para>200</para></entry>
             </row>
             <row>
-              <entry><para>NOT_STARTED</para></entry>
-              <entry><para>2</para></entry>
+              <entry><para>NORMAL</para></entry>
+              <entry><para>300</para></entry>
             </row>
             <row>
-              <entry><para>NOT_AVAILABLE</para></entry>
-              <entry><para>3</para></entry>
+              <entry><para>HIGH</para></entry>
+              <entry><para>400</para></entry>
+            </row>
+            <row>
+              <entry><para>VERY_HIGH</para></entry>
+              <entry><para>500</para></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="QueuePriority"><emphasis role="bold">QueuePriority Enumeration Type</emphasis></para>
+      <para xml:id="JobStatus"><emphasis role="bold">Enumeration TMS::JobStatus Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>RUNNING</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>WAITING</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>COMPLETED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>CANCELED</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>HELD</para></entry>
+              <entry><para>4</para></entry>
+            </row>
+            <row>
+              <entry><para>QUEUED</para></entry>
+              <entry><para>5</para></entry>
+            </row>
+            <row>
+              <entry><para>FAILED</para></entry>
+              <entry><para>6</para></entry>
+            </row>
+            <row>
+              <entry><para>NOT_SUBMITTED</para></entry>
+              <entry><para>7</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="QueuePriority"><emphasis role="bold">Enumeration TMS::QueuePriority Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -5386,89 +5369,35 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="Progression"><emphasis role="bold">Progression Class Content</emphasis></para>
+      <para xml:id="QueueStatus"><emphasis role="bold">Enumeration TMS::QueueStatus Type</emphasis></para>
       <informaltable>
-        <tgroup cols="3">
+        <tgroup cols="2">
           <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
+          <colspec colwidth="4cm"/>
           <thead>
             <row>
               <entry>Name
 </entry>
-              <entry>Type
-</entry>
-              <entry>Description
+              <entry>Value
 </entry>
             </row>
           </thead>
           <tbody>
             <row>
-              <entry><para>jobId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Represents the job id.</para></entry>
+              <entry><para>STARTED</para></entry>
+              <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>jobName</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Represents the job name.</para></entry>
+              <entry><para>RUNNING</para></entry>
+              <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>wallTime</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>Represents the job wall time.</para></entry>
+              <entry><para>NOT_STARTED</para></entry>
+              <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>startTime</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>Start date and time of the job (unix timestamp)</para></entry>
-            </row>
-            <row>
-              <entry><para>endTime</para></entry>
-              <entry><para>long</para></entry>
-              <entry><para>End date and time of the job (unix timestamp)</para></entry>
-            </row>
-            <row>
-              <entry><para>percent</para></entry>
-              <entry><para>double</para></entry>
-              <entry><para>Represent the job progression. </para></entry>
-            </row>
-            <row>
-              <entry><para>status</para></entry>
-              <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
-              <entry><para>Represents the job status.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ProgressOptions"><emphasis role="bold">ProgressOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>jobId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Represents the id of the job that the user wants to see its progression.</para></entry>
-            </row>
-            <row>
-              <entry><para>jobOwner</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Represents the owner of the job.</para></entry>
+              <entry><para>NOT_AVAILABLE</para></entry>
+              <entry><para>3</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5480,86 +5409,7 @@
     <section>
       <title>Definition of the functions of the package</title>
       <section>
-        <title>Function IMS::getUpdateFrequency</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>freq</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Frequency the data are updated, in second</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getUpdateFrequency() function gets the update frequency of the IMS database</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>Error code returned if success</para></entry>
-              </row>
-              <row>
-                <entry><para>DBERROR</para></entry>
-                <entry><para>The database generated an error</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
-                <entry><para>If a parameter is invalid</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>getUpdateFrequency</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>int&amp; <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function IMS::export</title>
+        <title>Function IMS::exportCommands</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5600,16 +5450,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>exportType</para></entry>
-                <entry><para><link linkend="ExportType">ExportType</link></para></entry>
-                <entry><para>The format to export</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>filename</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The file containing the commands</para></entry>
+                <entry><para>The path of the output file containing the vishnu shell commands</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -5617,7 +5460,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The export() function exports all the commands made by a user during a session</para>
+        <para>The exportCommands() function exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -5649,10 +5492,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>export</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>oldSessionKey</parameter></paramdef><paramdef>const ExportType&amp; <parameter>exportType</parameter></paramdef><paramdef>string&amp; <parameter>filename</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>exportCommands</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>oldSessionKey</parameter></paramdef><paramdef>string&amp; <parameter>filename</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function IMS::replay</title>
+        <title>Function IMS::getMetricCurrentValue</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5686,24 +5529,31 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>filename</para></entry>
+                <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>A file containing the commands to replay</para></entry>
+                <entry><para>The id of the machine</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>type</para></entry>
-                <entry><para><link linkend="ExportType">ExportType</link></para></entry>
-                <entry><para>The type of the script to execute (python, shell)</para></entry>
+                <entry><para>metricType</para></entry>
+                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry><para>Type of metric</para></entry>
                 <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>metricValue</para></entry>
+                <entry><para><link linkend="Metric">Metric</link></para></entry>
+                <entry><para>Value of the metric</para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The replay() function replays a script of VISHNU commands</para>
+        <para>The getMetricCurrentValue() function retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -5735,10 +5585,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>replay</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>filename</parameter></paramdef><paramdef>const ExportType&amp; <parameter>type</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>metricType</parameter></paramdef><paramdef>Metric&amp; <parameter>metricValue</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function IMS::getMetricVal</title>
+        <title>Function IMS::getMetricHistory</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5781,28 +5631,28 @@
               <row>
                 <entry><para>startTime</para></entry>
                 <entry><para>long</para></entry>
-                <entry><para>The start time to look for the metric</para></entry>
+                <entry><para>Start time of metric history</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>endTime</para></entry>
                 <entry><para>long</para></entry>
-                <entry><para>The end time to search</para></entry>
+                <entry><para>End time of metric history</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>metricType</para></entry>
                 <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>The metric types</para></entry>
+                <entry><para>Type of metric</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>res</para></entry>
+                <entry><para>metricValues</para></entry>
                 <entry><para><link linkend="ListMetric">ListMetric</link></para></entry>
-                <entry><para>A list of corresponding results</para></entry>
+                <entry><para>List of metric values</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -5810,7 +5660,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricVal() function gets data from a metric</para>
+        <para>The getMetricHistory() function retrieve the history of values of a metric on a machine</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -5842,100 +5692,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>getMetricVal</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const long&amp; <parameter>startTime</parameter></paramdef><paramdef>const long&amp; <parameter>endTime</parameter></paramdef><paramdef>const MetricType&amp; <parameter>metricType</parameter></paramdef><paramdef>ListMetric&amp; <parameter>res</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function IMS::getCurrentData</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The id of the machine the user wants the total diskSpace</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>dataType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>The type of data the user wants to get</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>res</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>The total diskSpace on the machine</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getCurrentData() function gets data corresponding to the datatype on a machine</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>Error code returned if success</para></entry>
-              </row>
-              <row>
-                <entry><para>DBERROR</para></entry>
-                <entry><para>The database generated an error</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
-                <entry><para>If a parameter is invalid</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>getCurrentData</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>dataType</parameter></paramdef><paramdef>double&amp; <parameter>res</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>getMetricHistory</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const long&amp; <parameter>startTime</parameter></paramdef><paramdef>const long&amp; <parameter>endTime</parameter></paramdef><paramdef>const MetricType&amp; <parameter>metricType</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValues</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getProcesses</title>
@@ -6018,6 +5775,92 @@
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>getProcesses</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListProcesses&amp; <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function IMS::setSystemInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The key of the session of the user that submits the command</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The id of the machine</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>systemInfo</para></entry>
+                <entry><para><link linkend="SystemInfo">SystemInfo</link></para></entry>
+                <entry><para>Contains system information to store in Vishnu database</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The setSystemInfo() function updates the system information of a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>DBERROR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>setSystemInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SystemInfo&amp; <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::setSystemThreshold</title>
@@ -6565,7 +6408,7 @@
               <row>
                 <entry><para>loadShedType</para></entry>
                 <entry><para><link linkend="LoadShedType">LoadShedType</link></para></entry>
-                <entry><para>Type of load shedding</para></entry>
+                <entry><para>Selects a load shedding mode (SOFT: flushes all services, HARD: stops all services)</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6573,7 +6416,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The loadShed() function loads shed a machine, 2 modes are available, soft or hard. Soft flushes the machine, hard stops the machine</para>
+        <para>The loadShed() function load sheds a machine</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -6691,9 +6534,9 @@
         <funcsynopsis><funcprototype><funcdef>int <function>setUpdateFrequency</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const int&amp; <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function IMS::restart</title>
+        <title>Function IMS::getUpdateFrequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
+        <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6725,128 +6568,17 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>type</para></entry>
-                <entry><para><link linkend="RestartType">RestartType</link></para></entry>
-                <entry><para>The type of restart desired</para></entry>
-                <entry><para>IN</para></entry>
+                <entry><para>freq</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>Frequency the data are updated, in second</para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>componentName</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>If not restarting all, the name of the component to restart</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restart() function restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>Error code returned if success</para></entry>
-              </row>
-              <row>
-                <entry><para>COMPONENT_ERROR</para></entry>
-                <entry><para>If a component is unavailable</para></entry>
-              </row>
-              <row>
-                <entry><para>DBERROR</para></entry>
-                <entry><para>The database generated an error</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_PARAMETER</para></entry>
-                <entry><para>If a parameter is invalid</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const RestartType&amp; <parameter>type</parameter></paramdef><paramdef>const string&amp; <parameter>componentName</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function IMS::updateMachine</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The id of the machine to update</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>CompoMachine</para></entry>
-                <entry><para><link linkend="CompoMachine">CompoMachine</link></para></entry>
-                <entry><para>A description of the type of component to change</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>val</para></entry>
-                <entry><para><link linkend="object">object</link></para></entry>
-                <entry><para>The value to set</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>lang</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>For machine description, the language used</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateMachine() function updates the machines information in the database (description, diskspace or memory)</para>
+        <para>The getUpdateFrequency() function gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -6878,12 +6610,131 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>updateMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const CompoMachine&amp; <parameter>CompoMachine</parameter></paramdef><paramdef>const object&amp; <parameter>val</parameter></paramdef><paramdef>const string&amp; <parameter>lang</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>getUpdateFrequency</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>int&amp; <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
       <title>Data types definitions</title>
-      <para xml:id="ExportType"><emphasis role="bold">ExportType Enumeration Type</emphasis></para>
+      <para xml:id="ListMetric"><emphasis role="bold">Class IMS::ListMetric Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>metric</para></entry>
+              <entry><para>List of <link linkend="Metric">Metric</link></para></entry>
+              <entry><para>The metrics of the list</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListProcesses"><emphasis role="bold">Class IMS::ListProcesses Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>processName</para></entry>
+              <entry><para>List of string</para></entry>
+              <entry><para>The processes of the list</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Metric"><emphasis role="bold">Class IMS::Metric Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+              <entry><para>The type of the metric</para></entry>
+            </row>
+            <row>
+              <entry><para>value</para></entry>
+              <entry><para>double</para></entry>
+              <entry><para>The value of the metric</para></entry>
+            </row>
+            <row>
+              <entry><para>time</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The timestamp the metric had the value</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="SystemInfo"><emphasis role="bold">Class IMS::SystemInfo Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>memory</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Amount of RAM memory available on the machine (in Bytes)</para></entry>
+            </row>
+            <row>
+              <entry><para>diskSpace</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Amount of disk space available on the machine (in KBytes)</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LoadShedType"><emphasis role="bold">Enumeration IMS::LoadShedType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -6898,17 +6749,17 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>PYTHON</para></entry>
+              <entry><para>SOFT</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>SHELL</para></entry>
+              <entry><para>HARD</para></entry>
               <entry><para>1</para></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="MetricType"><emphasis role="bold">MetricType Enumeration Type</emphasis></para>
+      <para xml:id="MetricType"><emphasis role="bold">Enumeration IMS::MetricType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -6949,185 +6800,6 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="ListMetric"><emphasis role="bold">ListMetric Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>metric</para></entry>
-              <entry><para>List of <link linkend="Metric">Metric</link></para></entry>
-              <entry><para>The metrics of the list</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="Metric"><emphasis role="bold">Metric Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>type</para></entry>
-              <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-              <entry><para>The type of the metric</para></entry>
-            </row>
-            <row>
-              <entry><para>value</para></entry>
-              <entry><para>double</para></entry>
-              <entry><para>The value of the metric</para></entry>
-            </row>
-            <row>
-              <entry><para>time</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>The timestamp the metric had the value</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="ListProcesses"><emphasis role="bold">ListProcesses Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>processName</para></entry>
-              <entry><para>List of string</para></entry>
-              <entry><para>The processes of the list</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="LoadShedType"><emphasis role="bold">LoadShedType Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>SOFT</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>HARD</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="RestartType"><emphasis role="bold">RestartType Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>ALL</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>SED</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>AGENT</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-            <row>
-              <entry><para>DAEMON</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-            <row>
-              <entry><para>MACHINE</para></entry>
-              <entry><para>4</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="CompoMachine"><emphasis role="bold">CompoMachine Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>DESC</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>DISKSPACE</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>RAM</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
     </section>
   </chapter>
   <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
@@ -7161,13 +6833,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -7253,7 +6918,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>createFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>createFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::createDir</title>
@@ -7282,13 +6947,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -7374,7 +7032,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>createDir</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::removeFile</title>
@@ -7403,13 +7061,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -7488,7 +7139,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>removeFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>removeFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::removeDir</title>
@@ -7517,13 +7168,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -7602,7 +7246,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>removeDir</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>removeDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::chGrpOfFile</title>
@@ -7631,13 +7275,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -7723,7 +7360,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>chGrpOfFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>chGrpOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::chModOfFile</title>
@@ -7752,13 +7389,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -7844,7 +7474,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>chModOfFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>chModOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::headOfFile</title>
@@ -7874,13 +7504,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session id</para></entry>
@@ -7902,7 +7525,7 @@
                 <entry><para>no</para></entry>
               </row>
               <row>
-                <entry><para>buffer</para></entry>
+                <entry><para>fileContent</para></entry>
                 <entry><para><link linkend="StringList">StringList</link></para></entry>
                 <entry><para>a buffer in which the first &quot;nline&quot; lines will be stored. he string buffer[i] represents the last &quot;nline&quot; of the file located in pathList[i] (0&lt;=i&lt;length(pathList)).</para></entry>
                 <entry><para>OUT</para></entry>
@@ -7972,7 +7595,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>headOfFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const int&amp; <parameter>nLine</parameter></paramdef><paramdef>StringList&amp; <parameter>buffer</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>headOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const int&amp; <parameter>nLine</parameter></paramdef><paramdef>StringList&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::tailOfFile</title>
@@ -8002,13 +7625,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session id</para></entry>
@@ -8030,7 +7646,7 @@
                 <entry><para>no</para></entry>
               </row>
               <row>
-                <entry><para>buffer</para></entry>
+                <entry><para>fileContent</para></entry>
                 <entry><para><link linkend="StringList">StringList</link></para></entry>
                 <entry><para>a buffer in which the last &quot;nLine&quot; lines will be stored. The string buffer[i] represents the last &quot;nline&quot; of the file located in pathList[i] (0&lt;=i&lt;length(pathList)).</para></entry>
                 <entry><para>OUT</para></entry>
@@ -8100,7 +7716,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const int&amp; <parameter>nLine</parameter></paramdef><paramdef>StringList&amp; <parameter>buffer</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const int&amp; <parameter>nLine</parameter></paramdef><paramdef>StringList&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::listDir</title>
@@ -8130,13 +7746,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session id</para></entry>
@@ -8151,17 +7760,17 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>buffer</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>a buffer in which the contents of the directories will be stored.</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="LsDirOptions">LsDirOptions</link></para></entry>
-                <entry/>
+                <entry><para>List of options for the listDir command</para></entry>
                 <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+              <row>
+                <entry><para>dirContent</para></entry>
+                <entry><para><link linkend="StringList">StringList</link></para></entry>
+                <entry><para>a buffer in which the contents of the directories will be stored (only file names with short format, all file informations with long format)</para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -8228,7 +7837,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listDir</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>StringList&amp; <parameter>buffer</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options=LsDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options=LsDirOptions()</parameter></paramdef><paramdef>StringList&amp; <parameter>dirContent</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::copyFile</title>
@@ -8784,13 +8393,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session identifier</para></entry>
@@ -8798,11 +8400,11 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>thrRef</para></entry>
-                <entry><para><link linkend="LongList">LongList</link></para></entry>
-                <entry><para>a list of file tranfer identifiers</para></entry>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="StopFileTransferOptions">StopFileTransferOptions</link></para></entry>
+                <entry><para>the file transfer command options</para></entry>
                 <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -8868,321 +8470,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>stopFileTransfer</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LongList&amp; <parameter>thrRef</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function FMS::stopAllFileTransfer</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
-                <entry/>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopAllFileTransfer() function stops all  file transfer in a session.</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_OPTION</para></entry>
-                <entry><para>The option provided is invalid for this service.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_SESSION_KEY</para></entry>
-                <entry><para>Invalid provided session key.</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_ERROR</para></entry>
-                <entry><para>an unkown error occured.</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>stopAllFileTransfer</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function FMS::stopAllUsersFileTransfer</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
-                <entry/>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopAllUsersFileTransfer() function stops all  users file transfer.</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_OPTION</para></entry>
-                <entry><para>The option provided is invalid for this service.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_SESSION_KEY</para></entry>
-                <entry><para>Invalid provided session key.</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_ERROR</para></entry>
-                <entry><para>an unkown error occured.</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>stopAllUsersFileTransfer</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function FMS::getFileTransferStatus</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>thrRef</para></entry>
-                <entry><para><link linkend="LongList">LongList</link></para></entry>
-                <entry><para>a list of file tranfer identifiers</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getFileTransferStatus() function gives the status of a list of file transfer.</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_OPTION</para></entry>
-                <entry><para>The option provided is invalid for this service.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_SESSION_KEY</para></entry>
-                <entry><para>Invalid provided session key.</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_ERROR</para></entry>
-                <entry><para>an unkown error occured.</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>getFileTransferStatus</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LongList&amp; <parameter>thrRef</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>stopFileTransfer</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StopFileTransferOptions&amp; <parameter>options=StopFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::listFilesTransferStatus</title>
@@ -9216,7 +8504,7 @@
                 <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
                 <entry/>
                 <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -9285,121 +8573,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransferStatus</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::listAllUsersFilesTransferStatus</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
-                <entry/>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listAllUsersFilesTransferStatus() function displays the status of all files transfer submitted by User.</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_OPTION</para></entry>
-                <entry><para>The option provided is invalid for this service.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_SESSION_KEY</para></entry>
-                <entry><para>Invalid provided session key.</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_ERROR</para></entry>
-                <entry><para>an unkown error occured.</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listAllUsersFilesTransferStatus</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function FMS::DisplayFilesTransferHistory</title>
+        <title>Function FMS::listFilesTransferHistory</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -9430,13 +8604,13 @@
                 <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
                 <entry/>
                 <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The DisplayFilesTransferHistory() function displays the history of all files transfer submitted by User.</para>
+        <para>The listFilesTransferHistory() function displays the history of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -9496,110 +8670,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>DisplayFilesTransferHistory</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransferHistory</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::DisplayAllUsersFilesTransferHistory</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
-                <entry/>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The DisplayAllUsersFilesTransferHistory() function displays the history of all files transfer submitted by all Users.</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function.</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_OPTION</para></entry>
-                <entry><para>The option provided is invalid for this service.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>FMS_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>INVALID_SESSION_KEY</para></entry>
-                <entry><para>Invalid provided session key.</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_ERROR</para></entry>
-                <entry><para>an unkown error occured.</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service has been performed succesfully.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>DisplayAllUsersFilesTransferHistory</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function FMS::GetFilesInfo</title>
+        <title>Function FMS::getFilesInfo</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any Vishnu user.</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -9625,13 +8699,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
@@ -9657,7 +8724,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The GetFilesInfo() function displays the information  of  files.</para>
+        <para>The getFilesInfo() function displays the information  of  files.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -9717,74 +8784,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>GetFilesInfo</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>FileStatList&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>getFilesInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>FileStatList&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
       <title>Data types definitions</title>
-      <para xml:id="StringList"><emphasis role="bold">StringList Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
-              <entry><para>listOfStrings</para></entry>
-              <entry><para>List of string</para></entry>
-              <entry><para>the dynamic list of strings.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="LsDirOptions"><emphasis role="bold">LsDirOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
-              <entry><para>isRecursive</para></entry>
-              <entry><para>boolean</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="CopyFileOptions"><emphasis role="bold">CopyFileOptions Class Content</emphasis></para>
+      <para xml:id="CopyFileOptions"><emphasis role="bold">Class FMS::CopyFileOptions Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -9820,204 +8825,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="TransferCommand"><emphasis role="bold">TransferCommand Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>SCP</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>RSYNC</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="LongList"><emphasis role="bold">LongList Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
-              <entry><para>listOfLongs</para></entry>
-              <entry><para>List of long</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="MvFileOptions"><emphasis role="bold">MvFileOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
-              <entry><para>transferCommand</para></entry>
-              <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-              <entry><para>the command to use to perform file transfer.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="LsFileTransferOptions"><emphasis role="bold">LsFileTransferOptions Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
-              <entry><para>sessionKey</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>the command to use to perform file transfer.</para></entry>
-            </row>
-            <row>
-              <entry><para>machineId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>the command to use to perform file transfer.</para></entry>
-            </row>
-            <row>
-              <entry><para>nbFileTransfers</para></entry>
-              <entry><para>int</para></entry>
-              <entry><para>the command to use to perform file transfer.</para></entry>
-            </row>
-            <row>
-              <entry><para>status</para></entry>
-              <entry><para><link linkend="Status">Status</link></para></entry>
-              <entry><para>the command to use to perform file transfer.</para></entry>
-            </row>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>the user identifier</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="Status"><emphasis role="bold">Status Enumeration Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>INPROGRESS</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>COMPLETED</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>CANCELLED</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-            <row>
-              <entry><para>FAILED</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="FileStatList"><emphasis role="bold">FileStatList Class Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>listOfFileStat</para></entry>
-              <entry><para>List of <link linkend="FileStat">FileStat</link></para></entry>
-              <entry><para>list of inodes.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="FileStat"><emphasis role="bold">FileStat Class Content</emphasis></para>
+      <para xml:id="FileStat"><emphasis role="bold">Class FMS::FileStat Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -10093,7 +8901,249 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="FileType"><emphasis role="bold">FileType Enumeration Type</emphasis></para>
+      <para xml:id="FileStatList"><emphasis role="bold">Class FMS::FileStatList Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>listOfFileStat</para></entry>
+              <entry><para>List of <link linkend="FileStat">FileStat</link></para></entry>
+              <entry><para>list of inodes.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LongList"><emphasis role="bold">Class FMS::LongList Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Error</para></entry>
+              <entry><para>Error</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>listOfLongs</para></entry>
+              <entry><para>List of long</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LsDirOptions"><emphasis role="bold">Class FMS::LsDirOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Error</para></entry>
+              <entry><para>Error</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>longFormat</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>allFiles</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="LsFileTransferOptions"><emphasis role="bold">Class FMS::LsFileTransferOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Error</para></entry>
+              <entry><para>Error</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>transferId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>a given transfer id</para></entry>
+            </row>
+            <row>
+              <entry><para>fromMachineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>the machine that is the source of the file transfer</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>allows the admin to list file transfers initiated by a specific user</para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="Status">Status</link></para></entry>
+              <entry><para>the file transfer status</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="MvFileOptions"><emphasis role="bold">Class FMS::MvFileOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Error</para></entry>
+              <entry><para>Error</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>transferCommand</para></entry>
+              <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+              <entry><para>the command to use to perform file transfer.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="StopFileTransferOptions"><emphasis role="bold">Class FMS::StopFileTransferOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Error</para></entry>
+              <entry><para>Error</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>transferId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>a given transfer id</para></entry>
+            </row>
+            <row>
+              <entry><para>fromMachineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>the machine that is the source of the file transfer</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>allows an admin to stop file transfers of a specific user</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="StringList"><emphasis role="bold">Class FMS::StringList Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Error</para></entry>
+              <entry><para>Error</para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+            <row>
+              <entry><para>listOfStrings</para></entry>
+              <entry><para>List of string</para></entry>
+              <entry><para>the dynamic list of strings.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="FileType"><emphasis role="bold">Enumeration FMS::FileType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -10134,6 +9184,64 @@
             <row>
               <entry><para>REGULAR</para></entry>
               <entry><para>6</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Status"><emphasis role="bold">Enumeration FMS::Status Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>INPROGRESS</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>COMPLETED</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>CANCELLED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>FAILED</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="TransferCommand"><emphasis role="bold">Enumeration FMS::TransferCommand Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>SCP</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>RSYNC</para></entry>
+              <entry><para>1</para></entry>
             </row>
           </tbody>
         </tgroup>

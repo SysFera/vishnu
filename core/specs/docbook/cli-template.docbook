@@ -87,7 +87,7 @@
 	  <para> A commands is defined as follows:</para>
       
 	  <para><emphasis role="bold">Access</emphasis></para>
-	  <para>Here is detailed the access of the command line for any VISHNU user or only for admin.</para>
+	  <para>Here is detailed the access level of the command line (i.e. the privilege required to use this command)</para>
 	   
 	  <para><emphasis role="bold">Description </emphasis></para>
 	  <para>Here is detailed the purpose of the command line.</para>
@@ -95,7 +95,7 @@
 	  <para><emphasis role="bold">Example of use </emphasis></para>
 	  <para>Here is detailed an example of the use of the command line which start by optional arguments preceded by a short letter and 
 	   the required arguments at the end.<emphasis role="bold"/></para>
-	  <para>myCommand -l acLogin -s sshKeyPath userId </para>
+          <para>myCommand <emphasis role="bold">-l</emphasis> acLogin  <emphasis role="bold">-s</emphasis> sshKeyPath userId </para>
 	    
 	  <para><emphasis role="bold">Parameters</emphasis></para>
 	  <para>The following table contains all the input arguments of the command with their type and description, 
