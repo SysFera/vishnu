@@ -84,7 +84,7 @@
 	<section><!-- Generic method definition format -->
 	  <title>Generic method definition format</title>
 	  <para><emphasis role="bold">Parameters</emphasis></para>
-	  <para>The following table contain all the input and output parameters of the method, along with their type and description,
+	  <para>The following table contains all the input and output parameters of the method, along with their type and description,
 		and their optional or required flag.</para>
 	  <informaltable>
 	    <tgroup cols="5">
