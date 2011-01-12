@@ -138,7 +138,7 @@
             <row>
               <entry><para>1.3</para></entry>
               <entry><para>Caractéristique d'une authentification</para></entry>
-              <entry><para>Une authentification se fait à l'aide d'un login et d'un mot de passe qui doivent être au préalable enregistrés dans une base de données Postgresql version 8.4 pour vérification. Le login est unique et le mot de passe enregistré est crypté en utilisant la fonction crypt de la librairie libcrypt de Linux. La procédure d'authentification est donc sécurisée en ce sens que le login est unique dans la base de données et que le mot de passe est crypté par un algorithme efficace SHA-512. Avant tout ajout d'un nouvel utilisateur via vishnu dans la base de données le système vérifie que le login n'est pas déjà utilisé.</para></entry>
+              <entry><para>Une authentification se fait à l'aide d'un login et d'un mot de passe qui doivent être au préalable enregistrés dans la base de données pour vérification. Le login est unique et le mot de passe enregistré est crypté en utilisant la fonction crypt de la librairie libcrypt de Linux. La procédure d'authentification est donc sécurisée en ce sens que le login est unique dans la base de données et que le mot de passe est crypté par un algorithme efficace SHA-512. Avant tout ajout d'un nouvel utilisateur via vishnu dans la base de données le système vérifie que le login n'est pas déjà utilisé.</para></entry>
             </row>
             <row>
               <entry><para>1.4</para></entry>
@@ -237,36 +237,11 @@
             </row>
             <row>
               <entry><para>3.1</para></entry>
-              <entry><para>Sécurité de le configuration du système</para></entry>
-              <entry/>
-            </row>
-            <row>
-              <entry><para>3.1.1</para></entry>
-              <entry><para>Consultation et modification de la configuration UMS</para></entry>
-              <entry><para>Un administrateur peut consulter et modifier l'ensemble de le configuration des utilisateurs.</para></entry>
-            </row>
-            <row>
-              <entry><para>3.1.2</para></entry>
-              <entry><para>Sauvegarde et restauration de la configuration UMS</para></entry>
-              <entry><para>L'ensemble de la configuration des utilisateurs peut être sauvegardée dans un fichier et restaurée. La nouvelle configuration vient remplacer la configuration existante. La restauration a lieu sans redémarrage de l'intergiciel.</para></entry>
-            </row>
-            <row>
-              <entry><para>3.1.3</para></entry>
-              <entry><para>Prise en compte des modifications</para></entry>
-              <entry><para>La prise en compte des modifications de la configuration est immédiate sans redémarrage de l'intergiciel</para></entry>
-            </row>
-            <row>
-              <entry><para>3.2</para></entry>
-              <entry><para>Configuration du délai max. d'inactivité</para></entry>
-              <entry><para>Un administrateur peut définir la valeur maximum du délai d'inactivité pris en compte pour la déconnexion automatique.</para></entry>
-            </row>
-            <row>
-              <entry><para>3.3</para></entry>
               <entry><para>Configuration de l'option par défaut de fin de session</para></entry>
               <entry><para>Un administrateur peut définir quelle est l'option par défaut pour la fermeture automatique d'une session utilisateur: soit terminaison en cas de déconnexion de l'utilisateur du client, soit terminaison après expiration du délai d'inactivité</para></entry>
             </row>
             <row>
-              <entry><para>3.4</para></entry>
+              <entry><para>3.2</para></entry>
               <entry><para>Utilisation d'un compte tiers</para></entry>
               <entry><para>Un administrateur de l’intergiciel pourra ouvrir une session VISHNU avec le compte d’un utilisateur n’étant pas administrateur lui-même.</para></entry>
             </row>
@@ -278,14 +253,6 @@
       <title>Glossaire</title>
       <para><itemizedlist>
           <listitem>
-            <para><emphasis role="bold">Configuration d'un utilisateur</emphasis>: correspond à la description d'un compte utilisateur sur une machine distante (
-login, chemin jusqu'à la clé ssh, chemin jusqu'au 
-repertoire home) pour un utilisateur VISHNU dans la base de données. Il permettra 
-à l'utilisateur d'avoir accès à une machine distante via VISHNU.
-
-</para>
-          </listitem>
-          <listitem>
             <para><emphasis role="bold">Firewall (ou pare-feu en français)</emphasis>: est un matériel ou un logiciel
 qui impose une politique de sécurité 
 pour protéger un réseau en constituant une
@@ -293,11 +260,11 @@ barrière (un filtre) avec d'autres réseaux.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">MD5</emphasis>: est un acronyme de Message Digest 5. 
-C'est une fonction de hachage cryptograpique.</para>
+C'est une fonction de hachage cryptographique.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SHA-512</emphasis>: SHA est un acronyme de Secure Hash Algorithm. C'est une fonction de hachage cryptographique dérivée
-de SHA-1 et qui a une empreinte de 512 bits.</para>
+            <para><emphasis role="bold">SHA-512</emphasis>: SHA-512 est un acronyme de Secure Hash Algorithm avec une empreinte de 512 bits. C'est une fonction de hachage cryptographique dérivée
+de SHA-1.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SSH</emphasis>: à la fois programme exécutable et protocole de communication sécurisé utilisant un échange de clés de chiffrement en début de connexion.</para>
