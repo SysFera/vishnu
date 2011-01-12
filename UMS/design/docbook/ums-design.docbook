@@ -950,11 +950,23 @@
           </informaltable>
    	  
 	  <para>The following paragraphs show the internal design of all services:</para>
+	  
 	  <para><emphasis role="bold">UMS::connect</emphasis></para>
+	  
+	  <para>The connect service allows the user to open a session by providing:</para> 
+	  <para><emphasis role="bold">Required parameters:</emphasis></para>
+	  <para> - Login and password, </para> 
+	  <para><emphasis role="bold">Optional parameters:</emphasis></para>
+	  <para> - The way for closing the session (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT), </para> 
+	  <para> - he maximum delay in seconds when the CLOSE_ON_TIMEOUT option is set,</para>
+	  <para> - For administrators, it is possible to open a session as he/she was a specific user.</para>
+	  
+	  <para><emphasis role="bold">Internal client and server design:</emphasis></para>
+	<!--<para><emphasis role="bold">UMS::connect</emphasis></para>-->
 	    <informaltable>
 	      <tgroup cols="2">
-		<colspec colwidth="5cm"/>
-		<colspec colwidth="5cm"/>
+		<colspec colwidth="8.5cm"/>
+		<colspec colwidth="8.5cm"/>
 		<thead>
 		  <row>
 		    <entry>Client</entry>
@@ -964,7 +976,13 @@
 		
 		<tbody>
 		  <row>
-		    <entry><para>Client actions description</para></entry>
+		    <entry><para> - The password is crypted by using the Secure Hash Algorithm SHA-512 of the Linux library libcrypt,</para>
+			   <para> - If the close policy option is set (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT), for command line it can be set on an
+			  environment variable VISHNU_CLOSE_POLICY and used by default,</para>
+			   <para> - If the close policy option is set to CLOSE_ON_TIMEOUT, the inactivity delay in seconds can be defined,</para>
+			   <para> - The programs checks the ssk key path of the user's machine define on an environment variable and get its containing as a string,</para>
+			   <para> - All optional parameters are encapsulates on the <link linkend="ConnectOptions">ConnectOptions</link> object</para>
+		    </entry>
 		    <entry><para>Server actions description</para></entry>
 		  </row>
 		</tbody>
