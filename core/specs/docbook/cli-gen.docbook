@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book
-    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <info>
+ <book xmlns="http://docbook.org/ns/docbook" version="5.0"> 
+ <info>
     <author>
       <personname>
         <firstname>Benjamin</firstname>
@@ -5658,7 +5657,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listDir command line displays  the contents of remote directory. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listDir   path</para>
+        <para>listDir  <emphasis role="bold">-l</emphasis> <emphasis role="bold">-a</emphasis>  path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5692,15 +5691,15 @@
               <row>
                 <entry><para>longFormat</para></entry>
                 <entry><para>boolean</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>l</para></entry>
+                <entry><para>It specifies the long display format (all available file informations)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>allFiles</para></entry>
                 <entry><para>boolean</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>Allows to display all files including hidden files</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5751,7 +5750,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyFile command line executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyFile  <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
+        <para>copyFile  <emphasis role="bold">-r</emphasis> <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5792,8 +5791,8 @@
               <row>
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>r</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -5859,7 +5858,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
+        <para>copyAsyncFile  <emphasis role="bold">-r</emphasis> <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5900,8 +5899,8 @@
               <row>
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
-                <entry><para>TO DO</para></entry>
-                <entry><para>TO DO</para></entry>
+                <entry><para>r</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>

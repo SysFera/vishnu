@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book
-    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <info>
+ <book xmlns="http://docbook.org/ns/docbook" version="5.0"> 
+ <info>
     <author>
       <personname>
         <firstname>Benjamin</firstname>
@@ -8914,7 +8913,7 @@
             <row>
               <entry><para>isRecursive</para></entry>
               <entry><para>boolean</para></entry>
-              <entry><para>TO DO</para></entry>
+              <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
             </row>
             <row>
               <entry><para>transferCommand</para></entry>
@@ -9016,12 +9015,12 @@
             <row>
               <entry><para>longFormat</para></entry>
               <entry><para>boolean</para></entry>
-              <entry><para>TO DO</para></entry>
+              <entry><para>It specifies the long display format (all available file informations)</para></entry>
             </row>
             <row>
               <entry><para>allFiles</para></entry>
               <entry><para>boolean</para></entry>
-              <entry><para>TO DO</para></entry>
+              <entry><para>Allows to display all files including hidden files</para></entry>
             </row>
           </tbody>
         </tgroup>
