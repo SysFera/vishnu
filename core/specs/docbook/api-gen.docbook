@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book
-    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <author>
       <personname>
@@ -314,7 +313,7 @@
       <section>
         <title>Function UMS::connect</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -430,7 +429,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options=ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>connect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const ConnectOptions&amp; <parameter>options = ConnectOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::addVishnuUser</title>
@@ -651,7 +650,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>updateUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const UpdateUserOptions&amp; <parameter>options=UpdateUserOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>updateUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const UpdateUserOptions&amp; <parameter>options = UpdateUserOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::deleteUser</title>
@@ -755,7 +754,7 @@
       <section>
         <title>Function UMS::close</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -839,7 +838,7 @@
       <section>
         <title>Function UMS::changePassword</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1040,7 +1039,7 @@
       <section>
         <title>Function UMS::addLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1147,7 +1146,7 @@
       <section>
         <title>Function UMS::updateLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1242,7 +1241,7 @@
       <section>
         <title>Function UMS::deleteLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1814,7 +1813,7 @@
       <section>
         <title>Function UMS::listLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1911,12 +1910,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listLocalAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options=ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listLocalAccount</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts&amp; <parameter>listLocalAcct</parameter></paramdef><paramdef>const ListLocalAccOptions&amp; <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listMachine</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2013,12 +2012,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options=ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines&amp; <parameter>listMachine</parameter></paramdef><paramdef>const ListMachineOptions&amp; <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listHistoryCmd</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2115,12 +2114,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listHistoryCmd</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands&amp; <parameter>listCommands</parameter></paramdef><paramdef>const ListCmdOptions&amp; <parameter>options=ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listHistoryCmd</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands&amp; <parameter>listCommands</parameter></paramdef><paramdef>const ListCmdOptions&amp; <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listOptions</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2225,7 +2224,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listOptions</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues&amp; <parameter>listOptValues=ListOptionsValues()</parameter></paramdef><paramdef>const ListOptOptions&amp; <parameter>options=ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listOptions</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues&amp; <parameter>listOptValues</parameter></paramdef><paramdef>const ListOptOptions&amp; <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listUsers</title>
@@ -2327,12 +2326,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const string&amp; <parameter>userIdOption = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::listSessions</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2433,12 +2432,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listSessions</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions&amp; <parameter>listsession</parameter></paramdef><paramdef>const ListSessionOptions&amp; <parameter>options=ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listSessions</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions&amp; <parameter>listsession</parameter></paramdef><paramdef>const ListSessionOptions&amp; <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::configureOption</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2624,7 +2623,7 @@
       <section>
         <title>Function UMS::vishnuInitialize</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2692,7 +2691,7 @@
       <section>
         <title>Function UMS::vishnuFinalize</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no parameters.</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3573,7 +3572,7 @@
       <section>
         <title>Function TMS::submitJob</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3711,12 +3710,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>jobPath</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options=SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>jobPath</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::listJobs</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3828,12 +3827,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options=ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::getJobInfo</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3950,7 +3949,7 @@
       <section>
         <title>Function TMS::cancelJob</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4006,7 +4005,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob() function cancels a job from it Id</para>
+        <para>The cancelJob() function cancels a job from its Id</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function.</para>
         <informaltable>
@@ -4067,7 +4066,7 @@
       <section>
         <title>Function TMS::getJobOutPut</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4191,7 +4190,7 @@
       <section>
         <title>Function TMS::getAllJobsOutPut</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4301,7 +4300,7 @@
       <section>
         <title>Function TMS::listQueues</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4575,7 +4574,7 @@
       <section>
         <title>Function TMS::getJobProgress</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4675,7 +4674,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>Progression&amp; <parameter>progress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options=ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>Progression&amp; <parameter>progress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -5415,7 +5414,7 @@
       <section>
         <title>Function IMS::exportCommands</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5501,7 +5500,7 @@
       <section>
         <title>Function IMS::getMetricCurrentValue</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5594,7 +5593,7 @@
       <section>
         <title>Function IMS::getMetricHistory</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6540,7 +6539,7 @@
       <section>
         <title>Function IMS::getUpdateFrequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6813,7 +6812,7 @@
       <section>
         <title>Function FMS::createFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6845,9 +6844,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of files to create, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6922,12 +6921,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>createFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>createFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const long&amp; <parameter>mode = long()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::createDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6954,14 +6953,14 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session idientifier</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of directories to create, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -7036,12 +7035,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const long&amp; <parameter>mode = long()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::removeFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7068,14 +7067,14 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of files to delete, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file to remove following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -7143,12 +7142,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>removeFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>removeFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::removeDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7175,14 +7174,14 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of directories to delete, each path following the pattern  [host:]directory path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  directory to remove following the pattern  [host:]directory path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -7250,12 +7249,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>removeDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>removeDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::chGrpOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7282,21 +7281,21 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of files , each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>the new group owner of files/directories.</para></entry>
+                <entry><para>the new group owner of file/directory.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -7364,12 +7363,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>chGrpOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>chGrpOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::chModOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7396,21 +7395,21 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of files, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
                 <entry><para>long</para></entry>
-                <entry><para> the access rigths of files/directories in octal system.</para></entry>
+                <entry><para> the access rigths of file/directory in octal system.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -7478,12 +7477,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>chModOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>chModOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const long&amp; <parameter>mode</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::headOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7510,15 +7509,22 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of files , each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>fileContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>a buffer in which the first &quot;nline&quot; lines will be stored. </para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
@@ -7527,13 +7533,6 @@
                 <entry><para>number of lines to display</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
-              </row>
-              <row>
-                <entry><para>fileContent</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>a buffer in which the first &quot;nline&quot; lines will be stored. The string fileContent[i] represents the firts &quot;nline&quot; of the file located in pathList[i] (0&lt;=i&lt;length(pathList)).</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7599,12 +7598,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>headOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const int&amp; <parameter>nLine</parameter></paramdef><paramdef>StringList&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>headOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const int&amp; <parameter>nLine = int()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::tailOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7631,15 +7630,22 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The paths of files, each path following the pattern  [host:]file path ..</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>fileContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>a buffer in which the last &quot;nLine&quot; lines will be stored. </para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
@@ -7648,13 +7654,6 @@
                 <entry><para>number of lines to display</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
-              </row>
-              <row>
-                <entry><para>fileContent</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>a buffer in which the last &quot;nLine&quot; lines will be stored. The string fileContent[i] represents the last &quot;nline&quot; of the file located in pathList[i] (0&lt;=i&lt;length(pathList)).</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7720,12 +7719,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const int&amp; <parameter>nLine</parameter></paramdef><paramdef>StringList&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const int&amp; <parameter>nLine = int()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::contentOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7752,21 +7751,21 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The paths of files to display, each path following the pattern  [host:]file path .</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file to display following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>fileContent</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>a buffer in which the contents of files will be stored. The string fileContent[i] represents the content of the file located in pathList[i] (0&lt;=i&lt;length(pathList)).</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>a buffer in which the contents of files will be stored.</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -7834,12 +7833,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>contentOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>StringList&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>contentOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::listDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7866,15 +7865,22 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of directories, each path following the pattern  [host:]directory path.</para></entry>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  directory to list following the pattern  [host:]directory path.</para></entry>
                 <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>dirContent</para></entry>
+                <entry><para><link linkend="StringList">StringList</link></para></entry>
+                <entry><para>a buffer in which the content of the directory will be stored (only file names with short format, all file informations with long format)</para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
@@ -7883,13 +7889,6 @@
                 <entry><para>List of options for the listDir command</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
-              </row>
-              <row>
-                <entry><para>dirContent</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>a buffer in which the contents of the directories will be stored (only file names with short format, all file informations with long format)</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -7955,12 +7954,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options=LsDirOptions()</parameter></paramdef><paramdef>StringList&amp; <parameter>dirContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>StringList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options = LsDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::copyFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -7985,23 +7984,16 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session ididentifier</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>src</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of source files to copy, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  source file to copy following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8083,12 +8075,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>copyFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CopyFileOptions&amp; <parameter>options=CopyFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>copyFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CopyFileOptions&amp; <parameter>options = CopyFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::copyAsyncFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8113,13 +8105,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session identifier</para></entry>
@@ -8128,8 +8113,8 @@
               </row>
               <row>
                 <entry><para>src</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of source files to copy, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The source file to copy following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8141,18 +8126,18 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
+                <entry><para>thrId</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>a file tranfer identifier</para></entry>
+                <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="CopyFileOptions">CopyFileOptions</link></para></entry>
                 <entry><para>the copy options.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
-              </row>
-              <row>
-                <entry><para>thrRef</para></entry>
-                <entry><para><link linkend="LongList">LongList</link></para></entry>
-                <entry><para>a list of file tranfer identifiers</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -8218,12 +8203,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>copyAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CopyFileOptions&amp; <parameter>options=CopyFileOptions()</parameter></paramdef><paramdef>LongList&amp; <parameter>thrRef</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>copyAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>long&amp; <parameter>thrId</parameter></paramdef><paramdef>const CopyFileOptions&amp; <parameter>options = CopyFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::moveFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8248,13 +8233,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session identifier</para></entry>
@@ -8263,8 +8241,8 @@
               </row>
               <row>
                 <entry><para>src</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of source files to move, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  source file to move following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8346,12 +8324,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>moveFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const MvFileOptions&amp; <parameter>options=MvFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>moveFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const MvFileOptions&amp; <parameter>options = MvFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::moveAsyncFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8376,13 +8354,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The machine identifier</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session identifier</para></entry>
@@ -8391,8 +8362,8 @@
               </row>
               <row>
                 <entry><para>src</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>The list of source files to move, each path following the pattern  [host:]file path.</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The source file to move following the pattern  [host:]file path.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8404,9 +8375,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>thrRef</para></entry>
-                <entry><para><link linkend="LongList">LongList</link></para></entry>
-                <entry><para>a list of file tranfer identifiers</para></entry>
+                <entry><para>thrId</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>the file tranfer identifier</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -8481,12 +8452,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>moveAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>LongList&amp; <parameter>thrRef</parameter></paramdef><paramdef>const MvFileOptions&amp; <parameter>options=MvFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>moveAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>long&amp; <parameter>thrId</parameter></paramdef><paramdef>const MvFileOptions&amp; <parameter>options = MvFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::stopFileTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8588,12 +8559,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>stopFileTransfer</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StopFileTransferOptions&amp; <parameter>options=StopFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>stopFileTransfer</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StopFileTransferOptions&amp; <parameter>options = StopFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::listFilesTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8617,6 +8588,13 @@
               </row>
             </thead>
             <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="LsFileTransferStatusOptions">LsFileTransferStatusOptions</link></para></entry>
@@ -8688,12 +8666,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransferStatus</function></funcdef><paramdef>const LsFileTransferStatusOptions&amp; <parameter>options=LsFileTransferStatusOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransferStatus</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsFileTransferStatusOptions&amp; <parameter>options = LsFileTransferStatusOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::listFilesTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8717,6 +8695,13 @@
               </row>
             </thead>
             <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
               <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="LsFileTransferOptions">LsFileTransferOptions</link></para></entry>
@@ -8788,12 +8773,12 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransfer</function></funcdef><paramdef>const LsFileTransferOptions&amp; <parameter>options=LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransfer</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsFileTransferOptions&amp; <parameter>options = LsFileTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::getFilesInfo</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by any Vishnu user.</para>
+        <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -8826,14 +8811,14 @@
               </row>
               <row>
                 <entry><para>pathList</para></entry>
-                <entry><para><link linkend="StringList">StringList</link></para></entry>
-                <entry><para>the  list of file whose inode information will be displayed.</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>the file whose inode information will be displayed.</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>filesinfo</para></entry>
-                <entry><para><link linkend="FileStatList">FileStatList</link></para></entry>
+                <entry><para><link linkend="FileStat">FileStat</link></para></entry>
                 <entry><para>the list of inode.</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
@@ -8902,7 +8887,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>getFilesInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StringList&amp; <parameter>pathList</parameter></paramdef><paramdef>FileStatList&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>getFilesInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>pathList</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -9014,63 +8999,6 @@
             <row>
               <entry><para>type</para></entry>
               <entry><para><link linkend="FileType">FileType</link></para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="FileStatList"><emphasis role="bold">Class FMS::FileStatList Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>listOfFileStat</para></entry>
-              <entry><para>List of <link linkend="FileStat">FileStat</link></para></entry>
-              <entry><para>list of inodes.</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="LongList"><emphasis role="bold">Class FMS::LongList Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
-              <entry><para>listOfLongs</para></entry>
-              <entry><para>List of long</para></entry>
               <entry><para>TO DO</para></entry>
             </row>
           </tbody>

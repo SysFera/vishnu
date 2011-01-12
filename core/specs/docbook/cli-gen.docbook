@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book
-    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <info>
+ <book xmlns="http://docbook.org/ns/docbook" version="5.0"> 
+ <info>
     <author>
       <personname>
         <firstname>Benjamin</firstname>
@@ -179,7 +178,7 @@
         </tgroup>
       </informaltable>
       <para><emphasis role="bold">Note:</emphasis></para>
-      <para> For each command line, the -h option can be used for help</para>
+      <para> For each command line the -h option can be used for help.</para>
     </section>
   </chapter>
   <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
@@ -189,7 +188,7 @@
       <section>
         <title>UMS connect</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The connect command line opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -262,7 +261,7 @@
       <section>
         <title>UMS reconnect</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -467,6 +466,13 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
                 <entry><para>firstname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>f</para></entry>
@@ -493,13 +499,6 @@
                 <entry><para>m</para></entry>
                 <entry><para>represents the updated email adress of the user</para></entry>
                 <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
-                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -624,7 +623,7 @@
       <section>
         <title>UMS close</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The close command line closes the session identfied by the session key</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -672,7 +671,7 @@
       <section>
         <title>UMS changePassword</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The changePassword command line changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -809,7 +808,7 @@
       <section>
         <title>UMS addLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addLocalAccount command line adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -917,7 +916,7 @@
       <section>
         <title>UMS updateLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateLocalAccount command line updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -1025,7 +1024,7 @@
       <section>
         <title>UMS deleteLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -1564,7 +1563,7 @@
       <section>
         <title>UMS listLocalAccount</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listLocalAccount command line lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -1658,7 +1657,7 @@
       <section>
         <title>UMS listMachine</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -1752,7 +1751,7 @@
       <section>
         <title>UMS listHistoryCmd</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listHistoryCmd command line lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -1861,7 +1860,7 @@
       <section>
         <title>UMS listOptions</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listOptions command line lists the options of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2034,7 +2033,7 @@
       <section>
         <title>UMS listSessions</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listSessions command line lists all sessions of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2173,7 +2172,7 @@
       <section>
         <title>UMS configureOption</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The configureOption command line configures an option of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2404,9 +2403,9 @@
       <section>
         <title>TMS submitJob</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh.</para>
+        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>submitJob  <emphasis role="bold">-n</emphasis> name <emphasis role="bold">-p</emphasis> priority <emphasis
               role="bold">-q</emphasis> queue <emphasis role="bold">-t</emphasis> wallTime <emphasis
@@ -2557,7 +2556,7 @@
       <section>
         <title>TMS listJobs</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listJobs command line gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2710,7 +2709,7 @@
       <section>
         <title>TMS getJobInfo</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobInfo command line gets information on a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2796,9 +2795,9 @@
       <section>
         <title>TMS cancelJob</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob command line cancels a job from it Id</para>
+        <para>The cancelJob command line cancels a job from its Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>cancelJob machineId jobId</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2882,7 +2881,7 @@
       <section>
         <title>TMS getJobOutPut</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobOutPut command line gets outputPath and errorPath of a job from it Id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -2968,7 +2967,7 @@
       <section>
         <title>TMS getAllJobsOutPut</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getAllJobsOutPut command line gets outputPath and errorPath of completed jobs dynamically</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3047,7 +3046,7 @@
       <section>
         <title>TMS listQueues</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listQueues command line gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3298,9 +3297,9 @@
       <section>
         <title>TMS getJobProgress</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobProgress command line get the progression status of jobs.</para>
+        <para>The getJobProgress command line get the progression status of jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>getJobProgress  <emphasis role="bold">-i</emphasis> jobId <emphasis
               role="bold">-u</emphasis> jobOwner  machineId</para>
@@ -3557,7 +3556,7 @@
       <section>
         <title>IMS exportCommands</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The exportCommands command line exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3636,7 +3635,7 @@
       <section>
         <title>IMS getMetricCurrentValue</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricCurrentValue command line retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -3722,7 +3721,7 @@
       <section>
         <title>IMS getMetricHistory</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricHistory command line retrieve the history of values of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4655,7 +4654,7 @@
       <section>
         <title>IMS getUpdateFrequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getUpdateFrequency command line gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -4901,11 +4900,11 @@
       <section>
         <title>FMS createFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The createFile command line creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createFile <emphasis role="bold">-m</emphasis> mode sessionKey   sessionKey  -null listOfStrings </para>
+        <para>createFile <emphasis role="bold">-m</emphasis> mode path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4930,18 +4929,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session identifier</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
@@ -4954,16 +4946,51 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS createDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The createDir command line creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>createDir <emphasis role="bold">-m</emphasis> mode sessionKey   sessionKey  -null listOfStrings </para>
+        <para>createDir <emphasis role="bold">-m</emphasis> mode path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4988,18 +5015,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session idientifier</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
@@ -5012,16 +5032,51 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS removeFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The removeFile command line removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>removeFile sessionKey   sessionKey  -null listOfStrings </para>
+        <para>removeFile path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5046,33 +5101,61 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  file to remove following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS removeDir</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The removeDir command line removes  directories (and subdirectories ) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>removeDir sessionKey   sessionKey  -null listOfStrings </para>
+        <para>removeDir path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5097,33 +5180,61 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  directory to remove following the pattern  [host:]directory path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS chGrpOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The chGrpOfFile command line changes group owner of  remote files. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>chGrpOfFile sessionKey   sessionKey  -null listOfStrings  group</para>
+        <para>chGrpOfFile path group</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5148,40 +5259,68 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>the new group owner of files/directories.</para></entry>
+                <entry><para>the new group owner of file/directory.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS chModOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The chModOfFile command line changes  access rights of   remote files.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>chModOfFile sessionKey   sessionKey  -null listOfStrings  mode</para>
+        <para>chModOfFile path mode</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5206,40 +5345,68 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
                 <entry><para>long</para></entry>
                 <entry/>
-                <entry><para> the access rigths of files/directories in octal system.</para></entry>
+                <entry><para> the access rigths of file/directory in octal system.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS headOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The headOfFile command line displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>headOfFile <emphasis role="bold">-n</emphasis> nLine sessionKey   sessionKey  -null listOfStrings </para>
+        <para>headOfFile <emphasis role="bold">-n</emphasis> nLine path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5264,18 +5431,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nLine</para></entry>
@@ -5288,16 +5448,51 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS tailOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The tailOfFile command line displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>tailOfFile <emphasis role="bold">-n</emphasis> nLine sessionKey   sessionKey  -null listOfStrings </para>
+        <para>tailOfFile <emphasis role="bold">-n</emphasis> nLine path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5322,18 +5517,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nLine</para></entry>
@@ -5346,67 +5534,51 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>FMS contentOfFile</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The contentOfFile command line displays content  of  files located on remote machines</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>contentOfFile sessionKey   sessionKey  -null listOfStrings </para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
             <colspec colwidth="1.5cm"/>
             <thead>
               <row>
+                <entry>Name
+</entry>
                 <entry>Parameter
 </entry>
                 <entry>Type
-</entry>
-                <entry>Option
 </entry>
                 <entry>Description
 </entry>
                 <entry>Required
 </entry>
+                <entry>User option
+</entry>
               </row>
             </thead>
             <tbody>
               <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The session identifier</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS listDir</title>
+        <title>FMS contentOfFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listDir command line displays  the contents of remote directory. </para>
+        <para>The contentOfFile command line displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>listDir   sessionKey   sessionKey  -null listOfStrings </para>
+        <para>contentOfFile path</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5431,18 +5603,90 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The session id</para></entry>
+                <entry><para>The  file to display following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
               <row>
-                <entry><para>listOfStrings</para></entry>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>FMS listDir</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The listDir command line displays  the contents of remote directory. </para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <para>listDir   path</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>The  directory to list following the pattern  [host:]directory path.</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>longFormat</para></entry>
@@ -5462,16 +5706,51 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS copyFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyFile command line executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>copyFile  <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5496,25 +5775,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>src</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The machine identifier</para></entry>
+                <entry><para>The  source file to copy following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session ididentifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>dest</para></entry>
@@ -5541,16 +5806,59 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS copyAsyncFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>copyAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>copyAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5575,25 +5883,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>src</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The machine identifier</para></entry>
+                <entry><para>The source file to copy following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>dest</para></entry>
@@ -5620,16 +5914,59 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS moveFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The moveFile command line executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>moveFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>moveFile  <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5654,25 +5991,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>src</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The machine identifier</para></entry>
+                <entry><para>The  source file to move following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>dest</para></entry>
@@ -5692,16 +6015,59 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS moveAsyncFile</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The moveAsyncFile command line executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <para>moveAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  machineId sessionKey   machineId sessionKey  -null listOfStrings  dest</para>
+        <para>moveAsyncFile  <emphasis role="bold">-c</emphasis> transferCommand  src dest</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5726,25 +6092,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>src</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The machine identifier</para></entry>
+                <entry><para>The source file to move following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listOfStrings</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the dynamic list of strings.</para></entry>
-                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>dest</para></entry>
@@ -5764,17 +6116,60 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_TRANSFER_CMD</para></entry>
+                <entry><para>transferCommand</para></entry>
+                <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
+                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS stopFileTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The stopFileTransfer command line stops an execution of an set of file transfer.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <para>stopFileTransfer  <emphasis role="bold">-i</emphasis> transferId <emphasis
-              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId  sessionKey</para>
+              role="bold">-m</emphasis> fromMachineId <emphasis role="bold">-u</emphasis> userId </para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5798,13 +6193,6 @@
               </row>
             </thead>
             <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The session identifier</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>transferId</para></entry>
                 <entry><para>string</para></entry>
@@ -5830,12 +6218,47 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS listFilesTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listFilesTransferStatus command line displays the status of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -5889,12 +6312,47 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>FMS listFilesTransfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any Vishnu user.</para>
+        <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listFilesTransfer command line displays the history of all files transfer submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
@@ -5948,7 +6406,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_SESSION_KEY</para></entry>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session identifier</para></entry>
+                <entry><para>YES</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
     </section>
     <section>
