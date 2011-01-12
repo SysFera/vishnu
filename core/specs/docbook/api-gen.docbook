@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<book
+    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -8911,11 +8912,6 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
               <entry><para>isRecursive</para></entry>
               <entry><para>boolean</para></entry>
               <entry><para>TO DO</para></entry>
@@ -8946,11 +8942,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
             <row>
               <entry><para>path</para></entry>
               <entry><para>string</para></entry>
@@ -9023,11 +9014,6 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
               <entry><para>longFormat</para></entry>
               <entry><para>boolean</para></entry>
               <entry><para>TO DO</para></entry>
@@ -9058,11 +9044,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
             <row>
               <entry><para>fromMachineId</para></entry>
               <entry><para>string</para></entry>
@@ -9100,11 +9081,6 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
               <entry><para>transferId</para></entry>
               <entry><para>string</para></entry>
               <entry><para>a given transfer id</para></entry>
@@ -9141,11 +9117,6 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
-            <row>
               <entry><para>transferCommand</para></entry>
               <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
               <entry><para>the command to use to perform file transfer.</para></entry>
@@ -9171,11 +9142,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
             <row>
               <entry><para>transferId</para></entry>
               <entry><para>string</para></entry>
@@ -9212,11 +9178,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>Error</para></entry>
-              <entry><para>Error</para></entry>
-              <entry><para>TO DO</para></entry>
-            </row>
             <row>
               <entry><para>listOfStrings</para></entry>
               <entry><para>List of string</para></entry>
