@@ -181,8 +181,8 @@
 	   
 	<!--</section>  Generic method definition format -->
 	
-      
-      
+      <para><emphasis role="bold">Note:</emphasis></para>
+      <para> For each command line the -h option can be used for help.</para>
 	<!--</section> Methods definition format -->
     </section> <!-- Generic definition formats presentation -->   
   </chapter>
