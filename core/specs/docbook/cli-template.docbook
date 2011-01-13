@@ -40,8 +40,8 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document presents the detailed specifications of the Vishnu command line user interface.</para>
-      <para>These specifications include the definition of all commands. ###FIXME###</para>
+      <para>This document presents the detailed specifications of the VISHNU command line user interface.</para>
+      <para>These specifications include the definition of all commands including administration commands.</para>
     </section>
     <section>
       <title>Document structure</title>
@@ -63,10 +63,10 @@
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:<itemizedlist>
           <listitem>
-            <para>A first section describing the definition of all commands provided by the package</para>
+            <para>A first section describing the definition of all commands provided by the package.</para>
           </listitem>
           <listitem>
-            <para>A second section describing the definition of all data types used ###FIXME###</para>
+            <para>A second section describing the definition of all enumerated values used as command parameters.</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -207,7 +207,7 @@
     <title>Commands specification for Information Management System (IMS)</title>
   </chapter>
  <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
-    <title>API specification for File Management System (FMS)</title>
+    <title>Commands specification for File Management System (FMS)</title>
   </chapter>
 </book>
   
