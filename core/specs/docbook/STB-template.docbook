@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-        <title>VISHNU D1.0 - Spécifications techniques des besoins</title>
+        <title>VISHNU D1.1b - Spécifications techniques des besoins</title>
         <author>
-            <personname>
-                <firstname>Benjamin</firstname>
-                <surname>Isnard</surname>
-            </personname>
+            <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
         </author>
         <author>
             <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
@@ -18,17 +15,17 @@
             <revision>
                 <revnumber>01</revnumber>
                 <date>07/12/2010</date>
-                <authorinitials>B.Isnard</authorinitials>
+                <authorinitials>SysFera</authorinitials>
                 <revdescription>
                     <para>Exemple pour validation du format</para>
                 </revdescription>
             </revision>
           <revision>
             <revnumber>02</revnumber>
-            <date>13/12/2010</date>
-            <authorinitials>B.Isnard</authorinitials>
+            <date>14/01/2011</date>
+            <authorinitials>SysFera</authorinitials>
             <revdescription>
-              <para>Pre-delivrable</para>
+              <para>Version du livrable</para>
             </revdescription>
           </revision>
         </revhistory>
