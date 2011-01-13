@@ -186,8 +186,10 @@
     </section> <!-- Generic command definition format -->   
     
      <section> <!-- Option use -->
-      <title> Option use </title>
-    	    
+      <title> Environment variables and options</title>
+	      
+      <para>Here is detailed the way to use the user options which are stored in the database and environment variables in VISHNU.</para>  
+      
       <example xml:id="optionUse"> <!-- Pseudo code of option use-->
 	  <title>Pseudo code of the option use</title>
 	    <programlisting>
@@ -215,7 +217,6 @@
 		  
 	    </programlisting>
 	</example> <!-- Pseudo code of option use-->
-
       </section> <!-- Option use -->
 
     
