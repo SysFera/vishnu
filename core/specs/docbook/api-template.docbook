@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>VISHNU D1.1 - APIs specifications</title>
+      <title>D1.1c - VISHNU A.P.I. specifications</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -21,9 +21,17 @@
         <revision>
         <revnumber>0</revnumber>
         <date>05/01/2011</date>
-        <authorinitials>B.Isnard</authorinitials>
+        <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Formatting example</para>
+        </revdescription>
+        </revision>
+        <revision>
+        <revnumber>1</revnumber>
+        <date>13/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>First release</para>
         </revdescription>
         </revision>
       </revhistory>
@@ -32,7 +40,7 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document presents the detailed specifications of the Vishnu APIs (Application Programming Interfaces).
+      <para>This document presents the detailed specifications of the VISHNU APIs (Application Programming Interfaces).
             The following APIs are included in the project:</para>
       <itemizedlist>
          <listitem><para>C++ API</para></listitem>
@@ -47,7 +55,7 @@
     <section>
       <title>Document structure</title>
       <para>The document is divided into 4 parts corresponding to the four modules that compose the
-        Vishnu system:</para>
+        VISHNU system:</para>
       <para><itemizedlist>
         <listitem>
           <para>UMS: Users Management System</para>
@@ -188,8 +196,11 @@
              <listitem>
                <para>The methods will throw exceptions for each error message specified. The exception will contain additional details provided by the server.</para>
              </listitem>
+              <listitem>
+               <para>The VishnuInitialize() and VishnuFinalize() methods are not applicable to the WS API.</para>
+             </listitem>
              <listitem>
-               <para>Methods with restricted access (administration) will not be included in the WS API.</para>
+               <para>Methods with restricted access (administration) are not included in the WS API.</para>
              </listitem>
            </itemizedlist>
         </section> <!--WS specific aspects -->
@@ -275,8 +286,10 @@
       </section> <!-- Data types definition format -->
 
     </section> <!-- Generic definition formats presentation -->
+
     <section>
-      <title>References</title>
+      <title>Web Services description</title>
+      <para>The Web Services are fully described by the following documents which are attached to the current document:
       <itemizedlist>
         <listitem>
           <para><emphasis role="bold">UMS.wsdl</emphasis> : WSDL file for the UMS module</para>
@@ -292,9 +305,17 @@
         </listitem>
       </itemizedlist>
     </section>
+   <section>
+      <title>References</title>
+      <para><itemizedlist>
+        <listitem>
+          <para>D1.1a : VISHNU General specifications</para>
+        </listitem>
+      </itemizedlist></para>
+    </section>
     <section>
       <title>Glossary</title>
-      <para/>
+      <para>None</para>
     </section>
   </chapter>
     <!-- GENERATED PART -->

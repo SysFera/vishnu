@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>VISHNU D1.0 - Command line interface specifications</title>
+      <title>D1.1d - VISHNU Command-line interface specifications</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -21,9 +21,17 @@
         <revision>
         <revnumber>0</revnumber>
         <date>05/01/2011</date>
-        <authorinitials>B.Isnard</authorinitials>
+        <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Formatting example</para>
+        </revdescription>
+        </revision>
+        <revision>
+        <revnumber>1</revnumber>
+        <date>13/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>First release</para>
         </revdescription>
         </revision>
       </revhistory>
@@ -64,9 +72,11 @@
     </section>
     <section>
       <title>References</title>
-      <para>
-		TODO - ajouter ref. vers les specs générales
-      </para>
+      <para><itemizedlist>
+        <listitem>
+          <para>D1.1a : VISHNU General specifications</para>
+        </listitem>
+      </itemizedlist></para>
     </section>
     <section>
       <title>Glossary</title>
