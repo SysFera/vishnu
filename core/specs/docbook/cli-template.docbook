@@ -83,19 +83,12 @@
       <para/>
     </section>
     
-    <section> <!-- Generic definition formats presentation -->
+    <section> <!-- Generic command definition format -->
       <title>Generic command definition format</title>
       <para>This section presents the generic format used in the following chapters to describe the commands. It also details 
 	the environment variables required and the user options.</para>
-      <!--<section>Methods definition format 
-      
-      
-      <title>Methods definition format</title> -->
-	
-	<!-- <section> Generic method definition format 
-	  <title>Generic method definition format</title> -->
+	  
 	  <para> A commands is defined as follows:</para>
-      
 	  <para><emphasis role="bold">Access</emphasis></para>
 	  <para>Here is detailed the access level of the command line (i.e. the privilege required to use this command)</para>
 	   
@@ -153,9 +146,8 @@
           </tgroup>
         </informaltable>
         
-	
-	<para>The following table contains the list of environment variables information, a required flag and a user option flag. The user option flag 
-	means that this parameter is a user option that can be define as an environment variable.</para>
+	<para>The following table contains the list of environment variables information, a required flag and a user option flag. When the user option flag 
+	is true, it can be defined as an environment variable.</para>
 	
 	<para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
@@ -188,13 +180,46 @@
             </tbody>
           </tgroup>
         </informaltable>  
-	   
-	<!--</section>  Generic method definition format -->
 	
       <para><emphasis role="bold">Note:</emphasis></para>
       <para> For each command line the -h option can be used for help.</para>
-	<!--</section> Methods definition format -->
-    </section> <!-- Generic definition formats presentation -->   
+    </section> <!-- Generic command definition format -->   
+    
+     <section> <!-- Option use -->
+      <title> Option use </title>
+    	    
+      <example xml:id="optionUse"> <!-- Pseudo code of option use-->
+	  <title>Pseudo code of the option use</title>
+	    <programlisting>
+		  if (the option is provided in the command line) 
+		  {
+		      optionValue = option 
+		      
+		  } else {
+			    if (an environment variable exists for the option not provided) 
+			    {
+				      optionValue = EnVariable_Value
+		 	
+			    } else { 
+			    
+				     if (a value has been defined in the user configuration) 
+				     {
+					      optionValue = user_Option
+				     }
+				     else { 
+					      //The default value of the option defined by VISHNU admin is used
+					      optionValue = defaultValueOption
+				     }
+			   } 
+		   } 
+		  
+	    </programlisting>
+	</example> <!-- Pseudo code of option use-->
+
+      </section> <!-- Option use -->
+
+    
+    
   </chapter>
     <!-- GENERATED PART -->
   <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
