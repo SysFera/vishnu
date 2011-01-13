@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>VISHNU D1.0 - General specifications</title>
+      <title>D1.1a - General specifications</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -21,7 +21,7 @@
         <revision>
         <revnumber>01</revnumber>
         <date>07/12/2010</date>
-        <authorinitials>B.Isnard</authorinitials>
+        <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Formatting example</para>
         </revdescription>
@@ -29,17 +29,17 @@
         <revision>
           <revnumber>02</revnumber>
           <date>13/12/2010</date>
-          <authorinitials>B.Isnard</authorinitials>
+          <authorinitials>SysFera</authorinitials>
           <revdescription>
-            <para>Pre-delivrable</para>
+            <para>Pre-deliverable</para>
           </revdescription>
         </revision>
         <revision>
           <revnumber>03</revnumber>
-          <date>29/12/2010</date>
-          <authorinitials>B.Isnard</authorinitials>
+          <date>13/01/2011</date>
+          <authorinitials>SysFera</authorinitials>
           <revdescription>
-            <para>Delivrable (draft)</para>
+            <para>First Release</para>
           </revdescription>
         </revision>
       </revhistory>
@@ -87,14 +87,14 @@
     </section>
     <section>
       <title>References</title>
-      <para/>
+      <para>None</para>
     </section>
     <section>
       <title>Glossary</title>
       <para>
          <itemizedlist>
            <listitem>
-            <para>SysferaDS: open-source middleware software used by Vishnu (former name
+            <para>Sysfera-DS: open-source middleware software used by Vishnu (former name
               "DIET")</para>
           </listitem>
           <listitem>Batch Scheduler: system used to manage batch jobs on multi-processor systems or
