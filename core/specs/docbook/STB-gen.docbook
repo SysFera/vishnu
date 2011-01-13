@@ -20,23 +20,23 @@
         <surname>Pamba Capo-Chichi</surname>
       </personname>
     </author>
-    <title>VISHNU D1.0 - Spécifications techniques des besoins</title>
+    <title>VISHNU D1.1b - Spécifications techniques des besoins</title>
     <revhistory>
       <revision>
         <revnumber>01</revnumber>
         <date>07/12/2010</date>
-        <authorinitials>B.Isnard</authorinitials>
+        <authorinitials>SysFera</authorinitials>
         <revdescription>
                     
                 <para>Exemple pour validation du format</para></revdescription>
       </revision>
       <revision>
         <revnumber>02</revnumber>
-        <date>13/12/2010</date>
-        <authorinitials>B.Isnard</authorinitials>
+        <date>14/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
         <revdescription>
               
-            <para>Pre-delivrable</para></revdescription>
+            <para>Version du livrable</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -554,13 +554,13 @@ de SHA-1.</para>
             </row>
             <row>
               <entry><para>1.5.2</para></entry>
-              <entry><para>Bases de donnée supportées</para></entry>
-              <entry><para>L'une des deux database suivantes doit être installée:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- Oracle Database 11g (v11.1.0.6 minimum)</para></entry>
+              <entry><para>SGBD supportés</para></entry>
+              <entry><para>L'un des deux SGBD suivantes doit être installé:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- Oracle Database 11g (v11.1.0.6 minimum)</para></entry>
             </row>
             <row>
               <entry><para>1.5.3</para></entry>
-              <entry><para>Réplication de la base de donnée</para></entry>
-              <entry><para>Afin de garantir un temps de réponse maximum aux requêtes des machines de la plateforme Vishnu, la base de donnée sera éventuellement répliquée selon une architecture maître-esclave (écriture sur un seul serveur, lecture sur plusieurs serveurs).</para></entry>
+              <entry><para>Réplication de la base de données</para></entry>
+              <entry><para>Afin de garantir un temps de réponse maximum aux requêtes des machines de la plate-forme VISHNU, la base de donnée pourra être répliquée selon une architecture maître-esclave (écriture sur un seul serveur, lecture sur plusieurs serveurs).</para></entry>
             </row>
             <row>
               <entry><para>1.6</para></entry>
@@ -625,7 +625,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.3</para></entry>
               <entry><para>Librairie BOOST C++</para></entry>
-              <entry><para>v1.35 minimum</para></entry>
+              <entry><para>v1.45 minimum</para></entry>
             </row>
             <row>
               <entry><para>2.4</para></entry>
@@ -665,7 +665,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.2</para></entry>
               <entry><para>GCC</para></entry>
-              <entry><para>GCC v3.4.3 minimum</para></entry>
+              <entry><para>GCC v4.4.3 minimum (Janvier 2010)</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -675,7 +675,7 @@ de SHA-1.</para>
       <title>Glossaire</title>
       <para><itemizedlist>
           <listitem>
-            <para>TODO</para>
+            <para><emphasis role="bold">SGBD</emphasis>: (Système de gestion de bases de données, en anglais DBMS)</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -833,7 +833,7 @@ de SHA-1.</para>
       <title>Glossaire</title>
       <para><itemizedlist>
           <listitem>
-            <para>TODO</para>
+            <para>Aucun terme à définir</para>
           </listitem>
         </itemizedlist></para>
     </section>
