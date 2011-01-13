@@ -145,7 +145,7 @@
 		</row>
 		<row>
 		  <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
-		  <entry><para>This is the human-readable generic message that will available to the user of the API.</para></entry>
+		  <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
 		</row>
 	      </tbody>
 	    </tgroup>
@@ -264,7 +264,7 @@
                      respectively to attributes of the 'Request' or 'Response' Java Bean.</para>
              </listitem>
              <listitem>
-               <para>When multiple instances of object are used as input or output parameter (for example list of machines or list or users)
+               <para>When multiple instances of object are used as input or output parameters (for example list of machines or list or users)
                      the 'Request' or 'Response' Java Bean will contain a 'data' subclass containing the instances. This follows the standard
                      WSDL/Java mapping for Apache-CXF.
                    </para>
