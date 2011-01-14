@@ -113,7 +113,10 @@
             <para>Sysfera-DS: open-source middleware software used by Vishnu (former name
               &quot;DIET&quot;)</para>
           </listitem>
-          <listitem/>
+          <listitem>
+            <para>Batch Scheduler: system used to manage batch jobs on multi-processor systems or
+            clusters.</para>
+          </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -125,7 +128,7 @@
 </title>
       <section>
         <title>UC UMS User Manual</title>
-        <para>This UseCase Diagram describes all cases attached when the user  opens a session with manual closure</para>
+        <para>This UseCase Diagram describes all cases that can occur when the user  opens a session with manual closure</para>
         <figure>
           <title>UC UMS User Manual</title>
           <mediaobject>
@@ -138,7 +141,7 @@
       </section>
       <section>
         <title>UC UMS User Auto</title>
-        <para>This UseCase Diagram describes all cases associated when a user  opens a session with automatic closure (on disconnect and on timeout)</para>
+        <para>This UseCase Diagram describes all cases that can occur when a user  opens a session with automatic closure (on disconnect and on timeout)</para>
         <figure>
           <title>UC UMS User Auto</title>
           <mediaobject>
@@ -151,7 +154,7 @@
       </section>
       <section>
         <title>UC UMS User account</title>
-        <para>This UseCase Diagram describes all cases associated when a user  executes synchronous request</para>
+        <para>This UseCase Diagram describes all cases that can occur when a user  executes synchronous requests</para>
         <figure>
           <title>UC UMS User account</title>
           <mediaobject>
@@ -176,7 +179,7 @@
       </section>
       <section>
         <title>UC UMS Admin Machines</title>
-        <para>This UseCase Diagram describes all cases associated to machine using by an admin</para>
+        <para>This UseCase Diagram describes all cases that can occur when an administrator wants to administrate a machine</para>
         <figure>
           <title>UC UMS Admin Machines</title>
           <mediaobject>
@@ -439,11 +442,11 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The user sends a request to list all his/her options</para><para>2. The System returns all options of the user</para></entry>
+                <entry><para>1. The user sends a request to list all of his/her options</para><para>2. The System returns all options of the user</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>1a. The users sends a request to list a specific option identified by its name</para><para>2a. The System checks the name of the option specified</para><para>2b. The System returns the value of the option specified</para></entry>
+                <entry><para>1a. The users sends a request to list a specific option identified by its name or all default options values defined by VISHNU administrator</para><para>2a. The System checks the name of the option specified</para><para>2b. The System returns the value of the option specified or all default options values defined by VISHNU administrator</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
@@ -521,11 +524,11 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The user sends a request to list all commands sent during the session identified by the session key registered in the user's environment</para><para>2. The System returns the list of all commands issued by the user during the session which key corresponds to the session key registered in the user's environment. Each command has exactly the same format and parameters as the original submission and can be resubmitted as-is to the System.</para></entry>
+                <entry><para>1. The user sends a request to list all commands sent during the session identified by the session key registered in the user's environment</para><para>2. The System returns the list of all commands issued by the user during the session which key corresponds to the session key registered in the user's environment. Each command has exactly the same format and parameters as the original submission and can be resubmitted as-is to the System</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>1a. The user sends a request containing a session identifier to list all commands sent during the session identified by the session id</para><para>2a. The System returns the list of all commands issued by the user during the session which id correspons to the provided id</para></entry>
+                <entry><para>1a. The user sends a request containing a session identifier to list all commands sent during the session identified by the session id</para><para>2a. The System returns the list of all commands issued by the user during the session which id corresponds to the provided id</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
@@ -1377,7 +1380,7 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The administrator adds a new machine on VISHNU by giving:</para><para>  - The machine name</para><para>  - The machine state (private or accessible to users)</para><para>  - The public IP adress</para><para>  - A structure describing the machine state</para><para>  - A structure describing the network</para><para>2. The machine is added on VISHNU and the System returns the machine ID.</para></entry>
+                <entry><para>1. The administrator adds a new machine on VISHNU by giving:</para><para>  - The machine name</para><para>  - The machine state (private or accessible to users)</para><para>  - The public IP adress</para><para>  - A structure describing the machine state</para><para>  - A structure describing the network</para><para>2. The machine is added on VISHNU and the System returns the machine id.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1418,7 +1421,7 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The administrator removes a machine from VISHNU by giving the machine ID</para><para>2. The System returns an acknowledgment to the administrator</para></entry>
+                <entry><para>1. The administrator removes a machine from VISHNU by giving the machine id</para><para>2. The System returns an acknowledgment to the administrator</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1599,14 +1602,14 @@ for each option is defined by the administrator. This features can be used by al
             <para><emphasis role="bold">Session</emphasis>: A session is the context in which VISHNU commands are executed (ex: job submission, file transfers). It is created following authentifcation of a user and lasts until it is closed either manually or automatically.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Session Key</emphasis>: The session key is a crypted string generated by the System for a session. It is registered in an environment variable
+            <para><emphasis role="bold">Session Key</emphasis>: The session key is a encrypted string generated by the System for a session. It is registered in an environment variable
 in order to avoid systematic authentification</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Session identifier</emphasis>: The session identifier (or session id) is an identifier of a session easy to manipulate by a user compare to the session key</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">The inactivity delay</emphasis>: The inactivity delay is the delay in which no api commands are lauched within a session
+            <para><emphasis role="bold">The inactivity delay</emphasis>: The inactivity delay is the delay in seconds in which no api commands are launched within a session
 </para>
           </listitem>
           <listitem>
@@ -3656,7 +3659,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to cancel all asynchronous file transfers he submitted. He can optionally specify either</para><para>- a file transfer identifier to cancel  that file transfer.</para><para>- or a machine identifier to cancel  all file transfer he submitted from that machine.</para></entry>
+                <entry><para>This use case allows User to cancel all asynchronous file transfers he submitted. He can optionally specify either</para><para>- a file transfer identifier to cancel  that file transfer.</para><para>- or a machine identifier to cancel  all file transfers he submitted from that machine.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3668,11 +3671,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- All file transfer submitted by User are cancelled. If a search criteria is provided, only file transfer matching that criteria are cancelled.</para><para>- The log System has been updated and contains request parameters.</para></entry>
+                <entry><para>- All file transfers submitted by User are cancelled. If a search criteria is provided, only file transfers matching that criteria are cancelled.</para><para>- The log System has been updated and contains request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits a cancel file transfer command by specifying the session key. with optionally a search criteria (either a file transfer id,  or a machine id).</para><para>2. The System cancels all file transfers he submitted. If a search criteria is provided, the System cancels only the file transfer matching that criteria.</para></entry>
+                <entry><para>1. User submits a cancel file transfer command by specifying the session key. with optionally a search criteria (either a file transfer id,  or a machine id).</para><para>2. The System cancels all file transfers he submitted. If a search criteria is provided, the System cancels only the file transfers matching that criteria.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3697,7 +3700,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows Admin to cancel all  current asynchronous file transfer submitted. He can  an optional search criteria among : </para><para>- a host identifier to cancel  all file transfer submitted from that host </para><para>- or an user identifier to cancel  all file transfer submitted by that user.</para></entry>
+                <entry><para>This use case allows Admin to cancel all  current asynchronous file transfers submitted. He can  an optional search criteria among : </para><para>- a host identifier to cancel  all file transfers submitted from that host </para><para>- or an user identifier to cancel  all file transfers submitted by that user.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3709,7 +3712,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- All file transfer submitted are cancelled. If a search criteria is provided, only the file transfer matching that criteria are cancelled.</para><para>- The log System has been updated and contains request parameters.</para></entry>
+                <entry><para>- All file transfers submitted are cancelled. If a search criteria is provided, only the file transfers matching that criteria are cancelled.</para><para>- The log System has been updated and contains request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
@@ -3818,13 +3821,13 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>F2.LS1- List files transfer status</title>
+        <title>F2.LS1- List file transfer status</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>F2.LS1- List files transfer status</para></entry>
+                <entry><para>F2.LS1- List file transfer status</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -3840,11 +3843,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The status of all file transfer User submitted are displayed on the standard output of client System. If a search criteria is provided, only the status of the file transfer matching that criteria are listed.</para></entry>
+                <entry><para>- The status of all file transfers User submitted are displayed on the standard output of client System. If a search criteria is provided, only the status of the file transfer matching that criteria are listed.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits a list file transfer status command by specifying a session key, with optionally a search criteria (either a file transfer id,  or a machine id).</para><para>2. The System displays  the status of all file transfer User submitted. If a search criteria is provided, the System displays only the status of the  file transfer matching that criteria.</para></entry>
+                <entry><para>1. User submits a list file transfer status command by specifying a session key, with optionally a search criteria (either a file transfer id,  or a machine id).</para><para>2. The System displays  the status of all file transfers User submitted. If a search criteria is provided, the System displays only the status of the  file transfers matching that criteria.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3873,7 +3876,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows Admin to list file transfer status. He can specify an optional search criteria among : </para><para>- a host identifier to list the status of all file transfer submitted from that host </para><para>- or an user identifier to list the status of all file transfer submitted by that user.</para></entry>
+                <entry><para>This use case allows Admin to list file transfer status. He can specify an optional search criteria among : </para><para>- a host identifier to list the status of all file transfers submitted from that host </para><para>- or an user identifier to list the status of all file transfers submitted by that user.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3885,11 +3888,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The status of all file transfer submitted  host are displayed on the standard output. If a search criteria is provided, only the file transfer matching that criteria are listed.</para><para>- The log System has been updated and contains request parameters.</para></entry>
+                <entry><para>- The status of all file transfers submitted  host are displayed on the standard output. If a search criteria is provided, only the file transfer matching that criteria are listed.</para><para>- The log System has been updated and contains request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. Admin submits a list file transfer status command a session key, with optionally a search criteria (either a host id, or a user id).</para><para>2. The System displays the status of all  file transfer on the standard output of client System. If a search criteria is provided, The System displays only the status of the file transfer matching that criteria.</para></entry>
+                <entry><para>1. Admin submits a list file transfer status command a session key, with optionally a search criteria (either a host id, or a user id).</para><para>2. The System displays the status of all  file transfers on the standard output of client System. If a search criteria is provided, The System displays only the status of the file transfers matching that criteria.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3901,7 +3904,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
-                <entry><para>F2.LS1- List files transfer status</para></entry>
+                <entry><para>F2.LS1- List file transfer status</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3918,7 +3921,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows User to list all  file transfer  he submitted. User can optionally  specify either</para><para>- a machine id to list all file transfer he submitted  from that machine</para><para>- or a status to list all file transfer matching that status.</para></entry>
+                <entry><para>This use case allows User to list all file transfers he submitted. User can optionally  specify either</para><para>- a machine id to list all file transfers he submitted  from that machine</para><para>- or a status to list all file transfers matching that status.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3930,11 +3933,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- All  file transfer User submitted are listed on the standard output of client System. If a search criteria is provided, only the file transfer matching that criteria are listed.</para><para>- The log System has been updated and contains request parameters.</para></entry>
+                <entry><para>- All  file transfers User submitted are listed on the standard output of client System. If a search criteria is provided, only the file transfers matching that criteria are listed.</para><para>- The log System has been updated and contains request parameters.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. User submits a list file transfer command by specifying a session key with optionally a search criteria (either a host id,  or a specific status).</para><para>2. The System displays all  file transfer User submitted on the standard output of client System. If a search criteria is provided, the System displays only the file transfer matching that criteria.</para></entry>
+                <entry><para>1. User submits a list file transfer command by specifying a session key with optionally a search criteria (either a host id,  or a specific status).</para><para>2. The System displays all  file transfers User submitted on the standard output of client System. If a search criteria is provided, the System displays only the file transfer matching that criteria.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -3959,7 +3962,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>This use case allows Admin to list all  file transfer. Admin can specify an optional search criteria among:</para><para>- host identifier: to list all file transfer submitted from that host</para><para>- user identifier: to list all file transfer submitted by that user</para><para>- status: to list all file transfer matching that status.</para></entry>
+                <entry><para>This use case allows Admin to list all  file transfers. Admin can specify an optional search criteria among:</para><para>- host identifier: to list all file transfers submitted from that host</para><para>- user identifier: to list all file transfers submitted by that user</para><para>- status: to list all file transfer matching that status.</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -3971,11 +3974,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- All  file transfer are listed on the standard output of client System. If a search criteria is provided, only the file transfer matching that criteria are listed.</para><para>- The log System has been updated and contains request parameters. </para></entry>
+                <entry><para>- All  file transfers are listed on the standard output of client System. If a search criteria is provided, only the file transfers matching that criteria are listed.</para><para>- The log System has been updated and contains request parameters. </para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. Admin submits a list file transfer  command by  specifying a session key with optionally a search criteria (either a host id, or a user id, or a specific status).</para><para>2. The System displays all  file transfer on the standard output of client System. If a search criteria is provided, The System displays only the file transfer matching that criteria.</para></entry>
+                <entry><para>1. Admin submits a list file transfer  command by  specifying a session key with optionally a search criteria (either a host id, or a user id, or a specific status).</para><para>2. The System displays all  file transfers on the standard output of client System. If a search criteria is provided, The System displays only the file transfer matching that criteria.</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
