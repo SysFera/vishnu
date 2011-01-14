@@ -97,8 +97,8 @@
             <para>Sysfera-DS: open-source middleware software used by Vishnu (former name
               "DIET")</para>
           </listitem>
-          <listitem>Batch Scheduler: system used to manage batch jobs on multi-processor systems or
-            clusters.</listitem>
+          <listitem><para>Batch Scheduler: system used to manage batch jobs on multi-processor systems or
+            clusters.</para></listitem>
          </itemizedlist>
       </para>
     </section>
