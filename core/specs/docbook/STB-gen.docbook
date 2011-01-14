@@ -614,6 +614,16 @@ de SHA-1.</para>
               <entry><para>TCP SSH (port 22) minimum</para></entry>
             </row>
             <row>
+              <entry><para>1.6.3</para></entry>
+              <entry><para>Connexion vers un serveur de messagerie</para></entry>
+              <entry><para>Les serveurs de calcul et de stockage de la plateforme VISHNU doivent pouvoir se connecter sur un serveur de messagerie via le protocole SMTP.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.3.1</para></entry>
+              <entry><para>Compte de messagerie</para></entry>
+              <entry><para>Un compte de messagerie sera utilisé par le système VISHNU pour envoyer des messages email aux utilisateurs.</para></entry>
+            </row>
+            <row>
               <entry><para>2.</para></entry>
               <entry><para>Versions des logiciels requis</para></entry>
               <entry/>
