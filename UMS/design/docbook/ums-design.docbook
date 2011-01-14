@@ -39,7 +39,7 @@
      <section> <!--Document structure -->
       <title>Document structure</title>
       
-      <para>This document is divided into 4 parts corresponding to the main elements to described the internal design:
+      <para>This document is divided into 4 parts corresponding to the main elements to describe the internal design:
       </para>
       <para>
 	<itemizedlist>
@@ -50,10 +50,10 @@
           <para>Database model</para>
         </listitem>
         <listitem>
-          <para>Data types description</para>
-        </listitem>
-        <listitem>
           <para>Internal services design</para>
+        </listitem>
+	<listitem>
+          <para>Data types description</para>
         </listitem>
 	</itemizedlist>
 	</para> 
@@ -67,7 +67,7 @@
        <section> <!-- UMS architecture -->
 	<title>UMS architecture</title>
 	<para>The UMS architecture is very simple because its main activities is to write or to read information on a database. In this 
-	way, it is a simple client/server architecture where several clients can be connected to a server which makew requests to the database. 
+	way, it is a simple client/server architecture where several clients can be connected to a server which make requests to the database. 
 	In this architecture, the clients can not directly request to the database because the only way to request a database 
 	is by sending a request to the server. 
 	</para>
@@ -82,9 +82,147 @@
 	<title>Database model</title>
 	  
 	</section> <!-- Database model -->
-
 	
-      
+      <section> <!-- Data types definition format -->
+	<title>Internal services design</title>
+	  <para>The description of the internal service description is organized as follows:</para>
+	  <para> For each service the emphasis laid on the client and the server parts. This is an example:</para>
+	  <para><emphasis role="bold">UMS::service name</emphasis></para>
+          <informaltable>
+            <tgroup cols="2">
+              <colspec colwidth="5cm"/>
+              <colspec colwidth="5cm"/>
+              <thead>
+                <row>
+                  <entry>Client</entry>
+                  <entry>Server Daemon</entry>
+                </row>
+              </thead>
+	      
+              <tbody>
+                <row>
+                  <entry><para>Client actions description</para></entry>
+                  <entry><para>Server actions description</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+   	
+	  
+	  <para><emphasis role="bold">Pre-requisite:</emphasis></para>  
+	  <para>
+	    <itemizedlist>
+	      <listitem>
+		<para>A root user have to be defined in the database</para>
+	      </listitem>  
+	      <listitem>
+		<para> The administrator have to defined the default value of all user options in the <emphasis>table Options</emphasis> of VISHNU database such as: VISHNU_CLOSE_POLICY (the way to close the session by default) and
+		  VISHNU_TIMEOUT (the default timeout uses when the CLOSE_ON_TIMEOUT value is set to VISHNU_CLOSE_POLICY).
+		</para>
+	      </listitem>
+	    </itemizedlist> 
+	  </para> 
+	    
+	  
+	  <para>The following paragraphs show the internal design of all services:</para>
+	  
+	  <para><emphasis role="bold">UMS::connect</emphasis></para>
+	  
+	  <para>The connect service allows the user to open a session by providing:</para> 
+	  <para><emphasis role="bold">Required parameters:</emphasis></para>
+	  <para> - Login and password, </para> 
+	  <para><emphasis role="bold">Optional parameters:</emphasis></para>
+	  <para> - The way for closing the session (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT), </para> 
+	  <para> - The maximum delay in seconds when the CLOSE_ON_TIMEOUT option is set,</para>
+	  <para> - For administrators, it is possible to open a session as if he/she was a specific user.</para>
+	  
+	  <para><emphasis role="bold">Internal client and server design:</emphasis></para>
+	<!--<para><emphasis role="bold">UMS::connect</emphasis></para>-->
+<!-- 	  <para>Requirement:<para> -->
+	    <informaltable>
+	      <tgroup cols="2">
+		<colspec colwidth="8.5cm"/>
+		<colspec colwidth="8.5cm"/>
+		<thead>
+		  <row>
+		    <entry>Client</entry>
+		    <entry>Server Daemon</entry>
+		  </row>
+		</thead>
+		
+		<tbody>
+		  <row>
+		    <entry>
+			  <para><emphasis role="bold"> Phase I required:</emphasis></para>
+			  <para> - The size of the VISHNU user identifier is checked according to the global variables LOGIN_MIN_SIZE and LOGIN_MAX_SIZE</para>
+			  <para> - The size of the password is checked according to the global variables PASSWORD_MIN_SIZE and PASSWORD_MAX_SIZE. The password is encrypted by using the Secure Hash Algorithm SHA-512 of the Linux library libcrypt with a salt 
+				    which is the md5 hash of the VISHNU user identifier,
+			  </para>
+			  <para> - The System checks the SSH key path of the user's machine define on an environment variable (VISHNU_SSHKEY_MACHINE) and get its content as a string,</para> 
+
+			  <para><emphasis role="bold"> Phase I optional:</emphasis></para>
+			  <para> - If the close policy option is set, the System checks the name of the name (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT). For command line it can be set as an
+				    environment variable VISHNU_CLOSE_POLICY with the value chosen and used by default for future connect command line without connect close policy option,</para>
+			  <para> - If the close policy option is set to CLOSE_ON_TIMEOUT, the inactivity delay in seconds can be defined,</para>
+			  <para> - An administrator can be connected as if he/she was another user by providing the user VISHNU identifier. This identifier is checked according to the global variables LOGIN_MIN_SIZE and LOGIN_MAX_SIZE</para>
+			  <para> - All optional parameters are encapsulates on the <link linkend="ConnectOptions">ConnectOptions</link> object which is serialized as a string</para>
+			  <sbr/>
+			  <para> - The System sends all previous parameters to the server</para> 
+			  <sbr/>
+			  <para><emphasis role="bold"> Phase III:</emphasis></para>
+			  <para> A sessionKey is received (for the command line it is registered on the environment variable VISHNU_SESSION_KEY) </para>
+		    </entry>
+		    <entry>
+		      <para><emphasis role="bold"> Phase II:</emphasis></para>
+		      <para> - The server checks the VISHNU user identifier and the password encrypted on the <emphasis>table Users</emphasis> of VISHNU database to authenticate the user.</para>
+		      <para> - The SSH key of the client machine is registered on the <emphasis>table ClientMachine</emphasis> (Base de données à compléter pour ClientMachine ...)</para>
+		      <para> - A new registration will be done on <emphasis>the table Session</emphasis>:</para>
+		      <para> - The sessionId is generated (how???) </para>
+		      <para> - The current date is registered on the dateCreation and the dateLastConnect </para>
+		      <para> - The sessionKey, which is an encrypted string of the current date until the microseconds (using SHA-512 with a salt as the  
+				the md5 hash of the VISHNU user identifier), is generated </para>
+		      <para> - The state is set to ACTIVE</para>
+		      <para> - The <link linkend="ConnectOptions"> ConnectOptions </link> object is deserialized for checking the options set</para>
+		      <para> - If the option close policy defined on <link linkend="ConnectOptions"> ConnectOptions </link> is not null, the value (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT) is recorded</para>
+		      <para> - If the inactivity delay in seconds is set, it is recorded on <emphasis>the table OptionValue</emphasis> 
+			and if the close policy is CLOSE_ON_TIMEOUT, it is recorded on the <emphasis>the table Session</emphasis>
+		      </para>
+		      <para> - If the administrator option to make a connection as he/she was another user is set, the System checks that the privilege of the user on the <emphasis>table Users</emphasis>
+		      is ADMIN: if yes the substituteUserId is recorded as a user identifier
+		      </para>  
+		      <para> - The userId is registered (if the substituteUserId is not already set)</para> 
+		      <para> - The System returns the sessionKey generated to the user</para>
+		     </entry>
+		  </row>
+		</tbody>
+	      </tgroup>
+	    </informaltable>
+	  
+	 <para><emphasis role="bold">UMS::reconnect</emphasis></para>   
+	 <informaltable>
+	      <tgroup cols="2">
+		<colspec colwidth="5cm"/>
+		<colspec colwidth="5cm"/>
+		<thead>
+		  <row>
+		    <entry>Client</entry>
+		    <entry>Server Daemon</entry>
+		  </row>
+		</thead>
+		
+		<tbody> 
+		  <row>
+		    <entry><para>The connect service allows the user to open a session </para></entry>
+		    <entry><para>Server actions description</para></entry>
+		  </row>
+		</tbody>
+	      </tgroup>
+	    </informaltable>   
+	      
+	</section> <!-- Data types definition format -->    
+    
+	
+	
       <section><!--Data types description -->
 	<title>Data types definitions</title>
 	<para xml:id="Command"><emphasis role="bold">Class UMS::Command Content</emphasis></para>
@@ -923,95 +1061,7 @@
 	  </tgroup>
 	</informaltable>
       </section> <!--Data types description -->
-    
-      <section> <!-- Data types definition format -->
-	<title>Internal services design</title>
-	  <para>The description of the internal service description is organized as follows:</para>
-	  <para> For each service the emphasis laid on the client and the server parts. This is an example:</para>
-	  <para><emphasis role="bold">UMS::service name</emphasis></para>
-          <informaltable>
-            <tgroup cols="2">
-              <colspec colwidth="5cm"/>
-              <colspec colwidth="5cm"/>
-              <thead>
-                <row>
-                  <entry>Client</entry>
-                  <entry>Server Daemon</entry>
-                </row>
-              </thead>
-	      
-              <tbody>
-                <row>
-                  <entry><para>Client actions description</para></entry>
-                  <entry><para>Server actions description</para></entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-   	  
-	  <para>The following paragraphs show the internal design of all services:</para>
-	  
-	  <para><emphasis role="bold">UMS::connect</emphasis></para>
-	  
-	  <para>The connect service allows the user to open a session by providing:</para> 
-	  <para><emphasis role="bold">Required parameters:</emphasis></para>
-	  <para> - Login and password, </para> 
-	  <para><emphasis role="bold">Optional parameters:</emphasis></para>
-	  <para> - The way for closing the session (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT), </para> 
-	  <para> - he maximum delay in seconds when the CLOSE_ON_TIMEOUT option is set,</para>
-	  <para> - For administrators, it is possible to open a session as he/she was a specific user.</para>
-	  
-	  <para><emphasis role="bold">Internal client and server design:</emphasis></para>
-	<!--<para><emphasis role="bold">UMS::connect</emphasis></para>-->
-	    <informaltable>
-	      <tgroup cols="2">
-		<colspec colwidth="8.5cm"/>
-		<colspec colwidth="8.5cm"/>
-		<thead>
-		  <row>
-		    <entry>Client</entry>
-		    <entry>Server Daemon</entry>
-		  </row>
-		</thead>
-		
-		<tbody>
-		  <row>
-		    <entry><para> - The password is crypted by using the Secure Hash Algorithm SHA-512 of the Linux library libcrypt,</para>
-			   <para> - If the close policy option is set (CLOSE_ON_DISCONNECT or CLOSE_ON_TIMEOUT), for command line it can be set on an
-			  environment variable VISHNU_CLOSE_POLICY and used by default,</para>
-			   <para> - If the close policy option is set to CLOSE_ON_TIMEOUT, the inactivity delay in seconds can be defined,</para>
-			   <para> - The programs checks the ssk key path of the user's machine define on an environment variable and get its containing as a string,</para>
-			   <para> - All optional parameters are encapsulates on the <link linkend="ConnectOptions">ConnectOptions</link> object</para>
-		    </entry>
-		    <entry><para>Server actions description</para></entry>
-		  </row>
-		</tbody>
-	      </tgroup>
-	    </informaltable>
-	  
-	 <para><emphasis role="bold">UMS::reconnect</emphasis></para>   
-	 <informaltable>
-	      <tgroup cols="2">
-		<colspec colwidth="5cm"/>
-		<colspec colwidth="5cm"/>
-		<thead>
-		  <row>
-		    <entry>Client</entry>
-		    <entry>Server Daemon</entry>
-		  </row>
-		</thead>
-		
-		<tbody> 
-		  <row>
-		    <entry><para>The connect service allows the user to open a session </para></entry>
-		    <entry><para>Server actions description</para></entry>
-		  </row>
-		</tbody>
-	      </tgroup>
-	    </informaltable>   
-	      
-	</section> <!-- Data types definition format -->    
-    
+      
     </chapter> <!--UMS Design -->
   
   </book>
