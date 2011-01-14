@@ -1,0 +1,2021 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>D1.1d - VISHNU Command-line interface specifications</title><link href="style.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" title="D1.1d - VISHNU Command-line interface specifications"><div class="titlepage"><div><div><h1 class="title"><a name="N2000B"></a>D1.1d - VISHNU Command-line interface specifications</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Benjamin</span> <span class="surname">Isnard</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Daouda</span> <span class="surname">Traor&eacute;</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Eug&egrave;ne</span> <span class="surname">Pamba Capo-Chichi</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Kevin</span> <span class="surname">Coulomb</span></h3></div></div><div><div class="author"><h3 class="author"><span class="firstname">Ibrahima</span> <span class="surname">Ciss&eacute;</span></h3></div></div><div><div class="revhistory"><table summary="Revision history" width="100%" border="1"><tr><th colspan="3" valign="top" align="left"><b>Revision History</b></th></tr>
+      <tr><td align="left">Revision 0</td><td align="left">05/01/2011</td><td align="left">SysFera</td></tr><tr><td colspan="3" align="left">
+          
+        <p>Formatting example</p></td></tr>
+      <tr><td align="left">Revision 1</td><td align="left">13/01/2011</td><td align="left">SysFera</td></tr><tr><td colspan="3" align="left">
+          
+        <p>First release</p></td></tr>
+    </table></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="chapter"><a href="#N20076">1. Document presentation</a></span></dt><dd><dl><dt><span class="section"><a href="#N2007B">Document objectives</a></span></dt><dt><span class="section"><a href="#N20087">Document structure</a></span></dt><dt><span class="section"><a href="#N200BD">References</a></span></dt><dt><span class="section"><a href="#N200CD">Glossary</a></span></dt><dt><span class="section"><a href="#N200DE">Generic command definition format</a></span></dt><dt><span class="section"><a href="#N201E7"> Environment variables and options</a></span></dt></dl></dd><dt><span class="chapter"><a href="#N201F8">2. Commands specification for User Management System (UMS)</a></span></dt><dd><dl><dt><span class="section"><a href="#N201FE">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N20203">UMS connect</a></span></dt><dt><span class="section"><a href="#N202DE">UMS reconnect</a></span></dt><dt><span class="section"><a href="#N2037B">UMS addVishnuUser</a></span></dt><dt><span class="section"><a href="#N204A6">UMS updateUser</a></span></dt><dt><span class="section"><a href="#N205D1">UMS deleteUser</a></span></dt><dt><span class="section"><a href="#N20690">UMS close</a></span></dt><dt><span class="section"><a href="#N2070E">UMS changePassword</a></span></dt><dt><span class="section"><a href="#N207AB">UMS resetPassword</a></span></dt><dt><span class="section"><a href="#N2086A">UMS addLocalAccount</a></span></dt><dt><span class="section"><a href="#N2098F">UMS updateLocalAccount</a></span></dt><dt><span class="section"><a href="#N20AB4">UMS deleteLocalAccount</a></span></dt><dt><span class="section"><a href="#N20B88">UMS saveConfiguration</a></span></dt><dt><span class="section"><a href="#N20C47">UMS restoreConfiguration</a></span></dt><dt><span class="section"><a href="#N20D06">UMS addMachine</a></span></dt><dt><span class="section"><a href="#N20E18">UMS updateMachine</a></span></dt><dt><span class="section"><a href="#N20F43">UMS deleteMachine</a></span></dt><dt><span class="section"><a href="#N21002">UMS listLocalAccount</a></span></dt><dt><span class="section"><a href="#N210FA">UMS listMachine</a></span></dt><dt><span class="section"><a href="#N211F2">UMS listHistoryCmd</a></span></dt><dt><span class="section"><a href="#N21320">UMS listOptions</a></span></dt><dt><span class="section"><a href="#N21418">UMS listUsers</a></span></dt><dt><span class="section"><a href="#N214DC">UMS listSessions</a></span></dt><dt><span class="section"><a href="#N2167A">UMS configureDefaultOption</a></span></dt><dt><span class="section"><a href="#N2174E">UMS configureOption</a></span></dt></dl></dd><dt><span class="section"><a href="#N21823">Parameters definitions</a></span></dt></dl></dd><dt><span class="chapter"><a href="#N2189A">3. Commands specification for Tasks Management System (TMS)</a></span></dt><dd><dl><dt><span class="section"><a href="#N218A0">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N218A5">TMS submitJob</a></span></dt><dt><span class="section"><a href="#N21A6E">TMS getJobInfo</a></span></dt><dt><span class="section"><a href="#N21B42">TMS getJobProgress</a></span></dt><dt><span class="section"><a href="#N21C37">TMS listQueues</a></span></dt><dt><span class="section"><a href="#N21CF6">TMS listJobs</a></span></dt><dt><span class="section"><a href="#N21EC7">TMS getJobOutPut</a></span></dt><dt><span class="section"><a href="#N21F9B">TMS getAllJobsOutPut</a></span></dt><dt><span class="section"><a href="#N2205A">TMS cancelJob</a></span></dt><dt><span class="section"><a href="#N2212E">TMS setMachineEnv</a></span></dt><dt><span class="section"><a href="#N22202">TMS setMachineRefreshPeriod</a></span></dt></dl></dd><dt><span class="section"><a href="#N222D7">Parameters definitions</a></span></dt></dl></dd><dt><span class="chapter"><a href="#N22458">4. Commands specification for Information Management System (IMS)</a></span></dt><dd><dl><dt><span class="section"><a href="#N2245E">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N22463">IMS exportCommands</a></span></dt><dt><span class="section"><a href="#N22522">IMS getMetricCurrentValue</a></span></dt><dt><span class="section"><a href="#N225F8">IMS getMetricHistory</a></span></dt><dt><span class="section"><a href="#N226F8">IMS getProcesses</a></span></dt><dt><span class="section"><a href="#N227B7">IMS setSystemInfo</a></span></dt><dt><span class="section"><a href="#N228A8">IMS setSystemThreshold</a></span></dt><dt><span class="section"><a href="#N22993">IMS getSystemThreshold</a></span></dt><dt><span class="section"><a href="#N22A69">IMS defineUserIdentifier</a></span></dt><dt><span class="section"><a href="#N22B28">IMS defineMachineIdentifier</a></span></dt><dt><span class="section"><a href="#N22BE7">IMS defineJobIdentifier</a></span></dt><dt><span class="section"><a href="#N22CA6">IMS defineTransferIdentifier</a></span></dt><dt><span class="section"><a href="#N22D65">IMS loadShed</a></span></dt><dt><span class="section"><a href="#N22E3B">IMS setUpdateFrequency</a></span></dt><dt><span class="section"><a href="#N22EFA">IMS getUpdateFrequency</a></span></dt><dt><span class="section"><a href="#N22F78">IMS restart</a></span></dt></dl></dd><dt><span class="section"><a href="#N2308B">Parameters definitions</a></span></dt></dl></dd><dt><span class="chapter"><a href="#N2317C">5. Commands specification for File Management System (FMS)</a></span></dt><dd><dl><dt><span class="section"><a href="#N23182">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N23187">FMS createFile</a></span></dt><dt><span class="section"><a href="#N23261">FMS createDir</a></span></dt><dt><span class="section"><a href="#N2333B">FMS removeFile</a></span></dt><dt><span class="section"><a href="#N233FA">FMS removeDir</a></span></dt><dt><span class="section"><a href="#N234B9">FMS chGrp</a></span></dt><dt><span class="section"><a href="#N2358D">FMS chMod</a></span></dt><dt><span class="section"><a href="#N23661">FMS headOfFile</a></span></dt><dt><span class="section"><a href="#N2373B">FMS tailOfFile</a></span></dt><dt><span class="section"><a href="#N23815">FMS contentOfFile</a></span></dt><dt><span class="section"><a href="#N238D4">FMS listDir</a></span></dt><dt><span class="section"><a href="#N239C5">FMS copyFile</a></span></dt><dt><span class="section"><a href="#N23AEC">FMS copyAsyncFile</a></span></dt><dt><span class="section"><a href="#N23C13">FMS moveFile</a></span></dt><dt><span class="section"><a href="#N23D21">FMS moveAsyncFile</a></span></dt><dt><span class="section"><a href="#N23E2F">FMS stopFileTransfer</a></span></dt><dt><span class="section"><a href="#N23F29">FMS listFileTransferStatus</a></span></dt><dt><span class="section"><a href="#N24023">FMS listFileTransfers</a></span></dt></dl></dd><dt><span class="section"><a href="#N24120">Parameters definitions</a></span></dt></dl></dd></dl></div><div class="list-of-examples"><p><b>List of Examples</b></p><dl><dt>1.1. <a href="#optionUse">Pseudo code</a></dt></dl></div>
+  
+  <div class="chapter" title="Chapter&nbsp;1.&nbsp;Document presentation"><div class="titlepage"><div><div><h2 class="title"><a name="N20076"></a>Chapter&nbsp;1.&nbsp;Document presentation</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#N2007B">Document objectives</a></span></dt><dt><span class="section"><a href="#N20087">Document structure</a></span></dt><dt><span class="section"><a href="#N200BD">References</a></span></dt><dt><span class="section"><a href="#N200CD">Glossary</a></span></dt><dt><span class="section"><a href="#N200DE">Generic command definition format</a></span></dt><dt><span class="section"><a href="#N201E7"> Environment variables and options</a></span></dt></dl></div>
+    
+    <div class="section" title="Document objectives"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N2007B"></a>Document objectives</h2></div></div></div>
+      
+      <p>This document presents the detailed specifications of the VISHNU command line user interface.</p>
+      <p>These specifications include the definition of all commands including administration commands.</p>
+    </div>
+    <div class="section" title="Document structure"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N20087"></a>Document structure</h2></div></div></div>
+      
+      <p>The document is divided into 4 parts corresponding to the 4 modules that compose the
+        Vishnu system:</p>
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            <p>UMS: Users Management System</p>
+          </li><li class="listitem">
+            <p>TMS: Tasks Management System</p>
+          </li><li class="listitem">
+            <p>FMS: Files Management System</p>
+          </li><li class="listitem">
+            <p>IMS: Information Management System</p>
+          </li></ul></div>
+      <p>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            <p>A first section describing the definition of all commands provided by the package.</p>
+          </li><li class="listitem">
+            <p>A second section describing the definition of all enumerated values used as command parameters.</p>
+          </li></ul></div>
+    </div>
+    <div class="section" title="References"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N200BD"></a>References</h2></div></div></div>
+      
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            <p>D1.1a : VISHNU General specifications</p>
+          </li></ul></div>
+    </div>
+    <div class="section" title="Glossary"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N200CD"></a>Glossary</h2></div></div></div>
+      
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          <p>VISHNU admin: any user having the administrator privilege</p>
+        </li></ul></div>
+      <p></p>
+    </div>
+    <div class="section" title="Generic command definition format"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N200DE"></a>Generic command definition format</h2></div></div></div>
+      
+      <p>This section presents the generic format used in the following chapters to describe the commands. It also details 
+	the environment variables required and the user options.</p>
+      <p> A commands is defined as follows:</p>
+      <p><span class="bold"><strong>Access</strong></span></p>
+      <p>Here is detailed the access level of the command line (i.e. the privilege required to use this command)</p>
+      <p><span class="bold"><strong>Description </strong></span></p>
+      <p>Here is detailed the purpose of the command line.</p>
+      <p><span class="bold"><strong>Example of use </strong></span></p>
+      <p>Here is detailed an example of the use of the command line which starts by optional arguments preceded by a short letter and 
+	   the required arguments at the end.<span class="bold"><strong></strong></span></p>
+      <p>myCommand <span class="bold"><strong>-l</strong></span> acLogin <span class="bold"><strong>-s</strong></span> sshKeyPath userId </p>
+      <p><span class="bold"><strong>Parameters</strong></span></p>
+      <p>The following table contains all the input arguments of the command with their type and description, 
+	   their short letter for options and a required flag.</p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter</th><th>Type</th><th>Option</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>This is an example of a required argument</p></td><td><p>YES</p></td></tr><tr><td><p>acLogin</p></td><td><p>string</p></td><td><p>l</p></td><td><p>This is an example of an optional argument</p></td><td><p>NO</p></td></tr><tr><td><p>sshKeyPath</p></td><td><p>string</p></td><td><p>s</p></td><td><p>This is an example of an optional argument</p></td><td><p>NO</p></td></tr></tbody></table>
+      </div>
+      <p>The following table contains the list of environment variables information, a required flag and a user option flag. When the user option flag 
+	is true, the environment variable can be defined as a user option stored in the database.</p>
+      <p><span class="bold"><strong>Environment variables</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name</th><th>Parameter</th><th>Type</th><th>Description</th><th>Required</th><th>User option</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>This is an example of an environment variable</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+      </div>
+      <p><span class="bold"><strong>Note:</strong></span></p>
+      <p> For each command line the -h option can be used for help.</p>
+    </div>
+    <div class="section" title="Environment variables and options"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N201E7"></a> Environment variables and options</h2></div></div></div>
+      
+      <p>Here is detailed the way to use the user options which are stored in the database and environment variables in VISHNU.</p>
+      <div class="example"><a name="optionUse"></a><p class="title"><b>Example&nbsp;1.1.&nbsp;Pseudo code</b></p><div class="example-contents"><pre class="programlisting">
+		  if (the option is provided in the command line) {
+		      optionValue = option 
+		      
+		  } else {
+			    if (an environment variable exists) {
+				      optionValue = EnVariable_Value
+		 	
+			    } else { 
+			    
+				     if (a value has been defined in the user configuration) {
+					      optionValue = user_Option
+				     }
+				     else { 
+					      //The default value of the option defined by VISHNU admin is used
+					      optionValue = defaultValueOption
+				     }
+			   } 
+		   } 
+		  
+	    </pre></div></div><br class="example-break">
+    </div>
+  </div>
+  <div class="chapter" title="Chapter&nbsp;2.&nbsp;Commands specification for User Management System (UMS)"><div class="titlepage"><div><div><h2 class="title"><a name="N201F8"></a>Chapter&nbsp;2.&nbsp;Commands specification for User Management System (UMS)</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#N201FE">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N20203">UMS connect</a></span></dt><dt><span class="section"><a href="#N202DE">UMS reconnect</a></span></dt><dt><span class="section"><a href="#N2037B">UMS addVishnuUser</a></span></dt><dt><span class="section"><a href="#N204A6">UMS updateUser</a></span></dt><dt><span class="section"><a href="#N205D1">UMS deleteUser</a></span></dt><dt><span class="section"><a href="#N20690">UMS close</a></span></dt><dt><span class="section"><a href="#N2070E">UMS changePassword</a></span></dt><dt><span class="section"><a href="#N207AB">UMS resetPassword</a></span></dt><dt><span class="section"><a href="#N2086A">UMS addLocalAccount</a></span></dt><dt><span class="section"><a href="#N2098F">UMS updateLocalAccount</a></span></dt><dt><span class="section"><a href="#N20AB4">UMS deleteLocalAccount</a></span></dt><dt><span class="section"><a href="#N20B88">UMS saveConfiguration</a></span></dt><dt><span class="section"><a href="#N20C47">UMS restoreConfiguration</a></span></dt><dt><span class="section"><a href="#N20D06">UMS addMachine</a></span></dt><dt><span class="section"><a href="#N20E18">UMS updateMachine</a></span></dt><dt><span class="section"><a href="#N20F43">UMS deleteMachine</a></span></dt><dt><span class="section"><a href="#N21002">UMS listLocalAccount</a></span></dt><dt><span class="section"><a href="#N210FA">UMS listMachine</a></span></dt><dt><span class="section"><a href="#N211F2">UMS listHistoryCmd</a></span></dt><dt><span class="section"><a href="#N21320">UMS listOptions</a></span></dt><dt><span class="section"><a href="#N21418">UMS listUsers</a></span></dt><dt><span class="section"><a href="#N214DC">UMS listSessions</a></span></dt><dt><span class="section"><a href="#N2167A">UMS configureDefaultOption</a></span></dt><dt><span class="section"><a href="#N2174E">UMS configureOption</a></span></dt></dl></dd><dt><span class="section"><a href="#N21823">Parameters definitions</a></span></dt></dl></div>
+    
+    <div class="section" title="Command definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N201FE"></a>Command definitions</h2></div></div></div>
+      
+      <div class="section" title="UMS connect"><div class="titlepage"><div><div><h3 class="title"><a name="N20203"></a>UMS connect</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The connect command line opens a session</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">connect  </code>  [-p<em class="replaceable"><code> closePolicy </code></em>] [-d<em class="replaceable"><code> sessionInactivityDelay </code></em>] [-s<em class="replaceable"><code> substituteUserId </code></em>]  <em class="replaceable"><code> userId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>userId represents the VISHNU user identifier</p></td><td><p>YES</p></td></tr><tr><td><p>password</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>password represents the password of the user, it is an interactive parameter</p></td><td><p>YES</p></td></tr><tr><td><p>closePolicy</p></td><td><p><a class="link" href="#SessionCloseType">SessionCloseType</a></p></td><td><p>p</p></td><td><p>is an option for closing session automatically</p></td><td><p>NO</p></td></tr><tr><td><p>sessionInactivityDelay</p></td><td><p>int</p></td><td><p>d</p></td><td><p>The sessionInactivityDelay is the maximum delay in seconds between two API commands when the CLOSE_ON_TIMEOUT option is set</p></td><td><p>NO</p></td></tr><tr><td><p>substituteUserId</p></td><td><p>string</p></td><td><p>s</p></td><td><p>is an option which allows an admin to open a session as if he/she was a specific user identified by his/her userId</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <p>This command defines no environment variables.</p>
+      </div>
+      <div class="section" title="UMS reconnect"><div class="titlepage"><div><div><h3 class="title"><a name="N202DE"></a>UMS reconnect</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">reconnect</code>   <em class="replaceable"><code> userId  sessionId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId </p></td><td><p>string</p></td><td>&nbsp;</td><td><p>userId represents the VISHNU user identifier</p></td><td><p>YES</p></td></tr><tr><td><p>password</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>password represents the password of the user, it is an interactive parameter</p></td><td><p>YES</p></td></tr><tr><td><p>sessionId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>sessionId is the identifier of the session defined in the database</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <p>This command defines no environment variables.</p>
+      </div>
+      <div class="section" title="UMS addVishnuUser"><div class="titlepage"><div><div><h3 class="title"><a name="N2037B"></a>UMS addVishnuUser</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The addVishnuUser command line adds a new VISHNU user</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">addVishnuUser</code>  [-f<em class="replaceable"><code> firstname</code></em>] [-l<em class="replaceable"><code> lastname</code></em>] [-p<em class="replaceable"><code> privilege</code></em>] [-m<em class="replaceable"><code> email</code></em>]  <em class="replaceable"><code>userId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the VISHNU user identifier</p></td><td><p>YES</p></td></tr><tr><td><p>firstname</p></td><td><p>string</p></td><td><p>f</p></td><td><p>is the firstname of the user</p></td><td><p>NO</p></td></tr><tr><td><p>lastname</p></td><td><p>string</p></td><td><p>l</p></td><td><p>is the lastname of the user</p></td><td><p>NO</p></td></tr><tr><td><p>privilege</p></td><td><p>int</p></td><td><p>p</p></td><td><p>is the privilege of the user (admin or simple user)</p></td><td><p>NO</p></td></tr><tr><td><p>email</p></td><td><p>string</p></td><td><p>m</p></td><td><p>is the email of the user</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS updateUser"><div class="titlepage"><div><div><h3 class="title"><a name="N204A6"></a>UMS updateUser</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The updateUser command line updates the user information except the userId and the password</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">updateUser  </code>  [-f<em class="replaceable"><code> firstname </code></em>] [-l<em class="replaceable"><code> lastname </code></em>] [-p<em class="replaceable"><code> privilege </code></em>] [-m<em class="replaceable"><code> email </code></em>]  <em class="replaceable"><code> userId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the VISHNU user identifier of the user whose information will be updated</p></td><td><p>YES</p></td></tr><tr><td><p>firstname</p></td><td><p>string</p></td><td><p>f</p></td><td><p>represents the updated firstname of the user</p></td><td><p>NO</p></td></tr><tr><td><p>lastname</p></td><td><p>string</p></td><td><p>l</p></td><td><p>represents the updated lastname of the user</p></td><td><p>NO</p></td></tr><tr><td><p>privilege</p></td><td><p>string</p></td><td><p>p</p></td><td><p>represents the updated privilege of the user</p></td><td><p>NO</p></td></tr><tr><td><p>email</p></td><td><p>string</p></td><td><p>m</p></td><td><p>represents the updated email adress of the user</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS deleteUser"><div class="titlepage"><div><div><h3 class="title"><a name="N205D1"></a>UMS deleteUser</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The deleteUser command line removes a user from VISHNU</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">deleteUser</code>   <em class="replaceable"><code> userId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>userId represents the VISHNU user identifier of the user who will be deleted from VISHNU</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS close"><div class="titlepage"><div><div><h3 class="title"><a name="N20690"></a>UMS close</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The close command line closes the session identfied by the session key</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">close</code>   <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <p>This command defines no arguments.</p>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS changePassword"><div class="titlepage"><div><div><h3 class="title"><a name="N2070E"></a>UMS changePassword</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The changePassword command line changes the password</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">changePassword</code>   <em class="replaceable"><code> userId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>userId represents the VISHNU user identifier</p></td><td><p>YES</p></td></tr><tr><td><p>password</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>password represents the password of the user, it is an interactive parameter</p></td><td><p>YES</p></td></tr><tr><td><p>passwordNew</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>passwordNew represents the new password of the user, it is an interactive parameter</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <p>This command defines no environment variables.</p>
+      </div>
+      <div class="section" title="UMS resetPassword"><div class="titlepage"><div><div><h3 class="title"><a name="N207AB"></a>UMS resetPassword</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The resetPassword command line resets the password of a user</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">resetPassword</code>   <em class="replaceable"><code> userId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>userId represents the VISHNU user identifier of the user whose password will be reset</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS addLocalAccount"><div class="titlepage"><div><div><h3 class="title"><a name="N2086A"></a>UMS addLocalAccount</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The addLocalAccount command line adds a new local user configuration </p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">addLocalAccount</code>  [-l<em class="replaceable"><code> acLogin</code></em>] [-s<em class="replaceable"><code> sshKeyPath</code></em>] [-d<em class="replaceable"><code> homeDirectory</code></em>]  <em class="replaceable"><code>userId machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The userId represents the VISHNU user identifier of the user of the local user configuration</p></td><td><p>YES</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The MachineId represents the identifier of the machine associated to the local user configuration</p></td><td><p>YES</p></td></tr><tr><td><p>acLogin</p></td><td><p>string</p></td><td><p>l</p></td><td><p>accLogin represents the login of the user on the associated machine</p></td><td><p>NO</p></td></tr><tr><td><p>sshKeyPath</p></td><td><p>string</p></td><td><p>s</p></td><td><p>sshKeyPath is the path of the ssh key of the user on the associated machine</p></td><td><p>NO</p></td></tr><tr><td><p>homeDirectory</p></td><td><p>string</p></td><td><p>d</p></td><td><p>HomeDirectory is the path of the home directory of the user on the associated machine</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS updateLocalAccount"><div class="titlepage"><div><div><h3 class="title"><a name="N2098F"></a>UMS updateLocalAccount</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The updateLocalAccount command line updates a local user configuration</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">updateLocalAccount</code>  [-l<em class="replaceable"><code> acLogin</code></em>] [-s<em class="replaceable"><code> sshKeyPath</code></em>] [-d<em class="replaceable"><code> homeDirectory</code></em>]  <em class="replaceable"><code>userId machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The userId represents the VISHNU user identifier of the user of the local user configuration</p></td><td><p>YES</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The MachineId represents the identifier of the machine associated to the local user configuration</p></td><td><p>YES</p></td></tr><tr><td><p>acLogin</p></td><td><p>string</p></td><td><p>l</p></td><td><p>accLogin represents the login of the user on the associated machine</p></td><td><p>NO</p></td></tr><tr><td><p>sshKeyPath</p></td><td><p>string</p></td><td><p>s</p></td><td><p>sshKeyPath is the path of the ssh key of the user on the associated machine</p></td><td><p>NO</p></td></tr><tr><td><p>homeDirectory</p></td><td><p>string</p></td><td><p>d</p></td><td><p>HomeDirectory is the path of the home directory of the user on the associated machine</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS deleteLocalAccount"><div class="titlepage"><div><div><h3 class="title"><a name="N20AB4"></a>UMS deleteLocalAccount</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">deleteLocalAccount</code>   <em class="replaceable"><code> userId machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>userId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine </p></td><td><p>YES</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>machineId represents the identifier of the machine whose local configuration will be deleted for the given user </p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS saveConfiguration"><div class="titlepage"><div><div><h3 class="title"><a name="N20B88"></a>UMS saveConfiguration</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The saveConfiguration command line saves the configuration of VISHNU</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">saveConfiguration</code>   <em class="replaceable"><code> filePath</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>filePath</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The filePath is the path of the file in which the VISHNU configuration will be saved</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS restoreConfiguration"><div class="titlepage"><div><div><h3 class="title"><a name="N20C47"></a>UMS restoreConfiguration</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The restoreConfiguration command line restores the configuration of VISHNU</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">restoreConfiguration</code>   <em class="replaceable"><code>  filePath </code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>filePath</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The filePath is the path of the VISHNU configuration file</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS addMachine"><div class="titlepage"><div><div><h3 class="title"><a name="N20D06"></a>UMS addMachine</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The addMachine command line adds a new machine in VISHNU</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">addMachine</code>  [-s<em class="replaceable"><code> site</code></em>] [-t<em class="replaceable"><code> machineDescription</code></em>] [-l<em class="replaceable"><code> language</code></em>]  <em class="replaceable"><code>name</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>name</p></td><td><p>string</p></td><td><p>n</p></td><td><p>represents the name of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>site</p></td><td><p>string</p></td><td><p>s</p></td><td><p>represents the location of the machine</p></td><td><p>NO</p></td></tr><tr><td><p>machineDescription</p></td><td><p>string</p></td><td><p>t</p></td><td><p>represents the description of the machine</p></td><td><p>NO</p></td></tr><tr><td><p>language</p></td><td><p>string</p></td><td><p>l</p></td><td><p>represents the language in which the description of the machine has been done</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS updateMachine"><div class="titlepage"><div><div><h3 class="title"><a name="N20E18"></a>UMS updateMachine</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The updateMachine command line updates machine description</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">updateMachine</code>  [-n<em class="replaceable"><code> name</code></em>] [-s<em class="replaceable"><code> site</code></em>] [-t<em class="replaceable"><code> machineDescription</code></em>] [-l<em class="replaceable"><code> language</code></em>]  <em class="replaceable"><code>machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the identifier of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>name</p></td><td><p>string</p></td><td><p>n</p></td><td><p>represents the name of the machine</p></td><td><p>NO</p></td></tr><tr><td><p>site</p></td><td><p>string</p></td><td><p>s</p></td><td><p>represents the location of the machine</p></td><td><p>NO</p></td></tr><tr><td><p>machineDescription</p></td><td><p>string</p></td><td><p>t</p></td><td><p>represents the description of the machine</p></td><td><p>NO</p></td></tr><tr><td><p>language</p></td><td><p>string</p></td><td><p>l</p></td><td><p>represents the language in which the description of the machine has been done</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS deleteMachine"><div class="titlepage"><div><div><h3 class="title"><a name="N20F43"></a>UMS deleteMachine</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The deleteMachine command line removes a machine from VISHNU</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">deleteMachine</code>   <em class="replaceable"><code> machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>machineId represents the identifier of the machine</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS listLocalAccount"><div class="titlepage"><div><div><h3 class="title"><a name="N21002"></a>UMS listLocalAccount</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listLocalAccount command line lists the local user configurations</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listLocalAccount  </code>  [-a] [-u<em class="replaceable"><code> userId </code></em>] [-i<em class="replaceable"><code> machineId </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>adminListOption</p></td><td><p>boolean</p></td><td><p>a</p></td><td><p>is an admin option for listing all local configurations of all users </p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>is an admin option for listing the local configurations of a specific user </p></td><td><p>NO</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>is an option for listing local user configurations on a specific machine</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS listMachine"><div class="titlepage"><div><div><h3 class="title"><a name="N210FA"></a>UMS listMachine</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listMachine  </code>  [-u<em class="replaceable"><code> userId </code></em>] [-a] [-m<em class="replaceable"><code> machineId </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>is an admin option for listing machines in which a specific user has a local configuration</p></td><td><p>NO</p></td></tr><tr><td><p>listAllmachine</p></td><td><p>boolean</p></td><td><p>a</p></td><td><p>is an option for listing all VISHNU machines</p></td><td><p>NO</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td><p>m</p></td><td><p>is an option for listing information about a specific machine</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS listHistoryCmd"><div class="titlepage"><div><div><h3 class="title"><a name="N211F2"></a>UMS listHistoryCmd</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listHistoryCmd command line lists the commands</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listHistoryCmd  </code>  [-a] [-u<em class="replaceable"><code> userId </code></em>] [-i<em class="replaceable"><code> sessionId </code></em>] [-s<em class="replaceable"><code> startDateOption </code></em>] [-e<em class="replaceable"><code> endDateOption </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>adminListOption</p></td><td><p>boolean</p></td><td><p>a</p></td><td><p>is an admin option for listing all commands of all users</p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>is an admin option for listing commands launched by a specific user identified by his/her userId</p></td><td><p>NO</p></td></tr><tr><td><p>sessionId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>lists all commands launched within a specific session</p></td><td><p>NO</p></td></tr><tr><td><p>startDateOption</p></td><td><p>long</p></td><td><p>s</p></td><td><p>allows the user to organize the commands listed by providing  the start date (the UNIX timestamp of the start date is used)</p></td><td><p>NO</p></td></tr><tr><td><p>endDateOption</p></td><td><p>long</p></td><td><p>e</p></td><td><p>allows the user to organize the commands listed by providing  the end date (the timestamp of the end date is used). By default, the end date is the current day</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS listOptions"><div class="titlepage"><div><div><h3 class="title"><a name="N21320"></a>UMS listOptions</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listOptions command line lists the options of the user</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listOptions  </code>  [-a] [-u<em class="replaceable"><code> userId </code></em>] [-n<em class="replaceable"><code> optionName </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>listAllDeftValue</p></td><td><p>boolean</p></td><td><p>a</p></td><td><p>is an option for listing all default option values defined by VISHNU administrator</p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>is an admin option for listing the options of a specific user</p></td><td><p>NO</p></td></tr><tr><td><p>optionName</p></td><td><p>string</p></td><td><p>n</p></td><td><p> allows the user to get the value of a specific option identified by its name  </p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS listUsers"><div class="titlepage"><div><div><h3 class="title"><a name="N21418"></a>UMS listUsers</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listUsers command line lists VISHNU users</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listUsers </code>  [-i<em class="replaceable"><code> userIdOption</code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>userIdOption</p></td><td><p>string</p></td><td><p>i</p></td><td><p>allows an admin to get information about a specific user identified by his/her userId</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS listSessions"><div class="titlepage"><div><div><h3 class="title"><a name="N214DC"></a>UMS listSessions</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listSessions command line lists all sessions of the user</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listSessions  </code>  [-t<em class="replaceable"><code> sessionListOption </code></em>] [-p<em class="replaceable"><code> sessionClosePolicy </code></em>] [-d<em class="replaceable"><code> sessionInactivityDelay </code></em>] [-m<em class="replaceable"><code> machineId </code></em>] [-a] [-u<em class="replaceable"><code> userId </code></em>] [-i<em class="replaceable"><code> sessionId </code></em>] [-s<em class="replaceable"><code> startDateOption </code></em>] [-e<em class="replaceable"><code> endDateOption </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>sessionListOption</p></td><td><p><a class="link" href="#SessionStateType">SessionStateType</a></p></td><td><p>t</p></td><td><p>specifies the type of the sessions which will be listed (INACTIVE or ACTIVE)</p></td><td><p>NO</p></td></tr><tr><td><p>sessionClosePolicy</p></td><td><p><a class="link" href="#SessionCloseType">SessionCloseType</a></p></td><td><p>p</p></td><td><p>specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)</p></td><td><p>NO</p></td></tr><tr><td><p>sessionInactivityDelay</p></td><td><p>int</p></td><td><p>d</p></td><td><p>specifies the inactivity delay in seconds of the sessions which will be listed</p></td><td><p>NO</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td><p>m</p></td><td><p>allows the user to list sessions opened on a specific machine</p></td><td><p>NO</p></td></tr><tr><td><p>adminListOption</p></td><td><p>boolean</p></td><td><p>a</p></td><td><p>is an admin option for listing all sessions of all users</p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>is an admin option for listing sessions opened by a specific user</p></td><td><p>NO</p></td></tr><tr><td><p>sessionId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>allows the user to list all commands launched within a specific session</p></td><td><p>NO</p></td></tr><tr><td><p>startDateOption</p></td><td><p>long</p></td><td><p>s</p></td><td><p>allows the user to organize the commands listed by providing  the start date (the UNIX timestamp of the start date is used)</p></td><td><p>NO</p></td></tr><tr><td><p>endDateOption</p></td><td><p>long</p></td><td><p>e</p></td><td><p>allows the user to organize the commands listed by providing  the end date (the timestamp of the end date is used). By default, the end date is the current day</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS configureDefaultOption"><div class="titlepage"><div><div><h3 class="title"><a name="N2167A"></a>UMS configureDefaultOption</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The configureDefaultOption command line configures a default option value</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">configureDefaultOption</code>   <em class="replaceable"><code>  optionName value </code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>optionName</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the name of an option</p></td><td><p>YES</p></td></tr><tr><td><p>value</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the value of an option</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="UMS configureOption"><div class="titlepage"><div><div><h3 class="title"><a name="N2174E"></a>UMS configureOption</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The configureOption command line configures an option of the user</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">configureOption</code>   <em class="replaceable"><code>  optionName value </code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>optionName</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the name of an option</p></td><td><p>YES</p></td></tr><tr><td><p>value</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>represents the value of an option</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the encrypted identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="section" title="Parameters definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N21823"></a>Parameters definitions</h2></div></div></div>
+      
+      <p><a name="SessionCloseType"></a><span class="bold"><strong>Enumeration UMS::SessionCloseType Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>CLOSE_ON_TIMEOUT</p></td><td><p>0</p></td></tr><tr><td><p>CLOSE_ON_DISCONNECT</p></td><td><p>1</p></td></tr></tbody></table>
+      </div>
+      <p><a name="SessionStateType"></a><span class="bold"><strong>Enumeration UMS::SessionStateType Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>INACTIVE</p></td><td><p>0</p></td></tr><tr><td><p>ACTIVE</p></td><td><p>1</p></td></tr></tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="chapter" title="Chapter&nbsp;3.&nbsp;Commands specification for Tasks Management System (TMS)"><div class="titlepage"><div><div><h2 class="title"><a name="N2189A"></a>Chapter&nbsp;3.&nbsp;Commands specification for Tasks Management System (TMS)</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#N218A0">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N218A5">TMS submitJob</a></span></dt><dt><span class="section"><a href="#N21A6E">TMS getJobInfo</a></span></dt><dt><span class="section"><a href="#N21B42">TMS getJobProgress</a></span></dt><dt><span class="section"><a href="#N21C37">TMS listQueues</a></span></dt><dt><span class="section"><a href="#N21CF6">TMS listJobs</a></span></dt><dt><span class="section"><a href="#N21EC7">TMS getJobOutPut</a></span></dt><dt><span class="section"><a href="#N21F9B">TMS getAllJobsOutPut</a></span></dt><dt><span class="section"><a href="#N2205A">TMS cancelJob</a></span></dt><dt><span class="section"><a href="#N2212E">TMS setMachineEnv</a></span></dt><dt><span class="section"><a href="#N22202">TMS setMachineRefreshPeriod</a></span></dt></dl></dd><dt><span class="section"><a href="#N222D7">Parameters definitions</a></span></dt></dl></div>
+    
+    <div class="section" title="Command definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N218A0"></a>Command definitions</h2></div></div></div>
+      
+      <div class="section" title="TMS submitJob"><div class="titlepage"><div><div><h3 class="title"><a name="N218A5"></a>TMS submitJob</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">submitJob  </code>  [-n<em class="replaceable"><code> name </code></em>] [-p<em class="replaceable"><code> priority </code></em>] [-q<em class="replaceable"><code> queue </code></em>] [-t<em class="replaceable"><code> wallTime </code></em>] [-m<em class="replaceable"><code> memory </code></em>] [-P<em class="replaceable"><code> nbCpu </code></em>] [-N<em class="replaceable"><code> nbNodesAndCpuPerNode </code></em>] [-o<em class="replaceable"><code> outPutPath </code></em>] [-e<em class="replaceable"><code> errorPath </code></em>]  <em class="replaceable"><code> machineId scriptFilePath</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Is the id of the machine where the job must be submitted</p></td><td><p>YES</p></td></tr><tr><td><p>scriptFilePath</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.</p></td><td><p>YES</p></td></tr><tr><td><p>name</p></td><td><p>string</p></td><td><p>n</p></td><td><p>Assigns a job name. The default is the path of job.</p></td><td><p>NO</p></td></tr><tr><td><p>priority</p></td><td><p><a class="link" href="#JobPriority">JobPriority</a></p></td><td><p>p</p></td><td><p>Assigns priority of the job.</p></td><td><p>NO</p></td></tr><tr><td><p>queue</p></td><td><p>string</p></td><td><p>q</p></td><td><p>Assigns the queue or class of the job.</p></td><td><p>NO</p></td></tr><tr><td><p>wallTime</p></td><td><p>int</p></td><td><p>t</p></td><td><p>The maximum wall-clock time during which the job can run.</p></td><td><p>NO</p></td></tr><tr><td><p>memory</p></td><td><p>int</p></td><td><p>m</p></td><td><p>Is the memory size that the job requires.</p></td><td><p>NO</p></td></tr><tr><td><p>nbCpu</p></td><td><p>int</p></td><td><p>P</p></td><td><p>The number of cpu that the job requires.</p></td><td><p>NO</p></td></tr><tr><td><p>nbNodesAndCpuPerNode</p></td><td><p>string</p></td><td><p>N</p></td><td><p>The number of nodes and processors per node.</p></td><td><p>NO</p></td></tr><tr><td><p>outPutPath</p></td><td><p>string</p></td><td><p>o</p></td><td><p>Assigns the path and file for job output.</p></td><td><p>NO</p></td></tr><tr><td><p>errorPath</p></td><td><p>string</p></td><td><p>e</p></td><td><p>Assigns the path and file for job error.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS getJobInfo"><div class="titlepage"><div><div><h3 class="title"><a name="N21A6E"></a>TMS getJobInfo</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getJobInfo command line gets information on a job from its id</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getJobInfo</code>   <em class="replaceable"><code> machineId jobId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Machine hash key</p></td><td><p>YES</p></td></tr><tr><td><p>jobId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the job </p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS getJobProgress"><div class="titlepage"><div><div><h3 class="title"><a name="N21B42"></a>TMS getJobProgress</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getJobProgress command line gets the progression status of jobs</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getJobProgress  </code>  [-i<em class="replaceable"><code> jobId </code></em>] [-u<em class="replaceable"><code> jobOwner </code></em>]  <em class="replaceable"><code> machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Is the id of the machine to get the jobs progression.</p></td><td><p>YES</p></td></tr><tr><td><p>jobId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>Represents the id of the job that the user wants to see the progression of.</p></td><td><p>NO</p></td></tr><tr><td><p>jobOwner</p></td><td><p>string</p></td><td><p>u</p></td><td><p>Represents the owner of the job.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS listQueues"><div class="titlepage"><div><div><h3 class="title"><a name="N21C37"></a>TMS listQueues</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listQueues command line gets queues information</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listQueues</code>   <em class="replaceable"><code> machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Machine hash key</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS listJobs"><div class="titlepage"><div><div><h3 class="title"><a name="N21CF6"></a>TMS listJobs</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listJobs command line gets a list of all submitted jobs</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listJobs  </code>  [-i<em class="replaceable"><code> jobId </code></em>] [-P<em class="replaceable"><code> nbCpu </code></em>] [-d<em class="replaceable"><code> fromSubmitDate </code></em>] [-D<em class="replaceable"><code> toSubmitDate </code></em>] [-u<em class="replaceable"><code> owner </code></em>] [-s<em class="replaceable"><code> status </code></em>] [-p<em class="replaceable"><code> priority </code></em>] [-o<em class="replaceable"><code> outPutPath </code></em>] [-e<em class="replaceable"><code> errorPath </code></em>] [-q<em class="replaceable"><code> queue </code></em>]  <em class="replaceable"><code> machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Machine hash key</p></td><td><p>YES</p></td></tr><tr><td><p>jobId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>To list job which has this id.</p></td><td><p>NO</p></td></tr><tr><td><p>nbCpu</p></td><td><p>int</p></td><td><p>P</p></td><td><p>To list jobs which have this number of cpu.</p></td><td><p>NO</p></td></tr><tr><td><p>fromSubmitDate</p></td><td><p>long</p></td><td><p>d</p></td><td><p>List jobs submitted after this date (unix timestamp).</p></td><td><p>NO</p></td></tr><tr><td><p>toSubmitDate</p></td><td><p>long</p></td><td><p>D</p></td><td><p>List jobs submitted before this date (unix timestamp)</p></td><td><p>NO</p></td></tr><tr><td><p>owner</p></td><td><p>string</p></td><td><p>u</p></td><td><p>To list all jobs submitted by this owner.</p></td><td><p>NO</p></td></tr><tr><td><p>status</p></td><td><p><a class="link" href="#JobStatus">JobStatus</a></p></td><td><p>s</p></td><td><p>To list jobs which have this status.</p></td><td><p>NO</p></td></tr><tr><td><p>priority</p></td><td><p><a class="link" href="#JobPriority">JobPriority</a></p></td><td><p>p</p></td><td><p>To list jobs which have this priority</p></td><td><p>NO</p></td></tr><tr><td><p>outPutPath</p></td><td><p>string</p></td><td><p>o</p></td><td><p>Gets the path and file for each job output.</p></td><td><p>NO</p></td></tr><tr><td><p>errorPath</p></td><td><p>string</p></td><td><p>e</p></td><td><p>Gets the path and file for each job error.</p></td><td><p>NO</p></td></tr><tr><td><p>queue</p></td><td><p>string</p></td><td><p>q</p></td><td><p>To list jobs which have this queue name.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS getJobOutPut"><div class="titlepage"><div><div><h3 class="title"><a name="N21EC7"></a>TMS getJobOutPut</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getJobOutPut command line gets outputPath and errorPath of a job from its id</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getJobOutPut</code>   <em class="replaceable"><code> machineId jobId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Machine hash key</p></td><td><p>YES</p></td></tr><tr><td><p>jobId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The Id of the job</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS getAllJobsOutPut"><div class="titlepage"><div><div><h3 class="title"><a name="N21F9B"></a>TMS getAllJobsOutPut</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getAllJobsOutPut command line dynamically gets outputPath and errorPath of completed jobs</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getAllJobsOutPut</code>   <em class="replaceable"><code> machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Machine hash key</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS cancelJob"><div class="titlepage"><div><div><h3 class="title"><a name="N2205A"></a>TMS cancelJob</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The cancelJob command line cancels a job from its id</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">cancelJob</code>   <em class="replaceable"><code> machineId jobId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Machine hash key</p></td><td><p>YES</p></td></tr><tr><td><p>jobId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The Id of the job</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS setMachineEnv"><div class="titlepage"><div><div><h3 class="title"><a name="N2212E"></a>TMS setMachineEnv</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The setMachineEnv command line sets environment variables on a remote machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">setMachineEnv</code>   <em class="replaceable"><code> machineId listEnv</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Represents the machine id</p></td><td><p>YES</p></td></tr><tr><td><p>listEnv</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>Represents the list environement variables</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="TMS setMachineRefreshPeriod"><div class="titlepage"><div><div><h3 class="title"><a name="N22202"></a>TMS setMachineRefreshPeriod</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The setMachineRefreshPeriod command line sets the refresh period of output and error files contents</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">setMachineRefreshPeriod</code>   <em class="replaceable"><code> machineId value</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>value</p></td><td><p>int</p></td><td>&nbsp;</td><td><p>Is the refresh interval value (in seconds)</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The sessionKey is the identifier of the session generated by VISHNU</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="section" title="Parameters definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N222D7"></a>Parameters definitions</h2></div></div></div>
+      
+      <p><a name="JobPriority"></a><span class="bold"><strong>Enumeration TMS::JobPriority Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>VERY_LOW</p></td><td><p>100</p></td></tr><tr><td><p>LOW</p></td><td><p>200</p></td></tr><tr><td><p>NORMAL</p></td><td><p>300</p></td></tr><tr><td><p>HIGH</p></td><td><p>400</p></td></tr><tr><td><p>VERY_HIGH</p></td><td><p>500</p></td></tr></tbody></table>
+      </div>
+      <p><a name="JobStatus"></a><span class="bold"><strong>Enumeration TMS::JobStatus Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>RUNNING</p></td><td><p>0</p></td></tr><tr><td><p>WAITING</p></td><td><p>1</p></td></tr><tr><td><p>COMPLETED</p></td><td><p>2</p></td></tr><tr><td><p>CANCELED</p></td><td><p>3</p></td></tr><tr><td><p>HELD</p></td><td><p>4</p></td></tr><tr><td><p>QUEUED</p></td><td><p>5</p></td></tr><tr><td><p>FAILED</p></td><td><p>6</p></td></tr><tr><td><p>NOT_SUBMITTED</p></td><td><p>7</p></td></tr></tbody></table>
+      </div>
+      <p><a name="QueuePriority"></a><span class="bold"><strong>Enumeration TMS::QueuePriority Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>VERY_LOW</p></td><td><p>0</p></td></tr><tr><td><p>LOW</p></td><td><p>1</p></td></tr><tr><td><p>NORMAL</p></td><td><p>2</p></td></tr><tr><td><p>HIGH</p></td><td><p>3</p></td></tr><tr><td><p>VERY_HIGH</p></td><td><p>4</p></td></tr></tbody></table>
+      </div>
+      <p><a name="QueueStatus"></a><span class="bold"><strong>Enumeration TMS::QueueStatus Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>STARTED</p></td><td><p>0</p></td></tr><tr><td><p>RUNNING</p></td><td><p>1</p></td></tr><tr><td><p>NOT_STARTED</p></td><td><p>2</p></td></tr><tr><td><p>NOT_AVAILABLE</p></td><td><p>3</p></td></tr></tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="chapter" title="Chapter&nbsp;4.&nbsp;Commands specification for Information Management System (IMS)"><div class="titlepage"><div><div><h2 class="title"><a name="N22458"></a>Chapter&nbsp;4.&nbsp;Commands specification for Information Management System (IMS)</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#N2245E">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N22463">IMS exportCommands</a></span></dt><dt><span class="section"><a href="#N22522">IMS getMetricCurrentValue</a></span></dt><dt><span class="section"><a href="#N225F8">IMS getMetricHistory</a></span></dt><dt><span class="section"><a href="#N226F8">IMS getProcesses</a></span></dt><dt><span class="section"><a href="#N227B7">IMS setSystemInfo</a></span></dt><dt><span class="section"><a href="#N228A8">IMS setSystemThreshold</a></span></dt><dt><span class="section"><a href="#N22993">IMS getSystemThreshold</a></span></dt><dt><span class="section"><a href="#N22A69">IMS defineUserIdentifier</a></span></dt><dt><span class="section"><a href="#N22B28">IMS defineMachineIdentifier</a></span></dt><dt><span class="section"><a href="#N22BE7">IMS defineJobIdentifier</a></span></dt><dt><span class="section"><a href="#N22CA6">IMS defineTransferIdentifier</a></span></dt><dt><span class="section"><a href="#N22D65">IMS loadShed</a></span></dt><dt><span class="section"><a href="#N22E3B">IMS setUpdateFrequency</a></span></dt><dt><span class="section"><a href="#N22EFA">IMS getUpdateFrequency</a></span></dt><dt><span class="section"><a href="#N22F78">IMS restart</a></span></dt></dl></dd><dt><span class="section"><a href="#N2308B">Parameters definitions</a></span></dt></dl></div>
+    
+    <div class="section" title="Command definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N2245E"></a>Command definitions</h2></div></div></div>
+      
+      <div class="section" title="IMS exportCommands"><div class="titlepage"><div><div><h3 class="title"><a name="N22463"></a>IMS exportCommands</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The exportCommands command line exports all the commands made by a user during a session</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">exportCommands</code>   <em class="replaceable"><code> oldSessionKey</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>oldSessionKey</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The key of the session to export (session has ended)</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command (current session key)</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS getMetricCurrentValue"><div class="titlepage"><div><div><h3 class="title"><a name="N22522"></a>IMS getMetricCurrentValue</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getMetricCurrentValue command line retrieve the current value of a metric on a machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getMetricCurrentValue</code>   <em class="replaceable"><code> machineId metricType</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>metricType</p></td><td><p><a class="link" href="#MetricType">MetricType</a></p></td><td>&nbsp;</td><td><p>Type of metric</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS getMetricHistory"><div class="titlepage"><div><div><h3 class="title"><a name="N225F8"></a>IMS getMetricHistory</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getMetricHistory command line retrieve the history of values of a metric on a machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getMetricHistory</code>   <em class="replaceable"><code> machineId startTime endTime metricType</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>startTime</p></td><td><p>long</p></td><td>&nbsp;</td><td><p>Start time of metric history</p></td><td><p>YES</p></td></tr><tr><td><p>endTime</p></td><td><p>long</p></td><td>&nbsp;</td><td><p>End time of metric history</p></td><td><p>YES</p></td></tr><tr><td><p>metricType</p></td><td><p><a class="link" href="#MetricType">MetricType</a></p></td><td>&nbsp;</td><td><p>Type of metric</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS getProcesses"><div class="titlepage"><div><div><h3 class="title"><a name="N226F8"></a>IMS getProcesses</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getProcesses command line gets the list of the processes running over a front machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getProcesses</code>   <em class="replaceable"><code> machineId</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine the user wants the running processes</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS setSystemInfo"><div class="titlepage"><div><div><h3 class="title"><a name="N227B7"></a>IMS setSystemInfo</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The setSystemInfo command line updates the system information of a machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">setSystemInfo</code>  [-m<em class="replaceable"><code> memory</code></em>] [-d<em class="replaceable"><code> diskSpace</code></em>]</p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>memory</p></td><td><p>long</p></td><td><p>m</p></td><td><p>Amount of RAM memory available on the machine (in Bytes)</p></td><td><p>NO</p></td></tr><tr><td><p>diskSpace</p></td><td><p>long</p></td><td><p>d</p></td><td><p>Amount of disk space available on the machine (in Bytes)</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS setSystemThreshold"><div class="titlepage"><div><div><h3 class="title"><a name="N228A8"></a>IMS setSystemThreshold</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The setSystemThreshold command line sets a threshold on a machine of a system</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">setSystemThreshold</code>   <em class="replaceable"><code> machineId thresholdType value</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>thresholdType</p></td><td><p><a class="link" href="#MetricType">MetricType</a></p></td><td>&nbsp;</td><td><p>The type of the metric to set</p></td><td><p>YES</p></td></tr><tr><td><p>value</p></td><td><p>double</p></td><td>&nbsp;</td><td><p>The threshold value</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS getSystemThreshold"><div class="titlepage"><div><div><h3 class="title"><a name="N22993"></a>IMS getSystemThreshold</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getSystemThreshold command line gets a System threshold on a machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getSystemThreshold</code>   <em class="replaceable"><code> machineId type</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine</p></td><td><p>YES</p></td></tr><tr><td><p>type</p></td><td><p><a class="link" href="#MetricType">MetricType</a></p></td><td>&nbsp;</td><td><p>The threshold type desired</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS defineUserIdentifier"><div class="titlepage"><div><div><h3 class="title"><a name="N22A69"></a>IMS defineUserIdentifier</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The defineUserIdentifier command line defines the shape of the identifiers automatically generated for the users</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">defineUserIdentifier</code>   <em class="replaceable"><code> format</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>format</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The new format to use</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS defineMachineIdentifier"><div class="titlepage"><div><div><h3 class="title"><a name="N22B28"></a>IMS defineMachineIdentifier</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The defineMachineIdentifier command line defines the shape of the identifiers automatically generated for the machines</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">defineMachineIdentifier</code>   <em class="replaceable"><code> format</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>format</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The new format to use</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS defineJobIdentifier"><div class="titlepage"><div><div><h3 class="title"><a name="N22BE7"></a>IMS defineJobIdentifier</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The defineJobIdentifier command line defines the shape of the identifiers automatically generated for the jobs</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">defineJobIdentifier</code>   <em class="replaceable"><code> format</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>format</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The new format to use</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS defineTransferIdentifier"><div class="titlepage"><div><div><h3 class="title"><a name="N22CA6"></a>IMS defineTransferIdentifier</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The defineTransferIdentifier command line defines the shape of the identifiers automatically generated for the file transfers</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">defineTransferIdentifier</code>   <em class="replaceable"><code> format</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>format</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The new format to use</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS loadShed"><div class="titlepage"><div><div><h3 class="title"><a name="N22D65"></a>IMS loadShed</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The loadShed command line load sheds a machine</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">loadShed</code>   <em class="replaceable"><code> machineId loadShedType</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>machineId</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The id of the machine to stop</p></td><td><p>YES</p></td></tr><tr><td><p>loadShedType</p></td><td><p><a class="link" href="#LoadShedType">LoadShedType</a></p></td><td>&nbsp;</td><td><p>Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS setUpdateFrequency"><div class="titlepage"><div><div><h3 class="title"><a name="N22E3B"></a>IMS setUpdateFrequency</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The setUpdateFrequency command line sets the update frequency of the IMS tables</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">setUpdateFrequency</code>   <em class="replaceable"><code> freq</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>freq</p></td><td><p>int</p></td><td>&nbsp;</td><td><p>Frequency the data are updated, in second</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS getUpdateFrequency"><div class="titlepage"><div><div><h3 class="title"><a name="N22EFA"></a>IMS getUpdateFrequency</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The getUpdateFrequency command line gets the update frequency of the IMS database</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">getUpdateFrequency</code>   <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <p>This command defines no arguments.</p>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="IMS restart"><div class="titlepage"><div><div><h3 class="title"><a name="N22F78"></a>IMS restart</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by ADMIN users only</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The restart command line restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">restart </code>  [-n<em class="replaceable"><code> componentName </code></em>] [-m<em class="replaceable"><code> machineId </code></em>] [-f<em class="replaceable"><code> file</code></em>]  <em class="replaceable"><code> type</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>type</p></td><td><p><a class="link" href="#RestartType">RestartType</a></p></td><td>&nbsp;</td><td><p>The type of restart</p></td><td><p>YES</p></td></tr><tr><td><p>componentName</p></td><td><p>string</p></td><td><p>n</p></td><td><p>If not restarting all, the name of the component to restart</p></td><td><p>NO</p></td></tr><tr><td><p>machineId</p></td><td><p>string</p></td><td><p>m</p></td><td><p>The id of the machine where the component is to be relaunched</p></td><td><p>NO</p></td></tr><tr><td><p>file</p></td><td><p>string</p></td><td><p>f</p></td><td><p>The config file to use to restart</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The key of the session of the user that submits the command</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="section" title="Parameters definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N2308B"></a>Parameters definitions</h2></div></div></div>
+      
+      <p><a name="LoadShedType"></a><span class="bold"><strong>Enumeration IMS::LoadShedType Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>SOFT</p></td><td><p>0</p></td></tr><tr><td><p>HARD</p></td><td><p>1</p></td></tr></tbody></table>
+      </div>
+      <p><a name="MetricType"></a><span class="bold"><strong>Enumeration IMS::MetricType Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>CPUNBR</p></td><td><p>0</p></td></tr><tr><td><p>CPUUSE</p></td><td><p>1</p></td></tr><tr><td><p>DISKSPACE</p></td><td><p>2</p></td></tr><tr><td><p>FREEDISKSPACE</p></td><td><p>3</p></td></tr><tr><td><p>MEMORY</p></td><td><p>4</p></td></tr><tr><td><p>FREEMEMORY</p></td><td><p>5</p></td></tr></tbody></table>
+      </div>
+      <p><a name="RestartType"></a><span class="bold"><strong>Enumeration IMS::RestartType Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>ALL</p></td><td><p>0</p></td></tr><tr><td><p>SED</p></td><td><p>1</p></td></tr><tr><td><p>AGENT</p></td><td><p>2</p></td></tr><tr><td><p>DAEMON</p></td><td><p>3</p></td></tr></tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="chapter" title="Chapter&nbsp;5.&nbsp;Commands specification for File Management System (FMS)"><div class="titlepage"><div><div><h2 class="title"><a name="N2317C"></a>Chapter&nbsp;5.&nbsp;Commands specification for File Management System (FMS)</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#N23182">Command definitions</a></span></dt><dd><dl><dt><span class="section"><a href="#N23187">FMS createFile</a></span></dt><dt><span class="section"><a href="#N23261">FMS createDir</a></span></dt><dt><span class="section"><a href="#N2333B">FMS removeFile</a></span></dt><dt><span class="section"><a href="#N233FA">FMS removeDir</a></span></dt><dt><span class="section"><a href="#N234B9">FMS chGrp</a></span></dt><dt><span class="section"><a href="#N2358D">FMS chMod</a></span></dt><dt><span class="section"><a href="#N23661">FMS headOfFile</a></span></dt><dt><span class="section"><a href="#N2373B">FMS tailOfFile</a></span></dt><dt><span class="section"><a href="#N23815">FMS contentOfFile</a></span></dt><dt><span class="section"><a href="#N238D4">FMS listDir</a></span></dt><dt><span class="section"><a href="#N239C5">FMS copyFile</a></span></dt><dt><span class="section"><a href="#N23AEC">FMS copyAsyncFile</a></span></dt><dt><span class="section"><a href="#N23C13">FMS moveFile</a></span></dt><dt><span class="section"><a href="#N23D21">FMS moveAsyncFile</a></span></dt><dt><span class="section"><a href="#N23E2F">FMS stopFileTransfer</a></span></dt><dt><span class="section"><a href="#N23F29">FMS listFileTransferStatus</a></span></dt><dt><span class="section"><a href="#N24023">FMS listFileTransfers</a></span></dt></dl></dd><dt><span class="section"><a href="#N24120">Parameters definitions</a></span></dt></dl></div>
+    
+    <div class="section" title="Command definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N23182"></a>Command definitions</h2></div></div></div>
+      
+      <div class="section" title="FMS createFile"><div class="titlepage"><div><div><h3 class="title"><a name="N23187"></a>FMS createFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The createFile command line creates  files on  remote machines.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">createFile </code>  [-m<em class="replaceable"><code> mode</code></em>]  <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file to create following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>mode</p></td><td><p>int</p></td><td><p>m</p></td><td><p>The file access permissions in octal numeral system</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS createDir"><div class="titlepage"><div><div><h3 class="title"><a name="N23261"></a>FMS createDir</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The createDir command line creates directories on remote machines.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">createDir </code>  [-m<em class="replaceable"><code> mode</code></em>]  <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  directory to create following the pattern  [host:]directory path</p></td><td><p>YES</p></td></tr><tr><td><p>mode</p></td><td><p>int</p></td><td><p>m</p></td><td><p>the new directories permission access in octal numeral system</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS removeFile"><div class="titlepage"><div><div><h3 class="title"><a name="N2333B"></a>FMS removeFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The removeFile command line removes files from  remote hosts.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">removeFile</code>   <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file to remove following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS removeDir"><div class="titlepage"><div><div><h3 class="title"><a name="N233FA"></a>FMS removeDir</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The removeDir command line removes  directories (and subdirectories) from  remote machines.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">removeDir</code>   <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  directory to remove following the pattern  [host:]directory path</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS chGrp"><div class="titlepage"><div><div><h3 class="title"><a name="N234B9"></a>FMS chGrp</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The chGrp command line changes group owner of  remote files/directories. </p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">chGrp</code>   <em class="replaceable"><code> path group</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file/directory following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>group</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>the new group owner of file/directory</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS chMod"><div class="titlepage"><div><div><h3 class="title"><a name="N2358D"></a>FMS chMod</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The chMod command line changes  access rights of remote files/directories.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">chMod</code>   <em class="replaceable"><code> path mode</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file/directory following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>mode</p></td><td><p>int</p></td><td>&nbsp;</td><td><p> the access rigths of file/directory in octal system.</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS headOfFile"><div class="titlepage"><div><div><h3 class="title"><a name="N23661"></a>FMS headOfFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The headOfFile command line displays a few first lines of  files located on  remote machines.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">headOfFile </code>  [-n<em class="replaceable"><code> nLine</code></em>]  <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file  following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>nLine</p></td><td><p>int</p></td><td><p>n</p></td><td><p>Number of lines to display</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS tailOfFile"><div class="titlepage"><div><div><h3 class="title"><a name="N2373B"></a>FMS tailOfFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The tailOfFile command line displays a few last lines of  files located on remote machines</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">tailOfFile </code>  [-n<em class="replaceable"><code> nLine</code></em>]  <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file  following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>nLine</p></td><td><p>int</p></td><td><p>n</p></td><td><p>number of lines to display</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS contentOfFile"><div class="titlepage"><div><div><h3 class="title"><a name="N23815"></a>FMS contentOfFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The contentOfFile command line displays content  of  files located on remote machines</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">contentOfFile</code>   <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  file to display following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS listDir"><div class="titlepage"><div><div><h3 class="title"><a name="N238D4"></a>FMS listDir</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listDir command line displays  the content of a remote directory. </p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listDir  </code>  [-l] [-a]  <em class="replaceable"><code> path</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>path</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  directory to list following the pattern  [host:]directory path</p></td><td><p>YES</p></td></tr><tr><td><p>longFormat</p></td><td><p>boolean</p></td><td><p>l</p></td><td><p>It specifies the long display format (all available file informations)</p></td><td><p>NO</p></td></tr><tr><td><p>allFiles</p></td><td><p>boolean</p></td><td><p>a</p></td><td><p>Allows to display all files including hidden files</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS copyFile"><div class="titlepage"><div><div><h3 class="title"><a name="N239C5"></a>FMS copyFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The copyFile command line executes a synchronous copy of file.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">copyFile  </code>  [-r] [-c<em class="replaceable"><code> trCommand </code></em>]  <em class="replaceable"><code> src dest</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>src</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  source file to copy following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>dest</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The path of the destination file</p></td><td><p>YES</p></td></tr><tr><td><p>isRecursive</p></td><td><p>boolean</p></td><td><p>r</p></td><td><p>It specifies when the copy is recursive (case of directory) or not.</p></td><td><p>NO</p></td></tr><tr><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>c</p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr><tr><td><p>VISHNU_TRANSFER_CMD</p></td><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS copyAsyncFile"><div class="titlepage"><div><div><h3 class="title"><a name="N23AEC"></a>FMS copyAsyncFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The copyAsyncFile command line executes an asynchronous copy of file.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">copyAsyncFile  </code>  [-r] [-c<em class="replaceable"><code> trCommand </code></em>]  <em class="replaceable"><code> src dest</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>src</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The source file to copy following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>dest</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The path of the destination file</p></td><td><p>YES</p></td></tr><tr><td><p>isRecursive</p></td><td><p>boolean</p></td><td><p>r</p></td><td><p>It specifies when the copy is recursive (case of directory) or not.</p></td><td><p>NO</p></td></tr><tr><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>c</p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr><tr><td><p>VISHNU_TRANSFER_CMD</p></td><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS moveFile"><div class="titlepage"><div><div><h3 class="title"><a name="N23C13"></a>FMS moveFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The moveFile command line executes a synchronous move of file.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">moveFile  </code>  [-c<em class="replaceable"><code> trCommand </code></em>]  <em class="replaceable"><code> src dest</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>src</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The  source file to move following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>dest</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The path of the destination file</p></td><td><p>YES</p></td></tr><tr><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>c</p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr><tr><td><p>VISHNU_TRANSFER_CMD</p></td><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS moveAsyncFile"><div class="titlepage"><div><div><h3 class="title"><a name="N23D21"></a>FMS moveAsyncFile</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The moveAsyncFile command line executes an asynchronous move of file.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">moveAsyncFile  </code>  [-c<em class="replaceable"><code> trCommand </code></em>]  <em class="replaceable"><code> src dest</code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>src</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The source file to move following the pattern  [host:]file path</p></td><td><p>YES</p></td></tr><tr><td><p>dest</p></td><td><p>string</p></td><td>&nbsp;</td><td><p>The path of the destination file</p></td><td><p>YES</p></td></tr><tr><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>c</p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr><tr><td><p>VISHNU_TRANSFER_CMD</p></td><td><p>trCommand</p></td><td><p><a class="link" href="#TransferCommand">TransferCommand</a></p></td><td><p>the command to use to perform file transfer.</p></td><td><p>NO</p></td><td><p>YES</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS stopFileTransfer"><div class="titlepage"><div><div><h3 class="title"><a name="N23E2F"></a>FMS stopFileTransfer</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The stopFileTransfer command line stops an execution of a set of file transfers.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">stopFileTransfer  </code>  [-i<em class="replaceable"><code> transferId </code></em>] [-m<em class="replaceable"><code> fromMachineId </code></em>] [-u<em class="replaceable"><code> userId </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>transferId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>a given transfer id</p></td><td><p>NO</p></td></tr><tr><td><p>fromMachineId</p></td><td><p>string</p></td><td><p>m</p></td><td><p>the machine that is the source of the file transfer</p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>allows an admin to stop file transfers of a specific user</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS listFileTransferStatus"><div class="titlepage"><div><div><h3 class="title"><a name="N23F29"></a>FMS listFileTransferStatus</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listFileTransferStatus command line displays the status of all file transfers submitted by User.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listFileTransferStatus  </code>  [-i<em class="replaceable"><code> transferId </code></em>] [-m<em class="replaceable"><code> fromMachineId </code></em>] [-u<em class="replaceable"><code> userId </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>transferId</p></td><td><p>string</p></td><td><p>i</p></td><td><p>a given transfer id</p></td><td><p>NO</p></td></tr><tr><td><p>fromMachineId</p></td><td><p>string</p></td><td><p>m</p></td><td><p>the machine that is the source of the file transfer</p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>allows the admin to list file transfers initiated by a specific user</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+      <div class="section" title="FMS listFileTransfers"><div class="titlepage"><div><div><h3 class="title"><a name="N24023"></a>FMS listFileTransfers</h3></div></div></div>
+        
+        <p><span class="bold"><strong>Access</strong></span></p>
+        <p>This command line can be used by any VISHNU user</p>
+        <p><span class="bold"><strong>Description </strong></span></p>
+        <p>The listFileTransfers command line displays the history of all file transfers submitted by User.</p>
+        <p><span class="bold"><strong>Example of use </strong></span></p>
+        <div class="cmdsynopsis"><p><code class="command">listFileTransfers  </code>  [-m<em class="replaceable"><code> fromMachineId </code></em>] [-u<em class="replaceable"><code> userId </code></em>] [-s<em class="replaceable"><code> status </code></em>]  <em class="replaceable"><code></code></em> </p></div>
+        <p><span class="bold"><strong>Parameters</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="3.5cm"><col width="3cm"><col width="1cm"><col width="7cm"><col width="1.5cm"></colgroup><thead><tr><th>Parameter
+</th><th>Type
+</th><th>Option
+</th><th>Description
+</th><th>Required
+</th></tr></thead><tbody><tr><td><p>fromMachineId</p></td><td><p>string</p></td><td><p>m</p></td><td><p>the machine that is the source of the file transfer</p></td><td><p>NO</p></td></tr><tr><td><p>userId</p></td><td><p>string</p></td><td><p>u</p></td><td><p>allows the admin to list file transfers initiated by a specific user</p></td><td><p>NO</p></td></tr><tr><td><p>status</p></td><td><p><a class="link" href="#Status">Status</a></p></td><td><p>s</p></td><td><p>the file transfer status</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+        <p><span class="bold"><strong>Environment variables</strong></span></p>
+        <div class="informaltable">
+          <table border="1"><colgroup><col width="4.1cm"><col width="2cm"><col width="2.5cm"><col width="4.2cm"><col width="1.5cm"><col width="1.5cm"></colgroup><thead><tr><th>Name
+</th><th>Parameter
+</th><th>Type
+</th><th>Description
+</th><th>Required
+</th><th>User option
+</th></tr></thead><tbody><tr><td><p>VISHNU_SESSION_KEY</p></td><td><p>sessionKey</p></td><td><p>string</p></td><td><p>The session key</p></td><td><p>YES</p></td><td><p>NO</p></td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="section" title="Parameters definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N24120"></a>Parameters definitions</h2></div></div></div>
+      
+      <p><a name="FileType"></a><span class="bold"><strong>Enumeration FMS::FileType Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>BLOCK</p></td><td><p>0</p></td></tr><tr><td><p>CHARACTER</p></td><td><p>1</p></td></tr><tr><td><p>DIRECTORY</p></td><td><p>2</p></td></tr><tr><td><p>SYMBOLICLINK</p></td><td><p>3</p></td></tr><tr><td><p>SCKT</p></td><td><p>4</p></td></tr><tr><td><p>FIFO</p></td><td><p>5</p></td></tr><tr><td><p>REGULAR</p></td><td><p>6</p></td></tr></tbody></table>
+      </div>
+      <p><a name="Status"></a><span class="bold"><strong>Enumeration FMS::Status Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>INPROGRESS</p></td><td><p>0</p></td></tr><tr><td><p>COMPLETED</p></td><td><p>1</p></td></tr><tr><td><p>CANCELLED</p></td><td><p>2</p></td></tr><tr><td><p>FAILED</p></td><td><p>3</p></td></tr></tbody></table>
+      </div>
+      <p><a name="TransferCommand"></a><span class="bold"><strong>Enumeration FMS::TransferCommand Type</strong></span></p>
+      <div class="informaltable">
+        <table border="1"><colgroup><col width="4cm"><col width="4cm"></colgroup><thead><tr><th>Name
+</th><th>Value
+</th></tr></thead><tbody><tr><td><p>SCP</p></td><td><p>0</p></td></tr><tr><td><p>RSYNC</p></td><td><p>1</p></td></tr></tbody></table>
+      </div>
+    </div>
+  </div>
+</div></body></html>
