@@ -289,7 +289,8 @@
 
     <section>
       <title>Web Services description</title>
-      <para>The Web Services are fully described by the following documents which are attached to the current document:
+      <para>The Web Services are fully described by the following documents which are attached to the current document:</para>
+      <para>
       <itemizedlist>
         <listitem>
           <para><emphasis role="bold">UMS.wsdl</emphasis> : WSDL file for the UMS module</para>
@@ -304,6 +305,7 @@
           <para><emphasis role="bold">IMS.wsdl</emphasis> : WSDL file for the IMS module</para>
         </listitem>
       </itemizedlist>
+      </para>
     </section>
    <section>
       <title>References</title>
@@ -330,6 +332,6 @@
   </chapter>
   <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
     <title>API specification for File Management System (FMS)</title>
-  </chapter> -->
+  </chapter>
 </book>
   
