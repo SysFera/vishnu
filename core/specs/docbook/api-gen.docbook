@@ -7318,7 +7318,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeDir() function removes  directories (and subdirectories ) from  remote machines.</para>
+        <para>The removeDir() function removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -8584,7 +8584,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopFileTransfer() function stops an execution of an set of file transfer.</para>
+        <para>The stopFileTransfer() function stops an execution of a set of file transfers.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -8643,7 +8643,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>stopFileTransfer</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const StopTransferOptions&amp; <parameter>options = StopTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::listFilesTransferStatus</title>
+        <title>Function FMS::listFileTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -8687,7 +8687,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFilesTransferStatus() function displays the status of all files transfer submitted by User.</para>
+        <para>The listFileTransferStatus() function displays the status of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -8743,10 +8743,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransferStatus</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsTrStatusOptions&amp; <parameter>options = LsTrStatusOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listFileTransferStatus</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsTrStatusOptions&amp; <parameter>options = LsTrStatusOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::listFilesTransfer</title>
+        <title>Function FMS::listFileTransfers</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -8790,7 +8790,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFilesTransfer() function displays the history of all files transfers submitted by User.</para>
+        <para>The listFileTransfers() function displays the history of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -8846,7 +8846,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>listFilesTransfer</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsTransferOptions&amp; <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>listFileTransfers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const LsTransferOptions&amp; <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::getFilesInfo</title>

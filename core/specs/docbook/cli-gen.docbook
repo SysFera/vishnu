@@ -5180,7 +5180,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeDir command line removes  directories (and subdirectories ) from  remote machines.</para>
+        <para>The removeDir command line removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>removeDir</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -6199,7 +6199,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopFileTransfer command line stops an execution of an set of file transfer.</para>
+        <para>The stopFileTransfer command line stops an execution of a set of file transfers.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>stopFileTransfer  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
               choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
@@ -6289,13 +6289,13 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS listFilesTransferStatus</title>
+        <title>FMS listFileTransferStatus</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFilesTransferStatus command line displays the status of all files transfer submitted by User.</para>
+        <para>The listFileTransferStatus command line displays the status of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listFilesTransferStatus  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
+        <cmdsynopsis><command>listFileTransferStatus  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
               choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -6383,13 +6383,13 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS listFilesTransfer</title>
+        <title>FMS listFileTransfers</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFilesTransfer command line displays the history of all files transfers submitted by User.</para>
+        <para>The listFileTransfers command line displays the history of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listFilesTransfer  </command><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg>-s<replaceable> status </replaceable></arg><arg
+        <cmdsynopsis><command>listFileTransfers  </command><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg>-s<replaceable> status </replaceable></arg><arg
               choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
