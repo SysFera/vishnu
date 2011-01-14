@@ -76,7 +76,14 @@
     </section>
     <section>
       <title>Références</title>
-      <para/>
+      <itemizedlist>
+        <listitem>
+          <para>Cahier des charges pour les services de base de l’intergiciel réparti VISHNU [EDF R&amp;D, Juillet 2010]</para>
+        </listitem>
+        <listitem>
+          <para>Compléments au cahier des charges pour les services de base de l’intergiciel réparti VISHNU [EDF R&amp;D, Août 2010]</para>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Glossaire</title>
