@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+    <info>
+      <title>D2.1a - VISHNU User Management System Package Design</title>
+      <author>
+        <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+      </author>
+      <revhistory>
+        <revision>
+        <revnumber>1</revnumber>
+        <date>21/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Deliverable version</para>
+        </revdescription>
+        </revision>
+      </revhistory>
+    </info>
+  <chapter>
+    <title>Document presentation</title>
+    <section>
+      <title>Document objectives</title>
+      <para>This document presents the detailed internal design of the Users Management System (UMS) package. The purpose of this
+        package is to handle all aspects of user management and session management within the VISHNU system. The functional
+        and non-functional requirements for this package are those described in the referenced specification documents. The current
+        document is part of the design phase of the software and therefore its main goal is to define the main components of the
+        system architecture and their relationships.
+      </para>
+    </section>
+    <section>
+      <title>Document structure</title>
+      <para>The document is divided into 4 parts corresponding to the four modules that compose the
+        VISHNU system:</para>
+      <para><itemizedlist>
+        <listitem>
+          <para>Chapter 1 contains a high-level overview of the system architecture.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 2 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 3 describes the internal class and data structures</para>
+        </listitem>
+      </itemizedlist></para>
+    </section>
+
+   <section>
+      <title>References</title>
+      <para><itemizedlist>
+        <listitem>
+          <para>D1.1a : VISHNU General specifications</para>
+        </listitem>
+        <listitem>
+          <para>D1.1b : VISHNU Spécifications techniques des besoins</para>
+        </listitem>
+      </itemizedlist></para>
+    </section>
+    <section>
+      <title>Acronyms</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>API: Application programming interface</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+     <title>Glossary</title>
+     <para>
+        <itemizedlist>
+          <listitem>
+            <para>SysFera-DS: open-source middleware</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>System Architecture</title>
+  </chapter>
+  
+  <chapter annotations="UMS_Internal.apim#SERVICES">
+    <title>Internal API specification</title>
+  </chapter>
+  
+  <chapter>
+    <title>Internal class and data structures</title>
+  </chapter>
+  
+</book>
+  
