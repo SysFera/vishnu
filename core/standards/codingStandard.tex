@@ -146,7 +146,7 @@ Right:
   addService();
 \end{verbatim}
 Here is a set of useful verbs \textit{add, run, launch, submit, send, receive,
-start, stop, get, set, have, is, emit, call}
+start, stop, get, set, has, is, emit, call}
 \item Member variable names should be short yet meaningful. The choice of a
  variable name should be mnemonic - that is, designed to indicate to the
  casual observer the intent of its use. Moreover, each member
@@ -195,7 +195,7 @@ Wrong:
 Right:
   diet_type_t
 \end{verbatim}
-\item Getter/setter/boolean functions must start with get/set/is(or have).
+\item Getter/setter/boolean functions must start with get/set/is(or has).
 If they just return/set something, they must be implemented in the header
 file.
 \begin{verbatim}
@@ -434,13 +434,11 @@ Right:
   if ((a && b) || c)
   (a + b) & c
 \end{verbatim}
-\item Use curly braces when the body of a conditionnal statement contains more than one line.
-If there is a else on several lines, then use braces.
+\item Always use curly braces when the body of a conditionnal statement.
 \begin{verbatim}
 Wrong:
-  if (true) {
+  if (true)
     return;
-  }
 
   if (true) 
     return a;
@@ -450,8 +448,9 @@ Wrong:
   }
 
 Right:
-  if (true)
+  if (true) {
     return;
+  }
 
   if (true) {
     return a;
