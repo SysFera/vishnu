@@ -92,7 +92,7 @@
     <title>System Architecture</title>
   </chapter>
   
-  <chapter>
+  <chapter annotations="UMS_Internal.apim#SERVICES">
     <title>Internal API specification</title>
   </chapter>
   
