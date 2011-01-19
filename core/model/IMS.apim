@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <modules name="IMS">
+    <services name="exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command (current session key)" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="oldSessionKey" dataType="//@typeList/@types.0" description="The key of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
+      <ports name="filename" direction="INOUT" dataType="//@typeList/@types.0" description="The path of the output file containing the Vishnu shell commands" longOptionName=""/>
+    </services>
+    <services name="getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
+      <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter=""/>
+      <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.5" description="Value of the metric"/>
+    </services>
+    <services name="getMetricHistory" description="Retrieve the history of values of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
+      <ports name="startTime" dataType="//@typeList/@types.11" description="Start time of metric history" shortOptionLetter=""/>
+      <ports name="endTime" dataType="//@typeList/@types.11" description="End time of metric history" shortOptionLetter="" longOptionName=""/>
+      <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter="" longOptionName=""/>
+      <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.10" description="List of metric values" longOptionName=""/>
+    </services>
+    <services name="getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine the user wants the running processes" shortOptionLetter=""/>
+      <ports name="process" direction="OUT" dataType="//@typeList/@types.8" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
+    </services>
+    <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter="" longOptionName=""/>
+      <ports name="systemInfo" dataType="//@typeList/@types.12" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
+    </services>
+    <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
+      <ports name="thresholdType" dataType="//@typeList/@types.4" description="The type of the metric to set" shortOptionLetter="" longOptionName=""/>
+      <ports name="value" dataType="//@typeList/@types.3" description="The threshold value" shortOptionLetter="" longOptionName=""/>
+    </services>
+    <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
+      <ports name="type" dataType="//@typeList/@types.4" description="The threshold type desired" shortOptionLetter="" longOptionName=""/>
+      <ports name="value" direction="OUT" dataType="//@typeList/@types.3" description="The threshold value" longOptionName=""/>
+    </services>
+    <services name="defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter="" longOptionName=""/>
+    </services>
+    <services name="defineMachineIdentifier" description="defines the shape of the identifiers automatically generated for the machines" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+    </services>
+    <services name="defineJobIdentifier" description="defines the shape of the identifiers automatically generated for the jobs" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+    </services>
+    <services name="defineTransferIdentifier" description="defines the shape of the identifiers automatically generated for the file transfers" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+    </services>
+    <services name="loadShed" description="load sheds a machine" adminOnly="true" resultCodes="VISHNU_OK COMPONENT_ERROR DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
+      <ports name="loadShedType" dataType="//@typeList/@types.7" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName=""/>
+    </services>
+    <services name="setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="freq" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second" shortOptionLetter="" longOptionName=""/>
+    </services>
+    <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
+    </services>
+    <services name="restart" description="restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted" adminOnly="true" isFunction="false" resultCodes="VISHNU_OK COMPONENT_ERROR DB_ERROR INVALID_PARAMETER">
+      <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="type" dataType="//@typeList/@types.6" description="The type of restart" shortOptionLetter=""/>
+      <ports name="componentName" dataType="//@typeList/@types.0" description="If not restarting all, the name of the component to restart" optional="true" shortOptionLetter="n"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where the component is to be relaunched" optional="true" shortOptionLetter="m" longOptionName=""/>
+      <ports name="file" dataType="//@typeList/@types.0" description="The config file to use to restart" optional="true" shortOptionLetter="f" longOptionName=""/>
+    </services>
+    <resultCodeList>
+      <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
+      <resultCodes name="INVALID_PARAMETER" description="If a parameter is invalid" value="1"/>
+      <resultCodes name="DB_ERROR" description="The database generated an error" value="2"/>
+      <resultCodes name="COMPONENT_ERROR" description="If a component is unavailable" value="3"/>
+    </resultCodeList>
+  </modules>
+  <envVariableList>
+    <envVariables name="VISHNU_SESSION_KEY" description="The value of this environment variable is the key of the current session"/>
+  </envVariableList>
+  <typeList>
+    <types name="string" description="String standard">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EString"/>
+    </types>
+    <types name="int" description="int standard">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EInt"/>
+    </types>
+    <types name="void" description="void"/>
+    <types name="double" description="Double precision numbers">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EDouble"/>
+    </types>
+    <types name="MetricType" description="The type of the metric">
+      <ECoreType xsi:type="ecore:EEnum" href="IMS_Data.ecore#//MetricType"/>
+    </types>
+    <types name="Metric" description="A metric result">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//Metric"/>
+    </types>
+    <types name="RestartType" description="The item to export">
+      <ECoreType xsi:type="ecore:EEnum" href="IMS_Data.ecore#//RestartType"/>
+    </types>
+    <types name="LoadShedType" description="Type of load shedding">
+      <ECoreType xsi:type="ecore:EEnum" href="IMS_Data.ecore#//LoadShedType"/>
+    </types>
+    <types name="ListProcesses" description="The list of the processes">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ListProcesses"/>
+    </types>
+    <types name="object" description="Generic type">
+      <ECoreType xsi:type="ecore:EClass" href="Ecore.ecore#//EObject"/>
+    </types>
+    <types name="ListMetric" description="A list of metrics">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ListMetric"/>
+    </types>
+    <types name="long" description="Long integers">
+      <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//ELong"/>
+    </types>
+    <types name="SystemInfo" description="Contains the system informations of a machine">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SystemInfo"/>
+    </types>
+  </typeList>
+</API>
