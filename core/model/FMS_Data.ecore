@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="FMS_Data"
+    nsURI="http://www.sysfera.com/emf/fms/data" nsPrefix="FMS_Data">
+  <eClassifiers xsi:type="ecore:EEnum" name="FileType" instanceTypeName="FileType">
+    <eLiterals name="BLOCK"/>
+    <eLiterals name="CHARACTER" value="1"/>
+    <eLiterals name="DIRECTORY" value="2" literal="DIRECTORY"/>
+    <eLiterals name="SYMBOLICLINK" value="3"/>
+    <eLiterals name="SCKT" value="4"/>
+    <eLiterals name="FIFO" value="5"/>
+    <eLiterals name="REGULAR" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringList" instanceTypeName="StringList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listOfStrings" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="the dynamic list of strings."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LongList" instanceTypeName="LongList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listOfLongs" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Status" instanceTypeName="Status">
+    <eLiterals name="INPROGRESS"/>
+    <eLiterals name="COMPLETED" value="1"/>
+    <eLiterals name="CANCELLED" value="2"/>
+    <eLiterals name="FAILED" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StatusList" instanceTypeName="StatusList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listOfStatus" upperBound="-1"
+        eType="#//Status"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FileStat" instanceTypeName="FileStat">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The path of the file"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The name of the owner of the file"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The group name of the owner"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The user identifier of the owner"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The group identifier of the owner"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The size of the file in bytes"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="atime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The time of  last access"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mtime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The time of  last modification"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ctime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The time of  the last change of the inode information"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FileType">
+      <eAnnotations source="Description">
+        <details key="content" value="The file type"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CopyFileOptions" instanceTypeName="CopyFileOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRecursive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="Description">
+        <details key="content" value="It specifies when the copy is recursive (case of directory) or not."/>
+        <details key="shortOption" value="r"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand">
+      <eAnnotations source="Description">
+        <details key="content" value="the command to use to perform file transfer."/>
+        <details key="shortOption" value="c"/>
+        <details key="userOption" value="VISHNU_TRANSFER_CMD"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TransferCommand" instanceTypeName="TransferCommand">
+    <eLiterals name="SCP"/>
+    <eLiterals name="RSYNC" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LsDirOptions" instanceTypeName="LsDirOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="longFormat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="Description">
+        <details key="content" value="It specifies the long display format (all available file informations)"/>
+        <details key="shortOption" value="l"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="allFiles" eType="ecore:EDataType Ecore.ecore#//EBoolean">
+      <eAnnotations source="Description">
+        <details key="content" value="Allows to display all files including hidden files"/>
+        <details key="shortOption" value="a"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MvFileOptions" instanceTypeName="MvFileOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand">
+      <eAnnotations source="Description">
+        <details key="content" value="the command to use to perform file transfer."/>
+        <details key="shortOption" value="c"/>
+        <details key="userOption" value="VISHNU_TRANSFER_CMD"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LsTransferOptions" instanceTypeName="LsTransferOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromMachineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="the machine that is the source of the file transfer"/>
+        <details key="shortOption" value="m"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="allows the admin to list file transfers initiated by a specific user"/>
+        <details key="shortOption" value="u"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status">
+      <eAnnotations source="Description">
+        <details key="content" value="the file transfer status"/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FileStatList" instanceTypeName="FileStatList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listOfFileStat" upperBound="-1"
+        eType="#//FileStat" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="list of inodes."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StopTransferOptions" instanceTypeName="StopTransferOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="a given transfer id"/>
+        <details key="shortOption" value="i"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromMachineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="the machine that is the source of the file transfer"/>
+        <details key="shortOption" value="m"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="allows an admin to stop file transfers of a specific user"/>
+        <details key="shortOption" value="u"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LsTrStatusOptions" instanceTypeName="LsTrStatusOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="a given transfer id"/>
+        <details key="shortOption" value="i"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromMachineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="the machine that is the source of the file transfer"/>
+        <details key="shortOption" value="m"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="allows the admin to list file transfers initiated by a specific user"/>
+        <details key="shortOption" value="u"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

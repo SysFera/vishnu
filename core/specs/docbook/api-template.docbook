@@ -321,16 +321,16 @@
     </section>
   </chapter>
     <!-- GENERATED PART -->
-  <chapter annotations="EDF-API/UMS.apim#APIOPS+APIDATA">
+  <chapter annotations="UMS.apim#APIOPS+APIDATA">
     <title>API specification for User Management System (UMS)</title>
   </chapter> 
-  <chapter annotations="EDF-API/TMS.apim#APIOPS+APIDATA">
+  <chapter annotations="TMS.apim#APIOPS+APIDATA">
     <title>API specification for Tasks Management System (TMS)</title>
   </chapter>
-  <chapter annotations="EDF-API/IMS.apim#APIOPS+APIDATA">
+  <chapter annotations="IMS.apim#APIOPS+APIDATA">
     <title>API specification for Information Management System (IMS)</title>
   </chapter>
-  <chapter annotations="EDF-API/FMS.apim#APIOPS+APIDATA">
+  <chapter annotations="FMS.apim#APIOPS+APIDATA">
     <title>API specification for File Management System (FMS)</title>
   </chapter>
 </book>

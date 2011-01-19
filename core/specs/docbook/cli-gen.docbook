@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<book
+    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -411,7 +412,7 @@
               </row>
               <row>
                 <entry><para>privilege</para></entry>
-                <entry><para>int</para></entry>
+                <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
                 <entry><para>p</para></entry>
                 <entry><para>is the privilege of the user (admin or simple user)</para></entry>
                 <entry><para>NO</para></entry>
@@ -519,7 +520,7 @@
               </row>
               <row>
                 <entry><para>privilege</para></entry>
-                <entry><para>string</para></entry>
+                <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
                 <entry><para>p</para></entry>
                 <entry><para>represents the updated privilege of the user</para></entry>
                 <entry><para>NO</para></entry>
@@ -2365,6 +2366,31 @@
     </section>
     <section>
       <title>Parameters definitions</title>
+      <para xml:id="PrivilegeType"><emphasis role="bold">Enumeration UMS::PrivilegeType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>USER</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>ADMIN</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="SessionCloseType"><emphasis role="bold">Enumeration UMS::SessionCloseType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">

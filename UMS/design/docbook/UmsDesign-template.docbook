@@ -93,11 +93,11 @@
     <title>System Architecture</title>
   </chapter>
   
-  <chapter annotations="UMS_Internal.apim#SERVICES">
+  <chapter annotations="core/model/UMS_Internal.apim#SERVICES">
     <title>Internal API specification</title>
   </chapter>
   
-  <chapter>
+  <chapter annotations="UMS/design/Design.asta#CLASSDIAG">
     <title>Internal class and data structures</title>
   </chapter>
   
