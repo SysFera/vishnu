@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="IMS_Data"
+    nsURI="http://www.sysfera.com/IMS/Data">
+  <eClassifiers xsi:type="ecore:EEnum" name="MetricType" instanceTypeName="MetricType">
+    <eLiterals name="CPUNBR"/>
+    <eLiterals name="CPUUSE" value="1"/>
+    <eLiterals name="DISKSPACE" value="2"/>
+    <eLiterals name="FREEDISKSPACE" value="3"/>
+    <eLiterals name="MEMORY" value="4"/>
+    <eLiterals name="FREEMEMORY" value="5"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Metric" instanceTypeName="Metric">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType">
+      <eAnnotations source="Description">
+        <details key="content" value="The type of the metric"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="Description">
+        <details key="content" value="The value of the metric"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="Description">
+        <details key="content" value="The timestamp the metric had the value"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RestartType" instanceTypeName="RestartType">
+    <eLiterals name="ALL"/>
+    <eLiterals name="SED" value="1"/>
+    <eLiterals name="AGENT" value="2"/>
+    <eLiterals name="DAEMON" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LoadShedType" instanceTypeName="LoadShedType">
+    <eLiterals name="SOFT" literal="SOFT"/>
+    <eLiterals name="HARD" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListMetric" instanceTypeName="ListMetric">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metric" upperBound="-1"
+        eType="#//Metric" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="The metrics of the list"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListProcesses" instanceTypeName="ListProcesses">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processName" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The Vishnu processes of the list"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SystemInfo" instanceTypeName="SystemInfo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="Amount of RAM memory available on the machine (in Bytes)"/>
+        <details key="shortOption" value="m"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="diskSpace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="Amount of disk space available on the machine (in Bytes)"/>
+        <details key="shortOption" value="d"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>
