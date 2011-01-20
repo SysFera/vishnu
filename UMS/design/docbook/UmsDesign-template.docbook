@@ -41,8 +41,6 @@
     </section>
     <section>
       <title>Document structure</title>
-      <para>The document is divided into 4 parts corresponding to the four modules that compose the
-        VISHNU system:</para>
       <para><itemizedlist>
         <listitem>
           <para>Chapter 1 contains a high-level overview of the system architecture.</para>
@@ -65,6 +63,9 @@
         <listitem>
           <para>D1.1b : VISHNU Spécifications techniques des besoins</para>
         </listitem>
+        <listitem>
+          <para>D1.1c : VISHNU API Detailed specifications</para>
+        </listitem>
       </itemizedlist></para>
     </section>
     <section>
@@ -73,6 +74,9 @@
         <itemizedlist>
           <listitem>
             <para>API: Application programming interface</para>
+          </listitem>
+          <listitem>
+            <para>CLI: Command line interface</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -95,10 +99,27 @@
   
   <chapter annotations="core/model/UMS_Internal.apim#SERVICES">
     <title>Internal API specification</title>
+    <section>
+      <title>Test section</title>
+      <para>blabla</para>
+    </section>
   </chapter>
   
-  <chapter annotations="UMS/design/Design.asta#CLASSDIAG">
+  <chapter>
     <title>Internal class and data structures</title>
+    
+    <section annotations="UMS/design/Design.asta#CLASSDIAG(client)">
+      <title>UMS Client Class Diagrams</title>
+    </section>
+    
+    <section annotations="UMS/design/Design.asta#CLASSDIAG(server)">
+      <title>UMS Server Class Diagrams</title>
+    </section>
+    
+<!--    <section annotations="core/design/CoreDesign.asta#CLASSDIAG">
+      <title>Vishnu core Class Diagrams</title>
+    </section> -->
+    
   </chapter>
   
 </book>
