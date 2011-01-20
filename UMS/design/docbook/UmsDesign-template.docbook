@@ -116,9 +116,326 @@
       <title>UMS Server Class Diagrams</title>
     </section>
     
-<!--    <section annotations="core/design/CoreDesign.asta#CLASSDIAG">
+    <section annotations="core/design/coreDesign.asta#CLASSDIAG">
       <title>Vishnu core Class Diagrams</title>
-    </section> -->
+      <section>
+	<title>Tables' relationship</title>
+	<!--l. 9
+	  -->
+	<para>   The links between the tables are based on the following rules:
+	</para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>The <emphasis
+			     role="it">VISHNU</emphasis> table has one or more <emphasis
+										  role="it">MACHINE</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE</emphasis> is in one and only one <emphasis
+										  role="it">VISHNU</emphasis> infrastructure
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE</emphasis> has one or more <emphasis
+									   role="it">CPU</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>
+		  A <emphasis
+		       role="it">CPU</emphasis> is in one and only one <emphasis
+									  role="it">MACHINE</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE</emphasis> has one or more <emphasis
+									   role="it">DESCRIPTION</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">DESCRIPTION</emphasis> is for one and only one <emphasis
+										       role="it">MACHINE</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      
+            </para><itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE</emphasis> has one or more <emphasis
+									   role="it">THRESHOLD</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">THRESHOLD</emphasis> is for one and only one <emphasis
+										     role="it">MACHINE</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE</emphasis> has one or more <emphasis
+									   role="it">ACCOUNT</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>An <emphasis
+			    role="it">ACCOUNT</emphasis> is for one and only one <emphasis
+										    role="it">MACHINE</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>The <emphasis
+			     role="it">VISHNU</emphasis> table has one or more <emphasis
+										  role="it">USER</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>An <emphasis
+			    role="it">USER</emphasis> is in one and only one <emphasis
+										role="it">VISHNU</emphasis> infrastructure
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>An <emphasis
+			    role="it">USER</emphasis> has one or more <emphasis
+									 role="it">ACCOUNT</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>An <emphasis
+			    role="it">ACCOUNT</emphasis> is for one and only one <emphasis
+										    role="it">USER</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>An <emphasis
+			    role="it">USER</emphasis> has one or more <emphasis
+									 role="it">FILE TRANSFER</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">FILE TRANSFER</emphasis> is for one and only one <emphasis
+											 role="it">USER</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>An <emphasis
+			    role="it">USER</emphasis> has one or more <emphasis
+									 role="it">OPTION VALUE</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>An <emphasis
+			    role="it">OPTION VALUE</emphasis> is for one and only one <emphasis
+											 role="it">USER</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>An <emphasis
+			    role="it">USER</emphasis> sets one or more <emphasis
+									  role="it">THRESHOLD</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">THRESHOLD</emphasis> is set by one and only one <emphasis
+											role="it">USER</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+	    </para>
+	    <itemizedlist>
+              <listitem>
+		<para>An <emphasis
+			    role="it">OPTION</emphasis> has one or more <emphasis
+									   role="it">OPTION VALUE</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>An <emphasis
+			    role="it">OPTION VALUE</emphasis> is for one and only one <emphasis
+											 role="it">OPTION</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>An <emphasis
+			    role="it">USER</emphasis> has one or more <emphasis
+									 role="it">SESSION</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">SESSION</emphasis> is for one and only one <emphasis
+										   role="it">USER</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+	    </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">SESSION</emphasis> has one or more <emphasis
+									   role="it">COMMAND</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">COMMAND</emphasis> is for one and only one <emphasis
+										   role="it">SESSION</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE or CLIENT MACHINE</emphasis> has one or more <emphasis
+											     role="it">SESSION</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A  <emphasis
+			    role="it">SESSION</emphasis>  is  for  one  and  only  one  <emphasis
+											   role="it">MACHINE  or  CLIENT
+		    MACHINE</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">MACHINE</emphasis> has one or more <emphasis
+									   role="it">STATE</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">STATE</emphasis> is for one and only one <emphasis
+										 role="it">MACHINE</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">COMMAND</emphasis> can have one or more <emphasis
+										role="it">JOB</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">JOB</emphasis> is for one and only one <emphasis
+									       role="it">COMMAND</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+            </para>
+	    <itemizedlist>
+              <listitem>
+		<para>A <emphasis
+			   role="it">COMMAND</emphasis> can have one or more <emphasis
+										role="it">FILE</emphasis>
+		</para>
+	      </listitem>
+              <listitem>
+		<para>A <emphasis
+			   role="it">FILE</emphasis> is for one and only one <emphasis
+										role="it">COMMAND</emphasis>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	</itemizedlist>
+      </section>
+    </section>
     
   </chapter>
   
