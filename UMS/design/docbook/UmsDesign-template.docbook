@@ -214,22 +214,43 @@
   
   <chapter><!-- PART 3 : CLASSES AND DATA -->
     <title>Internal class and data structures</title>
-    
+    <section>
+      <title>Introduction</title>
+      <para>This chapter introduces the details of the implementation of the different components described in chapter 2 (Architecture).
+        It is composed of three sections:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Client modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">UMS Client</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">UMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
+              the VISHNU cross-modules components (components that are used by UMS and other VISHNU modules).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
     <section annotations="UMS/design/Design.asta#CLASSDIAG(client)">
-      <title>UMS Client Class Diagrams</title>
+      <title>UMS client modelization</title>
     </section>
     
     <section annotations="UMS/design/Design.asta#CLASSDIAG(server)">
-      <title>UMS Server Class Diagrams</title>
+      <title>UMS server modelization</title>
     </section>
     
     <section annotations="core/design/coreDesign.asta#CLASSDIAG">
-      <title>Vishnu core Class Diagrams</title>
+      <title>Vishnu core functions modelization</title>
       <section>
-	<title>Tables' relationship</title>
+	<title>Tables relationships</title>
 	<!--l. 9
 	  -->
-	<para>   The links between the tables are based on the following rules:
+	<para>The links between the tables are based on the following rules:
 	</para>
 	<itemizedlist>
 	  <listitem>
@@ -543,9 +564,9 @@
 	</itemizedlist>
       </section>
       <section>
-          <title>Relationnal model</title>
+          <title>Relational model</title>
           <figure>
-            <title>Relationnal model</title>
+            <title>Relational model</title>
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/png/relationnalmodel.png" align="center" scale="20"/>
@@ -594,7 +615,7 @@
 	<section>
 	  <title>The exception diagram</title>
 	  <para>
-	    The exception class diagrams defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class gives birth to two subclasses, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
+	    The exception class diagrams defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two child classes, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
 	  </para>
 	</section>
       </section>
