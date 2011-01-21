@@ -59,13 +59,16 @@
       <title>Document structure</title>
       <para><itemizedlist>
           <listitem>
-            <para>Chapter 1 contains a high-level overview of the system architecture.</para>
+            <para>Chapter 1 contains a brief overview of the document content.</para>
           </listitem>
           <listitem>
-            <para>Chapter 2 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+            <para>Chapter 2 contains a high-level overview of the system architecture.</para>
           </listitem>
           <listitem>
-            <para>Chapter 3 describes the internal class and data structures</para>
+            <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 4 describes the internal class and data structures</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -88,10 +91,10 @@
       <para>
         <itemizedlist>
           <listitem>
-            <para>API: Application programming interface</para>
+            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
           </listitem>
           <listitem>
-            <para>CLI: Command line interface</para>
+            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -101,14 +104,58 @@
       <para>
         <itemizedlist>
           <listitem>
-            <para>SysFera-DS: open-source middleware</para>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware</para>
           </listitem>
         </itemizedlist>
       </para>
     </section>
   </chapter>
-  <chapter>
+  <chapter annotations="UMS/design/Archi.asta#COMPDIAG(architecture)">
     <title>System Architecture</title>
+    <section>
+      <title>Overview of the different architecture components</title>
+      <para>blabla TODO</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">External API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Internal API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Client</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Server</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu Database</emphasis> TODO</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Component diagrams</title>
+      <section>
+        <title>UMS Server Components</title>
+        <figure>
+          <title>UMS Server Components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UMS Server Components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
   </chapter>
   <chapter annotations="core/model/UMS_Internal.apim#SERVICES">
     <title>Internal API specification</title>
@@ -118,15 +165,17 @@
             by the internal API.</para>
       <section>
         <title>Service definition format</title>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
         <informaltable>
           <tgroup cols="5">
             <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
             <colspec colwidth="3cm"/>
             <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1cm"/>
             <thead>
               <row>
                 <entry>Parameter</entry>
@@ -2589,7 +2638,20 @@
     <section annotations="UMS/design/Design.asta#CLASSDIAG(client)">
       <title>UMS Client Class Diagrams</title>
       <section>
-        <title>Class Diagrams</title>
+        <title>Class diagrams</title>
+        <section>
+          <title>UMS_Client Class Diagram </title>
+          <para>TODO</para>
+          <figure>
+            <title>UMS_Client Class Diagram </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/UMS_Client Class Diagram .png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
         <section>
           <title>UMS SessionProxy Class Diagram</title>
           <para>The SessionProxy is an object which encapsulates all session activities</para>
@@ -2669,13 +2731,13 @@
           </figure>
         </section>
         <section>
-          <title>Class Diagram5</title>
+          <title>UMS OptionValueProxy Class Diagram</title>
           <figure>
-            <title>Class Diagram5</title>
+            <title>UMS OptionValueProxy Class Diagram</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/png/Class Diagram5.png" align="center"
-                    scale="40"/>
+                <imagedata fileref="images/png/UMS OptionValueProxy Class Diagram.png"
+                    align="center" scale="40"/>
               </imageobject>
             </mediaobject>
           </figure>
@@ -2685,7 +2747,7 @@
     <section annotations="UMS/design/Design.asta#CLASSDIAG(server)">
       <title>UMS Server Class Diagrams</title>
       <section>
-        <title>Class Diagrams</title>
+        <title>Class diagrams</title>
       </section>
     </section>
     <section annotations="core/design/coreDesign.asta#CLASSDIAG">
@@ -2972,7 +3034,67 @@
         </itemizedlist>
       </section>
       <section>
-        <title>Class Diagrams</title>
+        <title>Relationnal model</title>
+        <figure>
+          <title>Relationnal model</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/relationnalmodel.png" align="center"
+                  scale="20"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>
+	  The class diagrams
+	</title>
+        <section>
+          <title>The exception diagram</title>
+          <para>
+	    The database class diagram is very simple. There is a database interface that defines a set of public operations that can be done over a database:
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  commit
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  rollback
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  execute a query
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  connect
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  disconnect ...
+		</para>
+              </listitem>
+            </itemizedlist>
+	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
+	  </para>
+        </section>
+        <section>
+          <title>The exception diagram</title>
+          <para>
+	    The exception class diagrams defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class gives birth to two subclasses, the <emphasis
+                role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis
+                role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis
+                role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
+	  </para>
+        </section>
+      </section>
+      <section>
+        <title>Class diagrams</title>
         <section>
           <title>DB class diagram</title>
           <figure>
@@ -2981,6 +3103,17 @@
               <imageobject>
                 <imagedata fileref="images/png/DB class diagram.png" align="center"
                     scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+        <section>
+          <title>exception</title>
+          <figure>
+            <title>exception</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/exception.png" align="center" scale="40"/>
               </imageobject>
             </mediaobject>
           </figure>
