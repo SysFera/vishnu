@@ -110,15 +110,17 @@
             by the internal API.</para>
       <section><!-- Service definition format -->
         <title>Service definition format</title>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
         <informaltable>
           <tgroup cols="5">
             <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
             <colspec colwidth="3cm"/>
             <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1cm"/>
             <thead>
               <row>
                 <entry>Parameter</entry>
