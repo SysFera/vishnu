@@ -523,7 +523,51 @@
             </mediaobject>
           </figure>
         </section>
-
+      <section>
+	<title>
+	  The class diagrams
+	</title>
+	<section>
+	  <title>The exception diagram</title>
+	  <para>
+	    The database class diagram is very simple. There is a database interface that defines a set of public operations that can be done over a database:
+	    <itemizedlist>
+              <listitem>
+		<para>
+		  commit
+		</para>
+	      </listitem>
+              <listitem>
+		<para>
+		  rollback
+		</para>
+	      </listitem>
+              <listitem>
+		<para>
+		  execute a query
+		</para>
+	      </listitem>
+              <listitem>
+		<para>
+		  connect
+		</para>
+	      </listitem>
+              <listitem>
+		<para>
+		  disconnect ...
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
+	  </para>
+	</section>
+	<section>
+	  <title>The exception diagram</title>
+	  <para>
+	    The exception class diagrams defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class gives birth to two subclasses, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
+	  </para>
+	</section>
+      </section>
     </section>
     
   </chapter><!-- END PART 3 : CLASSES AND DATA -->
