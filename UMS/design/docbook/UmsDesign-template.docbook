@@ -58,13 +58,13 @@
       <title>References</title>
       <para><itemizedlist>
         <listitem>
-          <para>D1.1a : VISHNU General specifications</para>
+          <para>[D1.1a]: VISHNU General specifications</para>
         </listitem>
         <listitem>
-          <para>D1.1b : VISHNU Spécifications techniques des besoins</para>
+          <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
         </listitem>
         <listitem>
-          <para>D1.1c : VISHNU API Detailed specifications</para>
+          <para>[D1.1c]: VISHNU API Detailed specifications</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -93,19 +93,91 @@
     </section>
   </chapter>
 
+  <!-- PART 1 : ARCHITECTURE -->
   <chapter>
     <title>System Architecture</title>
-  </chapter>
+  </chapter><!-- PART 1 : ARCHITECTURE -->
   
+  <!-- PART 2 : INTERNAL API -->
   <chapter annotations="core/model/UMS_Internal.apim#SERVICES">
     <title>Internal API specification</title>
-    <section>
-      <title>Test section</title>
-      <para>blabla</para>
-    </section>
-  </chapter>
+     <section> <!-- Generic definition formats presentation -->
+      <title>Generic definition formats presentation</title>
+      <para>This section presents the formats used in this chapter to describe the services provided
+            by the internal API.</para>
+      <section><!-- Service definition format -->
+        <title>Service definition format</title>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>This is an example of a required string input parameter</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfJobs</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>ListJobs</para></entry>
+                <entry><para>This is an example of an object output parameter that is serialized as a string</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>Here is detailed the purpose of the service 'myService'</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>Here are detailed the different return codes provided by the service.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>This shows the list of functions from the external Vishnu API (see [D1_1c]) that use this service.</para>
+      </section> <!-- Service definition format -->
+    </section> <!-- Generic definition formats presentation -->
+  </chapter><!-- END PART 2 : INTERNAL API -->
   
-  <chapter>
+  <chapter><!-- PART 3 : CLASSES AND DATA -->
     <title>Internal class and data structures</title>
     
     <section annotations="UMS/design/Design.asta#CLASSDIAG(client)">
@@ -437,7 +509,7 @@
       </section>
     </section>
     
-  </chapter>
+  </chapter><!-- END PART 3 : CLASSES AND DATA -->
   
 </book>
   
