@@ -76,10 +76,10 @@
       <para>
         <itemizedlist>
           <listitem>
-            <para>API: Application programming interface</para>
+            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
           </listitem>
           <listitem>
-            <para>CLI: Command line interface</para>
+            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -89,7 +89,7 @@
      <para>
         <itemizedlist>
           <listitem>
-            <para>SysFera-DS: open-source middleware</para>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -97,8 +97,38 @@
   </chapter>
 
   <!-- PART 1 : ARCHITECTURE -->
-  <chapter>
+  <chapter annotations="UMS/design/Archi.asta#COMPDIAG(architecture)">
     <title>System Architecture</title>
+    <section>
+      <title>Overview of the different architecture components</title>
+      <para>blabla TODO</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">External API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Internal API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Client</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Server</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> TODO</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu Database</emphasis> TODO</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    
   </chapter><!-- PART 1 : ARCHITECTURE -->
   
   <!-- PART 2 : INTERNAL API -->
