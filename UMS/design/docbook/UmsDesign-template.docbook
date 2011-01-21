@@ -512,6 +512,18 @@
 	  </listitem>
 	</itemizedlist>
       </section>
+      <section>
+          <title>Relationnal model</title>
+          <figure>
+            <title>Relationnal model</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/relationnalmodel.png" align="center" scale="20"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+
     </section>
     
   </chapter><!-- END PART 3 : CLASSES AND DATA -->
