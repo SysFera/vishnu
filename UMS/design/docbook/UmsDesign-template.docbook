@@ -43,13 +43,16 @@
       <title>Document structure</title>
       <para><itemizedlist>
         <listitem>
-          <para>Chapter 1 contains a high-level overview of the system architecture.</para>
+          <para>Chapter 1 contains a brief overview of the document content.</para>
         </listitem>
         <listitem>
-          <para>Chapter 2 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          <para>Chapter 2 contains a high-level overview of the system architecture.</para>
         </listitem>
         <listitem>
-          <para>Chapter 3 describes the internal class and data structures</para>
+          <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 4 describes the internal class and data structures</para>
         </listitem>
       </itemizedlist></para>
     </section>
