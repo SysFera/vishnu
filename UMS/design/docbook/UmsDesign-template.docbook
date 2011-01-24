@@ -100,34 +100,67 @@
   <chapter annotations="UMS/design/Archi.asta#COMPDIAG(architecture)">
     <title>System Architecture</title>
     <section>
-      <title>Overview of the different architecture components</title>
-      <para>blabla TODO</para>
+      <title>Overview of the UMS software infrastructure</title>
+      <para>We present in this section a physical and static desciption of the UMS package architecture in terms of software components.
+	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
+        We present the different software layers from services provided directly to the user to the database used by the server. 
+	The UMS client server package has been split into eight different interrelated components. The server side is illustrated by 
+       </para>
       <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">External API</emphasis> TODO</para>
+            <para><emphasis role="bold">External API</emphasis>
+	     contains precisely the services provided to the user as defined in the detailed specifications.
+	     We're on the client side. The following items describe the necessary components to realize these services. These are the server side components.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Internal API</emphasis> TODO</para>
+            <para><emphasis role="bold">Internal API</emphasis>
+	     is the middle layer of the server side. The services announced previously are perforemed here by combining a set of classes defined 
+	    in the two following components.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">UMS Client</emphasis> TODO</para>
+            <para><emphasis role="bold">UMS Client</emphasis>
+	    contains intermediate classes representing a sort of gateway between the external and internal API.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">UMS Server</emphasis> TODO</para>
+            <para><emphasis role="bold">UMS Server</emphasis>
+	     contains all classes implementing business objects by encapsulating the processing performed by the internal API.
+	    </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Sysfera-DS Client API</emphasis> TODO</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> TODO</para>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> contains all remote procedures used by <emphasis role="bold"> UMS Server.</emphasis> </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Vishnu Database</emphasis> TODO</para>
+            <para><emphasis role="bold">UMS Daemon</emphasis>
+	      whose the only role is to keep an eye on the connexion time by checking the TIME_OUT parameter in the <emphasis role="bold">Vishnu Database.</emphasis> 
+	    </para>
           </listitem>
+	  <listitem>
+	    <para><emphasis role="bold">Vishnu Database</emphasis>
+	       stores all data manipulated by the UMS Server.
+	    </para>
+	  </listitem>
+
         </itemizedlist>
       </para>
     </section>
+
+    <section>
+      <title> Deployment aspect of UMS<\title>
+       <para>
+        We explains here how the UMS package will be deployed in a physical hardware as illustrated in diagram .... where each cube represents an environment execution.	The UMS environment execution consists of three basic elements.  
+       <\para>
+    <\section>	
+
+
+
+		
     
   </chapter><!-- PART 1 : ARCHITECTURE -->
   
@@ -244,6 +277,10 @@
       <title>UMS server modelization</title>
     </section>
     
+    <section annotations="UMS/design/data.asta#CLASSDIAG(data)">
+      <title>UMS data modelization</title>
+    </section>
+       
     <section annotations="core/design/coreDesign.asta#CLASSDIAG">
       <title>Vishnu core functions modelization</title>
       <section>
