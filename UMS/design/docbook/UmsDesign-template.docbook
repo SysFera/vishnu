@@ -156,17 +156,21 @@
         We explains here how the UMS package will be deployed in a physical hardware as illustrated in diagram .... where each cube represents an environment execution.	The UMS environment execution consists of three basic elements: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">main server host</emphasis>
+	    <para><emphasis role="bold">Main UMS Server</emphasis>
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">server host</emphasis>
+            <para><emphasis role="bold">Secondary UMS Server</emphasis>
             </para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">client host</emphasis>
+	    <para><emphasis role="bold">Client host</emphasis>
 	    </para>
 	  </listitem>
+           <listitem>
+            <para><emphasis role="bold">SysFera-DS Bus</emphasis>
+            </para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
             </para>
