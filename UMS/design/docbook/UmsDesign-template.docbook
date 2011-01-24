@@ -75,12 +75,20 @@
       <title>Acronyms</title>
       <para>
         <itemizedlist>
-          <listitem>
+	 <listitem>
+	   <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
+	  </listitem>
+	  <listitem>
             <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
+
+         <itemizedlist>
+           <listitem>
+             <para><emphasis role="bold">WS</emphasis>: Web services</para>
+            </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -101,7 +109,7 @@
     <title>System Architecture</title>
     <section>
       <title>Overview of the UMS software infrastructure</title>
-      <para>We present in this section a physical and static desciption of the UMS package architecture in terms of software components.
+      <para>We present in this section a detailed description of the UMS package architecture in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
         We present the different software layers from services provided directly to the user to the database used by the server. 
 	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
@@ -153,22 +161,22 @@
     <section>
       <title> Deployment aspects of UMS</title>
        <para>
-        We explains here how the UMS package will be deployed in a physical hardware as illustrated in diagram .... where each cube represents an environment execution.	The UMS environment execution consists of three basic elements: 
+        We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of : 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">Main UMS Server</emphasis>
+	    <para><emphasis role="bold">Main UMS Server is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS Sed (UMS Server daemon) which gathers all UMS services published.</emphasis>
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">Secondary UMS Server</emphasis>
+            <para><emphasis role="bold">Secondary UMS Server is optional and contains only the UMS Sed  allowing to make an UMS service request.  </emphasis>
             </para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Client host</emphasis>
+	    <para><emphasis role="bold">Client host is the UMS service requesters. It contains all software allowing to make an UMS service request. </emphasis>
 	    </para>
 	  </listitem>
            <listitem>
-            <para><emphasis role="bold">SysFera-DS Bus</emphasis>
+            <para><emphasis role="bold">SysFera-DS Bus is the specific software layer that ensures the communication between clients host and servers host. </emphasis>
             </para>
           </listitem>
           <listitem>
