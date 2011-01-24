@@ -551,14 +551,14 @@
 	    <itemizedlist>
               <listitem>
 		<para>A <emphasis
-			   role="it">MACHINE or CLIENT MACHINE</emphasis> has one or more <emphasis
+			   role="it">CLIENT MACHINE</emphasis> has one or more <emphasis
 											     role="it">SESSION</emphasis>
 		</para>
 	      </listitem>
               <listitem>
 		<para>A  <emphasis
 			    role="it">SESSION</emphasis>  is  for  one  and  only  one  <emphasis
-											   role="it">MACHINE  or  CLIENT
+											   role="it">CLIENT
 		    MACHINE</emphasis>
 		</para>
 	      </listitem>
@@ -667,14 +667,14 @@
 	      </listitem>
 	    </itemizedlist>
 	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
-	    See the diagram 4.10.
+	    See the diagram 4.13.
 	  </para>
 	</section>
 	<section>
 	  <title>The exception classes</title>
 	  <para>
-	    The exception class diagram defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two child classes, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
-	    See the diagram 4.11.
+	    The exception class diagram defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two subclasses, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
+	    See the diagram 4.14.
 	  </para>
 	</section>
       </section>
