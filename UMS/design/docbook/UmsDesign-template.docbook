@@ -283,6 +283,10 @@
             <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
               <emphasis role="it">UMS Server</emphasis> component.</para>
           </listitem>
+	   <listitem>
+            <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
+              <emphasis role="it">UMS Client</emphasis> component and the <emphasis role="it">UMS Server</emphasis> component.</para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
               the VISHNU cross-modules components (components that are used by UMS and other VISHNU modules).</para>
