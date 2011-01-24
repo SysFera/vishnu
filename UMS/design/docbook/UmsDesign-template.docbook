@@ -81,6 +81,9 @@
           <listitem>
             <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -88,6 +91,12 @@
      <title>Glossary</title>
      <para>
         <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
           </listitem>
