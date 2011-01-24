@@ -97,7 +97,7 @@
   </chapter>
 
   <!-- PART 1 : ARCHITECTURE -->
-  <chapter annotations="UMS/design/Archi.asta#COMPDIAG(architecture)">
+  <chapter annotations="UMS/design/Archi.asta#ARCHIDIAG(architecture)">
     <title>System Architecture</title>
     <section>
       <title>Overview of the UMS software infrastructure</title>
