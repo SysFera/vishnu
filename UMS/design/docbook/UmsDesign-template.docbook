@@ -152,11 +152,25 @@
     </section>
 
     <section>
-      <title> Deployment aspect of UMS<\title>
+      <title> Deployment aspect of UMS</title>
        <para>
-        We explains here how the UMS package will be deployed in a physical hardware as illustrated in diagram .... where each cube represents an environment execution.	The UMS environment execution consists of three basic elements.  
-       <\para>
-    <\section>	
+        We explains here how the UMS package will be deployed in a physical hardware as illustrated in diagram .... where each cube represents an environment execution.	The UMS environment execution consists of three basic elements: 
+	<itemizedlist>
+	  <listitem>
+	    <para><emphasis role="bold">main server host</emphasis>
+	    </para>
+	  </listitem>
+          <listitem>
+            <para><emphasis role="bold">server host</emphasis>
+            </para>
+          </listitem>
+	  <listitem>
+	    <para><emphasis role="bold">client host</emphasis>
+	    </para>
+	  </listitem>
+	 </itemizedlist>
+       </para>
+    </section>	
 
 
 
