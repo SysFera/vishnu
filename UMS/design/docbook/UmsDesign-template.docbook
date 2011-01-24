@@ -89,7 +89,7 @@
      <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware</para>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -104,46 +104,45 @@
       <para>We present in this section a physical and static desciption of the UMS package architecture in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
         We present the different software layers from services provided directly to the user to the database used by the server. 
-	The UMS client server package has been split into eight different interrelated components. The server side is illustrated by 
+	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
+        the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">External API</emphasis>
 	     contains precisely the services provided to the user as defined in the detailed specifications.
-	     We're on the client side. The following items describe the necessary components to realize these services. These are the server side components.
+	     We're on the client side.
 	    </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Internal API</emphasis>
-	     is the middle layer of the server side. The services announced previously are perforemed here by combining a set of classes defined 
+	     is the middle layer of the server side. The services announced previously are performed here by combining a set of classes defined 
 	    in the two following components.
 	    </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">UMS Client</emphasis>
-	    contains intermediate classes representing a sort of gateway between the external and internal API.
+	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis role="bold">UMS Server</emphasis>.
 	    </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">UMS Server</emphasis>
-	     contains all classes implementing business objects by encapsulating the processing performed by the internal API.
+	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> TODO</para>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C client API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> contains all remote procedures used by <emphasis role="bold"> UMS Server.</emphasis> </para>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C server API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">UMS Daemon</emphasis>
-	      whose the only role is to keep an eye on the connexion time by checking the TIME_OUT parameter in the <emphasis role="bold">Vishnu Database.</emphasis> 
+            <para><emphasis role="bold">UMS Monitor Daemon</emphasis> which the only role is to keep an eye on the session inactivity by checking the TIME_OUT parameter in the <emphasis role="bold">Vishnu Database.</emphasis> 
 	    </para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Vishnu Database</emphasis>
-	       stores all data manipulated by the UMS Server.
+	    <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the UMS Server.
 	    </para>
 	  </listitem>
 
@@ -152,7 +151,7 @@
     </section>
 
     <section>
-      <title> Deployment aspect of UMS</title>
+      <title> Deployment aspects of UMS</title>
        <para>
         We explains here how the UMS package will be deployed in a physical hardware as illustrated in diagram .... where each cube represents an environment execution.	The UMS environment execution consists of three basic elements: 
 	<itemizedlist>
@@ -168,6 +167,10 @@
 	    <para><emphasis role="bold">client host</emphasis>
 	    </para>
 	  </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
+            </para>
+          </listitem>
 	 </itemizedlist>
        </para>
     </section>	
