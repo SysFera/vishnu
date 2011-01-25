@@ -124,7 +124,7 @@
       <title>Overview of the UMS software infrastructure</title>
       <para>We present in this section a detailed description of the UMS package architecture in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
-        We present the different software layers from services provided directly to the user to the database used by the server. 
+        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
 	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
         the relationships between these components. The definitions of the components are the following:
        </para>
@@ -153,10 +153,10 @@
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C client API provided by the SysFera-DS toolbox.</para>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C server API provided by the SysFera-DS toolbox.</para>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">UMS Monitor Daemon</emphasis> which the only role is to keep an eye on the session inactivity by checking the TIME_OUT parameter in the <emphasis role="bold">Vishnu Database.</emphasis> 
@@ -174,18 +174,18 @@
     <section>
       <title> Deployment aspects of UMS</title>
        <para>
-        We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of : 
+        We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold"> Main UMS Server </emphasis>is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS Sed (UMS Server daemon) which gathers all UMS services published.
+	    <para><emphasis role="bold"> Main UMS Server </emphasis>is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS SeD (UMS Server daemon) which gathers all UMS services published.
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">Secondary UMS Server </emphasis> is optional and contains only the UMS Sed allowing to make an UMS service request.  
+            <para><emphasis role="bold">Secondary UMS Server </emphasis> is optional and contains only the UMS SeD allowing to make a UMS service request.  
             </para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Client host </emphasis> is UMS service requester. It contains all components allowing to make an UMS service request.	  
+	    <para><emphasis role="bold">Client host </emphasis> is UMS service requester. It contains all components allowing to make a UMS service request.	  
 	    </para>
 	  </listitem>
            <listitem>
@@ -256,8 +256,6 @@
             </tbody>
           </tgroup>
         </informaltable>
-        <para><emphasis role="bold">Access </emphasis></para>
-        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>Here is detailed the purpose of the service 'myService'</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
@@ -275,7 +273,7 @@
             <tbody>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully.</para></entry>
+                <entry><para>The service has been performed successfully.</para></entry>
               </row>
               <row>
                 <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
@@ -664,7 +662,7 @@
             <title>Relational model</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/png/relationnalmodel.png" align="center" scale="20"/>
+                <imagedata fileref="images/png/relationnalmodel.png" align="center" scale="40"/>
               </imageobject>
             </mediaobject>
           </figure>
