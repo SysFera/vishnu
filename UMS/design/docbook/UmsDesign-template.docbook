@@ -66,7 +66,7 @@
         <listitem>
           <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
         </listitem>
-        <listitem>
+       <listitem>
           <para>[D1.1c]: VISHNU API Detailed specifications</para>
         </listitem>
       </itemizedlist></para>
@@ -75,21 +75,22 @@
       <title>Acronyms</title>
       <para>
         <itemizedlist>
-	 <listitem>
-	   <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
-	  </listitem>
 	  <listitem>
             <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
-
-           <listitem>
-             <para><emphasis role="bold">WS</emphasis>: Web services</para>
-            </listitem>
           <listitem>
             <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+
+	  <listitem>
+	    <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
+	  </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web services</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -172,19 +173,19 @@
         We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of : 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">Main UMS Server is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS Sed (UMS Server daemon) which gathers all UMS services published.</emphasis>
+	    <para><emphasis role="bold"> Main UMS Server </emphasis>is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS Sed (UMS Server daemon) which gathers all UMS services published.
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">Secondary UMS Server is optional and contains only the UMS Sed  allowing to make an UMS service request.  </emphasis>
+            <para><emphasis role="bold">Secondary UMS Server </emphasis> is optional and contains only the UMS Sed allowing to make an UMS service request.  
             </para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Client host is the UMS service requesters. It contains all software allowing to make an UMS service request. </emphasis>
+	    <para><emphasis role="bold">Client host </emphasis> is UMS service requester. It contains all components allowing to make an UMS service request.	  
 	    </para>
 	  </listitem>
            <listitem>
-            <para><emphasis role="bold">SysFera-DS Bus is the specific software layer that ensures the communication between clients host and servers host. </emphasis>
+            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
             </para>
           </listitem>
           <listitem>
@@ -192,6 +193,9 @@
             </para>
           </listitem>
 	 </itemizedlist>
+       </para>
+
+       <para> It is important to note that we can have several Secondary UMS servers (where an UMS Sed is running in each) but only one instance of UMS Monitor daemon running in the Main UMS Server as we can see in figure 2.1.
        </para>
     </section>	
 
