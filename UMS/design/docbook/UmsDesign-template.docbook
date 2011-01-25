@@ -84,13 +84,14 @@
           <listitem>
             <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
           </listitem>
-
 	  <listitem>
 	    <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
 	  </listitem>
-
           <listitem>
             <para><emphasis role="bold">WS</emphasis>: Web services</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -338,6 +339,9 @@
 	<title>Tables relationships</title>
 	<!--l. 9
 	  -->
+	<para>
+	  In order to have a coherent System, we have designed a relational model for the database. We need only one database that can contain all the Vishnu tables. The model is represented in figure 4.4. The rectangles are the tables and the lines represent the links between the tables.
+	</para>
 	<para>The links between the tables are based on the following rules:
 	</para>
 	<itemizedlist>
@@ -698,14 +702,14 @@
 	      </listitem>
 	    </itemizedlist>
 	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
-	    See the diagram 4.13.
+	    See the diagram 4.5.
 	  </para>
 	</section>
 	<section>
 	  <title>The exception classes</title>
 	  <para>
 	    The exception class diagram defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two subclasses, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
-	    See the diagram 4.14.
+	    See the diagram 4.6.
 	  </para>
 	</section>
       </section>
