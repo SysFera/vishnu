@@ -82,6 +82,12 @@
             <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
           </listitem>
 	  <listitem>
@@ -89,9 +95,6 @@
 	  </listitem>
           <listitem>
             <para><emphasis role="bold">WS</emphasis>: Web services</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
           </listitem>
         </itemizedlist>
       </para>
