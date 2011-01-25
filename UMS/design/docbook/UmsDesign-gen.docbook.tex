@@ -124,6 +124,9 @@ This document presents the detailed internal design of the Users Management Syst
 \item{}\textbf{CLI}: Command line interface
 
 
+\item{}\textbf{DB}: DataBase
+
+
 \item{}\textbf{n/a}: Not Appliable (used for serializable capability in function descriptions)
 
 
@@ -134,8 +137,6 @@ This document presents the detailed internal design of the Users Management Syst
 
 
 \item{}\textbf{WS}: Web services
-
-
 
 \end{itemize}
   
@@ -165,7 +166,7 @@ This document presents the detailed internal design of the Users Management Syst
 
 We present in this section a detailed description of the UMS package architecture in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
-        We present the different software layers from services provided directly to the user to the database used by the server. 
+        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
 	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
         the relationships between these components. The definitions of the components are the following:
  
@@ -190,10 +191,10 @@ We present in this section a detailed description of the UMS package architectur
  
 
 
-\item{}\textbf{Sysfera-{}DS Client API} is the C client API provided by the SysFera-{}DS toolbox.
+\item{}\textbf{Sysfera-{}DS Client API} is the C++ client API provided by the SysFera-{}DS toolbox.
 
 
-\item{}\textbf{Sysfera-{}DS Server API} is the C server API provided by the SysFera-{}DS toolbox.
+\item{}\textbf{Sysfera-{}DS Server API} is the C++ server API provided by the SysFera-{}DS toolbox.
 
 
 \item{}\textbf{UMS Monitor Daemon} which the only role is to keep an eye on the session inactivity by checking the TIME\_OUT parameter in the \textbf{Vishnu Database.}  
@@ -207,18 +208,18 @@ We present in this section a detailed description of the UMS package architectur
 
 \section{ Deployment aspects of UMS}
 
-         We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of : 
+         We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of: 
  \begin{itemize}
 
-\item{}\textbf{ Main UMS Server }is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS Sed (UMS Server daemon) which gathers all UMS services published.
+\item{}\textbf{ Main UMS Server }is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS SeD (UMS Server daemon) which gathers all UMS services published.
  
 
 
-\item{}\textbf{Secondary UMS Server } is optional and contains only the UMS Sed allowing to make an UMS service request.  
+\item{}\textbf{Secondary UMS Server } is optional and contains only the UMS SeD allowing to make a UMS service request.  
  
 
 
-\item{}\textbf{Client host } is UMS service requester. It contains all components allowing to make an UMS service request.	  
+\item{}\textbf{Client host } is UMS service requester. It contains all components allowing to make a UMS service request.	  
  
 
 
@@ -239,11 +240,11 @@ We present in this section a detailed description of the UMS package architectur
 
 \subsection{UMS Deployment Diagram}
 
-This diagram shows the classes of entities that must be deployed for the Vishnu UMS application to work. One Main UMS Server contains both a UMS Sed component and a UMS Monitor Daemon component. The Secondary UMS Server entity is optional and can be duplicated to improve performance and robustness. All UMS Server entities connect to the same Vishnu database. It is important to note that the different classes are here shown on different nodes but they can also be deployed on the same node.
+This diagram shows the classes of entities that must be deployed for the Vishnu UMS application to work. One Main UMS Server contains both a UMS SeD component and a UMS Monitor Daemon component. The Secondary UMS Server entity is optional and can be duplicated to improve performance and robustness. All UMS Server entities connect to the same Vishnu database. It is important to note that the different classes are here shown on different nodes but they can also be deployed on the same node.
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/UMSDeploymentDiagram.png}{{\centering \imgevalsize{images/png/UMSDeploymentDiagram.png}{\includegraphics[scale=0.4]{images/png/UMSDeploymentDiagram.png}}}}{}
+\imgexists{images/png/UMS_Deployment_Diagram.png}{{\centering \imgevalsize{images/png/UMS_Deployment_Diagram.png}{\includegraphics[scale=0.4]{images/png/UMS_Deployment_Diagram.png}}}}{}
 \end{center}
 \caption{UMS Deployment Diagram}
 \end{figure}
@@ -254,7 +255,7 @@ This diagram shows the components that compose the client side of the Vishnu UMS
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/UMSclient-sidecomponents.png}{{\centering \imgevalsize{images/png/UMSclient-sidecomponents.png}{\includegraphics[scale=0.4]{images/png/UMSclient-sidecomponents.png}}}}{}
+\imgexists{images/png/UMS_client-side_components.png}{{\centering \imgevalsize{images/png/UMS_client-side_components.png}{\includegraphics[scale=0.4]{images/png/UMS_client-side_components.png}}}}{}
 \end{center}
 \caption{UMS client-{}side components}
 \end{figure}
@@ -265,7 +266,7 @@ This diagram shows the components that compose the server side of the Vishnu UMS
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/UMSserver-sidecomponents.png}{{\centering \imgevalsize{images/png/UMSserver-sidecomponents.png}{\includegraphics[scale=0.4]{images/png/UMSserver-sidecomponents.png}}}}{}
+\imgexists{images/png/UMS_server-side_components.png}{{\centering \imgevalsize{images/png/UMS_server-side_components.png}{\includegraphics[scale=0.4]{images/png/UMS_server-side_components.png}}}}{}
 \end{center}
 \caption{UMS server-{}side components}
 \end{figure}
@@ -276,7 +277,7 @@ This diagram shows the communication paths between the Client host and the UMS M
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/SysFera-DSBusDetails.png}{{\centering \imgevalsize{images/png/SysFera-DSBusDetails.png}{\includegraphics[scale=0.4]{images/png/SysFera-DSBusDetails.png}}}}{}
+\imgexists{images/png/SysFera-DS_Bus_Details.png}{{\centering \imgevalsize{images/png/SysFera-DS_Bus_Details.png}{\includegraphics[scale=0.4]{images/png/SysFera-DS_Bus_Details.png}}}}{}
 \end{center}
 \caption{SysFera-{}DS Bus Details}
 \end{figure}
@@ -359,10 +360,6 @@ OUT
 \restoretablecounter%
 }
 
-\textbf{Access }
-
-Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)
-
 \textbf{Description }
 
 Here is detailed the purpose of the service 'myService'
@@ -387,7 +384,7 @@ Description%
 VISHNU\_OK
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The service was performed  successfully.
+The service has been performed successfully.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -485,6 +482,22 @@ listCommands is the list of commands
 OUT
 %
 }\tabularnewline
+\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}\cline{5-5}\multicolumn{1}{|m{2cm}|}{\raggedright%
+errorInfo
+%
+}&\multicolumn{1}{m{2cm}|}{\raggedright%
+string
+%
+}&\multicolumn{1}{m{3cm}|}{\raggedright%
+n/a
+%
+}&\multicolumn{1}{m{8cm}|}{\raggedright%
+Additional information provided when an error code is returned
+%
+}&\multicolumn{1}{m{1cm}|}{\raggedright%
+OUT
+%
+}\tabularnewline
 \hline
 \end{longtable}\endgroup%
 \restoretablecounter%
@@ -530,7 +543,7 @@ The userId is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -666,7 +679,7 @@ string
 \hyperlink{ConnectOptions}{ConnectOptions}
 %
 }&\multicolumn{1}{m{8cm}|}{\raggedright%
-options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user
+options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as if he/she was a specific user
 %
 }&\multicolumn{1}{m{1cm}|}{\raggedright%
 IN
@@ -756,7 +769,7 @@ The name of the closure mode is unknown
 INCORRECT\_TIMEOUT
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The value of the timeout is incorrect (negative or higher than the TIMEOUT treshold)
+The value of the timeout is incorrect (negative or higher than the TIMEOUT threshold)
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -951,7 +964,7 @@ OUT
 
 \textbf{Description }
 
-The sessionReconnect() function returns the sessionKey of a session in which the user was disconnected previously without closing it
+The sessionReconnect() function returns the sessionKey of a session from which the user was disconnected previously without closing it
 
 \textbf{Return Value }
 
@@ -1017,7 +1030,7 @@ The session Id is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1163,7 +1176,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1253,7 +1266,7 @@ string
 \hyperlink{ListSessionOptions}{ListSessionOptions}
 %
 }&\multicolumn{1}{m{8cm}|}{\raggedright%
-allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.
+allows the user to list sessions using several optional criteria such as: the state of sessions (active or inactive, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.
 %
 }&\multicolumn{1}{m{1cm}|}{\raggedright%
 IN
@@ -1327,7 +1340,7 @@ The name of the session option is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1503,7 +1516,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1524,7 +1537,7 @@ The mail adress is invalid
 USERID\_REQUIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The userId must to be defined
+The userId must be defined
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1686,7 +1699,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1715,7 +1728,7 @@ UMS::updateUser
 \subsection{Service userDelete}
 
 \textbf{Access}
-\newpage
+
 This service can be used by ADMIN users only
 
 \textbf{Parameters}
@@ -1855,7 +1868,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -1995,6 +2008,13 @@ Description
 }\tabularnewline
 \cline{1-1}\cline{2-2}\endhead
 \multicolumn{1}{|m{8.5cm}|}{\raggedright%
+VISHNU\_OK
+%
+}&\multicolumn{1}{m{9cm}|}{\raggedright%
+The service was performed  successfully
+%
+}\tabularnewline
+\cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
 NO\_ADMIN
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
@@ -2012,7 +2032,7 @@ The userId is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -2352,7 +2372,7 @@ The size of the password is incorrect
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -2500,14 +2520,14 @@ The local account already exists for the given user on the given machine
 USERID\_REQUIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The userId must to be defined
+The userId must be defined
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
 MACHINEID\_REQUIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The machineId must to be defined
+The machineId must be defined
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -2535,7 +2555,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -2683,7 +2703,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -2854,7 +2874,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3011,7 +3031,7 @@ The userId is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3381,7 +3401,7 @@ string
 \hyperlink{Machine}{Machine}
 %
 }&\multicolumn{1}{m{8cm}|}{\raggedright%
-existing machine information
+Machine information
 %
 }&\multicolumn{1}{m{1cm}|}{\raggedright%
 IN
@@ -3448,7 +3468,7 @@ The machineId already exists in the database
 MACHINEID\_REQUIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The machineId must to be defined
+The machineId must be defined
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3469,7 +3489,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3572,7 +3592,7 @@ OUT
 
 \textbf{Description }
 
-The machineUpdate() function updates machine description
+The machineUpdate() function updates a machine description
 
 \textbf{Return Value }
 
@@ -3603,7 +3623,7 @@ The service was performed  successfully
 MACHINEID\_REQUIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The machineId must to be defined
+The machineId must be defined
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3631,7 +3651,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3786,7 +3806,7 @@ The sessionKey is unrecognized
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -3943,7 +3963,7 @@ The userId is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -4128,7 +4148,7 @@ the name of the option is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -4283,7 +4303,7 @@ the name of the option is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -4438,7 +4458,7 @@ the name of the option is unknown
 SESSIONKEY\_EXPIRED
 %
 }&\multicolumn{1}{m{9cm}|}{\raggedright%
-The sessionKey is expired. The session is closed.
+The sessionKey has expired. The session is closed.
 %
 }\tabularnewline
 \cline{1-1}\cline{2-2}\multicolumn{1}{|m{8.5cm}|}{\raggedright%
@@ -4506,7 +4526,7 @@ This diagram describes all classes used to communicate with VISHNU System. Each 
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/UMSClientClassDiagram.png}{{\centering \imgevalsize{images/png/UMSClientClassDiagram.png}{\includegraphics[scale=0.4]{images/png/UMSClientClassDiagram.png}}}}{}
+\imgexists{images/png/UMS_Client_Class_Diagram.png}{{\centering \imgevalsize{images/png/UMS_Client_Class_Diagram.png}{\includegraphics[scale=0.4]{images/png/UMS_Client_Class_Diagram.png}}}}{}
 \end{center}
 \caption{UMS Client Class Diagram}
 \end{figure}
@@ -4521,7 +4541,7 @@ This diagram presents the main objects used by UMS server component to process t
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/UMSServerClassDiagram.png}{{\centering \imgevalsize{images/png/UMSServerClassDiagram.png}{\includegraphics[scale=0.4]{images/png/UMSServerClassDiagram.png}}}}{}
+\imgexists{images/png/UMS_Server_Class_Diagram.png}{{\centering \imgevalsize{images/png/UMS_Server_Class_Diagram.png}{\includegraphics[scale=0.4]{images/png/UMS_Server_Class_Diagram.png}}}}{}
 \end{center}
 \caption{UMS Server Class Diagram}
 \end{figure}
@@ -4532,11 +4552,11 @@ This diagram presents the main objects used by UMS server component to process t
 
 \subsubsection{UMS Data Class Diagram}
 
-This diagram illustrates the structure and the relationship between data manipulated by the components Client and Server describes above.
+This diagram illustrates the structure and the relationship between data manipulated by the components Client and Server. 
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/UMSDataClassDiagram.png}{{\centering \imgevalsize{images/png/UMSDataClassDiagram.png}{\includegraphics[scale=0.4]{images/png/UMSDataClassDiagram.png}}}}{}
+\imgexists{images/png/UMS_Data_Class_Diagram.png}{{\centering \imgevalsize{images/png/UMS_Data_Class_Diagram.png}{\includegraphics[scale=0.4]{images/png/UMS_Data_Class_Diagram.png}}}}{}
 \end{center}
 \caption{UMS Data Class Diagram}
 \end{figure}
@@ -4752,7 +4772,7 @@ The links between the tables are based on the following rules:
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/relationnalmodel.png}{{\centering \imgevalsize{images/png/relationnalmodel.png}{\includegraphics[scale=0.2]{images/png/relationnalmodel.png}}}}{}
+\imgexists{images/png/relationnalmodel.png}{{\centering \imgevalsize{images/png/relationnalmodel.png}{\includegraphics[scale=0.4]{images/png/relationnalmodel.png}}}}{}
 \end{center}
 \caption{Relational model}
 \end{figure}
@@ -4801,7 +4821,7 @@ The links between the tables are based on the following rules:
 \begin{figure}[H]
 
 \begin{center}
-\imgexists{images/png/DBclassdiagram.png}{{\centering \imgevalsize{images/png/DBclassdiagram.png}{\includegraphics[scale=0.4]{images/png/DBclassdiagram.png}}}}{}
+\imgexists{images/png/DB_class_diagram.png}{{\centering \imgevalsize{images/png/DB_class_diagram.png}{\includegraphics[scale=0.4]{images/png/DB_class_diagram.png}}}}{}
 \end{center}
 \caption{DB class diagram}
 \end{figure}
