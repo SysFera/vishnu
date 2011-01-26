@@ -364,8 +364,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addVishnuUser command line adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addVishnuUser</command><arg>-f<replaceable> firstname</replaceable></arg><arg>-l<replaceable> lastname</replaceable></arg><arg>-p<replaceable> privilege</replaceable></arg><arg>-m<replaceable> email</replaceable></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addVishnuUser</command><arg>-p<replaceable> privilege</replaceable></arg><arg
+              choice="plain"><replaceable>userId firstname lastname email</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -401,28 +401,28 @@
                 <entry><para>string</para></entry>
                 <entry><para>f</para></entry>
                 <entry><para>is the firstname of the user</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>lastname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
                 <entry><para>is the lastname of the user</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>privilege</para></entry>
                 <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
                 <entry><para>p</para></entry>
                 <entry><para>is the privilege of the user (admin or simple user)</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>email</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
                 <entry><para>is the email of the user</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -472,8 +472,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateUser command line updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateUser  </command><arg>-f<replaceable> firstname </replaceable></arg><arg>-l<replaceable> lastname </replaceable></arg><arg>-p<replaceable> privilege </replaceable></arg><arg>-m<replaceable> email </replaceable></arg><arg
-              choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>updateUser  </command><arg>-f<replaceable> firstname </replaceable></arg><arg>-l<replaceable> lastname </replaceable></arg><arg>-p<replaceable> privilege </replaceable></arg><arg>-m<replaceable> email userId </replaceable></arg><arg
+              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -501,7 +501,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
+                <entry><para>represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -1304,8 +1304,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addMachine command line adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addMachine</command><arg>-s<replaceable> site</replaceable></arg><arg>-t<replaceable> machineDescription</replaceable></arg><arg>-l<replaceable> language</replaceable></arg><arg
-              choice="plain"><replaceable>name</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addMachine</command><arg choice="plain"><replaceable>  name site machineDescription language </replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1341,21 +1340,21 @@
                 <entry><para>string</para></entry>
                 <entry><para>s</para></entry>
                 <entry><para>represents the location of the machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>t</para></entry>
                 <entry><para>represents the description of the machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
                 <entry><para>represents the language in which the description of the machine has been done</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
