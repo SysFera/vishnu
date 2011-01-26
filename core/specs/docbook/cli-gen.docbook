@@ -222,7 +222,7 @@
 	    </programlisting></example>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
+  <chapter annotations="UMS.apim#CLIOPS+CLIDATA">
     <title>Commands specification for User Management System (UMS)</title>
     <section>
       <title>Command definitions</title>
@@ -2443,7 +2443,7 @@
       </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/TMS.apim#CLIOPS+CLIDATA">
+  <chapter annotations="TMS.apim#CLIOPS+CLIDATA">
     <title>Commands specification for Tasks Management System (TMS)</title>
     <section>
       <title>Command definitions</title>
@@ -3590,7 +3590,7 @@
       </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/IMS.apim#CLIOPS+CLIDATA">
+  <chapter annotations="IMS.apim#CLIOPS+CLIDATA">
     <title>Commands specification for Information Management System (IMS)</title>
     <section>
       <title>Command definitions</title>
@@ -4944,7 +4944,7 @@
       </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
+  <chapter annotations="FMS.apim#CLIOPS+CLIDATA">
     <title>Commands specification for File Management System (FMS)</title>
     <section>
       <title>Command definitions</title>
