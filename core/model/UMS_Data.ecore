@@ -194,70 +194,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AddUserOptions" instanceTypeName="AddUserOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the VISHNU user identifier"/>
-        <details key="shortOption" value=""/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="is the firstname of the user"/>
-        <details key="shortOption" value="f"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="is the lastname of the user"/>
-        <details key="shortOption" value="l"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="privilege" eType="#//PrivilegeType"
-        defaultValueLiteral="-1">
-      <eAnnotations source="Description">
-        <details key="content" value="is the privilege of the user (admin or simple user)"/>
-        <details key="shortOption" value="p"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="is the email of the user"/>
-        <details key="shortOption" value="m"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UpdateUserOptions" instanceTypeName="UpdateUserOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="0">
-      <eAnnotations source="Description">
-        <details key="shortOption" value="f"/>
-        <details key="content" value="represents the updated firstname of the user"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="0">
-      <eAnnotations source="Description">
-        <details key="shortOption" value="l"/>
-        <details key="content" value="represents the updated lastname of the user"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="privilege" eType="#//PrivilegeType"
-        defaultValueLiteral="0">
-      <eAnnotations source="Description">
-        <details key="shortOption" value="p"/>
-        <details key="content" value="represents the updated privilege of the user"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="0">
-      <eAnnotations source="Description">
-        <details key="shortOption" value="m"/>
-        <details key="content" value="represents the updated email adress of the user"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListUsers" instanceTypeName="ListUsers">
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
         eType="#//User" containment="true">
@@ -422,33 +358,6 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the name of the machine"/>
-        <details key="shortOption" value="n"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the location of the machine"/>
-        <details key="shortOption" value="s"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the description of the machine"/>
-        <details key="shortOption" value="t"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the language in which the description of the machine has been done"/>
-        <details key="shortOption" value="l"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AddMachineOptions" instanceTypeName="AddMachineOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the name of the machine"/>
         <details key="shortOption" value="n"/>
