@@ -36,7 +36,7 @@
     <revhistory>
       <revision>
         <revnumber>1</revnumber>
-        <date>21/01/2011</date>
+        <date>25/01/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           
@@ -96,6 +96,21 @@
           <listitem>
             <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
+          <listitem>
+            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+          </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -104,52 +119,150 @@
       <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware</para>
+            <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
           </listitem>
         </itemizedlist>
       </para>
     </section>
   </chapter>
-  <chapter annotations="UMS/design/Archi.asta#COMPDIAG(architecture)">
+  <chapter annotations="UMS/design/Archi.asta#ARCHIDIAG(architecture)">
     <title>System Architecture</title>
     <section>
-      <title>Overview of the different architecture components</title>
-      <para>blabla TODO</para>
+      <title>Overview of the UMS software infrastructure</title>
+      <para>We present in this section a detailed description of the UMS package architecture in terms of software components.
+	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
+        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
+	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
+        the relationships between these components. The definitions of the components are the following:
+       </para>
       <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">External API</emphasis> TODO</para>
+            <para><emphasis role="bold">External API</emphasis>
+	     contains precisely the services provided to the user as defined in the detailed specifications.
+	     We're on the client side.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Internal API</emphasis> TODO</para>
+            <para><emphasis role="bold">Internal API</emphasis>
+	     is the middle layer of the server side. The services announced previously are performed here by combining a set of classes defined 
+	    in the two following components.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">UMS Client</emphasis> TODO</para>
+            <para><emphasis role="bold">UMS Client</emphasis>
+	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis
+                  role="bold">UMS Server</emphasis>.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">UMS Server</emphasis> TODO</para>
+            <para><emphasis role="bold">UMS Server</emphasis>
+	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
+	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> TODO</para>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> TODO</para>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Vishnu Database</emphasis> TODO</para>
+            <para><emphasis role="bold">UMS Monitor Daemon</emphasis> which the only role is to keep an eye on the session inactivity by checking the TIME_OUT parameter in the <emphasis
+                  role="bold">Vishnu Database.</emphasis> 
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the UMS Server.
+	    </para>
           </listitem>
         </itemizedlist>
       </para>
     </section>
     <section>
-      <title>Component diagrams</title>
+      <title> Deployment aspects of UMS</title>
+      <para>
+        We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of: 
+	<itemizedlist>
+          <listitem>
+            <para><emphasis role="bold"> Main UMS Server </emphasis>is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS SeD (UMS Server daemon) which gathers all UMS services published.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Secondary UMS Server </emphasis> is optional and contains only the UMS SeD allowing to make a UMS service request.  
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Client host </emphasis> is UMS service requester. It contains all components allowing to make a UMS service request.	  
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
+            </para>
+          </listitem>
+        </itemizedlist>
+       </para>
+      <para> It is important to note that we can have several Secondary UMS servers (where an UMS Sed is running in each) but only one instance of UMS Monitor daemon running in the Main UMS Server as we can see in figure 2.1.
+       </para>
+    </section>
+    <section>
+      <title>Architecture diagrams</title>
       <section>
-        <title>UMS Server Components</title>
+        <title>UMS Deployment Diagram</title>
+        <para>This diagram shows the classes of entities that must be deployed for the Vishnu UMS application to work. One Main UMS Server contains both a UMS SeD component and a UMS Monitor Daemon component. The Secondary UMS Server entity is optional and can be duplicated to improve performance and robustness. All UMS Server entities connect to the same Vishnu database. It is important to note that the different classes are here shown on different nodes but they can also be deployed on the same node.</para>
         <figure>
-          <title>UMS Server Components</title>
+          <title>UMS Deployment Diagram</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/UMS Server Components.png" align="center"
+              <imagedata fileref="images/png/UMS_Deployment_Diagram.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>UMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the Vishnu UMS system and their interfaces. Two services among all the services of the UMS external API (see ref. D1.1c) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the UMS Client component are shown.</para>
+        <figure>
+          <title>UMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UMS_client-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>UMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the Vishnu UMS system and their interfaces. Two services among all the services of the UMS internal API are shown here for example. These services are consumed by the UMS Client component through the SysFera-DS API. All the interfaces of the UMS Server component are shown.</para>
+        <figure>
+          <title>UMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UMS_server-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and the UMS Main and Secondary server using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the UMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one UMS Server in the case of  several available UMS servers. The choice will be transparent to the user as all UMS Servers connect to the same database.  The diagram shows here all the communication paths in the case where the Main UMS Server is chosen by the MasterAgent.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
                   scale="40"/>
             </imageobject>
           </mediaobject>
@@ -203,8 +316,6 @@
             </tbody>
           </tgroup>
         </informaltable>
-        <para><emphasis role="bold">Access </emphasis></para>
-        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>Here is detailed the purpose of the service 'myService'</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
@@ -222,7 +333,7 @@
             <tbody>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully.</para></entry>
+                <entry><para>The service has been performed successfully.</para></entry>
               </row>
               <row>
                 <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
@@ -280,6 +391,13 @@
                 <entry><para>listCommands is the list of commands</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -310,7 +428,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -384,7 +502,7 @@
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="ConnectOptions">ConnectOptions</link></para></entry>
-                <entry><para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user</para></entry>
+                <entry><para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as if he/she was a specific user</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -435,7 +553,7 @@
               </row>
               <row>
                 <entry><para>INCORRECT_TIMEOUT</para></entry>
-                <entry><para>The value of the timeout is incorrect (negative or higher than the TIMEOUT treshold)</para></entry>
+                <entry><para>The value of the timeout is incorrect (negative or higher than the TIMEOUT threshold)</para></entry>
               </row>
               <row>
                 <entry><para>UNKNOWN_USERID</para></entry>
@@ -538,7 +656,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The sessionReconnect() function returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
+        <para>The sessionReconnect() function returns the sessionKey of a session from which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -580,7 +698,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -670,7 +788,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -722,7 +840,7 @@
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="ListSessionOptions">ListSessionOptions</link></para></entry>
-                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para></entry>
+                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (active or inactive, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -766,7 +884,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -871,7 +989,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>USERID_EXISTING</para></entry>
@@ -883,7 +1001,7 @@
               </row>
               <row>
                 <entry><para>USERID_REQUIRED</para></entry>
-                <entry><para>The userId must to be defined</para></entry>
+                <entry><para>The userId must be defined</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -980,7 +1098,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>INCORRECT_USERID_SIZE</para></entry>
@@ -1081,7 +1199,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -1164,6 +1282,10 @@
             </thead>
             <tbody>
               <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
                 <entry><para>NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
@@ -1173,7 +1295,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -1374,7 +1496,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -1463,11 +1585,11 @@
               </row>
               <row>
                 <entry><para>USERID_REQUIRED</para></entry>
-                <entry><para>The userId must to be defined</para></entry>
+                <entry><para>The userId must be defined</para></entry>
               </row>
               <row>
                 <entry><para>MACHINEID_REQUIRED</para></entry>
-                <entry><para>The machineId must to be defined</para></entry>
+                <entry><para>The machineId must be defined</para></entry>
               </row>
               <row>
                 <entry><para>UNKNOWN_USERID</para></entry>
@@ -1483,7 +1605,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -1572,7 +1694,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>UNKNOWN_LOCAL_ACCOUNT</para></entry>
@@ -1672,7 +1794,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -1764,7 +1886,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -1987,7 +2109,7 @@
                 <entry><para>machine</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="Machine">Machine</link></para></entry>
-                <entry><para>existing machine information</para></entry>
+                <entry><para>Machine information</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -2027,7 +2149,7 @@
               </row>
               <row>
                 <entry><para>MACHINEID_REQUIRED</para></entry>
-                <entry><para>The machineId must to be defined</para></entry>
+                <entry><para>The machineId must be defined</para></entry>
               </row>
               <row>
                 <entry><para>NO_ADMIN</para></entry>
@@ -2039,7 +2161,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -2098,7 +2220,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The machineUpdate() function updates machine description</para>
+        <para>The machineUpdate() function updates a machine description</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -2120,7 +2242,7 @@
               </row>
               <row>
                 <entry><para>MACHINEID_REQUIRED</para></entry>
-                <entry><para>The machineId must to be defined</para></entry>
+                <entry><para>The machineId must be defined</para></entry>
               </row>
               <row>
                 <entry><para>UNKNOWN_MACHINE</para></entry>
@@ -2136,7 +2258,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -2229,7 +2351,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>DB_ERROR</para></entry>
@@ -2321,7 +2443,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -2429,7 +2551,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -2522,7 +2644,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -2615,7 +2737,7 @@
               </row>
               <row>
                 <entry><para>SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
@@ -2635,109 +2757,46 @@
   </chapter>
   <chapter>
     <title>Internal class and data structures</title>
+    <section>
+      <title>Introduction</title>
+      <para>This chapter introduces the details of the implementation of the different components described in chapter 2 (Architecture).
+        It is composed of three sections:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Client modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">UMS Client</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">UMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
+              <emphasis role="it">UMS Client</emphasis> component and the <emphasis
+                  role="it">UMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
+              the VISHNU cross-modules components (components that are used by UMS and other VISHNU modules).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
     <section annotations="UMS/design/Design.asta#CLASSDIAG(client)">
-      <title>UMS Client Class Diagrams</title>
+      <title>UMS client modelization</title>
       <section>
         <title>Class diagrams</title>
         <section>
-          <title>UMS_Client Class Diagram </title>
-          <para>TODO</para>
+          <title>UMS Client Class Diagram</title>
+          <para>This diagram describes all classes used to communicate with VISHNU System. Each class proxy contains the corresponding data class illustrated on the UMS Data modelization section and the methods usable by the UMS Client component. A QueryProxy class implements a generic model to list objects of VISHNU.</para>
           <figure>
-            <title>UMS_Client Class Diagram </title>
+            <title>UMS Client Class Diagram</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/png/UMS_Client Class Diagram .png" align="center"
+                <imagedata fileref="images/png/UMS_Client_Class_Diagram.png" align="center"
                     scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS SessionProxy Class Diagram</title>
-          <para>The SessionProxy is an object which encapsulates all session activities</para>
-          <figure>
-            <title>UMS SessionProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS SessionProxy Class Diagram.png"
-                    align="center" scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS UserProxy Class Diagram</title>
-          <para>This diagram represents the UserProxy which is an object used for all user functions</para>
-          <figure>
-            <title>UMS UserProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS UserProxy Class Diagram.png" align="center"
-                    scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS MachineProxy Class Diagram</title>
-          <para>This diagram illustrate the MachineProxy which is an object which encapsulates all Machine fuctions</para>
-          <figure>
-            <title>UMS MachineProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS MachineProxy Class Diagram.png"
-                    align="center" scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS LocalAccountProxy Class Diagram</title>
-          <para>This diagram illustrate the LocalAccountProxy which is an object which encapsulates the LocalAccount functions</para>
-          <figure>
-            <title>UMS LocalAccountProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS LocalAccountProxy Class Diagram.png"
-                    align="center" scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS QueryProxy Class Diagram</title>
-          <para>This diagram represents a generic object using a template to request the database to list objects of VISHNU</para>
-          <figure>
-            <title>UMS QueryProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS QueryProxy Class Diagram.png" align="center"
-                    scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS ConfigurationProxy Class Diagram</title>
-          <para>This diagram illustrate the configuration object functions</para>
-          <figure>
-            <title>UMS ConfigurationProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS ConfigurationProxy Class Diagram.png"
-                    align="center" scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-        <section>
-          <title>UMS OptionValueProxy Class Diagram</title>
-          <figure>
-            <title>UMS OptionValueProxy Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS OptionValueProxy Class Diagram.png"
-                    align="center" scale="40"/>
               </imageobject>
             </mediaobject>
           </figure>
@@ -2745,16 +2804,57 @@
       </section>
     </section>
     <section annotations="UMS/design/Design.asta#CLASSDIAG(server)">
-      <title>UMS Server Class Diagrams</title>
+      <title>UMS server modelization</title>
       <section>
         <title>Class diagrams</title>
+        <section>
+          <title>UMS Server Class Diagram</title>
+          <para>This diagram presents the main objects used by UMS server component to process the UMS Client component requests. Each object that can be listed have a static method list with the corresponding options.</para>
+          <figure>
+            <title>UMS Server Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/UMS_Server_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section annotations="UMS/design/data.asta#CLASSDIAG(data)">
+      <title>UMS data modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>UMS Data Class Diagram</title>
+          <para>This diagram illustrates the structure and the relationship between data manipulated by the components Client and Server. </para>
+          <figure>
+            <title>UMS Data Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/UMS_Data_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
       </section>
     </section>
     <section annotations="core/design/coreDesign.asta#CLASSDIAG">
-      <title>Vishnu core Class Diagrams</title>
+      <title>Vishnu core functions modelization</title>
       <section>
-        <title>Tables' relationship</title>
-        <para>   The links between the tables are based on the following rules:
+        <title>Introduction</title>
+        <para>
+	The following elements describe the core classes (i.e. the classes that will be used by each module such as the exceptions and the databases). The modelization diagrams are given with some explanations about them.
+	</para>
+      </section>
+      <section>
+        <title>Tables relationships</title>
+        <para>
+	  In order to have a coherent System, we have designed a relational model for the database. We need only one database that can contain all the Vishnu tables. The model is represented in figure 4.4. The rectangles are the tables and the lines represent the links between the tables.
+	</para>
+        <para>The links between the tables are based on the following rules:
 	</para>
         <itemizedlist>
           <listitem>
@@ -2971,13 +3071,13 @@
             </para>
             <itemizedlist>
               <listitem>
-                <para>A <emphasis role="it">MACHINE or CLIENT MACHINE</emphasis> has one or more <emphasis
+                <para>A <emphasis role="it">CLIENT MACHINE</emphasis> has one or more <emphasis
                       role="it">SESSION</emphasis>
 		</para>
               </listitem>
               <listitem>
                 <para>A  <emphasis role="it">SESSION</emphasis>  is  for  one  and  only  one  <emphasis
-                      role="it">MACHINE  or  CLIENT
+                      role="it">CLIENT
 		    MACHINE</emphasis>
 		</para>
               </listitem>
@@ -3034,23 +3134,23 @@
         </itemizedlist>
       </section>
       <section>
-        <title>Relationnal model</title>
+        <title>Relational model</title>
         <figure>
-          <title>Relationnal model</title>
+          <title>Relational model</title>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/relationnalmodel.png" align="center"
-                  scale="20"/>
+                  scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
       </section>
       <section>
         <title>
-	  The class diagrams
+	  The modelization
 	</title>
         <section>
-          <title>The exception diagram</title>
+          <title>The database classes</title>
           <para>
 	    The database class diagram is very simple. There is a database interface that defines a set of public operations that can be done over a database:
 	    <itemizedlist>
@@ -3081,15 +3181,17 @@
               </listitem>
             </itemizedlist>
 	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
+	    See the diagram 4.5.
 	  </para>
         </section>
         <section>
-          <title>The exception diagram</title>
+          <title>The exception classes</title>
           <para>
-	    The exception class diagrams defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class gives birth to two subclasses, the <emphasis
+	    The exception class diagram defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two subclasses, the <emphasis
                 role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis
                 role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis
                 role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
+	    See the diagram 4.6.
 	  </para>
         </section>
       </section>
@@ -3101,7 +3203,7 @@
             <title>DB class diagram</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/png/DB class diagram.png" align="center"
+                <imagedata fileref="images/png/DB_class_diagram.png" align="center"
                     scale="40"/>
               </imageobject>
             </mediaobject>
