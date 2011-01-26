@@ -616,7 +616,7 @@
               <row>
                 <entry><para>newUser</para></entry>
                 <entry><para><link linkend="User">User</link></para></entry>
-                <entry><para>newUser is an object which encapsulates the new user information</para></entry>
+                <entry><para>Object containing the new user information</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -725,18 +725,11 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
+                <entry><para>user</para></entry>
+                <entry><para><link linkend="User">User</link></para></entry>
+                <entry><para>Object containing user information</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="UpdateUserOptions">UpdateUserOptions</link></para></entry>
-                <entry><para>options is an object which encapsulates user information updated</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -798,7 +791,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>updateUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const UpdateUserOptions&amp; <parameter>options = UpdateUserOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>updateUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const User&amp; <parameter>user</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::deleteUser</title>
@@ -1701,7 +1694,7 @@
               </row>
               <row>
                 <entry><para>newMachine</para></entry>
-                <entry><para><link linkend="AddMachineOptions">AddMachineOptions</link></para></entry>
+                <entry><para><link linkend="Machine">Machine</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
@@ -1762,7 +1755,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>addMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AddMachineOptions&amp; <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>addMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Machine&amp; <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::updateMachine</title>
@@ -2876,47 +2869,6 @@
     </section>
     <section>
       <title>Data types definitions</title>
-      <para xml:id="AddMachineOptions"><emphasis role="bold">Class UMS::AddMachineOptions Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>name</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the name of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>site</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the location of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>machineDescription</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the description of the machine</para></entry>
-            </row>
-            <row>
-              <entry><para>language</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the language in which the description of the machine has been done</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
       <para xml:id="Command"><emphasis role="bold">Class UMS::Command Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -3606,47 +3558,6 @@
               <entry><para>timeout</para></entry>
               <entry><para>long</para></entry>
               <entry><para>is the inactivity delay in seconds associated to the CLOSE_ON_TIMEOUT option</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="UpdateUserOptions"><emphasis role="bold">Class UMS::UpdateUserOptions Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>firstname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated firstname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>lastname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated lastname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>privilege</para></entry>
-              <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
-              <entry><para>represents the updated privilege of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>email</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the updated email adress of the user</para></entry>
             </row>
           </tbody>
         </tgroup>

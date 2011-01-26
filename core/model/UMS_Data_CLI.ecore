@@ -26,7 +26,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="privilege" lowerBound="1"
-        defaultValueLiteral="-1">
+        eType="ecore:EEnum UMS_Data.ecore#//PrivilegeType" defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="is the privilege of the user (admin or simple user)"/>
         <details key="shortOption" value="p"/>
@@ -61,7 +61,8 @@
         <details key="content" value="represents the updated lastname of the user"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="privilege" defaultValueLiteral="0">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="privilege" eType="ecore:EEnum UMS_Data.ecore#//PrivilegeType"
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="shortOption" value="p"/>
         <details key="content" value="represents the updated privilege of the user"/>
