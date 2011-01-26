@@ -230,7 +230,7 @@
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data.ecore#//ListOptionsValues"/>
     </types>
     <types name="UpdateUserOptions">
-      <ECoreType xsi:type="ecore:EClass" href="UMS_Data.ecore#//UpdateUserOptions"/>
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//UpdateUserOptions"/>
     </types>
     <types name="long" description="Long standard">
       <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//ELong"/>
@@ -251,10 +251,10 @@
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data.ecore#//ListOptOptions"/>
     </types>
     <types name="AddMachineOptions" description="The AddMachineOptions is an object which encapsulates the options for the addmachine method">
-      <ECoreType xsi:type="ecore:EClass" href="UMS_Data.ecore#//AddMachineOptions"/>
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//AddMachineOptions"/>
     </types>
     <types name="AddUserOptions" description="AddUserOptions is an object which encapsulates the information for adding a new user">
-      <ECoreType xsi:type="ecore:EClass" href="UMS_Data.ecore#//AddUserOptions"/>
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//AddUserOptions"/>
     </types>
   </typeList>
 </API>
