@@ -1,0 +1,31 @@
+
+
+Part 1: A faire dans le répertoire d'installation
+
+#### EMF4CPP
+see http://catedrasaes.inf.um.es/trac/wiki/EMF4CPP
+
+#### EMF4CPP Installation
+
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/emf4cpp-0.0.2/
+make
+sudo make install
+
+Part 2:
+#### EMF4CPP generateur
+
+sudo cp -r emf_bin/ /opt/emf4cpp-0.0.2/bin/
+
+#### EMF4CPP Code generation
+cd src/TMS/tms_src/emf
+/opt/emf4cpp-0.0.2/bin/emf4cpp.generator.sh TMS_Data.ecore
+
+#### Copie des fichiers manquants
+
+sudo cp emf4cpp/ecorecpp/mapping_forward.hpp /opt/emf4cpp-0.0.2/include/emf4cpp/ecorecpp/
+sudo cp emf4cpp/ecorecpp/mapping/EList.hpp /opt/emf4cpp-0.0.2/include/emf4cpp/ecorecpp/mapping/
+sudo cp emf4cpp/ecorecpp/mapping/EListImpl.hpp /opt/emf4cpp-0.0.2/include/emf4cpp/ecorecpp/mapping/
+
+
