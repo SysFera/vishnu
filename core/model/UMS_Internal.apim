@@ -6,7 +6,7 @@
       <ports name="options" dataType="//@typeList/@types.22" description="allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user" optional="true"/>
       <ports name="listCommands" direction="OUT" dataType="//@typeList/@types.5" description="listCommands is the list of commands" shortOptionLetter="" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@typeList/@types.0" description="Additional information provided when an error code is returned" longOptionName=""/>
-       <usedByServices href="UMS.apim#//@modules.0/@services.18"/>
+      <usedByServices href="UMS.apim#//@modules.0/@services.18"/>
     </services>
     <services name="sessionConnect" description="opens a session" resultCodes="VISHNU_OK NOT_AUTHENTICATED UNKNOWN_CLOSURE_MODE INCORRECT_TIMEOUT UNKNOWN_USERID NO_ADMIN INCORRECT_PASSWORD_SIZE INCORRECT_USERID_SIZE DB_ERROR">
       <ports name="userId" dataType="//@typeList/@types.0" description="userId represents the VISHNU user identifier" shortOptionLetter=""/>
