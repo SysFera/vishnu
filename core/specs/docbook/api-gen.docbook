@@ -615,7 +615,7 @@
               </row>
               <row>
                 <entry><para>newUser</para></entry>
-                <entry><para><link linkend="AddUserOptions">AddUserOptions</link></para></entry>
+                <entry><para><link linkend="User">User</link></para></entry>
                 <entry><para>newUser is an object which encapsulates the new user information</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
@@ -688,7 +688,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>addVishnuUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AddUserOptions&amp; <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>addVishnuUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const User&amp; <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::updateUser</title>
@@ -2913,52 +2913,6 @@
               <entry><para>language</para></entry>
               <entry><para>string</para></entry>
               <entry><para>represents the language in which the description of the machine has been done</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="AddUserOptions"><emphasis role="bold">Class UMS::AddUserOptions Content</emphasis></para>
-      <informaltable>
-        <tgroup cols="3">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="3cm"/>
-          <colspec colwidth="8cm"/>
-          <colspec colwidth="2cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Type
-</entry>
-              <entry>Description
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>userId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>represents the VISHNU user identifier</para></entry>
-            </row>
-            <row>
-              <entry><para>firstname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the firstname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>lastname</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the lastname of the user</para></entry>
-            </row>
-            <row>
-              <entry><para>privilege</para></entry>
-              <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
-              <entry><para>is the privilege of the user (admin or simple user)</para></entry>
-            </row>
-            <row>
-              <entry><para>email</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>is the email of the user</para></entry>
             </row>
           </tbody>
         </tgroup>
