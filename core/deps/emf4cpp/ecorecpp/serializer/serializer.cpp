@@ -28,7 +28,7 @@ using namespace ::ecorecpp::serializer;
 using namespace ::ecore;
 
 serializer::serializer(const std::string& _file) :
-    m_file(_file), m_out(_file.c_str()), m_level(0), m_ser(m_out)
+    m_out(_file.c_str()), m_level(0), m_ser(m_out)
 {
 }
 
@@ -294,6 +294,13 @@ std::string serializer::serialize(EObject_ptr obj)
    // m_out.close();
    return m_out.str(); 
 }
+
+
+
+void serializer::resetSerializer() {
+ m_out.str("");
+}
+
 
 ::ecorecpp::mapping::type_traits::string_t serializer::get_type(EObject_ptr obj) const
 {

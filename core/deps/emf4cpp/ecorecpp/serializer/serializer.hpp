@@ -42,7 +42,8 @@ public:
     virtual ~serializer();
 
     std::string serialize(::ecore::EObject_ptr obj);
-
+    void resetSerializer();
+    
 protected:
 
     ::ecorecpp::mapping::type_traits::string_t get_type(
@@ -56,7 +57,6 @@ protected:
     void create_node(::ecore::EObject_ptr parent_obj,
             ::ecore::EObject_ptr child_obj, ::ecore::EStructuralFeature_ptr ef);
 
-    std::string m_file;
     std::ostringstream m_out;
 
     int m_level; // current_level
