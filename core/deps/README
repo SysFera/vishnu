@@ -20,12 +20,6 @@ sudo cp -r emf_bin/ /opt/emf4cpp-0.0.2/bin/
 
 #### EMF4CPP Code generation
 cd src/TMS/tms_src/emf
-/opt/emf4cpp-0.0.2/bin/emf4cpp.generator.sh TMS_Data.ecore
-
-#### Copie des fichiers manquants
-
-sudo cp emf4cpp/ecorecpp/mapping_forward.hpp /opt/emf4cpp-0.0.2/include/emf4cpp/ecorecpp/
-sudo cp emf4cpp/ecorecpp/mapping/EList.hpp /opt/emf4cpp-0.0.2/include/emf4cpp/ecorecpp/mapping/
-sudo cp emf4cpp/ecorecpp/mapping/EListImpl.hpp /opt/emf4cpp-0.0.2/include/emf4cpp/ecorecpp/mapping/
+/opt/emf4cpp-0.0.2/bin/emf4cpp.generator.sh UMS_Data.ecore
 
 
