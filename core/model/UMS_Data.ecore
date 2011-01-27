@@ -5,7 +5,7 @@
     nsURI="http://www.sysfera.com/emf/ums/data" nsPrefix="ums_data">
   <eClassifiers xsi:type="ecore:EClass" name="ConnectOptions" instanceTypeName="ConnectOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="closePolicy" eType="#//SessionCloseType"
-        defaultValueLiteral="CLOSE_ON_TIMEOUT">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="is an option for closing session automatically"/>
         <details key="shortOption" value="p"/>
@@ -70,7 +70,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="closePolicy" eType="#//SessionCloseType"
-        defaultValueLiteral="&quot;CLOSE_ON_TIMEOUT&quot;">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="is the way to close the session"/>
       </eAnnotations>
@@ -92,14 +92,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListSessionOptions" instanceTypeName="ListSessionOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sessionListOption" eType="#//SessionStateType"
-        defaultValueLiteral="ACTIVE_SESSION">
+        defaultValueLiteral="1">
       <eAnnotations source="Description">
         <details key="content" value="specifies the type of the sessions which will be listed (INACTIVE or ACTIVE)"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sessionClosePolicy" eType="#//SessionCloseType"
-        defaultValueLiteral="CLOSE_ON_TIMEOUT">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)"/>
         <details key="shortOption" value="p"/>
