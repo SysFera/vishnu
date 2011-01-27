@@ -19,16 +19,7 @@ POSTGREDatabase::process(std::string request){
     
  if (misConnected) {
      
-    res = PQexec(conn, request.c_str());
-    
-   /* if (PQresultStatus(res) != PGRES_COMMAND_OK)
-    {
-        fprintf(stderr, "Process failed: %s\n", PQerrorMessage(conn));
-        PQclear(res);
-	disconnect();
-	return DATABASE_ERROR;//THROW exception;
-    }*/
-    
+    res = PQexec(conn, request.c_str());   
     int nFields = PQnfields(res);
     //int ntuples
  
