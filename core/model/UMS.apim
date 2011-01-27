@@ -141,7 +141,10 @@
       <ports name="configPath" dataType="//@typeList/@types.0" description="configPath is the path of VISHNU configuration file" shortOptionLetter="" envOption="VISHNU_CONFIG_FILE"/>
     </services>
     <services name="vishnuFinalize" description="allows a user to go out properly from VISHNU" isCommand="false" resultCodes="VISHNU_OK VISHNU_FINALIZE_ERROR"/>
-    <resultCodeList>
+    <services name="restore" description="initializes VISHNU environment for tests" isCommand="false" resultCodes="VISHNU_OK">
+      <ports name="file" dataType="//@typeList/@types.0" description="file containing a sql script to restore the database" shortOptionLetter="" envOption="VISHNU_CONFIG_FILE"/>
+    </services>
+       <resultCodeList>
       <resultCodes name="VISHNU_OK" description="The service was performed  successfully"/>
       <resultCodes name="DB_ERROR" description="A problem occurs with the database" value="-1"/>
       <resultCodes name="NOT_AUTHENTICATED" description="Unknown user" value="-2"/>
