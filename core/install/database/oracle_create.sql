@@ -1,45 +1,14 @@
-CREATE SEQUENCE GlobalSequence;
+-- This script is for initialization of the VISHNU Oracle 11g database
+-- Script name          : oracle_create.sql
+-- Script owner         : SysFera SAS
 
-CREATE TABLE optionu (
-  numoptionid INTEGER   NOT NULL ,
-  optionid INTEGER    ,
-  description VARCHAR(255)    ,
-  defaultvalue INTEGER      ,
-PRIMARY KEY(numoptionid));
+-- REVISIONS
+-- Revision nb          : 1.0
+-- Revision date        : 27/01/11
+-- Revision author      : Benjamin Isnard <benjamin.isnard@sysfera.com>
+-- Revision comment     : initial version
 
-
-CREATE OR REPLACE TRIGGER AINC_optionu
-BEFORE INSERT  ON optionu
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numoptionid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numoptionid FROM DUAL; 
-  END IF; 
-END; 
-
-/
-
-
-
-CREATE TABLE clmachine (
-  numclmachineid INTEGER   NOT NULL ,
-  sshkey VARCHAR(255)    ,
-  name VARCHAR(255)      ,
-PRIMARY KEY(numclmachineid));
-
-
-CREATE OR REPLACE TRIGGER AINC_clmachine
-BEFORE INSERT  ON clmachine
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numclmachineid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numclmachineid FROM DUAL; 
-  END IF; 
-END; 
-
-/
-
-
+-- Table for Vishnu system
 
 CREATE TABLE vishnu (
   vishnuid INTEGER   NOT NULL ,
@@ -54,47 +23,20 @@ CREATE TABLE vishnu (
   machinecpt INTEGER      ,
 PRIMARY KEY(vishnuid));
 
+CREATE SEQUENCE s_vishnu;
 
 CREATE OR REPLACE TRIGGER AINC_vishnu
 BEFORE INSERT  ON vishnu
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.vishnuid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.vishnuid FROM DUAL; 
+    SELECT s_vishnu.NEXTVAL INTO :NEW.vishnuid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-COMMENT ON COLUMN vishnu.updatefreq IS 'update frequency';
-
-
-CREATE TABLE machine (
-  nummachineid INTEGER   NOT NULL ,
-  vishnu_vishnuid INTEGER   NOT NULL ,
-  name VARCHAR(255)    ,
-  site VARCHAR(255)    ,
-  diskspace INTEGER    ,
-  memory INTEGER    ,
-  network INTEGER    ,
-  machineid VARCHAR(255)      ,
-PRIMARY KEY(nummachineid),
-  FOREIGN KEY(vishnu_vishnuid)
-    REFERENCES vishnu(vishnuid));
-
-
-CREATE OR REPLACE TRIGGER AINC_machine
-BEFORE INSERT  ON machine
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.nummachineid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.nummachineid FROM DUAL; 
-  END IF; 
-END; 
-
-/
-
-
+-- Table for Users
 
 CREATE TABLE users (
   numuserid INTEGER   NOT NULL ,
@@ -110,7 +52,91 @@ PRIMARY KEY(numuserid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
 
+CREATE SEQUENCE s_users;
 
+CREATE OR REPLACE TRIGGER AINC_users
+BEFORE INSERT  ON users
+FOR EACH ROW 
+BEGIN 
+  IF (:NEW.numuserid IS NULL) THEN 
+    SELECT s_users.NEXTVAL INTO :NEW.numuserid FROM DUAL; 
+  END IF; 
+END;
+
+/
+
+-- Table for User options
+
+CREATE TABLE optionu (
+  numoptionid INTEGER   NOT NULL ,
+  optionid INTEGER    ,
+  description VARCHAR(255)    ,
+  defaultvalue INTEGER      ,
+PRIMARY KEY(numoptionid));
+
+CREATE SEQUENCE s_optionu;
+
+CREATE OR REPLACE TRIGGER AINC_optionu
+BEFORE INSERT  ON optionu
+FOR EACH ROW 
+BEGIN 
+  IF (:NEW.numoptionid IS NULL) THEN 
+    SELECT s_optionu.NEXTVAL INTO :NEW.numoptionid FROM DUAL; 
+  END IF; 
+END; 
+
+/
+
+-- Table for Client machines
+
+CREATE TABLE clmachine (
+  numclmachineid INTEGER   NOT NULL ,
+  sshkey VARCHAR(255)    ,
+  name VARCHAR(255)      ,
+PRIMARY KEY(numclmachineid));
+
+CREATE SEQUENCE s_clmachine;
+
+CREATE OR REPLACE TRIGGER AINC_clmachine
+BEFORE INSERT  ON clmachine
+FOR EACH ROW 
+BEGIN 
+  IF (:NEW.numclmachineid IS NULL) THEN 
+    SELECT s_clmachine.NEXTVAL INTO :NEW.numclmachineid FROM DUAL; 
+  END IF; 
+END; 
+
+/
+
+-- Table for Machines (servers)
+
+CREATE TABLE machine (
+  nummachineid INTEGER   NOT NULL ,
+  vishnu_vishnuid INTEGER   NOT NULL ,
+  name VARCHAR(255)    ,
+  site VARCHAR(255)    ,
+  diskspace INTEGER    ,
+  memory INTEGER    ,
+  network INTEGER    ,
+  machineid VARCHAR(255)      ,
+PRIMARY KEY(nummachineid),
+  FOREIGN KEY(vishnu_vishnuid)
+    REFERENCES vishnu(vishnuid));
+
+CREATE SEQUENCE s_machine;
+
+CREATE OR REPLACE TRIGGER AINC_machine
+BEFORE INSERT  ON machine
+FOR EACH ROW 
+BEGIN 
+  IF (:NEW.nummachineid IS NULL) THEN 
+    SELECT s_machine.NEXTVAL INTO :NEW.nummachineid FROM DUAL; 
+  END IF; 
+END; 
+
+/
+
+-- Table for Machine states
 
 CREATE TABLE state (
   numstateid INTEGER   NOT NULL ,
@@ -124,19 +150,20 @@ PRIMARY KEY(numstateid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid));
 
+CREATE SEQUENCE s_state;
 
 CREATE OR REPLACE TRIGGER AINC_state
 BEFORE INSERT  ON state
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numstateid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numstateid FROM DUAL; 
+    SELECT s_state.NEXTVAL INTO :NEW.numstateid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for Machine CPU Information
 
 CREATE TABLE cpu (
   cpuid INTEGER   NOT NULL ,
@@ -149,19 +176,20 @@ PRIMARY KEY(cpuid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid));
 
+CREATE SEQUENCE s_cpu;
 
 CREATE OR REPLACE TRIGGER AINC_cpu
 BEFORE INSERT  ON cpu
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.cpuid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.cpuid FROM DUAL; 
+    SELECT s_cpu.NEXTVAL INTO :NEW.cpuid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for Machine descriptions
 
 CREATE TABLE description (
   numdescriptionid INTEGER   NOT NULL ,
@@ -172,19 +200,20 @@ PRIMARY KEY(numdescriptionid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid));
 
+CREATE SEQUENCE s_description;
 
 CREATE OR REPLACE TRIGGER AINC_description
 BEFORE INSERT  ON description
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numdescriptionid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numdescriptionid FROM DUAL; 
+    SELECT s_description.NEXTVAL INTO :NEW.numdescriptionid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for Vishnu Sessions
 
 CREATE TABLE vsession (
   numsessionid INTEGER   NOT NULL ,
@@ -204,7 +233,20 @@ PRIMARY KEY(numsessionid),
   FOREIGN KEY(clmachine_numclmachineid)
     REFERENCES clmachine(numclmachineid));
 
+CREATE SEQUENCE s_vsession;
 
+CREATE OR REPLACE TRIGGER AINC_vsession
+BEFORE INSERT  ON vsession
+FOR EACH ROW 
+BEGIN 
+  IF (:NEW.numsessionid IS NULL) THEN 
+    SELECT s_vsession.NEXTVAL INTO :NEW.numsessionid FROM DUAL; 
+  END IF; 
+END; 
+
+/
+
+-- Table for User Local accounts
 
 CREATE TABLE account (
   numaccountid INTEGER   NOT NULL ,
@@ -219,19 +261,20 @@ PRIMARY KEY(numaccountid),
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid));
 
+CREATE SEQUENCE s_account;
 
 CREATE OR REPLACE TRIGGER AINC_account
 BEFORE INSERT  ON account
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numaccountid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numaccountid FROM DUAL; 
+    SELECT s_account.NEXTVAL INTO :NEW.numaccountid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for User Option values
 
 CREATE TABLE optionvalue (
   numoptionvalueid INTEGER   NOT NULL ,
@@ -244,19 +287,20 @@ PRIMARY KEY(numoptionvalueid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid));
 
+CREATE SEQUENCE s_optionvalue;
 
 CREATE OR REPLACE TRIGGER AINC_optionvalue
 BEFORE INSERT  ON optionvalue
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numoptionvalueid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numoptionvalueid FROM DUAL; 
+    SELECT s_optionvalue.NEXTVAL INTO :NEW.numoptionvalueid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for Machine Tresholds
 
 CREATE TABLE threshold (
   thresholdid INTEGER   NOT NULL ,
@@ -270,19 +314,20 @@ PRIMARY KEY(thresholdid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid));
 
+CREATE SEQUENCE s_threshold;
 
 CREATE OR REPLACE TRIGGER AINC_threshold
 BEFORE INSERT  ON threshold
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.thresholdid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.thresholdid FROM DUAL; 
+    SELECT s_threshold.NEXTVAL INTO :NEW.thresholdid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for Commands (Vishnu log)
 
 CREATE TABLE command (
   numcommandid INTEGER   NOT NULL ,
@@ -295,19 +340,20 @@ PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid));
 
+CREATE SEQUENCE s_command;
 
 CREATE OR REPLACE TRIGGER AINC_command
 BEFORE INSERT  ON command
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numcommandid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numcommandid FROM DUAL; 
+    SELECT s_command.NEXTVAL INTO :NEW.numcommandid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-
+-- Table for File transfers
 
 CREATE TABLE filetransfer (
   numfiletransferid INTEGER   NOT NULL ,
@@ -324,24 +370,22 @@ PRIMARY KEY(numfiletransferid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
+CREATE SEQUENCE s_filetransfer;
 
 CREATE OR REPLACE TRIGGER AINC_filetransfer
 BEFORE INSERT  ON filetransfer
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numfiletransferid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numfiletransferid FROM DUAL; 
+    SELECT s_filetransfer.NEXTVAL INTO :NEW.numfiletransferid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
-COMMENT ON COLUMN filetransfer.source IS 'id of the source machine';
-COMMENT ON COLUMN filetransfer.destination IS 'id of the destination machine';
-COMMENT ON COLUMN filetransfer.client IS 'id of the client';
+-- Table for submitted files
 
-
-CREATE TABLE fileSub (
+CREATE TABLE filesub (
   numfileid INTEGER   NOT NULL ,
   command_numcommandid INTEGER   NOT NULL ,
   fileid VARCHAR(255)    ,
@@ -351,19 +395,20 @@ PRIMARY KEY(numfileid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
+CREATE SEQUENCE s_filesub;
 
-CREATE OR REPLACE TRIGGER AINC_fileSub
-BEFORE INSERT  ON fileSub
+CREATE OR REPLACE TRIGGER AINC_filesub
+BEFORE INSERT  ON filesub
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numfileid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numfileid FROM DUAL; 
+    SELECT s_filesub.NEXTVAL INTO :NEW.numfileid FROM DUAL; 
   END IF; 
-END; 
+END;
 
 /
 
-
+-- Table for jobs
 
 CREATE TABLE job (
   numjobid INTEGER   NOT NULL ,
@@ -378,18 +423,19 @@ PRIMARY KEY(numjobid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
+CREATE SEQUENCE s_job;
 
 CREATE OR REPLACE TRIGGER AINC_job
 BEFORE INSERT  ON job
 FOR EACH ROW 
 BEGIN 
   IF (:NEW.numjobid IS NULL) THEN 
-    SELECT GlobalSequence.NEXTVAL INTO :NEW.numjobid FROM DUAL; 
+    SELECT s_job.NEXTVAL INTO :NEW.numjobid FROM DUAL; 
   END IF; 
 END; 
 
 /
 
 
-
+-- END OF THE SCRIPT
 
