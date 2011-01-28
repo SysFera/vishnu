@@ -8,7 +8,6 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="represents the VISHNU user identifier"/>
-        <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstname" lowerBound="1"
@@ -75,27 +74,23 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the name of the machine"/>
-        <details key="shortOption" value="n"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the location of the machine"/>
-        <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="represents the description of the machine"/>
-        <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the language in which the description of the machine has been done"/>
-        <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
