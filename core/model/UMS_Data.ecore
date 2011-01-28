@@ -373,7 +373,7 @@
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="represents the description of the machine"/>
-        <details key="shortOption" value="t"/>
+        <details key="shortOption" value="d"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">

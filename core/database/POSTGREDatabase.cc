@@ -56,13 +56,19 @@ POSTGREDatabase::process(std::string request){
 */
 int 
 POSTGREDatabase::startTransaction(std::string request){
- if (misConnected)
-  return DATABASE_NOT_CONNECTED; 
-
+ 
+  if (misConnected) {  
+  
   SQLtransaction.clear();
-  SQLtransaction = "BEGIN;";
   SQLtransaction.append(request);
+  
   return 0;
+  
+  } else {
+    return DATABASE_NOT_CONNECTED;
+  }
+ 
+ 
 }
 
 /**
@@ -154,10 +160,19 @@ POSTGREDatabase::disconnect(){
  */
 int
 POSTGREDatabase::commit (){
-  if (misConnected)
-  return DATABASE_NOT_CONNECTED; 
-  SQLtransaction.append("COMMIT;");//TODO 
+  if (!misConnected) {
+
+  res = PQexec(conn, "BEGIN");   
+  //SQLtransaction.append("COMMIT;");//TODO 
+  res = PQexec(conn, SQLtransaction.c_str());
+  res = PQexec(conn, "COMMIT");   
+  
   return 0;
+  
+  } else {
+    return DATABASE_NOT_CONNECTED; //TODO throw exception 
+  }
+  
 }
 
 /**
