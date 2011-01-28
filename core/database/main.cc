@@ -12,9 +12,52 @@ int main () {
   
   Database *p = factory.create(POSTGREDB, "", "", "", "Paco");
   
-  int ret = p->process("select * from tableuser");
+  int ret = 0;// = 
   
+  std::cout<< "************ MIS A JOUR ********** "<<std::endl;
+  
+  ret = p->process("DELETE FROM tableuser;");
   std::cout<< "int retour "<<ret<<std::endl;
+  
+   p->process("select * from tableuser");
+  
+  
+  std::string transac = "insert into tableuser (nom,password) values ('Paco1','GENTILDD'); insert into tableuser (nom,password) values ('Paco2','MECHANT');";
+  //transac.append("insert into tableuser (nom,password) values ('William','titi');");
+  
+  std::cout<< "************ TRANSACTION ********** "<<std::endl;
+  
+  
+  p->startTransaction(transac);
+ // p->commit();
+  
+  
+  ret = p->process("select * from tableuser");
+  std::cout<< "int retour "<<ret<<std::endl;
+  
+  std::cout<< "************ ROLLBACK ********** "<<std::endl;
+  p->rollback();
+  
+  ret = p->process("select * from tableuser");
+  std::cout<< "int retour "<<ret<<std::endl;
+  
+  std::cout<< "************ COMMIT ********** "<<std::endl;
+  
+  p->startTransaction(transac);
+  p->commit();
+  
+  
+  ret = p->process("select * from tableuser");
+  std::cout<< "int retour "<<ret<<std::endl;
+  
+  std::cout<< "************ ROLLBACK ********** "<<std::endl;
+  p->rollback();
+  
+  ret = p->process("select * from tableuser");
+  std::cout<< "int retour "<<ret<<std::endl;
+  
+  ret = p->process("DELETE FROM session;");
+  //ret = p->process("select * from tableuser");
   
  // std::vector<std::string> v = p->getResult();
  

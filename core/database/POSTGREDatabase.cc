@@ -18,8 +18,13 @@ int
 POSTGREDatabase::process(std::string request){
     
  if (misConnected) {
-     
     res = PQexec(conn, request.c_str());   
+    
+    
+    
+     std::vector<std::vector<std::string> > results;
+     std::vector<std::string> testres;
+    
     int nFields = PQnfields(res);
     //int ntuples
  
@@ -27,17 +32,41 @@ POSTGREDatabase::process(std::string request){
      int j;
     
     for (i = 0; i < nFields; i++) {
-        std::cout<<"Attribut name:"<<PQfname(res, i)<<std::endl;
+        //std::cout<<"Attribut name:"<<PQfname(res, i)<<std::endl;
+	testres.push_back(std::string(PQfname(res, i)));
     }
+    results.push_back(testres);
     
     
     for (i = 0; i < PQntuples(res); i++) {
+      testres.clear();
       for (j = 0; j < nFields; j++) {
 	    std::cout<<"Mon test:"<<std::string(PQgetvalue(res, i, j))<<std::endl;
+	    testres.push_back(std::string(PQgetvalue(res, i, j)));
       }
+      results.push_back(testres);
    }
      
     PQclear(res);
+    std::cout<<"Affichage des résultats"<<std::endl;
+   
+    /*for (i = 0; i < results.size(); ++i) {
+      //testres.clear();
+      testres = results[i];
+      
+       std::vector<std::string>::iterator ii;
+ 
+	for(ii=testres.begin();ii!=testres.begin();ii++){
+ 
+		std::cout << *testres <<"  "<<std::endl;
+	}
+
+      
+      //std::cout<< "results"<<testres<<std::endl;
+    }*/
+    
+    
+    
     
    } //End if misConnected
    
@@ -58,14 +87,30 @@ int
 POSTGREDatabase::startTransaction(std::string request){
  
   if (misConnected) {  
-  
   SQLtransaction.clear();
   SQLtransaction.append(request);
+  std::cout<< "Transaction:"<< SQLtransaction<<std::endl;
   
+  
+  res = PQexec(conn, "BEGIN TRANSACTION;");   
+    //SQLtransaction.append("COMMIT;");//TODO 
+   res = PQexec(conn, SQLtransaction.c_str());
+    
+    std::cout<< "Dans transaction:"<< SQLtransaction<<std::endl;
+    
+    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, "PB COMMIT: %s", PQerrorMessage(conn));
+        std::cout<<new std::string(PQerrorMessage(conn));
+	PQclear(res);
+        disconnect();
+	return DATABASE_ERROR;
+    }
+  
+  //res = PQexec(conn, "END;");   
   return 0;
-  
   } else {
-    return DATABASE_NOT_CONNECTED;
+    return DATABASE_NOT_CONNECTED; // TODO THROW AN EXCEPTION
   }
  
  
@@ -78,7 +123,43 @@ POSTGREDatabase::startTransaction(std::string request){
  */
 int 
 POSTGREDatabase::reconnect(){
-  return 0;
+  
+  if (!misConnected) {
+    
+    std::ostringstream out;
+    out<<mport;
+   
+    //TODO test à faire sur le port<0
+   
+    conn = PQsetdbLogin(mhost.c_str(),
+                      "",
+                      "",
+                      mpwd.c_str(),
+                      mdatabase.c_str(),
+                      musername.c_str(),
+                      out.str().c_str());		     
+     
+      if (PQstatus(conn) != CONNECTION_OK)
+	{
+	    fprintf(stderr, "Connection to database failed: %s",
+		    PQerrorMessage(conn));
+	    disconnect(); //TODO THROW AN EXCEPTION
+	    //return DATABASE_NOT_CONNECTED;
+	}
+	// TODO THROW AN EXCEPTION
+    misConnected = true;
+    std::cout<<"The connection to the database "<<mdatabase
+    <<" "<<"is successfully completed"<<std::endl; 
+  
+  return 0;  
+  } 
+  else {
+     // TODO THROW AN EXCEPTION Database already connected
+     return DATABASE_NOT_CONNECTED; // TODO THROW AN EXCEPTION
+  }
+  
+  
+  
 }
 
 /**
@@ -104,7 +185,8 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
      std::ostringstream out;
      out<<mport;
      std::cout<<"mport"<<out.str()<<std::endl;
-
+      
+     //TODO if port < 0 exception
      
       /* Make a connection to the database */
   conn = PQsetdbLogin(mhost.c_str(),
@@ -160,18 +242,45 @@ POSTGREDatabase::disconnect(){
  */
 int
 POSTGREDatabase::commit (){
-  if (!misConnected) {
-
-  res = PQexec(conn, "BEGIN");   
-  //SQLtransaction.append("COMMIT;");//TODO 
-  res = PQexec(conn, SQLtransaction.c_str());
-  res = PQexec(conn, "COMMIT");   
   
-  return 0;
-  
-  } else {
-    return DATABASE_NOT_CONNECTED; //TODO throw exception 
-  }
+    if (misConnected) {
+    // res = PQexec(conn, "BEGIN TRANSACTION;");   
+    //SQLtransaction.append("COMMIT;");//TODO 
+    //res = PQexec(conn, SQLtransaction.c_str());
+    
+    //std::cout<< "Dans Commit:"<< SQLtransaction<<std::endl;
+    
+    /*if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, "PB COMMIT: %s", PQerrorMessage(conn));
+        std::cout<<new std::string(PQerrorMessage(conn));
+	PQclear(res);
+        disconnect();
+	return DATABASE_ERROR;
+    }
+    //PQclear(res);
+ 
+    std::cout<< "Tout ok dans commit:"<<std::endl;
+    
+ 
+    PQclear(res);*/
+    
+    res = PQexec(conn, "COMMIT TRANSACTION;");
+    
+    if (!res)
+    {
+      fprintf(stderr, "PB COMMIT BAS: %s", PQerrorMessage(conn));
+        std::cout<<new std::string(PQerrorMessage(conn));
+	PQclear(res);
+        disconnect();
+	return DATABASE_ERROR;
+    }
+    
+    
+    return 0;
+    } else {
+      return DATABASE_NOT_CONNECTED; //TODO throw exception 
+    }
   
 }
 
@@ -183,7 +292,16 @@ POSTGREDatabase::commit (){
  */
 int
 POSTGREDatabase::setDatabase(std::string db){
-  return 0;
+  
+  if (!misConnected) {
+    mdatabase = db;
+    return 0;
+  }
+  else {
+    return DATABASE_ERROR; //TODO exception database connected
+  }
+  
+  
 }
 
 /**
@@ -227,9 +345,28 @@ POSTGREDatabase::getResult(){
  */
 int
 POSTGREDatabase::rollback(){
-  if (misConnected)
-  return DATABASE_NOT_CONNECTED; 
-  SQLtransaction.append("ROLLBACK;"); //TODO 
-  return 0;
+  
+    if (misConnected) {
+      //res = PQexec(conn, "BEGIN");   
+      //res = PQexec(conn, SQLtransaction.c_str());
+      
+      //PQclear(res);    
+      res = PQexec(conn, "ROLLBACK;");
+	
+	if (!res) {
+	  fprintf(stderr, "PB ROLLBACK: %s", PQerrorMessage(conn));
+	    std::cout<<new std::string(PQerrorMessage(conn));
+	    PQclear(res);
+	    disconnect();
+	    return DATABASE_ERROR;
+	}
+
+      
+      
+      return 0;
+      } else {
+	return DATABASE_NOT_CONNECTED; //TODO throw exception 
+      }
+      
 }
 
