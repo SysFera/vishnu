@@ -25,6 +25,8 @@ SystemException::getTypeS() const{
   case 4 :
     return std::string("NONE");
     break;
+  default :
+    break;
   }
   return std::string("->not found<-");
 }
@@ -40,7 +42,8 @@ SystemException::initMsg(){
 
 std::string
 SystemException::getMsg() const{
-	if (mp.count(mval))
-      return mp[mval];
+  if (mp.count(mval)){
+    return mp[mval];
+  }
   return "Unknown error code.\n";
 }
