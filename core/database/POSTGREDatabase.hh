@@ -15,12 +15,8 @@
  * \class POSGREDatabase
  * \brief POSTRE implementation of the Database class
  */
-class POSTGREDatabase : public Database{
+class POSTGREDatabase : public Database {
 public :
-  static const int DATABASE_NOT_CONNECTED = -1;
-  static const int DATABASE_PROCESS_ERROR = -2;
-  static const int DATABASE_ERROR = -3;
-  
   /**
    * \brief Function to process the request in the database
    * \fn    void process(std::string request)
@@ -99,9 +95,11 @@ public :
   rollback();
 
 private :
+  
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
+  
   /**
   * \brief A PostgreSQL structure
   */
@@ -138,6 +136,7 @@ private :
   /////////////////////////////////
   // Functions
   /////////////////////////////////
+  
   /**
    * \brief To disconnect from the database
    * \fn void disconnect()

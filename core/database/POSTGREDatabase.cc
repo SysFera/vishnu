@@ -2,7 +2,7 @@
  * \file POSTGREDatabase.cc
  * \brief This file implements a PostGreSQL database.
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date 15/12/10
+ * \date 31/01/2011
  */
 #include <sstream>
 #include <iostream>
@@ -27,28 +27,23 @@ POSTGREDatabase::process(std::string request){
 	PQclear(res);
 	std::string errorMsg = std::string(PQerrorMessage(conn));
 	errorMsg.append("- Note: The process function must not be used for select request");
-	
-	SystemException e = SystemException();
-	e.setMsg(2);
-	e.setMsgComp(errorMsg); 
+	SystemException e(2, errorMsg);
 	throw e;
     }
     PQclear(res);
  } //END if CONNECTION_OK
  else {
-   SystemException e = SystemException();
-   e.setMsg(2);
-   e.setMsgComp("The database is not connected");
+   SystemException e(2, "The database is not connected");
    throw e;
    }
 }// END void process(std::string request)
 
 /**
-* \brief To start a transaction with the database
-* \fn void startTransaction(std::string request)
-* \param request The series of requests to process
-* \return raises an exception on error
-*/
+ * \brief To start a transaction with the database
+ * \fn void startTransaction(std::string request)
+ * \param request The series of requests to process
+ * \return raises an exception on error
+ */
   
 void 
 POSTGREDatabase::startTransaction(std::string request){
@@ -62,9 +57,7 @@ POSTGREDatabase::startTransaction(std::string request){
     res = PQexec(conn, "BEGIN TRANSACTION;");
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	PQclear(res);
-	SystemException e = SystemException();
-	e.setMsg(2);
-	e.setMsgComp(std::string(PQerrorMessage(conn))); 
+	SystemException e(2, std::string(PQerrorMessage(conn)));
 	throw e;
     }
     PQclear(res);
@@ -72,18 +65,14 @@ POSTGREDatabase::startTransaction(std::string request){
     res = PQexec(conn, SQLtransaction.c_str());
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
         PQclear(res);
-	SystemException e = SystemException();
-	e.setMsg(2);
-	e.setMsgComp(std::string(PQerrorMessage(conn))); 
+	SystemException e(2, std::string(PQerrorMessage(conn)));
 	throw e;
     }
     PQclear(res);
   
  } //END if CONNECTION_OK
  else {
-    SystemException e = SystemException();
-    e.setMsg(2);
-    e.setMsgComp("The database is not connected");
+    SystemException e(2, "The database is not connected");
     throw e;
  }
 }//END void startTransaction(std::string request)
@@ -101,9 +90,7 @@ POSTGREDatabase::connect(){
      out << mport;
     
      if (mport < 0) {
-	SystemException e = SystemException();
-	e.setMsg(2);
-	e.setMsgComp("The port value is incorrect");
+	SystemException e(2, "The port value is incorrect");
 	throw e; 
      }
      /* Make a connection to the database */
@@ -116,9 +103,7 @@ POSTGREDatabase::connect(){
 			  out.str().c_str());		     
 	
      if (PQstatus(conn) != CONNECTION_OK) {
-	 SystemException e = SystemException();
-	 e.setMsg(2);
-	 e.setMsgComp(std::string(PQerrorMessage(conn))); 
+	 SystemException e(2, std::string(PQerrorMessage(conn)));
 	 throw e;
      }
      misConnected = true;
@@ -127,9 +112,7 @@ POSTGREDatabase::connect(){
      
   }//END if NOT CONNECTION_OK 
   else {
-    SystemException e = SystemException();
-    e.setMsg(2);
-    e.setMsgComp("connect : The database is already connected");
+    SystemException e(2, "connect : The database is already connected");
     throw e;
   }
 }//END void connect()
@@ -145,9 +128,7 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
 		  unsigned int port):Database(){
 		     
  if (port < 0) {
-      SystemException e = SystemException();
-      e.setMsg(2);
-      e.setMsgComp("The port value is incorrect");
+      SystemException e(2, "The port value is incorrect");
       throw e; 
  }
  
@@ -156,39 +137,7 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
  mpwd         = pwd;
  mdatabase    = database;
  misConnected = false;
- mport        = port;  
- 
- /*
- if (PQstatus(conn) != CONNECTION_OK) {
-     std::ostringstream out;
-     out << mport;
-      
-     
-     conn = PQsetdbLogin(mhost.c_str(),
-                      "",
-                      "",
-                      mpwd.c_str(),
-                      mdatabase.c_str(),
-                      musername.c_str(),
-                      out.str().c_str());		     
-     
-      if (PQstatus(conn) != CONNECTION_OK) {
-	  SystemException e = SystemException();
-	  e.setMsg(2);
-	  e.setMsgComp(std::string(PQerrorMessage(conn))); 
-	  throw e;
-      }
-      misConnected = true;
-      std::cout<<"The connection to the database "<<mdatabase
-      <<" "<<"is successfully completed"<<std::endl; 
-  } //END if NOT CONNECTION_OK 
-  else {
-    SystemException e = SystemException();
-    e.setMsg(2);
-    e.setMsgComp("The database is already connected");
-    throw e;
-  }*/  
-    
+ mport        = port;     
 }
 /**
  * \fn ~Database()
@@ -226,17 +175,13 @@ POSTGREDatabase::commit (){
       
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	  PQclear(res);
-	  SystemException e = SystemException();
-	  e.setMsg(2);
-	  e.setMsgComp(std::string(PQerrorMessage(conn))); 
+	  SystemException e(2, std::string(PQerrorMessage(conn)));
 	  throw e;
     }
     PQclear(res);
  } //IF CONNECTION_OK
  else {
-    SystemException e = SystemException();
-    e.setMsg(2);
-    e.setMsgComp("commit : the database is not connected");
+    SystemException e(2, "commit : the database is not connected");
     throw e;
  }  
 }
@@ -254,9 +199,7 @@ POSTGREDatabase::setDatabase(std::string db){
     mdatabase = db;
   }
   else {
-    SystemException e = SystemException();
-    e.setMsg(2);
-    e.setMsgComp("The database is connected! Imposssible to set a new database name");
+    SystemException e(2, "The database is connected! Imposssible to set a new database name");
     throw e;
   } 
 }
@@ -284,9 +227,7 @@ POSTGREDatabase::getResult(std::string request) {
      
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
 	  PQclear(res);
-	  SystemException e = SystemException();
-	  e.setMsg(2);
-	  e.setMsgComp(std::string(PQerrorMessage(conn))); 
+	  SystemException e(2, std::string(PQerrorMessage(conn)));
 	  throw e;
     }
     
@@ -308,9 +249,7 @@ POSTGREDatabase::getResult(std::string request) {
  } //End if CONNECTION_OK
    
  else {
-    SystemException e = SystemException();
-    e.setMsg(2);
-    e.setMsgComp("getResult : the database is not connected");
+    SystemException e(2, "getResult : the database is not connected");
     throw e;
  }
  
@@ -330,17 +269,13 @@ POSTGREDatabase::rollback(){
       res = PQexec(conn, "ROLLBACK;");
       if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	  PQclear(res);
-	  SystemException e = SystemException();
-	  e.setMsg(2);
-	  e.setMsgComp(std::string(PQerrorMessage(conn))); 
+	  SystemException e(2, std::string(PQerrorMessage(conn)));
 	  throw e;
       }
       PQclear(res);   
    } 
    else {
-	SystemException e = SystemException();
-	e.setMsg(2);
-	e.setMsgComp("rollback : the database is not connected");
+	SystemException e(2, "rollback : the database is not connected");
 	throw e;
    }
       
