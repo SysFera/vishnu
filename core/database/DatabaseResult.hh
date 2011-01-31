@@ -1,6 +1,6 @@
 /**
  * \file DatabaseResult.hh
- * \brief This file presents an abstract database.
+ * \brief This file presents the Database results class.
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi.sysfera.com)
  * \date 15/12/10 
  */
@@ -23,22 +23,31 @@ public :
    * \param request The request to process
    * \return 0 on success, an error code otherwise
    */
-  int 
+  void 
   print();
+  /**
+   * \brief Function to print the attributes names
+   * \fn    print()
+   * \param request The request to process
+   * \return 0 on success, an error code otherwise
+   */
+  void 
+  printAttributesNames();
   /**
    * \brief To get the number of tuples 
    * \fn getNbTuples() 
    * \return 0 on success, an error code otherwise
    */
   int 
-  getNbTuples();
+  getNbTuples() const;
   /**
    * \brief To get the number of fields 
    * \fn getNbFields() 
    * \return 0 on success, an error code otherwise
    */
   int 
-  getNbFields();
+  getNbFields() const;
+  
   /**
    * \brief To get the number of fields 
    * \fn get(int position); 
@@ -46,26 +55,26 @@ public :
    * \return the tuple associated to the postion
    */
   std::vector<std::string> 
-  get(int position);
+  get(unsigned int position) const;
   /**
    * \brief To get the number of fields 
    * \fn get(); 
    * \return all results
    */
-  std::vector<std::vector<std::string>>
-  getResults();
+  std::vector<std::vector<std::string> >
+  getResults() const;
   
-protected :
+//protected :
   /**
    * \fn DatabaseResult()
    * \brief Constructor, raises an exception on error
    */
-  Database(std::vector<std::vector<std::string>> res);
+  DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes);
   /**
    * \fn ~DatabaseResult()
    * \brief Destructor, raises an exception on error
    */
-virtual ~Database();
+ ~DatabaseResult();
 private :
   /////////////////////////////////
   // Attributes
@@ -82,8 +91,31 @@ private :
    * \brief The database results
    */
   std::vector<std::vector<std::string> > results;
-   
-   
+  /**
+   * \brief The attributes names
+   */
+  std::vector<std::string> attributesNames;
+  /////////////////////////////////
+  // Functions
+  /////////////////////////////////
+  
+  /**
+   * \brief To set the number of tuples 
+   * \fn setNbTuples(int nbtuples)
+   * \param nbtuples The number of tuples
+   * \return 0 on success, an error code otherwise
+   */
+  void 
+  setNbTuples(int nbtuples);
+  /**
+   * \brief To set the number of fields 
+   * \fn setNbFields(int nbfields)
+   * \param nbtuples The number of fields
+   * \return 0 on success, an error code otherwise
+   */
+  void 
+  setNbFields(int nbfields);
+  
 };
 
 #endif // DATABASERESULT
