@@ -1,26 +1,11 @@
 #include "UserException.hh"
 
 
-UserException::UserException(){
-  mmsgc = "";
-  mtype = NONE;
-  mval = -1;
-  initMsg();
-}
+UserException::UserException():VishnuException(){ initMsg();}
 
-UserException::UserException(const UserException& e){
-  mmsgc = e.getMsgComp();
-  mtype = e.getTypeI();
-  mval  = e.getMsgI();
-  initMsg();
-}
+UserException::UserException(const UserException& e):VishnuException(e){ initMsg();}
 
-UserException::UserException(int msg, std::string msgComp){
-  mval = msg;
-  mmsgc = msgComp;
-  mtype = NONE;
-  initMsg();
-}
+UserException::UserException(int msg, std::string msgComp):VishnuException(msg,msgComp){ initMsg();}
 
 std::string
 UserException::getTypeS() const{
@@ -34,8 +19,8 @@ UserException::initMsg(){
 
 std::string
 UserException::getMsg() const{
-  std::map<int, std::string>::const_iterator it = mp.find(mval);
-  if (it != mp.end())
-    return it->second;
+  if (mp.count(mval)){
+    return mp[mval];
+  }
   return "Unknown error code for the User.\n";
 }

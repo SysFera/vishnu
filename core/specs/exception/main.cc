@@ -41,10 +41,10 @@ int main(int argc, char** argv){
       else if ((r%NBMOD) == 3)
 	i.call (rand()%5);
     }
-    catch (SystemException* e){
-      std::cout << " Erreur dans le module : " << e->getTypeS() << std::endl;
-      std::cout << " Message generique <-> : " << e->getMsg() << std::endl;
-      std::cout << "Details supplementaires : " << e->getMsgComp() << std::endl;
+    catch (VishnuException& e){
+      std::cout << " Erreur dans le module : " << e.getTypeS() << std::endl;
+      std::cout << " Message generique <-> : " << e.getMsg() << std::endl;
+      std::cout << "Details supplementaires : " << e.what() << std::endl;
     }
     sleep (2);
   }

@@ -9,10 +9,13 @@ LIB 	= -L/usr/lib/ -lpq
 
 .phony	: all clean
 
-all	: main main.o POSTGREDatabase.o DbFactory.o
+all	: main main.o POSTGREDatabase.o DbFactory.o DatabaseResult.o
 
 #MYSQLDatabase.o	: MYSQLDatabase.cc
 #		$(CC) $(CCFLAGS) $(INC) -c $< -o $@
+
+DatabaseResult.o       : DatabaseResult.cc DatabaseResult.hh
+		$(CC) $(CCFLAGS) $(INC) $(LIB) -c $< -o $@
 
 Database.o       : Database.cc Database.hh
 		$(CC) $(CCFLAGS) $(INC) $(LIB) -c $< -o $@
@@ -27,9 +30,9 @@ main.o: main.cc POSTGREDatabase.hh DbFactory.hh
 	$(CC) $(CCFLAGS) $(INC) $(LIB) -c $< -o $@
 
 
-main: main.o POSTGREDatabase.o DbFactory.o Database.o
-	$(CC) -o $@ $(CCFLAGS) $(INC) $(LIB) main.o POSTGREDatabase.o DbFactory.o Database.o
-
+main: main.o POSTGREDatabase.o DbFactory.o Database.o DatabaseResult.o
+	$(CC) -o $@ $(CCFLAGS) $(INC) $(LIB) main.o POSTGREDatabase.o DbFactory.o Database.o DatabaseResult.o
+ 
 
 debug	: CCFLAGS += $(DEBUG)
 

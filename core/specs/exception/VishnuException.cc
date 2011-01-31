@@ -3,23 +3,20 @@
 
 VishnuException::VishnuException(){
   mmsgc = "";
-  mtype = NONE;
+  mtype =VishnuException::NONE;
   mval = -1;
-  initMsg();
 }
 
 VishnuException::VishnuException(const VishnuException& e){
-  mmsgc = e.getMsgComp();
+  mmsgc = e.what();
   mtype = e.getTypeI();
   mval  = e.getMsgI();
-  initMsg();
 }
 
 VishnuException::VishnuException(int msg, std::string msgComp){
   mval = msg;
   mmsgc = msgComp;
-  mtype = NONE;
-  initMsg();
+  mtype = VishnuException::NONE;
 }
 
 void

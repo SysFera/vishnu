@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include "DatabaseResult.hh"
 
 /**
  * \class Database
@@ -21,52 +22,54 @@ public :
    * \brief Function to process the request in the database
    * \fn    virtual int createDatabase() = 0
    * \param request The request to process
-   * \return 0 on success, an error code otherwise
+   * \return raises an exception on error
    */
-  virtual int 
+  virtual void 
   process(std::string request) = 0;
   /**
    * \brief To start a transaction with the database
-   * \fn virtual reconnect() = 0
-   * \return 0 on success, an error code otherwise
+   * \fn void startTransaction(std::string request)
+   * \param request The series of requests to process
+   * \return raises an exception on error
    */
-  virtual int 
+  virtual void 
   startTransaction(std::string request) = 0;
   /**
-   * \brief To reconnect to the database
-   * \fn virtual reconnect() = 0
-   * \return 0 on success, an error code otherwise
-   */
-  virtual int 
-  reconnect() = 0;
+  * \brief To make a connection to the database
+  * \fn void connect()
+  * \return raises an exception on error
+  */
+  virtual void 
+  connect() = 0;
   /**
    * \brief To commit a transaction
-   * \fn virtual int commit() = 0
-   * \return 0 on success, an error code otherwise
+   * \fn virtual void commit() = 0
+   * \return raises an exception on error
    */
-  virtual int
+  virtual void
   commit () = 0;
   /**
-   * \brief To set the db to use
-   * \fn virtual int setDb(std::string db) = 0
-   * \param db The database to use
-   * \return 0 on success, an error code otherwise
+   * \brief To set the name of the database to use
+   * \fn virtual void setDatabase(std::string db) = 0
+   * \param db The name of database to use
+   * \return raises an exception on error
    */
-  virtual int
+  virtual void
   setDatabase(std::string db) = 0;
   /**
-   * \brief To get the result of the latest request (if any result)
-   * \fn virtual void* getResult() = 0
-   * \return The result of the latest request
-   */
-  virtual std::vector<std::string>
-  getResult() = 0;
+  * \brief To get the result of a select request
+  * \fn DatabaseResult* getResult()
+  * \param request The request to process
+  * \return An object which encapsulates the database results
+  */
+  virtual DatabaseResult*
+  getResult(std::string request) = 0;
   /**
-   * \brief To cancel a transaction
-   * \fn virtual int rollback() = 0
-   * \return 0 on success, an error code otherwise
-   */
-  virtual int
+  * \brief To cancel a transaction
+  * \fn void rollback()
+  * \return raises an exception on error
+  */
+  virtual void
   rollback() = 0;
 protected :
   /**
@@ -82,10 +85,10 @@ virtual ~Database();
 private :
   /**
    * \brief To disconnect from the database
-   * \fn virtual disconnect() = 0
-   * \return 0 on success, an error code otherwise
+   * \fn virtual void disconnect() = 0
+   * \return raises an exception on error
    */
-  virtual int 
+  virtual void 
   disconnect() = 0;
 };
 

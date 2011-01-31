@@ -12,7 +12,7 @@ private :
   void cancelJob();
   void listQueue();
   void listJobs();
-  TMSVishnuException* e;
+  TMSVishnuException e;
 public :
   TMS();
   ~TMS(){};

@@ -12,6 +12,9 @@
 #include <exception>
 #include <map>
 
+
+
+
 class VishnuException :
   public std::exception {
 public:
@@ -84,11 +87,11 @@ public :
   getTypeS() const {return "";};
   /**
    * \brief To get a complement to the message
-   * \fn std::string getMsgDetail()
+   * \fn virtual const char* what()const 
    * \return Returns a complement to the generic error message
    */
-  std::string
-  getMsgComp() const {return mmsgc;}
+  virtual const char*
+  what() const throw(){return mmsgc.c_str();}
   /**
    * \brief To get the generic message
    * \fn virtual std::string getMsg()
@@ -135,7 +138,7 @@ public :
    * \fn virtual void initMsg()
    */
   virtual void
-  initMsg() {};
+  initMsg() =0;
 };
 
 #endif // VISHNUEXCEPTION
