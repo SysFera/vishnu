@@ -364,8 +364,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addVishnuUser command line adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addVishnuUser</command><arg>-p<replaceable> privilege</replaceable></arg><arg
-              choice="plain"><replaceable>userId firstname lastname email</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addVishnuUser</command><arg choice="plain"><replaceable>  privilege userId firstname lastname email </replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -399,28 +398,28 @@
               <row>
                 <entry><para>firstname</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>f</para></entry>
+                <entry/>
                 <entry><para>is the firstname of the user</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>lastname</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
+                <entry/>
                 <entry><para>is the lastname of the user</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>privilege</para></entry>
                 <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
-                <entry><para>p</para></entry>
+                <entry/>
                 <entry><para>is the privilege of the user (admin or simple user)</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>email</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>m</para></entry>
+                <entry/>
                 <entry><para>is the email of the user</para></entry>
                 <entry><para>YES</para></entry>
               </row>
@@ -472,8 +471,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateUser command line updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateUser  </command><arg>-f<replaceable> firstname </replaceable></arg><arg>-l<replaceable> lastname </replaceable></arg><arg>-p<replaceable> privilege </replaceable></arg><arg>-m<replaceable> email userId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>updateUser</command><arg>-f<replaceable> firstname</replaceable></arg><arg>-l<replaceable> lastname</replaceable></arg><arg>-p<replaceable> privilege</replaceable></arg><arg>-m<replaceable> email</replaceable></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -844,8 +843,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addLocalAccount command line adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addLocalAccount</command><arg>-l<replaceable> acLogin</replaceable></arg><arg>-s<replaceable> sshKeyPath</replaceable></arg><arg>-d<replaceable> homeDirectory</replaceable></arg><arg
-              choice="plain"><replaceable>userId machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addLocalAccount</command><arg choice="plain"><replaceable>  userId machineId acLogin sshKeyPath homeDirectory </replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -886,23 +884,23 @@
               <row>
                 <entry><para>acLogin</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
+                <entry/>
                 <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>sshKeyPath</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>s</para></entry>
+                <entry/>
                 <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>homeDirectory</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>d</para></entry>
+                <entry/>
                 <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1304,7 +1302,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addMachine command line adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addMachine</command><arg choice="plain"><replaceable>  name site machineDescription language </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addMachine</command><arg choice="plain"><replaceable>  name site language </replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1331,28 +1329,28 @@
               <row>
                 <entry><para>name</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>n</para></entry>
+                <entry/>
                 <entry><para>represents the name of the machine</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>site</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>s</para></entry>
+                <entry/>
                 <entry><para>represents the location of the machine</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>represents the description of the machine</para></entry>
+                <entry/>
+                <entry><para>represents the description of the machine, it is an interactive parameter</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
+                <entry/>
                 <entry><para>represents the language in which the description of the machine has been done</para></entry>
                 <entry><para>YES</para></entry>
               </row>
@@ -1404,7 +1402,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateMachine command line updates machine description</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateMachine</command><arg>-n<replaceable> name</replaceable></arg><arg>-s<replaceable> site</replaceable></arg><arg>-t<replaceable> machineDescription</replaceable></arg><arg>-l<replaceable> language</replaceable></arg><arg
+        <cmdsynopsis><command>updateMachine</command><arg>-n<replaceable> name</replaceable></arg><arg>-s<replaceable> site</replaceable></arg><arg>-d</arg><arg>-l<replaceable> language</replaceable></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1453,8 +1451,8 @@
               <row>
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>represents the description of the machine</para></entry>
+                <entry><para>d</para></entry>
+                <entry><para>represents the description of the machine, it is an interactive parameter</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
