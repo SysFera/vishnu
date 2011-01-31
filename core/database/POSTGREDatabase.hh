@@ -23,27 +23,27 @@ public :
   
   /**
    * \brief Function to process the request in the database
-   * \fn    int createDatabase()
+   * \fn    void process(std::string request)
    * \param request The request to process
-   * \return 0 on success, an error code otherwise
+   * \return raises an exception on error
    */
-  int 
+  void 
   process(std::string request);
   /**
    * \brief To start a transaction with the database
-   * \fn virtual reconnect() = 0
-   * \return 0 on success, an error code otherwise
+   * \fn void startTransaction(std::string request)
+   * \param request The series of requests to process
+   * \return raises an exception on error
    */
-  int 
+  void 
   startTransaction(std::string request);
-
   /**
-   * \brief To reconnect to the database
-   * \fn reconnect()
-   * \return 0 on success, an error code otherwise
-   */
-   int 
-  reconnect();
+  * \brief To make a connection to the database
+  * \fn void connect()
+  * \return raises an exception on error
+  */
+  void 
+  connect();
   /**
    * \fn POSTGREDatabase(std::string hostname,
    *		         std::string username,
@@ -68,33 +68,34 @@ public :
    */
   ~POSTGREDatabase();
   /**
-   * \brief To commit a mysql transaction
-   * \fn virtual int commit()
-   * \return 0 on success, an error code otherwise
+   * \brief To commit a postgresql transaction
+   * \fn void commit()
+   * \return raises an exception on error
    */
-  int
+  void
   commit ();
   /**
    * \brief To set the db to use
-   * \fn virtual int setDb(std::string db)
-   * \param db The database to use
-   * \return 0 on success, an error code otherwise
+   * \fn void setDatabase(std::string db)
+   * \param db The name of the database to use
+   * \return 0 raises an exception on error
    */
-  int
+  void
   setDatabase(std::string db);
   /**
-   * \brief To get the result of the latest request (if any result)
-   * \fn std::vector<std::string> getResult()
-   * \return The result of the latest request
-   */
-  std::vector<std::string>
-  getResult();
+  * \brief To get the result of a select request
+  * \fn DatabaseResult* getResult()
+  * \param request The request to process
+  * \return An object which encapsulates the database results
+  */
+  DatabaseResult*
+  getResult(std::string request);
   /**
-   * \brief To cancel a transaction
-   * \fn int rollback()
-   * \return 0 on success, an error code otherwise
-   */
-  int
+  * \brief To cancel a transaction
+  * \fn void rollback()
+  * \return raises an exception on error
+  */
+  void
   rollback();
 
 private :
@@ -133,24 +134,16 @@ private :
    * \brief The current transaction
    */
   std::string SQLtransaction;
-   /**
-   * \brief Store the results of the last request
-   */
-  std::vector<std::string> mres;
-  /**
-   * \brief Encapsulate the results of the last request
-   */
-  PGresult* res;
   
   /////////////////////////////////
   // Functions
   /////////////////////////////////
   /**
    * \brief To disconnect from the database
-   * \fn disconnect()
-   * \return 0 on success, an error code otherwise
+   * \fn void disconnect()
+   * \return raises an exception on error
    */
-  int 
+  void
   disconnect();
 };
 

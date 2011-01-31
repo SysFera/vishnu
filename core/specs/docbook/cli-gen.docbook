@@ -1302,7 +1302,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addMachine command line adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addMachine</command><arg choice="plain"><replaceable>  name site machineDescription language </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addMachine</command><arg choice="plain"><replaceable>  name site language </replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1329,28 +1329,28 @@
               <row>
                 <entry><para>name</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>n</para></entry>
+                <entry/>
                 <entry><para>represents the name of the machine</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>site</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>s</para></entry>
+                <entry/>
                 <entry><para>represents the location of the machine</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>represents the description of the machine</para></entry>
+                <entry/>
+                <entry><para>represents the description of the machine, it is an interactive parameter</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
+                <entry/>
                 <entry><para>represents the language in which the description of the machine has been done</para></entry>
                 <entry><para>YES</para></entry>
               </row>
@@ -1402,7 +1402,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateMachine command line updates machine description</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateMachine</command><arg>-n<replaceable> name</replaceable></arg><arg>-s<replaceable> site</replaceable></arg><arg>-t<replaceable> machineDescription</replaceable></arg><arg>-l<replaceable> language</replaceable></arg><arg
+        <cmdsynopsis><command>updateMachine</command><arg>-n<replaceable> name</replaceable></arg><arg>-s<replaceable> site</replaceable></arg><arg>-d</arg><arg>-l<replaceable> language</replaceable></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1451,8 +1451,8 @@
               <row>
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>represents the description of the machine</para></entry>
+                <entry><para>d</para></entry>
+                <entry><para>represents the description of the machine, it is an interactive parameter</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>

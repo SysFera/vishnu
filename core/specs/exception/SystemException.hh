@@ -12,13 +12,6 @@ class SystemException :
   public VishnuException {
 public:
 
-typedef enum ExceptionType{
-  UMS  = 0 ,
-  TMS  = 1 ,
-  FMS  = 2 , 
-  IMS  = 3 ,
-  NONE = 4   
-} ExceptionType;
 
 private :
 

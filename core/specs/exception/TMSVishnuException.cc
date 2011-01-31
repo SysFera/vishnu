@@ -9,6 +9,6 @@ TMSVishnuException::TMSVishnuException(int msg, std::string msgComp):SystemExcep
   mtype = VishnuException::TMS;
 }
 
-TMSVishnuException::TMSVishnuException(){
+TMSVishnuException::TMSVishnuException():SystemException(){
   mtype = VishnuException::TMS;
 }
