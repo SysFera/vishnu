@@ -1,26 +1,11 @@
 #include "SystemException.hh"
 
 
-SystemException::SystemException(){
-  mmsgc = "";
-  mtype = VishnuException::NONE;
-  mval = -1;
-  initMsg();
-}
+SystemException::SystemException():VishnuException(){initMsg();}
 
-SystemException::SystemException(const SystemException& e){
-  mmsgc = e.getMsgComp();
-  mtype = e.getTypeI();
-  mval  = e.getMsgI();
-  initMsg();
-}
+SystemException::SystemException(const SystemException& e):VishnuException(e){initMsg();}
 
-SystemException::SystemException(int msg, std::string msgComp){
-  mval = msg;
-  mmsgc = msgComp;
-  mtype = VishnuException::NONE;
-  initMsg();
-}
+SystemException::SystemException(int msg, std::string msgComp):VishnuException(msg, msgComp){initMsg();}
 
 std::string
 SystemException::getTypeS() const{
@@ -55,10 +40,7 @@ SystemException::initMsg(){
 
 std::string
 SystemException::getMsg() const{
-//  std::map<int, std::string>::const_iterator it = mp.find(mval);
-  //if (it != mp.end())
-   // return it->second;
-      if (mval>=1 && mval<=static_cast<int>(mp.size()))
+	if (mp.count(mval))
       return mp[mval];
   return "Unknown error code.\n";
 }

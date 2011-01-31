@@ -13,7 +13,7 @@ private :
   void getFMem();
   void getTD();
   void getFD();
-  IMSVishnuException* e;
+  IMSVishnuException e;
 public :
   IMS();
   ~IMS(){};
