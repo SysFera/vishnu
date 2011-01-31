@@ -3,7 +3,7 @@
 #ifndef __IMS__
 #define __IMS__
 
-#include "IMSVishnuException.hh"
+#include "UserException.hh"
 #include "VishnuException.hh"
 
 class IMS{
@@ -13,7 +13,7 @@ private :
   void getFMem();
   void getTD();
   void getFD();
-  IMSVishnuException e;
+  UserException e;
 public :
   IMS();
   ~IMS(){};

@@ -19,7 +19,8 @@ UserException::initMsg(){
 
 std::string
 UserException::getMsg() const{
-  if (mp.count(mval))
-	        return mp[mval];
-	return "Unknown error code for the User.\n";
+  if (mp.count(mval)){
+    return mp[mval];
+  }
+  return "Unknown error code for the User.\n";
 }
