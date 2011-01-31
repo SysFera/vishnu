@@ -8,6 +8,6 @@ IMSVishnuException::IMSVishnuException(int msg, std::string msgComp):SystemExcep
   mtype = VishnuException::IMS;
 }
 
-IMSVishnuException::IMSVishnuException(){
+IMSVishnuException::IMSVishnuException():SystemException(){
   mtype = VishnuException::IMS;
 }

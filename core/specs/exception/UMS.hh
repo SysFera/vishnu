@@ -15,7 +15,7 @@ private :
   void removeMachine();
   void saveConfiguration();
   void displayLog();
-  UMSVishnuException* e;
+  UMSVishnuException e;
 public :
   UMS();
   ~UMS(){};
