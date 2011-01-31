@@ -2866,6 +2866,70 @@
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnuFinalize</function></funcdef><paramdef/></funcprototype></funcsynopsis>
       </section>
+      <section>
+        <title>Function UMS::restore</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>file</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>file containing a sql script to restore the database</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The restore() function initializes VISHNU environment for tests</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>restore</function></funcdef><paramdef>const string&amp; <parameter>file</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
     </section>
     <section>
       <title>Data types definitions</title>
@@ -3653,12 +3717,16 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
+              <entry><para>UNDEFINED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
               <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>

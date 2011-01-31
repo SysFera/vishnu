@@ -496,8 +496,9 @@
     <eAnnotations source="Description">
       <details key="content" value="The SessionCloseType is an option for closing session automatically"/>
     </eAnnotations>
-    <eLiterals name="CLOSE_ON_TIMEOUT" literal="CLOSE_ON_TIMEOUT"/>
-    <eLiterals name="CLOSE_ON_DISCONNECT" value="1" literal="CLOSE_ON_DISCONNECT"/>
+    <eLiterals name="UNDEFINED" literal=""/>
+    <eLiterals name="CLOSE_ON_TIMEOUT" value="1" literal="CLOSE_ON_TIMEOUT"/>
+    <eLiterals name="CLOSE_ON_DISCONNECT" value="2" literal="CLOSE_ON_DISCONNECT"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SessionStateType" instanceTypeName="SessionStateType">
     <eAnnotations source="Description">
