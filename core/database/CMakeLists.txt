@@ -1,10 +1,10 @@
 INCLUDE_DIRECTORIES(
  /usr/include/postgresql 
- ../specs/exception/
+ ../exception/
 )
 ADD_LIBRARY(exception-vishnu
- ../specs/exception/VishnuException.cc 
- ../specs/exception/SystemException.cc
+ ../exception/VishnuException.cc 
+ ../exception/SystemException.cc
 )
 
 ADD_EXECUTABLE(main 
