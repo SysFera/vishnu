@@ -12,6 +12,12 @@
 #include <iterator>
 #include <fstream>
 
+//EMF
+#include <ecore.hpp> // Ecore metamodel
+#include <ecorecpp.hpp> // EMF4CPP utils
+#include "UMS_Data.hpp"
+#include "ConnectOptions.hpp"
+
 /*
  * \struct env_name_mapper
  * \brief a environment variable name mapper
@@ -31,6 +37,11 @@ struct env_name_mapper{
 
 			result="trCmd";
 		}
+                if (name=="VISHNU_CONFIG_FILE") {
+
+                        result="dietConfig";
+                }
+
 
 		return result;
 	}
