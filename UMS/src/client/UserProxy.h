@@ -16,10 +16,10 @@ class SessionProxy;
 class UserProxy
 {
 private:
-	UMS_Data::User user;
+	UMS_Data::User m_user;
 	SessionProxy* sessionProxy;
 //	SessionProxy sessionProxy;
- 
+
 public:
         //Constructors	
         UserProxy(const std::string& userId, const std::string& password);
