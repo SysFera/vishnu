@@ -1545,9 +1545,19 @@ UMS_DataPackage::UMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_SessionCloseTypeEEnum);
+        m_SessionCloseTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // CLOSE_ON_TIMEOUT
         _el->setName("CLOSE_ON_TIMEOUT");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("CLOSE_ON_TIMEOUT");
         _el->setEEnum(m_SessionCloseTypeEEnum);
         m_SessionCloseTypeEEnum->getELiterals().push_back(_el);
@@ -1557,7 +1567,7 @@ UMS_DataPackage::UMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // CLOSE_ON_DISCONNECT
         _el->setName("CLOSE_ON_DISCONNECT");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("CLOSE_ON_DISCONNECT");
         _el->setEEnum(m_SessionCloseTypeEEnum);
         m_SessionCloseTypeEEnum->getELiterals().push_back(_el);
