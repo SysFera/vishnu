@@ -9,6 +9,8 @@
 
 UserProxy::UserProxy(const  std::string& userId, const std::string& password)
 {
+  m_user.setUserId(userId);
+  m_user.setPassword(password);
 }
  
 UserProxy::UserProxy(SessionProxy session)
@@ -46,7 +48,7 @@ int UserProxy::resetPassword(UMS_Data::User user)
  
 UMS_Data::User UserProxy::getData()
 {
-  return UMS_Data::User();
+  return m_user;
 }
  
 UserProxy::~UserProxy()
