@@ -19,6 +19,10 @@ static const int MYSQLDB   = 1;
  * \brief Constant used for creating postgre/sql databases
  */
 static const int POSTGREDB = 2;
+/**
+ * \brief Constant used for creating oracle databases
+ */
+static const int ORACLEDB = 3;
 
 /**
  * \class DbFactory
