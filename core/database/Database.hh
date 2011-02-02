@@ -72,6 +72,7 @@ public :
   */
   virtual int
   rollback() = 0;
+  
 protected :
   /**
    * \fn Database()
