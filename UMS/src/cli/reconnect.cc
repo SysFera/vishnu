@@ -36,10 +36,10 @@ int main (int ac, char* av[]){
 		opt.setPosition("userId",1);
 
 		opt.add<string>("password,w","represents the password od the user",HIDDEN);
-		opt.setPosition("password",2);
+		opt.setPosition("password",1);
 
 		 opt.add<string>("sessionId,s","represents the identifier of the session",HIDDEN);
-		 opt.setPosition("sessionId",3);
+		 opt.setPosition("sessionId",1);
 
 
 
