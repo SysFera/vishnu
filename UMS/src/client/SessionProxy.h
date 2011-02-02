@@ -29,15 +29,15 @@ class SessionProxy
 public:
         //constructor
         SessionProxy();
-	SessionProxy(std::string sessionKey);
-	SessionProxy(UMS_Data::Session session);
+	explicit SessionProxy(const std::string& sessionKey);
+	explicit SessionProxy(const UMS_Data::Session& session);
 
         //methods
-	int connect(UserProxy user, UMS_Data::ConnectOptions options);
-	int reconnect(UserProxy user);
+	int connect(const UserProxy& user, const UMS_Data::ConnectOptions& options);
+	int reconnect(const UserProxy& user);
 	int close();
-	UMS_Data::Session getData();
-        std::string getErrorInfo();
+	UMS_Data::Session getData() const;
+        std::string getErrorInfo() const;
 
         //Destructor
 	~SessionProxy();
@@ -46,11 +46,11 @@ private:
        std::string serialize(const UMS_Data::ConnectOptions& options, 
                               UMS_Data::ConnectOptions_ptr& serializedOptions);
 
-       int _connect(UserProxy user, bool connect, UMS_Data::ConnectOptions options=UMS_Data::ConnectOptions());
+       int _connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options=UMS_Data::ConnectOptions());
 
        //Attributs      
-       UMS_Data::Session m_session;
-       std::string m_sessionKey;
-       std::string m_errorInfo;
+       UMS_Data::Session msession;
+       std::string msessionKey;
+       std::string merrorInfo;
 };
 #endif
