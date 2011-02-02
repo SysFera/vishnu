@@ -19,6 +19,10 @@ static const int MYSQLDB   = 1;
  * \brief Constant used for creating postgre/sql databases
  */
 static const int POSTGREDB = 2;
+/**
+ * \brief Constant used for creating oracle databases
+ */
+static const int ORACLEDB = 3;
 
 /**
  * \class DbFactory
@@ -27,7 +31,6 @@ static const int POSTGREDB = 2;
 class DbFactory{
 
 public :
-
   /**
    * \brief Constructor
    * \fn DbFactory()
@@ -45,8 +48,10 @@ public :
    * \return A database or a nil pointer
    */
   Database*
-  create(int type, std::string host, std::string user, std::string pwd, std::string db = "", unsigned int port = 0);
+  getDatabaseInstance(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0);
 
+private :
+  static Database* mdb;
 };
 
 

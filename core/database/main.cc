@@ -13,7 +13,7 @@ int main () {
   std::cout<<"It's my test"<<std::endl;
   DbFactory factory;
   
-  Database *p = factory.create(POSTGREDB, "", "", "", "Paco");
+  Database *p = factory.getDatabaseInstance(POSTGREDB, "", "", "", "Paco");
  
  // p->connect();
   int ret = 0;// = 
@@ -42,7 +42,7 @@ int main () {
   p->connect();  
   } catch (SystemException& e) {
   std::cout << "Message generique <-> 1: " << e.getMsg()<<std::endl;
-  std::cout << "Details supplementaires 2: " << e.getMsgComp() <<std::endl;  
+  std::cout << "Details supplementaires 2: " << e.what() <<std::endl;  
   }
   
   DatabaseResult *data;
@@ -176,7 +176,7 @@ int main () {
  
  } catch (SystemException& e) {
   std::cout << "Message generique <-> : " << e.getMsg();
-  std::cout << "Details supplementaires : " << e.getMsgComp();  
+  std::cout << "Details supplementaires : " << e.what();  
   }
  
  /*std::cout<< "************ RECONNECT ********** "<<std::endl;

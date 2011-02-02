@@ -11,11 +11,11 @@
 
 /**
  * \brief Function to process the request in the database
- * \fn    void process(std::string request)
+ * \fn    int process(std::string request)
  * \param request The request to process
  * \return raises an exception on error
  */
-void 
+int 
 POSTGREDatabase::process(std::string request){
  
  PGresult* res;
@@ -36,16 +36,17 @@ POSTGREDatabase::process(std::string request){
    SystemException e(2, "The database is not connected");
    throw e;
    }
-}// END void process(std::string request)
+ return SUCCESS;
+}// END int process(std::string request)
 
 /**
  * \brief To start a transaction with the database
- * \fn void startTransaction(std::string request)
+ * \fn int startTransaction(std::string request)
  * \param request The series of requests to process
  * \return raises an exception on error
  */
   
-void 
+int 
 POSTGREDatabase::startTransaction(std::string request){
   
  PGresult* res;
@@ -75,14 +76,15 @@ POSTGREDatabase::startTransaction(std::string request){
     SystemException e(2, "The database is not connected");
     throw e;
  }
-}//END void startTransaction(std::string request)
+ return SUCCESS;
+}//END int startTransaction(std::string request)
 
 /**
  * \brief To make a connection to the database
- * \fn void connect()
+ * \fn int connect()
  * \return raises an exception on error
  */
-void 
+int 
 POSTGREDatabase::connect(){
  
  if (PQstatus(conn) != CONNECTION_OK) {
@@ -115,7 +117,8 @@ POSTGREDatabase::connect(){
     SystemException e(2, "connect : The database is already connected");
     throw e;
   }
-}//END void connect()
+ return SUCCESS;
+}//END int connect()
 
 /**
  * \fn Database()
@@ -153,19 +156,20 @@ POSTGREDatabase::~POSTGREDatabase(){
  * \fn disconnect()
  * \return 0 raises an exception on error
  */
-void 
+int 
 POSTGREDatabase::disconnect(){
   if (conn != NULL) {
     PQfinish(conn);
   }
+ return SUCCESS;
 }
 
 /**
  * \brief To commit a To commit a postgresql transaction transaction
- * \fn void commit()
+ * \fn int commit()
  * \return raises an exception on error
  */
-void
+int
 POSTGREDatabase::commit (){
     
  PGresult* res;
@@ -184,15 +188,16 @@ POSTGREDatabase::commit (){
     SystemException e(2, "commit : the database is not connected");
     throw e;
  }  
+ return SUCCESS;
 }
 
 /**
  * \brief To set the db to use
- * \fn void setDatabase(std::string db)
+ * \fn int setDatabase(std::string db)
  * \param db The name of database to use
  * \return raises an exception on error
  */
-void
+int
 POSTGREDatabase::setDatabase(std::string db){
   
   if (PQstatus(conn) != CONNECTION_OK) {
@@ -202,6 +207,7 @@ POSTGREDatabase::setDatabase(std::string db){
     SystemException e(2, "The database is connected! Imposssible to set a new database name");
     throw e;
   } 
+ return SUCCESS;
 }
 
 /**
@@ -252,15 +258,15 @@ POSTGREDatabase::getResult(std::string request) {
     SystemException e(2, "getResult : the database is not connected");
     throw e;
  }
- 
+ return SUCCESS; 
 }
 
 /**
  * \brief To cancel a transaction
- * \fn void rollback()
+ * \fn int rollback()
  * \return raises an exception on error
  */
-void
+int
 POSTGREDatabase::rollback(){
     
   PGresult* res;
@@ -279,5 +285,6 @@ POSTGREDatabase::rollback(){
 	throw e;
    }
       
+ return SUCCESS;
 }
 

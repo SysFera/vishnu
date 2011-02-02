@@ -219,7 +219,7 @@ CREATE TABLE vsession (
   numsessionid INTEGER   NOT NULL ,
   clmachine_numclmachineid INTEGER   NOT NULL ,
   users_numuserid INTEGER   NOT NULL ,
-  vsessionid INTEGER    ,
+  vsessionid VARCHAR(255)    ,
   lastconnect TIMESTAMP    ,
   creation TIMESTAMP    ,
   closure TIMESTAMP    ,
