@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iterator>
 #include <fstream>
+#include <cstdlib>
 
 //EMF
 #include <ecore.hpp> // Ecore metamodel
@@ -33,10 +34,6 @@ struct env_name_mapper{
 
 		std::string result= "";
 		
-		if (name=="VISHNU_TRANSFER_CMD") {
-
-			result="trCmd";
-		}
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
