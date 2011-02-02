@@ -1,4 +1,5 @@
 #include "reconnect.hh"
+#include "api.h"
 
 namespace po = boost::program_options;
 
@@ -7,6 +8,11 @@ using namespace std;
 int main (int ac, char* av[]){
 
 	try {
+                string userId;
+                string password;
+                string sessionId;
+                string sessionKey;
+                string configFile;
 
 		Configuration config(av[0]);// take the command line name
 
@@ -31,6 +37,8 @@ int main (int ac, char* av[]){
   
 		opt.add("version,v", "print version message",GENERIC);
 
+                opt.add<string>("dietConfig,c", "The diet config file",ENV);
+
 		opt.add<string>("userId,u","represents the VISHNU user identifier",HIDDEN);
 
 		opt.setPosition("userId",1);
@@ -50,7 +58,7 @@ int main (int ac, char* av[]){
 
 		//opt.parse_cfile();
 		
-		//opt.parse_env(env_name_mapper());
+		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
@@ -72,26 +80,37 @@ int main (int ac, char* av[]){
 		if (opt.count("userId")){
 			
 			cout <<"The user identifier is " << opt.get<string>("userId") << endl;
+                        userId = opt.get<string>("userId");
 		}
 		
 		if(opt.count("password")){
 			
 			cout <<"the password is set to: " << opt.get<string >("password") << endl;
+                        password = opt.get<string >("password");
 		}
 		
-		if(opt.count("sessionID")){
+		if(opt.count("sessionId")){
 
 			cout << "The session identifier is " << opt.get<string>("sessionId") <<endl;
+                        sessionId = opt.get<string>("sessionId");
 		}
 
-			
-  
+	        if (opt.count("dietConfig")){
+
+                        cout <<"The diet config file " << opt.get< string >("dietConfig") << endl;
+                        configFile = opt.get< string >("dietConfig");
+
+                }
+
+/************** Call UMS connect service *******************************/
+
+               // initializing DIET
+              if (diet_initialize(configFile.c_str(), ac, av)) {
+                    cerr << "DIET initialization failed !" << endl;
+               return 1;
+              }
 	
-
-/************** Call UMS reconnect service *******************************/
-
-		//std::string sessionKey= VISHNU::UMS::reconnect(userId,password,sessionId);
-
+              reconnect(userId, password, sessionId, sessionKey);
 
 		
 

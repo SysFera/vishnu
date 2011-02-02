@@ -13,7 +13,7 @@ int main () {
   std::cout<<"It's my test"<<std::endl;
   DbFactory factory;
   
-  Database *p = factory.create(POSTGREDB, "", "", "", "Paco");
+  Database *p = factory.getDatabaseInstance(POSTGREDB, "", "", "", "Paco");
  
  // p->connect();
   int ret = 0;// = 
