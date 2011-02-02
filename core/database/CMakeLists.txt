@@ -8,10 +8,13 @@ ADD_LIBRARY(exception-vishnu
 )
 
 ADD_EXECUTABLE(main 
- main.cc 
- DbFactory.hh DbFactory.cc 
- Database.hh Database.cc 
- DatabaseResult.hh DatabaseResult.cc 
- POSTGREDatabase.hh POSTGREDatabase.cc
-)
-TARGET_LINK_LIBRARIES(main -lpq exception-vishnu)
+  main.cc 
+  )
+
+ADD_LIBRARY(database-vishnu SHARED
+  DbFactory.cc 
+  Database.cc 
+  DatabaseResult.cc 
+  POSTGREDatabase.cc
+  )
+TARGET_LINK_LIBRARIES(main -lpq exception-vishnu database-vishnu)
