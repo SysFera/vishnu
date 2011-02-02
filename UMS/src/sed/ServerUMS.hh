@@ -10,9 +10,12 @@
 
 #include <string>
 #include "DIET_server.h"
+
 #define NB_SRV 3
 
 
+//static Database* mdatabaseVishnu;
+  
 static const char* SRV[NB_SRV] = {
   "sessionConnect", 
   "sessionReconnect", 
@@ -68,6 +71,7 @@ public :
    * \fn ~ServerUMS()
    */
   ~ServerUMS();
+  
   
 private :
   /////////////////////////////////
