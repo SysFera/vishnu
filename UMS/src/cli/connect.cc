@@ -130,7 +130,7 @@ int main (int ac, char* av[]){
               }
 
                 std::string sessionKey;
-		int res = connect(userId,password, connectOpt, sessionKey);
+		int res = connect(userId,password, sessionKey, connectOpt);
 
 
 		

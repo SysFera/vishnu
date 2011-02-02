@@ -1,4 +1,5 @@
 #include "close.hh"
+#include "api.h"
 
 namespace po = boost::program_options;
 
@@ -7,6 +8,8 @@ using namespace std;
 int main (int ac, char* av[]){
 
 	try {
+                string sessionKey;
+                string configFile;
 
 		Configuration config(av[0]);// take the command line name
 
@@ -30,7 +33,7 @@ int main (int ac, char* av[]){
 		Options opt(&config );
   
 		opt.add("version,v", "print version message",GENERIC);
-
+                opt.add<string>("dietConfig,c", "The diet config file",ENV);
 		opt.add<string >("sessionKey,s","The session Key",ENV);
 
 /**************  Parse to retrieve option values  ********************/
@@ -59,13 +62,25 @@ int main (int ac, char* av[]){
 		if (opt.count("sessionKey")){
 			
 			cout <<"your session key is " << opt.get<string>("sessionKey") << endl;
+                        sessionKey = opt.get<string>("sessionKey");
 		}	
 			
+                if (opt.count("dietConfig")){
+
+                        cout <<"The diet config file " << opt.get< string >("dietConfig") << endl;
+                        configFile = opt.get< string >("dietConfig");
+
+                }
 
 
 /************** Call UMS connect service *******************************/
 
-		//int res=VISHNU::UMS::close(sessionKey);
+                if (diet_initialize(configFile.c_str(), ac, av)) {
+                    cerr << "DIET initialization failed !" << endl;
+                 return 1;
+                }
+
+		int res=close(sessionKey);
 
 
 		
