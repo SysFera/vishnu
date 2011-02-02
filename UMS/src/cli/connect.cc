@@ -48,7 +48,7 @@ int main (int ac, char* av[]){
 		opt.setPosition("userId",1);
 
 		opt.add<string>("password,w","represents the password od the user",HIDDEN);
-		opt.setPosition("password",2);
+		opt.setPosition("password",1);
 
 		opt.add<int>("closePolicy,p","for closing session automatically",CONFIG);
 
