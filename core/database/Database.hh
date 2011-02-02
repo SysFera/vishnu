@@ -12,6 +12,7 @@
 #include <vector>
 #include "DatabaseResult.hh"
 
+static const int SUCCESS =  0;
 /**
  * \class Database
  * \brief This class describes a database
@@ -24,37 +25,37 @@ public :
    * \param request The request to process
    * \return raises an exception on error
    */
-  virtual void 
+  virtual int 
   process(std::string request) = 0;
   /**
    * \brief To start a transaction with the database
-   * \fn void startTransaction(std::string request)
+   * \fn int startTransaction(std::string request)
    * \param request The series of requests to process
    * \return raises an exception on error
    */
-  virtual void 
+  virtual int 
   startTransaction(std::string request) = 0;
   /**
   * \brief To make a connection to the database
-  * \fn void connect()
+  * \fn int connect()
   * \return raises an exception on error
   */
-  virtual void 
+  virtual int 
   connect() = 0;
   /**
    * \brief To commit a transaction
-   * \fn virtual void commit() = 0
+   * \fn virtual int commit() = 0
    * \return raises an exception on error
    */
-  virtual void
+  virtual int
   commit () = 0;
   /**
    * \brief To set the name of the database to use
-   * \fn virtual void setDatabase(std::string db) = 0
+   * \fn virtual int setDatabase(std::string db) = 0
    * \param db The name of database to use
    * \return raises an exception on error
    */
-  virtual void
+  virtual int
   setDatabase(std::string db) = 0;
   /**
   * \brief To get the result of a select request
@@ -66,11 +67,12 @@ public :
   getResult(std::string request) = 0;
   /**
   * \brief To cancel a transaction
-  * \fn void rollback()
+  * \fn int rollback()
   * \return raises an exception on error
   */
-  virtual void
+  virtual int
   rollback() = 0;
+  
 protected :
   /**
    * \fn Database()
@@ -85,10 +87,10 @@ virtual ~Database();
 private :
   /**
    * \brief To disconnect from the database
-   * \fn virtual void disconnect() = 0
+   * \fn virtual int disconnect() = 0
    * \return raises an exception on error
    */
-  virtual void 
+  virtual int 
   disconnect() = 0;
 };
 

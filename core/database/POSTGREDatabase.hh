@@ -19,26 +19,26 @@ class POSTGREDatabase : public Database {
 public :
   /**
    * \brief Function to process the request in the database
-   * \fn    void process(std::string request)
+   * \fn    int process(std::string request)
    * \param request The request to process
    * \return raises an exception on error
    */
-  void 
+  int 
   process(std::string request);
   /**
    * \brief To start a transaction with the database
-   * \fn void startTransaction(std::string request)
+   * \fn int startTransaction(std::string request)
    * \param request The series of requests to process
    * \return raises an exception on error
    */
-  void 
+  int 
   startTransaction(std::string request);
   /**
   * \brief To make a connection to the database
-  * \fn void connect()
+  * \fn int connect()
   * \return raises an exception on error
   */
-  void 
+  int 
   connect();
   /**
    * \fn POSTGREDatabase(std::string hostname,
@@ -65,18 +65,18 @@ public :
   ~POSTGREDatabase();
   /**
    * \brief To commit a postgresql transaction
-   * \fn void commit()
+   * \fn int commit()
    * \return raises an exception on error
    */
-  void
+  int
   commit ();
   /**
    * \brief To set the db to use
-   * \fn void setDatabase(std::string db)
+   * \fn int setDatabase(std::string db)
    * \param db The name of the database to use
    * \return 0 raises an exception on error
    */
-  void
+  int
   setDatabase(std::string db);
   /**
   * \brief To get the result of a select request
@@ -88,10 +88,10 @@ public :
   getResult(std::string request);
   /**
   * \brief To cancel a transaction
-  * \fn void rollback()
+  * \fn int rollback()
   * \return raises an exception on error
   */
-  void
+  int
   rollback();
 
 private :
@@ -139,10 +139,10 @@ private :
   
   /**
    * \brief To disconnect from the database
-   * \fn void disconnect()
+   * \fn int disconnect()
    * \return raises an exception on error
    */
-  void
+  int
   disconnect();
 };
 

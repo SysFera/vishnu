@@ -63,8 +63,6 @@ public :
    */
   std::vector<std::vector<std::string> >
   getResults() const;
-  
-//protected :
   /**
    * \fn DatabaseResult()
    * \brief Constructor, raises an exception on error
