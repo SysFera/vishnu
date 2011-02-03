@@ -1,5 +1,4 @@
 #include "close.hh"
-#include "api.h"
 
 namespace po = boost::program_options;
 
@@ -9,7 +8,8 @@ int main (int ac, char* av[]){
 
 	try {
                 string sessionKey;
-                string configFile;
+
+                string dietConfig;
 
 		Configuration config(av[0]);// take the command line name
 
@@ -32,9 +32,19 @@ int main (int ac, char* av[]){
 
 		Options opt(&config );
   
-		opt.add("version,v", "print version message",GENERIC);
-                opt.add<string>("dietConfig,c", "The diet config file",ENV);
-		opt.add<string >("sessionKey,s","The session Key",ENV);
+		opt.add("version,v",
+				"print version message",
+				GENERIC);
+
+        opt.add<string>("dietConfig,c",
+						"The diet config file",
+						ENV,
+						dietConfig);
+
+		opt.add<string >("sessionKey,s",
+						 "The session Key",
+						 ENV,
+						 sessionKey);
 
 /**************  Parse to retrieve option values  ********************/
  
@@ -61,24 +71,27 @@ int main (int ac, char* av[]){
 		
 		if (opt.count("sessionKey")){
 			
-			cout <<"your session key is " << opt.get<string>("sessionKey") << endl;
-                        sessionKey = opt.get<string>("sessionKey");
+			cout <<"your session key is " << sessionKey << endl;
 		}	
 			
-                if (opt.count("dietConfig")){
+               
+		if (opt.count("dietConfig")){
 
-                        cout <<"The diet config file " << opt.get< string >("dietConfig") << endl;
-                        configFile = opt.get< string >("dietConfig");
-
-                }
+                        
+			cout <<"The diet config file " << dietConfig << endl;
+		}
 
 
 /************** Call UMS connect service *******************************/
 
-                if (diet_initialize(configFile.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-                 return 1;
-                }
+               
+		if (diet_initialize(dietConfig.c_str(), ac, av)) {
+
+			cerr << "DIET initialization failed !" << endl;
+                 			
+			return 1;
+              
+		}
 
 		int res=close(sessionKey);
 
