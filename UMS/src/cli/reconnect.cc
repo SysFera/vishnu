@@ -11,7 +11,7 @@ int main (int ac, char* av[]){
                 string password;
                 string sessionId;
                 string sessionKey;
-                string dietconfig
+                string dietConfig;
 
 		Configuration config(av[0]);// take the command line name
 
