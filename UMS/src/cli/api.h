@@ -5,9 +5,9 @@
 
 #include "SessionProxy.h"
 
-int connect(std::string userId, std::string password, std::string& sessionKey, 
-            UMS_Data::ConnectOptions connectOpt=UMS_Data::ConnectOptions()); 
+int connect(const std::string& userId, const std::string& password, std::string& sessionKey, 
+            const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions()); 
 
-int reconnect(std::string userId, std::string password, std::string sessionId, std::string& sessionKey);
+int reconnect(const std::string& userId, const std::string& password, const std::string& sessionId, std::string& sessionKey);
 
-int close(std::string sessionKey);
+int close(const std::string& sessionKey);
