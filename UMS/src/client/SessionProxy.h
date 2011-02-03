@@ -18,7 +18,7 @@
 class UserProxy;
 
 #include "UserProxy.h"
-#include "Session.h"
+#include "Session.hpp"
 #include "ConnectOptions.hpp"
 
 #define HOST_NAME_MAX_SIZE 256
@@ -36,6 +36,7 @@ public:
 	int connect(const UserProxy& user, const UMS_Data::ConnectOptions& options);
 	int reconnect(const UserProxy& user);
 	int close();
+        std::string getSessionKey() const;
 	UMS_Data::Session getData() const;
         std::string getErrorInfo() const;
 

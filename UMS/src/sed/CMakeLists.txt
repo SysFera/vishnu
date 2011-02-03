@@ -1,7 +1,16 @@
 
 include_directories(
-  /home/capo-chichi/Sysfera/DIET_VISHNU/include
-  /usr/include/postgresql
+  ${DIET_DIR}/include
+  ${DIET_INCLUDE_DIR}
+  ${DIET_DIR}/include
+  ${EMF_DATA_DIR}
+  ${UMS_DATA_DIR}
+  ${EMF4CPP_CPP_DIR}/include/emf4cpp
+  ${EMF4CPP_INCLUDE_DIR} 
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${POSTGRESQL_INCLUDE_DIR}
+  ${DATA_BASE_INCLUDE_DIR}
+  ${SERVER_SOURCE_DIR}
 )
 
 add_executable(
@@ -9,7 +18,11 @@ add_executable(
 )
 
 target_link_libraries(main 
-  /usr/local/lib/libDIET_SeD.so
+  ${DIET_SED_LIB}
+  ${LIBPQ_LIB}
+  ${DATA_BASE_LIB}
+  ${EMF4CPP_UMS_DATA_LIB}
+  umsserver
 )
 
 

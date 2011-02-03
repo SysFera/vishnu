@@ -98,6 +98,8 @@
   
 	msession.setSessionKey(sessionkey);
 	merrorInfo = errorInfo;
+        if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
+        else std::cout << "The service was performed successfull" << std::endl;
     } else {
        ERRMSG("Error in diet_string_get");
     }
@@ -138,8 +140,9 @@
 
 	if(!diet_call(profile)) {
 	    diet_string_get(diet_parameter(profile,1), &errorInfo, NULL);
-	    std::cout << "errorInfo=" << errorInfo << std::endl;
 	    merrorInfo = errorInfo;
+            if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
+            else std::cout << "The service was performed successfull" << std::endl;
 	}
 	
 	res = (merrorInfo.size() > 0);
@@ -153,7 +156,12 @@
 
     return res;
   }
-  
+ 
+  std::string SessionProxy::getSessionKey() const
+  {
+   return msessionKey;
+  }
+ 
   UMS_Data::Session SessionProxy::getData() const
   {
     return msession;
