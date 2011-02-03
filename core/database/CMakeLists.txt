@@ -11,7 +11,7 @@ ADD_EXECUTABLE(main
   main.cc 
   )
 
-ADD_LIBRARY(database-vishnu SHARED
+ADD_LIBRARY(database-vishnu
   DbFactory.cc 
   Database.cc 
   DatabaseResult.cc 
