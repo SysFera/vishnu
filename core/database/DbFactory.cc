@@ -40,9 +40,11 @@ DbFactory::getDatabaseInstance(int type, std::string host, std::string user, std
     return  new MYSQLDatabase (host, user, pwd, db, port);
     break;*/
   case POSTGREDB :
-  	mdb = new POSTGREDatabase (host, user, pwd, db, port);
-	return mdb;   
+    std::cout <<"Good"<< std::endl;
+    mdb = new POSTGREDatabase (host, user, pwd, db, port);
+    return mdb;   
     break;
   }
+  std::cout <<"Failure"<< std::endl;
   return NULL;
 }

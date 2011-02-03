@@ -438,7 +438,7 @@ BOOST_AUTO_TEST_CASE( my_test )
     BOOST_CHECK	 (close        (key                )==0);  
 
     // Test delete machine normal
-    cout << " Testing update machine bad machien id UA6.2E"    <<endl;
+    cout << " Testing delete machine bad machine id UA6.2E"    <<endl;
     BOOST_REQUIRE(restore      ("clean_session.sql")==0);
     BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
     BOOST_CHECK	 (addMachine   (key, ma            )==0);
