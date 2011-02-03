@@ -6,3 +6,6 @@ INSERT INTO users("userid", "password", "firstname", "lastname", "email", "privi
 INSERT INTO users("userid", "password", "firstname", "lastname", "email", "privilege", "passwordstate", "numvishnuid")
        values('user_1', 'user', 'jeannot', 'dupont', 'user@user.com', 'U', '1', '1');
 
+INSERT INTO machine("vishnu_vishnuid", "name", "site", "machineid") 
+       values('1', 'tiger', 'berlin', 'machine_1');
+
