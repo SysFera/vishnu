@@ -19,11 +19,11 @@ int main(int argc, char* argv[], char* envp[]) {
     return usage(argv[0]);
   }
 
+
   ServerUMS server(argv[1]);
-  //server.printServices();
   
-   
-  //res = diet_SeD(server.getCfg().c_str(), argc, argv);
+  
+  //diet_profile_desc_free(server.profile);
   diet_print_service_table();
   res = diet_SeD(argv[1], argc, argv);
   
