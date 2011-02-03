@@ -23,5 +23,6 @@ private:
 	std::string mhostname;
 	Database *mdatabaseVishnu;
 	DbFactory factory;
+	bool exist();
  };
 #endif//MACHINE_CLIENT_SERVER_H 
