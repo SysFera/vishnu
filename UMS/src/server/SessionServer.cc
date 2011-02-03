@@ -8,7 +8,7 @@
 
 #include <exception>
 #include "SystemException.hh"
-#include "UMSVishnuException.cc"
+#include "UMSVishnuException.hh"
 
 #include "SessionServer.hh"
 
@@ -27,16 +27,17 @@ SessionServer::SessionServer(UMS_Data::Session session) {
  
 int SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions*& opt)
 {
+ 
   
-  
+  std::ostringstream out;
+    
   if (user.exist()) {
   
      generateSessionKey(user.getData().getUserId());
      generateSessionId(user.getData().getUserId());
      std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
      std::cout <<" After generation SessionId:" << msession.getSessionId()<< std::endl;
-     
-     
+        
     /* switch (opt.getClosePolicy()) {
        case 0: //TODO: closePolicy pas défini donc aller voir dans options users sinon défault options
        break;
@@ -54,43 +55,79 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, UMS
     
     //TODO Récupérer le numMachine puis mettre ça dans la base de données en enregistrant la machineServer dans sa table à l'aide de record
     
-    
-    
-        std::string sqlDeb = std::string("insert into vsession (vsessionid, sessionKey) values ");
+    //DbFactory factory;
+    //Database *
+    //mdatabaseVishnu = factory.getDatabaseInstance(); //TODO:à déclarer en attribut de la classe pour y avoir accès partout
+	
+    //try {
+        
+        /*std::string sqlDeb = std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, sessionKey) values ");
         time_t current_time;
 	time(&current_time);
 	std::string now (std::string(ctime(&current_time)));
 	std::string sqlCmd("('");
 	sqlCmd.append(msession.getSessionId()+"','");
+	
 	//sqlCmd.append("'"+now+"',");//TODO: convertir la date du jour en timestamp
 	//sqlCmd.append("'"+now+"','");
 	//sqlCmd.append("1,1,'");
 	//sqlCmd.append("'"+now+"','");
 	
 	sqlCmd.append(msession.getSessionKey()+"')");
-	sqlDeb.append(sqlCmd);	
+	sqlDeb.append(sqlCmd);
+	*/
+	
+	try {
+	  host.recordMachineClient();
+	  int numidhost = host.getId();
+	  int numiduser = user.getId();
+	  std::cout << "ID machineClient " << numidhost <<std::endl;
+	  std::cout << "ID users " << numiduser <<std::endl;
+	  //TODO: faire le test quand c'est égal à -1 pour les deux ids précédents
+	  
+	std::string sqlDeb = std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, sessionKey) values ");
+        /*time_t current_time;
+	time(&current_time);
+	std::string now (std::string(ctime(&current_time)));*/
+	std::string sqlCmd("('");
+	sqlCmd.append(msession.getSessionId()+"',");  
+	
+	
+	out << numidhost;
+	sqlCmd.append(out.str()+",");
+	out.str("");
+	out << numiduser;
+	sqlCmd.append(out.str());
+	sqlCmd.append(",'");
+	//sqlCmd.append("'"+now+"',");//TODO: convertir la date du jour en timestamp
+	//sqlCmd.append("'"+now+"','");
+	//sqlCmd.append("1,1,'");
+	//sqlCmd.append("'"+now+"','");
+	
+	sqlCmd.append(msession.getSessionKey()+"')");
+	sqlDeb.append(sqlCmd);
+	
 	std::cout << "SQL COMMAND:"<< sqlDeb << std::endl;
-	
-    
-    
-    try {
-        
-	mdatabaseVishnu->process(sqlDeb.c_str());
-	
+	  
+	  
+	  mdatabaseVishnu->process(sqlDeb.c_str());
+	} catch (SystemException& e) {
+	throw e;
+	}    
 	//TODO: machineServer et commanderServer à enregistrer dans la base de données donc créer un commanderServer
 	
-	} catch (SystemException& e) {
-	
-	  throw e;
-	  
-	}
+	/*} catch (SystemException& e) {
+	std::cout << "Message generique <-> 1: " << e.getMsg()<<std::endl;
+	std::cout << "Details supplementaires 2: " << e.what() <<std::endl;  
+	}*/
     
   } else {
-    
-    SystemException e(4, "The user is unknown");
+    SystemException e(4, "The user is unknwon");
     throw e;
   }
-    
+  
+  
+  
 	return 0;
 }
  
@@ -113,7 +150,8 @@ int SessionServer::reconnect() {
 	    //TODO://Throw UMSexception il n'y pas de reponse
 	    }
 	} catch (SystemException& e) {
-	throw e;
+	std::cout << "Message generique <-> 1: " << e.getMsg()<<std::endl;
+	std::cout << "Details supplementaires 2: " << e.what() <<std::endl;  
 	}
 	
 	return 0;

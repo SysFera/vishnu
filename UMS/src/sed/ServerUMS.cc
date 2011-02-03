@@ -37,10 +37,8 @@ solveSessionConnect(diet_profile_t* pb) {
   char* clientKey = NULL;
   char* clientHostname = NULL;
   char* options = NULL;
-  std::string empty("");
   //char* errorInfo = NULL;
- 
-  //TODO: tester les retours de DIET
+  
     
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
   std::cout<<"userID:"<<userId<<std::endl;
@@ -51,40 +49,34 @@ solveSessionConnect(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
   std::cout<<"clientHostname:"<<clientHostname<<std::endl;
   diet_string_get(diet_parameter(pb,4), &options, NULL);
- 
   
   UserServer userServer = UserServer(std::string(userId), std::string(password));
-  SessionServer sessionServer("");
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
-  ecorecpp::parser::parser parser;
-  
-  try {
-  
+  SessionServer sessionServer("");
+          
+     ecorecpp::parser::parser parser;
+     
+     //TODO :  à décommenter pour les tests
      ConnectOptions_ptr connectOpt;// = parser.load(std::string(options))->as< ConnectOptions >();
      //ListSessions_ptr other_listssession = parser.load(options)->as< ConnectOptions >();
-      
+     try { 
+     std::string empty("");  
      sessionServer.connectSession(userServer, machineClientServer, connectOpt);
+     diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
+     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
   
-  } catch (SystemException& e) {
-	std::cout << "Dans main: ************Message generique <-> 1: " << e.getMsg()<<std::endl;
-	std::cout << "Dans main: ********Details supplementaires 2: " << e.what() <<std::endl;  
-	
-	std::string errorInfo = e.getMsg();
+     } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
 	errorInfo.append(e.what());
-	//std::string errorInfo("The user is unknown");
-	diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);  
-	diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  	
-  }
-       
-       
 	
-	diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
-	diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
-	std::cout<<"**********Je suis là 3"<< std::endl;
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	
+	diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   
-  
-  
+  }
+   
   
 }
 /**

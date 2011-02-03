@@ -45,6 +45,7 @@ public:
 	~UserServer();
 	UMS_Data::User getData();
 	bool exist();
+	int getId();
 	//static UMS_Data::ListUsers  list(SessionServer session, string userIdOptions);
 };
 #endif

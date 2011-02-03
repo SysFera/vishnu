@@ -24,7 +24,7 @@ int main(int argc, char* argv[], char* envp[]) {
   
   
   //diet_profile_desc_free(server.profile);
-  //diet_print_service_table();
+  diet_print_service_table();
   res = diet_SeD(argv[1], argc, argv);
   
  return res; 
