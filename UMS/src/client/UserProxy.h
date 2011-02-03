@@ -15,20 +15,16 @@ class SessionProxy;
 
 class UserProxy
 {
-private:
-	UMS_Data::User m_user;
-	SessionProxy* sessionProxy;
-//	SessionProxy sessionProxy;
 
 public:
         //Constructors	
         UserProxy(const std::string& userId, const std::string& password);
-	explicit UserProxy(const SessionProxy& session);
+	explicit UserProxy(SessionProxy session);
 	explicit UserProxy(const UMS_Data::User& user);
 
         //methods	
-        int add(const UMS_Data::User& newUser);
-	int update(UMS_Data::User& user);
+        int add(const UMS_Data::User& user);
+	int update(const UMS_Data::User& user);
 	int deleteUser(const UMS_Data::User& user);
 	int changePassword(const std::string& newPassword);
 	int resetPassword(UMS_Data::User& user);
@@ -37,5 +33,13 @@ public:
 
         //Destructor	
         ~UserProxy();
+
+private:
+
+        int _addUserInformation(const UMS_Data::User& user, bool isNewUser=true);
+
+        UMS_Data::User muser;
+        SessionProxy* msessionProxy;
+
 };
 #endif

@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 2.8)
+add_subdirectory(utils/emfdata)
+add_subdirectory(client)
+add_subdirectory(sed)
+add_subdirectory(server)
+#add_subdirectory(api)
+add_subdirectory(cli)
