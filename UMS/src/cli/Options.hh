@@ -117,15 +117,17 @@ public:
 
 			template<class T>
 				void add(const std::string& name,
-                           const std::string& desc, const Group_type& group){
+                           const std::string& desc,
+						   const Group_type& group,
+						   T& value){
 
 					po::options_description tmp_options;
 
 					if( typeid(T)== typeid(std::vector<std::string>)){
-						tmp_options.add_options()(name.c_str(),po::value<T>()->multitoken(),desc.c_str());
+						tmp_options.add_options()(name.c_str(),po::value<T>(&value)->multitoken(),desc.c_str());
 					}
 					else{
-						tmp_options.add_options()(name.c_str(),po::value<T>(),desc.c_str());
+						tmp_options.add_options()(name.c_str(),po::value<T>(&value),desc.c_str());
 					}
 
 					// Set the group

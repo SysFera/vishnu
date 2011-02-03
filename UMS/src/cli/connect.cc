@@ -1,7 +1,6 @@
 
 
 #include "connect.hh"
-#include "api.h"
 
 namespace po = boost::program_options;
 
@@ -18,9 +17,20 @@ int main (int ac, char* av[]){
 
 		string defaultConfig = "VishnuConfig.cfg";
 
-                std::string userId;
-                std::string password;
-                std::string configFile;
+		/******* Parsed value containers ****************/
+       
+		string dietConfig;
+
+		std::string userId;
+        
+		std::string password;
+
+		int closePolicy;
+
+		int sessionInactivityDelay;
+
+		std::string substituteUserId;
+
 /***************  Default configuration file ***************** */
 
 		{
@@ -36,26 +46,47 @@ int main (int ac, char* av[]){
 /**************** Describe options *************/
 
 
-                UMS_Data::ConnectOptions connectOpt;
+		UMS_Data::ConnectOptions connectOpt;
+
 		Options opt(&config );
   
-		opt.add("version,v", "print version message",GENERIC);
+		opt.add("version,v",
+				"print version message",
+				GENERIC );
 		
-                opt.add<string>("dietConfig,c", "The diet config file",ENV);
+        opt.add<string>("dietConfig,c", 
+				        "The diet config file",
+						ENV,
+						dietConfig);
 
-		opt.add<string>("userId,u","represents the VISHNU user identifier",HIDDEN);
+		opt.add<string>("userId,u",
+				        "represents the VISHNU user identifier",
+						HIDDEN,
+						userId);
 
 		opt.setPosition("userId",1);
 
-		opt.add<string>("password,w","represents the password od the user",HIDDEN);
+		opt.add<string>("password,w",
+				        "represents the password od the user",
+						HIDDEN,
+						password);
+
 		opt.setPosition("password",1);
 
-		opt.add<int>("closePolicy,p","for closing session automatically",CONFIG);
+		opt.add<int>("closePolicy,p",
+					 "for closing session automatically",
+					 CONFIG,
+					 closePolicy);
 
 		opt.add<int >("sessionInactivityDelay,d",
-				          "The session inactivity delay",CONFIG);
+				      "The session inactivity delay",
+					  CONFIG,
+					  sessionInactivityDelay);
 
-		opt.add<string >("substituteUserId,s","The substitute user identifier",CONFIG);
+		opt.add<string >("substituteUserId,s",
+				         "The substitute user identifier",
+						 CONFIG,
+						 substituteUserId);
 
 /**************  Parse to retrieve option values  ********************/
  
@@ -85,46 +116,46 @@ int main (int ac, char* av[]){
 		
 		if (opt.count("userId")){
 			
-			cout <<"The user identifier is " << opt.get<string>("userId") << endl;
-                        userId=opt.get<string>("userId");
+			cout <<"The user identifier is " << userId << endl;
 		}
 		
 		if(opt.count("password")){
 			
-			cout <<"the password is set to: " << opt.get<string >("password") << endl;
-                        password=opt.get<string >("password");
+			cout <<"the password is set to: " << password << endl;
 		}
 		
 		if(opt.count("closePolicy")){
 
-			cout << "The close policy is " << opt.get<int>("closePolicy") <<endl;
-                        connectOpt.setClosePolicy(opt.get<int>("closePolicy"));
+			cout << "The close policy is " << closePolicy <<endl;
+                        
+			connectOpt.setClosePolicy(closePolicy);
 		}
 
 
 		if (opt.count("sessionInactivityDelay")){
 			
-			cout <<"The session inactivity delay is " << opt.get< int >("sessionInactivityDelay") << endl;
-                        connectOpt.setSessionInactivityDelay(opt.get< int >("sessionInactivityDelay"));
+			cout <<"The session inactivity delay is " << sessionInactivityDelay << endl;
+
+			connectOpt.setSessionInactivityDelay(sessionInactivityDelay);
 		}
   
 		if (opt.count("substituteUserId")){
 	
-			cout <<"The substitute user identifier is " << opt.get< string >("substituteUserId") << endl;
-                        connectOpt.setSubstituteUserId(opt.get< string >("substituteUserId"));
+			cout <<"The substitute user identifier is " << substituteUserId << endl;
+			connectOpt.setSubstituteUserId(substituteUserId);
 		}
 
-                if (opt.count("dietConfig")){
-
-                        cout <<"The diet config file " << opt.get< string >("dietConfig") << endl;
-                        configFile = opt.get< string >("dietConfig");
+            
+		if (opt.count("dietConfig")){
+           
+			cout <<"The diet config file " << dietConfig << endl;
                         
                 }
 
 /************** Call UMS connect service *******************************/
 
                // initializing DIET
-              if (diet_initialize(configFile.c_str(), ac, av)) {
+              if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }

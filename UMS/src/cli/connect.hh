@@ -8,6 +8,7 @@
  */
 
 #include "Options.hh"
+#include "api.h"
 #include <iostream>
 #include <iterator>
 #include <fstream>
