@@ -31,6 +31,12 @@ int main (int ac, char* av[]){
 
 		std::string substituteUserId;
 
+		/********** EMF Data ****************************/
+
+
+	//	UMS_Data::ConnectOptions connectOpt;
+
+
 /***************  Default configuration file ***************** */
 
 		{
@@ -46,7 +52,6 @@ int main (int ac, char* av[]){
 /**************** Describe options *************/
 
 
-		UMS_Data::ConnectOptions connectOpt;
 
 		Options opt(&config );
   
@@ -128,7 +133,7 @@ int main (int ac, char* av[]){
 
 			cout << "The close policy is " << closePolicy <<endl;
                         
-			connectOpt.setClosePolicy(closePolicy);
+		//	connectOpt.setClosePolicy(closePolicy);
 		}
 
 
@@ -136,13 +141,14 @@ int main (int ac, char* av[]){
 			
 			cout <<"The session inactivity delay is " << sessionInactivityDelay << endl;
 
-			connectOpt.setSessionInactivityDelay(sessionInactivityDelay);
+	//		connectOpt.setSessionInactivityDelay(sessionInactivityDelay);
 		}
   
 		if (opt.count("substituteUserId")){
 	
 			cout <<"The substitute user identifier is " << substituteUserId << endl;
-			connectOpt.setSubstituteUserId(substituteUserId);
+			
+			//connectOpt.setSubstituteUserId(substituteUserId);
 		}
 
             
@@ -154,6 +160,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
+		/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -164,7 +171,7 @@ int main (int ac, char* av[]){
 		int res = connect(userId,password, sessionKey, connectOpt);
 
 
-		
+		*/
 
 	}// End of try bloc
 

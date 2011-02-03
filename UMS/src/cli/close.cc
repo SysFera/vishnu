@@ -84,7 +84,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-               
+/*               
 		if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
 			cerr << "DIET initialization failed !" << endl;
@@ -95,7 +95,7 @@ int main (int ac, char* av[]){
 
 		int res=close(sessionKey);
 
-
+*/
 		
 
 	}// End of try bloc
