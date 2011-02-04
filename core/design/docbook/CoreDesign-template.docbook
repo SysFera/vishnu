@@ -8,6 +8,9 @@
       <author>
         <personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
       </author>
+       <author>
+        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
       <revhistory>
         <revision>
         <revnumber>1</revnumber>
@@ -65,11 +68,20 @@
           <listitem>
             <para><emphasis role="bold">DB</emphasis>: Database</para>
           </listitem>
+           <listitem>
+            <para><emphasis role="bold">FMS</emphasis>: File Management Service (VISHNU Module)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
+           <listitem>
+            <para><emphasis role="bold">TMS</emphasis>: Tasks Management Service (VISHNU Module)</para>
+          </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">UMS</emphasis>: Users Management Service</para>
+	    <para><emphasis role="bold">UMS</emphasis>: Users Management Service (VISHNU Module)</para>
 	  </listitem>
           <listitem>
             <para><emphasis role="bold">WS</emphasis>: Web Services</para>
@@ -81,6 +93,19 @@
      <title>Glossary</title>
      <para>
         <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Computing server</emphasis>: this represents all systems that provide computing services to the user through a batch scheduler program
+            like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the frontal server.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Managed Infrastructure</emphasis>: this represents all systems that are declared in the VISHNU system by the VISHNU administrator
+                  and on which the VISHNU server software is installed and running. In the case of the frontal server of a cluster, the nodes of the cluster are NOT
+                  considered as part of the managed infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Module</emphasis>: macro software component that provides a set of services to the user. It contains both client and 
+            server software providing these services. A module may have dependencies to other modules.</para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by the SysFera company.</para>
           </listitem>
@@ -101,7 +126,14 @@
     <title>Functional architecture</title>
     <section>
       <title>Functional architecture diagram</title>
-      <para>TODO
+      <para>The Figure 3.1 shows the different functional parts of the VISHNU system and their interactions. On the client side (upper
+        part of the diagram) are shown the different interface components that are provided to the users: APIs and command-line interface.
+        These interfaces provide access to the different VISHNU modules (UMS, TMS, FMS, IMS) using a client component, that is itself
+        connected with the corresponding server component through the SysFera-DS Middleware. The server components handle data items that
+        belong to different inter-related databases, each managing a specific kind of data (a more detailed description of the databases is
+        provided in section XXX FIXME). The TMS and FMS Server components also handle some specific interaction with external entities: the
+        batch schedulers (LoadLeveler or Torque) for the management of jobs on clusters or supercomputers, and the SCP and RSYNC programs
+        of the underlying Linux system for the transfer of files between two systems that belong to the VISHNU Managed Infrastructure.
        </para>
        <figure>
           <title>VISHNU Functional architecture diagram</title>
@@ -113,6 +145,34 @@
           </mediaobject>
         </figure>
     </section>
+    
+    <section>
+      <title>Database components
+        <para>The following database components are used by the VISHNU system to store persistent data and provide historical data to the users:
+          </para>
+        <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Users and infrastructure database</emphasis>: contains all data related to users, user configuration
+            and the VISHNU managed infrastructure information.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sessions database</emphasis>: contains all data related to user sessions and the history of commands
+            sent during the sessions.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Jobs database</emphasis>: contains meta-information about the jobs submitted on the computing servers.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">File transfers database</emphasis>: contains meta-information about the file transfers initiated by users of
+            VISHNU between systems that belong to the VISHNU Managed Infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Monitoring database</emphasis>: contains historical data about the status of systems that belong to the VISHNU
+            Managed Infrastructure. The status includes system hardware information (cpu usage, disk usage, memory usage, etc.).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
     
     <section>
       <title>Data flows</title>
@@ -146,6 +206,21 @@
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/VISHNU Deployment Overview Diagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+    </section>
+    
+    <section>
+      <title>Technical architecture with network firewalls</title>
+      <para>TODO
+       </para>
+       <figure>
+          <title>VISHNU Technical architecture with firewalls diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/VISHNU Deployment Firewall Diagram.png"
                   align="center" scale="40"/>
             </imageobject>
           </mediaobject>
