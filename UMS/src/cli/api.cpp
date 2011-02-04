@@ -49,3 +49,35 @@ int close(const string&  sessionKey) {
  return res;
 }
 
+int addVishnuUser(const string& sessionKey, const UMS_Data::User& user) {
+ 
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
+
+  int res = userProxy.add(user);
+
+ return res;
+}
+
+int updateUser(const string& sessionKey, const UMS_Data::User& user) {
+
+   SessionProxy sessionProxy(sessionKey);
+   UserProxy userProxy(sessionProxy);
+
+  int res = userProxy.update(user);
+
+  return res;
+}
+
+int deleteUser(const string& sessionKey, const string& userId) {
+
+
+  UMS_Data::User user;
+  user.setUserId(userId);
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
+
+  int res = userProxy.deleteUser(user);
+
+ return res;
+}

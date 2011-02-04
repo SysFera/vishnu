@@ -8,19 +8,19 @@
  */
 
 #include "Options.hh"
-//#include "api.h"
+#include "api.h"
 #include <iostream>
 #include <iterator>
 #include <fstream>
 #include <cstdlib>
 
-/*
+
 //EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
 #include "ConnectOptions.hpp"
-*/
+
 
 /*
  * \struct env_name_mapper

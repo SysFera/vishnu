@@ -8,19 +8,19 @@
  */
 
 #include "Options.hh"
-//#include "api.h"
+#include "api.h"
 #include <iostream>
 #include <iterator>
 #include <fstream>
 #include <cstdlib>
 
-/*
+
 //EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
 #include "ConnectOptions.hpp"
-*/
+
 
 /*
  * \struct env_name_mapper
@@ -40,6 +40,10 @@ struct env_name_mapper{
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
+                }
+                if (name=="VISHNU_SESSION_KEY") {
+
+                        result="sessionKey";
                 }
 
 

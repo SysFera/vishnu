@@ -20,6 +20,8 @@ int main (int ac, char* av[]){
 		/******* Parsed value containers ****************/
        
 		string dietConfig;
+             
+                string sessionKey;
 
 		std::string userId;
         
@@ -30,12 +32,6 @@ int main (int ac, char* av[]){
 		int privilege; 
 		
 		std::string email; 
-
-		/********** EMF data ************/
-
-	//	UMS_Data::User newUser;
-
-
 
 
 /***************  Default configuration file ***************** */
@@ -64,7 +60,10 @@ int main (int ac, char* av[]){
 						            "The diet config file",
 												ENV,
 												dietConfig);
-				
+        opt.add<string >("sessionKey,s",
+                                                 "The session Key",
+                                                 ENV,
+                                                 sessionKey);				
 
 				opt.add<string>("userId,u",
 									    	"represents the VISHNU user identifier",
@@ -107,7 +106,6 @@ int main (int ac, char* av[]){
 			
 			cout <<"The user identifier is " << userId << endl;
 			
-		//	newUser.setUserId(userId);
 		}
 		
             
@@ -120,17 +118,15 @@ int main (int ac, char* av[]){
 /************** Call UMS connect service *******************************/
 
                // initializing DIET
-							 /*
+							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
 
     
-							std::string sessionKey;
-		
-							int res = deleteUser(sessionKey,newUser);
-*/
+							int res = deleteUser(sessionKey, userId);
+
 
 		
 

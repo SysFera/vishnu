@@ -33,7 +33,7 @@ int main (int ac, char* av[]){
 
 		/********** EMF data ************/
 
-	//	UMS_Data::User newUser;
+		UMS_Data::User newUser;
 
 
 
@@ -133,21 +133,21 @@ int main (int ac, char* av[]){
 			
 			cout <<"The user identifier is " << userId << endl;
 			
-		//	newUser.setUserId(userId);
+			newUser.setUserId(userId);
 		}
 		
 		if(opt.count("privilege")){
 			
 			cout <<"the privilege is : " << privilege << endl;
 			
-		//	newUser.setPrivilege(privilege);
+			newUser.setPrivilege(privilege);
 		}
 		
 		if(opt.count("firstname")){
 
 			cout << "The firstname is " << firstname << endl;
 			
-			//newUser.setFirstname(firstname);
+			newUser.setFirstname(firstname);
                         
 		}
 
@@ -156,7 +156,7 @@ int main (int ac, char* av[]){
 			
 			cout <<"The lastname is " << lastname << endl;
 			
-		//	newUser.setLastname(lastname);
+			newUser.setLastname(lastname);
 
 		}
   
@@ -164,7 +164,7 @@ int main (int ac, char* av[]){
 	
 			cout <<"The email is " << email << endl;
 			
-	//		newUser.setEmail(email);
+		newUser.setEmail(email);
 		}
 
             
@@ -177,7 +177,7 @@ int main (int ac, char* av[]){
 /************** Call UMS connect service *******************************/
 
                // initializing DIET
-							 /*
+							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
                return 1;
@@ -187,7 +187,7 @@ int main (int ac, char* av[]){
 							std::string sessionKey;
 		
 							int res = addVishnuUser(sessionKey,newUser);
-*/
+
 
 		
 
