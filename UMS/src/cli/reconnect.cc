@@ -85,9 +85,11 @@ int main (int ac, char* av[]){
 
 		if (opt.count("help")){
 
-			 cout << "Usage: " << av[0] <<" [options] userId sessionId"<<endl;
+			 cout << "Usage: " << av[0] <<" [options] userId password sessionId"<<endl;
 
 			cout << opt << endl;
+
+			return 0;
 
 		}
 

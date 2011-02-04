@@ -66,6 +66,8 @@ int main (int ac, char* av[]){
 
 			cout << "Usage: " << av[0] << endl;
 
+			return 0;
+
 		}
 
 		
