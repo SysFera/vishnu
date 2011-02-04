@@ -14,16 +14,16 @@
 
 char* crypt(const char* clef, const char* salt);
 
-
-std::string intToString(int tmp) {
+template <class T>
+std::string convertToString(const T& val) {
   std::ostringstream out;
-  out << tmp;
+  out << val;
   return out.str();
 }
 
 int checkId(int id) {
   if (id < 0) {
-    SystemException e (4, "The id of the object is incorrect");
+    UMSVishnuException e (4, "The id of the object is incorrect");
     throw e;
   }
   return id;
@@ -52,8 +52,13 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
      std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
      std::cout <<" After generation SessionId:" << msession.getSessionId()<< std::endl;
      
-     /*ConnectOptions_ptr connectOpt = parser.load(std::string(opt))->as< ConnectOptions >();
+     UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+     ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+     
+     ConnectOptions_ptr connectOpt = parser.load(std::string(opt))->as< ConnectOptions >();
    
+     std::cout << "Opt:" << opt << std::endl ;
      
       switch (connectOpt->getClosePolicy()) {
        
@@ -75,7 +80,7 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
        
        //default: break; //Faire comme case 0
     }
-    */
+    
     //TODO if (opt.getSubstituteUserId() != "")  vérifier qu'il est admin sinon renvoyer erreur;
     
     //TODO Récupérer le numMachine puis mettre ça dans la base de données en enregistrant la machineServer dans sa table à l'aide de record
@@ -83,14 +88,14 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
     
 	try {
 	  host.recordMachineClient();
-	  recordSessionServer(intToString(checkId(host.getId())), intToString(checkId(user.getId())));
+	  recordSessionServer(convertToString(checkId(host.getId())), convertToString(checkId(user.getId())));
 	} catch (SystemException& e) {
 	throw e;
 	}    
 	//TODO: machineServer et commanderServer à enregistrer dans la base de données donc créer un commanderServer
     
   } else {
-    SystemException e(4, "The user is unknwon");
+    UMSVishnuException e(4, "The user is unknwon");
     throw e;
   }
   
@@ -100,27 +105,6 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 }
  
 int SessionServer::reconnect() {
-	
-	std::string sqlCommand("SELECT sessionKey FROM vsession where sessionId='");
-	sqlCommand.append(msession.getSessionId()+ "'");
-	
-	std::cout <<"SQL COMMAND:"<<sqlCommand;
-        try {
-	   DatabaseResult* result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-	
-	    std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
-	    //std::cout<<result->getNbTuples();
-	    if (result->getNbTuples() != 0) {
-	    //TODO: mettre le résultat de dans sessionKey
-	      result->print();
-	    } 
-	    else {
-	    //TODO://Throw UMSexception il n'y pas de reponse
-	    }
-	} catch (SystemException& e) {
-	std::cout << "Message generique <-> 1: " << e.getMsg()<<std::endl;
-	std::cout << "Details supplementaires 2: " << e.what() <<std::endl;  
-	}
 	
 	return 0;
 }
@@ -135,12 +119,9 @@ int SessionServer::close() {
     } catch (SystemException& e) {
 	throw e;
     }
-    
-    
-    
   } 
   else {
-    SystemException e (4, "Unknown sessionKey");
+    UMSVishnuException e (4, "Unknown sessionKey");
     throw e;
   }
   
@@ -183,9 +164,6 @@ int SessionServer::generateSessionKey(std::string salt) {
   tmpSalt.append(salt);
 
   std::string saltCrypted(std::string(crypt(salt.c_str(),+tmpSalt.c_str())));
-  
-  //sprintf(tmp,"%x#%s", crypt(clef,salt.c_str())+5);
-  //printf("tmp: %s\n",tmp);
   std::string globalSalt ("$6$");
   globalSalt.append(saltCrypted+"$");
   
@@ -229,42 +207,28 @@ int SessionServer::checkClientMachine(MachineClientServer MachineClient) {
  
 int SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
   
-  std::string sqlInsert = 
-  std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, sessionKey, state, closepolicy, timeout) values ");
-  //std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, creation, closure, sessionKey, state, closepolicy, timeout) values ");
-  std::string values = std::string("('" +msession.getSessionId()+"',"+idmachine+","+iduser+",'"+msession.getSessionKey()+"',");
+ std::string sqlInsert = 
+ //std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, sessionKey, state, closepolicy, timeout) values ");
+ std::string("insert into vsession (vsessionid, clmachine_numclmachineid, \
+ users_numuserid, sessionKey, state, closepolicy, timeout) values "); 
+ //std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, creation, closure, sessionKey, state, closepolicy, timeout) values ");
+ 
+ std::string values = std::string("('" +msession.getSessionId()+"\
+ ',"+idmachine+","+iduser+",'"+msession.getSessionKey()+"',");
+   
+ values.append(convertToString(msession.getState())+",");
+ values.append(convertToString(msession.getClosePolicy())+",");
+ values.append(convertToString(msession.getTimeout())+")");
   
+ sqlInsert.append(values);
+ std::cout << "SQL COMMAND:"<< sqlInsert << std::endl;
   
-  /*values.append(std::ostringstream << msession.getState()+",");
-  values.append(std::ostringstream << msession.getClosePolicy()+",");
-  values.append(std::ostringstream << msession.getTimeout()+")");
-  */
-  
-  
-  std::ostringstream out;
-  
-  out << msession.getState();
-  values.append(out.str()+",");
-  
-  out.str("");
-  out << msession.getClosePolicy();//TODO faire une fonction générique de convertion en string
-
-  values.append(out.str()+",");
-  out.str("");
-  
-  out << msession.getTimeout();
-  values.append(out.str()+")");
-  
-  sqlInsert.append(values);
-  std::cout << "SQL COMMAND:"<< sqlInsert << std::endl;
-  
-    try {
-	  //host.recordMachineClient(); 
-	  mdatabaseVishnu->process(sqlInsert.c_str());
-    } 
-    catch (SystemException& e) {
+ try {
+      mdatabaseVishnu->process(sqlInsert.c_str());
+ } 
+ catch (SystemException& e) {
 	throw e;
-    }
+ }
 } 
  
 int SessionServer::exist() {
@@ -294,10 +258,7 @@ int SessionServer::exist() {
       res =  false;
       }
 
-  return res;
-
- 
-  
+  return res; 
 } 
  
 /*UMS_Data::ListSessions  SessionServer::list(SessionServer session, UMS_Data::ListSessionOptions  options)
