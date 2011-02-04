@@ -642,7 +642,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Session__dateClosure->setOrdered(true);
     m_Session__state->setEType(m_SessionStateTypeEEnum);
     m_Session__state->setName("state");
-    m_Session__state->setDefaultValueLiteral("-1");
+    m_Session__state->setDefaultValueLiteral("1");
     m_Session__state->setLowerBound(0);
     m_Session__state->setUpperBound(1);
     m_Session__state->setTransient(false);
@@ -669,7 +669,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Session__timeout->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Session__timeout->setName("timeout");
-    m_Session__timeout->setDefaultValueLiteral("-1");
+    m_Session__timeout->setDefaultValueLiteral("0");
     m_Session__timeout->setLowerBound(0);
     m_Session__timeout->setUpperBound(1);
     m_Session__timeout->setTransient(false);

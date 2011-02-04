@@ -101,7 +101,7 @@ PRIMARY KEY(numdescriptionid),
 
 
 CREATE TABLE vsession (
-  numsessionid INTEGER   NOT NULL ,
+  numsessionid SERIAL NOT NULL ,
   clmachine_numclmachineid INTEGER   NOT NULL ,
   users_numuserid INTEGER   NOT NULL ,
   vsessionid VARCHAR(255)    ,

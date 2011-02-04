@@ -1,35 +1,33 @@
-cmake_minimum_required(VERSION 2.6)
 
-#Configuration du projet
-project(ProgOptionTest)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BUILD_TYPE})
-
-#Inclusion de Boost
-include(FindBoost)
-find_package(
-	Boost
-	1.42.0
-	REQUIRED program_options
-)
-link_directories(${Boost_LIBRARY_DIRS} 
-                 ${EMF4CPP_LIB}
-                 ${EMF4CPP_CPP_LIB}
-                 ${EMF4CPP_LIB} 
-                 ${EMF4CPP_CPP_LIB})
+link_directories(${Boost_LIBRARY_DIRS}
+                  ${EMF4CPP_LIB}
+                  ${EMF4CPP_CPP_LIB}
+                  ${EMF4CPP_LIB} 
+                  ${EMF4CPP_CPP_LIB}
+                )
 include_directories(${Boost_INCLUDE_DIRS}
                     ${DIET_DIR}/include
                     ${DIET_INCLUDE_DIR}
                     ${DIET_DIR}/include 
-                   ${UMS_CLIENT_SOURCE_DIR}/utils/emfdata/
-                   ${UMS_CLIENT_SOURCE_DIR}/utils/emfdata/UMS_Data
-                   ${UMS_CLIENT_SOURCE_DIR}/client
-                   /opt/emf4cpp-0.0.2/include/emf4cpp)
+	            ${EMF_DATA_DIR}
+                    ${UMS_DATA_DIR}
+                    ${EMF4CPP_CPP_DIR}/include/emf4cpp
+                    ${EMF4CPP_INCLUDE_DIR}
+                    ${CLIENT_PROXY_SOURCE_DIR}  
+                    ${VISHNU_EXCEPTION_INCLUDE_DIR} 
+              )
 
-#include_directories(${boost_include_dir})
-#link_directories(${boost_lib_dir})
+#declare all command lines provided
+
+set(ALLCLI connect reconnect close
+		    addVishnuUser updateUser deleteUser)
+
+
+# macro to generate all command lines
 
 macro(genCli NAME )
-	set(source_files ${NAME} Options api)
+	set(source_files ${NAME}
+			Options api)
 
 	#Configuration de l'executable
 	add_executable(
@@ -41,12 +39,20 @@ macro(genCli NAME )
 	target_link_libraries(
 	${NAME}
 	${Boost_LIBRARIES}
-        /home/traore/ProjectDev/UMS/UMS_client_test/build/utils/emfdata/libemf4cpp-UMS_Data.so
-        umsClientTest
-	)
+        ${EMF4CPP_UMS_DATA_LIB}
+        ${VISHNU_EXCEPTION_LIB}
+        umsclient
+        )
 endmacro(genCli)
 
-genCli(connect)
-genCli(reconnect)
-genCli(close)
+#Loop over all command lines to generate them
+
+foreach(cli ${ALLCLI})
+
+genCli(${cli})
+
+endforeach(cli)
+
+
+
 

@@ -9,8 +9,8 @@
 #define _POSTGREDATABASE_H_
 
 #include "Database.hh"
-#include "libpq-fe.h"
-
+//#include "libpq-fe.h"
+#include "/usr/include/postgresql/libpq-fe.h"
 /**
  * \class POSGREDatabase
  * \brief POSTRE implementation of the Database class

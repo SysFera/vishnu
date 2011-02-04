@@ -122,7 +122,7 @@ void Options::parse_cfile() {
 
 	ifstream ifs(conf->getConfigFile().c_str());
 
-store(parse_config_file(ifs, cfile_options), vm);
+store(parse_config_file(ifs,cfile_options), vm);
 
 }
 

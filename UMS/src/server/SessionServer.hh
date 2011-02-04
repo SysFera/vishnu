@@ -40,10 +40,12 @@ private:
 	int generateSessionKey(std::string salt);
 	int generateSessionId(std::string userId);
 	int checkClientMachine(MachineClientServer MachineClient);
+	int recordSessionServer(std::string idmachine, std::string iduser);
+	int exist();
 public:
 	SessionServer(std::string sessionKey);
 	SessionServer(UMS_Data::Session session);
-	int connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions*& opt);
+	int connectSession(UserServer user, MachineClientServer host, std::string opt);
 	int reconnect();
 	int close();
 	~SessionServer();
