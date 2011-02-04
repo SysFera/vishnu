@@ -124,7 +124,8 @@ int main (int ac, char* av[]){
 			cout << "Usage: " << av[0] <<" privilege userId firstname lastname email"<<endl;
 			
 			cout << opt << endl;
-                   return 0;
+                 
+			return 0;
 
 		}
 
