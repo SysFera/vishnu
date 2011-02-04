@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>D2.1a - VISHNU User Management System Package Design</title>
+      <title>D1.1g - VISHNU Technical Architecture</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
       <author>
-        <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+        <personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
       </author>
       <revhistory>
         <revision>
@@ -32,7 +23,10 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>TODO
+      <para>This document provides a global view of the architecture for the VISHNU system and its environment. The target audience
+        of this document is composed of software, system and network architects. The main objective of this document is to validate
+        that the solution provided, i.e. the VISHNU system, matches the needs and constraints of the target environment. It can also
+        be viewed as a checklist for system deployment.
       </para>
     </section>
     <section>
@@ -51,7 +45,7 @@
           <para>[D1.1a]: VISHNU General specifications</para>
         </listitem>
         <listitem>
-          <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
+          <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
         </listitem>
        <listitem>
           <para>[D1.1c]: VISHNU API Detailed specifications</para>
@@ -63,25 +57,22 @@
       <para>
         <itemizedlist>
 	  <listitem>
-            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
+            <para><emphasis role="bold">API</emphasis>: Application Programming Interface</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
+            <para><emphasis role="bold">CLI</emphasis>: Command Line Interface</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+            <para><emphasis role="bold">DB</emphasis>: Database</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+            <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
+	    <para><emphasis role="bold">UMS</emphasis>: Users Management Service</para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+            <para><emphasis role="bold">WS</emphasis>: Web Services</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -91,100 +82,77 @@
      <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by the SysFera company.</para>
           </listitem>
         </itemizedlist>
       </para>
     </section>
   </chapter>
 
-  <!-- PART 1 : ARCHITECTURE -->
-  <chapter annotations="core/design/coreDesign.asta#ARCHIDIAG(vishnu)">
-    <title>System Architecture</title>
+  
+  <!-- PART 1 : GLOBAL DESCRIPTION -->
+  <chapter>
+    <title>Global description of the VISHNU system</title>
+    
+  </chapter><!-- PART 1 : GLOBAL DESCRIPTION -->
+  
+  <!-- PART 2 : FUNCTIONAL ARCHITECTURE -->
+  <chapter>
+    <title>Functional architecture</title>
     <section>
-      <title>Definitions</title>
-      <para>We present in this section a detailed description of the UMS package architecture in terms of software components.
-	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
-        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
-	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
-        the relationships between these components. The definitions of the components are the following:
+      <title>Functional architecture diagram</title>
+      <para>TODO
        </para>
-      <para>
-        <itemizedlist>
-          <listitem>
-            <para><emphasis role="bold">External API</emphasis>
-	     contains precisely the services provided to the user as defined in the detailed specifications.
-	     We're on the client side.
-	    </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Internal API</emphasis>
-	     is the middle layer of the server side. The services announced previously are performed here by combining a set of classes defined 
-	    in the two following components.
-	    </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">UMS Client</emphasis>
-	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis role="bold">UMS Server</emphasis>.
-	    </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">UMS Server</emphasis>
-	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
-	    </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">UMS Monitor Daemon</emphasis> which the only role is to keep an eye on the session inactivity by checking the TIME_OUT parameter in the <emphasis role="bold">Vishnu Database.</emphasis> 
-	    </para>
-          </listitem>
-	  <listitem>
-	    <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the UMS Server.
-	    </para>
-	  </listitem>
-
-        </itemizedlist>
-      </para>
+       <figure>
+          <title>VISHNU Functional architecture diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/functional_architecture.png"
+                  align="center" scale="50"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+    </section>
+    
+    <section>
+      <title>Data flows</title>
+    </section>
+    
+    <section>
+      <title>Software architecture diagram</title>
+      <figure>
+          <title>VISHNU Software architecture diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/VISHNU Components Overview.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      
     </section>
 
+  </chapter><!-- PART 2 : FUNCTIONAL ARCHITECTURE -->
+  
+  <!-- PART 3 : TECHNICAL ARCHITECTURE -->
+  <chapter>
+    <title>Technical architecture</title>
     <section>
-      <title> Deployment aspectsS</title>
-       <para>
-        We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of: 
-	<itemizedlist>
-	  <listitem>
-	    <para><emphasis role="bold"> Main UMS Server </emphasis>is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS SeD (UMS Server daemon) which gathers all UMS services published.
-	    </para>
-	  </listitem>
-          <listitem>
-            <para><emphasis role="bold">Secondary UMS Server </emphasis> is optional and contains only the UMS SeD allowing to make a UMS service request.  
-            </para>
-          </listitem>
-	  <listitem>
-	    <para><emphasis role="bold">Client host </emphasis> is UMS service requester. It contains all components allowing to make a UMS service request.	  
-	    </para>
-	  </listitem>
-           <listitem>
-            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
-            </para>
-          </listitem>
-	 </itemizedlist>
+      <title>Technical architecture diagram</title>
+       <para>TODO
        </para>
-
-       <para> It is important to note that we can have several Secondary UMS servers (where an UMS Sed is running in each) but only one instance of UMS Monitor daemon running in the Main UMS Server as we can see in figure 2.1.
-       </para>
-    </section>	
-
-  </chapter><!-- PART 1 : ARCHITECTURE -->
+       <figure>
+          <title>VISHNU Technical architecture diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/VISHNU Deployment Overview Diagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+    </section>
+    
+  </chapter><!-- PART 3 : TECHNICAL ARCHITECTURE -->
   
 </book>
   
