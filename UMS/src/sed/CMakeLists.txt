@@ -28,6 +28,6 @@ target_link_libraries(umssed
   ums-server
 )
 
-#install_targets(/bin/
-# umssed 
-#)
+install_targets(/sbin/
+ umssed 
+)
