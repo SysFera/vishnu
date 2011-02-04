@@ -37,9 +37,8 @@ solveSessionConnect(diet_profile_t* pb) {
   char* clientKey = NULL;
   char* clientHostname = NULL;
   char* options = NULL;
-  //char* errorInfo = NULL;
   
-    
+  //TODO : faire des test sur les retours de if !diet_strinq_get throw ... 
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
   std::cout<<"userID:"<<userId<<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
@@ -54,14 +53,9 @@ solveSessionConnect(diet_profile_t* pb) {
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
   SessionServer sessionServer("");
           
-     ecorecpp::parser::parser parser;
-     
-     //TODO :  à décommenter pour les tests
-     ConnectOptions_ptr connectOpt;// = parser.load(std::string(options))->as< ConnectOptions >();
-     //ListSessions_ptr other_listssession = parser.load(options)->as< ConnectOptions >();
      try { 
      std::string empty("");  
-     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
+     sessionServer.connectSession(userServer, machineClientServer, options);
      diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
      diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
   
@@ -86,76 +80,7 @@ solveSessionConnect(diet_profile_t* pb) {
  * \return raises an exception on error
  */
 int 
-solveSessionReconnect(diet_profile_t* pb){
-  
-  char* userId = NULL;
-  char* password = NULL;
-  char* clientKey = NULL;
-  char* clientHostname = NULL;
-  char* sessionId = NULL;
-  //char* errorInfo = NULL;
-  
-  diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  std::cout<<"userID:"<<userId<<std::endl;
-  diet_string_get(diet_parameter(pb,1), &password, NULL);
-  std::cout<<"password:"<<password<<std::endl;
-  diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
-  std::cout<<"clientKey:"<<clientKey<<std::endl;
-  diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
-  std::cout<<"clientHostname:"<<clientHostname<<std::endl;
-  diet_string_get(diet_parameter(pb,4), &sessionId, NULL);
-  
-  UserServer userServer = UserServer(std::string(userId), std::string(password));
-  
-  //If the user is on the database
-  if (userServer.exist()) {
-     
-    
-     MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
-     SessionServer sessionServer("");
-     sessionServer.getData().setSessionId(std::string("sessionId"));
-     sessionServer.reconnect();
-     
-     //Genration of sessionKey and sessionId which are put directly on the UMS_Data::Session of sessionServer
-     //sessionServer.generateSessionKey();
-     //sessionServer.generateSessionId();
-     
-     //ecorecpp::parser::parser parser;
-     
-     //TODO :  à décommenter pour les tests
-     //ConnectOptions_ptr connectOpt;// = parser.load(std::string(options))->as< ConnectOptions >();
-     //ListSessions_ptr other_listssession = parser.load(options)->as< ConnectOptions >();
-      
-     //sessionServer.connectSession(userServer, machineClientServer, connectOpt);
-     
-     /*diet_string_set(diet_parameter(pb,5), sessionServer.getData.getSessionKey(), DIET_VOLATILE); 
-     diet_string_set(diet_parameter(pb,6), errorInfo, DIET_VOLATILE);*/
-    
-     
-	std::string empty("");
-	diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
-	diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
-  
-     
-  } // End If the user is on the database
-  else {
-	std::string empty("");
-	std::string errorInfo("The user is unknown");
-	diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
-	diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
-      
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+solveSessionReconnect(diet_profile_t* pb) {  
 }
 /**
  * \brief Function to solve the service SessionClose 
@@ -164,7 +89,26 @@ solveSessionReconnect(diet_profile_t* pb){
  * \return raises an exception on error
  */
 int 
-solveSessionClose(diet_profile_t* pb){}
+solveSessionClose(diet_profile_t* pb) {
+  
+  char* _sessionKey = NULL;
+  //TODO : faire des test sur les retours de if !diet_strinq_get throw ... 
+  diet_string_get(diet_parameter(pb,0), &_sessionKey, NULL);
+  
+  SessionServer sessionServer = SessionServer(std::string(_sessionKey));
+  try {
+    std::string empty("");
+    sessionServer.close();
+    diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
+   } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  } 
+    
+}
 
 /**
 * \brief To get the path of the configuration file used by the UMS server
