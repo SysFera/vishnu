@@ -32,8 +32,8 @@ using namespace ::UMS_Data;
 // Default constructor
 Session::Session() :
     m_sessionId(""), m_userId(""), m_sessionKey(""), m_dateLastConnect(-1),
-            m_dateCreation(-1), m_dateClosure(-1), m_state(-1),
-            m_closePolicy(0), m_timeout(-1)
+            m_dateCreation(-1), m_dateClosure(-1), m_state(1),
+            m_closePolicy(0), m_timeout(0)
 {
 
     /*PROTECTED REGION ID(SessionImpl__SessionImpl) START*/
