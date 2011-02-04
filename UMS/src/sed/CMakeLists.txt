@@ -20,8 +20,11 @@ add_executable(
 target_link_libraries(main 
   ${DIET_SED_LIB}
   ${LIBPQ_LIB}
-  ${DATA_BASE_LIB}
   ${EMF4CPP_UMS_DATA_LIB}
+  ${VISHNU_EXCEPTION_LIB}
+  ${DATA_BASE_LIB}
+  #exception-vishnu
+  #database-vishnu
   umsserver
 )
 
