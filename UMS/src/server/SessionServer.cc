@@ -1,8 +1,8 @@
-#include <string>
+/*#include <string>
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
+#include <assert.h>*/
 #include <time.h>
 #include <sys/time.h>
 
@@ -11,8 +11,8 @@
 #include "UMSVishnuException.hh"
 
 #include "SessionServer.hh"
+#include "utilServer.hh"
 
-char* crypt(const char* clef, const char* salt);
 
 template <class T>
 std::string convertToString(const T& val) {
@@ -30,10 +30,11 @@ int checkId(int id) {
 }
 
 
+
 SessionServer::SessionServer(std::string sessionKey) {
  
-    msession.setSessionKey(sessionKey);
-    mdatabaseVishnu = factory.getDatabaseInstance();
+ msession.setSessionKey(sessionKey);
+ mdatabaseVishnu = factory.getDatabaseInstance();
   
 }
  
@@ -104,30 +105,71 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 	return 0;
 }
  
-int SessionServer::reconnect() {
-	
-	return 0;
+int SessionServer::reconnect (UserServer user, MachineClientServer host, std::string sessionId) {
+ 
+ std::string key;
+  
+ msession.setSessionId(sessionId);
+ 
+ if (user.exist()) {
+    
+   //if (exist()) {
+    
+    try {   
+    int res = getSessionkey(convertToString(checkId(host.getId())));
+    
+    if (res == -1) {
+	UMSVishnuException e(4, "The corresponding session has not been opened with this machine");
+	throw e;
+     }
+      
+    
+    
+    } catch (SystemException& e) {
+	throw e;
+    }
+    
+      
+   /*}//ENF if res == -1
+   else {
+     UMSVishnuException e(4, "The sessionId is unrecognized");
+     throw e;
+  }*/
+ } //END IF user.exist
+ else {
+  UMSVishnuException e(4, "The user is unknwon");
+  throw e;
+ }
+ return 0;
 }
  
 int SessionServer::close() {
   
-  if (exist()) {
-    //TODO: if no running commands
-    std::string sqlCommand("UPDATE vsession SET state=0 WHERE sessionkey='"+msession.getSessionKey()+"'");
-    try {
-	mdatabaseVishnu->process(sqlCommand.c_str());  
-    } catch (SystemException& e) {
-	throw e;
+  int state = getState();
+    
+  if (state != -1) {
+     if (state != 0) {
+	//TODO: if no running commands
+	std::string sqlCommand("UPDATE vsession SET state=0 WHERE sessionkey='"+msession.getSessionKey()+"'");
+	try {
+	    mdatabaseVishnu->process(sqlCommand.c_str());
+	    
+	} catch (SystemException& e) {
+	    throw e;
+	}
+     } //END IF STATE != 0 
+     else {
+       UMSVishnuException e (4, "The sessionKey is expired. The session is already closed");
+       throw e;
     }
-  } 
+    
+  } //END IF STATE != -1
   else {
-    UMSVishnuException e (4, "Unknown sessionKey");
+    UMSVishnuException e (4, "The sessionKey is unrecognized");
     throw e;
   }
   
-  
-  
-	return 0;
+  return 0;
 }
  
 SessionServer::~SessionServer() {
@@ -191,7 +233,7 @@ int SessionServer::generateSessionId(std::string userId) {
   timeMilliseconde = tm->tm_hour * 3600 * 1000 + 
   tm->tm_min * 60 * 1000 + tm->tm_sec * 1000 + tv.tv_usec/1000;
   
-  sprintf(clef,"-%d/%d/%d-%d:%02d:%02d:%d \n", tm->tm_mday, tm->tm_mon, tm->tm_yday, tm->tm_hour, 
+  sprintf(clef,"-%d-%d-%d-%d:%02d:%02d:%d \n", tm->tm_mday, tm->tm_mon, tm->tm_yday, tm->tm_hour, 
 	  tm->tm_min, tm->tm_sec, (int)tv.tv_usec);
    
   userId.append(std::string(clef));
@@ -233,34 +275,92 @@ int SessionServer::recordSessionServer(std::string idmachine, std::string iduser
  
 int SessionServer::exist() {
   
-  //TODO: Pour éviter la duplication du code de la fonction exit (UserServer, MachineServer et SessionServer)
-  //Faire une fonction générique statique  bool exist(sqlcommand) qui renvoie un booléen
-  //Elle peut être défini dans sessionServer car tous les serveurs l'utilisent
-  
-  bool res = false;	
-  DatabaseResult* result;
-	
-  std::string sqlCommand("SELECT * FROM vsession where sessionkey='");
-  sqlCommand.append(msession.getSessionKey()+ "'");
-
-
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
-  try {
+ DatabaseResult* result;	
+ std::string sqlCommand("SELECT * FROM vsession where sessionkey=\
+ '"+msession.getSessionKey()+ "'");
+ std::cout <<"SQL COMMAND:"<<sqlCommand;
+ 
+ try {
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-  } catch (SystemException& e) {
+ } 
+ catch (SystemException& e) {
   throw e;
-  }
-      std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
-      if (result->getNbTuples() != 0) {
-	res = true;
-      } 
-      else {
-      res =  false;
-      }
-
-  return res; 
+ }
+ std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
+  
+ return (result->getNbTuples() != 0); 
 } 
  
+int SessionServer::getState() {
+ DatabaseResult* result;
+ std::vector<std::string>::iterator ii;
+
+ std::string sqlCommand("SELECT state FROM vsession where sessionkey=\
+ '"+msession.getSessionKey()+ "'");
+ 
+ std::cout <<"SQL COMMAND:"<<sqlCommand;
+ try {
+ result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+ } catch (SystemException& e) {
+ throw e;
+ }
+
+ if (result->getNbTuples() != 0) {
+      // res = true;
+      result->print();
+      std::vector<std::string> tmp = result->get(0);
+  
+  ii=tmp.begin();
+  std::istringstream str(*ii);
+  int value;
+  str>>value;
+  std::cout << "Value: "<< value;
+  return value;
+    
+ } // if  if (result->getNbTuples() != 0)
+ else {
+  return -1;
+ }
+}
+ 
+int SessionServer::getSessionkey(std::string idmachine) {
+ 
+  DatabaseResult* result;
+ std::vector<std::string>::iterator ii;
+
+ std::cout <<"SESSION:"<< msession.getSessionId() <<std::endl;
+ 
+ std::string sqlCommand("SELECT sessionkey FROM vsession where vsessionid='"+msession.getSessionId()+ "' and clmachine_numclmachineid="+idmachine);
+ 
+ std::cout <<"SQL COMMAND:"<<sqlCommand;
+ try {
+ result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+ } catch (SystemException& e) {
+ throw e;
+ }
+
+ if (result->getNbTuples() != 0) {
+   std::cout << "Je suis là"; 
+   // res = true;
+      result->print();
+      std::vector<std::string> tmp = result->get(0);
+  
+  ii=tmp.begin();
+  //std::istringstream str(*ii);
+  /*int value;
+  str>>value;
+  std::cout << "Value: "<< value;*/
+   msession.setSessionKey(*ii);
+  return 0;  
+ } // if  if (result->getNbTuples() != 0)
+ else {
+  result->printAttributesNames(); 
+  return -1;
+ }
+
+}
+
+
 /*UMS_Data::ListSessions  SessionServer::list(SessionServer session, UMS_Data::ListSessionOptions  options)
 {
 	return 0;

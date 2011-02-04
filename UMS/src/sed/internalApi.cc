@@ -53,8 +53,7 @@ solveSessionConnect(diet_profile_t* pb) {
 	
 	diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
 	diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  
-  }
+    }
    
   
 }
@@ -66,6 +65,56 @@ solveSessionConnect(diet_profile_t* pb) {
  */
 int 
 solveSessionReconnect(diet_profile_t* pb) {  
+ 
+ char* userId = NULL;
+ char* password = NULL;
+ char* clientKey = NULL;
+ char* clientHostname = NULL;
+ char* sessionId = NULL;
+   
+  
+ //TODO : faire des test sur les retours de if !diet_strinq_get throw ... 
+ diet_string_get(diet_parameter(pb,0), &userId, NULL);
+ std::cout<<"userID:"<<userId<<std::endl;
+ diet_string_get(diet_parameter(pb,1), &password, NULL);
+ std::cout<<"password:"<<password<<std::endl;
+ diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
+ std::cout<<"clientKey:"<<clientKey<<std::endl;
+ diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
+ std::cout<<"clientHostname:"<<clientHostname<<std::endl;
+ diet_string_get(diet_parameter(pb,4), &sessionId, NULL);
+ std::cout<<"sessionId:"<<sessionId<<std::endl;
+ 
+ UserServer userServer = UserServer(std::string(userId), std::string(password));
+ MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
+ 
+ 
+ SessionServer sessionServer = SessionServer(std::string(""));
+ 
+ sessionServer.getData().setSessionId(std::string(sessionId)); 
+ std::cout<<"sessionId dans SessionServer:"<<sessionServer.getData().getSessionId()<<std::endl;
+ 
+ try { 
+     std::string empty("");  
+     sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
+     diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
+     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
+  
+ } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
+	errorInfo.append(e.what());
+	
+	std::cout << "errorInfo: " << errorInfo <<std::endl;	
+	diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+ 
+ 
+ 
+ 
+ 
+  
 }
 /**
  * \brief Function to solve the service SessionClose 
