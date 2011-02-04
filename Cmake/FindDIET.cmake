@@ -63,19 +63,17 @@ IF( NOT DIET_DIR )
 
 ELSE( NOT DIET_DIR )
   ##### An indicative DIET_DIR was provided: check it
-  IF( EXISTS ${DIET_DIR}/share/DietConfig.cmake )
+  IF( EXISTS ${DIET_DIR}/share/cmake/Modules/DietConfig.cmake )
     SET( DIET_FOUND TRUE CACHE BOOL ${DIET_FOUND_STRING} FORCE )
-  ELSE( EXISTS ${DIET_DIR}/share/DietConfig.cmake )
+  ELSE( EXISTS ${DIET_DIR}/share/cmake/Modules/DietConfig.cmake )
     SET( DIET_FOUND FALSE CACHE BOOL ${DIET_FOUND_STRING} FORCE )
-  ENDIF( EXISTS ${DIET_DIR}/share/DietConfig.cmake )
+  ENDIF( EXISTS ${DIET_DIR}/share/cmake/Modules/DietConfig.cmake )
 ENDIF( NOT DIET_DIR )
 
-MESSAGE("XXXXXXXXXXXXXXXXXXX ${DIET_DIR}")
 
 IF( DIET_FOUND )
-  #MESSAGE("YYYYYYYYYYYYYYYYYYYYYYYYYY")
   MARK_AS_ADVANCED( DIET_FOUND )
-  SET( DIET_USE_FILE ${DIET_DIR}/share/DietConfig.cmake
+  SET( DIET_USE_FILE ${DIET_DIR}/share/cmake/Modules/DietConfig.cmake
        CACHE STRING "Full (with path) filename of DietConfig.cmake."  )
   MARK_AS_ADVANCED( DIET_USE_FILE )
   # Load the file to check if everything is fine:

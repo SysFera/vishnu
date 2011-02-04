@@ -2,18 +2,15 @@
 link_directories(${Boost_LIBRARY_DIRS}
                   ${EMF4CPP_LIB}
                   ${EMF4CPP_CPP_LIB}
-                  ${EMF4CPP_LIB} 
-                  ${EMF4CPP_CPP_LIB}
                 )
 include_directories(${Boost_INCLUDE_DIRS}
                     ${DIET_DIR}/include
                     ${DIET_INCLUDE_DIR}
-                    ${DIET_DIR}/include 
 	            ${EMF_DATA_DIR}
                     ${UMS_DATA_DIR}
-                    ${EMF4CPP_CPP_DIR}/include/emf4cpp
                     ${EMF4CPP_INCLUDE_DIR}
-                    ${CLIENT_PROXY_SOURCE_DIR}  
+                    ${API_SOURCE_DIR} 
+                    ${CLIENT_PROXY_SOURCE_DIR} 
                     ${VISHNU_EXCEPTION_INCLUDE_DIR} 
               )
 
@@ -27,7 +24,7 @@ set(ALLCLI connect reconnect close
 
 macro(genCli NAME )
 	set(source_files ${NAME}
-			Options api)
+			Options)
 
 	#Configuration de l'executable
 	add_executable(
@@ -39,10 +36,14 @@ macro(genCli NAME )
 	target_link_libraries(
 	${NAME}
 	${Boost_LIBRARIES}
-        ${EMF4CPP_UMS_DATA_LIB}
         ${VISHNU_EXCEPTION_LIB}
-        umsclient
+        ums-api-client
         )
+
+        install_targets(/bin/
+         ${NAME}
+        )
+
 endmacro(genCli)
 
 #Loop over all command lines to generate them
