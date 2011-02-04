@@ -1,4 +1,12 @@
 
+link_directories( 
+                  ${EMF4CPP_LIB}
+                  ${EMF4CPP_CPP_LIB}
+                  ${EMF4CPP_LIB} 
+                  ${EMF4CPP_CPP_LIB}
+                  ${VISHNU_EXCEPTION_DIR}
+                )
+
 include_directories(
   ${DIET_DIR}/include
   ${DIET_INCLUDE_DIR}
@@ -19,10 +27,11 @@ add_library(umsclient
 target_link_libraries(umsclient
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
-  ${VISHNU_EXCEPTION_LIB}
   ${EMF4CPP_LIB}
   ${EMF4CPP_CPP_LIB}
   ${EMF4CPP_LIB} 
   ${EMF4CPP_CPP_LIB}
+  ${VISHNU_EXCEPTION_LIB}
+ #exception-vishnu
 )
 

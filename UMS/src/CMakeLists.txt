@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
+#add_subdirectory(core/database/)
 add_subdirectory(utils/emfdata)
 add_subdirectory(client)
 add_subdirectory(sed)

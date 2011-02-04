@@ -5,6 +5,7 @@ INCLUDE_DIRECTORIES(
 ADD_LIBRARY(exception-vishnu
  ../exception/VishnuException.cc 
  ../exception/SystemException.cc
+ ../exception/UMSVishnuException.cc
 )
 
 ADD_EXECUTABLE(main 

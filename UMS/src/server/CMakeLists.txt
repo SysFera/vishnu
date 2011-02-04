@@ -22,12 +22,14 @@ add_library(umsserver
 target_link_libraries(umsserver
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
-  ${VISHNU_EXCEPTION_LIB}
   ${EMF4CPP_LIB}
   ${EMF4CPP_CPP_LIB}
   ${EMF4CPP_LIB} 
   ${EMF4CPP_CPP_LIB}
-  ${DATA_BASE_LIB}
   ${LIBPQ_LIB}
+  ${VISHNU_EXCEPTION_LIB}
+  ${DATA_BASE_LIB}
+  #database-vishnu
+  #exception-vishnu
 )
 
