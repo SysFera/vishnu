@@ -8,28 +8,28 @@ include_directories(
   ${EMF4CPP_CPP_DIR}/include/emf4cpp
   ${EMF4CPP_INCLUDE_DIR} 
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
-  ${SERVER_SOURCE_DIR}
+  ${POSTGRESQL_INCLUDE_DIR}
 )
 
-add_executable(
- main main.cc ServerUMS.cc ServerUMS.hh
+ 
+add_library(umsserver
+   SessionServer.cc
+   UserServer.cc
+   MachineClientServer.cc
 )
 
-target_link_libraries(main 
-  ${DIET_SED_LIB}
+target_link_libraries(umsserver
+  ${DIET_CLIENT_LIB}
+  ${DIET_SERVER_LIB}
+  ${EMF4CPP_LIB}
+  ${EMF4CPP_CPP_LIB}
+  ${EMF4CPP_LIB} 
+  ${EMF4CPP_CPP_LIB}
   ${LIBPQ_LIB}
-  ${EMF4CPP_UMS_DATA_LIB}
   ${VISHNU_EXCEPTION_LIB}
   ${DATA_BASE_LIB}
-  #exception-vishnu
   #database-vishnu
-  umsserver
+  #exception-vishnu
 )
-
-
-
-
-
 

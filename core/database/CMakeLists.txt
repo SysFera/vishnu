@@ -5,13 +5,14 @@ INCLUDE_DIRECTORIES(
 ADD_LIBRARY(exception-vishnu
  ../exception/VishnuException.cc 
  ../exception/SystemException.cc
+ ../exception/UMSVishnuException.cc
 )
 
 ADD_EXECUTABLE(main 
   main.cc 
   )
 
-ADD_LIBRARY(database-vishnu SHARED
+ADD_LIBRARY(database-vishnu
   DbFactory.cc 
   Database.cc 
   DatabaseResult.cc 

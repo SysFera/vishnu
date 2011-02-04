@@ -64,7 +64,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//SessionStateType"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="1">
       <eAnnotations source="Description">
         <details key="content" value="is the state of the session (ACTIVE OR INACTIVE)"/>
       </eAnnotations>
@@ -76,7 +76,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="is the inactivity delay in seconds associated to the CLOSE_ON_TIMEOUT option"/>
       </eAnnotations>

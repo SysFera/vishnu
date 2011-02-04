@@ -1,9 +1,9 @@
-#ifndef RECONNECT_HH
-#define RECONNECT_HH
+#ifndef DELETEUSER_HH
+#define DELETEUSER_HH
 
 /**
- * \file reconnect.hh
- * This file declares convenient include files for the VISHNU reconnexion process
+ * \file deleteUser.hh
+ * This file defines convenients functions for the VISHNU delete user process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -12,7 +12,14 @@
 #include <iostream>
 #include <iterator>
 #include <fstream>
+#include <cstdlib>
 
+
+//EMF
+#include <ecore.hpp> // Ecore metamodel
+#include <ecorecpp.hpp> // EMF4CPP utils
+#include "UMS_Data.hpp"
+#include "ConnectOptions.hpp"
 
 
 /*
@@ -26,23 +33,23 @@
 
 struct env_name_mapper{
 
-        std::string operator ()(std::string name){
+	std::string operator ()(std::string name){
 
-                std::string result= "";
-
+		std::string result= "";
+		
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
                 }
+                if (name=="VISHNU_SESSION_KEY") {
+
+                        result="sessionKey";
+                }
 
 
-                return result;
-        }
+		return result;
+	}
 };
-
-		
-
-
 
 
 

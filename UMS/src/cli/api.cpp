@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int connect(string userId, string password, string& sessionKey, UMS_Data::ConnectOptions connectOpt) {
+int connect(const string& userId, const string& password, string& sessionKey, const UMS_Data::ConnectOptions& connectOpt) {
 
   UserProxy userProxy(userId, password);
   SessionProxy sessionProxy;
@@ -13,17 +13,14 @@ int connect(string userId, string password, string& sessionKey, UMS_Data::Connec
 
   std::string envValue = "export VISHNU_SESSION_KEY="+sessionKey;
   std::cout << envValue << endl;
-  std::string test = "echo '"+envValue+"'"+" >> /home/traore/.bashrc";
-  std::cout << test << endl;
-  //if(system(envValue.c_str())) {
-  if(system(test.c_str())) {
+  if(system(envValue.c_str())) {
      std::cerr << "export error.." << std::endl;
   }; 
  
  return res;
 }
 
-int reconnect(string userId, string password, string sessionId, string& sessionKey) {
+int reconnect(const string& userId, const string& password, const string& sessionId, string& sessionKey) {
 
   UserProxy userProxy(userId, password);
   UMS_Data::Session session;
@@ -43,7 +40,7 @@ int reconnect(string userId, string password, string sessionId, string& sessionK
  return res;
 }
 
-int close(string  sessionKey) {
+int close(const string&  sessionKey) {
 
   UMS_Data::Session session;
   SessionProxy sessionProxy(sessionKey);
@@ -52,3 +49,35 @@ int close(string  sessionKey) {
  return res;
 }
 
+int addVishnuUser(const string& sessionKey, const UMS_Data::User& user) {
+ 
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
+
+  int res = userProxy.add(user);
+
+ return res;
+}
+
+int updateUser(const string& sessionKey, const UMS_Data::User& user) {
+
+   SessionProxy sessionProxy(sessionKey);
+   UserProxy userProxy(sessionProxy);
+
+  int res = userProxy.update(user);
+
+  return res;
+}
+
+int deleteUser(const string& sessionKey, const string& userId) {
+
+
+  UMS_Data::User user;
+  user.setUserId(userId);
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
+
+  int res = userProxy.deleteUser(user);
+
+ return res;
+}

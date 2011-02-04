@@ -1,5 +1,4 @@
 #include "reconnect.hh"
-#include "api.h"
 
 namespace po = boost::program_options;
 
@@ -12,7 +11,7 @@ int main (int ac, char* av[]){
                 string password;
                 string sessionId;
                 string sessionKey;
-                string configFile;
+                string dietConfig;
 
 		Configuration config(av[0]);// take the command line name
 
@@ -35,19 +34,35 @@ int main (int ac, char* av[]){
 
 		Options opt(&config );
   
-		opt.add("version,v", "print version message",GENERIC);
+		opt.add("version,v",
+				"print version message",
+				GENERIC);
 
-                opt.add<string>("dietConfig,c", "The diet config file",ENV);
+        opt.add<string>("dietConfig,c",
+				        "The diet config file",
+						ENV,
+						dietConfig);
 
-		opt.add<string>("userId,u","represents the VISHNU user identifier",HIDDEN);
+		opt.add<string>("userId,u",
+						"represents the VISHNU user identifier",
+						HIDDEN,
+						userId);
 
 		opt.setPosition("userId",1);
 
-		opt.add<string>("password,w","represents the password od the user",HIDDEN);
-		opt.setPosition("password",2);
+		opt.add<string>("password,w",
+						"represents the password od the user",
+						HIDDEN,
+						password);
 
-		 opt.add<string>("sessionId,s","represents the identifier of the session",HIDDEN);
-		 opt.setPosition("sessionId",3);
+		opt.setPosition("password",1);
+
+		 opt.add<string>("sessionId,s",
+				 		 "represents the identifier of the session",
+						 HIDDEN,
+						 sessionId);
+
+		 opt.setPosition("sessionId",1);
 
 
 
@@ -79,40 +94,40 @@ int main (int ac, char* av[]){
 		
 		if (opt.count("userId")){
 			
-			cout <<"The user identifier is " << opt.get<string>("userId") << endl;
-                        userId = opt.get<string>("userId");
+			cout <<"The user identifier is " << userId << endl;
 		}
 		
 		if(opt.count("password")){
 			
-			cout <<"the password is set to: " << opt.get<string >("password") << endl;
-                        password = opt.get<string >("password");
+			cout <<"the password is set to: " << password << endl;
 		}
 		
 		if(opt.count("sessionId")){
 
-			cout << "The session identifier is " << opt.get<string>("sessionId") <<endl;
-                        sessionId = opt.get<string>("sessionId");
+			cout << "The session identifier is " << sessionId <<endl;
 		}
 
-	        if (opt.count("dietConfig")){
+		if (opt.count("dietConfig")){
 
-                        cout <<"The diet config file " << opt.get< string >("dietConfig") << endl;
-                        configFile = opt.get< string >("dietConfig");
+                      
+			cout <<"The diet config file " << dietConfig << endl;
 
                 }
 
 /************** Call UMS connect service *******************************/
 
+
                // initializing DIET
-              if (diet_initialize(configFile.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
+              if (diet_initialize(dietConfig.c_str(), ac, av)) {
+                   
+				  cerr << "DIET initialization failed !" << endl;
+               
+				  return 1;
               }
 	
               reconnect(userId, password, sessionId, sessionKey);
 
-		
+	
 
 	}// End of try bloc
 

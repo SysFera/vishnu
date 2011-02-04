@@ -86,8 +86,10 @@ POSTGREDatabase::startTransaction(std::string request){
  */
 int 
 POSTGREDatabase::connect(){
- 
- if (PQstatus(conn) != CONNECTION_OK) {
+
+  std::cout << "Connect " << std::endl; 
+  if (PQstatus(conn) != CONNECTION_OK) {
+    std::cout << "Connecting " << std::endl; 
      std::ostringstream out;
      out << mport;
     
@@ -95,14 +97,16 @@ POSTGREDatabase::connect(){
 	SystemException e(2, "The port value is incorrect");
 	throw e; 
      }
+     std::cout << "Connect ?" << std::endl; 
+  
      /* Make a connection to the database */
      conn = PQsetdbLogin(mhost.c_str(),
 			  "",
 			  "",
-			  mpwd.c_str(),
+			  out.str().c_str(),
 			  mdatabase.c_str(),
 			  musername.c_str(),
-			  out.str().c_str());		     
+			  mpwd.c_str());		     
 	
      if (PQstatus(conn) != CONNECTION_OK) {
 	 SystemException e(2, std::string(PQerrorMessage(conn)));
@@ -114,6 +118,7 @@ POSTGREDatabase::connect(){
      
   }//END if NOT CONNECTION_OK 
   else {
+    std::cout << "Connect failed" << std::endl; 
     SystemException e(2, "connect : The database is already connected");
     throw e;
   }
@@ -130,10 +135,10 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
 		  std::string database,
 		  unsigned int port):Database(){
 		     
- if (port < 0) {
-      SystemException e(2, "The port value is incorrect");
-      throw e; 
- }
+  if (port < 0) {
+    SystemException e(2, "The port value is incorrect");
+    throw e; 
+  }
  
  mhost        = hostname;
  musername    = username;
@@ -141,6 +146,8 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
  mdatabase    = database;
  misConnected = false;
  mport        = port;     
+ conn         = NULL;
+ std::cout << "Constructed " << std::endl;
 }
 /**
  * \fn ~Database()

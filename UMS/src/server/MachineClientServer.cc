@@ -3,6 +3,7 @@
 #include <list>
 #include <iostream>
 #include <assert.h>
+#include <sstream>
 
 #include "POSTGREDatabase.hh"
 #include "DbFactory.hh"
@@ -21,52 +22,65 @@ MachineClientServer::MachineClientServer(std::string sshKey, std::string host) {
  
 int MachineClientServer::recordMachineClient()
 {
-    
-    try {
+  
+  if (!exist()) {
+    //TODO: Voir la comparaison des chaines
     std::string sqlCmd = std::string("insert into clmachine (sshkey, name) values ('"); //TODO: Faire une fonction pr construire les cmds sql
     sqlCmd.append(mmachineSSHKey+"','");
     sqlCmd.append(mhostname+"')");
-    } catch (SystemException& e) {
-	throw e;
-    }
+    std::cout <<"SQL COMMAND:"<<sqlCmd;
     
+    try {
+	mdatabaseVishnu->process(sqlCmd.c_str());
+	} catch (SystemException& e) {
+	throw e;
+	}
+    
+    
+  } else {
+    std::cout << "The machine is already registered";
+  } 
+     
     return 0;
 }
  
 int MachineClientServer::getId()
 {	
+  
+	DatabaseResult* result;
+	std::vector<std::string>::iterator ii;
 	
-	/*DatabaseResult* result;
-	std::string sqlCommand("SELECT numclmachineid FROM clmachine where sskey='");
-	sqlCommand.append(mmachineSSHKey+"')");
 	
+	std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
+	sqlCommand.append(mmachineSSHKey+ "' and name='");
+	sqlCommand.append(mhostname+"'");
 	
 	std::cout <<"SQL COMMAND:"<<sqlCommand;
-        
-	try {
-	    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-	
+        try {
+	result = mdatabaseVishnu->getResult(sqlCommand.c_str());
 	} catch (SystemException& e) {
 	throw e;
 	}
 	
-	
-	std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
-	 
 	if (result->getNbTuples() != 0) {
-	      result->print();
-	      std::vector<std::string> obj = result->get(0);
-	     // obj.
-	      return; 
+	     // res = true;
+	     result->print();
+	     std::vector<std::string> tmp = result->get(0);
+	  
+	  ii=tmp.begin();
+	  std::istringstream str(*ii);
+	  int value;
+	  str>>value;
+	  std::cout << "Value: "<< value;
+	  return value;
+	    
 	} 
 	else {
-	    SystemException e(4, "The machine "+mhostname+"SSH Key is unknown");
-	    throw e;
+	  return -1;
+	    //res =  false;
 	}
-
-	
-	*/
-	return 0;
+    
+	//return 0;
 }
  
 std::string MachineClientServer::getSSHKey() const{
@@ -76,4 +90,34 @@ std::string MachineClientServer::getSSHKey() const{
  
 std::string MachineClientServer::getHost() const{
 	return mhostname;
+}
+
+bool MachineClientServer::exist(){
+  
+ bool res = false;
+	
+	DatabaseResult* result;
+	
+	std::string sqlCommand("SELECT * FROM clmachine where sshkey='");
+	sqlCommand.append(mmachineSSHKey+ "' and name='");
+	sqlCommand.append(mhostname+"'");
+	
+	
+	std::cout <<"SQL COMMAND:"<<sqlCommand;
+        try {
+	result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+	} catch (SystemException& e) {
+	throw e;
+	}
+	    std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
+	    //std::cout<<result->getNbTuples();
+	    if (result->getNbTuples() != 0) {
+	      res = true;
+	    } 
+	    else {
+	    res =  false;
+	    }
+	
+	return res;
+  
 }
