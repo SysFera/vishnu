@@ -3,13 +3,14 @@
 #
 
 find_path(POSTGRESQL_INCLUDE_DIR
- postgresql/libpq-fe.h
+ libpq-fe.h
   paths
 	${POSTGRESQL}/include
 	$ENV{POSTGRESQL}/include
 	/usr/include
 	/usr/local/include
 	/opt/local/include
+        /usr/include/postgresql/
 )
 
 if (POSTGRESQL_INCLUDE_DIR)
