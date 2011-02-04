@@ -14,8 +14,10 @@ include_directories(
   ${SERVER_SOURCE_DIR}
 )
 
-add_executable(
- umssed main.cc ServerUMS.cc ServerUMS.hh
+add_executable(umssed 
+  main.cc 
+  ServerUMS.cc 
+  internalApi.cc
 )
 
 target_link_libraries(umssed 
