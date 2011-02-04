@@ -83,7 +83,7 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("help")){
+		if ((ac < 4)|| (opt.count("help"))){
 
 			 cout << "Usage: " << av[0] <<" [options] userId password sessionId"<<endl;
 
