@@ -110,7 +110,7 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("help")){
+		if (( ac < 2 )|| (opt.count("help"))){
 
 			cout << "Usage: " << av[0] <<" [options] userId "<<endl;
 			

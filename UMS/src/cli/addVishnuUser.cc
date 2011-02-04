@@ -119,7 +119,7 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("help")){
+		if ((ac < 6) || (opt.count("help"))){
 
 			cout << "Usage: " << av[0] <<" privilege userId firstname lastname email"<<endl;
 			
