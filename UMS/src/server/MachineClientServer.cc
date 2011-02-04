@@ -51,8 +51,8 @@ int MachineClientServer::getId()
 	std::vector<std::string>::iterator ii;
 	
 	
-	std::string sqlCommand("SELECT numclmachineid FROM clmachine where name='");
-	sqlCommand.append(mmachineSSHKey+ "' and sshkey='");
+	std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
+	sqlCommand.append(mmachineSSHKey+ "' and name='");
 	sqlCommand.append(mhostname+"'");
 	
 	std::cout <<"SQL COMMAND:"<<sqlCommand;
@@ -98,8 +98,8 @@ bool MachineClientServer::exist(){
 	
 	DatabaseResult* result;
 	
-	std::string sqlCommand("SELECT * FROM clmachine where name='");
-	sqlCommand.append(mmachineSSHKey+ "' and sshkey='");
+	std::string sqlCommand("SELECT * FROM clmachine where sshkey='");
+	sqlCommand.append(mmachineSSHKey+ "' and name='");
 	sqlCommand.append(mhostname+"'");
 	
 	
