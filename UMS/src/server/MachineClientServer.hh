@@ -1,13 +1,12 @@
 #ifndef MACHINE_CLIENT_SERVER_H
 #define MACHINE_CLIENT_SERVER_H
 
-#include <string>
-#include <vector>
-#include <list>
-#include <iostream>
-#include <assert.h>
-
 //#include "SessionServer.hh"
+
+#include "POSTGREDatabase.hh"
+#include "DbFactory.hh"
+#include "DatabaseResult.hh"
+
 
 class MachineClientServer {
   

@@ -48,7 +48,7 @@ int main () {
   DatabaseResult *data;
   
   try {
-  data = p->getResult("select * from tableuser");
+  data = p->getResult("select * from session");
   std::cout<< "************ ATTRIBUT NAMES ********** "<<std::endl;
   data->printAttributesNames();
   std::cout<< "************ ALL ********** "<<std::endl;
