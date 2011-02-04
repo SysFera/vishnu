@@ -195,11 +195,11 @@ void Session::eSet(::ecore::EInt _featureID,
     case ::UMS_Data::UMS_DataPackage::SESSION__DATECLOSURE:
         return m_dateClosure != -1;
     case ::UMS_Data::UMS_DataPackage::SESSION__STATE:
-        return m_state != -1;
+        return m_state != 1;
     case ::UMS_Data::UMS_DataPackage::SESSION__CLOSEPOLICY:
         return m_closePolicy != 0;
     case ::UMS_Data::UMS_DataPackage::SESSION__TIMEOUT:
-        return m_timeout != -1;
+        return m_timeout != 0;
 
     }
     throw "Error";
