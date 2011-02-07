@@ -18,7 +18,7 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include "utilServer.hh"
-
+#include "OptionValueServer.hh"
 
 using namespace UMS_Data;
 
@@ -36,9 +36,9 @@ private:
 	int generateSessionId(std::string userId);
 	int checkClientMachine(MachineClientServer MachineClient);
 	int recordSessionServer(std::string idmachine, std::string iduser);
-	int exist();
-	int getState();
-	int getSessionkey(std::string idmachine);
+	bool exist(bool flagSessionId = false);
+	int getState(bool flagSessionId = false);
+	int getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin = false);
 public:
 	SessionServer(std::string sessionKey);
 	SessionServer(UMS_Data::Session session);
