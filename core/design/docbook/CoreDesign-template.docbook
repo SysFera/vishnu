@@ -29,14 +29,25 @@
       <para>This document provides a global view of the architecture for the VISHNU system and its environment. The target audience
         of this document is composed of software, system and network architects. The main objective of this document is to validate
         that the solution provided, i.e. the VISHNU system, matches the needs and constraints of the target environment. It can also
-        be viewed as a checklist for system deployment.
+        be considered as a first version of a checklist for system deployment but some deployment details may still not be defined
+        at the time this document is written and may be completed during the project development.
       </para>
     </section>
     <section>
       <title>Document structure</title>
       <para><itemizedlist>
         <listitem>
-          <para>TODO</para>
+          <para>Chapter 1 contains a description of the document itself and definitions of terms and acronyms.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 2 contains a global description of the VISHNU project: its objectives, its context including the main constraints
+            and the main technical choices made for the technical solution proposed by SysFera.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 3 contains a description of the functional architecture of the VISHNU system: users, functional units, interfaces, data and security.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 4 contains a description of the technical architecture of the VISHNU system: clients and servers, network, databases.</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -56,7 +67,7 @@
       </itemizedlist></para>
     </section>
     <section>
-      <title>Acronyms</title>
+      <title>Acronyms and abbreviations</title>
       <para>
         <itemizedlist>
 	  <listitem>
@@ -71,12 +82,24 @@
            <listitem>
             <para><emphasis role="bold">FMS</emphasis>: File Management Service (VISHNU Module)</para>
           </listitem>
+           <listitem>
+            <para><emphasis role="bold">For ex.</emphasis>: For example</para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
+          <listitem>
+            <para><emphasis role="bold">QoS</emphasis>: Quality of Service</para>
+            </listitem>
+           <listitem>
+            <para><emphasis role="bold">TBC</emphasis>: To Be Completed</para>
+           </listitem>
+           <listitem>
+            <para><emphasis role="bold">SSH</emphasis>: Secure Shell</para>
+           </listitem>
            <listitem>
             <para><emphasis role="bold">TMS</emphasis>: Tasks Management Service (VISHNU Module)</para>
           </listitem>
@@ -107,7 +130,7 @@
             server software providing these services. A module may have dependencies to other modules.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by the SysFera company.</para>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -118,7 +141,141 @@
   <!-- PART 1 : GLOBAL DESCRIPTION -->
   <chapter>
     <title>Global description of the VISHNU system</title>
+    <para>This chapter contains a synthetic presentation of the ins and outs of the project architecture.</para>
+    <section>
+      <title>Project sheet</title>
+       <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="5cm"/>
+            <colspec/>
+            <tbody>
+              <row>
+                <entry><para>Project Title</para></entry>
+                <entry><para>VISHNU</para></entry>
+              </row>
+              <row>
+                <entry><para>Version</para></entry>
+                <entry><para>1.0</para></entry>
+              </row>
+              <row>
+                <entry><para>Objective</para></entry>
+                <entry><para>To provide a standardized, integrated, secure, reliable and high performance interface to heterogeneous scientific computing resources
+                  used by research and development teams.</para></entry>
+              </row>
+              <row>
+                <entry><para>Beneficiaries</para></entry>
+                <entry><para>EDF R&amp;D</para></entry>
+              </row>
+              <row>
+                <entry><para>Impact</para></entry>
+                <entry><para>This project is critical for the beneficiary organization. The realized system will be transfered to different
+                  enterprise organizations for deployment on their own infrastructure.</para></entry>
+              </row>
+              <row>
+                <entry><para>Project Duration</para></entry>
+                <entry><para>7 months</para></entry>
+              </row>
+              <row>
+                <entry><para>Major constraints</para></entry>
+                <entry>
+                  <para>- The system must not be tied to a specific deployment environment.</para>
+                  <para>- The installation and usage of the system must not require root access on the computing infrastructure elements.</para>
+                  <para>- The source code must be open (License ???)</para>
+                </entry>
+              </row>
+              <row>
+                <entry><para>Security constraints</para></entry>
+                <entry>
+                  <para>- The system requires user authentication.</para>
+                </entry>
+                <entry>
+                  <para>- The system does not use data encryption except for file transfers.</para>
+                </entry>
+                <entry>
+                  <para>- The system provides two levels of access privilege: standard users and administrators.</para>
+                </entry>
+                <entry>
+                  <para>- The system does not handle commercially sensitive information.</para>
+                </entry>
+                <entry>
+                  <para>- The system must not compromize access to user accounts on the VISHNU Managed Infrastructure.</para>
+                </entry>
+              </row>
+              <row>
+                <entry><para>Traceability constraints</para></entry>
+                <entry>
+                  <para>The system will keep track of all user actions with their date and time, user identifier, client host identifier and action details.</para>
+                  <para>The system will provide a log of all user actions that allows the user herself or an administrator to redo past actions.</para>
+                </entry>
+              </row>
+              <row>
+                <entry><para>System services</para></entry>
+                <entry>
+                  <para>The system will provide the following services:</para>
+                   <itemizedlist>
+                     <listitem>
+                       <para>User management services (UMS): authentication and session management.</para>
+                     </listitem>
+                     <listitem>
+                       <para>Information management services (IMS): monitoring and control of the managed infrastructure.</para>
+                     </listitem>
+                     <listitem>
+                       <para>Tasks management services (TMS): submission of tasks on computing resources.</para>
+                     </listitem>
+                     <listitem>
+                       <para>File management services (FMS): display and transfer of files between storage resources.</para>
+                     </listitem>
+                   </itemizedlist>
+                </entry>
+              </row>
+              <row>
+                <entry><para>System interfaces</para></entry>
+                <entry>
+                  <para>The system will provide the following interfaces:</para>
+                   <itemizedlist>
+                     <listitem>
+                       <para>a Web Services interface</para>
+                     </listitem>
+                     <listitem>
+                       <para>a Python shell interface</para>
+                     </listitem>
+                     <listitem>
+                       <para>a C++ application programming interface (API)</para>
+                     </listitem>
+                     <listitem>
+                       <para>a Unix command line interface</para>
+                     </listitem>
+                   </itemizedlist>
+                </entry>
+              </row>
+              <row>
+                <entry><para>System users</para></entry>
+                <entry><para>The system will be used by managers, engineers and researchers. A user may either use a man-machine interface (web or unix shell)
+                  or a programming interface (Python or C++) to access the system.</para></entry>
+              </row>
+              <row>
+                <entry><para>Database system</para></entry>
+                <entry><para>The system will use either a PostgreSQL 8.x or Oracle 11g database server.</para></entry>
+              </row>
+              <row>
+                <entry><para>Architecture choices</para></entry>
+                <entry>
+                  <para>- The system will be based on a distributed service-oriented middleware for the communication between all clients and servers.</para>
+                  <para>- The system will be modular so that new services can be easily integrated with the existing ones and so that each module can have its own version.</para>
+                  <para>- The system will use the SSH protocol for file transfers and for tunneling of application flows across network firewalls.</para>
+                  <para>- The system will use the mechanisms of the underlying Unix security system to protect access to sensitive information (for ex. SSH keys).</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+    </section>
     
+    <section>
+      <title>QoS objectives</title>
+      <para>TBC or cf STB</para>
+      
+    </section>
   </chapter><!-- PART 1 : GLOBAL DESCRIPTION -->
   
   <!-- PART 2 : FUNCTIONAL ARCHITECTURE -->
@@ -147,7 +304,7 @@
     </section>
     
     <section>
-      <title>Database components
+      <title>Database components</title>
         <para>The following database components are used by the VISHNU system to store persistent data and provide historical data to the users:
           </para>
         <para>
@@ -173,6 +330,7 @@
           </listitem>
         </itemizedlist>
       </para>
+    </section>
     
     <section>
       <title>Data flows</title>
