@@ -49,28 +49,22 @@ Options::Options(Configuration* conf):generic_options("Generic Options"),
 }
 
 
+void Options::setGroup (const po::options_description& tmp_options,
+												const Group_type& group){
 
 
-void
-Options::add(const std::string& name,
-              const std::string& desc, const Group_type& group ){
-	
-	
-	po::options_description tmp_options;
-	tmp_options.add_options()(name.c_str(),desc.c_str());
-	
-	switch(group){
-		
-		case GENERIC:
-			{
-				generic_options.add(tmp_options);
+	switch(group){                                                                    
+	    
+		case GENERIC:                                                                   
+			{ 
+				generic_options.add(tmp_options);                                           
 				break;
 			}
 		case CONFIG:
 			{
 				config_options.add(tmp_options);
 				break;
-			}
+		}
 		case ENV:
 			{
 				env_options.add(tmp_options);
@@ -86,6 +80,25 @@ Options::add(const std::string& name,
 				cout << "unknown option group " << endl;
 			}
 	}
+}
+
+
+
+
+
+
+
+void
+Options::add(const std::string& name,
+              const std::string& desc, const Group_type& group ){
+	
+	
+	po::options_description tmp_options;
+
+	tmp_options.add_options()(name.c_str(),desc.c_str());
+
+	setGroup(tmp_options,group);
+		
 }
 
 

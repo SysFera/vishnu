@@ -96,6 +96,8 @@ public:
 			mutable po::variables_map vm;/*!<  map storing all parsed options  */
 			po::positional_options_description position; /*!< option position in a command line  */
 
+			void setGroup (const po::options_description&, const Group_type&);/*!< to set the option group    */
+
 		public:
 			/**
 			 * \brief Constructor by variable taking a command configuration in parameter
@@ -132,39 +134,15 @@ public:
 
 					// Set the group
 
-					switch(group){
-						case GENERIC:
-								{
-									generic_options.add(tmp_options);
-									break;
-								}
-						case CONFIG:
-								{
-									config_options.add(tmp_options);
-									break;
-								}
-						case ENV:
-								{
-									env_options.add(tmp_options);
-									break;
-								}
-						case HIDDEN:
-								{
-									hidden_options.add(tmp_options);
-									break;
-								}
-						default:
-								{
-									std::cout << "unknown option group " << std::endl;
-								}
-					}
+					setGroup(tmp_options,group);
+
 				}
 			
 			/**
 			 * \brief To set position of options 
 			 */
 			
-			virtual void setPosition(const std::string &, int);
+			virtual void setPosition(const std::string &, int); 
 
 			/**
 			 * \brief To parse command line
