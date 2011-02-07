@@ -6,6 +6,7 @@ namespace po = boost::program_options;
 
 using namespace std;
 
+
 int main (int ac, char* av[]){
      
        
@@ -34,7 +35,7 @@ int main (int ac, char* av[]){
 		/********** EMF Data ****************************/
 
 
-		UMS_Data::ConnectOptions connectOpt;
+  		UMS_Data::ConnectOptions connectOpt;
 
 
 /***************  Default configuration file ***************** */
@@ -71,13 +72,6 @@ int main (int ac, char* av[]){
 
 		opt.setPosition("userId",1);
 
-		opt.add<string>("password,w",
-				        "represents the password od the user",
-						HIDDEN,
-						password);
-
-		opt.setPosition("password",1);
-
 		opt.add<int>("closePolicy,p",
 					 "for closing session automatically",
 					 CONFIG,
@@ -109,26 +103,31 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if ( (ac<3) || (opt.count("help"))) {
+		if ( (ac<2) || (opt.count("help"))) {
 
-			cout << "Usage: " << av[0] <<" [options] userId password"<<endl;
+			cout << "Usage: " << av[0] <<" [options] userId"<<endl;
 			
 			cout << opt << endl;
                    return 0;
 
 		}
+   else{
 
+		 password= getpass("Password: ");// getpass is obsolete. 
+
+	 }
 		
 		if (opt.count("userId")){
 			
 			cout <<"The user identifier is " << userId << endl;
 		}
-		
-		if(opt.count("password")){
-			
-			cout <<"the password is set to: " << password << endl;
+	 
+		if (!password.empty()){
+
+		cout << "password is set to: " << password <<endl;
+
 		}
-		
+   		
 		if(opt.count("closePolicy")){
 
 			cout << "The close policy is " << closePolicy <<endl;

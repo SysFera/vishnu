@@ -1,4 +1,4 @@
-#include "reconnect.hh"
+#include "resetPassword.hh"
 
 namespace po = boost::program_options;
 
@@ -8,8 +8,6 @@ int main (int ac, char* av[]){
 
 	try {
                 string userId;
-                string password;
-                string sessionId;
                 string sessionKey;
                 string dietConfig;
 
@@ -43,6 +41,11 @@ int main (int ac, char* av[]){
 						ENV,
 						dietConfig);
 
+				opt.add<string>("sessionKey,s",
+						           "The session key",
+											 ENV,
+											 sessionKey);
+
 		opt.add<string>("userId,u",
 						"represents the VISHNU user identifier",
 						HIDDEN,
@@ -51,12 +54,6 @@ int main (int ac, char* av[]){
 		opt.setPosition("userId",1);
 
 
-		 opt.add<string>("sessionId,s",
-				 		 "represents the identifier of the session",
-						 HIDDEN,
-						 sessionId);
-
-		 opt.setPosition("sessionId",1);
 
 
 
@@ -77,18 +74,13 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if ((ac < 3)|| (opt.count("help"))){
+		if ((ac < 2)|| (opt.count("help"))){
 
-			 cout << "Usage: " << av[0] <<" [options] userId sessionId"<<endl;
+			 cout << "Usage: " << av[0] <<" userId"<<endl;
 
 			cout << opt << endl;
 
 			return 0;
-
-		}
-		else{
-
-			password=getpass("Password: ");
 
 		}
 
@@ -98,26 +90,36 @@ int main (int ac, char* av[]){
 			cout <<"The user identifier is " << userId << endl;
 		}
 		
-		if(!password.empty()){
 			
-			cout <<"the password is set to: " << password << endl;
-		}
-		
-		if(opt.count("sessionId")){
-
-			cout << "The session identifier is " << sessionId <<endl;
-		}
 
 		if (opt.count("dietConfig")){
 
                       
 			cout <<"The diet config file " << dietConfig << endl;
 
-                }
+		}
+
+		if(opt.count("sessionKey")){
+
+			cout << "The session Key is: " << sessionKey <<endl;
+
+		}
+
+		else{
+
+			cerr << "Set the VISHNU_SESSION_KEY in your environment variable" <<endl;
+
+			return 0;
+
+
+		}
+
+
+
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                    
@@ -126,8 +128,8 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 	
-              reconnect(userId, password, sessionId, sessionKey);
-
+              resetPassword(sessionKey,userId);
+*/
 	
 
 	}// End of try bloc
