@@ -18,6 +18,7 @@
 */
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
+#include "utilServer.hh"
 
 class UserServer
 {
@@ -29,7 +30,6 @@ private:
 	Database *mdatabaseVishnu;
 
 private:
-	bool isAdmin();
 	bool checkLogin();
 	bool checkPassword();
 	int generatePassword();
@@ -45,7 +45,10 @@ public:
 	~UserServer();
 	UMS_Data::User getData();
 	bool exist();
-	int getId();
+	bool isAdmin();
+	//int getId();
+	//return the integer attribut of the user
+	std::string getAttribut(std::string condition, std::string attrname = "numuserid");
 	//static UMS_Data::ListUsers  list(SessionServer session, string userIdOptions);
 };
 #endif
