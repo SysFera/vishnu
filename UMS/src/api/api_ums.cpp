@@ -49,12 +49,12 @@ int close(const string&  sessionKey) {
  return res;
 }
 
-int addVishnuUser(const string& sessionKey, const UMS_Data::User& user) {
+int addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) {
  
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
 
-  int res = userProxy.add(user);
+  int res = userProxy.add(newUser);
 
  return res;
 }
@@ -78,6 +78,94 @@ int deleteUser(const string& sessionKey, const string& userId) {
   UserProxy userProxy(sessionProxy);
 
   int res = userProxy.deleteUser(user);
+
+ return res;
+}
+
+int changePassword(const std::string& userId, const std::string& password, const std::string& passwordNew) {
+
+  UMS_Data::User user;
+  user.setUserId(userId);
+  user.setPassword(password);
+  UserProxy userProxy(user);
+
+  int res = userProxy.changePassword(passwordNew);
+ return res;
+}
+
+int resetPassword(const std::string& sessionKey, const std::string& userId) {
+
+  UMS_Data::User user;
+  user.setUserId(userId);
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
+  int res = userProxy.resetPassword(user);
+
+ return res;
+}
+
+int addMachine(const std::string& sessionKey, const UMS_Data::Machine& newMachine) {
+
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(newMachine, sessionProxy);
+
+  int res = machineProxy.add();
+
+ return res;
+}
+
+int updateMachine(const std::string& sessionKey, const UMS_Data::Machine& machine) {
+
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machine, sessionProxy);
+
+  int res = machineProxy.update();
+
+ return res;
+}
+
+int deleteMachine(const std::string& sessionKey, const std::string& machineId) {
+
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machine, sessionProxy);
+
+  int res = machineProxy.deleteMachine();
+ 
+ return res;
+}
+
+int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount) {
+
+  
+  SessionProxy sessionProxy(sessionKey);
+  LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
+
+  int res = localAccountProxy.add();
+ 
+ return res;
+}
+
+int updateLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& localAccount) {
+
+ SessionProxy sessionProxy(sessionKey);
+ LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
+
+ int res = localAccountProxy.update();
+
+ return res;
+}
+
+int deleteLocalAccount(const std::string& sessionKey, const std::string& userId, const std::string& machineId) {
+
+  UMS_Data::LocalAccount localAccount;
+  localAccount.setUserId(userId);
+  localAccount.setMachineId(machineId);
+  SessionProxy sessionProxy(sessionKey);
+  LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
+
+  int res = localAccountProxy.deleteLocalAccount();
 
  return res;
 }
