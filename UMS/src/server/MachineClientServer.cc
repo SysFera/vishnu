@@ -27,7 +27,7 @@ int MachineClientServer::recordMachineClient()
   
   if (!exist()) {
     //TODO: Voir la comparaison des chaines
-    std::string sqlCmd = std::string("insert into clmachine (sshkey, name) values ('"); //TODO: Faire une fonction pr construire les cmds sql
+    std::string sqlCmd = std::string("insert into clmachine (sshkey, name) values ('");
     sqlCmd.append(mmachineSSHKey+"','");
     sqlCmd.append(mhostname+"')");
     std::cout <<"SQL COMMAND:"<<sqlCmd;
@@ -93,20 +93,21 @@ std::string MachineClientServer::getHost() const{
 
 bool MachineClientServer::exist(){
   
- DatabaseResult* result;
+ /*DatabaseResult* result;
  std::string sqlCommand("SELECT * FROM clmachine where sshkey='");
  sqlCommand.append(mmachineSSHKey+ "' and name='");
  sqlCommand.append(mhostname+"'");
 	
- std::cout <<"SQL COMMAND:"<<sqlCommand;
+ std::cout <<"SQL COMMAND:"<<sqlCommand;*/
  try {
-      result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+      //result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+      return (getId() != -1);
  } 
  catch (SystemException& e) {
 	throw e;
  }
- std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
+ /*std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
 	    //std::cout<<result->getNbTuples();
 	    
-  return (result->getNbTuples() != 0); 
+  return (result->getNbTuples() != 0); */
 }
