@@ -14,6 +14,8 @@ include_directories(
 add_library(ums-client-proxy
    SessionProxy.cpp 
    UserProxy.cpp
+   MachineProxy.cpp
+   LocalAccountProxy.cpp
 )
 
 target_link_libraries(ums-client-proxy
