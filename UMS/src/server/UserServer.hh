@@ -10,33 +10,24 @@
 #include "DbFactory.hh"
 #include "DatabaseResult.hh"
 
-//#include "SessionServer.h"
+//#include "SessionServer.hh"
 /*#include "User.hpp"
 #include "UMS_Data/User.hpp"
 #include "UMS_Data/ConnectOptions.hpp"
 #include "UMS_Data/ListUsers.hpp"
 */
+class SessionServer;
+#include "SessionServer.hh"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "utilServer.hh"
 
-class UserServer
-{
-private:
-	UMS_Data::User muser;
-	UMS_Data::ConnectOptions moptions;
-	//Database* mdatabase;
-	DbFactory factory;
-	Database *mdatabaseVishnu;
+class UserServer {
 
-private:
-	bool checkLogin();
-	bool checkPassword();
-	int generatePassword();
 public:
+        UserServer();
 	UserServer(std::string userId, std::string password);
 	UserServer(UMS_Data::User user);
-	//void UserServer(SessionServer session);
+	UserServer(SessionServer sessionServer);
 	int add(UMS_Data::User user);
 	int update(UMS_Data::User user);
 	int deleteUser(UMS_Data::User user);
@@ -50,5 +41,19 @@ public:
 	//return the integer attribut of the user
 	std::string getAttribut(std::string condition, std::string attrname = "numuserid");
 	//static UMS_Data::ListUsers  list(SessionServer session, string userIdOptions);
+
+private:
+	UMS_Data::User muser;
+	UMS_Data::ConnectOptions moptions;
+	//Database* mdatabase;
+	DbFactory factory;
+	Database *mdatabaseVishnu;
+	SessionServer* msessionServer;
+
+private:
+	bool checkLogin();
+	bool checkPassword();
+	int generatePassword();
+	
 };
 #endif

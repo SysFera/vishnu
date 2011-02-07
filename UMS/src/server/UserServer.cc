@@ -7,7 +7,7 @@
 #include "UserServer.hh"
 #include <exception>
 #include "SystemException.hh"
-
+#include "utilServer.hh"
 
 /*
 int convertToInt(std::string val) {
@@ -23,13 +23,12 @@ UserServer::UserServer(std::string userId, std::string password) {
   muser.setPassword(password);
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
-/* 
+
 UserServer::UserServer(UMS_Data::User user) {
   
 }
  
-void UserServer::UserServer(SessionServer session)
-{
+UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServer) {
 }
  
 int UserServer::add(UMS_Data::User user)
@@ -42,21 +41,21 @@ int UserServer::update(UMS_Data::User user)
 	return 0;
 }
  
-int UserServer::deleteUser(User user)
+int UserServer::deleteUser(UMS_Data::User user)
 {
 	return 0;
 }
  
-int UserServer::changePassword(string newPassword)
+int UserServer::changePassword(std::string newPassword)
 {
 	return 0;
 }
  
-int UserServer::resetPassword(User user)
+int UserServer::resetPassword(UMS_Data::User user)
 {
 	return 0;
 }
-*/ 
+ 
 UserServer::~UserServer()
 {
 }
