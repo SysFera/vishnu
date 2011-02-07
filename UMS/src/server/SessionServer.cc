@@ -13,38 +13,13 @@
 #include "utilServer.hh"
 #include "OptionValueServer.hh"
 
-
-//TODO mettre tout ça(les 3 premières fonctions) dans utilServer
-/*template <class T>
-std::string convertToString(const T& val) {
-  std::ostringstream out;
-  out << val;
-  return out.str();
+SessionServer::SessionServer() {
+  msession.setSessionKey("");
 }
-
-//TODO: répétion de convertToInt à régler
-int convertToInt2(std::string val) {
-  int intValue;
-  std::istringstream str(val); 
-  str >> intValue;
-  return static_cast<int> (intValue);
-}
-
-int checkId(int id) {
-  if (id < 0) {
-    UMSVishnuException e (4, "The value of the object is incorrect. It is negative");
-    throw e;
-  }
-  return id;
-}
-*/
-
 
 SessionServer::SessionServer(std::string sessionKey) {
- 
  msession.setSessionKey(sessionKey);
- mdatabaseVishnu = factory.getDatabaseInstance();
-  
+ mdatabaseVishnu = factory.getDatabaseInstance(); 
 }
  
 SessionServer::SessionServer(UMS_Data::Session session) {
@@ -58,42 +33,47 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
   std::string userIdToconnect;
   
   OptionValueServer optionValueServer;
-  
-  std::string numoptionpolicy;
+  std::string numoption;
   std::string userValuepolicy;
+  std::string userValuetimeout;
   std::string defaultValuepolicy;
   std::string defaultValuetimeout;
   
- try {   
+ try {
+   
+  //if the user exist 
   if (user.exist()) {
   
-     
      UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
      ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-     //OptionValueServer optionValueServer = OptionValueServer("","");
-     
      ConnectOptions_ptr connectOpt = parser.load(std::string(opt))->as< ConnectOptions >();
    
      std::cout << "Opt:" << opt << std::endl ;
      
       switch (connectOpt->getClosePolicy()) {
        
-       case 0: //TODO: closePolicy pas défini donc aller voir dans options users sinon défault options
+       case 0: 
+	      /*TODO: faire dans option une fonction gettimeout et getClosePolicy
+	       * Dans l'objet OptionValueServer faire une méthode init (ou dans le constructeur) qui va chercher 
+	       * les valeur par défaut numoption close policy et timeout et les enregistre
+	       * puis faire getTimeout(numuserId) et getPolicy(numuserId) qui vont chercher les valeurs pour un utilisateur
+	      */
 	      
 	      /*To get the id of the default option close policy*/
-	      numoptionpolicy = 
+	      numoption = 
 	      optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "numoptionid", true);
 	      
-	      /* To check if the option value policy is defined for the user */
+	      /*To check if the option value policy is defined for the user*/
 	      userValuepolicy = 
 	      optionValueServer.getAttribut
 	      (
-		"where optionu_numoptionid="+numoptionpolicy+
+		"where optionu_numoptionid="+numoption+
 		" and users_numuserid='"
 		 +user.getAttribut("where userid='"+user.getData().getUserId()+"'")
 		 +"'"
 	      );
-	      /* if no option value policy is defined the default option will be used */
+	      
+	      /* if no option value policy is defined for the user the default option will be used */
 	      if (userValuepolicy.size() == 0) {
 		  
 		  defaultValuepolicy = 
@@ -104,57 +84,98 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 		    defaultValuetimeout = 
 		    optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
 		    msession.setTimeout(convertToInt(defaultValuetimeout));
-		    
 		  } 
 		  else {
 		    msession.setClosePolicy(2);
 		  }
-	      }	
+	      }	//END if no option value policy is defined for the user
 	      else {
-		//TODO: tester si l'option est 2 c'est bon sinon vérifier que le timeout 
-		//est défini chez l'utilisateur sinon aller récupérer dans les options par défaut
-		msession.setClosePolicy(convertToInt(userValuepolicy));
-	      }
+		    msession.setClosePolicy(convertToInt(userValuepolicy));
+		    
+		    //if the value is 1 (CLOSE_ON_TIMEOUT) the timeout have to be defined
+		    if (convertToInt(userValuepolicy) == 1) {
+			numoption = 
+			optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "numoptionid", true);
+			
+			userValuetimeout = optionValueServer.getAttribut
+			(
+			  "where optionu_numoptionid="+numoption+
+			  " and users_numuserid='"
+			  +user.getAttribut("where userid='"+user.getData().getUserId()+"'")
+			  +"'"
+			);
+			  //if no option timeout is defined for the user
+			 if (userValuetimeout.size() == 0) {
+			    defaultValuetimeout = 
+			    optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
+			    msession.setTimeout(convertToInt(defaultValuetimeout));
+			 } //END if no option timeout is defined for the user
+			 else {
+				msession.setTimeout(convertToInt(userValuetimeout));
+			  }
+		      
+		    } // End if the the option value is 1 (CLOSE_ON_TIMEOUT)
+		
+	      } //End Else option value is defined for the user 
 	      
 	      //std::string numoptionpolicy = optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "numoptionid", true);
        break;
        
        case 1: msession.setClosePolicy(1);
-               //TODO: enregistrer l'option dans la base ==> non pr enregister c'est configure option!
+              
 		if (connectOpt->getSessionInactivityDelay() != 0) {
 		  msession.setTimeout(connectOpt->getSessionInactivityDelay());
-		} 
+		} //END the timeout is defined
 		else {
-		//TODO:  donc aller voir dans options users sinon défault options pour le timeout
-		//et enregistrer chez l'utilisateur ==> non pr enregister c'est configure option!
-		}
+			numoption = 
+			optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "numoptionid");
+			
+			userValuetimeout = optionValueServer.getAttribut
+			(
+			  "where optionu_numoptionid="+numoption+
+			  " and users_numuserid='"
+			  +user.getAttribut("where userid='"+user.getData().getUserId()+"'")
+			  +"'"
+			);
+			  //if no option timeout is defined for the user
+			 if (userValuetimeout.size() == 0) {
+			    defaultValuetimeout = 
+			    optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
+			    msession.setTimeout(convertToInt(defaultValuetimeout));
+			 } //END if no option timeout is defined for the user
+			 else {
+				msession.setTimeout(convertToInt(userValuetimeout));
+			  }
+		}// END ELSE the timeout is defined
        
 	       break;
-       case 2: msession.setClosePolicy(2); //TODO
+       case 2: msession.setClosePolicy(2); 
 	       break;
        
        //default: break; //Faire comme case 0
     }
-    
+     
+     //if a user to substitute is defined
      if (connectOpt->getSubstituteUserId().size() != 0) {
       std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;
       
+      // if the user is admin
       if (user.isAdmin()) {
 	std::cout << "Je suis Admin" << std::endl;
 	
 	substituteUserId = user.getAttribut("where \
 	    userid='"+connectOpt->getSubstituteUserId()+"'");
+	
 	//If the user to substitute exist
 	if (substituteUserId.size() != 0) {
 	    userIdToconnect = substituteUserId;
-	 }
+	 } //End If the user to substitute exist
 	 else {
 	    UMSVishnuException e(4, "The user to substitute is unknown!");
             throw e;
 	}
 	
-	
-      } // END IF is admin
+      } // END if the user is admin
       else {
 	UMSVishnuException e(4, "The substitution is an admin option!");
         throw e;
@@ -172,7 +193,6 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
      else {
 	 generateSessionKey(connectOpt->getSubstituteUserId());
 	 generateSessionId(connectOpt->getSubstituteUserId());
-     
     }
      
      std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
@@ -181,12 +201,11 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
      
      host.recordMachineClient();
      recordSessionServer(convertToString(checkId(host.getId())), userIdToconnect);
-	  
-	  /*<< user.getAttribut("where userid='"+user.getData().getUserId()+"'and pwd='"+user.getData().getPassword()+"'", " privilege");*/
-	    
-	//TODO: machineServer et commanderServer à enregistrer dans la base de données donc créer un commanderServer
+	     
+    //TODO: machineServer et commanderServer à enregistrer dans la base de données donc créer un commanderServer
     
-  } else {
+  } // END if the user exist 
+  else {
     UMSVishnuException e(4, "The user is unknwon");
     throw e;
   }

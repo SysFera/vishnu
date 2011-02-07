@@ -10,16 +10,12 @@
 
 
 OptionValueServer::OptionValueServer() {
-  //moptionValue. //= UMS_Data::OptionValue("", "");
-  moptionName = "";
-  moptionValue = "";
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
 
-OptionValueServer::OptionValueServer(std::string optionName, std::string optionValue) {//, UserServer userServer) {
-   moptionName = optionName;
-   moptionValue = optionValue;
+OptionValueServer::OptionValueServer(UMS_Data::OptionValue optionvalue) {
+   moptionValue = optionvalue;
    mdatabaseVishnu = factory.getDatabaseInstance();
 }
  
@@ -37,8 +33,7 @@ OptionValueServer::~OptionValueServer()
 {
 }
  
-std::string OptionValueServer::getOptionValue()
-{
+UMS_Data::OptionValue OptionValueServer::getOptionValue() {
 	return moptionValue;
 }
 

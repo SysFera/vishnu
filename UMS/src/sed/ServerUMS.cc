@@ -120,6 +120,17 @@ ServerUMS::init() {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(profile, NULL, solveSessionClose);
 
+  /* solveUserCreate */
+  
+  profile = diet_profile_desc_alloc(SRV[3], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(profile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(profile, NULL, solveUserCreate);
+ 
+  
+  
   diet_profile_desc_free(profile);
 }
 

@@ -13,11 +13,12 @@
 #include <stdlib.h>
 #include "UMS_Data.hpp"
 
+class UserServer;
 #include "UserServer.hh"
 #include "MachineClientServer.hh"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "utilServer.hh"
+//#include "utilServer.hh"
 #include "OptionValueServer.hh"
 
 using namespace UMS_Data;
@@ -25,9 +26,21 @@ using namespace UMS_Data;
 
 class SessionServer
 {
+public:
+	SessionServer();
+	SessionServer(std::string sessionKey);
+	SessionServer(UMS_Data::Session session);
+	int connectSession(UserServer user, MachineClientServer host, std::string opt);
+	int reconnect(UserServer user, MachineClientServer host, std::string sessionId);
+	int close();
+	~SessionServer();
+	UMS_Data::Session getData();
+	//static std::vector<std::vector <std::string> > get(std::string sqlcode);
+	//static UMS_Data::ListSessions  list(SessionServer session, UMS_Data::ListSessionOptions  options);
+
 private:
 	UMS_Data::Session msession;
-	UserServer* muserServer;
+	//UserServer muserServer;
 	DbFactory factory;
 	Database* mdatabaseVishnu;
  
@@ -39,15 +52,5 @@ private:
 	bool exist(bool flagSessionId = false);
 	int getState(bool flagSessionId = false);
 	int getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin = false);
-public:
-	SessionServer(std::string sessionKey);
-	SessionServer(UMS_Data::Session session);
-	int connectSession(UserServer user, MachineClientServer host, std::string opt);
-	int reconnect(UserServer user, MachineClientServer host, std::string sessionId);
-	int close();
-	~SessionServer();
-	UMS_Data::Session getData();
-	//static std::vector<std::vector <std::string> > get(std::string sqlcode);
-	//static UMS_Data::ListSessions  list(SessionServer session, UMS_Data::ListSessionOptions  options);
 };
 #endif
