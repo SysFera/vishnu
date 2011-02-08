@@ -11,7 +11,7 @@
 #include <string>
 #include "internalApi.hh"
 //#include "DIET_server.h"
-#define NB_SRV 3
+#define NB_SRV 4
 
 
 //static Database* mdatabaseVishnu;
@@ -19,7 +19,8 @@
 static const char* SRV[NB_SRV] = {
   "sessionConnect", 
   "sessionReconnect", 
-  "sessionClose"};
+  "sessionClose",
+   "userCreate"};
  
 /**
  * \class ServerUMS

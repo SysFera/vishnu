@@ -7,7 +7,8 @@
 #include "UserServer.hh"
 #include <exception>
 #include "SystemException.hh"
-
+#include "UMSVishnuException.hh"
+#include "utilServer.hh"
 
 /*
 int convertToInt(std::string val) {
@@ -23,17 +24,63 @@ UserServer::UserServer(std::string userId, std::string password) {
   muser.setPassword(password);
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
-/* 
+
 UserServer::UserServer(UMS_Data::User user) {
   
 }
  
-void UserServer::UserServer(SessionServer session)
-{
+UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServer) {
+  mdatabaseVishnu = factory.getDatabaseInstance(); 
 }
  
-int UserServer::add(UMS_Data::User user)
-{
+int UserServer::add(std::string userSerialized) {
+  
+ std::string numUser;  
+ 
+ try {
+      
+      numUser = 
+      msessionServer->getAttribut("where\
+      sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
+      
+     /*If the session key is found and the numuserId return*/ 
+     if (numUser.size() != 0) {
+	  muser.setUserId(getAttribut("where numuserid='"+numUser+"'", "userid"));
+	  muser.setPassword(getAttribut("where numuserid='"+numUser+"'", "pwd"));
+	  
+	  std::cout << "idUser" << muser.getUserId() << std::endl;
+	  std::cout << "Pwd" << muser.getPassword() << std::endl;
+      
+	  if (isAdmin()) {
+	    
+	    //TODO génération password voir Ibrahima
+	    //Insertion dans la base User ... Insert Into
+	    
+	  } else {
+	    UMSVishnuException e (4, "The user is not an admin");
+	    throw e;
+	  }
+     } // END If the session key
+     else {
+	  UMSVishnuException e (4, "The session key is unrecognized");
+	  throw e;
+     }
+     
+     
+  }
+  catch (SystemException& e) {
+	throw e;
+ }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 	return 0;
 }
  
@@ -42,21 +89,21 @@ int UserServer::update(UMS_Data::User user)
 	return 0;
 }
  
-int UserServer::deleteUser(User user)
+int UserServer::deleteUser(UMS_Data::User user)
 {
 	return 0;
 }
  
-int UserServer::changePassword(string newPassword)
+int UserServer::changePassword(std::string newPassword)
 {
 	return 0;
 }
  
-int UserServer::resetPassword(User user)
+int UserServer::resetPassword(UMS_Data::User user)
 {
 	return 0;
 }
-*/ 
+ 
 UserServer::~UserServer()
 {
 }
@@ -97,6 +144,22 @@ bool UserServer::exist() {
 	throw e;
  } 	
 }
+
+bool UserServer::isPwdStateOk() {
+ try {
+      return
+      
+      (
+	convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and \
+	pwd='"+muser.getPassword()+"'", "passwordstate")) != 0	
+      );
+ } 
+ catch (SystemException& e) {
+	throw e;
+ } 	
+}
+ 
+ 
  
 bool UserServer::checkLogin()
 {

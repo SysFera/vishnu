@@ -9,7 +9,7 @@
 
 
 /**
- * \brief Function to solve the service SessionConnect 
+ * \brief Function to solve the service sessionConnect 
  * \fn    void solveSessionConnect(diet_profile_t* pb);
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
@@ -58,7 +58,7 @@ solveSessionConnect(diet_profile_t* pb) {
   
 }
 /**
- * \brief Function to solve the service SessionReconnect 
+ * \brief Function to solve the service sessionReconnect 
  * \fn    void solveSessionReconnect
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
@@ -73,7 +73,6 @@ solveSessionReconnect(diet_profile_t* pb) {
  char* sessionId = NULL;
    
   
- //TODO : faire des test sur les retours de if !diet_strinq_get throw ... 
  diet_string_get(diet_parameter(pb,0), &userId, NULL);
  std::cout<<"userID:"<<userId<<std::endl;
  diet_string_get(diet_parameter(pb,1), &password, NULL);
@@ -109,16 +108,11 @@ solveSessionReconnect(diet_profile_t* pb) {
 	diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
 	diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
- 
- 
- 
- 
- 
-  
+   
 }
 /**
- * \brief Function to solve the service SessionClose 
- * \fn    virtual int createDatabase() = 0
+ * \brief Function to solve the service sessionClose 
+ * \fn    int solveSessionClose(diet_profile_t* pb)
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -126,7 +120,7 @@ int
 solveSessionClose(diet_profile_t* pb) {
   
   char* _sessionKey = NULL;
-  //TODO : faire des test sur les retours de if !diet_strinq_get throw ... 
+  
   diet_string_get(diet_parameter(pb,0), &_sessionKey, NULL);
   
   SessionServer sessionServer = SessionServer(std::string(_sessionKey));
@@ -143,3 +137,43 @@ solveSessionClose(diet_profile_t* pb) {
   } 
     
 }
+
+/**
+* \brief Function to solve the service userCreate 
+* \fn    int solveUserCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserCreate(diet_profile_t* pb) {
+ char* sessionKey = NULL;
+ char* userSerialized = NULL;
+ 
+ 
+ diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+ std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+ diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
+ std::cout<<"User:"<< userSerialized <<std::endl;
+ 
+ SessionServer sessionServer = SessionServer(std::string(sessionKey));
+ UserServer userServer = UserServer(sessionServer);
+ 
+ 
+  try {
+    std::string empty("");
+    //sessionServer.close();
+    userServer.add(userSerialized);
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+ 
+ 
+ 
+ 
+}  
