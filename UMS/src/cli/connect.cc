@@ -17,6 +17,8 @@ int main (int ac, char* av[]){
 		Configuration config(av[0]);// take the command line name
 
 		string defaultConfig = "VishnuConfig.cfg";
+		
+		int reqParam=0;   // to count the required parameters for the command
 
 		/******* Parsed value containers ****************/
        
@@ -60,29 +62,29 @@ int main (int ac, char* av[]){
 				"print version message",
 				GENERIC );
 		
-        opt.add<string>("dietConfig,c", 
+        opt.add("dietConfig,c", 
 				        "The diet config file",
 						ENV,
 						dietConfig);
 
-		opt.add<string>("userId,u",
+		opt.add("userId,u",
 				        "represents the VISHNU user identifier",
 						HIDDEN,
 						userId);
 
-		opt.setPosition("userId",1);
+		opt.setPosition("userId",-1);
 
-		opt.add<int>("closePolicy,p",
+		opt.add("closePolicy,p",
 					 "for closing session automatically",
 					 CONFIG,
 					 closePolicy);
 
-		opt.add<int >("sessionInactivityDelay,d",
+		opt.add("sessionInactivityDelay,d",
 				      "The session inactivity delay",
 					  CONFIG,
 					  sessionInactivityDelay);
 
-		opt.add<string >("substituteUserId,s",
+		opt.add("substituteUserId,s",
 				         "The substitute user identifier",
 						 CONFIG,
 						 substituteUserId);
@@ -103,30 +105,15 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if ( (ac<2) || (opt.count("help"))) {
-
-			cout << "Usage: " << av[0] <<" [options] userId"<<endl;
-			
-			cout << opt << endl;
-                   return 0;
-
-		}
-   else{
-
-		 password= getpass("Password: ");// getpass is obsolete. 
-
-	 }
 		
 		if (opt.count("userId")){
 			
 			cout <<"The user identifier is " << userId << endl;
+			
+			reqParam=reqParam+1;
+
 		}
 	 
-		if (!password.empty()){
-
-		cout << "password is set to: " << password <<endl;
-
-		}
    		
 		if(opt.count("closePolicy")){
 
@@ -154,12 +141,44 @@ int main (int ac, char* av[]){
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;
-                        
-                }
+                  
+		}
+		else{
+			
+			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+			
+			return 1;
+			
+		}
+
+
+		
+		if ( (reqParam<CPARAM) || (opt.count("help"))) {
+
+
+			      cerr << "Usage: " << av[0] <<" [options] userId"<<endl;
+						    
+						cerr << opt << endl;
+						
+						return 1;
+						
+		}
+		  
+		else{
+
+			password= getpass("Password: ");// getpass is obsolete. 
+
+			cout << "The user password  is " << password << endl;
+
+							 
+		}
+
+
+
 
 /************** Call UMS connect service *******************************/
 
-		
+	/*	
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -169,7 +188,7 @@ int main (int ac, char* av[]){
                 std::string sessionKey;
 		int res = connect(userId,password, sessionKey, connectOpt);
 
-
+*/
 	
 
 	}// End of try bloc

@@ -17,6 +17,8 @@ int main (int ac, char* av[]){
 		Configuration config(av[0]);// take the command line name
 
 		string defaultConfig = "VishnuConfig.cfg";
+		
+		int reqParam=0;   // to count the required parameters for the command
 
 /***************  Default configuration file ***************** */
 
@@ -39,17 +41,22 @@ int main (int ac, char* av[]){
 				"print version message",
 				GENERIC);
 
-        opt.add<string>("dietConfig,c",
+        opt.add("dietConfig,c",
 				        "The diet config file",
 						ENV,
 						dietConfig);
 
-		opt.add<string>("userId,u",
+				opt.add("sessionKey,s",
+						    "The session Key",
+								 ENV,
+					       sessionKey);
+
+		opt.add("userId,u",
 						"represents the VISHNU user identifier",
 						HIDDEN,
 						userId);
 
-		opt.setPosition("userId",1);
+		opt.setPosition("userId",-1);
 
 
 
@@ -71,49 +78,57 @@ int main (int ac, char* av[]){
 
 
 /********  Process **************************/
-
-		if ((ac < 2)|| (opt.count("help"))){
-
-			 cout << "Usage: " << av[0] <<" userId"<<endl;
-
-			cout << opt << endl;
-
-			return 0;
-
-		}
-		else{
-
-			oldPassword=getpass("old password: ");
-			
-			newPassword=getpass("new password: ");
-
-		}
-
 		
 		if (opt.count("userId")){
 			
 			cout <<"The user identifier is " << userId << endl;
+
+			reqParam=reqParam+1;
 		}
 		
-		if(!oldPassword.empty()){
-			
-			cout <<"the old password was: " << oldPassword << endl;
-		}
-		
-		if(!newPassword.empty()){
-
-			cout << "The new password is: " << newPassword << endl;
-
-		}
-
-
 
 		if (opt.count("dietConfig")){
-
-                      
+			
 			cout <<"The diet config file " << dietConfig << endl;
 
-                }
+		}
+
+		else{
+
+			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+      
+			return 1;
+    }
+
+ 
+		if (opt.count("sessionKey")){
+
+			cout <<"The sessionKey is " << sessionKey << endl;
+		}
+
+
+		if ((reqParam < CPPARAM)|| (opt.count("help"))){
+
+	     
+			cout << "Usage: " << av[0] <<" userId"<<endl;
+
+			cout << opt << endl;
+			
+			return 0;
+		}
+    else{
+			      
+			oldPassword=getpass("old password: ");
+
+			cout << "old password is" << oldPassword <<endl;
+
+			newPassword=getpass("new password: ");
+
+			cout << "The new password is "<< newPassword <<endl;
+		}
+
+
+
 
 /************** Call UMS connect service *******************************/
 

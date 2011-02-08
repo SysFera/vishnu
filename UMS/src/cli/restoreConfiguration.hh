@@ -1,9 +1,9 @@
-#ifndef DELETEUSER_HH
-#define DELETEUSER_HH
+#ifndef RESTORECONFIGURATION_HH
+#define RESTORECONFIGURATION_HH
 
 /**
- * \file deleteUser.hh
- * This file defines convenients functions for the VISHNU delete user process
+ * \file restoreConfiguration.hh
+ * This file declares convenient include files for the VISHNU restore configuration process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -12,14 +12,7 @@
 #include <iostream>
 #include <iterator>
 #include <fstream>
-#include <cstdlib>
 
-
-//EMF
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
-#include "UMS_Data.hpp"
-#include "ConnectOptions.hpp"
 
 
 /*
@@ -31,27 +24,34 @@
  * the variable is ignored.
  */
 
-const unsigned int DUPARAM=1;
+
+const unsigned int RCPARAM=1;
 
 struct env_name_mapper{
 
-	std::string operator ()(std::string name){
+        std::string operator ()(std::string name){
 
-		std::string result= "";
-		
+                std::string result= "";
+
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
                 }
-                if (name=="VISHNU_SESSION_KEY") {
 
-                        result="sessionKey";
-                }
+								if (name=="VISHNU_SESSION_KEY"){
+
+									result="sessionKey";
+
+								}
 
 
-		return result;
-	}
+                return result;
+        }
 };
+
+		
+
+
 
 
 
