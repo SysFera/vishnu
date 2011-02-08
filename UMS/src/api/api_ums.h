@@ -12,6 +12,10 @@ void print(UMS_Data::User_ptr user, int id);
 void print(UMS_Data::Machine_ptr machine, int id); 
 void  print(UMS_Data::LocalAccount_ptr localAccount, int id);
 
+int vishnuInitialize(char* cfg, int argc, char** argv);
+
+void vishnuFinalize();
+
 int connect(const std::string& userId, const std::string& password, std::string& sessionKey, 
             const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions()); 
 

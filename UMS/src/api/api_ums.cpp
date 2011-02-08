@@ -3,6 +3,14 @@
 
 using namespace std;
 
+int vishnuInitialize(char* cfg, int argc, char** argv) {
+
+  if (diet_initialize(cfg, argc, argv)) {
+     return 1;
+   }
+ return 0;
+}
+
 int connect(const string& userId, const string& password, string& sessionKey, const UMS_Data::ConnectOptions& connectOpt) {
 
   UserProxy userProxy(userId, password);
