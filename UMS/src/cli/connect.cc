@@ -178,17 +178,17 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-	/*	
+		
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
 
-                std::string sessionKey;
+   
+							std::string sessionKey;
 		int res = connect(userId,password, sessionKey, connectOpt);
 
-*/
 	
 
 	}// End of try bloc
