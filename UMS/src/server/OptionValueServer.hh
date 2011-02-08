@@ -34,6 +34,8 @@ public:
 	~OptionValueServer(); 
 	UMS_Data::OptionValue getOptionValue();
 	std::string getAttribut(std::string condition, std::string attrname="value", bool defaultOptions=false);
+	int getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
+	//int getTimeout(std::string numuserId);
 	//static UMS_Data::ListOptionsValues  list(SessionServer session, UMS_Data::ListOptOptions  options);
 };
 #endif

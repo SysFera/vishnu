@@ -39,6 +39,7 @@ void
 ServerUMS::init() {
 
   DbFactory factory;
+  //TODO: mettre mot de passe pour access à la base de données
   Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "", "", "VISHNU");
   
   try {
@@ -51,11 +52,12 @@ ServerUMS::init() {
     if (!admin.exist()) {
      std::cout << "Insertion of the default Vishnu user";
      
-     /*Insertion of the vishnu object in the database*/
+     //TODO: mettre toutes ces insertions dans le sql de création de la base de données
+     /*Insertion of the vishnu object in the database en disant explicitement que les séquences commencent à 1*/
      mdatabaseVishnu->process("insert into vishnu (updatefreq, usercpt) values (0, 0)");
      
      /*Insertion of the default admin user*/
-     mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege) values (1, 'admin','admin', 1)");
+     mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate) values (1, 'admin','admin', 1, 1)");
     //TODO: Récupérer le vishnu_vishnuid c'est plus propre (par défault ici c'est 1)
      
      /*Insertion of the default option values*/ //TODO optionid ne sert à rien l'autoincréménte suffit

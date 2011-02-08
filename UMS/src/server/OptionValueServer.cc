@@ -4,6 +4,7 @@
 #include <iostream>
 #include <assert.h>
 
+#include "utilServer.hh"
 #include "OptionValueServer.hh"
 #include <exception>
 #include "SystemException.hh"
@@ -71,8 +72,49 @@ std::string OptionValueServer::getAttribut(std::string condition, std::string at
 	}
 }
 
+int OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
 
+try {  
+    /*To get the close policy of the user identified by the numuserId*/  
+    std::string userClosepolicy = getAttribut (
+		    "where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
+		    getAttribut("where description='"+nameInfo+"'", "numoptionid", true)
+		  );
+      /*If the close policy is not defined for the user*/	      
+      if (userClosepolicy.size() == 0) {
+	userClosepolicy = 
+	getAttribut("where description='"+nameInfo+"'", "defaultvalue", true);
+	return convertToInt(userClosepolicy);
+      } //END If the close policy is not defined for the user*/	      
+      else {
+	return convertToInt(userClosepolicy);
+      }
+ } 
+ catch (SystemException& e) {
+  throw e;
+ } 
+  
+}
 
+/*
+int OptionValueServer::getTimeout(std::string numuserId) {
+  
+
+std::string userTimeout = getAttribut (
+		"where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
+		 getAttribut("where description='VISHNU_TIMEOUT'", "numoptionid", true)
+	      );
+ 
+  if (userTimeout.size() == 0) {
+    userTimeout = 
+    getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
+    return convertToInt(userTimeout);
+  } //END If the close policy is not defined for the user	      
+  else {
+    return convertToInt(userTimeout);
+  } 
+}
+*/
  /*
 UMS_Data::ListOptionsValues  OptionValueServer::list(SessionServer session, UMS_Data::ListOptOptions  options)
 {
