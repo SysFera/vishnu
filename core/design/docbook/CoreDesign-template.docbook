@@ -307,7 +307,7 @@
                 <para>- The components of the VISHNU system with the exception of the Web Server and the Database will be monitored internally and restarted automatically within less than 1 minute (the real delay will depend 
                         on the monitoring frequency which will be set by the administrator)</para>
                 <para>- VISHNU will keep internal data stored in a central database and use this data to recover its state before a crash or manual termination.</para>
-                <para>- VISHNU will depend on the central server database for providing all its services.</para>
+                <para>- In case of database crash, VISHNU will be restarted using a standby database that contains a copy of the main database.</para>
               </entry>
             </row>
             <row>
@@ -417,7 +417,9 @@
     </section>
     
     <section>
-      <title>Database components</title>
+      <title>Database description</title>
+      <section>
+        <title>Functional view</title>
         <para>The following database components are used by the VISHNU system to store persistent data and provide historical data to the users:
           </para>
         <para>
@@ -442,7 +444,22 @@
             Managed Infrastructure. The status includes system hardware information (cpu usage, disk usage, memory usage, etc.).</para>
           </listitem>
         </itemizedlist>
-      </para>
+        </para>
+      </section>
+      
+      <section>
+        <title>Physical view</title>
+        <para>The Figure 3.2 describes all the tables of the VISHNU database with their relationships.</para>
+        <figure>
+          <title>VISHNU Database diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/database.png"
+                  align="center" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
     </section>
     
     <section>
@@ -607,7 +624,7 @@
    
     <section>
       <title>Software architecture diagram</title>
-      <para>The Figure 3.1 describes the different software components of VISHNU with their dependencies.</para>
+      <para>The Figure 3.3 describes the different software components of VISHNU with their dependencies.</para>
       <para>This diagram is a UML component diagram:</para>
       <para>
         <itemizedlist>
@@ -619,7 +636,7 @@
           <listitem><para> A semi-circle represents a required interface and is connected to the component that requires it.</para></listitem>
         </itemizedlist>
       </para>
-      <para>The following terms and abbreviations are used in the Figure 3.1:</para>
+      <para>The following terms and abbreviations are used in the Figure 3.3:</para>
       <para>
         <itemizedlist>
           <listitem><para>CPP : C++</para></listitem>
