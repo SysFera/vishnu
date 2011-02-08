@@ -18,19 +18,20 @@ SessionServer::SessionServer() {
 }
 
 SessionServer::SessionServer(std::string sessionKey) {
- msession.setSessionKey(sessionKey);
- mdatabaseVishnu = factory.getDatabaseInstance(); 
+  msession.setSessionKey(sessionKey);
+  mdatabaseVishnu = factory.getDatabaseInstance(); 
 }
  
-SessionServer::SessionServer(UMS_Data::Session session) {
+SessionServer::SessionServer(const UMS_Data::Session& session):msession(session) {
 }
+
+//std::string opt
+int SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions* connectOpt) {
  
-int SessionServer::connectSession(UserServer user, MachineClientServer host, std::string opt) {
- 
-  std::ostringstream out;
-  ecorecpp::parser::parser parser;
+  //std::ostringstream out;
   std::string substituteUserId;
   std::string userIdToconnect;
+  ecorecpp::parser::parser parser;
   
   OptionValueServer optionValueServer;
   std::string numoption;
@@ -39,22 +40,27 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
   std::string defaultValuepolicy;
   std::string defaultValuetimeout;
   
+  /*UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  ecorecpp::parser::parser parser;
+  */
+  
  try {
    
   //if the user exist 
   if (user.exist()) {
   
+    /*
      UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
      ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
      ConnectOptions_ptr connectOpt = parser.load(std::string(opt))->as< ConnectOptions >();
-   
-     std::cout << "Opt:" << opt << std::endl ;
+    */
+     
+     //std::cout << "Opt:" << opt << std::endl ;
      
       switch (connectOpt->getClosePolicy()) {
        
        case 0: 
-	 
-	      
 	      msession.setClosePolicy( 
 				      optionValueServer.getClosureInfo(user.getAttribut("\
 				      where userid='"+user.getData().getUserId()+"'"))
@@ -69,69 +75,6 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 				     );
 	      } 
 	      
-	      
-	      
-	      
-	      /*
-	      numoption = 
-	      optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "numoptionid", true);
-	      
-	      
-	      userValuepolicy = 
-	      optionValueServer.getAttribut
-	      (
-		"where optionu_numoptionid="+numoption+
-		" and users_numuserid='"
-		 +user.getAttribut("where userid='"+user.getData().getUserId()+"'")
-		 +"'"
-	      );
-	      
-	      
-	      if (userValuepolicy.size() == 0) {
-		  
-		  defaultValuepolicy = 
-		  optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "defaultvalue", true);
-		 
-		  if (convertToInt(defaultValuepolicy) == 1) {  
-		    msession.setClosePolicy(1);
-		    defaultValuetimeout = 
-		    optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
-		    msession.setTimeout(convertToInt(defaultValuetimeout));
-		  } 
-		  else {
-		    msession.setClosePolicy(2);
-		  }
-	      }	//END if no option value policy is defined for the user
-	      else {
-		    msession.setClosePolicy(convertToInt(userValuepolicy));
-		    
-		    //if the value is 1 (CLOSE_ON_TIMEOUT) the timeout have to be defined
-		    if (convertToInt(userValuepolicy) == 1) {
-			numoption = 
-			optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "numoptionid", true);
-			
-			userValuetimeout = optionValueServer.getAttribut
-			(
-			  "where optionu_numoptionid="+numoption+
-			  " and users_numuserid='"
-			  +user.getAttribut("where userid='"+user.getData().getUserId()+"'")
-			  +"'"
-			);
-			  //if no option timeout is defined for the user
-			 if (userValuetimeout.size() == 0) {
-			    defaultValuetimeout = 
-			    optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
-			    msession.setTimeout(convertToInt(defaultValuetimeout));
-			 } //END if no option timeout is defined for the user
-			 else {
-				msession.setTimeout(convertToInt(userValuetimeout));
-			  }
-		      
-		    } // End if the the option value is 1 (CLOSE_ON_TIMEOUT)
-		
-	      } //End Else option value is defined for the user 
-	      */
-	      //std::string numoptionpolicy = optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "numoptionid", true);
        break;
        
        case 1: msession.setClosePolicy(1);
@@ -144,26 +87,6 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 				      optionValueServer.getClosureInfo(user.getAttribut("\
 				      where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT")
 				     );
-			
-			/*numoption = 
-			optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "numoptionid");
-			
-			userValuetimeout = optionValueServer.getAttribut
-			(
-			  "where optionu_numoptionid="+numoption+
-			  " and users_numuserid='"
-			  +user.getAttribut("where userid='"+user.getData().getUserId()+"'")
-			  +"'"
-			);
-			  //if no option timeout is defined for the user
-			 if (userValuetimeout.size() == 0) {
-			    defaultValuetimeout = 
-			    optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "defaultvalue", true);
-			    msession.setTimeout(convertToInt(defaultValuetimeout));
-			 } //END if no option timeout is defined for the user
-			 else {
-				msession.setTimeout(convertToInt(userValuetimeout));
-			  }*/
 		}// END ELSE the timeout is defined
        
 	       break;
@@ -232,6 +155,7 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 	throw e;
  }
   
+  
 	return 0;
 }
  
@@ -298,34 +222,43 @@ int SessionServer::reconnect (UserServer user, MachineClientServer host, std::st
  
 int SessionServer::close() {
   
-  int state = getState();
-    
-  if (state != -1) {
-     if (state != 0) {
-	//TODO: if no running commands
-	std::string sqlCommand("UPDATE vsession SET state=0 WHERE sessionkey='"+msession.getSessionKey()+"';");
-	sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP WHERE sessionkey='"+msession.getSessionKey()+"';");
+  int state;
+  try {
 	
+	UserServer user = UserServer(SessionServer(msession.getSessionKey()));
+	//The init function initializes login and password using the sessionKey
+	user.init();	
 	
-	try {
-	  //TODO: réflechir sur une transaction ici seul pb 
-	    mdatabaseVishnu->process(sqlCommand.c_str());
-	    //mdatabaseVishnu->process(sqlCode.c_str());
-	} catch (SystemException& e) {
+	//We check here if all user information is ok (exist?, blocked?, deleted? passwordState)
+       if (user.exist()) {
+		
+	state = getState();
+	
+	  //if the session is not already closed
+	  if (state != 0) {
+	      //TODO: if no running commands
+	      
+	         
+		      std::string sqlCommand("UPDATE vsession SET state=0 WHERE sessionkey='"+msession.getSessionKey()+"';");
+		      sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP WHERE sessionkey='"+msession.getSessionKey()+"';");
+		      
+		      
+		      
+			//TODO: réflechir sur une transaction ici seul pb 
+			  mdatabaseVishnu->process(sqlCommand.c_str());
+		 
+		
+	  } //END IF STATE != 0 
+	  else {
+	    UMSVishnuException e (4, "The session key is expired. The session is already closed");
 	    throw e;
-	}
-     } //END IF STATE != 0 
-     else {
-       UMSVishnuException e (4, "The session key is expired. The session is already closed");
-       throw e;
-    }
-    
-  } //END IF STATE != -1
-  else {
-    UMSVishnuException e (4, "The session key is unrecognized");
-    throw e;
+	  }
+	  
+	} //END IF The user exist
+	
+  } catch (SystemException& e) {
+		throw e;
   }
-  
   return 0;
 }
  
@@ -353,21 +286,18 @@ int SessionServer::generateSessionKey(std::string salt) {
   timeMilliseconde = tm->tm_hour * 3600 * 1000 + 
   tm->tm_min * 60 * 1000 + tm->tm_sec * 1000 + tv.tv_usec/1000;
   
+  //current time
   sprintf(clef,"%d-%d-%d-%d:%d:%d:%d (~%0.1f ms)", tm->tm_mday, tm->tm_mon+1, tm->tm_year+1900, tm->tm_hour, 
 	  tm->tm_min, tm->tm_sec, (int)tv.tv_usec, timeMilliseconde*rand());
   
-  //sprintf(salt,"$6$%x$",id);
-  salt.append("$");
-  std::string tmpSalt("$1$");
-  tmpSalt.append(salt);
-
-  std::string saltCrypted(std::string(crypt(salt.c_str(),+tmpSalt.c_str())));
   
-  std::cout << "saltCrypted: "<< saltCrypted << std::endl; 
+  //for the md5 encryption
+  std::string tmpSalt = "$1$" + salt + "$";
   
-  std::string globalSalt ("$6$");
-  globalSalt.append(saltCrypted+"$");
+  //For SHA1-512 encryption
+  std::string globalSalt = "$6$"+std::string(crypt(salt.c_str(), tmpSalt.c_str()))+"$";
   
+  //SHA1-512 encryption of the salt encrypted using the md5 and the current time as the clef
   std::cout << "SessionKey generated:" << std::string(crypt(clef,globalSalt.c_str())+5) <<std::endl;
   
   msession.setSessionKey(std::string(crypt(clef,globalSalt.c_str())+5));
@@ -404,7 +334,8 @@ int SessionServer::recordSessionServer(std::string idmachine, std::string iduser
  std::string sqlInsert = 
  //std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, sessionKey, state, closepolicy, timeout) values ");
  std::string("insert into vsession\
- (vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, creation, sessionKey, state, closepolicy, timeout) values "); 
+ (vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, \
+ creation, sessionKey, state, closepolicy, timeout) values "); 
  //std::string("insert into vsession (vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, creation, closure, sessionKey, state, closepolicy, timeout) values ");
  
  std::string values = std::string("('" +msession.getSessionId()+"',"+idmachine+","+iduser+",\
