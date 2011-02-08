@@ -14,7 +14,7 @@
       <revhistory>
         <revision>
         <revnumber>1</revnumber>
-        <date>01/02/2011</date>
+        <date>08/02/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
@@ -127,6 +127,9 @@
             supercomputers, the cluster gateway servers and the cluster processing nodes.</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">Host</emphasis>: represents a physical client or server computer system.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Middleware</emphasis>: an application that sits "in the middle" between application software that
             may be working on different operating systems. It is similar to the middle layer of a three-tier single system architecture,
             except that it is stretched across multiple systems or applications. [source: Wikipedia]</para>
@@ -136,7 +139,7 @@
               on traffic protocol patterns.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">POSIX</emphasis>: standard API to access a filesystem.</para>
+            <para><emphasis role="bold">POSIX</emphasis>: international standard that defines an API to access a filesystem.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Storage resource</emphasis>: a server that is used to store data as files. This definition covers the
@@ -201,7 +204,7 @@
                   <para>- VISHNU architecture must not be tied to a given deployment environment but must be usable on different system and network environments
                     as long as they are compliant with the requirements defined in [D1.1b].</para>
                   <para>- The installation and usage of VISHNU must not require root access on the computing or storage resources.</para>
-                  <para>- The source code must be open (License ???) and VISHNU must be distributed as a debian package or a source package.</para>
+                  <para>- The source code must be under the CeCILL A v2 license and VISHNU must be distributed as a debian package and a source package.</para>
                 </entry>
               </row>
               <row>
@@ -336,6 +339,9 @@
             like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the gateway server.</para>
           </listitem>
           <listitem>
+             <para><emphasis role="bold">Database Server (DBS)</emphasis>: represents a database server used by VISHNU.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Storage server</emphasis>: a server that provides filesystem access to the user through a standard POSIX API.</para>
           </listitem>
           <listitem>
@@ -369,7 +375,7 @@
             <para>
               <itemizedlist>
                 <listitem>
-                   <para><emphasis role="bold">Forwarder</emphasis>: represents a SysFera-DS agent that provides connectivity between
+                   <para><emphasis role="bold">>SysFera-DS Forwarder</emphasis>: represents a SysFera-DS agent that provides connectivity between
                    different networks through a dedicated SSH tunnel.</para>
                 </listitem>
                 <listitem>
@@ -380,15 +386,19 @@
                   <para><emphasis role="bold">VISHNU Admin system (VAS)</emphasis>: represents a component used by an administrator to launch 
                   and stop the VISHNU system and to restart individually VISHNU processes.</para>
                 </listitem>
-                <listitem>
-                  <para><emphasis role="bold">VISHNU Database</emphasis>: represents a database server used by VISHNU.</para>
-                </listitem>
               </itemizedlist>
             </para>
           </listitem>
           <listitem>
+             <para><emphasis role="bold">VISHNU Database</emphasis>: represents the logical database used by VISHNU to store internal data.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">VISHNU Module</emphasis>: macro software component that provides a set of services to the user. It contains both client and 
             server software providing these services. A module may have dependencies to other modules.</para>
+          </listitem>
+          <listitem>
+             <para><emphasis role="bold">VISHNU User</emphasis>: represents the unix user that is used to run all VISHNU internal processes (VBS or VSS) on the different host(s)
+             used by the VISHNU System.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -448,7 +458,7 @@
       </section>
       
       <section>
-        <title>Physical view</title>
+        <title>Logical view</title>
         <para>The Figure 3.2 describes all the tables of the VISHNU database with their relationships.</para>
         <figure>
           <title>VISHNU Database diagram</title>
@@ -465,7 +475,7 @@
     <section>
       <title>Data flows</title>
       <para>The Table 3.1 lists all the VISHNU data flows between the different functional elements of the architecture. Please note that
-        the data flows involving the <quote>Forwarder</quote> component are used only in the case of a deployment the requires crossing
+        the data flows involving the <quote>Forwarder</quote> component are used only in the case of a deployment that requires crossing
         firewalls between different network areas (see chapter 4).</para>
       <para>The bandwidth information provided in the table is an average estimated size for one standard user request sent by the client
         to the VISHNU system. The bandwidth requirement can be obtained by multiplying this value by the request rate. A <quote>standard user request</quote>
@@ -542,7 +552,7 @@
               <entry>VISHNU MA</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry>1Kb*NVSS/request</entry>
+              <entry>1Kb*NVSS /request</entry>
               <entry>SysFera-DS Submit</entry>
             </row>
             <row>
@@ -632,19 +642,19 @@
           <listitem><para> A component can contain internal classifiers that implement the interface provided by the component (internal
             classifiers are shown by a box without the component icon)</para></listitem>
           <listitem><para> A dotted line arrow represent a dependency between two components.</para></listitem>
-          <listitem><para> A circle represents a provided interface and is connected to the component that provides it..</para></listitem>
+          <listitem><para> A circle represents a provided interface and is connected to the component that provides it.</para></listitem>
           <listitem><para> A semi-circle represents a required interface and is connected to the component that requires it.</para></listitem>
         </itemizedlist>
       </para>
       <para>The following terms and abbreviations are used in the Figure 3.3:</para>
       <para>
         <itemizedlist>
-          <listitem><para>CPP : C++</para></listitem>
-          <listitem><para>Py : Python</para></listitem>
-          <listitem><para>Proxy : generic component type described in the <quote>proxy pattern</quote> which is used when a class acts
+          <listitem><para><emphasis role="bold">CPP</emphasis>: C++</para></listitem>
+          <listitem><para><emphasis role="bold">Py</emphasis>: Python</para></listitem>
+          <listitem><para><emphasis role="bold">Proxy</emphasis>: Generic component type described in the <quote>proxy pattern</quote> which is used when a class acts
                      as an interface to another class.</para></listitem>
-          <listitem><para>SeD : Server Daemon</para></listitem>
-          <listitem><para>WS : Web Services package</para></listitem>
+          <listitem><para><emphasis role="bold">SeD</emphasis>: Server Daemon</para></listitem>
+          <listitem><para><emphasis role="bold">WS</emphasis>: Web Services package</para></listitem>
          </itemizedlist>
       </para>
       <figure>
@@ -664,10 +674,21 @@
   <!-- PART 3 : TECHNICAL ARCHITECTURE -->
   <chapter>
     <title>Technical architecture</title>
-    
+    <para>This chapter describes the deployment aspects of a VISHNU System. The first section presents a typical deployment
+      of VISHNU on a single network. The second section presents a more complex deployment of VISHNU where the systems involved
+      are located on different networks inter-connected by firewalls.</para>
     <section>
       <title>Technical architecture diagram</title>
-       <para>TODO
+       <para>The Figure 4.1 shows a VISHNU system deployed on a set of hosts where each class of VSS and VBS is running
+         on one dedicated host and where all clients and servers can connect to each other without crossing network firewalls.
+         The SysFera-DS middleware uses the CORBA Bus for communication between the client systems and MasterAgent (MA) server
+         or a VSS Server , and between MA server and VSS Servers.
+         All VSS Servers connect directly to the Database Server and do not communicate together except
+         for file transfers through SSH (not shown on the diagram).
+       </para>
+       <para>During the startup or termination phases of VISHNU, the VISHNU Admin System (VAS) uses SSH connections to all the
+         VBS and VSS to launch the VISHNU internal processes. These connections are not shown on the diagram for better readability.
+         These connections are all using the VISHNU User SSH keys.
        </para>
        <figure>
           <title>VISHNU Technical architecture diagram</title>
@@ -682,13 +703,25 @@
 
     <section>
       <title>Technical architecture with network firewalls</title>
-      <para>TODO
+      <para>The Figure 4.2 shows a VISHNU system deployed on a set of hosts located on different networks:
        </para>
+       <para><itemizedlist>
+         <listitem><para><emphasis role="bold">Network A</emphasis>: contains a client system (user laptop) and a SysFera-DS Forwarder host.</para></listitem>
+         <listitem><para><emphasis role="bold">Network B</emphasis>: contains VISHNU VBS servers (with one hosting a SysFera-DS Forwarder). This network could also contain some VSS servers.</para></listitem>
+         <listitem><para><emphasis role="bold">Network C</emphasis>: contains the Web server, the Database Server and a SysFera-DS Forwarder host.</para></listitem>
+         <listitem><para><emphasis role="bold">Network D</emphasis>: contains a VSS server (that could be a UMS,TMS,IMS or FMS Server) and a SysFera-DS Forwarder on the same host.</para></listitem>
+       </itemizedlist></para>
+       <para>In this architecture, all inter-network communications are using the SSH protocol or the HTTP protocol (for client to web server). The 
+         SysFera-DS Forwarder agents and the SSH tunnels are started and managed by the VISHNU Admin System.</para>
+       <para>The role of the SysFera-DS Forwarder is to allow CORBA communications (described in §4.1) across network firewalls. A SysFera-DS Forwarder
+         agent must be running on both sides of the firewall and be accessible by other hosts on the same network.</para>
+       <para>The startup and termination phases are identical to the architecture of §4.1., the SysFera-DS Forwarders being started and managed
+         by the VISHNU Admin Server.</para>
        <figure>
           <title>VISHNU Technical architecture with firewalls diagram</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/png/VISHNU Deployment Firewall Diagram.png"
+              <imagedata fileref="images/png/VISHNU Deployment Overview Diagram with firewall.png"
                   align="center" scale="40"/>
             </imageobject>
           </mediaobject>
