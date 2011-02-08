@@ -28,7 +28,7 @@ public:
 	UserServer(std::string userId, std::string password);
 	UserServer(UMS_Data::User user);
 	UserServer(SessionServer sessionServer);
-	int add(UMS_Data::User user);
+	int add(std::string userSerialized);
 	int update(UMS_Data::User user);
 	int deleteUser(UMS_Data::User user);
 	int changePassword(std::string newPassword);
@@ -37,6 +37,7 @@ public:
 	UMS_Data::User getData();
 	bool exist();
 	bool isAdmin();
+	bool isPwdStateOk();//return if the password state ok
 	//int getId();
 	//return the integer attribut of the user
 	std::string getAttribut(std::string condition, std::string attrname = "numuserid");

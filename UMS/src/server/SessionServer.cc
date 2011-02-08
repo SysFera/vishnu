@@ -53,17 +53,30 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
       switch (connectOpt->getClosePolicy()) {
        
        case 0: 
-	      /*TODO: faire dans option une fonction gettimeout et getClosePolicy
-	       * Dans l'objet OptionValueServer faire une méthode init (ou dans le constructeur) qui va chercher 
-	       * les valeur par défaut numoption close policy et timeout et les enregistre
-	       * puis faire getTimeout(numuserId) et getPolicy(numuserId) qui vont chercher les valeurs pour un utilisateur
-	      */
+	 
 	      
-	      /*To get the id of the default option close policy*/
+	      msession.setClosePolicy( 
+				      optionValueServer.getClosureInfo(user.getAttribut("\
+				      where userid='"+user.getData().getUserId()+"'"))
+				      );
+	      
+	      //If the policy is not 2 (CLOSE_ON_DISCONNECT)
+	      if (msession.getClosePolicy() != 2) {
+		  
+		  msession.setTimeout(
+				      optionValueServer.getClosureInfo(user.getAttribut("\
+				      where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT")
+				     );
+	      } 
+	      
+	      
+	      
+	      
+	      /*
 	      numoption = 
 	      optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "numoptionid", true);
 	      
-	      /*To check if the option value policy is defined for the user*/
+	      
 	      userValuepolicy = 
 	      optionValueServer.getAttribut
 	      (
@@ -73,12 +86,12 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 		 +"'"
 	      );
 	      
-	      /* if no option value policy is defined for the user the default option will be used */
+	      
 	      if (userValuepolicy.size() == 0) {
 		  
 		  defaultValuepolicy = 
 		  optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "defaultvalue", true);
-		  
+		 
 		  if (convertToInt(defaultValuepolicy) == 1) {  
 		    msession.setClosePolicy(1);
 		    defaultValuetimeout = 
@@ -117,17 +130,22 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 		    } // End if the the option value is 1 (CLOSE_ON_TIMEOUT)
 		
 	      } //End Else option value is defined for the user 
-	      
+	      */
 	      //std::string numoptionpolicy = optionValueServer.getAttribut("where description='VISHNU_CLOSE_POLICY'", "numoptionid", true);
        break;
        
        case 1: msession.setClosePolicy(1);
               
 		if (connectOpt->getSessionInactivityDelay() != 0) {
-		  msession.setTimeout(connectOpt->getSessionInactivityDelay());
+		    msession.setTimeout(connectOpt->getSessionInactivityDelay());
 		} //END the timeout is defined
 		else {
-			numoption = 
+		    msession.setTimeout(
+				      optionValueServer.getClosureInfo(user.getAttribut("\
+				      where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT")
+				     );
+			
+			/*numoption = 
 			optionValueServer.getAttribut("where description='VISHNU_TIMEOUT'", "numoptionid");
 			
 			userValuetimeout = optionValueServer.getAttribut
@@ -145,7 +163,7 @@ int SessionServer::connectSession(UserServer user, MachineClientServer host, std
 			 } //END if no option timeout is defined for the user
 			 else {
 				msession.setTimeout(convertToInt(userValuetimeout));
-			  }
+			  }*/
 		}// END ELSE the timeout is defined
        
 	       break;
@@ -298,13 +316,13 @@ int SessionServer::close() {
 	}
      } //END IF STATE != 0 
      else {
-       UMSVishnuException e (4, "The sessionKey is expired. The session is already closed");
+       UMSVishnuException e (4, "The session key is expired. The session is already closed");
        throw e;
     }
     
   } //END IF STATE != -1
   else {
-    UMSVishnuException e (4, "The sessionKey is unrecognized");
+    UMSVishnuException e (4, "The session key is unrecognized");
     throw e;
   }
   
@@ -506,6 +524,33 @@ int SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool
   return -1;
  }
 
+}
+
+//TODO utiliser cette fonction dans getState et getSessionKey ou simplement la généraliser pour
+//éviter les répétitions de code
+std::string SessionServer::getAttribut(std::string condition, std::string attrname) {
+ DatabaseResult* result;
+ std::vector<std::string>::iterator ii;
+ 
+ std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
+ std::cout <<"SQL COMMAND:"<<sqlCommand;
+   
+  try {
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  } 
+  catch (SystemException& e) {
+  throw e;
+  }
+  
+  if (result->getNbTuples() != 0) {
+      result->print();
+      std::vector<std::string> tmp = result->get(0);  
+      ii=tmp.begin();
+      return (*ii);
+   } 
+   else {
+	  return "";
+	}
 }
 
 

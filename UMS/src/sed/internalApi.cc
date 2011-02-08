@@ -147,20 +147,22 @@ solveSessionClose(diet_profile_t* pb) {
 int 
 solveUserCreate(diet_profile_t* pb) {
  char* sessionKey = NULL;
- char* user = NULL;
+ char* userSerialized = NULL;
  
  
  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
- diet_string_get(diet_parameter(pb,1), &user, NULL);
- std::cout<<"User:"<< user <<std::endl;
+ diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
+ std::cout<<"User:"<< userSerialized <<std::endl;
  
  SessionServer sessionServer = SessionServer(std::string(sessionKey));
  UserServer userServer = UserServer(sessionServer);
  
+ 
   try {
     std::string empty("");
     //sessionServer.close();
+    userServer.add(userSerialized);
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
@@ -168,7 +170,7 @@ solveUserCreate(diet_profile_t* pb) {
 	std::string errorInfo = e.getMsg()+"==>";
 	errorInfo.append(e.what());
 	std::cout << "errorInfo: " << errorInfo <<std::endl;
-	diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
  
  

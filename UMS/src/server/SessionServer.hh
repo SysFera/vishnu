@@ -35,6 +35,7 @@ public:
 	int close();
 	~SessionServer();
 	UMS_Data::Session getData();
+	std::string getAttribut(std::string condition, std::string attrname="sessionkey");
 	//static std::vector<std::vector <std::string> > get(std::string sqlcode);
 	//static UMS_Data::ListSessions  list(SessionServer session, UMS_Data::ListSessionOptions  options);
 
