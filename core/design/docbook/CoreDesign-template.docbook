@@ -86,10 +86,10 @@
             <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Kb</emphasis>: Kilo-bytes</para>
+            <para><emphasis role="bold">kB</emphasis>: Kilo-bytes</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Mb</emphasis>: Mega-bytes</para>
+            <para><emphasis role="bold">MB</emphasis>: Mega-bytes</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
@@ -375,7 +375,7 @@
             <para>
               <itemizedlist>
                 <listitem>
-                   <para><emphasis role="bold">>SysFera-DS Forwarder</emphasis>: represents a SysFera-DS agent that provides connectivity between
+                   <para><emphasis role="bold">SysFera-DS Forwarder</emphasis>: represents a SysFera-DS agent that provides connectivity between
                    different networks through a dedicated SSH tunnel.</para>
                 </listitem>
                 <listitem>
@@ -512,7 +512,7 @@
               <entry>Client system</entry>
               <entry>VISHNU MA</entry>
               <entry>CORBA</entry>
-              <entry>1Kb/request</entry>
+              <entry>1kB/request</entry>
               <entry>SysFera-DS Request</entry>
             </row>
             <row>
@@ -520,7 +520,7 @@
               <entry>Web server</entry>
               <entry>VISHNU MA</entry>
               <entry>CORBA</entry>
-              <entry>1Kb/request</entry>
+              <entry>1kB/request</entry>
               <entry>SysFera-DS Request</entry>
             </row>
             <row>
@@ -528,7 +528,7 @@
               <entry>Client system</entry>
               <entry>Web server</entry>
               <entry>HTTP (80/tcp)</entry>
-              <entry>2Kb/request</entry>
+              <entry>2kB/request</entry>
               <entry>Web service request</entry>
             </row>
             <row>
@@ -536,7 +536,7 @@
               <entry>Client system</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry>15Kb/request</entry>
+              <entry>15kB/request</entry>
               <entry>SysFera-DS Solve</entry>
             </row>
             <row>
@@ -544,7 +544,7 @@
               <entry>Web server</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry>15Kb/request</entry>
+              <entry>15kB/request</entry>
               <entry>SysFera-DS Solve</entry>
             </row>
             <row>
@@ -552,7 +552,7 @@
               <entry>VISHNU MA</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry>1Kb*NVSS /request</entry>
+              <entry>1kB*NVSS /request</entry>
               <entry>SysFera-DS Submit</entry>
             </row>
             <row>
@@ -560,7 +560,7 @@
               <entry>VISHNU VSS</entry>
               <entry>Database server</entry>
               <entry>Oracle SQL*Net (1521/tcp) or PostgreSQL (5432/tcp)</entry>
-              <entry>11Kb/request</entry>
+              <entry>11kB/request</entry>
               <entry>Database connection</entry>
             </row>
             <row>
@@ -570,6 +570,14 @@
               <entry>SSH (22/tcp)</entry>
               <entry>depends on file size</entry>
               <entry>File transfer between servers</entry>
+            </row>
+	    <row>
+              <entry>VDT</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>CORBA</entry>
+              <entry>TBC (&lt;1kB /request)</entry>
+              <entry>Data transfer between servers</entry>
             </row>
             <row>
               <entry>UFT</entry>
@@ -592,7 +600,7 @@
               <entry>VISHNU VSS</entry>
               <entry>SMTP server</entry>
               <entry>SMTP (25/tcp)</entry>
-              <entry>&lt;10Kb per message</entry>
+              <entry>&lt;10kB per message</entry>
               <entry>Email to users or administrators</entry>
             </row>
             <row>
@@ -600,7 +608,7 @@
               <entry>Admin system (VAS)</entry>
               <entry>VISHNU VSS and VBS</entry>
               <entry>SSH (22/tcp)</entry>
-              <entry>&lt;1Kb/s</entry>
+              <entry>&lt;1kB/s</entry>
               <entry>Control of VISHNU processes</entry>
             </row>
              <row>
@@ -638,9 +646,9 @@
       <para>This diagram is a UML component diagram:</para>
       <para>
         <itemizedlist>
-          <listitem><para> A component can be included inside another parent component (e.g. a package)</para></listitem>
+          <listitem><para> A component can be included inside another parent component (e.g. a package).</para></listitem>
           <listitem><para> A component can contain internal classifiers that implement the interface provided by the component (internal
-            classifiers are shown by a box without the component icon)</para></listitem>
+            classifiers are shown by a box without the component icon).</para></listitem>
           <listitem><para> A dotted line arrow represent a dependency between two components.</para></listitem>
           <listitem><para> A circle represents a provided interface and is connected to the component that provides it.</para></listitem>
           <listitem><para> A semi-circle represents a required interface and is connected to the component that requires it.</para></listitem>
@@ -676,18 +684,18 @@
     <title>Technical architecture</title>
     <para>This chapter describes the deployment aspects of a VISHNU System. The first section presents a typical deployment
       of VISHNU on a single network. The second section presents a more complex deployment of VISHNU where the systems involved
-      are located on different networks inter-connected by firewalls.</para>
+      are located on different networks isolated by firewalls.</para>
     <section>
       <title>Technical architecture diagram</title>
        <para>The Figure 4.1 shows a VISHNU system deployed on a set of hosts where each class of VSS and VBS is running
          on one dedicated host and where all clients and servers can connect to each other without crossing network firewalls.
-         The SysFera-DS middleware uses the CORBA Bus for communication between the client systems and MasterAgent (MA) server
-         or a VSS Server , and between MA server and VSS Servers.
-         All VSS Servers connect directly to the Database Server and do not communicate together except
-         for file transfers through SSH (not shown on the diagram).
+         The SysFera-DS middleware uses the CORBA Bus for communication between the client systems and the MasterAgent (MA) server
+         or a VSS, and between the MA server and a VSS.
+         All VSS connect directly to the Database Server and can communicate together through CORBA or
+	 transfer files through SSH (not shown on the diagram).
        </para>
        <para>During the startup or termination phases of VISHNU, the VISHNU Admin System (VAS) uses SSH connections to all the
-         VBS and VSS to launch the VISHNU internal processes. These connections are not shown on the diagram for better readability.
+         VBS and VSS hosts to launch the VISHNU internal processes. These connections are not shown on the diagram for better readability.
          These connections are all using the VISHNU User SSH keys.
        </para>
        <figure>
@@ -707,14 +715,14 @@
        </para>
        <para><itemizedlist>
          <listitem><para><emphasis role="bold">Network A</emphasis>: contains a client system (user laptop) and a SysFera-DS Forwarder host.</para></listitem>
-         <listitem><para><emphasis role="bold">Network B</emphasis>: contains VISHNU VBS servers (with one hosting a SysFera-DS Forwarder). This network could also contain some VSS servers.</para></listitem>
+         <listitem><para><emphasis role="bold">Network B</emphasis>: contains VISHNU VBSs (with one hosting a SysFera-DS Forwarder). This network could also contain some VSS servers.</para></listitem>
          <listitem><para><emphasis role="bold">Network C</emphasis>: contains the Web server, the Database Server and a SysFera-DS Forwarder host.</para></listitem>
-         <listitem><para><emphasis role="bold">Network D</emphasis>: contains a VSS server (that could be a UMS,TMS,IMS or FMS Server) and a SysFera-DS Forwarder on the same host.</para></listitem>
+         <listitem><para><emphasis role="bold">Network D</emphasis>: contains a VSS (that could be a UMS, TMS, IMS or FMS Server) and a SysFera-DS Forwarder on the same host.</para></listitem>
        </itemizedlist></para>
-       <para>In this architecture, all inter-network communications are using the SSH protocol or the HTTP protocol (for client to web server). The 
-         SysFera-DS Forwarder agents and the SSH tunnels are started and managed by the VISHNU Admin System.</para>
+       <para>In this architecture, all inter-network communications are using the SSH protocol or the HTTP protocol (for client to web server).</para>
        <para>The role of the SysFera-DS Forwarder is to allow CORBA communications (described in §4.1) across network firewalls. A SysFera-DS Forwarder
-         agent must be running on both sides of the firewall and be accessible by other hosts on the same network.</para>
+         agent must be running on both sides of the firewall and be accessible by other hosts on the same network. Within one network, all
+	 communications are as described in §4.1.</para>
        <para>The startup and termination phases are identical to the architecture of §4.1., the SysFera-DS Forwarders being started and managed
          by the VISHNU Admin Server.</para>
        <figure>
