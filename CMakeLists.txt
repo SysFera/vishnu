@@ -78,6 +78,7 @@ set(DATA_BASE_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/database)
 set(CLIENT_PROXY_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/client)
 set(SERVER_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/server)
 set(API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/api)
+set(CLI_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/cli)
 
 add_subdirectory(core/database)
 add_subdirectory(UMS/src)
