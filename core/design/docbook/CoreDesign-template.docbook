@@ -82,9 +82,6 @@
            <listitem>
             <para><emphasis role="bold">FMS</emphasis>: File Management Service (VISHNU Module)</para>
           </listitem>
-           <listitem>
-            <para><emphasis role="bold">For ex.</emphasis>: For example</para>
-          </listitem>
           <listitem>
             <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
           </listitem>
@@ -118,7 +115,7 @@
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">Computing resource</emphasis>: a server that is used to process batch jobs. This definition covers
-            supercomputers, the cluster frontal servers and the cluster processing nodes.</para>
+            supercomputers, the cluster gateway servers and the cluster processing nodes.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Middleware</emphasis>: an application that sits "in the middle" between application software that
@@ -140,7 +137,10 @@
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">(a) VISHNU system</emphasis>: set of all elements (software, hardware, data) that compose a single instance of the
+            <para><emphasis role="bold">SysFera-DS Agent</emphasis>: SysFera-DS process running permanently (or daemon).</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU system</emphasis>: set of all elements (software, hardware, data) that compose a single instance of the
             VISHNU application and that work together to provide VISHNU services to the users.</para>
           </listitem>
         </itemizedlist>
@@ -275,7 +275,7 @@
                   <para>- VISHNU will be based on a distributed service-oriented middleware for the communication between all clients and servers.</para>
                   <para>- VISHNU will be modular so that new services can be easily integrated with the existing ones and so that each module can have its own version.</para>
                   <para>- VISHNU will use the SSH protocol for file transfers and for tunneling of application flows across network firewalls.</para>
-                  <para>- VISHNU will use the mechanisms of the underlying Unix security system to protect access to sensitive information (for ex. SSH keys).</para>
+                  <para>- VISHNU will use the mechanisms of the underlying Unix security system to protect access to sensitive information (e.g. SSH keys).</para>
                 </entry>
               </row>
             </tbody>
@@ -291,13 +291,13 @@
           <colspec/>
           <tbody>
             <row>
-              <entry><para>Availability</para></entry>
+              <entry><para>Availability (TODO)</para></entry><!-- TODO -->
               <entry>
                 <para>- The individual failures of computing or storage resources must not impact the global availability of VISHNU but only services located on that resource.</para>
                 <para>- The individual failure of servers that </para></entry>
             </row>
             <row>
-              <entry><para>Performance</para></entry>
+              <entry><para>Performance</para></entry><!-- TODO -->
               <entry><para>VISHNU</para></entry>
             </row>
           </tbody>
@@ -316,33 +316,58 @@
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">Computing server</emphasis>: a server that provides computing services to the user through a batch scheduler software
-            like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the frontal server.</para>
+            like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the gateway server.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Storage server</emphasis>: a server that provides filesystem access to the user through a standard POSIX API.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">VISHNU Deployment Map</emphasis>: this map defines which physical host is providing which VISHNU services or on which
-            are running VISHNU internal processes. This map will be described physically as a XML file and will be used by SysFera-DS to
-            launch and check the VISHNU system deployment.</para>
+            are running VISHNU internal processes. This map will be described physically as a XML file and will be used by the VISHNU Admin System (see below
+            inside the VBS category) to launch, check and stop the VISHNU system.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU Services Servers (VSS)</emphasis>: this represents all systems that are declared in the VISHNU system by the VISHNU administrator
-                  and on which the VISHNU server software is installed and running. A VSS may be running only a part of the VISHNU services or the whole set
-                  of services (all modules), as this depends on the VISHNU deployment map. Depending on the set of running services on the server,
-                  it will have the following roles in the functional architecture:</para>
-               <listitem>
-                 <para>FMS Server (File Management Server): this role can be assigned only to a Storage Server</para></listitem>
-               <listitem>
-                 <para>IMS Server (Infrastructure Management Server): this role can be assigned to any VSS</para></listitem>
-               <listitem>
-                 <para>TMS Server (Tasks Management Server): this role can be assigned only to a Computing Server</para></listitem>
-               <listitem>
-                 <para>UMS Server (Users Management Server): this role can be assigned to any VSS</para></listitem>
-               </listitem>
+            <para><emphasis role="bold">VISHNU Services Servers (VSS)</emphasis>: this is a generic component of the functional architecture that
+                  represents all the VISHNU server components providing services to the user. The different classes of this generic component are 
+                  the following in the context of the VISHNU 1.0 project, but the list of classes could be extended in the future:</para>
+            <para>
+              <itemizedlist>
+                <listitem>
+                  <para>FMS Server (File Management Server): this role can be assigned only to a Storage Server</para></listitem>
+                <listitem>
+                  <para>IMS Server (Infrastructure Management Server): this role can be assigned to any VSS</para></listitem>
+                <listitem>
+                  <para>TMS Server (Tasks Management Server): this role can be assigned only to a Computing Server</para></listitem>
+                <listitem>
+                  <para>UMS Server (Users Management Server): this role can be assigned to any VSS</para></listitem>
+               </itemizedlist>
+             </para>
+          </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU Backbone servers</emphasis>: this represents all systems that are used by VISHNU to handle user requests and
-             to administrate VISHNU. A VISHNU Backbone server may also be a VISHNU Services Server as these are two independent roles.</para>
+            <para><emphasis role="bold">VISHNU Backbone servers (VBS)</emphasis>: this is a generic component of the functional architecture that 
+             represents all VISHNU server components that are used by VISHNU to handle user requests (i.e. receive the request and forward it
+             to the appropriate VSS) and to administrate VISHNU.
+             A physical server may host both a VISHNU Backbone server and a VISHNU Services Server as these are two independent functionalities.
+             The different classes of this generic component are the following:</para>
+            <para>
+              <itemizedlist>
+                <listitem>
+                   <para><emphasis role="bold">Forwarder</emphasis>: represents a SysFera-DS agent that provides connectivity between
+                   different networks through a dedicated SSH tunnel.</para>
+                </listitem>
+                <listitem>
+                  <para><emphasis role="bold">SysFera-DS MasterAgent (MA)</emphasis>: represents a SysFera-DS agent that
+                  processes requests coming directly from client systems.</para>
+                </listitem>
+                 <listitem>
+                  <para><emphasis role="bold">VISHNU Admin system (VAS)</emphasis>: represents a component used by an administrator to launch 
+                  and stop the VISHNU system and to restart individually VISHNU processes.</para>
+                </listitem>
+                <listitem>
+                  <para><emphasis role="bold">VISHNU Database</emphasis>: represents a database server used by VISHNU.</para>
+                </listitem>
+              </itemizedlist>
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">VISHNU Module</emphasis>: macro software component that provides a set of services to the user. It contains both client and 
@@ -361,7 +386,7 @@
         belong to different inter-related databases, each managing a specific kind of data (a more detailed description of the databases is
         provided in section 3.2). The TMS and FMS Server components also handle some specific interaction with external entities: the
         batch schedulers (LoadLeveler or Torque) for the management of jobs on clusters or supercomputers, and the SCP and RSYNC programs
-        of the underlying Linux system for the transfer of files between two systems that belong to the VISHNU Managed Infrastructure.
+        of the underlying Linux system for the transfer of files between two storage servers or between a client system and a storage server.
        </para>
        <figure>
           <title>VISHNU Functional architecture diagram</title>
@@ -405,8 +430,148 @@
     
     <section>
       <title>Data flows</title>
+      <para>The Table 3.1 lists all the VISHNU data flows between the different functional elements of the architecture. Please note that
+        the data flows involving the <quote>Forwarder</quote> component are used only in the case of a deployment the requires crossing
+        firewalls between different network areas.</para>
+      <table>
+        <title>Test</title>
+        <tgroup cols="6">
+          <colspec colwidth="1cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="3cm"/>
+          <thead>
+            <row>
+              <entry>ID</entry>
+              <entry>Source</entry>
+              <entry>Destination</entry>
+              <entry>Protocol</entry>
+              <entry>Bandwidth</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>CMA</entry>
+              <entry>Client system</entry>
+              <entry>VISHNU MA</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>SysFera-DS Request</entry>
+            </row>
+            <row>
+              <entry>WMA</entry>
+              <entry>Web server</entry>
+              <entry>VISHNU MA</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>SysFera-DS Request</entry>
+            </row>
+            <row>
+              <entry>CWS</entry>
+              <entry>Client system</entry>
+              <entry>Web server</entry>
+              <entry>HTTP (80/tcp)</entry>
+              <entry></entry>
+              <entry>Web service request</entry>
+            </row>
+            <row>
+              <entry>CVS</entry>
+              <entry>Client system</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>SysFera-DS Solve</entry>
+            </row>
+            <row>
+              <entry>WVS</entry>
+              <entry>Web server</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>SysFera-DS Solve</entry>
+            </row>
+            <row>
+              <entry>MAS</entry>
+              <entry>VISHNU MA</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>SysFera-DS Submit</entry>
+            </row>
+            <row>
+              <entry>VSD</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>Database server</entry>
+              <entry>Oracle SQL*Net (1521/tcp) or PostgreSQL (5432/tcp)</entry>
+              <entry></entry>
+              <entry>Database connection</entry>
+            </row>
+            <row>
+              <entry>VFT</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry></entry>
+              <entry>File transfer between servers</entry>
+            </row>
+            <row>
+              <entry>UFT</entry>
+              <entry>Client system or Web server</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry></entry>
+              <entry>Upload file</entry>
+            </row>
+            <row>
+              <entry>DFT</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>Client system or Web server</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry></entry>
+              <entry>Download file</entry>
+            </row>
+            <row>
+              <entry>ADM</entry>
+              <entry>Admin system (VAS)</entry>
+              <entry>VISHNU VSS and VBS</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry></entry>
+              <entry>Control of VISHNU processes</entry>
+            </row>
+             <row>
+              <entry>FWD</entry>
+              <entry>Forwarder</entry>
+              <entry>Forwarder</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry></entry>
+              <entry>CORBA Tunnel</entry>
+            </row>
+            <row>
+              <entry>CWD</entry>
+              <entry>Client system or Web server</entry>
+              <entry>Forwarder</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>CORBA call through forwarder</entry>
+            </row>
+            <row>
+              <entry>SWD</entry>
+              <entry>VISHNU VSS or VBS</entry>
+              <entry>Forwarder</entry>
+              <entry>CORBA</entry>
+              <entry></entry>
+              <entry>CORBA call through forwarder</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <para><emphasis role="bold">CORBA protocol ports</emphasis>: uses the IIOP (Internet Inter-ORB Protocol) on port 2809/tcp by default for omniNames
+       and random user tcp ports.</para>
     </section>
-    
+   
     <section>
       <title>Software architecture diagram</title>
       <figure>
@@ -426,24 +591,6 @@
   <!-- PART 3 : TECHNICAL ARCHITECTURE -->
   <chapter>
     <title>Technical architecture</title>
-    
-    <section>
-      <title>SysFera-DS concepts</title>
-      <para>This section defines some concepts used in the architecture of a system based on SysFera-DS.</para>
-      <itemizedlist>
-        <listitem>
-          <para><emphasis role="bold">MasterAgent (MA)</emphasis>: represents a process running permanently on a given server (daemon) that
-          processes requests coming directly from client systems.</para>
-        </listitem>
-        <listitem>
-          <para><emphasis role="bold">Forwarder</emphasis>: represents a process running permanently on a given server (daemon) that forwards
-          CORBA requests to another forwarder through a dedicated SSH tunnel.</para>
-        </listitem>
-        <listitem>
-          <para></para>
-        </listitem>
-        </itemizedlist>
-    </section>
     
     <section>
       <title>Technical architecture diagram</title>
