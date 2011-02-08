@@ -20,12 +20,12 @@ POSTGREDatabase::process(std::string request){
  
  PGresult* res;
  
- if (PQstatus(conn) == CONNECTION_OK) {
-    res = PQexec(conn, request.c_str());
+ if (PQstatus(mconn) == CONNECTION_OK) {
+    res = PQexec(mconn, request.c_str());
     
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	PQclear(res);
-	std::string errorMsg = std::string(PQerrorMessage(conn));
+	std::string errorMsg = std::string(PQerrorMessage(mconn));
 	errorMsg.append("- Note: The process function must not be used for select request");
 	SystemException e(2, errorMsg);
 	throw e;
@@ -51,22 +51,22 @@ POSTGREDatabase::startTransaction(std::string request){
   
  PGresult* res;
   
- if (PQstatus(conn) == CONNECTION_OK) {  
-    SQLtransaction.clear();
-    SQLtransaction.append(request);
+ if (PQstatus(mconn) == CONNECTION_OK) {  
+   mSQLtransaction.clear();
+   mSQLtransaction.append(request);
   
-    res = PQexec(conn, "BEGIN TRANSACTION;");
+    res = PQexec(mconn, "BEGIN TRANSACTION;");
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	PQclear(res);
-	SystemException e(2, std::string(PQerrorMessage(conn)));
+	SystemException e(2, std::string(PQerrorMessage(mconn)));
 	throw e;
     }
     PQclear(res);
  
-    res = PQexec(conn, SQLtransaction.c_str());
+    res = PQexec(mconn, mSQLtransaction.c_str());
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
         PQclear(res);
-	SystemException e(2, std::string(PQerrorMessage(conn)));
+	SystemException e(2, std::string(PQerrorMessage(mconn)));
 	throw e;
     }
     PQclear(res);
@@ -88,7 +88,7 @@ int
 POSTGREDatabase::connect(){
 
   std::cout << "Connect " << std::endl; 
-  if (PQstatus(conn) != CONNECTION_OK) {
+  if (PQstatus(mconn) != CONNECTION_OK) {
     std::cout << "Connecting " << std::endl; 
      std::ostringstream out;
      out << mport;
@@ -100,7 +100,7 @@ POSTGREDatabase::connect(){
      std::cout << "Connect ?" << std::endl; 
   
      /* Make a connection to the database */
-     conn = PQsetdbLogin(mhost.c_str(),
+     mconn = PQsetdbLogin(mhost.c_str(),
 			  "",
 			  "",
 			  out.str().c_str(),
@@ -108,8 +108,8 @@ POSTGREDatabase::connect(){
 			  musername.c_str(),
 			  mpwd.c_str());		     
 	
-     if (PQstatus(conn) != CONNECTION_OK) {
-	 SystemException e(2, std::string(PQerrorMessage(conn)));
+     if (PQstatus(mconn) != CONNECTION_OK) {
+	 SystemException e(2, std::string(PQerrorMessage(mconn)));
 	 throw e;
      }
      misConnected = true;
@@ -146,7 +146,7 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
  mdatabase    = database;
  misConnected = false;
  mport        = port;     
- conn         = NULL;
+ mconn         = NULL;
  std::cout << "Constructed " << std::endl;
 }
 /**
@@ -165,8 +165,8 @@ POSTGREDatabase::~POSTGREDatabase(){
  */
 int 
 POSTGREDatabase::disconnect(){
-  if (conn != NULL) {
-    PQfinish(conn);
+  if (mconn != NULL) {
+    PQfinish(mconn);
   }
  return SUCCESS;
 }
@@ -181,12 +181,12 @@ POSTGREDatabase::commit (){
     
  PGresult* res;
  
- if (PQstatus(conn) == CONNECTION_OK) { 
-    res = PQexec(conn, "COMMIT TRANSACTION;");
+ if (PQstatus(mconn) == CONNECTION_OK) { 
+    res = PQexec(mconn, "COMMIT TRANSACTION;");
       
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	  PQclear(res);
-	  SystemException e(2, std::string(PQerrorMessage(conn)));
+	  SystemException e(2, std::string(PQerrorMessage(mconn)));
 	  throw e;
     }
     PQclear(res);
@@ -207,7 +207,7 @@ POSTGREDatabase::commit (){
 int
 POSTGREDatabase::setDatabase(std::string db){
   
-  if (PQstatus(conn) != CONNECTION_OK) {
+  if (PQstatus(mconn) != CONNECTION_OK) {
     mdatabase = db;
   }
   else {
@@ -234,13 +234,13 @@ POSTGREDatabase::getResult(std::string request) {
  int i;
  int j;
  
- if (PQstatus(conn) == CONNECTION_OK) {
+ if (PQstatus(mconn) == CONNECTION_OK) {
    
-    res = PQexec(conn, request.c_str());    
+    res = PQexec(mconn, request.c_str());    
      
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
 	  PQclear(res);
-	  SystemException e(2, std::string(PQerrorMessage(conn)));
+	  SystemException e(2, std::string(PQerrorMessage(mconn)));
 	  throw e;
     }
     
@@ -278,11 +278,11 @@ POSTGREDatabase::rollback(){
     
   PGresult* res;
     
-  if (PQstatus(conn) == CONNECTION_OK) {
-      res = PQexec(conn, "ROLLBACK;");
+  if (PQstatus(mconn) == CONNECTION_OK) {
+      res = PQexec(mconn, "ROLLBACK;");
       if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 	  PQclear(res);
-	  SystemException e(2, std::string(PQerrorMessage(conn)));
+	  SystemException e(2, std::string(PQerrorMessage(mconn)));
 	  throw e;
       }
       PQclear(res);   
