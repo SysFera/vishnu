@@ -205,9 +205,12 @@ Wrong:
   void size(int s);
 
 Right:
-  bool isLocal() {return mlocal;} 
-  int  getNumberChildren() {return mchildren;}
-  void setSize(int s) {msize = s;}
+  bool 
+  isLocal() {return mlocal;} 
+  int  
+  getNumberChildren() {return mchildren;}
+  void 
+  setSize(int s) {msize = s;}
 \end{verbatim}
 
 \end{itemize}
@@ -285,7 +288,7 @@ maintain the code.
 Do not use tabs inside the code, and wrap lines after the 80th
 character in a line. We do not like tabs because different editors and editor
 settings always lead to different displays.
-A tab is 4 spaces characters.
+A tab is 2 spaces characters.
 
 Lines have to be indented by two spaces for each code block level.
 
@@ -324,12 +327,13 @@ reference the space has to be put in between the \texttt{*} or the
  \begin{verbatim}
 Wrong:
   char* toto;
-  int \& titi;
+  int & titi;
 
 Right:
   char *toto = NULL;
-  int \&titi = myObject();
-\end{itemize}
+  int &titi = myObject();
+
+\end{verbatim}
 \item All keywords (extern, static, export, explicit,
  inline, ...) and the return type must be on the line line the function
  declaration. In the header and the implementation.
