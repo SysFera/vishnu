@@ -713,6 +713,10 @@
        </itemizedlist></para>
        <para>In this architecture, all inter-network communications are using the SSH protocol or the HTTP protocol (for client to web server). The 
          SysFera-DS Forwarder agents and the SSH tunnels are started and managed by the VISHNU Admin System.</para>
+       <para>The role of the SysFera-DS Forwarder is to allow CORBA communications (described in §4.1) across network firewalls. A SysFera-DS Forwarder
+         agent must be running on both sides of the firewall and be accessible by other hosts on the same network.</para>
+       <para>The startup and termination phases are identical to the architecture of §4.1., the SysFera-DS Forwarders being started and managed
+         by the VISHNU Admin Server.</para>
        <figure>
           <title>VISHNU Technical architecture with firewalls diagram</title>
           <mediaobject>
