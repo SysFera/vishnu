@@ -102,7 +102,7 @@ private :
   /**
   * \brief A PostgreSQL structure
   */
-  PGconn* conn;
+  PGconn* mconn;
   /**
    * \brief The host of the base
    */
@@ -130,7 +130,7 @@ private :
   /**
    * \brief The current transaction
    */
-  std::string SQLtransaction;
+  std::string mSQLtransaction;
   
   /////////////////////////////////
   // Functions

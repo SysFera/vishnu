@@ -19,21 +19,23 @@
 class OptionValueServer
 {
 private:
-	//UMS_Data::OptionValue moptionValue;
+	UMS_Data::OptionValue moptionValue;
 	DbFactory factory;
 	Database *mdatabaseVishnu;
-	std::string moptionName;
+	/*std::string moptionName;
 	std::string moptionValue;
-	//UserServer  muserServer;
+	UserServer  muserServer;*/
  
 public:
 	OptionValueServer();
-	OptionValueServer(std::string optionName, std::string optionValue);//, UserServer muserServer);
+	OptionValueServer(UMS_Data::OptionValue optionvalue);
 	int configureOption();
 	int configureDefaultOption();
 	~OptionValueServer(); 
-	std::string getOptionValue();
+	UMS_Data::OptionValue getOptionValue();
 	std::string getAttribut(std::string condition, std::string attrname="value", bool defaultOptions=false);
+	int getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
+	//int getTimeout(std::string numuserId);
 	//static UMS_Data::ListOptionsValues  list(SessionServer session, UMS_Data::ListOptOptions  options);
 };
 #endif

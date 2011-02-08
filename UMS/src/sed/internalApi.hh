@@ -16,28 +16,35 @@
 #include "MachineClientServer.hh"
 
 /**
-* \brief Function to solve the service SessionConnect 
-* \fn    void solveSessionConnect(diet_profile_t* pb);
+* \brief Function to solve the service sessionConnect 
+* \fn    int solveSessionConnect(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int 
 solveSessionConnect(diet_profile_t* pb);
 /**
-* \brief Function to solve the service SessionReconnect 
-* \fn    void solveSessionReconnect
+* \brief Function to solve the service sessionReconnect 
+* \fn    int solveSessionReconnect(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int 
 solveSessionReconnect(diet_profile_t* pb);
 /**
-* \brief Function to solve the service SessionClose 
-* \fn    virtual int createDatabase() = 0
+* \brief Function to solve the service sessionClose 
+* \fn    int solveSessionClose(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int 
 solveSessionClose(diet_profile_t* pb);  
-
+/**
+* \brief Function to solve the service userCreate 
+* \fn    int solveUserCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserCreate(diet_profile_t* pb);  
 #endif // SERVERUMS
