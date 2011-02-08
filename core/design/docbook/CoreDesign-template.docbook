@@ -26,17 +26,28 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document provides a global view of the architecture for the VISHNU system and its environment. The target audience
+      <para>This document provides a global view of the architecture for VISHNU and its environment. The target audience
         of this document is composed of software, system and network architects. The main objective of this document is to validate
-        that the solution provided, i.e. the VISHNU system, matches the needs and constraints of the target environment. It can also
-        be viewed as a checklist for system deployment.
+        that the solution provided  matches the needs and constraints of the target environment. It can also
+        be considered as a first version of a checklist for system deployment but some deployment details may still not be defined
+        at the time this document is written and may be completed during the project development.
       </para>
     </section>
     <section>
       <title>Document structure</title>
       <para><itemizedlist>
         <listitem>
-          <para>TODO</para>
+          <para>Chapter 1 contains a description of the document itself and definitions of terms and acronyms.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 2 contains a global description of the VISHNU project: its objectives, its context including the main constraints
+            and the main technical choices made for the technical solution proposed by SysFera.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 3 contains a description of the functional architecture of VISHNU: users, functional units, interfaces, data and security.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 4 contains a description of the technical architecture of VISHNU: clients and servers, network, databases.</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -56,7 +67,7 @@
       </itemizedlist></para>
     </section>
     <section>
-      <title>Acronyms</title>
+      <title>Acronyms and abbreviations</title>
       <para>
         <itemizedlist>
 	  <listitem>
@@ -71,12 +82,24 @@
            <listitem>
             <para><emphasis role="bold">FMS</emphasis>: File Management Service (VISHNU Module)</para>
           </listitem>
+           <listitem>
+            <para><emphasis role="bold">For ex.</emphasis>: For example</para>
+          </listitem>
           <listitem>
             <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
+          <listitem>
+            <para><emphasis role="bold">QoS</emphasis>: Quality of Service</para>
+            </listitem>
+           <listitem>
+            <para><emphasis role="bold">TBC</emphasis>: To Be Completed</para>
+           </listitem>
+           <listitem>
+            <para><emphasis role="bold">SSH</emphasis>: Secure Shell</para>
+           </listitem>
            <listitem>
             <para><emphasis role="bold">TMS</emphasis>: Tasks Management Service (VISHNU Module)</para>
           </listitem>
@@ -94,20 +117,31 @@
      <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">Computing server</emphasis>: this represents all systems that provide computing services to the user through a batch scheduler program
-            like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the frontal server.</para>
+            <para><emphasis role="bold">Computing resource</emphasis>: a server that is used to process batch jobs. This definition covers
+            supercomputers, the cluster frontal servers and the cluster processing nodes.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU Managed Infrastructure</emphasis>: this represents all systems that are declared in the VISHNU system by the VISHNU administrator
-                  and on which the VISHNU server software is installed and running. In the case of the frontal server of a cluster, the nodes of the cluster are NOT
-                  considered as part of the managed infrastructure.</para>
+            <para><emphasis role="bold">Middleware</emphasis>: an application that sits "in the middle" between application software that
+            may be working on different operating systems. It is similar to the middle layer of a three-tier single system architecture,
+            except that it is stretched across multiple systems or applications. [source: Wikipedia]</para>
+          </listitem>
+           <listitem>
+            <para><emphasis role="bold">Network firewall</emphasis>: a system that filters the network traffic between two or more different network areas based
+              on traffic protocol patterns.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU Module</emphasis>: macro software component that provides a set of services to the user. It contains both client and 
-            server software providing these services. A module may have dependencies to other modules.</para>
+            <para><emphasis role="bold">POSIX</emphasis>: standard API to access a filesystem.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by the SysFera company.</para>
+            <para><emphasis role="bold">Storage resource</emphasis>: a server that is used to store data as files. This definition covers the
+            user desktops or laptops and all unix servers.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">(a) VISHNU system</emphasis>: set of all elements (software, hardware, data) that compose a single instance of the
+            VISHNU application and that work together to provide VISHNU services to the users.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -117,21 +151,215 @@
   
   <!-- PART 1 : GLOBAL DESCRIPTION -->
   <chapter>
-    <title>Global description of the VISHNU system</title>
+    <title>Global description of VISHNU</title>
+    <para>This chapter contains a synthetic presentation of the ins and outs of the system architecture.</para>
+    <section>
+      <title>Project sheet</title>
+       <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="5cm"/>
+            <colspec/>
+            <tbody>
+              <row>
+                <entry><para>Project Title</para></entry>
+                <entry><para>VISHNU</para></entry>
+              </row>
+              <row>
+                <entry><para>Version</para></entry>
+                <entry><para>1.0</para></entry>
+              </row>
+              <row>
+                <entry><para>Objective</para></entry>
+                <entry><para>To provide a standardized, integrated, secure, reliable and high performance interface to heterogeneous scientific computing resources
+                  used by research and development teams.</para></entry>
+              </row>
+              <row>
+                <entry><para>Beneficiaries</para></entry>
+                <entry><para>EDF R&amp;D</para></entry>
+              </row>
+              <row>
+                <entry><para>Impact</para></entry>
+                <entry><para>This project is critical for the beneficiary organization. The realized system will be transfered to different
+                  enterprise organizations for deployment on their own infrastructure.</para></entry>
+              </row>
+              <row>
+                <entry><para>Project Duration</para></entry>
+                <entry><para>7 months</para></entry>
+              </row>
+              <row>
+                <entry><para>Major constraints</para></entry>
+                <entry>
+                  <para>- VISHNU architecture must not be tied to a given deployment environment but must be usable on different system and network environments
+                    as long as they are compliant with the requirements defined in [D1.1b].</para>
+                  <para>- The installation and usage of VISHNU must not require root access on the computing or storage resources.</para>
+                  <para>- The source code must be open (License ???) and VISHNU must be distributed as a debian package or a source package.</para>
+                </entry>
+              </row>
+              <row>
+                <entry><para>Security constraints</para></entry>
+                <entry>
+                  <para>- VISHNU requires user authentication.</para>
+                </entry>
+                <entry>
+                  <para>- VISHNU does not use data encryption except for file transfers.</para>
+                </entry>
+                <entry>
+                  <para>- VISHNU provides two levels of access privilege: standard users and administrators.</para>
+                </entry>
+                <entry>
+                  <para>- VISHNU does not handle commercially sensitive information.</para>
+                </entry>
+                <entry>
+                  <para>- VISHNU must not compromize access to user unix accounts on the infrastructure.</para>
+                </entry>
+              </row>
+              <row>
+                <entry><para>Traceability constraints</para></entry>
+                <entry>
+                  <para>VISHNU will keep track of all user actions with their date and time, user identifier, client host identifier and action details.</para>
+                  <para>VISHNU will provide a log of all user actions that allows the user herself or an administrator to redo past actions.</para>
+                </entry>
+              </row>
+              <row>
+                <entry><para>System services</para></entry>
+                <entry>
+                  <para>VISHNU will provide the following services:</para>
+                   <itemizedlist>
+                     <listitem>
+                       <para>User management services (UMS): authentication and session management.</para>
+                     </listitem>
+                     <listitem>
+                       <para>Information management services (IMS): monitoring and control services.</para>
+                     </listitem>
+                     <listitem>
+                       <para>Tasks management services (TMS): submission of tasks (jobs) on computing resources.</para>
+                     </listitem>
+                     <listitem>
+                       <para>File management services (FMS): display and transfer of files between storage resources.</para>
+                     </listitem>
+                   </itemizedlist>
+                </entry>
+              </row>
+              <row>
+                <entry><para>System interfaces</para></entry>
+                <entry>
+                  <para>VISHNU will provide the following interfaces:</para>
+                   <itemizedlist>
+                     <listitem>
+                       <para>a Web Services interface</para>
+                     </listitem>
+                     <listitem>
+                       <para>a Python shell interface</para>
+                     </listitem>
+                     <listitem>
+                       <para>a C++ application programming interface (API)</para>
+                     </listitem>
+                     <listitem>
+                       <para>a Unix command line interface</para>
+                     </listitem>
+                   </itemizedlist>
+                </entry>
+              </row>
+              <row>
+                <entry><para>System users</para></entry>
+                <entry><para>VISHNU will be used by managers, engineers and researchers. A user may either use a man-machine interface (web or unix shell)
+                  or a programming interface (Python or C++) to access the system.</para></entry>
+              </row>
+              <row>
+                <entry><para>Database system</para></entry>
+                <entry><para>VISHNU will use either a PostgreSQL 8.x or Oracle 11g database server.</para></entry>
+              </row>
+              <row>
+                <entry><para>Architecture choices</para></entry>
+                <entry>
+                  <para>- VISHNU will be based on a distributed service-oriented middleware for the communication between all clients and servers.</para>
+                  <para>- VISHNU will be modular so that new services can be easily integrated with the existing ones and so that each module can have its own version.</para>
+                  <para>- VISHNU will use the SSH protocol for file transfers and for tunneling of application flows across network firewalls.</para>
+                  <para>- VISHNU will use the mechanisms of the underlying Unix security system to protect access to sensitive information (for ex. SSH keys).</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+    </section>
     
+    <section>
+      <title>QoS objectives</title>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="5cm"/>
+          <colspec/>
+          <tbody>
+            <row>
+              <entry><para>Availability</para></entry>
+              <entry>
+                <para>- The individual failures of computing or storage resources must not impact the global availability of VISHNU but only services located on that resource.</para>
+                <para>- The individual failure of servers that </para></entry>
+            </row>
+            <row>
+              <entry><para>Performance</para></entry>
+              <entry><para>VISHNU</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
   </chapter><!-- PART 1 : GLOBAL DESCRIPTION -->
   
   <!-- PART 2 : FUNCTIONAL ARCHITECTURE -->
   <chapter>
     <title>Functional architecture</title>
     <section>
+      <title>VISHNU concepts</title>
+      <para>This paragraph introduces important concepts that are used in the definition of the functional and technical architecture</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Computing server</emphasis>: a server that provides computing services to the user through a batch scheduler software
+            like LoadLeveler or Torque. In the case of a cluster, the computing server is also known as the frontal server.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Storage server</emphasis>: a server that provides filesystem access to the user through a standard POSIX API.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Deployment Map</emphasis>: this map defines which physical host is providing which VISHNU services or on which
+            are running VISHNU internal processes. This map will be described physically as a XML file and will be used by SysFera-DS to
+            launch and check the VISHNU system deployment.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Services Servers (VSS)</emphasis>: this represents all systems that are declared in the VISHNU system by the VISHNU administrator
+                  and on which the VISHNU server software is installed and running. A VSS may be running only a part of the VISHNU services or the whole set
+                  of services (all modules), as this depends on the VISHNU deployment map. Depending on the set of running services on the server,
+                  it will have the following roles in the functional architecture:</para>
+               <listitem>
+                 <para>FMS Server (File Management Server): this role can be assigned only to a Storage Server</para></listitem>
+               <listitem>
+                 <para>IMS Server (Infrastructure Management Server): this role can be assigned to any VSS</para></listitem>
+               <listitem>
+                 <para>TMS Server (Tasks Management Server): this role can be assigned only to a Computing Server</para></listitem>
+               <listitem>
+                 <para>UMS Server (Users Management Server): this role can be assigned to any VSS</para></listitem>
+               </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Backbone servers</emphasis>: this represents all systems that are used by VISHNU to handle user requests and
+             to administrate VISHNU. A VISHNU Backbone server may also be a VISHNU Services Server as these are two independent roles.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Module</emphasis>: macro software component that provides a set of services to the user. It contains both client and 
+            server software providing these services. A module may have dependencies to other modules.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    
+    <section>
       <title>Functional architecture diagram</title>
-      <para>The Figure 3.1 shows the different functional parts of the VISHNU system and their interactions. On the client side (upper
+      <para>The Figure 3.1 shows the different functional parts of VISHNU and their interactions. On the client side (upper
         part of the diagram) are shown the different interface components that are provided to the users: APIs and command-line interface.
         These interfaces provide access to the different VISHNU modules (UMS, TMS, FMS, IMS) using a client component, that is itself
         connected with the corresponding server component through the SysFera-DS Middleware. The server components handle data items that
         belong to different inter-related databases, each managing a specific kind of data (a more detailed description of the databases is
-        provided in section XXX FIXME). The TMS and FMS Server components also handle some specific interaction with external entities: the
+        provided in section 3.2). The TMS and FMS Server components also handle some specific interaction with external entities: the
         batch schedulers (LoadLeveler or Torque) for the management of jobs on clusters or supercomputers, and the SCP and RSYNC programs
         of the underlying Linux system for the transfer of files between two systems that belong to the VISHNU Managed Infrastructure.
        </para>
@@ -147,7 +375,7 @@
     </section>
     
     <section>
-      <title>Database components
+      <title>Database components</title>
         <para>The following database components are used by the VISHNU system to store persistent data and provide historical data to the users:
           </para>
         <para>
@@ -173,6 +401,7 @@
           </listitem>
         </itemizedlist>
       </para>
+    </section>
     
     <section>
       <title>Data flows</title>
@@ -197,6 +426,25 @@
   <!-- PART 3 : TECHNICAL ARCHITECTURE -->
   <chapter>
     <title>Technical architecture</title>
+    
+    <section>
+      <title>SysFera-DS concepts</title>
+      <para>This section defines some concepts used in the architecture of a system based on SysFera-DS.</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">MasterAgent (MA)</emphasis>: represents a process running permanently on a given server (daemon) that
+          processes requests coming directly from client systems.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Forwarder</emphasis>: represents a process running permanently on a given server (daemon) that forwards
+          CORBA requests to another forwarder through a dedicated SSH tunnel.</para>
+        </listitem>
+        <listitem>
+          <para></para>
+        </listitem>
+        </itemizedlist>
+    </section>
+    
     <section>
       <title>Technical architecture diagram</title>
        <para>TODO
