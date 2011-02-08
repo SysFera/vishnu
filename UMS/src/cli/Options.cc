@@ -103,7 +103,7 @@ Options::add(const std::string& name,
 
 
 
-
+// set the position of the option
 
 void Options::setPosition(const std::string& name, int pos ){
 	this->position.add(name.c_str(),pos);

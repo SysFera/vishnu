@@ -16,12 +16,14 @@ int main (int ac, char* av[]){
 		Configuration config(av[0]);// take the command line name
 
 		string defaultConfig = "VishnuConfig.cfg";
+		
+		int reqParam=0;   // to count the required parameters for the command
 
 		/******* Parsed value containers ****************/
        
 		string dietConfig;
-             
-                string sessionKey;
+                
+		string sessionKey;
 
 		std::string userId;
         
@@ -56,16 +58,16 @@ int main (int ac, char* av[]){
 				"print version message",
 				GENERIC );
 		
-        opt.add<string>("dietConfig,c", 
+        opt.add("dietConfig,c", 
 						            "The diet config file",
 												ENV,
 												dietConfig);
-        opt.add<string >("sessionKey,s",
+        opt.add("sessionKey,s",
                                                  "The session Key",
                                                  ENV,
                                                  sessionKey);				
 
-				opt.add<string>("userId,u",
+				opt.add("userId,u",
 									    	"represents the VISHNU user identifier",
 												HIDDEN,
 												userId);
@@ -92,20 +94,12 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if ((ac < 2)|| (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<" userId "<<endl;
-			
-			cout << opt << endl;
-        
-			return 0;
-
-		}
-
 		
 		if (opt.count("userId")){
 			
 			cout <<"The user identifier is " << userId << endl;
+			
+			reqParam=reqParam+1;
 			
 		}
 		
@@ -113,11 +107,28 @@ int main (int ac, char* av[]){
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;
-                        
-                }
+  
+		}
+		else{
+
+			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+			
+			return 1;
+		}
+
+	
+		if ((reqParam < DUPARAM)|| (opt.count("help"))){
+
+			cout << "Usage: " << av[0] <<" userId "<<endl;
+
+			cout << opt << endl;
+			
+			return 0;
+		}
+
 
 /************** Call UMS connect service *******************************/
-
+/*
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -128,7 +139,7 @@ int main (int ac, char* av[]){
     
 							int res = deleteUser(sessionKey, userId);
 
-
+*/
 		
 
 	}// End of try bloc
