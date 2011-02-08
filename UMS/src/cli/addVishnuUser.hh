@@ -31,6 +31,8 @@
  * the variable is ignored.
  */
 
+const unsigned int AVUPARAM=5;
+
 struct env_name_mapper{
 
 	std::string operator ()(std::string name){
@@ -41,6 +43,12 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
+
+								if(name=="VISHNU_SESSION_KEY"){
+
+									result="sessionKey";
+
+								}
 
 
 		return result;

@@ -16,6 +16,8 @@ int main (int ac, char* av[]){
 		Configuration config(av[0]);// take the command line name
 
 		string defaultConfig = "VishnuConfig.cfg";
+		
+		int reqParam=0;   // to count the required parameters for the command
 
 		/******* Parsed value containers ****************/
        
@@ -60,35 +62,35 @@ int main (int ac, char* av[]){
 				"print version message",
 				GENERIC );
 		
-        opt.add<string>("dietConfig,c", 
+        opt.add("dietConfig,c", 
 						            "The diet config file",
 												ENV,
 												dietConfig);
 				
-				opt.add<int>("privilege,p",
+				opt.add("privilege,p",
 		                 "the privilege of the user (admin or simple user)",
 										 CONFIG,
 										 privilege);
 
 
-				opt.add<string>("userId,u",
+				opt.add("userId,u",
 									    	"represents the VISHNU user identifier",
 												HIDDEN,
 												userId);
 
 				opt.setPosition("userId",-1);
 
-				opt.add<string>("firstname,f",
+				opt.add("firstname,f",
 												"The firstname of the user",
 												CONFIG,
 												firstname);
 
-				opt.add<string>("lastname,l",
+				opt.add("lastname,l",
 												"The lastname of the user",
 												CONFIG,
 												lastname);
 
-				opt.add<string>("email,m",
+				opt.add("email,m",
 												"The email of the user",
 												CONFIG,
 												email);
@@ -109,23 +111,14 @@ int main (int ac, char* av[]){
 
 
 /********  Process **************************/
-
-		if (( ac < 2 )|| (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<" [options] userId "<<endl;
-			
-			cout << opt << endl;
-
-			return 0;
-
-		}
-
 		
 		if (opt.count("userId")){
 			
 			cout <<"The user identifier is " << userId << endl;
 			
 			newUser.setUserId(userId);
+			
+			reqParam=reqParam+1;
 		}
 		
 		if(opt.count("privilege")){
@@ -163,12 +156,30 @@ int main (int ac, char* av[]){
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;
-                        
-                }
+               
+		}
+		else{
+
+			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+			
+			return 1;
+		}
+
+		 
+		if (( reqParam < UUPARAM )|| (opt.count("help"))){
+
+			cout << "Usage: " << av[0] <<" [options] userId "<<endl;
+
+			cout << opt << endl;
+			
+			return 0;
+			
+		}
+
 
 /************** Call UMS connect service *******************************/
 
-               // initializing DIET
+     /*          // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -181,7 +192,7 @@ int main (int ac, char* av[]){
 							int res = updateUser(sessionKey,newUser);
 
 
-		
+		*/
 
 	}// End of try bloc
 

@@ -10,14 +10,8 @@
 
 #include <boost/program_options.hpp>
 #include <boost/function.hpp>
-#include <string>
-#include <list>
-#include <map>
 #include <typeinfo>
 #include <iostream>
-#include <algorithm>
-#include <iterator>
-#include <fstream>
 
 namespace po = boost::program_options;
 class Options;
@@ -41,7 +35,7 @@ public:
    * \brief Constructor by variable
    * \param pgName: The program name
    */
-  Configuration(const std::string& pgName);
+ explicit Configuration(const std::string& pgName);
 
   /**
    * \brief get the program name
@@ -103,18 +97,19 @@ public:
 			 * \brief Constructor by variable taking a command configuration in parameter
 			 * \param 
 			 */
-			Options(Configuration* );
+			explicit Options(Configuration* );
 
 			/**
 			 * \brief function allowing to add a new non-typed option 
 			 */
-			virtual  void add(const std::string&,const std::string&, const Group_type &);
+			  void add(const std::string&,const std::string&, const Group_type &);
 			
 			/**
+			 * 
 			 * \brief function offering a way to add a typed option
 			 * \param name: the name of the option
 			 * \param desc: brief description of the option
-			 * \param group: a group which option belongs to
+			 :/ \param group: a group which option belongs to
 			 */
 
 			template<class T>
@@ -142,19 +137,19 @@ public:
 			 * \brief To set position of options 
 			 */
 			
-			virtual void setPosition(const std::string &, int); 
+			 void setPosition(const std::string &, int); 
 
 			/**
 			 * \brief To parse command line
 			 */
 
-			virtual void parse_cli(int, char*[]);
+		   void parse_cli(int, char*[]);
 
 			/**
 			 * \brief To parse config file
 			 */
 
-			 virtual void parse_cfile();
+			void parse_cfile();
 			 
 			 /**
 			  * \brief To parse environement variable
