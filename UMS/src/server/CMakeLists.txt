@@ -15,9 +15,11 @@ include_directories(
 
  
 add_library(ums-server
+   utilServer.cc
    SessionServer.cc
    UserServer.cc
    MachineClientServer.cc
+   OptionValueServer.cc
 )
 
 target_link_libraries(ums-server
