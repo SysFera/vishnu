@@ -87,9 +87,7 @@ POSTGREDatabase::startTransaction(std::string request){
 int 
 POSTGREDatabase::connect(){
 
-  std::cout << "Connect " << std::endl; 
   if (PQstatus(mconn) != CONNECTION_OK) {
-    std::cout << "Connecting " << std::endl; 
      std::ostringstream out;
      out << mport;
     
@@ -97,7 +95,6 @@ POSTGREDatabase::connect(){
 	SystemException e(2, "The port value is incorrect");
 	throw e; 
      }
-     std::cout << "Connect ?" << std::endl; 
   
      /* Make a connection to the database */
      mconn = PQsetdbLogin(mhost.c_str(),
@@ -113,12 +110,9 @@ POSTGREDatabase::connect(){
 	 throw e;
      }
      misConnected = true;
-     std::cout<<"The connection to the database "<<mdatabase
-     <<" "<<"is successfully completed"<<std::endl;
      
   }//END if NOT CONNECTION_OK 
   else {
-    std::cout << "Connect failed" << std::endl; 
     SystemException e(2, "connect : The database is already connected");
     throw e;
   }
