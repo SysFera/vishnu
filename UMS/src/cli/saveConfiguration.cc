@@ -1,5 +1,7 @@
 #include "saveConfiguration.hh"
 
+#include "utils.hh" 
+
 namespace po = boost::program_options;
 
 using namespace std;
@@ -132,6 +134,26 @@ int main (int ac, char* av[]){
               }
 	
               saveConfiguration(sessionKey,filePath,configuration);
+
+
+              //A enlever apres, c'est juste pour les tests
+      //To set the file path 
+      std::cout << "config filePath=" << configuration.getFilePath() << std::endl;
+      //To set the user list 
+      for(int i = 0; i < configuration.getListConfUsers().size(); i++) {
+        UMS_Data::User_ptr user = configuration.getListConfUsers()[i];
+        print(user, i);
+      }
+      //To set the machine list 
+      for(int i = 0; i < configuration.getListConfMachines().size(); i++) {
+        UMS_Data::Machine_ptr machine = configuration.getListConfMachines().get(i);
+        print(machine, i);
+     }
+     //To set the LocalAccounts list 
+     for(int i = 0; i < configuration.getListConfLocalAccounts().size(); i++) {
+       UMS_Data::LocalAccount_ptr localAccount = configuration.getListConfLocalAccounts().get(i);
+       print(localAccount, i);
+     }
 
 	
 

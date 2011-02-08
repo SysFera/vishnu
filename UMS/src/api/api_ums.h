@@ -8,6 +8,10 @@
 #include "LocalAccountProxy.h"
 #include "ConfigurationProxy.h"
 
+void print(UMS_Data::User_ptr user, int id);
+void print(UMS_Data::Machine_ptr machine, int id); 
+void  print(UMS_Data::LocalAccount_ptr localAccount, int id);
+
 int connect(const std::string& userId, const std::string& password, std::string& sessionKey, 
             const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions()); 
 
@@ -39,4 +43,4 @@ int deleteLocalAccount(const std::string& sessionKey, const std::string& userId,
 
 int saveConfiguration(const std::string& sessionKey, const std::string filePath, UMS_Data::Configuration& config);
 
-int saveConfiguration(const std::string& sessionKey, const UMS_Data::Configuration& config);
+int restoreConfiguration(const std::string& sessionKey, const UMS_Data::Configuration& config);

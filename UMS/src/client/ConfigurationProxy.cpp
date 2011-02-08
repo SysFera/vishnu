@@ -16,7 +16,7 @@ mfilePath(filePath), msessionProxy(session)
 {
 }
  
-ConfigurationProxy::ConfigurationProxy(const UMS_Data::Configuration& config, const SessionProxy& session):
+ConfigurationProxy::ConfigurationProxy(UMS_Data::Configuration* config, const SessionProxy& session):
 mconfiguration(config), msessionProxy(session)
 {
 }
@@ -69,26 +69,11 @@ int ConfigurationProxy::save()
 
   // Parse the model
   ecorecpp::parser::parser parser;
-  UMS_Data::Configuration_ptr config_ptr = parser.load(configurationInString)->as< UMS_Data::Configuration >();
-   
+  //To set the mconfiguration 
+  mconfiguration = parser.load(configurationInString)->as< UMS_Data::Configuration >(); 
   //To set the file path 
-  mconfiguration.setFilePath(mfilePath);
-  //To set the user list 
-  for(int i = 0; i < config_ptr->getListConfUsers().size(); i++) {
-      UMS_Data::User_ptr user = config_ptr->getListConfUsers().get(i);
-      mconfiguration.getListConfUsers().push_back(user);
-  }
-  //To set the machine list 
-  for(int i = 0; i < config_ptr->getListConfMachines().size(); i++) {
-      UMS_Data::Machine_ptr machine = config_ptr->getListConfMachines().get(i);
-      mconfiguration.getListConfMachines().push_back(machine);
-  }
-  //To set the LocalAccounts list 
-  for(int i = 0; i < config_ptr->getListConfLocalAccounts().size(); i++) {
-      UMS_Data::LocalAccount_ptr localAccount = config_ptr->getListConfLocalAccounts().get(i);
-      mconfiguration.getListConfLocalAccounts().push_back(localAccount);
-  }
-
+  mconfiguration->setFilePath(mfilePath);
+  
   //To save the configuration in the file
   std::ofstream ofile(mfilePath.c_str());
   ofile << configurationInString;
@@ -121,7 +106,7 @@ int ConfigurationProxy::restore(bool fromFile)
    else {
      const char* name = "ConfigurationRestore";
      ::ecorecpp::serializer::serializer _ser(name);
-     configurationInString =  strdup((_ser.serialize(&mconfiguration)).c_str());
+     configurationInString =  strdup((_ser.serialize(mconfiguration)).c_str());
    }
    profile = diet_profile_alloc("configurationRestore", 1, 1, 2);
    sessionKey = msessionProxy.getSessionKey();
@@ -170,7 +155,7 @@ int ConfigurationProxy::restoreFromData()
   return restore(false);
 }
  
-UMS_Data::Configuration ConfigurationProxy::getData()
+UMS_Data::Configuration* ConfigurationProxy::getData()
 {
  return mconfiguration;
 }

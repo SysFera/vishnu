@@ -26,7 +26,7 @@ public:
         int add(const UMS_Data::User& user);
 	int update(const UMS_Data::User& user);
 	int deleteUser(const UMS_Data::User& user);
-	int changePassword(const std::string& newPassword);
+	int changePassword(const std::string& password, const std::string& newPassword);
 	int resetPassword(UMS_Data::User& user);
 	UMS_Data::User getData() const;
         SessionProxy getSessionProxy() const;

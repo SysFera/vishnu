@@ -132,8 +132,8 @@ int main (int ac, char* av[]){
                
 				  return 1;
               }
-	
-              restoreConfiguration(sessionKey,filePath,configuration);
+
+              restoreConfiguration(sessionKey, configuration);
 
 	
 
