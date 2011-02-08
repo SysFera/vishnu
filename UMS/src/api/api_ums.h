@@ -6,6 +6,7 @@
 #include "SessionProxy.h"
 #include "MachineProxy.h"
 #include "LocalAccountProxy.h"
+#include "ConfigurationProxy.h"
 
 int connect(const std::string& userId, const std::string& password, std::string& sessionKey, 
             const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions()); 
@@ -35,3 +36,7 @@ int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount&
 int updateLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& localAccount);
 
 int deleteLocalAccount(const std::string& sessionKey, const std::string& userId, const std::string& machineId);
+
+int saveConfiguration(const std::string& sessionKey, const std::string filePath, UMS_Data::Configuration& config);
+
+int saveConfiguration(const std::string& sessionKey, const UMS_Data::Configuration& config);
