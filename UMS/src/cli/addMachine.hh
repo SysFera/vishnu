@@ -1,9 +1,9 @@
-#ifndef DELETEUSER_HH
-#define DELETEUSER_HH
+#ifndef ADDMACHINE_HH
+#define ADDMACHINE_HH
 
 /**
- * \file deleteUser.hh
- * This file defines convenients functions for the VISHNU delete user process
+ * \file addMachine.hh
+ * This file defines convenients functions for the VISHNU add machine  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -19,7 +19,6 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
-#include "ConnectOptions.hpp"
 
 
 /*
@@ -31,7 +30,8 @@
  * the variable is ignored.
  */
 
-const unsigned int DUPARAM=1;
+const unsigned int AMPARAM=3;
+
 
 struct env_name_mapper{
 
@@ -43,10 +43,11 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
-                if (name=="VISHNU_SESSION_KEY") {
-
-                        result="sessionKey";
-                }
+								if(name=="VISHNU_SESSION_KEY"){
+									
+									result="sessionKey";
+								}
+		
 
 
 		return result;

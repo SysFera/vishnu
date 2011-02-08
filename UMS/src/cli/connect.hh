@@ -30,6 +30,8 @@
  * the variable is ignored.
  */
 
+const unsigned int CPARAM=1;
+
 struct env_name_mapper{
 
 	std::string operator ()(std::string name){

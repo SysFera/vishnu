@@ -1,6 +1,6 @@
 
 
-#include "deleteLocalAccount.hh"
+#include "updateMachine.hh"
 
 namespace po = boost::program_options;
 
@@ -22,15 +22,22 @@ int main (int ac, char* av[]){
        
 		string dietConfig;
 
-		std::string userId;
+		std::string name;
         
-		std::string machineId;
+		std::string site;
+
+		std::string language;
+		
+		std::string machineDescription; 
+		
+		std::string machineId; 
 		
 		std::string sessionKey;
 
 
 		/********** EMF data ************/
 
+		UMS_Data::Machine newMachine;
 
 
 
@@ -62,24 +69,32 @@ int main (int ac, char* av[]){
 												ENV,
 												dietConfig);
 				
-				opt.add("userId",
-		                 "the Vishnu user identifier of the user of the local user configuration",
-										 HIDDEN,
-										 userId);
+				opt.add("name,n",
+		                 "The name of the machine",
+										 CONFIG,
+										 name);
 
-				opt.setPosition("userId",1);
+				opt.add("site,s",
+								"The location of the machine",
+								CONFIG,
+								site);
 
+				opt.add("language,l",
+												"The language in which the description of the machine has been done",
+												CONFIG,
+												language);
+
+				opt.add("machineDescription,d",
+											"The description of the machine, it is an interactive option",	
+												CONFIG);
 
 				opt.add("machineId",
-									    	"the identifier of the machine associated to the local user configuration",
+											"The identifier of the machine",	
 												HIDDEN,
 												machineId);
 
-				opt.setPosition("machineId",1);
+				opt.setPosition("machineId",-1);
 
-
-
-										
 				opt.add("sessionKey",
 												"The session key",
 												ENV,
@@ -101,29 +116,52 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
+		if (opt.count("machineId")){
+			
+			cout <<"The machine identifier is " << machineId << endl;
+			
+			newMachine.setMachineId(machineId);
+			
+			reqParam=reqParam+1;
+		}
+		
+		if (opt.count("name")){
+			
+			cout <<"The name of the machine is " << name << endl;
+			
+			newMachine.setName(name);
+		}
 
-		
-		if (opt.count("userId")){
+		if(opt.count("site")){
 			
-			cout <<"The user identifier is " << userId << endl;
+			cout <<"the site is : " << site << endl;
 			
-			reqParam=reqParam+1;
+			newMachine.setSite(site);
 			
 		}
 		
-		if(opt.count("machineId")){
+		if(opt.count("language")){
+
+			cout << "The language is " << language << endl;
 			
-			cout <<"the machineId is : " << machineId << endl;
-			
-			reqParam=reqParam+1;
+			newMachine.setLanguage(language);
+                        
 		}
-		
+
+		if(opt.count("machineDescription")){//Fix me
+
+		cout << "Enter the Machine Description:\n ";
+
+		cin >> machineDescription;
+			
+		newMachine.setMachineDescription(machineDescription);
+
+		}
             
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;           
 		}
-
 		else{
 
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
@@ -131,16 +169,16 @@ int main (int ac, char* av[]){
 			return 1;
 		}
 
-		if ((reqParam < DLAPARAM) || (opt.count("help"))){
-			
-			cout << "Usage: " << av[0] <<"  userId machineId "<<endl;
 
+		if ((reqParam < UMPARAM) || (opt.count("help"))){
+			
+			cout << "Usage: " << av[0] <<" [options] machineId "<<endl;
 				     
 			cout << opt << endl;
-
 							      
 			return 0;
 		}
+
 
 
 
@@ -156,7 +194,7 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = deleteLocalAccount(sessionKey,userId,machineId);
+							int res = updateMachine(sessionKey,newMachine);
 
 
 	*/	

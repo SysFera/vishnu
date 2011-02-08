@@ -63,12 +63,12 @@ int main (int ac, char* av[]){
 				"print version message",
 				GENERIC );
 		
-        opt.add<string>("dietConfig,c", 
+        opt.add("dietConfig,c", 
 						            "The diet config file",
 												ENV,
 												dietConfig);
 				
-				opt.add<string>("userId",
+				opt.add("userId",
 		                 "the Vishnu user identifier of the user of the local user configuration",
 										 HIDDEN,
 										 userId);
@@ -76,14 +76,14 @@ int main (int ac, char* av[]){
 				opt.setPosition("userId",1);
 
 
-				opt.add<string>("machineId",
+				opt.add("machineId",
 									    	"the identifier of the machine associated to the local user configuration",
 												HIDDEN,
 												machineId);
 
 				opt.setPosition("machineId",1);
 
-				opt.add<string>("acLogin",
+				opt.add("acLogin",
 												"login of the user on the associated machine",
 												HIDDEN,
 												acLogin);
@@ -91,7 +91,7 @@ int main (int ac, char* av[]){
 				opt.setPosition("acLogin",1);
 
 
-				opt.add<string>("sshKeyPath",
+				opt.add("sshKeyPath",
 												"The path of the ssh key of the user on the associated machine",
 												HIDDEN,
 												sshKeyPath);
@@ -99,14 +99,14 @@ int main (int ac, char* av[]){
 				opt.setPosition("sshKeyPath",1);
 
 
-				opt.add<string>("homeDirectory",
+				opt.add("homeDirectory",
 												"The path of the home directory of the user on the associated machine",
 												HIDDEN,
 												homeDirectory);
 										
 				opt.setPosition("homeDirectory",1);
 
-				opt.add<string>("sessionKey",
+				opt.add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
@@ -182,6 +182,12 @@ int main (int ac, char* av[]){
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;           
+		}
+		else{
+
+			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+			
+			return 1;
 		}
 
 

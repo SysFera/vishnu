@@ -1,6 +1,6 @@
 
 
-#include "deleteLocalAccount.hh"
+#include "deleteMachine.hh"
 
 namespace po = boost::program_options;
 
@@ -22,9 +22,7 @@ int main (int ac, char* av[]){
        
 		string dietConfig;
 
-		std::string userId;
-        
-		std::string machineId;
+		std::string machineId; 
 		
 		std::string sessionKey;
 
@@ -62,24 +60,13 @@ int main (int ac, char* av[]){
 												ENV,
 												dietConfig);
 				
-				opt.add("userId",
-		                 "the Vishnu user identifier of the user of the local user configuration",
-										 HIDDEN,
-										 userId);
-
-				opt.setPosition("userId",1);
-
-
 				opt.add("machineId",
-									    	"the identifier of the machine associated to the local user configuration",
+											"The identifier of the machine",	
 												HIDDEN,
 												machineId);
 
-				opt.setPosition("machineId",1);
+				opt.setPosition("machineId",-1);
 
-
-
-										
 				opt.add("sessionKey",
 												"The session key",
 												ENV,
@@ -101,29 +88,17 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-
-		
-		if (opt.count("userId")){
+		if (opt.count("machineId")){
 			
-			cout <<"The user identifier is " << userId << endl;
-			
-			reqParam=reqParam+1;
-			
-		}
-		
-		if(opt.count("machineId")){
-			
-			cout <<"the machineId is : " << machineId << endl;
+			cout <<"The machine identifier is " << machineId << endl;
 			
 			reqParam=reqParam+1;
 		}
-		
             
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;           
 		}
-
 		else{
 
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
@@ -131,16 +106,16 @@ int main (int ac, char* av[]){
 			return 1;
 		}
 
-		if ((reqParam < DLAPARAM) || (opt.count("help"))){
-			
-			cout << "Usage: " << av[0] <<"  userId machineId "<<endl;
 
+		if ((reqParam < DMPARAM) || (opt.count("help"))){
+			
+			cout << "Usage: " << av[0] <<"  machineId "<<endl;
 				     
 			cout << opt << endl;
-
 							      
 			return 0;
 		}
+
 
 
 
@@ -156,7 +131,7 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = deleteLocalAccount(sessionKey,userId,machineId);
+							int res = deleteMachine(sessionKey,machineId);
 
 
 	*/	
