@@ -57,8 +57,10 @@ ServerUMS::init() {
      mdatabaseVishnu->process("insert into vishnu (updatefreq, usercpt) values (0, 0)");
      
      /*Insertion of the default admin user*/
-     mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate) values (1, 'admin','admin', 1, 1)");
-    //TODO: Récupérer le vishnu_vishnuid c'est plus propre (par défault ici c'est 1)
+     mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, deleted, blocked)\
+     values (1, 'admin','admin', 1, 1, 0, 0)");
+    //TODO: Récupérer le vishnu_vishnuid c'est plus propre (par défault ici c'est 1) ou éviter un incrément dans la table
+    //vishnu et mettre vishnu_vishnuid à 1 idem pour ce qui suit
      
      /*Insertion of the default option values*/ //TODO optionid ne sert à rien l'autoincréménte suffit
      mdatabaseVishnu->process("insert into optionu (optionid, description, defaultvalue) values (1, 'VISHNU_CLOSE_POLICY', 1)");
@@ -131,8 +133,6 @@ ServerUMS::init() {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(profile, NULL, solveUserCreate);
  
-  
-  
   diet_profile_desc_free(profile);
 }
 
