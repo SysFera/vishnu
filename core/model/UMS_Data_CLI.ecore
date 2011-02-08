@@ -4,12 +4,6 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="UMS_Data_CLI"
     nsURI="http://www.sysfera.com/emf/ums/data/cli" nsPrefix="ums_data_cli">
   <eClassifiers xsi:type="ecore:EClass" name="AddUserOptions" instanceTypeName="AddUserOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the VISHNU user identifier"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstname" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">

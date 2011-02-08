@@ -8,21 +8,23 @@
 #include <assert.h>
 
 #include "SessionProxy.h"
-#include "UMS_Data/LocalAccount.h"
+#include "LocalAccount.hpp"
 
 class LocalAccountProxy
 {
-private:
-	UMS_Data::LocalAccount localAccount;
-	SessionProxy sessionProxy;
-	SessionProxy sessionProxy;
  
 public:
-	void LocalAccountProxy(UMS_Data::LocalAccount localAccount, SessionProxy session);
+	LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session);
 	int add();
 	int update();
-	int delete();
-	void ~LocalAccountProxy();
+	int deleteLocalAccount();
 	SessionProxy getSessionProxy();
+        ~LocalAccountProxy();
+
+private:
+        int _addLocalAccountInformation(bool isNewMachine=true);
+
+        UMS_Data::LocalAccount mlocalAccount;
+        SessionProxy msessionProxy;
 };
 #endif

@@ -1,4 +1,4 @@
-#include "reconnect.hh"
+#include "changePassword.hh"
 
 namespace po = boost::program_options;
 
@@ -8,7 +8,8 @@ int main (int ac, char* av[]){
 
 	try {
                 string userId;
-                string password;
+                string oldPassword;
+                string newPassword;
                 string sessionId;
                 string sessionKey;
                 string dietConfig;
@@ -51,12 +52,6 @@ int main (int ac, char* av[]){
 		opt.setPosition("userId",1);
 
 
-		 opt.add<string>("sessionId,s",
-				 		 "represents the identifier of the session",
-						 HIDDEN,
-						 sessionId);
-
-		 opt.setPosition("sessionId",1);
 
 
 
@@ -77,9 +72,9 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if ((ac < 3)|| (opt.count("help"))){
+		if ((ac < 2)|| (opt.count("help"))){
 
-			 cout << "Usage: " << av[0] <<" [options] userId sessionId"<<endl;
+			 cout << "Usage: " << av[0] <<" userId"<<endl;
 
 			cout << opt << endl;
 
@@ -88,7 +83,9 @@ int main (int ac, char* av[]){
 		}
 		else{
 
-			password=getpass("Password: ");
+			oldPassword=getpass("old password: ");
+			
+			newPassword=getpass("new password: ");
 
 		}
 
@@ -98,15 +95,18 @@ int main (int ac, char* av[]){
 			cout <<"The user identifier is " << userId << endl;
 		}
 		
-		if(!password.empty()){
+		if(!oldPassword.empty()){
 			
-			cout <<"the password is set to: " << password << endl;
+			cout <<"the old password was: " << oldPassword << endl;
 		}
 		
-		if(opt.count("sessionId")){
+		if(!newPassword.empty()){
 
-			cout << "The session identifier is " << sessionId <<endl;
+			cout << "The new password is: " << newPassword << endl;
+
 		}
+
+
 
 		if (opt.count("dietConfig")){
 
@@ -117,7 +117,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                    
@@ -126,8 +126,8 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 	
-              reconnect(userId, password, sessionId, sessionKey);
-
+              changePassword(userId, oldPassword, newPassword);
+*/
 	
 
 	}// End of try bloc

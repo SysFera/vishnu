@@ -17,7 +17,9 @@ include_directories(${Boost_INCLUDE_DIRS}
 #declare all command lines provided
 
 set(ALLCLI connect reconnect close
-		    addVishnuUser updateUser deleteUser)
+		    addVishnuUser updateUser deleteUser
+				changePassword resetPassword
+				 addLocalAccount updateLocalAccount deleteLocalAccount)
 
 
 # macro to generate all command lines
