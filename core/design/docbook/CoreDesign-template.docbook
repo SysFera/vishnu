@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
     <info>
       <title>D1.1g - VISHNU Technical Architecture</title>
       <author>
