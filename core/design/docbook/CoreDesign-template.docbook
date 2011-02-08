@@ -86,6 +86,12 @@
             <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">Kb</emphasis>: Kilo-bytes</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Mb</emphasis>: Mega-bytes</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
           <listitem>
@@ -99,6 +105,9 @@
            </listitem>
            <listitem>
             <para><emphasis role="bold">TMS</emphasis>: Tasks Management Service (VISHNU Module)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UML</emphasis>: Unified Modeling Language (current version: v2.3)</para>
           </listitem>
 	  <listitem>
 	    <para><emphasis role="bold">UMS</emphasis>: Users Management Service (VISHNU Module)</para>
@@ -276,6 +285,7 @@
                   <para>- VISHNU will be modular so that new services can be easily integrated with the existing ones and so that each module can have its own version.</para>
                   <para>- VISHNU will use the SSH protocol for file transfers and for tunneling of application flows across network firewalls.</para>
                   <para>- VISHNU will use the mechanisms of the underlying Unix security system to protect access to sensitive information (e.g. SSH keys).</para>
+                  <para>- VISHNU will store all internal and user data (except user files) in a central database.</para>
                 </entry>
               </row>
             </tbody>
@@ -291,14 +301,21 @@
           <colspec/>
           <tbody>
             <row>
-              <entry><para>Availability (TODO)</para></entry><!-- TODO -->
+              <entry>Availability</entry>
               <entry>
-                <para>- The individual failures of computing or storage resources must not impact the global availability of VISHNU but only services located on that resource.</para>
-                <para>- The individual failure of servers that </para></entry>
+                <para>- The individual failure of a computing or storage resource must not impact the global availability of VISHNU but only services located on that resource.</para>
+                <para>- The components of the VISHNU system with the exception of the Web Server and the Database will be monitored internally and restarted automatically within less than 1 minute (the real delay will depend 
+                        on the monitoring frequency which will be set by the administrator)</para>
+                <para>- VISHNU will keep internal data stored in a central database and use this data to recover its state before a crash or manual termination.</para>
+                <para>- VISHNU will depend on the central server database for providing all its services.</para>
+              </entry>
             </row>
             <row>
-              <entry><para>Performance</para></entry><!-- TODO -->
-              <entry><para>VISHNU</para></entry>
+              <entry>Performance</entry>
+              <entry>
+                <para>- VISHNU will support at least 100 simultaneous users and peaks of 100 simultaneous requests.</para>
+                <para>- The latency for all user requests sent through the VISHNU C++ API or CLI will be less than a similar request done using SSH.</para>
+              </entry>
             </row>
           </tbody>
         </tgroup>
@@ -432,9 +449,19 @@
       <title>Data flows</title>
       <para>The Table 3.1 lists all the VISHNU data flows between the different functional elements of the architecture. Please note that
         the data flows involving the <quote>Forwarder</quote> component are used only in the case of a deployment the requires crossing
-        firewalls between different network areas.</para>
+        firewalls between different network areas (see chapter 4).</para>
+      <para>The bandwidth information provided in the table is an average estimated size for one standard user request sent by the client
+        to the VISHNU system. The bandwidth requirement can be obtained by multiplying this value by the request rate. A <quote>standard user request</quote>
+        is a request that returns data to the user about VISHNU managed objects (users, sessions, commands, jobs, file transfers, accounts)
+        considering that the size of this data set is not more than 10KBytes.</para>
+      <para>The <emphasis role="bold">NVSS</emphasis> number represents the number of VISHNU Services Servers in the VISHNU System. Please note that this is
+        the number of logical servers not the number of physical servers.</para>
+      <para>The <emphasis role="bold">aggregation</emphasis> term is used when the bandwidth of the flow is the aggregation of the bandwidth
+        of all flows that are tunneled through that flow.</para>
+      <para>The <emphasis role="bold">CORBA</emphasis> protocol ports: CORBA uses the IIOP (Internet Inter-ORB Protocol) on port 2809/tcp by default for omniNames
+       and random user tcp ports.</para>
       <table>
-        <title>Test</title>
+        <title>VISHNU Data Flows</title>
         <tgroup cols="6">
           <colspec colwidth="1cm"/>
           <colspec colwidth="3cm"/>
@@ -458,7 +485,7 @@
               <entry>Client system</entry>
               <entry>VISHNU MA</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>1Kb/request</entry>
               <entry>SysFera-DS Request</entry>
             </row>
             <row>
@@ -466,7 +493,7 @@
               <entry>Web server</entry>
               <entry>VISHNU MA</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>1Kb/request</entry>
               <entry>SysFera-DS Request</entry>
             </row>
             <row>
@@ -474,7 +501,7 @@
               <entry>Client system</entry>
               <entry>Web server</entry>
               <entry>HTTP (80/tcp)</entry>
-              <entry></entry>
+              <entry>2Kb/request</entry>
               <entry>Web service request</entry>
             </row>
             <row>
@@ -482,7 +509,7 @@
               <entry>Client system</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>15Kb/request</entry>
               <entry>SysFera-DS Solve</entry>
             </row>
             <row>
@@ -490,7 +517,7 @@
               <entry>Web server</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>15Kb/request</entry>
               <entry>SysFera-DS Solve</entry>
             </row>
             <row>
@@ -498,7 +525,7 @@
               <entry>VISHNU MA</entry>
               <entry>VISHNU VSS</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>1Kb*NVSS/request</entry>
               <entry>SysFera-DS Submit</entry>
             </row>
             <row>
@@ -506,7 +533,7 @@
               <entry>VISHNU VSS</entry>
               <entry>Database server</entry>
               <entry>Oracle SQL*Net (1521/tcp) or PostgreSQL (5432/tcp)</entry>
-              <entry></entry>
+              <entry>11Kb/request</entry>
               <entry>Database connection</entry>
             </row>
             <row>
@@ -514,7 +541,7 @@
               <entry>VISHNU VSS</entry>
               <entry>VISHNU VSS</entry>
               <entry>SSH (22/tcp)</entry>
-              <entry></entry>
+              <entry>depends on file size</entry>
               <entry>File transfer between servers</entry>
             </row>
             <row>
@@ -522,7 +549,7 @@
               <entry>Client system or Web server</entry>
               <entry>VISHNU VSS</entry>
               <entry>SSH (22/tcp)</entry>
-              <entry></entry>
+              <entry>depends on file size</entry>
               <entry>Upload file</entry>
             </row>
             <row>
@@ -530,15 +557,23 @@
               <entry>VISHNU VSS</entry>
               <entry>Client system or Web server</entry>
               <entry>SSH (22/tcp)</entry>
-              <entry></entry>
+              <entry>depends on file size</entry>
               <entry>Download file</entry>
+            </row>
+            <row>
+              <entry>VSE</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>SMTP server</entry>
+              <entry>SMTP (25/tcp)</entry>
+              <entry>&lt;10Kb per message</entry>
+              <entry>Email to users or administrators</entry>
             </row>
             <row>
               <entry>ADM</entry>
               <entry>Admin system (VAS)</entry>
               <entry>VISHNU VSS and VBS</entry>
               <entry>SSH (22/tcp)</entry>
-              <entry></entry>
+              <entry>&lt;1Kb/s</entry>
               <entry>Control of VISHNU processes</entry>
             </row>
              <row>
@@ -546,7 +581,7 @@
               <entry>Forwarder</entry>
               <entry>Forwarder</entry>
               <entry>SSH (22/tcp)</entry>
-              <entry></entry>
+              <entry>aggregation</entry>
               <entry>CORBA Tunnel</entry>
             </row>
             <row>
@@ -554,7 +589,7 @@
               <entry>Client system or Web server</entry>
               <entry>Forwarder</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>aggregation</entry>
               <entry>CORBA call through forwarder</entry>
             </row>
             <row>
@@ -562,18 +597,39 @@
               <entry>VISHNU VSS or VBS</entry>
               <entry>Forwarder</entry>
               <entry>CORBA</entry>
-              <entry></entry>
+              <entry>aggregation</entry>
               <entry>CORBA call through forwarder</entry>
             </row>
           </tbody>
         </tgroup>
       </table>
-      <para><emphasis role="bold">CORBA protocol ports</emphasis>: uses the IIOP (Internet Inter-ORB Protocol) on port 2809/tcp by default for omniNames
-       and random user tcp ports.</para>
     </section>
    
     <section>
       <title>Software architecture diagram</title>
+      <para>The Figure 3.1 describes the different software components of VISHNU with their dependencies.</para>
+      <para>This diagram is a UML component diagram:</para>
+      <para>
+        <itemizedlist>
+          <listitem><para> A component can be included inside another parent component (e.g. a package)</para></listitem>
+          <listitem><para> A component can contain internal classifiers that implement the interface provided by the component (internal
+            classifiers are shown by a box without the component icon)</para></listitem>
+          <listitem><para> A dotted line arrow represent a dependency between two components.</para></listitem>
+          <listitem><para> A circle represents a provided interface and is connected to the component that provides it..</para></listitem>
+          <listitem><para> A semi-circle represents a required interface and is connected to the component that requires it.</para></listitem>
+        </itemizedlist>
+      </para>
+      <para>The following terms and abbreviations are used in the Figure 3.1:</para>
+      <para>
+        <itemizedlist>
+          <listitem><para>CPP : C++</para></listitem>
+          <listitem><para>Py : Python</para></listitem>
+          <listitem><para>Proxy : generic component type described in the <quote>proxy pattern</quote> which is used when a class acts
+                     as an interface to another class.</para></listitem>
+          <listitem><para>SeD : Server Daemon</para></listitem>
+          <listitem><para>WS : Web Services package</para></listitem>
+         </itemizedlist>
+      </para>
       <figure>
           <title>VISHNU Software architecture diagram</title>
           <mediaobject>
@@ -606,7 +662,7 @@
           </mediaobject>
         </figure>
     </section>
-    
+
     <section>
       <title>Technical architecture with network firewalls</title>
       <para>TODO
