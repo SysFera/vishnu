@@ -124,7 +124,7 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
    return (strlen(errorInfo) > 0);
 }
  
-int UserProxy::changePassword(const std::string& newPassword)
+int UserProxy::changePassword(const std::string& password, const std::string& newPassword)
 {
 
    diet_profile_t* profile = NULL;
@@ -133,11 +133,11 @@ int UserProxy::changePassword(const std::string& newPassword)
    profile = diet_profile_alloc("userPasswordChange", 2, 2, 3);
 
    //IN Parameters  
-   if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
+   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
        ERRMSG("Error in diet_string_set");
    }
 
-   if(diet_string_set(diet_parameter(profile,1), strdup((muser.getPassword()).c_str()), DIET_VOLATILE)) {
+   if(diet_string_set(diet_parameter(profile,1), strdup(password.c_str()), DIET_VOLATILE)) {
        ERRMSG("Error in diet_string_set");
    }
 

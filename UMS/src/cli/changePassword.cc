@@ -51,12 +51,6 @@ int main (int ac, char* av[]){
 								 ENV,
 					       sessionKey);
 
-		opt.add("userId,u",
-						"represents the VISHNU user identifier",
-						HIDDEN,
-						userId);
-
-		opt.setPosition("userId",-1);
 
 
 
@@ -79,14 +73,6 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 		
-		if (opt.count("userId")){
-			
-			cout <<"The user identifier is " << userId << endl;
-
-			reqParam=reqParam+1;
-		}
-		
-
 		if (opt.count("dietConfig")){
 			
 			cout <<"The diet config file " << dietConfig << endl;
@@ -107,10 +93,10 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ((reqParam < CPPARAM)|| (opt.count("help"))){
+		if (opt.count("help")){
 
 	     
-			cout << "Usage: " << av[0] <<" userId"<<endl;
+			cout << "Usage: " << av[0] <<endl;
 
 			cout << opt << endl;
 			
@@ -141,7 +127,7 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 	
-              changePassword(userId, oldPassword, newPassword);
+              changePassword(sessionKey, oldPassword, newPassword);
 
 	
 

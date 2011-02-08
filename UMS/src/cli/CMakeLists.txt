@@ -28,7 +28,7 @@ set(ALLCLI connect reconnect close
 
 macro(genCli NAME )
 	set(source_files ${NAME}
-			Options)
+			Options utils)
 
 	#Configuration de l'executable
 	add_executable(
