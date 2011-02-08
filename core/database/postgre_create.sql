@@ -56,6 +56,8 @@ CREATE TABLE users (
   privilege INTEGER    ,
   email VARCHAR(255)    ,
   passwordstate INTEGER      ,
+  deleted INTEGER      ,
+  blocked INTEGER      ,
 PRIMARY KEY(numuserid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
