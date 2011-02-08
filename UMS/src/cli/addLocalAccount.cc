@@ -207,19 +207,16 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
- /*              // initializing DIET
+              // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
 
-    
 		
 							int res = addLocalAccount(sessionKey,newAcLogin);
-
-
-	*/	
+	
 
 	}// End of try bloc
 

@@ -8,23 +8,28 @@
 #include <assert.h>
 
 #include "SessionProxy.h"
-#include "UMS_Data/Configuration.h"
+#include "Configuration.hpp"
 
 class ConfigurationProxy
 {
-private:
-	UMS_Data::Configuration configuration;
-	SessionProxy sessionProxy;
-	SessionProxy sessionProxy;
  
 public:
-	void ConfigurationProxy(string filePath, SessionProxy session);
-	void ConfigurationProxy(UMS_Data::Configuration config, SessionProxy session);
+	ConfigurationProxy(const std::string& filePath, const SessionProxy& session);
+	ConfigurationProxy(const UMS_Data::Configuration& config, const SessionProxy& session);
 	int save();
 	int restoreFromFile();
 	int restoreFromData();
-	void ~ConfigurationProxy();
-	void getData();
+	UMS_Data::Configuration getData();
 	SessionProxy getSessionProxy();
+
+        ~ConfigurationProxy();
+
+private:
+
+        int restore(bool fromFile=true);
+        
+        UMS_Data::Configuration mconfiguration;
+        SessionProxy msessionProxy;
+        std::string mfilePath;
 };
 #endif

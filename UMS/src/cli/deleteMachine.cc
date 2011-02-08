@@ -122,7 +122,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
- /*              // initializing DIET
+               // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -134,7 +134,7 @@ int main (int ac, char* av[]){
 							int res = deleteMachine(sessionKey,machineId);
 
 
-	*/	
+		
 
 	}// End of try bloc
 
