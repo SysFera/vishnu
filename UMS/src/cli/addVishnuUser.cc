@@ -216,7 +216,7 @@ int main (int ac, char* av[]){
 
 
 /************** Call UMS connect service *******************************/
-/*
+
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -229,7 +229,7 @@ int main (int ac, char* av[]){
 							int res = addVishnuUser(sessionKey,newUser);
 
 
-	*/	
+		
 
 	}// End of try bloc
 
