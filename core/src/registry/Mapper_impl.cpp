@@ -34,7 +34,7 @@ int
 Mapper_impl::getCommand(const string& key,string& command){
   map<string, string>::const_iterator it; 
   for (it = mmap.begin() ; it != mmap.end() ; it++){
-    if (key.compare(it->first)){
+    if (key.compare(it->first)==0){
       command = it->second;
       return 0;
     }
@@ -45,7 +45,7 @@ int
 Mapper_impl::getKey(const string& command, string& key){
   map<string, string>::const_iterator it; 
   for (it = mmap.begin() ; it != mmap.end() ; it++){
-    if (command.compare(it->second)){
+    if (command.compare(it->second)==0){
       key = it->first;
       return 0;
     }

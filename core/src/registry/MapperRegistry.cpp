@@ -49,9 +49,8 @@ int
 MapperRegistry::getMapper(const string& s, Mapper** mapper){
   map<string, Mapper*>::const_iterator it; 
   for (it = mmapper.begin() ; it != mmapper.end() ; it++){
-    if (s.compare(it->first)){
+    if (s.compare(it->first)==0){
       *mapper = it->second;
-      display();
       return 0;
     }
   }
