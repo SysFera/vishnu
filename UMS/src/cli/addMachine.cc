@@ -165,7 +165,7 @@ int main (int ac, char* av[]){
 
 		cout << "Enter the Machine Description:\n ";
 
-		cin >> machineDescription;
+		getline(cin, machineDescription);
 			
 		newMachine.setMachineDescription(machineDescription);
 
@@ -186,7 +186,6 @@ int main (int ac, char* av[]){
     
 		
 							int res = addMachine(sessionKey,newMachine);
-
 
 
 	}// End of try bloc

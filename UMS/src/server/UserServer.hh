@@ -26,18 +26,29 @@ class UserServer {
 public:
         UserServer();
 	UserServer(std::string userId, std::string password);
-	UserServer(UMS_Data::User user);
+	UserServer(const UMS_Data::User& user);
 	UserServer(SessionServer sessionServer);
-	int add(std::string userSerialized);
-	int update(UMS_Data::User user);
-	int deleteUser(UMS_Data::User user);
-	int changePassword(std::string newPassword);
-	int resetPassword(UMS_Data::User user);
+	int 
+	add(UMS_Data::User*& user);
+	int 
+	update(UMS_Data::User user);
+	int 
+	deleteUser(UMS_Data::User user);
+	int 
+	changePassword(std::string newPassword);
+	int 
+	resetPassword(UMS_Data::User user);
 	~UserServer();
-	UMS_Data::User getData();
-	bool exist();
-	bool isAdmin();
-	bool isPwdStateOk();//return if the password state ok
+	UMS_Data::User 
+	getData();
+	void 
+	init();
+	bool 
+	exist();
+	bool 
+	isAdmin();
+	bool 
+	isAttributOk(std::string attributName, int valueOk);//return if the password state ok
 	//int getId();
 	//return the integer attribut of the user
 	std::string getAttribut(std::string condition, std::string attrname = "numuserid");
@@ -48,13 +59,16 @@ private:
 	UMS_Data::ConnectOptions moptions;
 	//Database* mdatabase;
 	DbFactory factory;
-	Database *mdatabaseVishnu;
+	Database* mdatabaseVishnu;
 	SessionServer* msessionServer;
 
 private:
-	bool checkLogin();
-	bool checkPassword();
-	int generatePassword();
+	bool 
+	checkLogin();
+	bool 
+	checkPassword();
+	std::string 
+	generatePassword(std::string lastname, std::string firstname);
 	
 };
 #endif
