@@ -1,0 +1,25 @@
+SET( CMAKE_INSTALL_PREFIX ../../.. )
+
+ADD_LIBRARY(exception-vishnu
+ VishnuException.cpp
+ SystemException.cpp
+ UserException.cpp
+ UMSVishnuException.cpp
+ TMSVishnuException.cpp
+ IMSVishnuException.cpp
+ FMSVishnuException.cpp
+ InternalVishnuException.cpp
+)
+
+ADD_EXECUTABLE(main 
+  main.cpp
+  UMS.cpp
+  TMS.cpp
+  IMS.cpp
+  FMS.cpp
+  )
+
+target_link_libraries(main
+  exception-vishnu)
+
+install( TARGETS exception-vishnu DESTINATION lib )
