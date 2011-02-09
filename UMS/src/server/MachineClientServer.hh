@@ -9,19 +9,24 @@
 
 
 class MachineClientServer {
-  
+
 public:
-	MachineClientServer(std::string sshKey, std::string host);
-	int recordMachineClient();
-	int getId();
-	std::string getSSHKey() const;
-	std::string getHost() const;
-	//~MachineClientServer();
+  MachineClientServer(std::string sshKey, std::string host);
+  int 
+  recordMachineClient();
+  std::string 
+  getId();
+  std::string 
+  getSSHKey() const;
+  std::string 
+  getHost() const;
+  ~MachineClientServer();
+  
 private:
-	std::string mmachineSSHKey;
-	std::string mhostname;
-	Database *mdatabaseVishnu;
-	DbFactory factory;
-	bool exist();
- };
+  std::string mmachineSSHKey;
+  std::string mhostname;
+  Database *mdatabaseVishnu;
+  DbFactory factory;
+  bool exist();
+};
 #endif//MACHINE_CLIENT_SERVER_H 
