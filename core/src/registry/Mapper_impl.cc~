@@ -1,0 +1,60 @@
+/**
+ * \file Mapper.cc
+ * \brief Sample mapper
+ * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * \date 07/02/11
+ */
+
+#include "Mapper_impl.hh"
+
+
+Mapper_impl(MapperRegistry* reg, string na):Mapper(reg){
+  mname = na;
+  mmap.insert (pair<string, string>("1", "connect"));
+  mmap.insert (pair<string, string>("2", "reconnect"));
+  mmap.insert (pair<string, string>("3", "close"));
+  mmap.insert (pair<string, string>("4", "addVishnuUser"));
+  mmap.insert (pair<string, string>("5", "addLocalAccount"));
+};
+
+virtual int
+registerMapper(){
+  reg->addMapper(mname, this);
+}
+
+virtual int 
+unregisterMapper(){
+  reg->removeMapper(name);
+}
+
+virtual int
+getCommand(const string& key,string& command){
+  map<string, string>::const_iterator it; 
+  for (it = mapper.begin() ; it != mapper.end() ; it++){
+    if (key.compare(it->first)){
+      cout << "key = " << it->first << " and val = " << it->second << endl;
+      command = it->second;
+      return 0;
+    }
+  }
+}
+
+virtual int
+getKey(const string& command, string& key){
+  map<string, string>::const_iterator it; 
+  for (it = mapper.begin() ; it != mapper.end() ; it++){
+    if (command.compare(it->second)){
+      cout << "key = " << it->first << " and val = " << it->second << endl;
+      key = it->first;
+      return 0;
+    }
+  }
+}
+
+protected:
+private:
+  MapperRegistry* mreg;
+};
+
+
+#endif
