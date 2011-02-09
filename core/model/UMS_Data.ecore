@@ -388,6 +388,12 @@
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//MachineStatusType">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the status of the machine  (ACTIVE or INACTIVE) "/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListMachines" instanceTypeName="ListMachines">
     <eStructuralFeatures xsi:type="ecore:EReference" name="machines" upperBound="-1"
@@ -529,5 +535,12 @@
     </eAnnotations>
     <eLiterals name="ACTIVE"/>
     <eLiterals name="LOCKED" value="1" literal="LOCKED"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MachineStatusType" instanceTypeName="UserStatusType">
+    <eAnnotations source="Description">
+      <details key="content" value="represents the different states of a VISHNU Machine"/>
+    </eAnnotations>
+    <eLiterals name="ACTIVE"/>
+    <eLiterals name="INACTIVE" value="1" literal="INACTIVE"/>
   </eClassifiers>
 </ecore:EPackage>
