@@ -193,7 +193,12 @@
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//UserStatusType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//UserStatusType">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the status of the user (LOCKED or ACTIVE) "/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListUsers" instanceTypeName="ListUsers">
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
