@@ -193,6 +193,7 @@
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//UserStatusType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListUsers" instanceTypeName="ListUsers">
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
@@ -516,5 +517,12 @@
     </eAnnotations>
     <eLiterals name="USER" literal="USER"/>
     <eLiterals name="ADMIN" value="1" literal="ADMIN"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="UserStatusType" instanceTypeName="UserStatusType">
+    <eAnnotations source="Description">
+      <details key="content" value="represents the different states of a VISHNU User account"/>
+    </eAnnotations>
+    <eLiterals name="ACTIVE"/>
+    <eLiterals name="LOCKED" value="1" literal="LOCKED"/>
   </eClassifiers>
 </ecore:EPackage>
