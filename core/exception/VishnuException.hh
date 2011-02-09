@@ -20,11 +20,12 @@ class VishnuException :
 public:
 
 typedef enum ExceptionType{
-  UMS  = 0 ,
-  TMS  = 1 ,
-  FMS  = 2 , 
-  IMS  = 3 ,
-  NONE = 4   
+  UMS  	    = 0 ,
+  TMS  	    = 1 ,
+  FMS  	    = 2 , 
+  IMS  	    = 3 ,
+  INTERNAL  = 4 ,
+  NONE      = 5   
 } ExceptionType;
 
 private :
