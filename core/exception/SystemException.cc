@@ -38,6 +38,7 @@ SystemException::initMsg(){
   mp.insert(std::pair<int, std::string>(3, std::string("Error with a system call")));
   mp.insert(std::pair<int, std::string>(4, std::string("Error bad parameters")));
   mp.insert(std::pair<int, std::string>(5, std::string("Error invalid component")));
+  mp.insert(std::pair<int, std::string>(6, std::string("Error invalid mapper")));
 }
 
 std::string

@@ -42,6 +42,14 @@
             <para>First Release</para>
           </revdescription>
         </revision>
+        <revision>
+          <revnumber>04</revnumber>
+          <date>09/02/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Added UA1.3, modified </para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
@@ -62,22 +70,23 @@
         Vishnu system:</para>
       <para><itemizedlist>
         <listitem>
-          <para>UMS: Users Management System</para>
+          <para>UMS: Users Management Service</para>
         </listitem>
         <listitem>
-          <para>TMS: Tasks Management System</para>
+          <para>TMS: Tasks Management Service</para>
         </listitem>
         <listitem>
-          <para>FMS: Files Management System</para>
+          <para>FMS: Files Management Service</para>
         </listitem>
         <listitem>
-          <para>IMS: Information Management System</para>
+          <para>IMS: Information Management Service</para>
         </listitem>
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains two sections:<itemizedlist>
           <listitem>
             <para>A first section containing "Use case descriptions" that follow the standard UML
-              description of a use case</para>
+              description of a use case. Each use case is identified by a code beginning with a letter corresponding to the
+              VISHNU Module that realizes the use case (U for UMS, T for TMS, F for FMS, I for IMS).</para>
           </listitem>
           <listitem>
             <para>A second section containing the "Use case diagrams" that describe the organization
@@ -94,27 +103,37 @@
       <para>
          <itemizedlist>
            <listitem>
-            <para>Sysfera-DS: open-source middleware software used by Vishnu (former name
+             <para><emphasis role="bold">Batch scheduler</emphasis>: system used to manage batch jobs on multi-processor systems or
+            clusters.</para>
+           </listitem>
+           <listitem>
+             <para><emphasis role="bold">Client system</emphasis>: computer system used to send requests to the VISHNU system either using the
+               command-line interface or any API.</para>
+             </listitem>
+           <listitem>
+            <para><emphasis role="bold">Sysfera-DS</emphasis>: open-source middleware software used by Vishnu (former name
               "DIET")</para>
           </listitem>
-          <listitem><para>Batch Scheduler: system used to manage batch jobs on multi-processor systems or
-            clusters.</para></listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU system</emphasis>: set of all elements (software, hardware, data) that compose a single instance of the
+            VISHNU application and that work together to provide VISHNU services to the users.</para>
+          </listitem>
          </itemizedlist>
       </para>
     </section>
   </chapter>
     <!-- GENERATED PART -->
   <chapter annotations="UMS/specs/UMS.asta#UCDIAG+UCDESC+DICT(UMS Analyse/DATA_DICTIONARY)">
-    <title>Use cases for User Management System (UMS)</title>
+    <title>Use cases for User Management Service (UMS)</title>
   </chapter>
   <chapter annotations="TMS/specs/TMS.asta#UCDIAG+UCDESC+DICT(TMS Analyse/DATA_DICTIONARY)">
-    <title>Use cases for Tasks Management System (TMS)</title>
+    <title>Use cases for Tasks Management Service (TMS)</title>
   </chapter>
   <chapter annotations="IMS/specs/IMS.asta#UCDIAG+UCDESC+DICT(IMS Analyse/DATA_DICTIONARY)">
-    <title>Use cases for Information Management System (IMS)</title>
+    <title>Use cases for Information Management Service (IMS)</title>
   </chapter>
   <chapter annotations="FMS/specs/FMS.asta#UCDIAG+UCDESC+DICT(FMS Analyse/DATA_DICTIONARY)">
-    <title>Use cases for File Management System (FMS)</title>
+    <title>Use cases for File Management Service (FMS)</title>
   </chapter>
 </book>
   

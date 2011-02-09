@@ -3674,6 +3674,11 @@
               <entry><para>string</para></entry>
               <entry><para>is the email of the user</para></entry>
             </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="UserStatusType">UserStatusType</link></para></entry>
+              <entry><para>represents the status of the user (LOCKED or ACTIVE) </para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -3751,6 +3756,31 @@
             </row>
             <row>
               <entry><para>ACTIVE</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="UserStatusType"><emphasis role="bold">Enumeration UMS::UserStatusType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>ACTIVE</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>LOCKED</para></entry>
               <entry><para>1</para></entry>
             </row>
           </tbody>

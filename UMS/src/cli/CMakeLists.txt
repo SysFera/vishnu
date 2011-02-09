@@ -26,7 +26,9 @@ set(ALLCLI connect reconnect close
 				changePassword resetPassword
 				 addLocalAccount updateLocalAccount deleteLocalAccount
 				 saveConfiguration restoreConfiguration
-				 addMachine updateMachine deleteMachine)
+				 addMachine updateMachine deleteMachine
+				 configureDefaultOption configureOption
+				 listLocalAccount listMachine listHistoryCmd listOptions listUsers listSessions)
 
 
 # macro to generate all command lines

@@ -464,7 +464,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateUser command line updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateUser</command><arg>-f<replaceable> firstname</replaceable></arg><arg>-l<replaceable> lastname</replaceable></arg><arg>-p<replaceable> privilege</replaceable></arg><arg>-m<replaceable> email</replaceable></arg><arg
+        <cmdsynopsis><command>updateUser</command><arg>-f<replaceable> firstname</replaceable></arg><arg>-l<replaceable> lastname</replaceable></arg><arg>-p<replaceable> privilege</replaceable></arg><arg>-m<replaceable> email</replaceable></arg><arg>-s<replaceable> status</replaceable></arg><arg
               choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -522,6 +522,13 @@
                 <entry><para>string</para></entry>
                 <entry><para>m</para></entry>
                 <entry><para>represents the updated email adress of the user</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="UserStatusType">UserStatusType</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>represents the status of the user (LOCKED or ACTIVE)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2458,6 +2465,31 @@
             </row>
             <row>
               <entry><para>ACTIVE</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="UserStatusType"><emphasis role="bold">Enumeration UMS::UserStatusType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>ACTIVE</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>LOCKED</para></entry>
               <entry><para>1</para></entry>
             </row>
           </tbody>
