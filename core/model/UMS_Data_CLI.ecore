@@ -64,7 +64,12 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EEnum UMS_Data.ecore#//UserStatusType"
-        defaultValueLiteral=""/>
+        defaultValueLiteral="">
+      <eAnnotations source="Description">
+        <details key="shortOption" value="s"/>
+        <details key="content" value="represents the status of the user (LOCKED or ACTIVE)"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AddMachineOptions" instanceTypeName="AddMachineOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
