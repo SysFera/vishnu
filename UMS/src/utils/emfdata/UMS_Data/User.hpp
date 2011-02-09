@@ -67,6 +67,9 @@ namespace UMS_Data
         ::ecore::EString const& getEmail() const;
         void setEmail(::ecore::EString const& _email);
 
+        ::UMS_Data::UserStatusType getStatus() const;
+        void setStatus(::UMS_Data::UserStatusType _status);
+
         // References
 
 
@@ -103,6 +106,8 @@ namespace UMS_Data
         ::UMS_Data::PrivilegeType m_privilege;
 
         ::ecore::EString m_email;
+
+        ::UMS_Data::UserStatusType m_status;
 
         // References
 
