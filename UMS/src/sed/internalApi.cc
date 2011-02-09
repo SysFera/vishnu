@@ -189,3 +189,122 @@ solveUserCreate(diet_profile_t* pb) {
 	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 }  
+
+/**
+* \brief Function to solve the service solveUserUpdate 
+* \fn    int solveUserUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserUpdate(diet_profile_t* pb) {
+  char* sessionKey = NULL;
+  char* userSerialized = NULL;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
+  std::cout<<"User:"<< userSerialized <<std::endl;
+ 
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  
+  ecorecpp::parser::parser parser;
+  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  User_ptr user = parser.load(std::string(userSerialized))->as< User >();
+  
+  try {
+    std::string empty("");
+    //sessionServer.close();
+    userServer.init();
+    userServer.update(user);
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  } 
+}
+/**
+* \brief Function to solve the service solveUserDelete 
+* \fn    int solveUserDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserDelete(diet_profile_t* pb) {
+  char* sessionKey = NULL;
+  char* userId = NULL;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &userId, NULL);
+  std::cout<<"User:"<< userId <<std::endl;
+ 
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  
+  UMS_Data::User user;
+  user.setUserId(userId);
+  
+  try {
+    std::string empty("");
+    //sessionServer.close();
+    userServer.init();
+    userServer.deleteUser(user);
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  } 
+  
+}
+/**
+* \brief Function to solve the service solveUserPasswordChange 
+* \fn    int solveUserPasswordChange(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserPasswordChange(diet_profile_t* pb) {
+ 
+  char* sessionKey = NULL;
+  char* oldPassword = NULL;
+  char* newPassword = NULL;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &oldPassword, NULL);
+  std::cout<<"oldPassword:"<< oldPassword <<std::endl;
+  diet_string_get(diet_parameter(pb,2), &newPassword, NULL);
+  std::cout<<"newPassword:"<< newPassword <<std::endl;
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  
+  
+  try {
+    std::string empty("");
+    //sessionServer.close(); 
+    userServer.init();
+    userServer.changePassword(std::string(oldPassword), std::string(newPassword));
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	std::string empty("");
+	std::string errorInfo = e.getMsg()+"==>";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  
+} 
+
