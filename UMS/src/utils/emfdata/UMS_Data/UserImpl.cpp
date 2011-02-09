@@ -91,6 +91,12 @@ void User::_initialize()
                 m_email);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::USER__STATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::UserStatusType >::toAny(
+                _any, m_status);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -136,6 +142,12 @@ void User::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_email);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::USER__STATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::UserStatusType >::fromAny(
+                _newValue, m_status);
+    }
+        return;
 
     }
     throw "Error";
@@ -161,6 +173,9 @@ void User::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::UMS_Data::UMS_DataPackage::USER__EMAIL:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_email);
+    case ::UMS_Data::UMS_DataPackage::USER__STATUS:
+        return ::ecorecpp::mapping::set_traits< ::UMS_Data::UserStatusType >::is_set(
+                m_status);
 
     }
     throw "Error";

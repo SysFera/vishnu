@@ -78,6 +78,8 @@ namespace UMS_Data
 
         static const int USER = 21;
 
+        static const int USERSTATUSTYPE = 22;
+
         static const int CONNECTOPTIONS__CLOSEPOLICY = 0;
 
         static const int CONNECTOPTIONS__SESSIONINACTIVITYDELAY = 1;
@@ -134,87 +136,89 @@ namespace UMS_Data
 
         static const int USER__EMAIL = 27;
 
-        static const int LISTUSERS__USERS = 28;
+        static const int USER__STATUS = 28;
 
-        static const int COMMAND__COMMANDID = 29;
+        static const int LISTUSERS__USERS = 29;
 
-        static const int COMMAND__SESSIONID = 30;
+        static const int COMMAND__COMMANDID = 30;
 
-        static const int COMMAND__MACHINEID = 31;
+        static const int COMMAND__SESSIONID = 31;
 
-        static const int COMMAND__CMDDESCRIPTION = 32;
+        static const int COMMAND__MACHINEID = 32;
 
-        static const int COMMAND__CMDSTARTTIME = 33;
+        static const int COMMAND__CMDDESCRIPTION = 33;
 
-        static const int COMMAND__CMDENDTIME = 34;
+        static const int COMMAND__CMDSTARTTIME = 34;
 
-        static const int LISTCOMMANDS__COMMANDS = 35;
+        static const int COMMAND__CMDENDTIME = 35;
 
-        static const int LISTCMDOPTIONS__ADMINLISTOPTION = 36;
+        static const int LISTCOMMANDS__COMMANDS = 36;
 
-        static const int LISTCMDOPTIONS__USERID = 37;
+        static const int LISTCMDOPTIONS__ADMINLISTOPTION = 37;
 
-        static const int LISTCMDOPTIONS__SESSIONID = 38;
+        static const int LISTCMDOPTIONS__USERID = 38;
 
-        static const int LISTCMDOPTIONS__STARTDATEOPTION = 39;
+        static const int LISTCMDOPTIONS__SESSIONID = 39;
 
-        static const int LISTCMDOPTIONS__ENDDATEOPTION = 40;
+        static const int LISTCMDOPTIONS__STARTDATEOPTION = 40;
 
-        static const int LOCALACCOUNT__USERID = 41;
+        static const int LISTCMDOPTIONS__ENDDATEOPTION = 41;
 
-        static const int LOCALACCOUNT__MACHINEID = 42;
+        static const int LOCALACCOUNT__USERID = 42;
 
-        static const int LOCALACCOUNT__ACLOGIN = 43;
+        static const int LOCALACCOUNT__MACHINEID = 43;
 
-        static const int LOCALACCOUNT__SSHKEYPATH = 44;
+        static const int LOCALACCOUNT__ACLOGIN = 44;
 
-        static const int LOCALACCOUNT__HOMEDIRECTORY = 45;
+        static const int LOCALACCOUNT__SSHKEYPATH = 45;
 
-        static const int LISTLOCALACCOUNTS__ACCOUNTS = 46;
+        static const int LOCALACCOUNT__HOMEDIRECTORY = 46;
 
-        static const int LISTLOCALACCOPTIONS__ADMINLISTOPTION = 47;
+        static const int LISTLOCALACCOUNTS__ACCOUNTS = 47;
 
-        static const int LISTLOCALACCOPTIONS__USERID = 48;
+        static const int LISTLOCALACCOPTIONS__ADMINLISTOPTION = 48;
 
-        static const int LISTLOCALACCOPTIONS__MACHINEID = 49;
+        static const int LISTLOCALACCOPTIONS__USERID = 49;
 
-        static const int MACHINE__MACHINEID = 50;
+        static const int LISTLOCALACCOPTIONS__MACHINEID = 50;
 
-        static const int MACHINE__NAME = 51;
+        static const int MACHINE__MACHINEID = 51;
 
-        static const int MACHINE__SITE = 52;
+        static const int MACHINE__NAME = 52;
 
-        static const int MACHINE__MACHINEDESCRIPTION = 53;
+        static const int MACHINE__SITE = 53;
 
-        static const int MACHINE__LANGUAGE = 54;
+        static const int MACHINE__MACHINEDESCRIPTION = 54;
 
-        static const int LISTMACHINES__MACHINES = 55;
+        static const int MACHINE__LANGUAGE = 55;
 
-        static const int LISTMACHINEOPTIONS__USERID = 56;
+        static const int LISTMACHINES__MACHINES = 56;
 
-        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 57;
+        static const int LISTMACHINEOPTIONS__USERID = 57;
 
-        static const int LISTMACHINEOPTIONS__MACHINEID = 58;
+        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 58;
 
-        static const int CONFIGURATION__FILEPATH = 59;
+        static const int LISTMACHINEOPTIONS__MACHINEID = 59;
 
-        static const int CONFIGURATION__LISTCONFUSERS = 60;
+        static const int CONFIGURATION__FILEPATH = 60;
 
-        static const int CONFIGURATION__LISTCONFMACHINES = 61;
+        static const int CONFIGURATION__LISTCONFUSERS = 61;
 
-        static const int CONFIGURATION__LISTCONFLOCALACCOUNTS = 62;
+        static const int CONFIGURATION__LISTCONFMACHINES = 62;
 
-        static const int OPTIONVALUE__OPTIONNAME = 63;
+        static const int CONFIGURATION__LISTCONFLOCALACCOUNTS = 63;
 
-        static const int OPTIONVALUE__VALUE = 64;
+        static const int OPTIONVALUE__OPTIONNAME = 64;
 
-        static const int LISTOPTIONSVALUES__OPTIONVALUES = 65;
+        static const int OPTIONVALUE__VALUE = 65;
 
-        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 66;
+        static const int LISTOPTIONSVALUES__OPTIONVALUES = 66;
 
-        static const int LISTOPTOPTIONS__USERID = 67;
+        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 67;
 
-        static const int LISTOPTOPTIONS__OPTIONNAME = 68;
+        static const int LISTOPTOPTIONS__USERID = 68;
+
+        static const int LISTOPTOPTIONS__OPTIONNAME = 69;
 
         // IDs for classifiers for class Command 
 
@@ -319,6 +323,8 @@ namespace UMS_Data
 
         virtual ::ecore::EEnum_ptr getPrivilegeType();
 
+        virtual ::ecore::EEnum_ptr getUserStatusType();
+
         // EStructuralFeatures methods
 
         virtual ::ecore::EAttribute_ptr getConnectOptions__closePolicy();
@@ -382,6 +388,8 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getUser__privilege();
 
         virtual ::ecore::EAttribute_ptr getUser__email();
+
+        virtual ::ecore::EAttribute_ptr getUser__status();
 
         virtual ::ecore::EReference_ptr getListUsers__users();
 
@@ -521,6 +529,8 @@ namespace UMS_Data
 
         ::ecore::EEnum_ptr m_PrivilegeTypeEEnum;
 
+        ::ecore::EEnum_ptr m_UserStatusTypeEEnum;
+
         // EDataType instances 
 
 
@@ -581,6 +591,8 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_User__privilege;
 
         ::ecore::EAttribute_ptr m_User__email;
+
+        ::ecore::EAttribute_ptr m_User__status;
 
         ::ecore::EReference_ptr m_ListUsers__users;
 
