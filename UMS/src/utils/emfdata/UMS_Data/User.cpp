@@ -207,5 +207,31 @@ void User::setEmail(::ecore::EString const& _email)
 #endif
 }
 
+::UMS_Data::UserStatusType User::getStatus() const
+{
+    return m_status;
+}
+
+void User::setStatus(::UMS_Data::UserStatusType _status)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::UMS_Data::UserStatusType _old_status = m_status;
+#endif
+    m_status = _status;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getUser__status(),
+                _old_status,
+                m_status
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 

@@ -198,6 +198,9 @@ UMS_DataPackage::UMS_DataPackage()
     m_User__email = new ::ecore::EAttribute();
     m_User__email->setFeatureID(::UMS_Data::UMS_DataPackage::USER__EMAIL);
     m_UserEClass->getEStructuralFeatures().push_back(m_User__email);
+    m_User__status = new ::ecore::EAttribute();
+    m_User__status->setFeatureID(::UMS_Data::UMS_DataPackage::USER__STATUS);
+    m_UserEClass->getEStructuralFeatures().push_back(m_User__status);
 
     // ListUsers
     m_ListUsersEClass = new ::ecore::EClass();
@@ -492,6 +495,11 @@ UMS_DataPackage::UMS_DataPackage()
     m_PrivilegeTypeEEnum->setClassifierID(PRIVILEGETYPE);
     m_PrivilegeTypeEEnum->setEPackage(this);
     getEClassifiers().push_back(m_PrivilegeTypeEEnum);
+
+    m_UserStatusTypeEEnum = new ::ecore::EEnum();
+    m_UserStatusTypeEEnum->setClassifierID(USERSTATUSTYPE);
+    m_UserStatusTypeEEnum->setEPackage(this);
+    getEClassifiers().push_back(m_UserStatusTypeEEnum);
 
     // Create data types
 
@@ -913,6 +921,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_User__email->setUnique(true);
     m_User__email->setDerived(false);
     m_User__email->setOrdered(true);
+    m_User__status->setEType(m_UserStatusTypeEEnum);
+    m_User__status->setName("status");
+    m_User__status->setDefaultValueLiteral("");
+    m_User__status->setLowerBound(0);
+    m_User__status->setUpperBound(1);
+    m_User__status->setTransient(false);
+    m_User__status->setVolatile(false);
+    m_User__status->setChangeable(true);
+    m_User__status->setUnsettable(false);
+    m_User__status->setID(false);
+    m_User__status->setUnique(true);
+    m_User__status->setDerived(false);
+    m_User__status->setOrdered(true);
     // ListUsers
     m_ListUsersEClass->setName("ListUsers");
     m_ListUsersEClass->setAbstract(false);
@@ -1621,6 +1642,30 @@ UMS_DataPackage::UMS_DataPackage()
         m_PrivilegeTypeEEnum->getELiterals().push_back(_el);
     }
 
+    // UserStatusType
+    m_UserStatusTypeEEnum->setName("UserStatusType");
+    m_UserStatusTypeEEnum->setSerializable(true);
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // ACTIVE
+        _el->setName("ACTIVE");
+        _el->setValue(0);
+        _el->setLiteral("ACTIVE");
+        _el->setEEnum(m_UserStatusTypeEEnum);
+        m_UserStatusTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // LOCKED
+        _el->setName("LOCKED");
+        _el->setValue(1);
+        _el->setLiteral("LOCKED");
+        _el->setEEnum(m_UserStatusTypeEEnum);
+        m_UserStatusTypeEEnum->getELiterals().push_back(_el);
+    }
+
     _initialize();
 }
 
@@ -1711,6 +1756,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EEnum_ptr UMS_DataPackage::getPrivilegeType()
 {
     return m_PrivilegeTypeEEnum;
+}
+::ecore::EEnum_ptr UMS_DataPackage::getUserStatusType()
+{
+    return m_UserStatusTypeEEnum;
 }
 
 ::ecore::EAttribute_ptr UMS_DataPackage::getConnectOptions__closePolicy()
@@ -1824,6 +1873,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getUser__email()
 {
     return m_User__email;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getUser__status()
+{
+    return m_User__status;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getListUsers__users()
 {
