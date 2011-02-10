@@ -734,7 +734,7 @@
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>userId represents the VISHNU user identifier of the user whose password will be change</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -1223,7 +1223,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>restoreConfiguration</command><arg choice="plain"><replaceable>  filePath </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>restoreConfiguration</command><arg choice="plain"><replaceable> filePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1251,7 +1251,7 @@
                 <entry><para>filePath</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The filePath is the path of the VISHNU configuration file</para></entry>
+                <entry><para>The filePath is the path of the file used to restore VISHNU configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
