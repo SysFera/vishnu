@@ -60,7 +60,7 @@ int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)
        else std::cout << "The service was performed successfull" << std::endl;
    }  
    else {
-       ERRMSG("Error in diet_string_get");
+       ERRMSG("Error in diet_call function");
    }
 
    if(strlen(errorInfo) > 0 ) {

@@ -4,33 +4,84 @@
 #include <iostream>
 #include <assert.h>
 
+#include "UMSVishnuException.hh"
+#include "debug.hh"
+
 #include "OptionValueProxy.h"
 
 
-void OptionValueProxy::OptionValueProxy(UMS_Data::OptionValue optionValue, SessionProxy session)
+OptionValueProxy::OptionValueProxy(const UMS_Data::OptionValue& optionValue, const SessionProxy& session):
+moptionValue(optionValue), msessionProxy(session)
 {
 }
  
-int OptionValueProxy::configureOption()
+int OptionValueProxy::setOptionValue(bool defaultValue)
 {
-	return 0;
+   diet_profile_t* profile = NULL;
+   std::string sessionKey;
+   std::string optionValueToString;
+   char* errorInfo;
+
+   if(defaultValue) profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
+   else profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
+   sessionKey = msessionProxy.getSessionKey();
+
+   const char* name = "optionValueSet";
+   ::ecorecpp::serializer::serializer _ser(name);
+   optionValueToString =  _ser.serialize(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
+
+   //IN Parameters
+   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+       ERRMSG("Error in diet_string_set");
+   };
+   if(diet_string_set(diet_parameter(profile,1), strdup(optionValueToString.c_str()), DIET_VOLATILE)) {
+       ERRMSG("Error in diet_string_set");
+   };
+
+   //OUT Parameters
+   if(diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE)) {
+      ERRMSG("Error in diet_string_set");
+   }
+
+   if(!diet_call(profile)) {
+       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+        ERRMSG("Error in diet_string_set");
+       };
+       if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
+       else std::cout << "The service was performed successfull" << std::endl;
+   }
+   else {
+       ERRMSG("Error in diet_call function");
+   }
+
+   if(strlen(errorInfo) > 0 ) {
+      UMSVishnuException e(1, errorInfo);
+      throw e;
+   }
+
+  return 0;
+}
+
+int OptionValueProxy::configureOption() 
+{
+  return setOptionValue(false);
 }
  
 int OptionValueProxy::configureDefaultOption()
 {
-	return 0;
-}
- 
-void OptionValueProxy::~OptionValueProxy()
-{
+  return setOptionValue();
 }
  
 UMS_Data::OptionValue OptionValueProxy::getData()
 {
-	return 0;
+  return moptionValue;
 }
  
 SessionProxy OptionValueProxy::getSessionProxy()
 {
-	return 0;
+  return msessionProxy;
+}
+
+OptionValueProxy::~OptionValueProxy()
+{
 }

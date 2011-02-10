@@ -46,5 +46,29 @@ solveSessionClose(diet_profile_t* pb);
 * \return raises an exception on error
 */
 int 
-solveUserCreate(diet_profile_t* pb);  
+solveUserCreate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveUserUpdate 
+* \fn    int solveUserUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserUpdate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveUserDelete 
+* \fn    int solveUserDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserDelete(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveUserPasswordChange 
+* \fn    int solveUserPasswordChange(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserPasswordChange(diet_profile_t* pb); 
 #endif // SERVERUMS

@@ -14,21 +14,21 @@ class MachineProxy
 {
  
 public:
-	MachineProxy(const UMS_Data::Machine& machine, const SessionProxy& session);
-	int add();
-	int update();
-	int deleteMachine();
-	SessionProxy getSessionProxy();
-	UMS_Data::Machine getData();
+  MachineProxy(const UMS_Data::Machine& machine, const SessionProxy& session);
+  int add();
+  int update();
+  int deleteMachine();
+  SessionProxy getSessionProxy();
+  UMS_Data::Machine getData();
 
-        ~MachineProxy();
+  ~MachineProxy();
 
 private:
 
-        int _addMachineInformation(bool isNewMachine=true);
+  int _addMachineInformation(bool isNewMachine=true);
 
-        UMS_Data::Machine mmachine;
-        SessionProxy msessionProxy;
+  UMS_Data::Machine mmachine;
+  SessionProxy msessionProxy;
 
 };
 #endif

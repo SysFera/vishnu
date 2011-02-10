@@ -14,17 +14,17 @@ class LocalAccountProxy
 {
  
 public:
-	LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session);
-	int add();
-	int update();
-	int deleteLocalAccount();
-	SessionProxy getSessionProxy();
-        ~LocalAccountProxy();
+  LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session);
+  int add();
+  int update();
+  int deleteLocalAccount();
+  SessionProxy getSessionProxy();
+  ~LocalAccountProxy();
 
 private:
-        int _addLocalAccountInformation(bool isNewMachine=true);
+  int _addLocalAccountInformation(bool isNewMachine=true);
 
-        UMS_Data::LocalAccount mlocalAccount;
-        SessionProxy msessionProxy;
+  UMS_Data::LocalAccount mlocalAccount;
+  SessionProxy msessionProxy;
 };
 #endif
