@@ -29,12 +29,6 @@ int main (int ac, char* av[]){
         
 		std::string password;
 
-		//int closePolicy;
-
-		int sessionInactivityDelay;
-
-		std::string substituteUserId;
-
 
 		/********** EMF Data ****************************/
 
@@ -47,6 +41,8 @@ int main (int ac, char* av[]){
 			/******** Callback functions ******************/
 
 			boost::function1<void,UMS_Data::SessionCloseType> fClosePolicy( boost::bind(&UMS_Data::ConnectOptions::setClosePolicy,boost::ref(connectOpt),_1));  		
+			boost::function1<void,int> fSessionInactivityDelay( boost::bind(&UMS_Data::ConnectOptions::setSessionInactivityDelay,boost::ref(connectOpt),_1));  		
+			boost::function1<void,string> fSubstituteUserId( boost::bind(&UMS_Data::ConnectOptions::setSubstituteUserId,boost::ref(connectOpt),_1));  		
 
 /***************  Default configuration file ***************** */
 
@@ -91,12 +87,12 @@ int main (int ac, char* av[]){
 		opt.add("sessionInactivityDelay,d",
 				      "The session inactivity delay",
 					  CONFIG,
-					  sessionInactivityDelay);
+					  fSessionInactivityDelay);
 
 		opt.add("substituteUserId,s",
 				         "The substitute user identifier",
 						 CONFIG,
-						 substituteUserId);
+						 fSubstituteUserId);
 
 /**************  Parse to retrieve option values  ********************/
  
@@ -128,22 +124,19 @@ int main (int ac, char* av[]){
 
 			cout << "The close policy is " << connectOpt.getClosePolicy() <<endl;
                         
-			//connectOpt.setClosePolicy(closePolicy);
 		}
 
 
 		if (opt.count("sessionInactivityDelay")){
 			
-			cout <<"The session inactivity delay is " << sessionInactivityDelay << endl;
+			cout <<"The session inactivity delay is " << connectOpt.getSessionInactivityDelay() << endl;
 
-			connectOpt.setSessionInactivityDelay(sessionInactivityDelay);
 		}
   
 		if (opt.count("substituteUserId")){
 	
-			cout <<"The substitute user identifier is " << substituteUserId << endl;
+			cout <<"The substitute user identifier is " << connectOpt.getSubstituteUserId() << endl;
 			
-			connectOpt.setSubstituteUserId(substituteUserId);
 		}
 
             
@@ -160,7 +153,6 @@ int main (int ac, char* av[]){
 			
 		}
 
-
 		
 		if ( (reqParam<CPARAM) || (opt.count("help"))) {
 
@@ -170,19 +162,17 @@ int main (int ac, char* av[]){
 						cerr << opt << endl;
 						
 						return 1;
-						
 		}
 		  
 		else{
 
+			//Fix me
 			password= getpass("Password: ");// getpass is obsolete. 
 
 			cout << "The user password  is " << password << endl;
 
 							 
 		}
-
-
 
 
 /************** Call UMS connect service *******************************/
