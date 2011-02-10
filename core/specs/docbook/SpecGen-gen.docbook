@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <author>
       <personname>
@@ -60,11 +59,12 @@
       </revision>
       <revision>
         <revnumber>04</revnumber>
-        <date>09/02/2011</date>
+        <date>10/02/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
             
-          <para>Added UA1.3, modified </para></revdescription>
+          <para>Modified 1.2, 1.4, U1, U1.1, U1.3.3, U1.3.4, U1.3.5, U1.4, U1.5, U2, U3, U4, U4.1, U4.2, UA1, UA1.1, UA6.2, UA7, T1.2, T2.6.
+              Added UA1.3 and modified 2.3.</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -74,7 +74,7 @@
       <title>Document objectives</title>
       <para>This document presents the external specifications of the Vishnu system at a general
         level. At this level, we describe the interaction of a user with the system without
-        providing implementation details. The different steps that constitute the scenario are
+        providing implementation details. The different steps that constitute one scenario are
         detailed as well as the content of the messages exchanged. The main objective is to describe
         the system from the user point of view.</para>
       <para>These general specifications are a prerequisite for the detailed specifications step in
@@ -98,7 +98,7 @@
             <para>IMS: Information Management Service</para>
           </listitem>
         </itemizedlist></para>
-      <para>Each module  corresponds to a chapter in the document, and each chapter contains two sections:<itemizedlist>
+      <para>Each module  corresponds to a chapter in the document, and each chapter contains three sections:<itemizedlist>
           <listitem>
             <para>A first section containing &quot;Use case descriptions&quot; that follow the standard UML
               description of a use case. Each use case is identified by a code beginning with a letter corresponding to the
@@ -106,9 +106,93 @@
           </listitem>
           <listitem>
             <para>A second section containing the &quot;Use case diagrams&quot; that describe the organization
-              of the different use cases. These diagrams follow the UML2.0 standard.</para>
+              of the different use cases (see §1.3 for a more precise definition of use cases).</para>
+          </listitem>
+          <listitem>
+            <para>A third section containing the &quot;Data dictionary&quot; that contains the definitions of the words or expressions
+              used in the use cases of the module.</para>
           </listitem>
         </itemizedlist></para>
+    </section>
+    <section>
+      <title>Use cases format description</title>
+      <para>The specifications of VISHNU functionalities are formatted as &quot;use case descriptions&quot; and &quot;use case diagrams&quot;
+      following the UML standard. Each use
+      case is the description of a scenario that a VISHNU user will follow when using the system, and it details each step of the
+      user/system interaction. The use cases do not describe the internal steps that the user should not be aware of, and that may be
+      specific to the implementation of the use case.</para>
+      <para>Each <emphasis role="bold">use case description</emphasis> can contain the following elements:</para>
+      <para><itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Title</emphasis>: Contains the use case code and name.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Summary</emphasis>: Describes the main objective of the use case.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Actors</emphasis>: Contains respectively &quot;User&quot;, &quot;Admin&quot; or both when
+                 the use case applies respectively to a standard user, an administrator or both classes of users.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Precondition</emphasis>: Contains the conditions that should be realized before the use case runs.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Postcondition</emphasis>: Contains the conditions that should be realized when the basic sequences or
+             the branch sequences are finished.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Base sequence</emphasis>: Contains the basic sequence in chronological order between the Actor and the System. Each step 
+            of the sequence is identified by a number.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Branch sequence</emphasis>: Contains the branch(es) of the base sequence. The branch step is identified by a
+            number, a letter and eventually a number: the first number identies the branching point in the base sequence, the letter identifies
+            the branch itself and the last number is used for the different steps within the branch. The postconditions should be realized after
+            the branch is finished.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Exception sequence</emphasis>: Contains the errors that may happen during the base sequence or the branch
+            sequence, as considered by users. The exceptions are identified by a base or branch step identifier (see above) followed by a letter that
+            identifies the exception. The postconditions cannot be realized after the exception is thrown.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Extension of</emphasis>: Contains list of use cases that the current use case &quot;extends&quot; (see
+             below for a definition of this relationship).</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Extensions</emphasis>: Contains list of use cases that &quot;extend&quot; the current use case (see
+             below for a definition of this relationship).</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Notes</emphasis>: All things for understanding the use case can be recorded here.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>Each <emphasis role="bold">use case diagram</emphasis> show the relationships between Actors and use cases, and between use cases. All
+      these relationships are defined in the UML standard and have the following meaning:</para>
+      <para><itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Generalization</emphasis> (shown as solid arrow with a large triangle head): the source use case inherits
+            properties and behavior of the parent (target of the arrow) use case and may override the behavior of the parent. The preconditions, 
+            postconditions and exceptions of the parent apply to the child use case. A use case that has child (specializations) of itself is
+            shown in the use case diagram in <emphasis role="bold">orange</emphasis> color.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Extension</emphasis> (shown as dashed arrow with &quot;extend&quot; stereotype): this is a directed relationship
+            that specifies how and when the behavior defined in usually supplementary (optional) extending use case can be inserted into the behavior
+            defined in the extended use case. Extending use case typically defines optional behavior that is not necessarily meaningful by itself.
+            The extension takes place at one or more extension points defined in the extended use case by the &quot;Include&quot; keyword. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Inclusion</emphasis> (shown as dashed arrow with &quot;include&quot; stereotype): this is a directed relationship
+            between two use cases when required, not optional behavior of the included use case is inserted into the behavior of the 
+            including (base) use case. Including use case depends on the addition of the included use case. Including use cases are
+            usually not complete by themselves and require the included use cases. A use case that has inclusions is shown in the use case
+            diagram in <emphasis role="bold">blue</emphasis> color.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </section>
     <section>
       <title>References</title>
@@ -127,8 +211,16 @@
                command-line interface or any API.</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">Exception</emphasis>: event happening during the execution of a use case scenario and that triggers a
+               specific action from the System. This action can either be returning an error message to the user (if the used interface is interactive)
+               or triggering a programing language exception if the used interface is programmatic.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Sysfera-DS</emphasis>: open-source middleware software used by Vishnu (former name
               &quot;DIET&quot;)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UML</emphasis>: Unified Modeling Language (current version: v2.3)</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">VISHNU system</emphasis>: set of all elements (software, hardware, data) that compose a single instance of the
@@ -1073,7 +1165,7 @@
               </row>
               <row>
                 <entry><para>Notes</para></entry>
-                <entry><para>The user identifier cannot be modified at any time.</para></entry>
+                <entry><para>The user identifier is an information that cannot be modified due to integrity constraints.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1640,7 +1732,7 @@
             <para><emphasis role="bold">Manual closure</emphasis>: The Manual closure means that the user uses a command for closing a session.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Option</emphasis>: The option is a parameter of the user account that is not mandatory for user creation. A default value for each option is defined by the administrator. This features can be used by all VISHNU modules (not only UMS).</para>
+            <para><emphasis role="bold">Option</emphasis>: The option is a parameter of the user account that is not mandatory for user creation. A default value for each option is defined by the administrator. This features can be used by all VISHNU modules (not only UMS). This feature is used in particular to specify which technology is used for a set of VISHNU services (e.g. to use a specific transfer method for file transfers).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Password state</emphasis>: Records the current state of the password of a user: either 'temporary' if the password must be changed next time the user connects to the System, or 'valid' if the password is in a normal state.</para>
@@ -1726,7 +1818,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T1.1 - Submit a job </para><para>T1.2 - Get job outputs (asynchronous)</para></entry>
+                <entry><para>T1.1 - Submit a job </para><para>T1.2 - Get job outputs asynchronously</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1778,13 +1870,13 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>T1.2 - Get job outputs (asynchronous)</title>
+        <title>T1.2 - Get job outputs asynchronously</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T1.2 - Get job outputs (asynchronous)</para></entry>
+                <entry><para>T1.2 - Get job outputs asynchronously</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -1804,7 +1896,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The User sends the request containing the machine id</para><para>2. The System registers the request</para><para>3. The System checks the running jobs submitted by the User on the machine</para><para>4. The System sends the job outputs for all completed jobs to the client host</para><para>5. If the number of jobs submitted by the User on the machine with a waiting, queued or running status is positive, the System waits during a period defined by the administrator. If not, go to step 7</para><para>6. Go back to step 3</para><para>7. The User request is completed</para></entry>
+                <entry><para>1. The User sends the request containing the machine id</para><para>2. The System registers the request</para><para>3. The System checks the running jobs submitted by the User on the machine</para><para>4. The System sends the job outputs for all completed jobs to the client host</para><para>5. If the number of jobs submitted by the User on the machine with a waiting, queued or running status is positive, the System waits during a period defined by the administrator (see TA1). If not, go to step 7</para><para>6. Go back to step 3</para><para>7. The User request is completed</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1865,7 +1957,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get job outputs (synchronous)</para><para>TA1 - Set machine refresh period</para><para>TA2 - Set machine environment</para></entry>
+                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get job outputs synchronously</para><para>TA1 - Set machine refresh period</para><para>TA2 - Set machine environment</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2101,13 +2193,13 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>T2.6 - Get job outputs (synchronous)</title>
+        <title>T2.6 - Get job outputs synchronously</title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.6 - Get job outputs (synchronous)</para></entry>
+                <entry><para>T2.6 - Get job outputs synchronously</para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -2160,7 +2252,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The admin sets the refresh period of output and error file content</para></entry>
+                <entry><para>The admin sets the refresh period of output and error file content that is used by the System when uploading the job outputs asynchronously (see T1.2).</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
@@ -2339,13 +2431,16 @@ in order to avoid systematic authentification</para>
             <para><emphasis role="bold">Job id</emphasis>: A job id allows to identifie the job in the batch scheduler system.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">JobPath</emphasis>: A jobPath is the path to the file (script) containing the instructions (batch directives or job characteristics, job execution command) of the job.</para>
+            <para><emphasis role="bold">Job path</emphasis>: A jobPath is the path to the file (script) containing the instructions (batch directives or job characteristics, job execution command) of the job.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Queue ou Class</emphasis>:  A queue or class associates the resource limits (CPU wallclock time, CPU memory) and execution priorities of the jobs.</para>
+            <para><emphasis role="bold">Job state</emphasis>: A job state allows to know the progression of the job. It may  have the following state : RUNNING, WAITING, COMPLETED, QUEUED, CANCELED, FAILED</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">TMS</emphasis>: Task Management System.</para>
+            <para><emphasis role="bold">Job walltime</emphasis>: The maximum duration of a job as defined in the job submission parameters</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Queue or Class</emphasis>:  A queue or class associates the resource limits (CPU wallclock time, CPU memory) and execution priorities of the jobs.</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -4218,13 +4313,10 @@ in order to avoid systematic authentification</para>
       <title>Data dictionary</title>
       <para><itemizedlist>
           <listitem>
-            <para>FMS: File Management System</para>
+            <para><emphasis role="bold">Host</emphasis>:  Computer connected to other computers or terminals to which it provides data or computing services via a network.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Host:</emphasis>:  Computer connected to other computers or terminals to which it provides data or computing services via a network.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Inode:</emphasis></para>
+            <para><emphasis role="bold">Inode</emphasis></para>
             <itemizedlist>
               <listitem>
                 <para>An inode is a data structure on a filesystem on Linux and other Unix-like operating systems that stores all the information about a file except its name and its actual data.</para>
@@ -4247,7 +4339,10 @@ in order to avoid systematic authentification</para>
             </itemizedlist>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Path:</emphasis>: String of characters denoting the complete location of a file or folder (directory) in the host's data filing system.</para>
+            <para><emphasis role="bold">Path</emphasis>: String of characters denoting the complete location of a file or folder (directory) in the host's data filing system.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Permissions</emphasis>: The set of rights (read, write, execute) that are related to a file for a given user on a Unix filesystem.</para>
           </listitem>
         </itemizedlist></para>
     </section>
