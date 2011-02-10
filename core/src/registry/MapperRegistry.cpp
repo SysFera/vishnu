@@ -22,10 +22,11 @@ MapperRegistry::getInstance(){
 int
 MapperRegistry::addMapper(string s, Mapper* mapper){
   if (!mreg){
-    e = InternalVishnuException();
-    e.setType(VishnuException::INTERNAL);
-    e.setMsg(6);
-    e.setMsgComp("Error null registry");
+    me = InternalVishnuException();
+    me.setType(VishnuException::INTERNAL);
+    me.setMsg(6);
+    me.setMsgComp("Error null registry");
+    throw(me);
   }
   if (!contains(s)){
     mmapper.insert( pair<string, Mapper*>(s, mapper));
