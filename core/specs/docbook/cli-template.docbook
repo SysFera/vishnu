@@ -34,6 +34,17 @@
           <para>First release</para>
         </revdescription>
         </revision>
+        <revision>
+          <revnumber>2</revnumber>
+          <date>10/02/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Removed UMS::SessionStateType.</para>
+            <para>Added UMS::StatusType, UMS::PrivilegeType.</para>
+            <para>Modified UMS::addVishnuUser, UMS::updateUser, UMS::addLocalAccount, UMS::addMachine, UMS::updateMachine,
+              UMS::listSessions, UMS::restoreConfiguration.</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
@@ -49,16 +60,16 @@
         Vishnu system:</para>
       <para><itemizedlist>
         <listitem>
-          <para>UMS: Users Management System</para>
+          <para>UMS: Users Management Service</para>
         </listitem>
         <listitem>
-          <para>TMS: Tasks Management System</para>
+          <para>TMS: Tasks Management Service</para>
         </listitem>
         <listitem>
-          <para>FMS: Files Management System</para>
+          <para>FMS: Files Management Service</para>
         </listitem>
         <listitem>
-          <para>IMS: Information Management System</para>
+          <para>IMS: Information Management Service</para>
         </listitem>
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:<itemizedlist>
@@ -231,16 +242,16 @@
   </chapter>
     <!-- GENERATED PART -->
   <chapter annotations="UMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for User Management System (UMS)</title>
+    <title>Commands specification for User Management Service (UMS)</title>
   </chapter> 
   <chapter annotations="TMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for Tasks Management System (TMS)</title>
+    <title>Commands specification for Tasks Management Service (TMS)</title>
   </chapter>
   <chapter annotations="IMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for Information Management System (IMS)</title>
+    <title>Commands specification for Information Management Service (IMS)</title>
   </chapter>
  <chapter annotations="FMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for File Management System (FMS)</title>
+    <title>Commands specification for File Management Service (FMS)</title>
   </chapter>
 </book>
   
