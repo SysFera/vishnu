@@ -1,6 +1,7 @@
 #include "utilServer.hh"
 #include "UMSVishnuException.hh"
 
+std::string Vishnuid::mvishnuid = "";
 
 int convertToInt(std::string val) {
   int intValue;
