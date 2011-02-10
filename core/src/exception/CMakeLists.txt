@@ -11,7 +11,7 @@ ADD_LIBRARY(exception-vishnu
  InternalVishnuException.cpp
 )
 
-ADD_EXECUTABLE(main 
+ADD_EXECUTABLE(mainEx
   main.cpp
   UMS.cpp
   TMS.cpp
@@ -19,7 +19,7 @@ ADD_EXECUTABLE(main
   FMS.cpp
   )
 
-target_link_libraries(main
+target_link_libraries(mainEx
   exception-vishnu)
 
 install( TARGETS exception-vishnu DESTINATION lib )
