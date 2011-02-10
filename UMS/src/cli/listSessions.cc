@@ -1,6 +1,7 @@
 
 
 #include "listSessions.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -198,6 +199,13 @@ int main (int ac, char* av[]){
 			
 		}
 		
+		if (opt.count("sessionId")){
+			
+			cout <<"The session identifier is " << sessionId << endl;
+			
+			listOptions.setSessionId(sessionId);
+			
+		}
 		
 		if(opt.count("startDateOption")){
 			
@@ -232,7 +240,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ( isEmpty ||(opt.count("help"))){
+		if ( opt.count("help")){
 			
 			cout << "Usage: " << av[0] <<" [options]  "<<endl;
 			
@@ -246,7 +254,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-		/*
+		
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -258,9 +266,15 @@ int main (int ac, char* av[]){
 		
 							int res = listSessions(sessionKey,listSession,listOptions);
 
-
+                                  
 							// Display the list
-	*/
+     printf("sessionId    userId       sessionKey      LastConnect     Create          Close           ST ClosePolicy TimeOut\n");
+     printf("============ ============ =============== =============== =============== =============== == =========== =======\n");
+     UMS_Data::Session_ptr session;
+     for(int i = 0; i < listSession.getSessions().size(); i++) {
+        session = listSession.getSessions().get(i);
+        printSession(session);
+     }
 
 	}// End of try bloc
 
