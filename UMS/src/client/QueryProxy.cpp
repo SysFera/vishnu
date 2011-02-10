@@ -7,16 +7,17 @@
 #include "QueryProxy.h"
 
 
-void QueryProxy::QueryProxy(QueryParameters params, SessionProxy session)
+QueryProxy::QueryProxy(const QueryParameters& params, const SessionProxy& session)
 {
 }
  
 template <class QueryParameters, class ListObject>
- ListObject QueryProxy<QueryParameters, ListObject>::list()
+ListObject* QueryProxy<QueryParameters, ListObject>::list()
 {
-	return 0;
+
+ return 0;
 }
  
-void QueryProxy::~QueryProxy()
+QueryProxy::~QueryProxy()
 {
 }

@@ -25,138 +25,79 @@ SessionServer::SessionServer(std::string sessionKey) {
 SessionServer::SessionServer(const UMS_Data::Session& session):msession(session) {
 }
 
-//std::string opt
-int SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions* connectOpt) {
- 
-  //std::ostringstream out;
-  std::string substituteUserId;
-  std::string userIdToconnect;
-  ecorecpp::parser::parser parser;
+int 
+SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions* connectOpt) {
+  std::string numSubstituteUserId;
+  std::string numUserIdToconnect;
   
-  OptionValueServer optionValueServer;
-  std::string numoption;
-  std::string userValuepolicy;
-  std::string userValuetimeout;
-  std::string defaultValuepolicy;
-  std::string defaultValuetimeout;
-  
-  /*UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-  ecorecpp::parser::parser parser;
-  */
-  
- try {
-   
-  //if the user exist 
-  if (user.exist()) {
-  
-    /*
-     UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-     ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-     ConnectOptions_ptr connectOpt = parser.load(std::string(opt))->as< ConnectOptions >();
-    */
-     
-     //std::cout << "Opt:" << opt << std::endl ;
-     
-      switch (connectOpt->getClosePolicy()) {
-       
-       case 0: 
-	      msession.setClosePolicy( 
-				      optionValueServer.getClosureInfo(user.getAttribut("\
-				      where userid='"+user.getData().getUserId()+"'"))
-				      );
-	      
-	      //If the policy is not 2 (CLOSE_ON_DISCONNECT)
-	      if (msession.getClosePolicy() != 2) {
-		  
-		  msession.setTimeout(
-				      optionValueServer.getClosureInfo(user.getAttribut("\
-				      where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT")
-				     );
-	      } 
-	      
-       break;
-       
-       case 1: msession.setClosePolicy(1);
-              
-		if (connectOpt->getSessionInactivityDelay() != 0) {
-		    msession.setTimeout(connectOpt->getSessionInactivityDelay());
-		} //END the timeout is defined
-		else {
-		    msession.setTimeout(
-				      optionValueServer.getClosureInfo(user.getAttribut("\
-				      where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT")
-				     );
-		}// END ELSE the timeout is defined
-       
-	       break;
-       case 2: msession.setClosePolicy(2); 
-	       break;
-       
-       //default: break; //Faire comme case 0
-    }
-     
-     //if a user to substitute is defined
-     if (connectOpt->getSubstituteUserId().size() != 0) {
-      std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;
+  try {
+    //if the user exist 
+    if (user.exist()) {
+      solveConnectionMode(connectOpt, user);
+      //if a user to substitute is defined
       
-      // if the user is admin
-      if (user.isAdmin()) {
-	std::cout << "Je suis Admin" << std::endl;
-	
-	substituteUserId = user.getAttribut("where \
-	    userid='"+connectOpt->getSubstituteUserId()+"'");
-	
-	//If the user to substitute exist
-	if (substituteUserId.size() != 0) {
-	    userIdToconnect = substituteUserId;
-	 } //End If the user to substitute exist
-	 else {
+      if (connectOpt->getSubstituteUserId().size() != 0) {
+	std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;	
+	// if the user is admin
+	if (user.isAdmin()) {
+	  //TODO faire une fonction checklogin qui vérifie 
+	  //que le userID appartient a un utilisateur qui exist et qui n'est pas blocked
+	  numSubstituteUserId = user.getAttribut("where \
+	  userid='"+connectOpt->getSubstituteUserId()+"'");
+	  
+	  //If the user to substitute exist
+	  if (user.existuserId(connectOpt->getSubstituteUserId())) {
+	  //if (numSubstituteUserId.size() != 0) {
+	    
+	    //if (user.getAttribut("where userid='"+user.getData().getUserId()+"'")) {
+	      numUserIdToconnect = numSubstituteUserId;
+	    //}
+	    
+	  } //End If the user to substitute exist
+	  else {
 	    UMSVishnuException e(4, "The user to substitute is unknown!");
-            throw e;
+	    throw e;
+	  }
+	  
+	} // END if the user is admin
+	else {
+	  UMSVishnuException e(4, "The substitution is an admin option!");
+	  throw e;
 	}
-	
-      } // END if the user is admin
-      else {
-	UMSVishnuException e(4, "The substitution is an admin option!");
-        throw e;
-      }
-      
-     }  
+     } //End if connectOpt->getSubstituteUserId().size() != 0
     
-     //if There is not a substituteUserId
-     if (userIdToconnect.size() == 0) {
-         userIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'\
-	 and pwd='"+user.getData().getPassword()+"'"); 
-	 generateSessionKey(user.getData().getUserId());
-         generateSessionId(user.getData().getUserId());
-     } //END if There is not a substituteUserId 
-     else {
-	 generateSessionKey(connectOpt->getSubstituteUserId());
-	 generateSessionId(connectOpt->getSubstituteUserId());
-    }
+     //if there is not a numSubstituteUserId
+     if (numUserIdToconnect.size() == 0) {
+	numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'\
+	and pwd='"+user.getData().getPassword()+"'"); 
+     } //END if There is not a numSubstituteUserId 
+     /*else {
+	generateSessionKey(connectOpt->getSubstituteUserId());
+	generateSessionId(connectOpt->getSubstituteUserId());
+    }*/
+    
+    generateSessionKey(user.getData().getUserId());
+    generateSessionId(user.getData().getUserId()); 
+    
+    std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
+    std::cout <<" After generation SessionId:" << msession.getSessionId()<< std::endl;
      
-     std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
-     std::cout <<" After generation SessionId:" << msession.getSessionId()<< std::endl;
      
-     
-     host.recordMachineClient();
-     recordSessionServer(convertToString(checkId(host.getId())), userIdToconnect);
+    host.recordMachineClient();
+    recordSessionServer(host.getId(), numUserIdToconnect);
 	     
     //TODO: machineServer et commanderServer à enregistrer dans la base de données donc créer un commanderServer
     
-  } // END if the user exist 
-  else {
-    UMSVishnuException e(4, "The user is unknwon");
-    throw e;
-  }
+    } // END if the user exist 
+    else {
+      UMSVishnuException e(4, "The user is unknwon");
+      throw e;
+    }
   
- } catch (SystemException& e) {
+  } catch (SystemException& e) {
 	throw e;
- }
-  
-  
-	return 0;
+  }
+  return 0;
 }
  
 int SessionServer::reconnect (UserServer user, MachineClientServer host, std::string sessionId) {
@@ -180,7 +121,7 @@ int SessionServer::reconnect (UserServer user, MachineClientServer host, std::st
 		  existSessionKey = getSessionkey("", "", true);  
 		} //END if user is admin
 		else {
-		existSessionKey = getSessionkey(convertToString(checkId(host.getId())), 
+		existSessionKey = getSessionkey(host.getId(), 
 						user.getAttribut("where userid='"+user.getData().getUserId()+"'\
 						and pwd='"+user.getData().getPassword()+"'")
 	                                        );
@@ -236,9 +177,9 @@ int SessionServer::close() {
 	
 	  //if the session is not already closed
 	  if (state != 0) {
-	      //TODO: if no running commands
-	      
-	         
+	      //TODO: if no running commands ==> vérifier dans la table commande qu'il n'y a pas de commande à status
+	      //active
+	        
 		      std::string sqlCommand("UPDATE vsession SET state=0 WHERE sessionkey='"+msession.getSessionKey()+"';");
 		      sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP WHERE sessionkey='"+msession.getSessionKey()+"';");
 		      
@@ -374,7 +315,34 @@ bool SessionServer::exist(bool flagSessionId) {
       }
   }
 } 
+
+//TODO utiliser cette fonction dans getState et getSessionKey ou simplement la généraliser pour
+//éviter les répétitions de code
+std::string SessionServer::getAttribut(std::string condition, std::string attrname) {
+ DatabaseResult* result;
+ std::vector<std::string>::iterator ii;
  
+ std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
+ std::cout <<"SQL COMMAND:"<<sqlCommand;
+   
+  try {
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  } 
+  catch (SystemException& e) {
+  throw e;
+  }
+  
+  if (result->getNbTuples() != 0) {
+      result->print();
+      std::vector<std::string> tmp = result->get(0);  
+      ii=tmp.begin();
+      return (*ii);
+   } 
+   else {
+	  return "";
+	}
+}
+
 int SessionServer::getState(bool flagSessionId) {
  DatabaseResult* result;
  std::vector<std::string>::iterator ii;
@@ -457,34 +425,41 @@ int SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool
 
 }
 
-//TODO utiliser cette fonction dans getState et getSessionKey ou simplement la généraliser pour
-//éviter les répétitions de code
-std::string SessionServer::getAttribut(std::string condition, std::string attrname) {
- DatabaseResult* result;
- std::vector<std::string>::iterator ii;
- 
- std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
- std::cout <<"SQL COMMAND:"<<sqlCommand;
-   
-  try {
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-  } 
-  catch (SystemException& e) {
-  throw e;
-  }
+
+
+int 
+SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, UserServer user) {
   
-  if (result->getNbTuples() != 0) {
-      result->print();
-      std::vector<std::string> tmp = result->get(0);  
-      ii=tmp.begin();
-      return (*ii);
-   } 
-   else {
-	  return "";
-	}
+  OptionValueServer optionValueServer;
+  
+  switch (connectOpt->getClosePolicy()) {
+    case 0: 
+      msession.setClosePolicy(optionValueServer.getClosureInfo(user.getAttribut("\
+			            where userid='"+user.getData().getUserId()+"'")));
+      //If the policy is not 2 (CLOSE_ON_DISCONNECT)
+      if (msession.getClosePolicy() != 2) { 
+	msession.setTimeout(optionValueServer.getClosureInfo(user.getAttribut("\
+			    where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT"));
+      } 
+    break;
+
+    case 1: 
+      msession.setClosePolicy(1);
+      if (connectOpt->getSessionInactivityDelay() != 0) {
+	  msession.setTimeout(connectOpt->getSessionInactivityDelay());
+      } //END the timeout is defined
+      else {
+	  msession.setTimeout(optionValueServer.getClosureInfo(user.getAttribut("\
+			      where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT"));
+      }// END ELSE the timeout is defined
+    break;
+    
+    case 2: 
+      msession.setClosePolicy(2); 
+    break;
+  }  
 }
-
-
+  
 /*UMS_Data::ListSessions  SessionServer::list(SessionServer session, UMS_Data::ListSessionOptions  options)
 {
 	return 0;
