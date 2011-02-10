@@ -1,12 +1,12 @@
 /**
- * \file Mapper_impl.hpp
- * \brief Sample file to test mapper
+ * \file FMSMapper.hpp
+ * \brief Mapper for the FMS module
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
- * \date 07/02/11
+ * \date 10/02/11
  */
 
-#ifndef __MAPPERSAMPLE__HH__
-#define __MAPPERSAMPLE__HH__
+#ifndef __FMSMAPPER__HH__
+#define __FMSMAPPER__HH__
 
 #include <map>
 
@@ -17,13 +17,13 @@
 using namespace std;
 
 /**
- * \class Mapper_impl
- * \brief Generic mapper
+ * \class FMSMapper
+ * \brief Mapper implementation for the FMS module
  */
-class Mapper_impl : Mapper{
+class FMSMapper : Mapper{
 public :
-  Mapper_impl(MapperRegistry* reg, string name);
-  Mapper_impl();
+  FMSMapper(MapperRegistry* reg, string name);
+  FMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper()
