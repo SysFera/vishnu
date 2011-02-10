@@ -18,7 +18,7 @@ using namespace std;
 
 /**
  * \class UMSMapper
- * \brief Generic mapper
+ * \brief Mapper implementation for the UMS module
  */
 class UMSMapper : Mapper{
 public :

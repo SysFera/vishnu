@@ -1,12 +1,12 @@
 /**
- * \file Mapper_impl.hpp
- * \brief Sample file to test mapper
+ * \file IMSMapper.hpp
+ * \brief Mapper for the IMS module
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
- * \date 07/02/11
+ * \date 10/02/11
  */
 
-#ifndef __MAPPERSAMPLE__HH__
-#define __MAPPERSAMPLE__HH__
+#ifndef __IMSMAPPER__HH__
+#define __IMSMAPPER__HH__
 
 #include <map>
 
@@ -17,13 +17,13 @@
 using namespace std;
 
 /**
- * \class Mapper_impl
- * \brief Generic mapper
+ * \class IMSMapper
+ * \brief Mapper implementation for the IMS module
  */
-class Mapper_impl : Mapper{
+class IMSMapper : Mapper{
 public :
-  Mapper_impl(MapperRegistry* reg, string name);
-  Mapper_impl();
+  IMSMapper(MapperRegistry* reg, string name);
+  IMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper()
