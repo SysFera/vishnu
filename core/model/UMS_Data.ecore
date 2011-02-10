@@ -63,10 +63,10 @@
         <details key="content" value="is the date of the closure of the session (the UNIX timestamps is used)"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//SessionStateType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
         defaultValueLiteral="1">
       <eAnnotations source="Description">
-        <details key="content" value="is the state of the session (ACTIVE OR INACTIVE)"/>
+        <details key="content" value="represents the status of the session"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="closePolicy" eType="#//SessionCloseType"
@@ -91,10 +91,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListSessionOptions" instanceTypeName="ListSessionOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sessionListOption" eType="#//SessionStateType"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
         defaultValueLiteral="1">
       <eAnnotations source="Description">
-        <details key="content" value="specifies the type of the sessions which will be listed (INACTIVE or ACTIVE)"/>
+        <details key="content" value="specifies the status of the sessions which will be listed"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -193,9 +193,10 @@
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//UserStatusType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
+        defaultValueLiteral="1">
       <eAnnotations source="Description">
-        <details key="content" value="represents the status of the user (LOCKED or ACTIVE) "/>
+        <details key="content" value="represents the status of the user"/>
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -372,7 +373,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the location of the machine"/>
-        <details key="shortOption" value="t"/>
+        <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -388,10 +389,11 @@
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//MachineStatusType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
+        defaultValueLiteral="1">
       <eAnnotations source="Description">
-        <details key="content" value="represents the status of the machine  (ACTIVE or INACTIVE) "/>
-        <details key="shortOption" value="s"/>
+        <details key="content" value="represents the status of the machine"/>
+        <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -498,16 +500,6 @@
     <eLiterals name="CLOSE_ON_TIMEOUT" value="1" literal="CLOSE_ON_TIMEOUT"/>
     <eLiterals name="CLOSE_ON_DISCONNECT" value="2" literal="CLOSE_ON_DISCONNECT"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="SessionStateType" instanceTypeName="SessionStateType">
-    <eAnnotations source="Description">
-      <details key="content" value="is an option for listing the session according to a specific state"/>
-    </eAnnotations>
-    <eAnnotations source="shortOption">
-      <details key="shortOption" value="t"/>
-    </eAnnotations>
-    <eLiterals name="INACTIVE" literal="INACTIVE"/>
-    <eLiterals name="ACTIVE" value="1" literal="ACTIVE"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PrivilegeType" instanceTypeName="PrivilegeType">
     <eAnnotations source="Description">
       <details key="content" value="The PrivilegeType represents the privilege type of a user"/>
@@ -515,18 +507,11 @@
     <eLiterals name="USER" literal="USER"/>
     <eLiterals name="ADMIN" value="1" literal="ADMIN"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="UserStatusType" instanceTypeName="UserStatusType">
+  <eClassifiers xsi:type="ecore:EEnum" name="StatusType" instanceTypeName="StatusType">
     <eAnnotations source="Description">
-      <details key="content" value="represents the different states of a VISHNU User account"/>
+      <details key="content" value="represents the different states of a VISHNU object"/>
     </eAnnotations>
-    <eLiterals name="ACTIVE"/>
-    <eLiterals name="LOCKED" value="1" literal="LOCKED"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="MachineStatusType" instanceTypeName="UserStatusType">
-    <eAnnotations source="Description">
-      <details key="content" value="represents the different states of a VISHNU Machine"/>
-    </eAnnotations>
-    <eLiterals name="ACTIVE"/>
-    <eLiterals name="INACTIVE" value="1" literal="INACTIVE"/>
+    <eLiterals name="INACTIVE" literal="INACTIVE"/>
+    <eLiterals name="ACTIVE" value="1" literal="ACTIVE"/>
   </eClassifiers>
 </ecore:EPackage>

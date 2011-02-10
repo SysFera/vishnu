@@ -34,6 +34,16 @@
           <para>First release</para>
         </revdescription>
         </revision>
+        <revision>
+          <revnumber>2</revnumber>
+          <date>10/02/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Removed UMS::AddUserOptions, UMS::AddMachineOptions and UMS::UpdateUserOptions classes and UMS::SessionStateType.</para>
+            <para>Added function UMS::reconnect, UMS::StatusType.</para>
+            <para>Modified UMS::restoreConfiguration and UMS::Configuration class</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
@@ -58,16 +68,16 @@
         VISHNU system:</para>
       <para><itemizedlist>
         <listitem>
-          <para>UMS: Users Management System</para>
+          <para>UMS: Users Management Service</para>
         </listitem>
         <listitem>
-          <para>TMS: Tasks Management System</para>
+          <para>TMS: Tasks Management Service</para>
         </listitem>
         <listitem>
-          <para>FMS: Files Management System</para>
+          <para>FMS: Files Management Service</para>
         </listitem>
         <listitem>
-          <para>IMS: Information Management System</para>
+          <para>IMS: Information Management Service</para>
         </listitem>
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:
@@ -322,16 +332,16 @@
   </chapter>
     <!-- GENERATED PART -->
   <chapter annotations="UMS.apim#APIOPS+APIDATA">
-    <title>API specification for User Management System (UMS)</title>
+    <title>API specification for User Management Service (UMS)</title>
   </chapter> 
   <chapter annotations="TMS.apim#APIOPS+APIDATA">
-    <title>API specification for Tasks Management System (TMS)</title>
+    <title>API specification for Tasks Management Service (TMS)</title>
   </chapter>
   <chapter annotations="IMS.apim#APIOPS+APIDATA">
-    <title>API specification for Information Management System (IMS)</title>
+    <title>API specification for Information Management Service (IMS)</title>
   </chapter>
   <chapter annotations="FMS.apim#APIOPS+APIDATA">
-    <title>API specification for File Management System (FMS)</title>
+    <title>API specification for File Management Service (FMS)</title>
   </chapter>
 </book>
   
