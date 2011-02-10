@@ -175,16 +175,6 @@ int deleteLocalAccount(const std::string& sessionKey, const std::string& userId,
  return res;
 }
 
-void print(UMS_Data::User_ptr user, UMS_Data::Configuration& config) {
-
-   user->getFirstname();
-  cout << "    lastname=" << user->getLastname() << endl;
-  cout << "    privilege=" << user->getPrivilege() << endl;
-  cout << "    mail=" << user->getEmail() << endl;
-  cout << "    userId=" << user->getUserId() << endl;
-  cout << "=======================================" << endl;
-}
-
 int saveConfiguration(const std::string& sessionKey, const std::string filePath, UMS_Data::Configuration& config) {
   
    SessionProxy sessionProxy(sessionKey);

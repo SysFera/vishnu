@@ -1,6 +1,7 @@
 
 
 #include "listLocalAccount.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -30,7 +31,7 @@ int main (int ac, char* av[]){
 
 		/********** EMF data ************/
 
-		UMS_Data::ListLocalAccounts listLocalAccount;
+		UMS_Data::ListLocalAccounts lsLocalAccount;
 		
 		UMS_Data::ListLocalAccOptions listOptions;
 
@@ -140,7 +141,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ( isEmpty ||(opt.count("help"))){
+		if ( opt.count("help")){
 			
 			cout << "Usage: " << av[0] <<" [options]  "<<endl;
 			
@@ -154,7 +155,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-		/*
+		
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -164,11 +165,15 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = listLocalAccount(sessionKey,listLocalAccount,listOptions);
-
+							int res = listLocalAccount(sessionKey,lsLocalAccount,listOptions);
 
 							// Display the list
-	*/
+     printf("userId          machineId       acLogin         sshKeyPath           homeDirectory       \n");
+     printf("--------------- --------------- --------------- -------------------- --------------------\n");
+     for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
+        printLocalAccount(lsLocalAccount.getAccounts().get(i));
+     }
+	
 
 	}// End of try bloc
 
