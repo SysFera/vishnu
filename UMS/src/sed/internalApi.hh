@@ -14,6 +14,7 @@
 #include "UserServer.hh"
 #include "SessionServer.hh"
 #include "MachineClientServer.hh"
+#include "MachineServer.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect 
@@ -70,5 +71,22 @@ solveUserDelete(diet_profile_t* pb);
 * \return raises an exception on error
 */
 int 
-solveUserPasswordChange(diet_profile_t* pb); 
+solveUserPasswordChange(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveUserPasswordReset 
+* \fn    int solveUserPasswordReset(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int 
+solveUserPasswordReset(diet_profile_t* pb);
+
+/**
+* \brief Function to solve the service solveMachineCreate 
+* \fn    int solveMachineCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveMachineCreate(diet_profile_t* pb);
 #endif // SERVERUMS

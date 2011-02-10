@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "ServerUMS.hh"
+#include "utilServer.hh"
 
 std::string ServerUMS::mvishnuid = "";
 /**
@@ -29,6 +30,7 @@ ServerUMS::ServerUMS(std::string cfg, std::string vishnuid) {
   mvishnucfg = cfg;
   mprofile = NULL;
   mvishnuid = vishnuid;
+  Vishnuid::mvishnuid = vishnuid; 
 }
 
 /**
@@ -146,6 +148,7 @@ ServerUMS::init() {
   diet_service_table_add(mprofile, NULL, solveUserDelete);
   
   /* solveUserPasswordChange */
+  
   mprofile = diet_profile_desc_alloc(SRV[6], 2, 2, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
@@ -154,8 +157,24 @@ ServerUMS::init() {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveUserPasswordChange);
  
+  /* solveUserPasswordReset */
   
+  mprofile = diet_profile_desc_alloc(SRV[7], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveUserPasswordReset);
   
+  /* solveMachineCreate */
+  
+  mprofile = diet_profile_desc_alloc(SRV[8], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveMachineCreate);
+
   diet_profile_desc_free(mprofile);
 }
 

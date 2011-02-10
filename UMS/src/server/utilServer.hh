@@ -11,6 +11,11 @@
 #include <iostream>
 #include <sstream>
 
+class Vishnuid {
+  public:
+    static std::string mvishnuid;
+};
+
 /**
 * \brief Function to encrypt data and password
 * \fn    char* crypt(const char* clef, const char* salt);
@@ -31,8 +36,6 @@ std::string convertToString(T val) {
   out << val;
   return out.str();
 }
-
-
 int convertToInt(std::string val);
 /**
 * \brief Function to check if an id is correct (higher than zero) 
