@@ -372,7 +372,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the location of the machine"/>
-        <details key="shortOption" value="s"/>
+        <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
