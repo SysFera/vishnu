@@ -147,7 +147,7 @@ int main (int ac, char* av[]){
 
 
 /************** Call UMS connect service *******************************/
-/*
+
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -158,7 +158,7 @@ int main (int ac, char* av[]){
 		
 							int res = configureDefaultOption(sessionKey,optionValue);
 		
-*/
+
 	}// End of try bloc
 
 	catch(std::exception& e){

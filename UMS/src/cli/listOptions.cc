@@ -1,6 +1,7 @@
 
 
 #include "listOptions.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -30,9 +31,9 @@ int main (int ac, char* av[]){
 
 		/********** EMF data ************/
 
-		UMS_Data::ListOptionsValues listOptionsValues;
+		UMS_Data::ListOptionsValues lsOptionsValues;
 		
-		UMS_Data::ListOptOptions listOptions;
+		UMS_Data::ListOptOptions lsOptions;
 
 	
 
@@ -108,7 +109,7 @@ int main (int ac, char* av[]){
 			
 			cout <<"It is an admin list option " << endl;
 			
-			listOptions.setListAllDeftValue(true);
+			lsOptions.setListAllDeftValue(true);
 		}
 			
 		
@@ -116,7 +117,7 @@ int main (int ac, char* av[]){
 			
 			cout <<"The user identifier is " << userId << endl;
 			
-			listOptions.setUserId(userId);
+			lsOptions.setUserId(userId);
 			
 		}
 		
@@ -124,7 +125,7 @@ int main (int ac, char* av[]){
 			
 			cout <<"the optionName is : " << optionName << endl;
 			
-			listOptions.setOptionName(optionName);
+			lsOptions.setOptionName(optionName);
 		}
 		
 
@@ -145,7 +146,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ( isEmpty ||(opt.count("help"))){
+		if ( opt.count("help")){
 			
 			cout << "Usage: " << av[0] <<" [options]  "<<endl;
 			
@@ -159,7 +160,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-		/*
+		
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -169,11 +170,18 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = listOptions(sessionKey,listOptionsValues,listOptions);
+							int res = listOptions(sessionKey,lsOptionsValues,lsOptions);
 
 
 							// Display the list
-	*/
+     printf("Name            Value          \n");
+     printf("--------------- ---------------\n");
+     //Imprimer la liste formatee
+     for(int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
+        printOptionValue(lsOptionsValues.getOptionValues().get(i));
+     }
+
+	
 
 	}// End of try bloc
 
