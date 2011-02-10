@@ -2,6 +2,7 @@
 
 \usepackage{a4}
 \usepackage[french]{babel}
+\usepackage{color}
 
 
 \begin{document}
@@ -14,6 +15,8 @@
 \section*{Introduction}
 Ce document a pour but de pr\'esenter l'int\'er\^et des APIM\footnote{API Mod\`ele} faites \`a l'aide d'Eclipse\footnote{Eclipse est un framework populaire pour d\'evelopper en JAVA} et leur fonctionnement. La premi\`ere partie sera consacr\'ee \`a la pr\'esentation de ce qu'est une APIM. La seconde partie est li\'ee \`a comment la construire. La derni\`ere partie pr\'esentera comment utiliser le code g\'en\'erant la documentation se basant sur l'APIM en docbook.
 
+\textcolor{red}{Attention}, ce document a \'et\'e r\'edig\'e au d\'ebut de l'utilisation des APIM, il est possible que certaines informations soient obsol\`etes.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SECTION APIM
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,12 +28,12 @@ Une APIM correspond \`a un mod\`ele d'API, c'est \`a dire une abstraction de l'A
 Le but de l'APIM est de fournir une abstraction de telle sorte que l'on ne manipule plus qu'une abstraction de l'API. Ainsi une modification dans le mod\`ele est automatiquement r\'epercut\'ee dans tout les documents se basant sur l'API. Cela permet d'assurer une coh\'erence entre les divers documents bas\'es sur l'API mais \'egalement une justesse des documents issus du mod\`ele. En effet les documents \'etant automatiquement extraits du mod\`ele, cela supprime le risque d'erreur humaine lors du passage d'une API aux documents qui lui sont li\'es (la documentation, les manuels, etc...). \\
 De plus, le mod\`ele APIM \'etant simple (du XML), il est facile de parser la structure pour g\'en\'erer des documents qui vont bien.
 \subsection*{Pr\'erequis}
-Afin de pouvoir utiliser APIM, nous avons eu besoin des \'el\'ements suivant~:
+Afin de pouvoir utiliser une APIM, nous avons eu besoin des \'el\'ements suivant~:
 \begin{itemize}
 \item[*] Eclipse version Helios (pour les futures versions, il ne devrait pas y avoir de probl\`eme de compatibilit\'e)
 \item[*] Le package EMF de Eclipse. Voici ci-dessous les manipulations \`a faire dans Eclipse pour avoir les bons packages bien configur\'es (par B. Isnard)~:
   \begin{itemize}
-  \item[\#] La liste des packages faisant partie de la distribution Eclipse Helios (site \textit{'http://download.eclipse.org/releases/helios'}, normalement d\'ej\`a configur\'e dans la liste) n\'ecessaires:
+  \item[\#] La liste des packages faisant partie de la distribution Eclipse Helios (site \textit{'http://download.eclipse.org/releases/helios'}, normalement d\'ej\`a configur\'e dans la liste) n\'ecessaires sont les suivants~:
     \begin{itemize}
       \item Modeling/EMF Modeling Framework SDK
       \item General Purpose Tools/Eclipse Plug-In Development Env
@@ -48,10 +51,10 @@ Afin de pouvoir utiliser APIM, nous avons eu besoin des \'el\'ements suivant~:
   \item[\#] Pour le plugin APIModel:
     \begin{itemize}
       \item R\'ecup\'erer le .zip dans le SVN de Sysfera: SYSFERA/startup/devel/Eclipse\-/Plugins/com.sysfera.codegen.api.zip
-      \item Unzipper le fichier dans votre repertoire d'install eclipse (cela va installer le .jar ds le sous-repertoire plugins/)
-      \item redemarrer Eclipse
+      \item Unzipper le fichier dans votre repertoire d'install eclipse (cela va installer le .jar dans le sous-repertoire plugins/)
+      \item red\'emarrer Eclipse
     \end{itemize}
-  \item[\#] Voil\`a, il ne reste plus qu'\`a r\'ecup\'erer les sources des plugins présents dans le depôt git (eclipse\_1.git) sur graal, puis importer les projets dans votre workspace (dans le Package Explorer: click droit$>$Import...$>$Existing projects into workspace$>$Selectionner le directory de votre workspace$>$ La liste des plugins \`a importer doit appara\^itre avec des cases à cocher$>$Les selectionner puis faire Import.) Les mod\`eles existants UMS.apim, TMS.apim, IMS.apim sont dispos dans le projet EDF-API. Normalement en double-cliquant dessus dans l'explorateur d'Eclipse ça ouvre l'editeur EMF du modèle (affichage de l'arborescence)
+  \item[\#] Voil\`a, il ne reste plus qu'\`a r\'ecup\'erer les sources des plugins présents dans le depôt git (eclipse\_1.git) sur graal, puis importer les projets dans votre workspace (dans le Package Explorer: click droit$>$Import...$>$Existing projects into workspace$>$Selectionner le directory de votre workspace$>$ La liste des plugins \`a importer doit appara\^itre avec des cases à cocher$>$Les selectionner puis faire Import.) Les mod\`eles existants UMS.apim, TMS.apim, IMS.apim, FMS.apim sont disponibles dans le projet EDF-API. Normalement en double-cliquant dessus dans l'explorateur d'Eclipse ça ouvre l'editeur EMF du modèle (affichage de l'arborescence)
   \end{itemize}
 \end{itemize}
 
@@ -59,7 +62,7 @@ Afin de pouvoir utiliser APIM, nous avons eu besoin des \'el\'ements suivant~:
 %% SECTION FORMATAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Formatage pour docbook}
-Pour g\'en\'erer du docbook en utilisant notre g\'en\'erateur, il faut respecter un certain nombre de r\`egles. 
+Pour g\'en\'erer du docbook en utilisant notre g\'en\'erateur, il faut respecter plusieurs r\`egles. 
 Une r\`egle g\'en\'erale concerne le nommage des services/ports, il faut suivre les conventions d\'efinies dans le document codingStandard.pdf d\'efini pour le projet EDF. Pour rappel ces conventions sont~:
 \begin{itemize}
 \item Pour un service, la premi\`ere lettre doit \^etre une minucule. Si plusieurs mots sont attach\'es uniquement la premi\`ere lettre de chaque mot (hormis le premier) est en majuscule. Le nom du service doit comporter un verbe d'action, exemple 'run, startProcess, fillData'.
@@ -67,7 +70,7 @@ Une r\`egle g\'en\'erale concerne le nommage des services/ports, il faut suivre 
 \end{itemize}
 
 \subsection*{Le fichier data.ecore}
-Ce fichier ecore correspond \`a un fichier EMF qui sert \`a d\'efinir les classes/types qui seront par la suite utilis\'ees dans l'API. Bien entendu, le nom du fichier peut \^etre quelconque (ici data sert d'exemple juste).
+Ce fichier ecore correspond \`a un fichier EMF qui sert \`a d\'efinir les classes/types qui seront par la suite utilis\'es dans l'API. Bien entendu, le nom du fichier peut \^etre quelconque (ici data sert d'exemple juste).
 
 Pour cr\'eer une classe~:
 \begin{itemize}
