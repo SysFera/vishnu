@@ -1006,7 +1006,7 @@
               <row>
                 <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>userId represents the VISHNU user identifier of the user whose password will be change</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -1606,9 +1606,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>configuration </para></entry>
-                <entry><para><link linkend="Configuration">Configuration</link></para></entry>
-                <entry><para>The configuration is the object which encapsulates the configuration information </para></entry>
+                <entry><para>filePath</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The filePath is the path of the file used to restore VISHNU configuration</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -1656,7 +1656,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>restoreConfiguration</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Configuration&amp; <parameter>configuration </parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>restoreConfiguration</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::addMachine</title>
@@ -3002,11 +3002,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>filePath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>The filePath is the path of the VISHNU configuration file</para></entry>
-            </row>
             <row>
               <entry><para>listConfUsers</para></entry>
               <entry><para>List of <link linkend="User">User</link></para></entry>
