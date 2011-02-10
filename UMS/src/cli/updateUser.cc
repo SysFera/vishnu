@@ -22,6 +22,8 @@ int main (int ac, char* av[]){
 		/******* Parsed value containers ****************/
        
 		string dietConfig;
+		
+		string sessionKey;
 
 		std::string userId;
         
@@ -67,6 +69,11 @@ int main (int ac, char* av[]){
 												ENV,
 												dietConfig);
 				
+        opt.add("sessionKey", 
+						            "The session key",
+												ENV,
+												sessionKey);
+
 				opt.add("privilege,p",
 		                 "the privilege of the user (admin or simple user)",
 										 CONFIG,
@@ -152,7 +159,13 @@ int main (int ac, char* av[]){
 			newUser.setEmail(email);
 		}
 
-            
+
+		if (opt.count("sessionKey")){
+           
+			cout <<"The session key is " << sessionKey << endl;
+		}           
+    
+
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;
@@ -179,7 +192,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-               // initializing DIET
+ /*              // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -187,11 +200,10 @@ int main (int ac, char* av[]){
               }
 
     
-							std::string sessionKey;
 		
 							int res = updateUser(sessionKey,newUser);
 
-
+*/
 		
 
 	}// End of try bloc

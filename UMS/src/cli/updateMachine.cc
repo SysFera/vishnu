@@ -152,7 +152,8 @@ int main (int ac, char* av[]){
 
 		cout << "Enter the Machine Description:\n ";
 
-		cin >> machineDescription;
+	
+		getline(cin, machineDescription);
 			
 		newMachine.setMachineDescription(machineDescription);
 
