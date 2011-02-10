@@ -58,8 +58,6 @@ public :
 
 protected:
 private:
-  map<string, string> mmap;
-  string mname;
 };
 
 

@@ -39,6 +39,7 @@ SystemException::initMsg(){
   mp.insert(std::pair<int, std::string>(4, std::string("Error bad parameters")));
   mp.insert(std::pair<int, std::string>(5, std::string("Error invalid component")));
   mp.insert(std::pair<int, std::string>(6, std::string("Error invalid mapper")));
+  mp.insert(std::pair<int, std::string>(7, std::string("Error it is a temporary password")));
 }
 
 std::string

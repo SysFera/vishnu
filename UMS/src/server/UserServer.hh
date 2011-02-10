@@ -16,6 +16,7 @@
 #include "UMS_Data/ConnectOptions.hpp"
 #include "UMS_Data/ListUsers.hpp"
 */
+class ServerUMS;
 class SessionServer;
 #include "SessionServer.hh"
 #include "UMS_Data.hpp"
@@ -31,11 +32,11 @@ public:
 	int 
 	add(UMS_Data::User*& user);
 	int 
-	update(UMS_Data::User user);
+	update(UMS_Data::User* user);
 	int 
 	deleteUser(UMS_Data::User user);
 	int 
-	changePassword(std::string newPassword);
+	changePassword(std::string oldPassword, std::string newPassword);
 	int 
 	resetPassword(UMS_Data::User user);
 	~UserServer();
@@ -53,7 +54,10 @@ public:
 	//return the integer attribut of the user
 	std::string getAttribut(std::string condition, std::string attrname = "numuserid");
 	//static UMS_Data::ListUsers  list(SessionServer session, string userIdOptions);
-
+	bool 
+	existuserId(std::string userId);
+	
+	
 private:
 	UMS_Data::User muser;
 	UMS_Data::ConnectOptions moptions;
@@ -63,8 +67,6 @@ private:
 	SessionServer* msessionServer;
 
 private:
-	bool 
-	checkLogin();
 	bool 
 	checkPassword();
 	std::string 

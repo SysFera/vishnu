@@ -230,7 +230,7 @@ CREATE TABLE vsession (
   timeout INTEGER      ,
 PRIMARY KEY(numsessionid),
   FOREIGN KEY(users_numuserid)
-    REFERENCES users(numuserid),
+    REFERENCES users(numuserid) ON DELETE CASCADE,
   FOREIGN KEY(clmachine_numclmachineid)
     REFERENCES clmachine(numclmachineid));
 
@@ -286,7 +286,7 @@ PRIMARY KEY(numoptionvalueid),
   FOREIGN KEY(optionu_numoptionid)
     REFERENCES optionu(numoptionid),
   FOREIGN KEY(users_numuserid)
-    REFERENCES users(numuserid));
+    REFERENCES users(numuserid) ON DELETE CASCADE);
 
 CREATE SEQUENCE s_optionvalue;
 
@@ -339,7 +339,7 @@ CREATE TABLE command (
   ctype INTEGER      ,
 PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)
-    REFERENCES vsession(numsessionid));
+    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
 CREATE SEQUENCE s_command;
 
