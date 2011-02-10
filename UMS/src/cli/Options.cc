@@ -35,12 +35,13 @@ void Configuration::setConfigFile(const string& configFile) {
 }
 
 /* Standard Options constructor. Get a pointer on a config object*/
-Options::Options(Configuration* conf):generic_options("Generic Options"),
-									  config_options("Configuration"),
-                                      env_options("Environment variables"),
-                                      hidden_options("Hidden Options"){
+Options::Options(Configuration* otherConf):conf(otherConf),
+	                                                    generic_options("Generic Options"),
+									                                    config_options("Configuration"),
+                                                      env_options("Environment variables"),
+                                                      hidden_options("Hidden Options"){
 										  
-	this->conf = conf;
+//	this->conf = conf;
 	generic_options.add_options()
 							   ("help,h", "produce help message")
 							   ;
@@ -81,8 +82,6 @@ void Options::setGroup (const po::options_description& tmp_options,
 			}
 	}
 }
-
-
 
 
 

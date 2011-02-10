@@ -27,31 +27,31 @@ class SessionProxy
 {
 
 public:
-        //constructor
-        SessionProxy();
-	explicit SessionProxy(const std::string& sessionKey);
-	explicit SessionProxy(const UMS_Data::Session& session);
+  //constructor
+  SessionProxy();
+  explicit SessionProxy(const std::string& sessionKey);
+  explicit SessionProxy(const UMS_Data::Session& session);
 
-        //methods
-	int connect(const UserProxy& user, const UMS_Data::ConnectOptions& options);
-	int reconnect(const UserProxy& user);
-	int close();
-        std::string getSessionKey() const;
-	UMS_Data::Session getData() const;
-        std::string getErrorInfo() const;
+  //methods
+  int connect(const UserProxy& user, const UMS_Data::ConnectOptions& options);
+  int reconnect(const UserProxy& user);
+  int close();
+  std::string getSessionKey() const;
+  UMS_Data::Session getData() const;
+  std::string getErrorInfo() const;
 
-        //Destructor
-	~SessionProxy();
+   //Destructor
+  ~SessionProxy();
 private:
        
-       std::string serialize(const UMS_Data::ConnectOptions& options, 
-                              UMS_Data::ConnectOptions_ptr& serializedOptions);
+  std::string serialize(const UMS_Data::ConnectOptions& options, 
+                        UMS_Data::ConnectOptions_ptr& serializedOptions);
 
-       int _connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options=UMS_Data::ConnectOptions());
+  int _connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options=UMS_Data::ConnectOptions());
 
-       //Attributs      
-       UMS_Data::Session msession;
-       std::string msessionKey;
-       std::string merrorInfo;
+  //Attributs      
+  UMS_Data::Session msession;
+  std::string msessionKey;
+  std::string merrorInfo;
 };
 #endif

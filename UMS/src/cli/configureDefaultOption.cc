@@ -1,6 +1,6 @@
 
 
-#include "addMachine.hh"
+#include "configureDefaultOption.hh"
 
 namespace po = boost::program_options;
 
@@ -22,21 +22,17 @@ int main (int ac, char* av[]){
        
 		string dietConfig;
 
-		std::string name;
+		std::string optionName;
         
-		std::string site;
-
-		std::string language;
-		
-		std::string machineDescription; 
+		std::string value;
 		
 		std::string sessionKey;
 
 
 		/********** EMF data ************/
 
-		UMS_Data::Machine newMachine;
 
+  		UMS_Data::OptionValue optionValue;
 
 
 
@@ -67,29 +63,22 @@ int main (int ac, char* av[]){
 												ENV,
 												dietConfig);
 				
-				opt.add("name",
-		                 "The name of the machine",
+				opt.add("optionName",
+		                 "the name of an option", 
 										 HIDDEN,
-										 name);
+										 optionName);
 
-				opt.setPosition("name",1);
+				opt.setPosition("optionName",1);
 
 
-				opt.add("site",
-								"The location of the machine",
-								HIDDEN,
-								site);
-
-				opt.setPosition("site",1);
-
-				opt.add("language",
-												"The language in which the description of the machine has been done",
+				opt.add("value",
+								       "The value of an option",
 												HIDDEN,
-												language);
+												value);
 
-				opt.setPosition("language",1);
+				opt.setPosition("value",1);
 
-
+										
 				opt.add("sessionKey",
 												"The session key",
 												ENV,
@@ -111,40 +100,33 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("name")){
+
+		
+		if (opt.count("optionName")){
 			
-			cout <<"The name of the machine is " << name << endl;
-			
-			newMachine.setName(name);
-			
+			cout <<"The option name is " << optionName << endl;
+		
+			optionValue.setOptionName(optionName);
+
 			reqParam=reqParam+1;
 			
 		}
 		
-		if(opt.count("site")){
+		if(opt.count("value")){
 			
-			cout <<"the site is : " << site << endl;
+			cout <<"the value is : " << value << endl;
 			
-			newMachine.setSite(site);
+			optionValue.setValue(value);
 			
 			reqParam=reqParam+1;
 		}
 		
-		if(opt.count("language")){
-
-			cout << "The language is " << language << endl;
-			
-			newMachine.setLanguage(language);
-			
-			reqParam=reqParam+1;
-                        
-		}
-
             
 		if (opt.count("dietConfig")){
            
 			cout <<"The diet config file " << dietConfig << endl;           
 		}
+
 		else{
 
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
@@ -152,30 +134,20 @@ int main (int ac, char* av[]){
 			return 1;
 		}
 
-
-		if ((reqParam < AMPARAM) || (opt.count("help"))){
+		if ((reqParam < CDOPARAM) || (opt.count("help"))){
 			
-			cout << "Usage: " << av[0] <<" name site language "<<endl;
+			cout << "Usage: " << av[0] <<"  optionName value "<<endl;
 				     
 			cout << opt << endl;
 							      
 			return 0;
-		}
-		else{//Fix me
-
-		cout << "Enter the Machine Description:\n ";
-
-		getline(cin, machineDescription);
-			
-		newMachine.setMachineDescription(machineDescription);
-
 		}
 
 
 
 
 /************** Call UMS connect service *******************************/
-
+/*
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -183,11 +155,10 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-    
 		
-							int res = addMachine(sessionKey,newMachine);
-
-
+							int res = configureDefaultOption(sessionKey,optionValue);
+		
+*/
 	}// End of try bloc
 
 	catch(std::exception& e){

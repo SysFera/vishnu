@@ -7,10 +7,8 @@
 #include "MachineProxy.h"
 #include "LocalAccountProxy.h"
 #include "ConfigurationProxy.h"
-
-void print(UMS_Data::User_ptr user, int id);
-void print(UMS_Data::Machine_ptr machine, int id); 
-void  print(UMS_Data::LocalAccount_ptr localAccount, int id);
+#include "OptionValueProxy.h"
+#include "QueryProxy.h"
 
 int vishnuInitialize(char* cfg, int argc, char** argv);
 
@@ -48,3 +46,25 @@ int deleteLocalAccount(const std::string& sessionKey, const std::string& userId,
 int saveConfiguration(const std::string& sessionKey, const std::string filePath, UMS_Data::Configuration& config);
 
 int restoreConfiguration(const std::string& sessionKey, const UMS_Data::Configuration& config);
+
+int configureOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue);
+
+int configureDefaultOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue);
+
+int listSessions(const std::string& sessionKey, UMS_Data::ListSessions& listSession, 
+                 const UMS_Data::ListSessionOptions& options=UMS_Data::ListSessionOptions());
+
+int listLocalAccount(const std::string& sessionKey, UMS_Data::ListLocalAccounts& listLocalAcc,
+                     const UMS_Data::ListLocalAccOptions& options=UMS_Data::ListLocalAccOptions()); 
+
+int listMachine(const std::string& sessionKey, UMS_Data::ListMachines& listMachine,
+                const UMS_Data::ListMachineOptions& options=UMS_Data::ListMachineOptions());
+
+int listHistoryCmd(const std::string& sessionKey, UMS_Data::ListCommands& listCommands,
+                   const UMS_Data::ListCmdOptions& options=UMS_Data::ListCmdOptions());
+
+int listOptions(const std::string& sessionKey, UMS_Data::ListOptionsValues& listOptValues,
+                const UMS_Data::ListOptOptions& options=UMS_Data::ListOptOptions());
+
+int listUsers(const std::string& sessionKey, UMS_Data::ListUsers& listUsers, 
+              const std::string& userIdOption=std::string());

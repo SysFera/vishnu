@@ -1,6 +1,6 @@
 
 
-#include "addMachine.hh"
+#include "listMachine.hh"
 
 namespace po = boost::program_options;
 
@@ -17,27 +17,24 @@ int main (int ac, char* av[]){
 
 		string defaultConfig = "VishnuConfig.cfg";
 
-		int reqParam=0;   // to count the required parameters for the command
+
 		/******* Parsed value containers ****************/
        
 		string dietConfig;
-
-		std::string name;
-        
-		std::string site;
-
-		std::string language;
 		
-		std::string machineDescription; 
+		std::string userId;
+        
+		std::string machineId;
 		
 		std::string sessionKey;
 
-
 		/********** EMF data ************/
 
-		UMS_Data::Machine newMachine;
+		UMS_Data::ListMachines listMachine;
+		
+		UMS_Data::ListMachineOptions listOptions;
 
-
+	
 
 
 /***************  Default configuration file ***************** */
@@ -55,7 +52,6 @@ int main (int ac, char* av[]){
 /**************** Describe options *************/
 
 
-
 		Options opt(&config );
   
 		opt.add("version,v",
@@ -67,29 +63,20 @@ int main (int ac, char* av[]){
 												ENV,
 												dietConfig);
 				
-				opt.add("name",
-		                 "The name of the machine",
-										 HIDDEN,
-										 name);
+        opt.add("userId,u", 
+						             "An admin option for listing machines in which a specific user has a local configuration",
+												CONFIG,
+												userId);
 
-				opt.setPosition("name",1);
+				opt.add("listAllmachine,a",
+		                    "An option for listing all VISHNU machines", 
+										    CONFIG);
 
-
-				opt.add("site",
-								"The location of the machine",
-								HIDDEN,
-								site);
-
-				opt.setPosition("site",1);
-
-				opt.add("language",
-												"The language in which the description of the machine has been done",
-												HIDDEN,
-												language);
-
-				opt.setPosition("language",1);
-
-
+				opt.add("machineId,i",
+									    	"An option for listing information about a	specific machine",
+												CONFIG,
+												machineId);
+										
 				opt.add("sessionKey",
 												"The session key",
 												ENV,
@@ -98,6 +85,8 @@ int main (int ac, char* av[]){
 /**************  Parse to retrieve option values  ********************/
  
 		opt.parse_cli(ac,av);
+
+		bool isEmpty=opt.empty();//if no value was given in the command line
 
 		opt.parse_cfile();
 		
@@ -111,35 +100,34 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("name")){
+
+		if (opt.count("listAllmachine")){
 			
-			cout <<"The name of the machine is " << name << endl;
+			cout <<"We nedd to list all VISHNU machines " << endl;
 			
-			newMachine.setName(name);
+			listOptions.setListAllmachine(true);
+		}
 			
-			reqParam=reqParam+1;
+		
+		if (opt.count("userId")){
+			
+			cout <<"The user identifier is " << userId << endl;
+			
+			listOptions.setUserId(userId);
 			
 		}
 		
-		if(opt.count("site")){
+		if(opt.count("machineId")){
 			
-			cout <<"the site is : " << site << endl;
+			cout <<"the machineId is : " << machineId << endl;
 			
-			newMachine.setSite(site);
-			
-			reqParam=reqParam+1;
+			listOptions.setMachineId(machineId);
 		}
 		
-		if(opt.count("language")){
-
-			cout << "The language is " << language << endl;
+		if(opt.count("sessionKey")){
 			
-			newMachine.setLanguage(language);
-			
-			reqParam=reqParam+1;
-                        
+			cout <<"the session key is : " << sessionKey << endl;
 		}
-
             
 		if (opt.count("dietConfig")){
            
@@ -153,22 +141,13 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ((reqParam < AMPARAM) || (opt.count("help"))){
+		if ( isEmpty ||(opt.count("help"))){
 			
-			cout << "Usage: " << av[0] <<" name site language "<<endl;
-				     
+			cout << "Usage: " << av[0] <<" [options]  "<<endl;
+			
 			cout << opt << endl;
 							      
 			return 0;
-		}
-		else{//Fix me
-
-		cout << "Enter the Machine Description:\n ";
-
-		getline(cin, machineDescription);
-			
-		newMachine.setMachineDescription(machineDescription);
-
 		}
 
 
@@ -176,6 +155,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
+		/*
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -185,8 +165,11 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = addMachine(sessionKey,newMachine);
+							int res = listMachine(sessionKey,listMachine,listOptions);
 
+
+							// Display the list
+	*/
 
 	}// End of try bloc
 
