@@ -17,6 +17,7 @@ ADD_EXECUTABLE(mainReg
 ADD_LIBRARY(register-vishnu
   MapperRegistry.cpp
   Mapper.cpp
+  UMSMapper.cpp
   )
 
 TARGET_LINK_LIBRARIES(mainReg register-vishnu exception-vishnu)
