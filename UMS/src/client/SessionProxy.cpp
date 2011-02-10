@@ -101,7 +101,7 @@
         if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
         else std::cout << "The service was performed successfull" << std::endl;
     } else {
-       ERRMSG("Error in diet_string_get");
+       ERRMSG("Error in diet_call");
     }
 
     if(merrorInfo.size() > 0 ) { 

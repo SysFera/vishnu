@@ -1,6 +1,7 @@
 
 
 #include "listHistoryCmd.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -175,7 +176,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ( isEmpty ||(opt.count("help"))){
+		if ( opt.count("help")){
 			
 			cout << "Usage: " << av[0] <<" [options]  "<<endl;
 			
@@ -189,7 +190,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-		/*
+		
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -203,7 +204,12 @@ int main (int ac, char* av[]){
 
 
 							// Display the list
-	*/
+     printf("CommandId       SessionId       MachineId       CmdDescription       CmdStartTime    CmdEndTime     \n");
+     printf("--------------- --------------- --------------- -------------------- --------------- ---------------\n");
+     for(int i = 0; i < listCmd.getCommands().size(); i++) {
+        printCommand(listCmd.getCommands().get(i));
+     }
+	
 
 	}// End of try bloc
 
