@@ -11,7 +11,7 @@
 #include <string>
 #include "internalApi.hh"
 //#include "DIET_server.h"
-#define NB_SRV 4
+#define NB_SRV 8
 
 
 //static Database* mdatabaseVishnu;
@@ -20,7 +20,11 @@ static const char* SRV[NB_SRV] = {
   "sessionConnect", 
   "sessionReconnect", 
   "sessionClose",
-   "userCreate"};
+  "userCreate",
+  "userUpdate",
+  "userDelete",
+  "userPasswordChange",
+  "userPasswordReset"};
  
 /**
  * \class ServerUMS
@@ -41,18 +45,22 @@ public :
    */
    void
    init();
-   /**
-   * \brief Constructor, raises an exception on error
-   * \fn ServerUMS(std::string cfg)
-   * \param cfg The vishnu configuration filepath
-   */
-  ServerUMS(std::string cfg);
+  /**
+  * \brief Constructor, raises an exception on error
+  * \fn ServerUMS(std::string cfg)
+  * \param cfg The vishnu configuration filepath
+  * \param vishnuid The id of the vishnu configuration registered in the database
+  */  
+  ServerUMS(std::string cfg, std::string vishnuid);
   /**
    * \brief Destructor, raises an exception on error
    * \fn ~ServerUMS()
    */
   ~ServerUMS();
-  
+  /**
+  * \brief The id of the VISHNU configuration registered in the database
+  */
+  static std::string mvishnuid;
   
 private :
   
@@ -63,11 +71,11 @@ private :
   /**
   * \brief The VISHNU configuration file path
   */
-  std::string vishnucfg;
+  std::string mvishnucfg;
   /**
   * \brief Structure representing a profile description
   */
-  diet_profile_desc_t* profile;
+  diet_profile_desc_t* mprofile;
   
 };
 #endif // SERVERUMS

@@ -1,12 +1,12 @@
 /**
- * \file Mapper_impl.hpp
- * \brief Sample file to test mapper
+ * \file TMSMapper.hpp
+ * \brief Mapper for the TMS module
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
- * \date 07/02/11
+ * \date 10/02/11
  */
 
-#ifndef __MAPPERSAMPLE__HH__
-#define __MAPPERSAMPLE__HH__
+#ifndef __TMSMAPPER__HH__
+#define __TMSMAPPER__HH__
 
 #include <map>
 
@@ -17,13 +17,13 @@
 using namespace std;
 
 /**
- * \class Mapper_impl
- * \brief Generic mapper
+ * \class TMSMapper
+ * \brief Mapper implementation for the TMS module
  */
-class Mapper_impl : Mapper{
+class TMSMapper : Mapper{
 public :
-  Mapper_impl(MapperRegistry* reg, string name);
-  Mapper_impl();
+  TMSMapper(MapperRegistry* reg, string name);
+  TMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper()
