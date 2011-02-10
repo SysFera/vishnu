@@ -10,6 +10,7 @@
 
 #include <boost/program_options.hpp>
 #include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>
 #include <typeinfo>
 #include <iostream>
 
@@ -82,7 +83,7 @@ public:
 	 */
 	class Options {
 		private:
-			Configuration* conf;/*!< store a command configuration*/
+		  Configuration *conf;/*!< store a command configuration*/
 			po::options_description generic_options;/*!< Generic option description*/
 			po::options_description config_options;/*!< Configuration option description */ 
 			po::options_description hidden_options ;/*!<Hidden option description*/
@@ -168,6 +169,12 @@ public:
 			  */
 
 			 int count (const std::string&)const;
+			 
+			 /**
+			  * \brief To check if a value is stored 
+			  */
+
+			 bool empty ()const{return vm.empty();}
 			 
 			 /**
 			  * \brief To get the value of options

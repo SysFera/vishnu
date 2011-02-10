@@ -227,3 +227,133 @@ int restoreConfiguration(const std::string& sessionKey, const UMS_Data::Configur
  return res;
 }
 
+int configureOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue) {
+ 
+  SessionProxy sessionProxy(sessionKey);
+  OptionValueProxy optionValueProxy(optionValue, sessionProxy);
+
+  int res = optionValueProxy.configureOption();
+
+ return res;
+}
+
+int configureDefaultOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue) {
+
+  SessionProxy sessionProxy(sessionKey);
+  OptionValueProxy optionValueProxy(optionValue, sessionProxy);
+
+  int res = optionValueProxy.configureDefaultOption();
+ return res;
+}
+
+int listSessions(const std::string& sessionKey, 
+                 UMS_Data::ListSessions& listSession,
+                 const UMS_Data::ListSessionOptions& options) {
+   
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListSessionOptions, UMS_Data::ListSessions> query(options, sessionProxy, "sessionList");
+
+  UMS_Data::ListSessions* listSession_ptr = query.list();  
+
+  UMS_Data::Session_ptr session;
+  for(int i = 0; i < listSession_ptr->getSessions().size(); i++) {
+      session = listSession_ptr->getSessions().get(i);
+      listSession.getSessions().push_back(session);
+  }
+ return 0;
+}
+
+int listLocalAccount(const std::string& sessionKey, 
+                     UMS_Data::ListLocalAccounts& listLocalAcc,
+                     const UMS_Data::ListLocalAccOptions& options)
+{
+
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts> query(options, sessionProxy, "localAccountList");
+
+  UMS_Data::ListLocalAccounts* listLocalAcc_ptr = query.list();
+
+  UMS_Data::LocalAccount_ptr account;
+  for(int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
+      account = listLocalAcc_ptr->getAccounts().get(i);
+      listLocalAcc.getAccounts().push_back(account);
+  }
+  return 0;
+}
+
+int listMachine(const std::string& sessionKey, 
+                UMS_Data::ListMachines& listMachine,
+                const UMS_Data::ListMachineOptions& options)
+{
+
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListMachineOptions, UMS_Data::ListMachines> query(options, sessionProxy, "machineList");
+
+  UMS_Data::ListMachines* listMachine_ptr = query.list();
+
+  UMS_Data::Machine_ptr machine;
+  for(int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
+      machine = listMachine_ptr->getMachines().get(i);
+      listMachine.getMachines().push_back(machine);
+  }
+
+  return 0;
+}
+
+int listHistoryCmd(const std::string& sessionKey, 
+                   UMS_Data::ListCommands& listCommands,
+                   const UMS_Data::ListCmdOptions& options)
+{
+
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListCmdOptions, UMS_Data::ListCommands> query(options, sessionProxy, "commandList");
+
+  UMS_Data::ListCommands* listCommands_ptr = query.list();
+
+  UMS_Data::Command_ptr command;
+  for(int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
+      command = listCommands_ptr->getCommands().get(i);
+      listCommands.getCommands().push_back(command);
+  }
+
+  return 0;
+}
+
+int listOptions(const std::string& sessionKey, 
+                UMS_Data::ListOptionsValues& listOptValues,
+                const UMS_Data::ListOptOptions& options)
+{
+
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues> query(options, sessionProxy, "optionValueList");
+
+  UMS_Data::ListOptionsValues* listOptValues_ptr = query.list();
+
+  UMS_Data::OptionValue_ptr optionValue;
+  for(int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
+      optionValue = listOptValues_ptr->getOptionValues().get(i);
+      listOptValues.getOptionValues().push_back(optionValue);
+  }
+
+  return 0;
+}
+
+int listUsers(const std::string& sessionKey, 
+              UMS_Data::ListUsers& listUsers, 
+              const std::string& userIdOption)
+{
+
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<std::string, UMS_Data::ListUsers> query(userIdOption, sessionProxy, "userList");
+
+  UMS_Data::ListUsers* listUsers_ptr = query.listWithParamsString();
+
+  UMS_Data::User_ptr user;
+  for(int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
+      user = listUsers_ptr->getUsers().get(i);
+      listUsers.getUsers().push_back(user);
+  }
+
+  return 0;
+}
+

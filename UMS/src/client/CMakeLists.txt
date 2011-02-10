@@ -1,6 +1,6 @@
 
 link_directories( 
- ${VISHNU_EXCEPTION_INCLUDE_DIR}   
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}   
 )
 
 include_directories(
@@ -17,6 +17,7 @@ add_library(ums-client-proxy
    MachineProxy.cpp
    LocalAccountProxy.cpp
    ConfigurationProxy.cpp
+   OptionValueProxy.cpp
 )
 
 target_link_libraries(ums-client-proxy
