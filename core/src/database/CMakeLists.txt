@@ -9,7 +9,7 @@ LINK_DIRECTORIES(
   ../../../lib
 )
 
-ADD_EXECUTABLE(main 
+ADD_EXECUTABLE(mainDB
   main.cpp
   )
 
@@ -20,6 +20,6 @@ ADD_LIBRARY(database-vishnu
   POSTGREDatabase.cpp
   )
 
-TARGET_LINK_LIBRARIES(main -lpq exception-vishnu database-vishnu)
+TARGET_LINK_LIBRARIES(mainDB -lpq database-vishnu exception-vishnu)
 
 install( TARGETS database-vishnu DESTINATION lib )

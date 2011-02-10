@@ -14,22 +14,22 @@ class ConfigurationProxy
 {
  
 public:
-	ConfigurationProxy(const std::string& filePath, const SessionProxy& session);
-	ConfigurationProxy(UMS_Data::Configuration* config, const SessionProxy& session);
-	int save();
-	int restoreFromFile();
-	int restoreFromData();
-	UMS_Data::Configuration* getData();
-	SessionProxy getSessionProxy();
+  ConfigurationProxy(const std::string& filePath, const SessionProxy& session);
+  ConfigurationProxy(UMS_Data::Configuration* config, const SessionProxy& session);
+  int save();
+  int restoreFromFile();
+  int restoreFromData();
+  UMS_Data::Configuration* getData();
+  SessionProxy getSessionProxy();
 
-        ~ConfigurationProxy();
+  ~ConfigurationProxy();
 
 private:
 
-        int restore(bool fromFile=true);
-        
-        UMS_Data::Configuration *mconfiguration;
-        SessionProxy msessionProxy;
-        std::string mfilePath;
+  int restore(bool fromFile=true);
+      
+  UMS_Data::Configuration *mconfiguration;
+  SessionProxy msessionProxy;
+  std::string mfilePath;
 };
 #endif

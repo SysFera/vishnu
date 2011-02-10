@@ -372,7 +372,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="represents the location of the machine"/>
-        <details key="shortOption" value="s"/>
+        <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -426,20 +426,6 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration" instanceTypeName="Configuration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="The filePath is the path of the VISHNU configuration file"/>
-        <details key="shortOption" value=""/>
-        <contents xsi:type="ecore:EAttribute" name="userId" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-            defaultValueLiteral="&quot;&quot;">
-          <eAnnotations source="Description">
-            <details key="content" value="represents the login of the user"/>
-            <details key="shortOption" value=""/>
-          </eAnnotations>
-        </contents>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listConfUsers" upperBound="-1"
         eType="#//User" containment="true">
       <eAnnotations source="Description">

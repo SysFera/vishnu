@@ -1,12 +1,12 @@
 /**
- * \file Mapper_impl.hpp
- * \brief Sample file to test mapper
+ * \file UMSMapper.hpp
+ * \brief Mapper for the UMS module
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
- * \date 07/02/11
+ * \date 10/02/11
  */
 
-#ifndef __MAPPERSAMPLE__HH__
-#define __MAPPERSAMPLE__HH__
+#ifndef __UMSMAPPER__HH__
+#define __UMSMAPPER__HH__
 
 #include <map>
 
@@ -17,13 +17,13 @@
 using namespace std;
 
 /**
- * \class Mapper_impl
- * \brief Generic mapper
+ * \class UMSMapper
+ * \brief Mapper implementation for the UMS module
  */
-class Mapper_impl : Mapper{
+class UMSMapper : Mapper{
 public :
-  Mapper_impl(MapperRegistry* reg, string name);
-  Mapper_impl();
+  UMSMapper(MapperRegistry* reg, string name);
+  UMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper()
