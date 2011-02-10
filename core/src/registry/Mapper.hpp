@@ -56,6 +56,9 @@ public :
 
 protected:
   MapperRegistry* mreg;
+  map<string, string> mmap;
+  string mname;
+
 private:
 };
 

@@ -1,6 +1,7 @@
 
 
 #include "listUsers.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -28,7 +29,7 @@ int main (int ac, char* av[]){
 
 		/********** EMF data ************/
 
-		UMS_Data::ListUsers listUsers;
+		UMS_Data::ListUsers lsUsers;
 		
 
 
@@ -110,7 +111,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ( isEmpty ||(opt.count("help"))){
+		if ( opt.count("help")){
 			
 			cout << "Usage: " << av[0] <<" [options]  "<<endl;
 			
@@ -124,7 +125,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-		/*
+		
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -134,11 +135,17 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = listUsers(sessionKey,listUsers,userIdOption);
+							int res = listUsers(sessionKey,lsUsers, userIdOption);
 
 
 							// Display the list
-	*/
+     printf("FirstName       LastName        Privilege Email                          UserId         \n");
+     printf("--------------- --------------- --------- ------------------------------ ---------------\n");
+     //Imprimer la liste formatee
+      for(int i = 0; i < lsUsers.getUsers().size(); i++) {
+        printUser(lsUsers.getUsers().get(i));
+      }
+	
 
 	}// End of try bloc
 

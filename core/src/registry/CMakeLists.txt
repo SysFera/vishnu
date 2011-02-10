@@ -18,6 +18,9 @@ ADD_LIBRARY(register-vishnu
   MapperRegistry.cpp
   Mapper.cpp
   UMSMapper.cpp
+  FMSMapper.cpp
+  IMSMapper.cpp
+  TMSMapper.cpp
   )
 
 TARGET_LINK_LIBRARIES(mainReg register-vishnu exception-vishnu)
