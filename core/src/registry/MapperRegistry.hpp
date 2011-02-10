@@ -69,7 +69,7 @@ private :
   /**
    * \brief Exception to be thrown
    */
-  InternalVishnuException e;
+  InternalVishnuException me;
   /**
    * \brief Return if the list contains the string
    * \fn bool contains(string s)
