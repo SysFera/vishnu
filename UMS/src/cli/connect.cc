@@ -1,7 +1,8 @@
 
 
 #include "connect.hh"
-
+#include <boost/bind.hpp>
+#include <typeinfo>
 namespace po = boost::program_options;
 
 using namespace std;
@@ -28,17 +29,24 @@ int main (int ac, char* av[]){
         
 		std::string password;
 
-		int closePolicy;
+		//int closePolicy;
 
 		int sessionInactivityDelay;
 
 		std::string substituteUserId;
 
+
 		/********** EMF Data ****************************/
 
 
   		UMS_Data::ConnectOptions connectOpt;
+  		
+			UMS_Data::SessionCloseType closePolicy;
 
+
+			/******** Callback functions ******************/
+
+			boost::function1<void,UMS_Data::SessionCloseType> fClosePolicy( boost::bind(&UMS_Data::ConnectOptions::setClosePolicy,boost::ref(connectOpt),_1));  		
 
 /***************  Default configuration file ***************** */
 
@@ -77,7 +85,8 @@ int main (int ac, char* av[]){
 		opt.add("closePolicy,p",
 					 "for closing session automatically",
 					 CONFIG,
-					 closePolicy);
+			       fClosePolicy );  		
+					
 
 		opt.add("sessionInactivityDelay,d",
 				      "The session inactivity delay",
@@ -117,9 +126,9 @@ int main (int ac, char* av[]){
    		
 		if(opt.count("closePolicy")){
 
-			cout << "The close policy is " << closePolicy <<endl;
+			cout << "The close policy is " << connectOpt.getClosePolicy() <<endl;
                         
-			connectOpt.setClosePolicy(closePolicy);
+			//connectOpt.setClosePolicy(closePolicy);
 		}
 
 
