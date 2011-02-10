@@ -64,7 +64,6 @@ public:
 	typedef boost::function1<std::string, std::string> func1;
 
 
-
 	/**
 	 * \enum Group_type
 	 * \brief A convenient type allowing to group options
@@ -134,6 +133,27 @@ public:
 
 				}
 			
+			template<typename T> 
+				void add(const std::string& name,
+                           const std::string& desc,
+						   const Group_type& group,
+							 boost::function1<void, T>& userFunc
+						   ){
+
+					po::options_description tmp_options;
+
+					if( typeid(T)== typeid(std::vector<std::string>)){
+						tmp_options.add_options()(name.c_str(),po::value<T>()->multitoken()->notifier(userFunc),desc.c_str());
+					}
+					else{
+						tmp_options.add_options()(name.c_str(),po::value<T>()->notifier(userFunc),desc.c_str());
+					}
+
+					// Set the group
+
+					setGroup(tmp_options,group);
+
+				}
 			/**
 			 * \brief To set position of options 
 			 */

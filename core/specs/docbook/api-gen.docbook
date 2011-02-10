@@ -50,6 +50,16 @@
           
         <para>First release</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>10/02/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            
+            
+            
+          <para>Removed UMS::AddUserOptions, UMS::AddMachineOptions and UMS::UpdateUserOptions classes and UMS::SessionStateType.</para><para>Added function UMS::reconnect, UMS::StatusType.</para><para>Modified UMS::restoreConfiguration and UMS::Configuration class</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -80,16 +90,16 @@
         VISHNU system:</para>
       <para><itemizedlist>
           <listitem>
-            <para>UMS: Users Management System</para>
+            <para>UMS: Users Management Service</para>
           </listitem>
           <listitem>
-            <para>TMS: Tasks Management System</para>
+            <para>TMS: Tasks Management Service</para>
           </listitem>
           <listitem>
-            <para>FMS: Files Management System</para>
+            <para>FMS: Files Management Service</para>
           </listitem>
           <listitem>
-            <para>IMS: Information Management System</para>
+            <para>IMS: Information Management Service</para>
           </listitem>
         </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:
@@ -330,7 +340,7 @@
     </section>
   </chapter>
   <chapter annotations="UMS.apim#APIOPS+APIDATA">
-    <title>API specification for User Management System (UMS)</title>
+    <title>API specification for User Management Service (UMS)</title>
     <section>
       <title>Definition of the functions of the package</title>
       <section>
@@ -3333,9 +3343,9 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>sessionListOption</para></entry>
-              <entry><para><link linkend="SessionStateType">SessionStateType</link></para></entry>
-              <entry><para>specifies the type of the sessions which will be listed (INACTIVE or ACTIVE)</para></entry>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+              <entry><para>specifies the status of the sessions which will be listed</para></entry>
             </row>
             <row>
               <entry><para>sessionClosePolicy</para></entry>
@@ -3523,8 +3533,8 @@
             </row>
             <row>
               <entry><para>status</para></entry>
-              <entry><para><link linkend="UserStatusType">UserStatusType</link></para></entry>
-              <entry><para>represents the status of the machine  (ACTIVE or INACTIVE) </para></entry>
+              <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+              <entry><para>represents the status of the machine</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3609,9 +3619,9 @@
               <entry><para>is the date of the closure of the session (the UNIX timestamps is used)</para></entry>
             </row>
             <row>
-              <entry><para>state</para></entry>
-              <entry><para><link linkend="SessionStateType">SessionStateType</link></para></entry>
-              <entry><para>is the state of the session (ACTIVE OR INACTIVE)</para></entry>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+              <entry><para>represents the status of the session</para></entry>
             </row>
             <row>
               <entry><para>closePolicy</para></entry>
@@ -3676,8 +3686,8 @@
             </row>
             <row>
               <entry><para>status</para></entry>
-              <entry><para><link linkend="UserStatusType">UserStatusType</link></para></entry>
-              <entry><para>represents the status of the user (LOCKED or ACTIVE) </para></entry>
+              <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+              <entry><para>represents the status of the user</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3736,7 +3746,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="SessionStateType"><emphasis role="bold">Enumeration UMS::SessionStateType Type</emphasis></para>
+      <para xml:id="StatusType"><emphasis role="bold">Enumeration UMS::StatusType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -3761,35 +3771,10 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="UserStatusType"><emphasis role="bold">Enumeration UMS::UserStatusType Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>ACTIVE</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>LOCKED</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
     </section>
   </chapter>
   <chapter annotations="TMS.apim#APIOPS+APIDATA">
-    <title>API specification for Tasks Management System (TMS)</title>
+    <title>API specification for Tasks Management Service (TMS)</title>
     <section>
       <title>Definition of the functions of the package</title>
       <section>
@@ -5663,7 +5648,7 @@
     </section>
   </chapter>
   <chapter annotations="IMS.apim#APIOPS+APIDATA">
-    <title>API specification for Information Management System (IMS)</title>
+    <title>API specification for Information Management Service (IMS)</title>
     <section>
       <title>Definition of the functions of the package</title>
       <section>
@@ -7061,7 +7046,7 @@
     </section>
   </chapter>
   <chapter annotations="FMS.apim#APIOPS+APIDATA">
-    <title>API specification for File Management System (FMS)</title>
+    <title>API specification for File Management Service (FMS)</title>
     <section>
       <title>Definition of the functions of the package</title>
       <section>

@@ -1,6 +1,7 @@
 
 
 #include "listMachine.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -30,7 +31,7 @@ int main (int ac, char* av[]){
 
 		/********** EMF data ************/
 
-		UMS_Data::ListMachines listMachine;
+		UMS_Data::ListMachines lsMachine;
 		
 		UMS_Data::ListMachineOptions listOptions;
 
@@ -141,7 +142,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ( isEmpty ||(opt.count("help"))){
+		if ( opt.count("help")){
 			
 			cout << "Usage: " << av[0] <<" [options]  "<<endl;
 			
@@ -155,7 +156,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-		/*
+		
                // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -165,11 +166,16 @@ int main (int ac, char* av[]){
 
     
 		
-							int res = listMachine(sessionKey,listMachine,listOptions);
+							int res = listMachine(sessionKey,lsMachine,listOptions);
 
 
 							// Display the list
-	*/
+     printf("machineId       Name            Site            MachineDescription    Language      \n");
+     printf("--------------- --------------- --------------- -------------------- ---------------\n");
+     for(int i = 0; i < lsMachine.getMachines().size(); i++) {
+        printMachine(lsMachine.getMachines().get(i));
+     }
+	
 
 	}// End of try bloc
 
