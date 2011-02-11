@@ -120,6 +120,7 @@ CREATE TABLE machine (
   memory INTEGER    ,
   network INTEGER    ,
   machineid VARCHAR(255)      ,
+  status INTEGER      ,
 PRIMARY KEY(nummachineid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
@@ -149,7 +150,7 @@ CREATE TABLE state (
   time TIMESTAMP      ,
 PRIMARY KEY(numstateid),
   FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid));
+    REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
 CREATE SEQUENCE s_state;
 
@@ -175,7 +176,7 @@ CREATE TABLE cpu (
   cache INTEGER      ,
 PRIMARY KEY(cpuid),
   FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid));
+    REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
 CREATE SEQUENCE s_cpu;
 
@@ -199,7 +200,7 @@ CREATE TABLE description (
   description VARCHAR(255)      ,
 PRIMARY KEY(numdescriptionid),
   FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid));
+    REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
 CREATE SEQUENCE s_description;
 
@@ -260,7 +261,7 @@ PRIMARY KEY(numaccountid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid),
   FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid));
+    REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
 CREATE SEQUENCE s_account;
 
@@ -311,7 +312,7 @@ CREATE TABLE threshold (
   value INTEGER      ,
 PRIMARY KEY(thresholdid),
   FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid),
+    REFERENCES machine(nummachineid) ON DELETE CASCADE,
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid));
 
