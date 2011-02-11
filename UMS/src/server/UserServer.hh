@@ -16,7 +16,7 @@
 #include "UMS_Data/ConnectOptions.hpp"
 #include "UMS_Data/ListUsers.hpp"
 */
-class ServerUMS;
+//class ServerUMS;
 class SessionServer;
 #include "SessionServer.hh"
 #include "UMS_Data.hpp"
@@ -36,7 +36,7 @@ public:
 	int 
 	deleteUser(UMS_Data::User user);
 	int 
-	changePassword(std::string oldPassword, std::string newPassword);
+	changePassword(std::string newPassword);
 	int 
 	resetPassword(UMS_Data::User user);
 	~UserServer();
@@ -45,7 +45,7 @@ public:
 	void 
 	init();
 	bool 
-	exist();
+	exist(bool flagForChangePwd = false);
 	bool 
 	isAdmin();
 	bool 
