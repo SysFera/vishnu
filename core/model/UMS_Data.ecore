@@ -181,7 +181,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="privilege" eType="#//PrivilegeType"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="is the privilege of the user (admin or simple user)"/>
         <details key="shortOption" value="p"/>

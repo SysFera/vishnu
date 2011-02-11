@@ -1522,13 +1522,6 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>filePath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The filePath is the path of the file in which the VISHNU configuration will be saved</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>configuration</para></entry>
                 <entry><para><link linkend="Configuration">Configuration</link></para></entry>
                 <entry><para>The configuration is an object which encapsulates the configuration description</para></entry>
@@ -1579,7 +1572,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>saveConfiguration</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>filePath</parameter></paramdef><paramdef>Configuration&amp; <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>saveConfiguration</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Configuration&amp; <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::restoreConfiguration</title>

@@ -1,11 +1,10 @@
+
 CREATE TABLE optionu (
   numoptionid SERIAL  NOT NULL ,
   optionid INTEGER    ,
   description VARCHAR(255)    ,
   defaultvalue INTEGER      ,
 PRIMARY KEY(numoptionid));
-
-
 
 CREATE TABLE clmachine (
   numclmachineid SERIAL  NOT NULL ,
@@ -222,6 +221,8 @@ PRIMARY KEY(numjobid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
+INSERT INTO vishnu (updatefreq, usercpt) VALUES (0, 0);
 
-
-
+INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
+INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIMEOUT', 3600);
+     
