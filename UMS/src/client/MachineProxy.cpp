@@ -5,8 +5,8 @@
 #include <assert.h>
 
 #include "UMSVishnuException.hh"
-#include "debug.hh"
 #include "MachineProxy.h"
+#include "utilsClient.hpp"
 
 
 MachineProxy::MachineProxy(const UMS_Data::Machine& machine, const SessionProxy& session):
@@ -21,6 +21,7 @@ int MachineProxy::_addMachineInformation(bool isNewMachine)
    std::string sessionKey;
    std::string machineToString;
    char* errorInfo;
+   std::string msg = "call of function diet_string_set is rejected ";
 
    if(isNewMachine) profile = diet_profile_alloc("machineCreate", 1, 1, 2);
    else profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
@@ -33,32 +34,33 @@ int MachineProxy::_addMachineInformation(bool isNewMachine)
 
    //IN Parameters
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-   };
+     msg += "with sessionKey parameter "+sessionKey;
+     ERRMSG(msg.c_str());
+     sendErrorMsg(msg); 
+   }
    if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-   };
+     msg += "with machineToString parameter "+machineToString;
+     ERRMSG(msg.c_str());
+     sendErrorMsg(msg);
+   }
 
    //OUT Parameters
-   if(diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-   }
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        ERRMSG("Error in diet_string_set");
-       };
-       if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-       else std::cout << "The service was performed successfull" << std::endl;
+         msg += " by receiving errorInfo message";
+         ERRMSG(msg.c_str());
+         sendErrorMsg(msg);
+       }
+       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
    }
    else {
-       ERRMSG("Error in diet_string_get");
+      sendErrorMsg(" the function diet_call is rejected");
    }
 
-   if(strlen(errorInfo) > 0 ) {
-      UMSVishnuException e(1, errorInfo);
-      throw e;
-   }
+    /*To check the receiving message error*/
+    checkErrorMsg(errorInfo);
 
   return 0;
 }
@@ -79,6 +81,7 @@ int MachineProxy::deleteMachine()
    std::string sessionKey;
    std::string machineId;
    char* errorInfo;
+   std::string msg = "call of function diet_string_set is rejected ";
 
    profile = diet_profile_alloc("machineDelete", 1, 1, 2);
    sessionKey = msessionProxy.getSessionKey();
@@ -86,35 +89,34 @@ int MachineProxy::deleteMachine()
 
    //IN Parameters
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-   };
+      msg += "with sessionKey parameter "+sessionKey;
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg); 
+   }
    if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-   };
+      msg += "with machineId parameter "+machineId;
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg);
+   }
 
    //OUT Parameters
-   if(diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-   }
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        ERRMSG("Error in diet_string_set");
-       };
-       if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-       else std::cout << "The service was performed successfull" << std::endl;
+         msg += " by receiving errorInfo message";
+         ERRMSG(msg.c_str());
+         sendErrorMsg(msg); 
+       }
+       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
    }
    else {
-       ERRMSG("Error in diet_string_get");
+      sendErrorMsg(" the function diet_call is rejected"); 
    }
 
-   if(strlen(errorInfo) > 0 ) {
-      UMSVishnuException e(1, errorInfo);
-      throw e;
-   }
-
-   return (strlen(errorInfo) > 0);
-
+     /*To check the receiving message error*/
+    checkErrorMsg(errorInfo);
+ 
   return 0;
 }
 

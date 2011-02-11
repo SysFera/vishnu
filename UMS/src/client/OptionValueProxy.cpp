@@ -5,8 +5,7 @@
 #include <assert.h>
 
 #include "UMSVishnuException.hh"
-#include "debug.hh"
-
+#include "utilsClient.hpp"
 #include "OptionValueProxy.h"
 
 
@@ -21,6 +20,7 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
    std::string sessionKey;
    std::string optionValueToString;
    char* errorInfo;
+   std::string msg = "call of function diet_string_set is rejected ";
 
    if(defaultValue) profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
    else profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
@@ -32,32 +32,33 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
 
    //IN Parameters
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-   };
+      msg += "with sessionKey parameter "+sessionKey;
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg);
+   }
    if(diet_string_set(diet_parameter(profile,1), strdup(optionValueToString.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-   };
+      msg += "with optionValueToString parameter "+optionValueToString;
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg);
+   }
 
    //OUT Parameters
-   if(diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-   }
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        ERRMSG("Error in diet_string_set");
-       };
-       if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-       else std::cout << "The service was performed successfull" << std::endl;
+         msg += " by receiving errorInfo message";
+         ERRMSG(msg.c_str());
+         sendErrorMsg(msg);
+       }
+       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
    }
    else {
-       ERRMSG("Error in diet_call function");
+      sendErrorMsg(" the function diet_call is rejected");
    }
 
-   if(strlen(errorInfo) > 0 ) {
-      UMSVishnuException e(1, errorInfo);
-      throw e;
-   }
+   /*To check the receiving message error*/
+    checkErrorMsg(errorInfo);
 
   return 0;
 }
