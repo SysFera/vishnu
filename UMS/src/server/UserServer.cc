@@ -8,8 +8,6 @@
 #include <exception>
 #include "SystemException.hh"
 #include "UMSVishnuException.hh"
-#include "utilServer.hh"
-//#include "sed/ServerUMS.hh"
 
 UserServer::UserServer(std::string userId, std::string password) {
   //try {
@@ -40,53 +38,48 @@ int
 UserServer::add(UMS_Data::User*& user) {
 
 std::string pwd;
+std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,\
+  privilege, email, passwordstate, status) values "; 
 
- try {
-        if (exist()) {  
-	    if (isAdmin()) {
-	     
-	      //Insertion dans la base User ... Insert Into
-	      //User_ptr user = parser.load(std::string(userSerialized))->as< User >();
-	      //TODO :  voir stockage password avec Ibrahima
-	      pwd = generatePassword(user->getLastname(), user->getFirstname());
-	      //std::string pwd = generatePassword("","");
-	      user->setPassword(pwd);
-	      //TODO voir génération Id avec Kévine
-	      user->setUserId(user->getFirstname()+"_"+user->getLastname());
-	      
-	      //extern std::string ServerUMS::mvishnuid;
-	      
-	      //std::cout << "VISHNUIOD dans USer" << ServerUMS::mvishnuid << std::endl;
-	      //ServerUMS::mvishnuid;
-	      //ServerUMS::mvishnuid;
-	      std::cout << "VISHNUIOD dans USer" << Vishnuid::mvishnuid <<std::endl;
-	      //TODO Faire appel ici à la variable globale mvishnuid ServerUMS::mvishnuid;
-	      //std::cout << "VISHNUIOD dans USer" << ServerUMS::mvishnuid << std::endl;
-	      if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
-		mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,\
-		privilege, email, passwordstate, status)\
-		values (1, '"+user->getUserId()+"','"+user->getPassword()+"','\
-		"+ user->getFirstname()+"','"+user->getLastname()+"',"+ 
-		  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', 0, "+convertToString(user->getStatus())+")");
-		}
-		else {
-		  UMSVishnuException e (4, "The userId generated already exists");
-		  throw e;
-		}
-	      
-	      //TODO : voir envoi de mail avec kévine
-	      
-	    } //END if the user is an admin 
-	    else {
-	      UMSVishnuException e (4, "The user is not an admin");
-	      throw e;
-	    }
-	} //END if the user exists 
-	else {
-	      UMSVishnuException e (4, "The user is unknown");
-	      throw e;
+try {
+  if (exist()) {  
+      if (isAdmin()) {
+	
+	//TODO :  voir stockage password avec Ibrahima
+	pwd = generatePassword(user->getLastname(), user->getFirstname());
+	//std::string pwd = generatePassword("","");
+	user->setPassword(pwd);
+	
+	//TODO voir génération Id avec Kévine
+	user->setUserId(user->getFirstname()+"_"+user->getLastname());
+	
+	
+	std::cout << "VISHNUIOD dans USer" << Vishnuid::mvishnuid <<std::endl;
+	
+	if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
+	  
+	  mdatabaseVishnu->process( sqlInsert + "(" + Vishnuid::mvishnuid+", '"+user->getUserId()+"','"+user->getPassword()+"','\
+	  "+ user->getFirstname()+"','"+user->getLastname()+"',"+ 
+	  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', 0, "+convertToString(user->getStatus())+")");
 	}
+	  else {
+	    UMSVishnuException e (4, "The userId generated already exists");
+	    throw e;
+	  }
+	
+	//TODO : voir envoi de mail avec kévine
+	
+      } //END if the user is an admin 
+      else {
+	UMSVishnuException e (4, "The user is not an admin");
+	throw e;
+      }
+  } //END if the user exists 
+  else {
+	UMSVishnuException e (4, "The user is unknown");
+	throw e;
   }
+}
   catch (SystemException& e) {
 	throw e;
  }  

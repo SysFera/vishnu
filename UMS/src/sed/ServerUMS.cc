@@ -10,7 +10,8 @@
 #include "ServerUMS.hh"
 #include "utilServer.hh"
 
-std::string ServerUMS::mvishnuid = "";
+//std::string ServerUMS::mvishnuid = "";
+
 /**
 * \brief To get the path of the configuration file used by the UMS server
 * \fn std::string getCfg()
@@ -26,53 +27,60 @@ ServerUMS::getCfg() {
 * \param cfg The vishnu configuration filepath
 * \param vishnuid The id of the vishnu configuration registered in the database which will be used
 */  
-ServerUMS::ServerUMS(std::string cfg, std::string vishnuid) {
+ServerUMS::ServerUMS(std::string cfg) {
   mvishnucfg = cfg;
   mprofile = NULL;
-  mvishnuid = vishnuid;
-  Vishnuid::mvishnuid = vishnuid; 
+  //mvishnuid = vishnuid;
+  //Vishnuid::mvishnuid = vishnuid; 
 }
 
 /**
 * \brief To initialize the UMS server
-* \fn void init()
+* \fn void init(std::string vishnuid)
+* \param vishnuid The id of the vishnu configuration registered in the database
 */
 void
-ServerUMS::init() {
+ServerUMS::init(std::string vishnuid) {
 
   DbFactory factory;
-  //TODO: mettre mot de passe pour access à la base de données
-  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "", "", "VISHNU");
+  //TODO: mettre mot de passe pour access à la base de données sera passé en paramètre
+  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "", "", "vishnu");
+  //TODO régler le pb de variable globale qui fonctionne en classe mais pas en namespace
+  utilServer::mvishnuid = vishnuid;
+  Vishnuid::mvishnuid = vishnuid;
+  
+  DatabaseResult* result;
+  
+  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+Vishnuid::mvishnuid);
+  std::cout <<"SQL COMMAND:"<<sqlCommand;
   
   try {
-    
-  //TODO:: Rajouter les paramètres de connection à la base de données dans le constructeur de serverUMS  
-    
+      
   /*connection to the database*/
   mdatabaseVishnu->connect();
   
-  //The default vishnu user
-  UserServer admin = UserServer("admin", "admin");
+  /* Checking of vishnuid on the database */
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+ 
+  if (result->getResults().size() == 0) {
+   SystemException e(4, "The vishnuid is unrecognized"); 
+   throw e;
+  }  
+  
+  //The default vishnu users
+  UserServer admin = UserServer("vishnu_db_admin", "vishnu_db_admin");
   
     if (!admin.exist()) {
-     std::cout << "Insertion of the default Vishnu user";
-     
-     //TODO: mettre toutes ces insertions dans le sql de création de la base de données
-
-     mdatabaseVishnu->process("insert into vishnu (updatefreq, usercpt) values (0, 0)");     
-     /*Insertion of the default admin user*/
+    
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-     values ("+mvishnuid+", 'admin','admin', 1, 1, 0)");
-    //TODO: Récupérer le vishnu_vishnuid c'est plus propre (par défault ici c'est 1) ou éviter un incrément dans la table
-    //vishnu et mettre vishnu_vishnuid à 1 idem pour ce qui suit
-     
-     /*Insertion of the default option values*/ //TODO optionid ne sert à rien l'autoincréménte suffit
-     mdatabaseVishnu->process("insert into optionu (optionid, description, defaultvalue) values (1, 'VISHNU_CLOSE_POLICY', 1)");
-     mdatabaseVishnu->process("insert into optionu (optionid, description, defaultvalue) values (2, 'VISHNU_TIMEOUT', 3600)");
-     
+     values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','vishnu_db_admin', 1, 1, 0)");
+   
+     mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
+     values ("+Vishnuid::mvishnuid+", 'vishnu_user','vishnu_user', 1, 1, 0)");
+    
     }
     else {
-    std::cout << "The default user is already defined in the database"<< std::endl;	
+    std::cout << "The default users are already defined in the database"<< std::endl;	
     }
       
   } catch (SystemException& e) {

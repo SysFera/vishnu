@@ -20,7 +20,9 @@ class UserServer;
 #include "UMS_Data_forward.hpp"
 //#include "utilServer.hh"
 #include "OptionValueServer.hh"
+#include "utilServer.hh"
 
+using namespace utilServer;
 using namespace UMS_Data;
 
 

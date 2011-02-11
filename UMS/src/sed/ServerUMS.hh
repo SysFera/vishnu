@@ -41,26 +41,24 @@ public :
    getCfg();  
    /**
    * \brief To initialize the UMS server
-   * \fn void init()
-   */
+   * \fn void init(std::string vishnuid)
+   * \param vishnuid The id of the vishnu configuration registered in the database
+   */ 
    void
-   init();
+   init(std::string vishnuid);
   /**
   * \brief Constructor, raises an exception on error
   * \fn ServerUMS(std::string cfg)
   * \param cfg The vishnu configuration filepath
-  * \param vishnuid The id of the vishnu configuration registered in the database
   */  
-  ServerUMS(std::string cfg, std::string vishnuid);
+  ServerUMS(std::string cfg);
   /**
    * \brief Destructor, raises an exception on error
    * \fn ~ServerUMS()
    */
   ~ServerUMS();
-  /**
-  * \brief The id of the VISHNU configuration registered in the database
-  */
-  static std::string mvishnuid;
+  
+  //static std::string mvishnuid;
   
 private :
   
@@ -76,6 +74,5 @@ private :
   * \brief Structure representing a profile description
   */
   diet_profile_desc_t* mprofile;
-  
 };
 #endif // SERVERUMS
