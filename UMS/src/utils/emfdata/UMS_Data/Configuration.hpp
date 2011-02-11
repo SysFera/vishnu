@@ -23,8 +23,6 @@
 #include <UMS_Data_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
-
 #include <ecore/EObject.hpp>
 
 /*PROTECTED REGION ID(Configuration_pre) START*/
@@ -49,8 +47,6 @@ namespace UMS_Data
 
 
         // Attributes
-        ::ecore::EString const& getFilePath() const;
-        void setFilePath(::ecore::EString const& _filePath);
 
         // References
         ::ecorecpp::mapping::EList< ::UMS_Data::User >& getListConfUsers();
@@ -83,7 +79,6 @@ namespace UMS_Data
     protected:
         // Attributes
 
-        ::ecore::EString m_filePath;
 
         // References
 

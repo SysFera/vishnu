@@ -68,8 +68,8 @@ namespace UMS_Data
         ::ecore::ELong getDateClosure() const;
         void setDateClosure(::ecore::ELong _dateClosure);
 
-        ::UMS_Data::SessionStateType getState() const;
-        void setState(::UMS_Data::SessionStateType _state);
+        ::UMS_Data::StatusType getStatus() const;
+        void setStatus(::UMS_Data::StatusType _status);
 
         ::UMS_Data::SessionCloseType getClosePolicy() const;
         void setClosePolicy(::UMS_Data::SessionCloseType _closePolicy);
@@ -114,7 +114,7 @@ namespace UMS_Data
 
         ::ecore::ELong m_dateClosure;
 
-        ::UMS_Data::SessionStateType m_state;
+        ::UMS_Data::StatusType m_status;
 
         ::UMS_Data::SessionCloseType m_closePolicy;
 

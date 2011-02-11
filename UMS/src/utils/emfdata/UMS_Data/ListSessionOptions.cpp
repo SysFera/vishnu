@@ -31,10 +31,9 @@ using namespace ::UMS_Data;
 
 // Default constructor
 ListSessionOptions::ListSessionOptions() :
-    m_sessionListOption(1), m_sessionClosePolicy(0),
-            m_sessionInactivityDelay(0), m_machineId(""), m_adminListOption(
-                    false), m_sessionId(""), m_startDateOption(-1),
-            m_endDateOption(-1)
+    m_status(1), m_sessionClosePolicy(0), m_sessionInactivityDelay(0),
+            m_machineId(""), m_adminListOption(false), m_sessionId(""),
+            m_startDateOption(-1), m_endDateOption(-1)
 {
 
     /*PROTECTED REGION ID(ListSessionOptionsImpl__ListSessionOptionsImpl) START*/
@@ -54,27 +53,26 @@ ListSessionOptions::~ListSessionOptions()
 
 // Attributes
 
-::UMS_Data::SessionStateType ListSessionOptions::getSessionListOption() const
+::UMS_Data::StatusType ListSessionOptions::getStatus() const
 {
-    return m_sessionListOption;
+    return m_status;
 }
 
-void ListSessionOptions::setSessionListOption(
-        ::UMS_Data::SessionStateType _sessionListOption)
+void ListSessionOptions::setStatus(::UMS_Data::StatusType _status)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::UMS_Data::SessionStateType _old_sessionListOption = m_sessionListOption;
+    ::UMS_Data::StatusType _old_status = m_status;
 #endif
-    m_sessionListOption = _sessionListOption;
+    m_status = _status;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListSessionOptions__sessionListOption(),
-                _old_sessionListOption,
-                m_sessionListOption
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getListSessionOptions__status(),
+                _old_status,
+                m_status
         );
         eNotify(&notification);
     }

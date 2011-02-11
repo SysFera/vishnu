@@ -31,7 +31,7 @@ using namespace ::UMS_Data;
 
 // Default constructor
 Machine::Machine() :
-    m_machineId(""), m_machineDescription("")
+    m_machineId(""), m_machineDescription(""), m_status(1)
 {
 
     /*PROTECTED REGION ID(MachineImpl__MachineImpl) START*/
@@ -175,6 +175,32 @@ void Machine::setLanguage(::ecore::EString const& _language)
                 (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__language(),
                 _old_language,
                 m_language
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::UMS_Data::StatusType Machine::getStatus() const
+{
+    return m_status;
+}
+
+void Machine::setStatus(::UMS_Data::StatusType _status)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::UMS_Data::StatusType _old_status = m_status;
+#endif
+    m_status = _status;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__status(),
+                _old_status,
+                m_status
         );
         eNotify(&notification);
     }

@@ -79,12 +79,6 @@ void Configuration::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_filePath);
-    }
-        return _any;
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFUSERS:
     {
         _any = m_listConfUsers->asEListOf< ::ecore::EObject > ();
@@ -110,12 +104,6 @@ void Configuration::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_filePath);
-    }
-        return;
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFUSERS:
     {
         ::ecorecpp::mapping::EList_ptr _t0 =
@@ -152,9 +140,6 @@ void Configuration::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_filePath);
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFUSERS:
         return m_listConfUsers && m_listConfUsers->size();
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFMACHINES:
