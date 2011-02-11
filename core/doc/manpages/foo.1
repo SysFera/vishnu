@@ -1,0 +1,219 @@
+'\" t
+.\"     Title: FOO
+.\"    Author: Jens Schweikhardt <schweikh@schweikhardt.net>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: 02/11/2011
+.\"    Manual: User Manuals
+.\"    Source: foo 0.1.2
+.\"  Language: English
+.\"
+.TH "FOO" "1" "02/11/2011" "foo 0.1.2" "User Manuals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+foo \- frobnicate the bar library
+.SH "SYNOPSIS"
+.HP \w'\fBfoo\fR\ 'u
+\fBfoo\fR [\fB\-bar\fR] [\fB\-b\fR | \fB\-\-busy\fR] [\fB\-c\ \fR\fB\fIconfig\-file\fR\fR | \fB\-\-config=\fR\fB\fIconfig\-file\fR\fR] [{\fB\-e\fR\ |\ \fB\-\-example\fR}\ \fIthis\fR] [{\fB\-e\fR\ |\ \fB\-\-example\fR}\ {\fIthis\fR\ |\ \fIthat\fR}] \fIfile(s)\fR...
+.HP \w'\fBfoo\fR\ 'u
+\fBfoo\fR [{\fB\-h\fR\ |\ \fB\-\-help\fR} | {\fB\-v\fR\ |\ \fB\-\-version\fR}]
+.SH "DESCRIPTION"
+.PP
+\fBfoo\fR
+frobnicates the
+bar
+library by tweaking internal symbol tables\&. By default it parses all baz segments and rearranges them in reverse order by time for the
+\fBxyzzy\fR(1)
+linker to find them\&. The symdef entry is then compressed using the
+WBG
+(Whiz\-Bang\-Gizmo) algorithm\&. All files are processed in the order specified\&.
+.SH "OPTIONS"
+.PP
+\fB\-b\fR, \fB\-\-busy\fR
+.RS 4
+Do not write
+\(lqbusy\(rq
+to
+stdout
+while processing\&.
+.RE
+.PP
+\fB\-c \fR\fB\fIconfig\-file\fR\fR, \fB\-\-config=\fR\fB\fIconfig\-file\fR\fR
+.RS 4
+Use the alternate system wide
+\fIconfig\-file\fR
+instead of the
+/etc/foo\&.conf\&. This overrides any
+\fBFOOCONF\fR
+environment variable\&.
+.RE
+.PP
+\fB\-a\fR
+.RS 4
+In addition to the baz segments, also parse the
+\fBblurfl\fR(3)
+headers\&.
+.RE
+.PP
+\fB\-r\fR
+.RS 4
+Recursive mode\&. Operates as fast as lightning at the expense of a megabyte of virtual memory\&.
+.RE
+.SH "FILES"
+.PP
+/etc/foo\&.conf
+.RS 4
+The system\-wide configuration file\&. See
+\fBfoo.conf\fR(5)
+for further details\&.
+.RE
+.PP
+${HOME}/\&.foo\&.conf
+.RS 4
+The per\-user configuration file\&. See
+\fBfoo.conf\fR(5)
+for further details\&.
+.RE
+.SH "ENVIONMENT"
+.PP
+\fBFOOCONF\fR
+.RS 4
+The full pathname for an alternate system wide configuration file
+\fBfoo.conf\fR(5)
+(see also
+the section called \(lqFILES\(rq)\&. Overridden by the
+\fB\-c\fR
+option\&.
+.RE
+.SH "DIAGNOSTICS"
+.PP
+The following diagnostics may be issued on
+stderr:
+.PP
+\(lqBad magic number\&.\(rq
+.RS 4
+The input file does not look like an archive file\&.
+.RE
+.PP
+\(lqOld style baz segments\&.\(rq
+.RS 4
+\fBfoo\fR
+can only handle new style baz segments\&.
+COBOL
+object libraries are not supported in this version\&.
+.RE
+.PP
+The following return codes can be used in scripts:
+.\" line length increase to cope w/ tbl weirdness
+.ll +(\n(LLu * 62u / 100u)
+.TS
+lll.
+\fIErrorcode\fR	\fIErrortext\fR	\fIDiagnostic\fR
+T{
+\fB0\fR
+T}	T{
+Program exited normally\&.
+T}	T{
+No error\&. Program ran successfully\&.
+T}
+T{
+\fB1\fR
+T}	T{
+Bad magic number\&.
+T}	T{
+The input file does not look like an archive file\&.
+T}
+T{
+\fB2\fR
+T}	T{
+Old style baz segments\&.
+T}	T{
+\fBfoo\fR can only handle new style baz segments\&. COBOL object libraries are not supported in this version\&.
+T}
+.TE
+.\" line length decrease back to previous value
+.ll -(\n(LLu * 62u / 100u)
+.sp
+.SH "BUGS"
+.PP
+The command name should have been chosen more carefully to reflect its purpose\&.
+.PP
+The upstreams
+BTS
+can be found at
+\m[blue]\fB\%http://bugzilla.foo.tld\fR\m[]\&.
+.SH "SEE ALSO"
+.PP
+\fBbar\fR(1),
+\fBfoo\fR(1),
+\fBfoo.conf\fR(5),
+\fBxyzzy\fR(1)
+.PP
+The programs are documented fully by
+The Rise and Fall of a Fooish Bar
+available via the
+Info
+system\&.
+.SH "AUTHORS"
+.PP
+\fBJens Schweikhardt\fR <\&schweikh@schweikhardt\&.net\&>
+.RS 4
+Wrote this example manpage for the "Linux Man Page Howto", available at \m[blue]\fB\%http://www.schweikhardt.net/man_page_howto.html\fR\m[] or \m[blue]\fB\%http://www.faqs.org/docs/Linux-mini/Man-Page.html\fR\m[]\&.
+.RE
+.PP
+\fBDaniel Leidert\fR <\&daniel\&.leidert@wgdd\&.de\&>
+.RS 4
+Rewrote and extended the example manpage in DocBook XML for the Debian distribution\&.
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Jens Schweikhardt
+.br
+Copyright \(co 2006 Daniel Leidert
+.br
+.PP
+The Howto containing this example, was offered under the following conditions:
+.PP
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution\&.
+.RE
+.PP
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED\&. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE\&.
+.sp
