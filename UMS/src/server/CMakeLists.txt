@@ -20,6 +20,7 @@ add_library(ums-server
    UserServer.cc
    MachineClientServer.cc
    OptionValueServer.cc
+   MachineServer.cpp 
 )
 
 target_link_libraries(ums-server
