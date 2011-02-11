@@ -7,6 +7,9 @@
 #include "SystemException.hh"
 #include "UMSVishnuException.hh"
 
+#include"utilServer.hh"
+using namespace utilServer;
+
 
 #include "MachineServer.hpp"
 
@@ -19,6 +22,8 @@ MachineServer::MachineServer(UMS_Data::Machine*& machine, SessionServer& session
  
 int 
 MachineServer::add() {
+  
+  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid) values ";
   
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -34,8 +39,8 @@ MachineServer::add() {
 	  
 	  //TODO: récupérer le vishnunumId su serverUMS
 	  //To insert the machine
-	  mdatabaseVishnu->process("insert into machine (vishnu_vishnuid, name, site, machineid) values \
-	  (1,'"+mmachine->getName()+"','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"')");
+	  mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"\
+	  ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"')");
 	  
 	  //To insert the description of the machine
 	  mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \

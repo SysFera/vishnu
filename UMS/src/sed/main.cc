@@ -18,8 +18,8 @@ int main(int argc, char* argv[], char* envp[]) {
     return usage(argv[0]);
   }
   
-  ServerUMS server(argv[1], argv[2]);
-  server.init();
+  ServerUMS server(argv[1]);
+  server.init(argv[2]);
   
   diet_print_service_table();
   res = diet_SeD(argv[1], argc, argv);
