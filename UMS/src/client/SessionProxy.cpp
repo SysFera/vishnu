@@ -10,21 +10,18 @@
  #include "SessionProxy.h"
  #include "UserProxy.h"
  #include "UMSVishnuException.hh"
- #include "debug.hh"
+ #include "utilsClient.hpp"
 
   SessionProxy::SessionProxy(const std::string& sessionKey):msessionKey(sessionKey)
   {
-    merrorInfo = "";
   }
   
   SessionProxy::SessionProxy(const UMS_Data::Session& session):msession(session)
   {
-    merrorInfo = "";
   }
   
   SessionProxy::SessionProxy()
   {
-    merrorInfo = "";
   }
   
   int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options)
@@ -38,15 +35,14 @@
     std::string sessionId ;
     char* sessionkey;
     char* errorInfo;
+    std::string msg = "call of function diet_string_set is rejected ";
 
     sshKey = std::string(getenv("HOME"))+"/.ssh/id_rsa";
     gethostname(hostname, HOST_NAME_MAX_SIZE);  
   
-    //Serialization of the ConnectOption
-    // CREATE DATA MODEL
     if(connect) {
       // SERIALIZE DATA MODEL
-      const char* name = "umsConnect";
+      const char* name = "sessionConnect";
       ::ecorecpp::serializer::serializer _ser(name);
       optionsToString =  _ser.serialize(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
     }
@@ -56,58 +52,66 @@
     } else {
       profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);
     }
-    char* test = NULL;
+    
     //IN Parameters
     if(diet_string_set(diet_parameter(profile,0), strdup((user.getData().getUserId()).c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-    };
+       msg += "with userId parameter "+user.getData().getUserId();
+       ERRMSG(msg.c_str());
+       sendErrorMsg(msg);
+    }
     if(diet_string_set(diet_parameter(profile,1), strdup((user.getData().getPassword()).c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-    };
-    if(diet_string_set(diet_parameter(profile,2), hostname, DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-    };  
-    if(diet_string_set(diet_parameter(profile,3), strdup(sshKey.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
-    }; 
+       msg += "with password parameter";
+       ERRMSG(msg.c_str());
+       sendErrorMsg(msg);
+    }
+    if(diet_string_set(diet_parameter(profile,2), strdup(sshKey.c_str()), DIET_VOLATILE)) {
+       msg += "with sshKey parameter "+sshKey;
+       ERRMSG(msg.c_str());
+       sendErrorMsg(msg);
+    }  
+    if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
+       msg += "with hostname parameter "+std::string(hostname);
+       ERRMSG(msg.c_str());
+       sendErrorMsg(msg);
+    }  
     if(connect) {
       if(diet_string_set(diet_parameter(profile,4), strdup(optionsToString.c_str()), DIET_VOLATILE)){
-       ERRMSG("Error in diet_string_set"); 
+       msg += "with optionsToString parameter ";
+       ERRMSG(msg.c_str());
+       sendErrorMsg(msg);
       } 
     } else {
       sessionId = msession.getSessionId();
       if(diet_string_set(diet_parameter(profile,4), strdup(sessionId.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
+        msg += "with sessionId parameter "+sessionId;
+        ERRMSG(msg.c_str());
+        sendErrorMsg(msg);
       }
     }
     //OUT Parameters
-    if(diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-    }
-    if(diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-    }
+    diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
 
     if(!diet_call(profile)) {
 	if(diet_string_get(diet_parameter(profile,5), &sessionkey, NULL)){
-          ERRMSG("Error in diet_string_get");
+           msg += " by receiving sessionKey value";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);
         }
 	if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
-          ERRMSG("Error in diet_string_get");
+           msg += " to receiving errorInfo message";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);
         }
   
 	msession.setSessionKey(sessionkey);
-	merrorInfo = errorInfo;
-        if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-        else std::cout << "The service was performed successfull" << std::endl;
+        if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
     } else {
-       ERRMSG("Error in diet_call");
+       sendErrorMsg(" the function diet_call is rejected");
     }
 
-    if(merrorInfo.size() > 0 ) { 
-      UMSVishnuException e(1, merrorInfo);
-      throw e;
-    }
+     /*To check the receiving message error*/
+     checkErrorMsg(errorInfo);
 
     return 0;
   }
@@ -127,34 +131,38 @@
 
     int res = 0;
     char* errorInfo = NULL;
+    std::string msg = "call of function diet_string_set is rejected ";
 
-    try {
-	std::string sessionKey =  msessionKey;
+    std::string sessionKey =  msessionKey;
 
-	diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1); 
-	//IN Parameters
-	diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE);
-
-	//OUT Parameters
-	diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
-
-	if(!diet_call(profile)) {
-	    diet_string_get(diet_parameter(profile,1), &errorInfo, NULL);
-	    merrorInfo = errorInfo;
-            if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-            else std::cout << "The service was performed successfull" << std::endl;
-	}
-	
-	res = (merrorInfo.size() > 0);
-    
-    } catch(std::exception& ex) {
-        std::cerr << ex.what() << std::endl;
-        merrorInfo += "\n";
-        merrorInfo += ex.what();
-       return 1;
+    diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1); 
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+       msg += "with sessionKey parameter "+sessionKey;
+       ERRMSG(msg.c_str());
+       sendErrorMsg(msg);
     }
 
-    return res;
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
+         msg += " by receiving errorInfo message";
+         ERRMSG(msg.c_str());
+         sendErrorMsg(msg);
+      }
+      
+      if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+  
+   } else {  
+      sendErrorMsg(" the function diet_call is rejected"); 
+   }
+   
+     /*To check the receiving message error*/
+     checkErrorMsg(errorInfo);
+
+   return 0;
   }
  
   std::string SessionProxy::getSessionKey() const
@@ -167,11 +175,6 @@
     return msession;
   }
 
-  std::string SessionProxy::getErrorInfo() const
-  {
-    return merrorInfo;
-  }
- 
   SessionProxy::~SessionProxy()
   {
   }

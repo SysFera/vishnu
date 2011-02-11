@@ -6,7 +6,7 @@
 #include <fstream>
 
 #include "UMSVishnuException.hh"
-#include "debug.hh"
+#include "utilsClient.hpp"
 
 #include "ConfigurationProxy.h"
 
@@ -27,41 +27,41 @@ int ConfigurationProxy::save()
    std::string sessionKey;
    char* errorInfo;
    char* configurationInString;
+   std::string msg = "call of function diet_string_set is rejected ";
 
    profile = diet_profile_alloc("configurationSave", 0, 0, 2);
    sessionKey = msessionProxy.getSessionKey();
 
    //IN Parameters
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
+      msg += "with sessionKey parameter "+sessionKey;
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg);
    }
 
    //OUT Parameters
-   if(diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-   }
-   if(diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-   }
+   diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
        if(diet_string_get(diet_parameter(profile,1), &configurationInString, NULL)){
-        ERRMSG("Error in diet_string_set");
-       };
+           msg += " by receiving configurationInString message";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);      
+       }
        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        ERRMSG("Error in diet_string_set");
-       };
-       if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-       else std::cout << "The service was performed successfull" << std::endl;
+           msg += " by receiving errorInfo message";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);
+       }
+       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
    }
    else {
-       ERRMSG("Error in diet_string_get");
+      sendErrorMsg(" the function diet_call is rejected");
    }
 
-   if(strlen(errorInfo) > 0 ) {
-      UMSVishnuException e(1, errorInfo);
-      throw e;
-   }
+    /*To check the receiving message error*/
+    checkErrorMsg(errorInfo);
 
    // CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -71,8 +71,6 @@ int ConfigurationProxy::save()
   ecorecpp::parser::parser parser;
   //To set the mconfiguration 
   mconfiguration = parser.load(configurationInString)->as< UMS_Data::Configuration >(); 
-  //To set the file path 
-  mconfiguration->setFilePath(mfilePath);
   
   //To save the configuration in the file
   std::ofstream ofile(mfilePath.c_str());
@@ -88,7 +86,8 @@ int ConfigurationProxy::restore(bool fromFile)
    std::string sessionKey;
    char* errorInfo;
    char* configurationInString;
-  
+   std::string msg = "call of function diet_string_set is rejected "; 
+ 
    if(fromFile) {
      size_t length;
      std::ifstream ifile(mfilePath.c_str()); 
@@ -113,32 +112,32 @@ int ConfigurationProxy::restore(bool fromFile)
 
    //IN Parameters
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
+      msg += "with sessionKey parameter "+sessionKey;
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg); 
    }
    if(diet_string_set(diet_parameter(profile,1), configurationInString, DIET_VOLATILE)) {
-       ERRMSG("Error in diet_string_set");
+      msg += "with configurationInString parameter "+std::string(configurationInString);
+      ERRMSG(msg.c_str());
+      sendErrorMsg(msg);
    }
    //OUT Parameters
-   if(diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE)) {
-      ERRMSG("Error in diet_string_set");
-   }
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        ERRMSG("Error in diet_string_set");
-       };
-       if(strlen(errorInfo) > 0) std::cout << "errorInfo=" << errorInfo << std::endl;
-       else std::cout << "The service was performed successfull" << std::endl;
+          msg += " by receiving errorInfo message";
+          ERRMSG(msg.c_str());
+          sendErrorMsg(msg); 
+       }
+       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
    }
    else {
-       ERRMSG("Error in diet_string_get");
+      sendErrorMsg(" the function diet_call is rejected");
    }
 
-   if(strlen(errorInfo) > 0 ) {
-      UMSVishnuException e(1, errorInfo);
-      throw e;
-   }
-  
+   /*To check the receiving message error*/
+   checkErrorMsg(errorInfo);
   
    if(fromFile) free(configurationInString);
 
