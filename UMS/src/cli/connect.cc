@@ -1,8 +1,9 @@
 
 
 #include "connect.hh"
+#include "utils.hh"
 #include <boost/bind.hpp>
-#include <typeinfo>
+
 namespace po = boost::program_options;
 
 using namespace std;
@@ -57,8 +58,6 @@ int main (int ac, char* av[]){
 			f.close();
 		}
 /**************** Describe options *************/
-
-
 
 		Options opt(&config );
   
@@ -119,40 +118,14 @@ int main (int ac, char* av[]){
 
 		}
 	 
-   		
-		if(opt.count("closePolicy")){
-
-			cout << "The close policy is " << connectOpt.getClosePolicy() <<endl;
-                        
-		}
-
-
-		if (opt.count("sessionInactivityDelay")){
-			
-			cout <<"The session inactivity delay is " << connectOpt.getSessionInactivityDelay() << endl;
-
-		}
-  
-		if (opt.count("substituteUserId")){
-	
-			cout <<"The substitute user identifier is " << connectOpt.getSubstituteUserId() << endl;
-			
-		}
-
-            
-		if (opt.count("dietConfig")){
+		if (opt.count("dietConfig")==0){
            
-			cout <<"The diet config file " << dietConfig << endl;
-                  
-		}
-		else{
-			
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
 			
 			return 1;
-			
+                  
 		}
-
+			
 		
 		if ( (reqParam<CPARAM) || (opt.count("help"))) {
 
@@ -170,8 +143,6 @@ int main (int ac, char* av[]){
 			password= getpass("Password: ");// getpass is obsolete. 
 
 			cout << "The user password  is " << password << endl;
-
-							 
 		}
 
 
@@ -184,11 +155,9 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-   
 							std::string sessionKey;
-		int res = connect(userId,password, sessionKey, connectOpt);
 
-	
+							int res = connect(userId,password, sessionKey, connectOpt);
 
 	}// End of try bloc
 
