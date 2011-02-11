@@ -136,10 +136,7 @@ int main (int ac, char* av[]){
               saveConfiguration(sessionKey,filePath,configuration);
 
 
-              //A enlever apres, c'est juste pour les tests
-      //To set the file path 
-      std::cout << "config filePath=" << configuration.getFilePath() << std::endl;
-      //To set the user list 
+             //A enlever apres, c'est juste pour les tests
       for(int i = 0; i < configuration.getListConfUsers().size(); i++) {
         UMS_Data::User_ptr user = configuration.getListConfUsers()[i];
         print(user, i);

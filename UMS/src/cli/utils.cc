@@ -29,7 +29,7 @@ void printSession(UMS_Data::Session_ptr session) {
   date_tm = localtime(&dateCreation); strftime(date_dc, DATE_SIZE, "%m/%d %H:%M", date_tm);
   long dateClosure = session->getDateClosure();
   date_tm = localtime(&dateClosure); strftime(date_dcl, DATE_SIZE, "%m/%d %H:%M", date_tm);
-  int state = session->getState(); os_s << state;
+  int state = session->getStatus(); os_s << state;
   int closePolicy = session->getClosePolicy(); os_c << closePolicy ;
   long timeOut = session->getTimeout(); os_t << timeOut;
 
