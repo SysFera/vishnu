@@ -99,9 +99,10 @@ UMS_DataPackage::UMS_DataPackage()
     m_Session__dateClosure->setFeatureID(
             ::UMS_Data::UMS_DataPackage::SESSION__DATECLOSURE);
     m_SessionEClass->getEStructuralFeatures().push_back(m_Session__dateClosure);
-    m_Session__state = new ::ecore::EAttribute();
-    m_Session__state->setFeatureID(::UMS_Data::UMS_DataPackage::SESSION__STATE);
-    m_SessionEClass->getEStructuralFeatures().push_back(m_Session__state);
+    m_Session__status = new ::ecore::EAttribute();
+    m_Session__status->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::SESSION__STATUS);
+    m_SessionEClass->getEStructuralFeatures().push_back(m_Session__status);
     m_Session__closePolicy = new ::ecore::EAttribute();
     m_Session__closePolicy->setFeatureID(
             ::UMS_Data::UMS_DataPackage::SESSION__CLOSEPOLICY);
@@ -127,11 +128,11 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListSessionOptionsEClass->setClassifierID(LISTSESSIONOPTIONS);
     m_ListSessionOptionsEClass->setEPackage(this);
     getEClassifiers().push_back(m_ListSessionOptionsEClass);
-    m_ListSessionOptions__sessionListOption = new ::ecore::EAttribute();
-    m_ListSessionOptions__sessionListOption->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONLISTOPTION);
+    m_ListSessionOptions__status = new ::ecore::EAttribute();
+    m_ListSessionOptions__status->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__STATUS);
     m_ListSessionOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListSessionOptions__sessionListOption);
+            m_ListSessionOptions__status);
     m_ListSessionOptions__sessionClosePolicy = new ::ecore::EAttribute();
     m_ListSessionOptions__sessionClosePolicy->setFeatureID(
             ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONCLOSEPOLICY);
@@ -372,6 +373,10 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__language->setFeatureID(
             ::UMS_Data::UMS_DataPackage::MACHINE__LANGUAGE);
     m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__language);
+    m_Machine__status = new ::ecore::EAttribute();
+    m_Machine__status->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::MACHINE__STATUS);
+    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__status);
 
     // ListMachines
     m_ListMachinesEClass = new ::ecore::EClass();
@@ -410,11 +415,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_ConfigurationEClass->setClassifierID(CONFIGURATION);
     m_ConfigurationEClass->setEPackage(this);
     getEClassifiers().push_back(m_ConfigurationEClass);
-    m_Configuration__filePath = new ::ecore::EAttribute();
-    m_Configuration__filePath->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__filePath);
     m_Configuration__listConfUsers = new ::ecore::EReference();
     m_Configuration__listConfUsers->setFeatureID(
             ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFUSERS);
@@ -486,20 +486,15 @@ UMS_DataPackage::UMS_DataPackage()
     m_SessionCloseTypeEEnum->setEPackage(this);
     getEClassifiers().push_back(m_SessionCloseTypeEEnum);
 
-    m_SessionStateTypeEEnum = new ::ecore::EEnum();
-    m_SessionStateTypeEEnum->setClassifierID(SESSIONSTATETYPE);
-    m_SessionStateTypeEEnum->setEPackage(this);
-    getEClassifiers().push_back(m_SessionStateTypeEEnum);
-
     m_PrivilegeTypeEEnum = new ::ecore::EEnum();
     m_PrivilegeTypeEEnum->setClassifierID(PRIVILEGETYPE);
     m_PrivilegeTypeEEnum->setEPackage(this);
     getEClassifiers().push_back(m_PrivilegeTypeEEnum);
 
-    m_UserStatusTypeEEnum = new ::ecore::EEnum();
-    m_UserStatusTypeEEnum->setClassifierID(USERSTATUSTYPE);
-    m_UserStatusTypeEEnum->setEPackage(this);
-    getEClassifiers().push_back(m_UserStatusTypeEEnum);
+    m_StatusTypeEEnum = new ::ecore::EEnum();
+    m_StatusTypeEEnum->setClassifierID(STATUSTYPE);
+    m_StatusTypeEEnum->setEPackage(this);
+    getEClassifiers().push_back(m_StatusTypeEEnum);
 
     // Create data types
 
@@ -648,19 +643,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_Session__dateClosure->setUnique(true);
     m_Session__dateClosure->setDerived(false);
     m_Session__dateClosure->setOrdered(true);
-    m_Session__state->setEType(m_SessionStateTypeEEnum);
-    m_Session__state->setName("state");
-    m_Session__state->setDefaultValueLiteral("1");
-    m_Session__state->setLowerBound(0);
-    m_Session__state->setUpperBound(1);
-    m_Session__state->setTransient(false);
-    m_Session__state->setVolatile(false);
-    m_Session__state->setChangeable(true);
-    m_Session__state->setUnsettable(false);
-    m_Session__state->setID(false);
-    m_Session__state->setUnique(true);
-    m_Session__state->setDerived(false);
-    m_Session__state->setOrdered(true);
+    m_Session__status->setEType(m_StatusTypeEEnum);
+    m_Session__status->setName("status");
+    m_Session__status->setDefaultValueLiteral("1");
+    m_Session__status->setLowerBound(0);
+    m_Session__status->setUpperBound(1);
+    m_Session__status->setTransient(false);
+    m_Session__status->setVolatile(false);
+    m_Session__status->setChangeable(true);
+    m_Session__status->setUnsettable(false);
+    m_Session__status->setID(false);
+    m_Session__status->setUnique(true);
+    m_Session__status->setDerived(false);
+    m_Session__status->setOrdered(true);
     m_Session__closePolicy->setEType(m_SessionCloseTypeEEnum);
     m_Session__closePolicy->setName("closePolicy");
     m_Session__closePolicy->setDefaultValueLiteral("0");
@@ -709,19 +704,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListSessionOptionsEClass->setName("ListSessionOptions");
     m_ListSessionOptionsEClass->setAbstract(false);
     m_ListSessionOptionsEClass->setInterface(false);
-    m_ListSessionOptions__sessionListOption->setEType(m_SessionStateTypeEEnum);
-    m_ListSessionOptions__sessionListOption->setName("sessionListOption");
-    m_ListSessionOptions__sessionListOption->setDefaultValueLiteral("1");
-    m_ListSessionOptions__sessionListOption->setLowerBound(0);
-    m_ListSessionOptions__sessionListOption->setUpperBound(1);
-    m_ListSessionOptions__sessionListOption->setTransient(false);
-    m_ListSessionOptions__sessionListOption->setVolatile(false);
-    m_ListSessionOptions__sessionListOption->setChangeable(true);
-    m_ListSessionOptions__sessionListOption->setUnsettable(false);
-    m_ListSessionOptions__sessionListOption->setID(false);
-    m_ListSessionOptions__sessionListOption->setUnique(true);
-    m_ListSessionOptions__sessionListOption->setDerived(false);
-    m_ListSessionOptions__sessionListOption->setOrdered(true);
+    m_ListSessionOptions__status->setEType(m_StatusTypeEEnum);
+    m_ListSessionOptions__status->setName("status");
+    m_ListSessionOptions__status->setDefaultValueLiteral("1");
+    m_ListSessionOptions__status->setLowerBound(0);
+    m_ListSessionOptions__status->setUpperBound(1);
+    m_ListSessionOptions__status->setTransient(false);
+    m_ListSessionOptions__status->setVolatile(false);
+    m_ListSessionOptions__status->setChangeable(true);
+    m_ListSessionOptions__status->setUnsettable(false);
+    m_ListSessionOptions__status->setID(false);
+    m_ListSessionOptions__status->setUnique(true);
+    m_ListSessionOptions__status->setDerived(false);
+    m_ListSessionOptions__status->setOrdered(true);
     m_ListSessionOptions__sessionClosePolicy->setEType(m_SessionCloseTypeEEnum);
     m_ListSessionOptions__sessionClosePolicy->setName("sessionClosePolicy");
     m_ListSessionOptions__sessionClosePolicy->setDefaultValueLiteral("0");
@@ -896,7 +891,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_User__lastname->setOrdered(true);
     m_User__privilege->setEType(m_PrivilegeTypeEEnum);
     m_User__privilege->setName("privilege");
-    m_User__privilege->setDefaultValueLiteral("-1");
+    m_User__privilege->setDefaultValueLiteral("0");
     m_User__privilege->setLowerBound(0);
     m_User__privilege->setUpperBound(1);
     m_User__privilege->setTransient(false);
@@ -921,9 +916,9 @@ UMS_DataPackage::UMS_DataPackage()
     m_User__email->setUnique(true);
     m_User__email->setDerived(false);
     m_User__email->setOrdered(true);
-    m_User__status->setEType(m_UserStatusTypeEEnum);
+    m_User__status->setEType(m_StatusTypeEEnum);
     m_User__status->setName("status");
-    m_User__status->setDefaultValueLiteral("");
+    m_User__status->setDefaultValueLiteral("1");
     m_User__status->setLowerBound(0);
     m_User__status->setUpperBound(1);
     m_User__status->setTransient(false);
@@ -1341,6 +1336,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__language->setUnique(true);
     m_Machine__language->setDerived(false);
     m_Machine__language->setOrdered(true);
+    m_Machine__status->setEType(m_StatusTypeEEnum);
+    m_Machine__status->setName("status");
+    m_Machine__status->setDefaultValueLiteral("1");
+    m_Machine__status->setLowerBound(0);
+    m_Machine__status->setUpperBound(1);
+    m_Machine__status->setTransient(false);
+    m_Machine__status->setVolatile(false);
+    m_Machine__status->setChangeable(true);
+    m_Machine__status->setUnsettable(false);
+    m_Machine__status->setID(false);
+    m_Machine__status->setUnique(true);
+    m_Machine__status->setDerived(false);
+    m_Machine__status->setOrdered(true);
     // ListMachines
     m_ListMachinesEClass->setName("ListMachines");
     m_ListMachinesEClass->setAbstract(false);
@@ -1408,20 +1416,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_ConfigurationEClass->setName("Configuration");
     m_ConfigurationEClass->setAbstract(false);
     m_ConfigurationEClass->setInterface(false);
-    m_Configuration__filePath->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Configuration__filePath->setName("filePath");
-    m_Configuration__filePath->setDefaultValueLiteral("");
-    m_Configuration__filePath->setLowerBound(1);
-    m_Configuration__filePath->setUpperBound(1);
-    m_Configuration__filePath->setTransient(false);
-    m_Configuration__filePath->setVolatile(false);
-    m_Configuration__filePath->setChangeable(true);
-    m_Configuration__filePath->setUnsettable(false);
-    m_Configuration__filePath->setID(false);
-    m_Configuration__filePath->setUnique(true);
-    m_Configuration__filePath->setDerived(false);
-    m_Configuration__filePath->setOrdered(true);
     m_Configuration__listConfUsers->setEType(m_UserEClass);
     m_Configuration__listConfUsers->setName("listConfUsers");
     m_Configuration__listConfUsers->setDefaultValueLiteral("");
@@ -1594,30 +1588,6 @@ UMS_DataPackage::UMS_DataPackage()
         m_SessionCloseTypeEEnum->getELiterals().push_back(_el);
     }
 
-    // SessionStateType
-    m_SessionStateTypeEEnum->setName("SessionStateType");
-    m_SessionStateTypeEEnum->setSerializable(true);
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // INACTIVE
-        _el->setName("INACTIVE");
-        _el->setValue(0);
-        _el->setLiteral("INACTIVE");
-        _el->setEEnum(m_SessionStateTypeEEnum);
-        m_SessionStateTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // ACTIVE
-        _el->setName("ACTIVE");
-        _el->setValue(1);
-        _el->setLiteral("ACTIVE");
-        _el->setEEnum(m_SessionStateTypeEEnum);
-        m_SessionStateTypeEEnum->getELiterals().push_back(_el);
-    }
-
     // PrivilegeType
     m_PrivilegeTypeEEnum->setName("PrivilegeType");
     m_PrivilegeTypeEEnum->setSerializable(true);
@@ -1642,28 +1612,28 @@ UMS_DataPackage::UMS_DataPackage()
         m_PrivilegeTypeEEnum->getELiterals().push_back(_el);
     }
 
-    // UserStatusType
-    m_UserStatusTypeEEnum->setName("UserStatusType");
-    m_UserStatusTypeEEnum->setSerializable(true);
+    // StatusType
+    m_StatusTypeEEnum->setName("StatusType");
+    m_StatusTypeEEnum->setSerializable(true);
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // INACTIVE
+        _el->setName("INACTIVE");
+        _el->setValue(0);
+        _el->setLiteral("INACTIVE");
+        _el->setEEnum(m_StatusTypeEEnum);
+        m_StatusTypeEEnum->getELiterals().push_back(_el);
+    }
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // ACTIVE
         _el->setName("ACTIVE");
-        _el->setValue(0);
-        _el->setLiteral("ACTIVE");
-        _el->setEEnum(m_UserStatusTypeEEnum);
-        m_UserStatusTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // LOCKED
-        _el->setName("LOCKED");
         _el->setValue(1);
-        _el->setLiteral("LOCKED");
-        _el->setEEnum(m_UserStatusTypeEEnum);
-        m_UserStatusTypeEEnum->getELiterals().push_back(_el);
+        _el->setLiteral("ACTIVE");
+        _el->setEEnum(m_StatusTypeEEnum);
+        m_StatusTypeEEnum->getELiterals().push_back(_el);
     }
 
     _initialize();
@@ -1749,17 +1719,13 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_SessionCloseTypeEEnum;
 }
-::ecore::EEnum_ptr UMS_DataPackage::getSessionStateType()
-{
-    return m_SessionStateTypeEEnum;
-}
 ::ecore::EEnum_ptr UMS_DataPackage::getPrivilegeType()
 {
     return m_PrivilegeTypeEEnum;
 }
-::ecore::EEnum_ptr UMS_DataPackage::getUserStatusType()
+::ecore::EEnum_ptr UMS_DataPackage::getStatusType()
 {
-    return m_UserStatusTypeEEnum;
+    return m_StatusTypeEEnum;
 }
 
 ::ecore::EAttribute_ptr UMS_DataPackage::getConnectOptions__closePolicy()
@@ -1798,9 +1764,9 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_Session__dateClosure;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getSession__state()
+::ecore::EAttribute_ptr UMS_DataPackage::getSession__status()
 {
-    return m_Session__state;
+    return m_Session__status;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getSession__closePolicy()
 {
@@ -1814,9 +1780,9 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_ListSessions__sessions;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getListSessionOptions__sessionListOption()
+::ecore::EAttribute_ptr UMS_DataPackage::getListSessionOptions__status()
 {
-    return m_ListSessionOptions__sessionListOption;
+    return m_ListSessionOptions__status;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getListSessionOptions__sessionClosePolicy()
 {
@@ -1986,6 +1952,10 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_Machine__language;
 }
+::ecore::EAttribute_ptr UMS_DataPackage::getMachine__status()
+{
+    return m_Machine__status;
+}
 ::ecore::EReference_ptr UMS_DataPackage::getListMachines__machines()
 {
     return m_ListMachines__machines;
@@ -2001,10 +1971,6 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getListMachineOptions__machineId()
 {
     return m_ListMachineOptions__machineId;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getConfiguration__filePath()
-{
-    return m_Configuration__filePath;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getConfiguration__listConfUsers()
 {

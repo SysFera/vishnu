@@ -93,8 +93,8 @@ void User::_initialize()
         return _any;
     case ::UMS_Data::UMS_DataPackage::USER__STATUS:
     {
-        ::ecorecpp::mapping::any_traits< ::UMS_Data::UserStatusType >::toAny(
-                _any, m_status);
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::toAny(_any,
+                m_status);
     }
         return _any;
 
@@ -144,7 +144,7 @@ void User::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return;
     case ::UMS_Data::UMS_DataPackage::USER__STATUS:
     {
-        ::ecorecpp::mapping::any_traits< ::UMS_Data::UserStatusType >::fromAny(
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::fromAny(
                 _newValue, m_status);
     }
         return;
@@ -169,13 +169,12 @@ void User::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_lastname);
     case ::UMS_Data::UMS_DataPackage::USER__PRIVILEGE:
-        return m_privilege != -1;
+        return m_privilege != 0;
     case ::UMS_Data::UMS_DataPackage::USER__EMAIL:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_email);
     case ::UMS_Data::UMS_DataPackage::USER__STATUS:
-        return ::ecorecpp::mapping::set_traits< ::UMS_Data::UserStatusType >::is_set(
-                m_status);
+        return m_status != 1;
 
     }
     throw "Error";

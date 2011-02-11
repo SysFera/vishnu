@@ -91,10 +91,10 @@ void Session::_initialize()
                 m_dateClosure);
     }
         return _any;
-    case ::UMS_Data::UMS_DataPackage::SESSION__STATE:
+    case ::UMS_Data::UMS_DataPackage::SESSION__STATUS:
     {
-        ::ecorecpp::mapping::any_traits< ::UMS_Data::SessionStateType >::toAny(
-                _any, m_state);
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::toAny(_any,
+                m_status);
     }
         return _any;
     case ::UMS_Data::UMS_DataPackage::SESSION__CLOSEPOLICY:
@@ -155,10 +155,10 @@ void Session::eSet(::ecore::EInt _featureID,
                 m_dateClosure);
     }
         return;
-    case ::UMS_Data::UMS_DataPackage::SESSION__STATE:
+    case ::UMS_Data::UMS_DataPackage::SESSION__STATUS:
     {
-        ::ecorecpp::mapping::any_traits< ::UMS_Data::SessionStateType >::fromAny(
-                _newValue, m_state);
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::fromAny(
+                _newValue, m_status);
     }
         return;
     case ::UMS_Data::UMS_DataPackage::SESSION__CLOSEPOLICY:
@@ -194,8 +194,8 @@ void Session::eSet(::ecore::EInt _featureID,
         return m_dateCreation != -1;
     case ::UMS_Data::UMS_DataPackage::SESSION__DATECLOSURE:
         return m_dateClosure != -1;
-    case ::UMS_Data::UMS_DataPackage::SESSION__STATE:
-        return m_state != 1;
+    case ::UMS_Data::UMS_DataPackage::SESSION__STATUS:
+        return m_status != 1;
     case ::UMS_Data::UMS_DataPackage::SESSION__CLOSEPOLICY:
         return m_closePolicy != 0;
     case ::UMS_Data::UMS_DataPackage::SESSION__TIMEOUT:
