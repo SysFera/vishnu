@@ -115,7 +115,8 @@ OracleDatabase::getResult(std::string request) {
 
   stmt = con->createStatement(request);
   res = stmt->execute();
-  res->->setCharacterStreamMode(2, 10000);
+  res->setCharacterStreamMode(2, 10000);
+  vector<MetaData> vec = res->getColumnListMetaData();
   while(res->next()){
 
   }
