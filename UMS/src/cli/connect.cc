@@ -130,7 +130,7 @@ int main (int ac, char* av[]){
 		if ( (reqParam<CPARAM) || (opt.count("help"))) {
 
 
-			      cerr << "Usage: " << av[0] <<" [options] userId"<<endl;
+			      cerr << "\nUsage: \n \n" << av[0] <<" [options] userId\n "<<endl;
 						    
 						cerr << opt << endl;
 						
@@ -140,7 +140,7 @@ int main (int ac, char* av[]){
 		else{
 
 			//Fix me
-			password= getpass("Password: ");// getpass is obsolete. 
+			password= takePassword("Password: ");// getpass is obsolete. 
 
 			cout << "The user password  is " << password << endl;
 		}
