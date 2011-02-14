@@ -15,6 +15,7 @@
 #include "SessionServer.hh"
 #include "MachineClientServer.hh"
 #include "MachineServer.hpp"
+#include "LocalAccountServer.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect 
@@ -105,4 +106,13 @@ solveMachineUpdate(diet_profile_t* pb);
 */
 int
 solveMachineDelete(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveLocalAccountCreate 
+* \fn    int solveLocalAccountCreate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveLocalAccountCreate(diet_profile_t* pb);
+
 #endif // SERVERUMS

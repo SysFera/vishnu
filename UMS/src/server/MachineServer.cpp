@@ -7,7 +7,18 @@
 
 #include "MachineServer.hpp"
 
-using namespace utilServer;
+/**
+* \brief Constructor
+* \fn MachineServer(UMS_Data::Machine*& machine)
+* \param machine The machine data structure
+*/
+MachineServer::MachineServer(UMS_Data::Machine*& machine): 
+mmachine(machine) 
+{
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
+}
+
 
 /**
 * \brief Constructor
@@ -32,9 +43,9 @@ MachineServer::add() {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status) values ";
   
   try {
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-   
+    UserServer userServer = UserServer(msessionServer);
+    userServer.init();
+    
     //if the user exists 
     if (userServer.exist()) {
       //if the user is an admin
@@ -168,22 +179,18 @@ MachineServer::deleteMachine() {
     if (userServer.exist()) {
       //if the user is an admin
       if (userServer.isAdmin()) {  
-	
 	//if the machine to update exists
 	if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
-	  
 	 mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
-	  
 	} //End if the machine to update exists
 	else {
 	  UMSVishnuException e (4, "The machine is unknown");
 	  throw e;
 	}
-	
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (4, "The machine is not added. The user is not an admin");
-	  throw e;
+	UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	throw e;
       }
     }//End if the user exists
     else {
@@ -199,7 +206,7 @@ MachineServer::deleteMachine() {
 
 /**
 * \fn ~MachineServer()
-* \brief Destructor, raises an exception on error
+* \brief Destructor
 */
 MachineServer::~MachineServer() {
   delete mmachine;
@@ -212,7 +219,7 @@ MachineServer::~MachineServer() {
 */
 UMS_Data::Machine* 
 MachineServer::getData() {
-	return mmachine;
+  return mmachine;
 }
 
 /**

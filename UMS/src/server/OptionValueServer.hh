@@ -12,7 +12,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 #include <exception>
 #include "SystemException.hh"
 #include "UMS_Data.hpp"

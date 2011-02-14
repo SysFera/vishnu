@@ -12,7 +12,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 #include <exception>
 #include "SystemException.hh"
 #include "UMSVishnuException.hh"
@@ -30,6 +29,12 @@ using namespace utilServer;
 class MachineServer {
 
 public:
+  /**
+  * \brief Constructor
+  * \fn MachineServer(UMS_Data::Machine*& machine)
+  * \param machine The machine data structure
+  */
+  MachineServer(UMS_Data::Machine*& machine);
   /**
   * \brief Constructor
   * \fn MachineServer(UMS_Data::Machine*& machine, SessionServer& session)

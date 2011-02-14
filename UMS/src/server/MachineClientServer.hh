@@ -23,7 +23,7 @@
 class MachineClientServer {
 public:
   /**
-  * \brief Constructor, raises an exception on error
+  * \brief Constructor
   * \fn MachineClientServer(std::string sshKey, std::string host)
   * \param sshKey The ssh key of the client machine
   * \param host The name of the client host
