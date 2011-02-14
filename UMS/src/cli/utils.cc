@@ -6,6 +6,9 @@ using namespace std;
 #define DATE_SIZE 20
 
 
+
+ std::string takePassword(const char* prompt){return std::string(getpass(prompt));}
+
 void printSession(UMS_Data::Session_ptr session) {
 
   ostringstream os_dc;
@@ -39,13 +42,15 @@ void printSession(UMS_Data::Session_ptr session) {
     (os_s.str()).c_str(), (os_c.str()).c_str(), (os_t.str()).c_str());
 }
 
-void printLocalAccount(UMS_Data::LocalAccount_ptr account) {
+ostream& operator <<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
 
   std::string userId = account->getUserId();
   std::string machineId = account->getMachineId();
   std::string acLogin = account->getAcLogin();
   std::string sshKeyPath = account->getSshKeyPath();
   std::string homeDir = account->getHomeDirectory();
+
+	cout.width(15);
 
   printf("%-15s %-15s %-15s %-20s %-20s\n", userId.c_str(), machineId.c_str(), acLogin.c_str(), sshKeyPath.c_str(), homeDir.c_str());
 
