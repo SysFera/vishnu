@@ -24,13 +24,13 @@ int main(int argc, char* argv[])
      sess1->setSessionId("ABCDEFGH");
      sess1->setSessionKey("Certif-1"); 
     // sess1->setDateCreation("Today");
-     sess1->setState(1);
+     sess1->setStatus(1);
      
      Session_ptr sess2 = ecoreFactory->createSession();
      
      sess2->setSessionId("IGKLMNOPQRSTUW"); //Idsession("Session Paco 2");
      sess2->setSessionKey("Certif-2");
-     sess2->setState(0);
+     sess2->setStatus(0);
      
      listsession->getSessions().push_back(sess1);
      listsession->getSessions().push_back(sess2);
@@ -135,7 +135,7 @@ int main(int argc, char* argv[])
       Session_ptr sess =  other_listssession->getSessions()[i];//other_listssession->getSessions[i];
       cout <<"idsess:"<< sess->getSessionId() <<endl; // << job->getJobName() << endl;
       cout <<"idsess:"<< sess->getDateCreation() <<endl;
-      cout << "State:"<<sess->getState() <<endl;
+      cout << "Status:"<<sess->getStatus() <<endl;
       cout << "Certif:"<<sess->getSessionKey()<<endl<<endl<<endl;
       	
     }
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
       cout << sess->getIduser() <<endl;
       cout << sess->getDatecreation() <<endl;
       cout << sess->getDateloading() <<endl;
-      cout << sess->getState() <<endl;
+      cout << sess->getStatus() <<endl;
     }
 */
     // Delete the parsed model

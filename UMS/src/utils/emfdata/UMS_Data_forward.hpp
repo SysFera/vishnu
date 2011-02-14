@@ -41,20 +41,15 @@ namespace UMS_Data
     // To do this, add the keyword ENABLED before START.
     typedef int SessionCloseType;
     /*PROTECTED REGION END*/
-    /*PROTECTED REGION ID(UMS_Data_SessionStateType) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    typedef int SessionStateType;
-    /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(UMS_Data_PrivilegeType) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     typedef int PrivilegeType;
     /*PROTECTED REGION END*/
-    /*PROTECTED REGION ID(UMS_Data_UserStatusType) START*/
+    /*PROTECTED REGION ID(UMS_Data_StatusType) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
-    typedef int UserStatusType;
+    typedef int StatusType;
     /*PROTECTED REGION END*/
 
     // EClass

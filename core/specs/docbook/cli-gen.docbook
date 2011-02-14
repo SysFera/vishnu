@@ -1155,40 +1155,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The saveConfiguration command line saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>saveConfiguration</command><arg choice="plain"><replaceable> filePath</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>saveConfiguration</command><arg choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>filePath</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The filePath is the path of the file in which the VISHNU configuration will be saved</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
           <tgroup cols="6">

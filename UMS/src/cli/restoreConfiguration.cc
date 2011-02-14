@@ -18,10 +18,6 @@ int main (int ac, char* av[]){
 		int reqParam=0;   // to count the required parameters for the command
 
 
-		/********** EMF Data ****************************/
-
-
-  		UMS_Data::Configuration configuration;
     
 
 /***************  Default configuration file ***************** */
@@ -82,8 +78,6 @@ int main (int ac, char* av[]){
 			
 			cout <<"The file Path is " << filePath << endl;
 
-			configuration.setFilePath(filePath);
-
 			reqParam=reqParam+1;
 		}
 		
@@ -133,7 +127,7 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              restoreConfiguration(sessionKey, configuration);
+              restoreConfiguration(sessionKey, filePath);
 
 	
 

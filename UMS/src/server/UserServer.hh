@@ -16,6 +16,11 @@
 #include "UMS_Data/ConnectOptions.hpp"
 #include "UMS_Data/ListUsers.hpp"
 */
+#include "utilServer.hh"
+using namespace utilServer;
+
+//extern std::string utilServer::mvishnuid;
+//extern utilServer::m ;
 //class ServerUMS;
 class SessionServer;
 #include "SessionServer.hh"

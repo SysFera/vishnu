@@ -40,7 +40,7 @@ int main (int ac, char* av[]){
 		/********** EMF data ************/
 
 		
-		UMS_Data::SessionStateType sessionListOption;
+		UMS_Data::StatusType status;
 		
 		UMS_Data::SessionCloseType sessionClosePolicy;
 		
@@ -77,11 +77,11 @@ int main (int ac, char* av[]){
 												ENV,
 												dietConfig);
 			
-		opt.add("sessionListOption,t",
+		opt.add("status,t",
 				        "specifies the type of the sessions which will be\n"
 								"listed (INACTIVE or ACTIVE)",
 						  CONFIG,
-						  sessionListOption);
+						  status);
 		
 		opt.add("sessionClosePolicy,p",
 				      "Specifies the closure mode of the sessions which\n"
@@ -154,11 +154,11 @@ int main (int ac, char* av[]){
 /********  Process **************************/
 
 
-		if (opt.count("sessionListOption")){
+		if (opt.count("status")){
 			
-			cout <<"The session state type is " << sessionListOption <<endl;
+			cout <<"The session state type is " << status <<endl;
 			
-			listOptions.setSessionListOption(sessionListOption);
+			listOptions.setStatus(status);
 		}
 			
 		if (opt.count("sessionClosePolicy")){

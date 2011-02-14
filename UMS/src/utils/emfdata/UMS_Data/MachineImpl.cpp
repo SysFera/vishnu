@@ -83,6 +83,12 @@ void Machine::_initialize()
                 m_language);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::toAny(_any,
+                m_status);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -123,6 +129,12 @@ void Machine::eSet(::ecore::EInt _featureID,
                 m_language);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::fromAny(
+                _newValue, m_status);
+    }
+        return;
 
     }
     throw "Error";
@@ -145,6 +157,8 @@ void Machine::eSet(::ecore::EInt _featureID,
     case ::UMS_Data::UMS_DataPackage::MACHINE__LANGUAGE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_language);
+    case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
+        return m_status != 1;
 
     }
     throw "Error";

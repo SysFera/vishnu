@@ -55,10 +55,10 @@ void ListSessionOptions::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONLISTOPTION:
+    case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__STATUS:
     {
-        ::ecorecpp::mapping::any_traits< ::UMS_Data::SessionStateType >::toAny(
-                _any, m_sessionListOption);
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::toAny(_any,
+                m_status);
     }
         return _any;
     case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONCLOSEPOLICY:
@@ -119,10 +119,10 @@ void ListSessionOptions::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONLISTOPTION:
+    case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__STATUS:
     {
-        ::ecorecpp::mapping::any_traits< ::UMS_Data::SessionStateType >::fromAny(
-                _newValue, m_sessionListOption);
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::fromAny(
+                _newValue, m_status);
     }
         return;
     case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONCLOSEPOLICY:
@@ -182,8 +182,8 @@ void ListSessionOptions::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONLISTOPTION:
-        return m_sessionListOption != 1;
+    case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__STATUS:
+        return m_status != 1;
     case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONCLOSEPOLICY:
         return m_sessionClosePolicy != 0;
     case ::UMS_Data::UMS_DataPackage::LISTSESSIONOPTIONS__SESSIONINACTIVITYDELAY:

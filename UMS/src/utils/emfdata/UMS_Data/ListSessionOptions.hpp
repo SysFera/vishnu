@@ -50,9 +50,8 @@ namespace UMS_Data
 
 
         // Attributes
-        ::UMS_Data::SessionStateType getSessionListOption() const;
-        void setSessionListOption(
-                ::UMS_Data::SessionStateType _sessionListOption);
+        ::UMS_Data::StatusType getStatus() const;
+        void setStatus(::UMS_Data::StatusType _status);
 
         ::UMS_Data::SessionCloseType getSessionClosePolicy() const;
         void setSessionClosePolicy(
@@ -104,7 +103,7 @@ namespace UMS_Data
     protected:
         // Attributes
 
-        ::UMS_Data::SessionStateType m_sessionListOption;
+        ::UMS_Data::StatusType m_status;
 
         ::UMS_Data::SessionCloseType m_sessionClosePolicy;
 

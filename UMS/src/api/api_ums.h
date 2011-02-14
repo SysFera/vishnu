@@ -45,7 +45,7 @@ int deleteLocalAccount(const std::string& sessionKey, const std::string& userId,
 
 int saveConfiguration(const std::string& sessionKey, const std::string filePath, UMS_Data::Configuration& config);
 
-int restoreConfiguration(const std::string& sessionKey, const UMS_Data::Configuration& config);
+int restoreConfiguration(const std::string& sessionKey, const std::string filePath);
 
 int configureOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue);
 

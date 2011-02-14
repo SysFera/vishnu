@@ -31,7 +31,7 @@ using namespace ::UMS_Data;
 
 // Default constructor
 User::User() :
-    m_userId(""), m_privilege(-1)
+    m_userId(""), m_privilege(0), m_status(1)
 {
 
     /*PROTECTED REGION ID(UserImpl__UserImpl) START*/
@@ -207,15 +207,15 @@ void User::setEmail(::ecore::EString const& _email)
 #endif
 }
 
-::UMS_Data::UserStatusType User::getStatus() const
+::UMS_Data::StatusType User::getStatus() const
 {
     return m_status;
 }
 
-void User::setStatus(::UMS_Data::UserStatusType _status)
+void User::setStatus(::UMS_Data::StatusType _status)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::UMS_Data::UserStatusType _old_status = m_status;
+    ::UMS_Data::StatusType _old_status = m_status;
 #endif
     m_status = _status;
 #ifdef ECORECPP_NOTIFICATION_API
