@@ -1,5 +1,5 @@
-#ifndef SESSION_PROXY_H
-#define SESSION_PROXY_H
+#ifndef _SESSION_PROXY_H_
+#define _SESSION_PROXY_H_
 
 #include <string>
 #include <vector>

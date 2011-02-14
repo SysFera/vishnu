@@ -1,5 +1,4 @@
 
-
 #include "listLocalAccount.hh"
 #include "utils.hh"
 
@@ -168,12 +167,14 @@ int main (int ac, char* av[]){
 							int res = listLocalAccount(sessionKey,lsLocalAccount,listOptions);
 
 							// Display the list
-     printf("userId          machineId       acLogin         sshKeyPath           homeDirectory       \n");
-     printf("--------------- --------------- --------------- -------------------- --------------------\n");
-     for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
-        printLocalAccount(lsLocalAccount.getAccounts().get(i));
-     }
-	
+      if(isEmpty) {
+          cout << lsLocalAccount << endl;
+      } 
+      else {
+             for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
+               cout << lsLocalAccount.getAccounts().get(i) ;
+             }
+      }	
 
 	}// End of try bloc
 

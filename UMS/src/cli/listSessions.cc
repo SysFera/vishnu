@@ -268,13 +268,14 @@ int main (int ac, char* av[]){
 
                                   
 							// Display the list
-     printf("sessionId    userId       sessionKey      LastConnect     Create          Close           ST ClosePolicy TimeOut\n");
-     printf("============ ============ =============== =============== =============== =============== == =========== =======\n");
+     cout << listSession << std::endl;
+     /*printf("sessionId    userId       sessionKey      LastConnect               Create          Close           ST ClosePolicy TimeOut\n");
+     printf("============ ============ =============== ========================= =============== =============== == =========== =======\n");
      UMS_Data::Session_ptr session;
      for(int i = 0; i < listSession.getSessions().size(); i++) {
         session = listSession.getSessions().get(i);
         printSession(session);
-     }
+     }*/
 
 	}// End of try bloc
 

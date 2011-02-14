@@ -1,11 +1,13 @@
+#ifndef  _utilsClient_H_  
+#define  _utilsClient_H_
+
 #include <errno.h>
 #include <string>
 #include <iostream>
 #include <assert.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <cstring>
 #include <sstream>
+#include <algorithm>
 
 #include "UMSVishnuException.hh"
 
@@ -16,3 +18,5 @@
 void sendErrorMsg(std::string msg);
 
 void checkErrorMsg(std::string msg);
+
+#endif
