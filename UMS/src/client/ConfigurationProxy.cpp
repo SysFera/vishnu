@@ -14,6 +14,7 @@
 ConfigurationProxy::ConfigurationProxy(const std::string& filePath, const SessionProxy& session):
 mfilePath(filePath), msessionProxy(session)
 {
+  mconfiguration = NULL;
 }
  
 ConfigurationProxy::ConfigurationProxy(UMS_Data::Configuration* config, const SessionProxy& session):

@@ -1,5 +1,5 @@
-#ifndef CONFIGURATION_PROXY_H
-#define CONFIGURATION_PROXY_H
+#ifndef _CONFIGURATION_PROXY_H_
+#define _CONFIGURATION_PROXY_H_
 
 #include <string>
 #include <vector>

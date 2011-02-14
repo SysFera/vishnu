@@ -12,6 +12,7 @@ UserProxy::UserProxy(const  std::string& userId, const std::string& password)
 {
   muser.setUserId(userId);
   muser.setPassword(password);
+  msessionProxy = NULL;
 }
  
 UserProxy::UserProxy(SessionProxy session):
@@ -22,6 +23,7 @@ UserProxy::UserProxy(SessionProxy session):
 UserProxy::UserProxy(const UMS_Data::User& user):
  muser(user)
 {
+ msessionProxy = NULL;
 }
  
 int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)

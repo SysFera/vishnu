@@ -52,9 +52,8 @@ int close(const string&  sessionKey) {
 
   UMS_Data::Session session;
   SessionProxy sessionProxy(sessionKey);
-  int  res = sessionProxy.close();
 
- return res;
+ return sessionProxy.close();;
 }
 
 int addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) {
@@ -62,9 +61,7 @@ int addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) {
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
 
-  int res = userProxy.add(newUser);
-
- return res;
+ return userProxy.add(newUser);
 }
 
 int updateUser(const string& sessionKey, const UMS_Data::User& user) {
@@ -72,9 +69,7 @@ int updateUser(const string& sessionKey, const UMS_Data::User& user) {
    SessionProxy sessionProxy(sessionKey);
    UserProxy userProxy(sessionProxy);
 
-  int res = userProxy.update(user);
-
-  return res;
+  return userProxy.update(user);
 }
 
 int deleteUser(const string& sessionKey, const string& userId) {
@@ -85,17 +80,15 @@ int deleteUser(const string& sessionKey, const string& userId) {
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
 
-  int res = userProxy.deleteUser(user);
-
- return res;
+ return userProxy.deleteUser(user);
 }
 
 int changePassword(const std::string& sessionKey, const std::string& password, const std::string& passwordNew) {
 
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
-  int res = userProxy.changePassword(password, passwordNew);
- return res;
+
+ return userProxy.changePassword(password, passwordNew);
 }
 
 int resetPassword(const std::string& sessionKey, const std::string& userId) {
@@ -104,9 +97,8 @@ int resetPassword(const std::string& sessionKey, const std::string& userId) {
   user.setUserId(userId);
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
-  int res = userProxy.resetPassword(user);
 
- return res;
+ return userProxy.resetPassword(user);
 }
 
 int addMachine(const std::string& sessionKey, const UMS_Data::Machine& newMachine) {
@@ -114,9 +106,7 @@ int addMachine(const std::string& sessionKey, const UMS_Data::Machine& newMachin
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(newMachine, sessionProxy);
 
-  int res = machineProxy.add();
-
- return res;
+ return machineProxy.add();
 }
 
 int updateMachine(const std::string& sessionKey, const UMS_Data::Machine& machine) {
@@ -124,9 +114,7 @@ int updateMachine(const std::string& sessionKey, const UMS_Data::Machine& machin
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(machine, sessionProxy);
 
-  int res = machineProxy.update();
-
- return res;
+ return machineProxy.update();
 }
 
 int deleteMachine(const std::string& sessionKey, const std::string& machineId) {
@@ -136,9 +124,7 @@ int deleteMachine(const std::string& sessionKey, const std::string& machineId) {
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(machine, sessionProxy);
 
-  int res = machineProxy.deleteMachine();
- 
- return res;
+ return machineProxy.deleteMachine();
 }
 
 int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount) {
@@ -146,10 +132,8 @@ int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount&
   
   SessionProxy sessionProxy(sessionKey);
   LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
-
-  int res = localAccountProxy.add();
  
- return res;
+ return localAccountProxy.add();
 }
 
 int updateLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& localAccount) {
@@ -157,9 +141,7 @@ int updateLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccou
  SessionProxy sessionProxy(sessionKey);
  LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
 
- int res = localAccountProxy.update();
-
- return res;
+ return localAccountProxy.update();
 }
 
 int deleteLocalAccount(const std::string& sessionKey, const std::string& userId, const std::string& machineId) {
@@ -170,49 +152,49 @@ int deleteLocalAccount(const std::string& sessionKey, const std::string& userId,
   SessionProxy sessionProxy(sessionKey);
   LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
 
-  int res = localAccountProxy.deleteLocalAccount();
-
- return res;
+ return localAccountProxy.deleteLocalAccount();
 }
 
-int saveConfiguration(const std::string& sessionKey, const std::string filePath, UMS_Data::Configuration& config) {
+int saveConfiguration(const std::string& sessionKey, const std::string& filePath, UMS_Data::Configuration& config) {
   
    SessionProxy sessionProxy(sessionKey);
    ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
    int res = configurationProxy.save();
-   UMS_Data::Configuration *configData = configurationProxy.getData();
  
-   UMS_Data::User_ptr user;
+   if(!res) {
+     UMS_Data::Configuration *configData = configurationProxy.getData();
+ 
+     UMS_Data::User_ptr user;
   
-  //To set the user list 
-  for(int i = 0; i < configData->getListConfUsers().size(); i++) {
-      user = configData->getListConfUsers().get(i);
-      config.getListConfUsers().push_back(user);
-  }
-  //To set the machine list
-  UMS_Data::Machine_ptr machine; 
-  for(int i = 0; i < configData->getListConfMachines().size(); i++) {
-      machine = configData->getListConfMachines().get(i);
-      config.getListConfMachines().push_back(machine);
-  }
-  //To set the LocalAccounts list
-  UMS_Data::LocalAccount_ptr localAccount; 
-  for(int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
-      localAccount = configData->getListConfLocalAccounts().get(i);
-      config.getListConfLocalAccounts().push_back(localAccount);
+     //To set the user list 
+     for(int i = 0; i < configData->getListConfUsers().size(); i++) {
+       user = configData->getListConfUsers().get(i);
+       config.getListConfUsers().push_back(user);
+     }
+     //To set the machine list
+     UMS_Data::Machine_ptr machine; 
+     for(int i = 0; i < configData->getListConfMachines().size(); i++) {
+       machine = configData->getListConfMachines().get(i);
+       config.getListConfMachines().push_back(machine);
+     }
+     //To set the LocalAccounts list
+     UMS_Data::LocalAccount_ptr localAccount; 
+     for(int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
+       localAccount = configData->getListConfLocalAccounts().get(i);
+       config.getListConfLocalAccounts().push_back(localAccount);
+     }
   }
 
   return res;
 }
 
-int restoreConfiguration(const std::string& sessionKey, const std::string filePath) {
+int restoreConfiguration(const std::string& sessionKey, const std::string& filePath) {
 
    SessionProxy sessionProxy(sessionKey);
    ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
-   int  res = configurationProxy.restoreFromFile();
- return res;
+ return configurationProxy.restoreFromFile();
 }
 
 int configureOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue) {
@@ -220,9 +202,7 @@ int configureOption(const std::string& sessionKey, const UMS_Data::OptionValue& 
   SessionProxy sessionProxy(sessionKey);
   OptionValueProxy optionValueProxy(optionValue, sessionProxy);
 
-  int res = optionValueProxy.configureOption();
-
- return res;
+ return optionValueProxy.configureOption();
 }
 
 int configureDefaultOption(const std::string& sessionKey, const UMS_Data::OptionValue& optionValue) {
@@ -230,8 +210,7 @@ int configureDefaultOption(const std::string& sessionKey, const UMS_Data::Option
   SessionProxy sessionProxy(sessionKey);
   OptionValueProxy optionValueProxy(optionValue, sessionProxy);
 
-  int res = optionValueProxy.configureDefaultOption();
- return res;
+ return optionValueProxy.configureDefaultOption();
 }
 
 int listSessions(const std::string& sessionKey, 
@@ -243,11 +222,17 @@ int listSessions(const std::string& sessionKey,
 
   UMS_Data::ListSessions* listSession_ptr = query.list();  
 
-  UMS_Data::Session_ptr session;
-  for(int i = 0; i < listSession_ptr->getSessions().size(); i++) {
+  if(listSession_ptr!=NULL) {
+    UMS_Data::Session_ptr session;
+    for(int i = 0; i < listSession_ptr->getSessions().size(); i++) {
       session = listSession_ptr->getSessions().get(i);
       listSession.getSessions().push_back(session);
+    }
+  } 
+  else {
+    return 1;
   }
+
  return 0;
 }
 
@@ -261,11 +246,17 @@ int listLocalAccount(const std::string& sessionKey,
 
   UMS_Data::ListLocalAccounts* listLocalAcc_ptr = query.list();
 
-  UMS_Data::LocalAccount_ptr account;
-  for(int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
+  if(listLocalAcc_ptr!=NULL) {
+    UMS_Data::LocalAccount_ptr account;
+    for(int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
       account = listLocalAcc_ptr->getAccounts().get(i);
       listLocalAcc.getAccounts().push_back(account);
+    }
   }
+  else {
+   return 1;
+  }
+
   return 0;
 }
 
@@ -279,10 +270,15 @@ int listMachine(const std::string& sessionKey,
 
   UMS_Data::ListMachines* listMachine_ptr = query.list();
 
+  if(listMachine_ptr!=NULL) {
   UMS_Data::Machine_ptr machine;
   for(int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
-      machine = listMachine_ptr->getMachines().get(i);
-      listMachine.getMachines().push_back(machine);
+    machine = listMachine_ptr->getMachines().get(i);
+    listMachine.getMachines().push_back(machine);
+  }
+  }
+  else {
+    return 1;
   }
 
   return 0;
@@ -298,10 +294,15 @@ int listHistoryCmd(const std::string& sessionKey,
 
   UMS_Data::ListCommands* listCommands_ptr = query.list();
 
-  UMS_Data::Command_ptr command;
-  for(int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
+  if(listCommands_ptr!=NULL) {
+    UMS_Data::Command_ptr command;
+    for(int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
       command = listCommands_ptr->getCommands().get(i);
       listCommands.getCommands().push_back(command);
+    }
+  }
+  else {
+    return 1;
   }
 
   return 0;
@@ -317,10 +318,15 @@ int listOptions(const std::string& sessionKey,
 
   UMS_Data::ListOptionsValues* listOptValues_ptr = query.list();
 
-  UMS_Data::OptionValue_ptr optionValue;
-  for(int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
+  if(listOptValues_ptr!=NULL) {
+    UMS_Data::OptionValue_ptr optionValue;
+    for(int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
       optionValue = listOptValues_ptr->getOptionValues().get(i);
       listOptValues.getOptionValues().push_back(optionValue);
+    }
+  }
+  else {
+    return 1;
   }
 
   return 0;
@@ -336,12 +342,17 @@ int listUsers(const std::string& sessionKey,
 
   UMS_Data::ListUsers* listUsers_ptr = query.listWithParamsString();
 
-  UMS_Data::User_ptr user;
-  for(int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
+  if(listUsers_ptr!=NULL) {
+    UMS_Data::User_ptr user;
+    for(int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
       user = listUsers_ptr->getUsers().get(i);
       listUsers.getUsers().push_back(user);
+    }
   }
-
-  return 0;
+  else {
+    return 1;
+  }
+ 
+ return 0;
 }
 

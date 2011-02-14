@@ -1,5 +1,5 @@
-#ifndef MACHINE_PROXY_H
-#define MACHINE_PROXY_H
+#ifndef _MACHINE_PROXY_H_
+#define _MACHINE_PROXY_H_
 
 #include <string>
 #include <vector>
