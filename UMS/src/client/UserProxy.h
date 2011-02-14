@@ -1,5 +1,5 @@
-#ifndef USER_PROXY_H
-#define USER_PROXY_H
+#ifndef _USER_PROXY_H_
+#define _USER_PROXY_H_
 
 #include <string>
 #include <vector>
