@@ -1,5 +1,5 @@
-#ifndef QUERY_PROXY_H
-#define QUERY_PROXY_H
+#ifndef _QUERY_PROXY_H_
+#define _QUERY_PROXY_H_
 
 #include <string>
 #include <vector>
@@ -49,6 +49,7 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
                                                     const std::string& serviceName):
   mparameters(params), msessionProxy(session), mserviceName(serviceName)
 {
+  mlistObject = NULL;
 }
 
 template <class QueryParameters, class ListObject>

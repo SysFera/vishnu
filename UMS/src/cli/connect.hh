@@ -12,7 +12,6 @@
 #include <iostream>
 #include <iterator>
 #include <fstream>
-#include <cstdlib>
 
 //EMF
 #include <ecore.hpp> // Ecore metamodel
