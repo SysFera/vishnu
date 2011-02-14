@@ -1,27 +1,29 @@
-/*#include <string>
-#include <vector>
-#include <list>
-#include <iostream>
-#include <assert.h>
-#include <sstream>
-
-#include "POSTGREDatabase.hh"
-#include "DbFactory.hh"
-#include "DatabaseResult.hh"
+/**
+* \file MachineClientServer.cpp
+* \brief This file implements the Class which manipulates the VISHNU client machine data on server side.
+* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+* \date 31/01/2011
 */
-#include <sstream>
-#include <exception>
 
 #include "MachineClientServer.hh"
-#include "SystemException.hh"
-#include "utilServer.hh"
-
+/**
+* \brief Constructor, raises an exception on error
+* \fn MachineClientServer(std::string sshKey, std::string host)
+* \param sshKey The ssh key of the client machine
+* \param host The name of the client host
+*/
 MachineClientServer::MachineClientServer(std::string sshKey, std::string host) {
+  DbFactory factory;
   mmachineSSHKey = sshKey;
   mhostname = host;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
- 
+
+/**
+* \brief Function to record the client machine on the database
+* \fn int recordMachineClient()
+* \return raises an exception on error
+*/
 int MachineClientServer::recordMachineClient() {
   
   //If the machine is not on the database
@@ -32,18 +34,23 @@ int MachineClientServer::recordMachineClient() {
     std::cout <<"SQL COMMAND:"<<sqlCmd;
 
     try {
-    mdatabaseVishnu->process(sqlCmd.c_str());
-    } catch (SystemException& e) {
-    throw e;
+      mdatabaseVishnu->process(sqlCmd.c_str());
+    } 
+    catch (SystemException& e) {
+      throw e;
     }
   } //End if the machine is not on the database 
   else {
     std::cout << "The machine is already registered";
   } 
-
-return 0;
+  return 0;
 }
- 
+
+/**
+* \brief Function to get the id number of the client machine
+* \fn std::string getId()
+* \return raises an exception on error
+*/
 std::string
 MachineClientServer::getId() {	
     
@@ -57,55 +64,55 @@ MachineClientServer::getId() {
   std::cout <<"SQL COMMAND:"<<sqlCommand;
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-  } catch (SystemException& e) {
+  } 
+  catch (SystemException& e) {
     throw e;
   }
-
   if (result->getNbTuples() != 0) {  
     result->print();
     std::vector<std::string> tmp = result->get(0);
-
     ii=tmp.begin();
-    /*std::istringstream str(*ii);
-    int value;
-    str>>value;
-    std::cout << "Value: "<< value;*/
     return *ii;
-
-  } // if  if (result->getNbTuples() != 0)
+  } 
   else {
     return "";
   }
 }
- 
+/**
+* \brief Function to get the ssh key of the client machine
+* \fn std::string getSSHKey()
+* \return raises an exception on error
+*/
 std::string MachineClientServer::getSSHKey() const{
   return mmachineSSHKey;
 }
- 
+
+/**
+* \brief Function to get the hostname of the client machine
+* \fn std::string getHost()
+* \return raises an exception on error
+*/  
 std::string MachineClientServer::getHost() const{
   return mhostname;
 }
-
-bool MachineClientServer::exist(){
-  
- /*DatabaseResult* result;
- std::string sqlCommand("SELECT * FROM clmachine where sshkey='");
- sqlCommand.append(mmachineSSHKey+ "' and name='");
- sqlCommand.append(mhostname+"'");
-	
- std::cout <<"SQL COMMAND:"<<sqlCommand;*/
- try {
-      //result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-      return (getId().size() != 0);
- } 
- catch (SystemException& e) {
-	throw e;
- }
- /*std::cout << "Nb résulats:" << result->getNbTuples() << std::endl;
-	    //std::cout<<result->getNbTuples();
-	    
-  return (result->getNbTuples() != 0); */
-}
-
+/**
+* \fn ~MachineClientServer()
+* \brief Destructor
+*/
 MachineClientServer::~MachineClientServer() {
 }
+
+/**
+* \brief Function to check the client machine on the database
+* \fn bool exist()
+* \return true if the machine exists on the database else false
+*/
+bool MachineClientServer::exist(){
+  try {
+    return (getId().size() != 0);
+  } 
+  catch (SystemException& e) {
+    throw e;
+  }
+}
+

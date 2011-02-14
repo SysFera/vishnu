@@ -1,8 +1,8 @@
 /**
- * \file utilServer.hh
- * \brief This file presents the utils functions of server objects
- * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date 31/01/2001 
+* \file utilServer.hpp
+* \brief This file presents the utils functions of server objects
+* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+* \date 31/01/2001 
 */
 
 #ifndef _UTILSERVER_H_
@@ -11,21 +11,27 @@
 #include <iostream>
 #include <sstream>
 
+/**
+* \class Vishnuid
+* \brief The Vishnuid class encapsulates the global vishnu id
+*/
 class Vishnuid {
   public:
-    //static std::string mvishnuid;
     static std::string mvishnuid;
 };
+/**
+* \brief Function to encrypt data and password
+* \fn    char* crypt(const char* clef, const char* salt);
+* \param clef is the data to be encrypted
+* \param salt This string is used to perturb the algorithm
+* \return the string encrypted
+*/ 
+char* crypt(const char* clef, const char* salt);
 
 /**
-  * \brief Function to encrypt data and password
-  * \fn    char* crypt(const char* clef, const char* salt);
-  * \param clef is the data to be encrypted
-  * \param salt This string is used to perturb the algorithm in one of 4096 different ways.
-  * \return the string encrypted
-  */ 
-  char* crypt(const char* clef, const char* salt);
-
+* \namespace utilServer
+* \brief The utils functions of server objects
+*/  
 namespace utilServer {
   /**
   * \brief The id of the VISHNU configuration registered in the database
@@ -43,15 +49,12 @@ namespace utilServer {
     out << val;
     return out.str();
   }
-  int convertToInt(std::string val);
   /**
-  * \brief Function to check if an id is correct (higher than zero) 
-  * \fn    int checkId(int id);
-  * \param id is the id to be tested
-  * \return the id if correct or raises an exception
+  * \brief Function to convert a string to int 
+  * \fn    std::string convertToString(const T& val);
+  * \param  val a value to convert to string
+  * \return int value of the corresponding string
   */
-  int checkId(int id) ;
-  
-  
+  int convertToInt(std::string val);
   }
 #endif//UTILSERVER

@@ -89,4 +89,20 @@ solveUserPasswordReset(diet_profile_t* pb);
 */
 int
 solveMachineCreate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveMachineUpdate 
+* \fn    int solveMachineUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveMachineUpdate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveMachineDelete 
+* \fn    int solveMachineDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveMachineDelete(diet_profile_t* pb);
 #endif // SERVERUMS

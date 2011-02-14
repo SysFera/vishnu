@@ -8,9 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "ServerUMS.hh"
-#include "utilServer.hh"
-
-//std::string ServerUMS::mvishnuid = "";
 
 /**
 * \brief To get the path of the configuration file used by the UMS server
@@ -44,9 +41,8 @@ ServerUMS::init(std::string vishnuid) {
 
   DbFactory factory;
   //TODO: mettre mot de passe pour access à la base de données sera passé en paramètre
-  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "", "", "vishnu");
-  //TODO régler le pb de variable globale qui fonctionne en classe mais pas en namespace
-  utilServer::mvishnuid = vishnuid;
+  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "vishnu_user", "vishnu_user", "vishnu");
+  
   Vishnuid::mvishnuid = vishnuid;
   
   DatabaseResult* result;
@@ -73,10 +69,10 @@ ServerUMS::init(std::string vishnuid) {
     if (!admin.exist()) {
     
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-     values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','vishnu_db_admin', 1, 1, 0)");
+     values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','vishnu_db_admin', 1, 1, 1)");
    
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-     values ("+Vishnuid::mvishnuid+", 'vishnu_user','vishnu_user', 1, 1, 0)");
+     values ("+Vishnuid::mvishnuid+", 'vishnu_user','vishnu_user', 1, 1, 1)");
     
     }
     else {
@@ -88,7 +84,6 @@ ServerUMS::init(std::string vishnuid) {
 	std::cout << "Details supplementaires 2: " << e.what() <<std::endl;
 	exit(0);
   }
-  
   
   // initialization of the service table
   diet_service_table_init(NB_SRV);  
@@ -182,6 +177,23 @@ ServerUMS::init(std::string vishnuid) {
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveMachineCreate);
+  
+  /* solveMachineUpdate */
+  
+  mprofile = diet_profile_desc_alloc(SRV[9], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveMachineUpdate);
+  
+  mprofile = diet_profile_desc_alloc(SRV[10], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveMachineDelete);
+
 
   diet_profile_desc_free(mprofile);
 }

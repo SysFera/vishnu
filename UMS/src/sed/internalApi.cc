@@ -389,3 +389,81 @@ solveMachineCreate(diet_profile_t* pb) {
   
   return 0;
 }
+/**
+* \brief Function to solve the service solveMachineUpdate 
+* \fn    int solveMachineUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveMachineUpdate(diet_profile_t* pb) {
+  
+  char* sessionKey = NULL;
+  char* machineSerialized = NULL;
+  std::string empty("");
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
+  std::cout<<"Machine:"<< machineSerialized <<std::endl;
+ 
+  ecorecpp::parser::parser parser;
+  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  Machine_ptr machine = parser.load(std::string(machineSerialized))->as< Machine >();
+  MachineServer machineServer = MachineServer(machine, sessionServer);
+  
+  try {   
+    machineServer.update();
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	//std::string empty("");
+	std::string errorInfo = convertToString(e.getMsgI())+"#";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  
+  return 0;
+}
+/**
+* \brief Function to solve the service solveMachineDelete 
+* \fn    int solveMachineDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveMachineDelete(diet_profile_t* pb) {
+  
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  std::string empty("");
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  std::cout<<"Machine:"<< machineId <<std::endl;
+ 
+  UMS_Data::Machine* machine = new UMS_Data::Machine();
+  machine->setMachineId(machineId);
+  
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  MachineServer machineServer = MachineServer(machine, sessionServer);
+  
+  try {   
+    machineServer.deleteMachine();
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	//std::string empty("");
+	std::string errorInfo = convertToString(e.getMsgI())+"#";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  
+  return 0;
+}
