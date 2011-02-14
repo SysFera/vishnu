@@ -183,8 +183,6 @@ int saveConfiguration(const std::string& sessionKey, const std::string filePath,
    int res = configurationProxy.save();
    UMS_Data::Configuration *configData = configurationProxy.getData();
  
-   //To set the file path 
-   config.setFilePath(configData->getFilePath());
    UMS_Data::User_ptr user;
   
   //To set the user list 
@@ -208,10 +206,10 @@ int saveConfiguration(const std::string& sessionKey, const std::string filePath,
   return res;
 }
 
-int restoreConfiguration(const std::string& sessionKey, const UMS_Data::Configuration& config) {
+int restoreConfiguration(const std::string& sessionKey, const std::string filePath) {
 
    SessionProxy sessionProxy(sessionKey);
-   ConfigurationProxy configurationProxy(config.getFilePath(), sessionProxy);
+   ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
    int  res = configurationProxy.restoreFromFile();
  return res;

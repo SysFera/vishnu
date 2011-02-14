@@ -11,6 +11,12 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 
+#include "utilServer.hh"
+using namespace utilServer;
+
+//extern std::string utilServer::mvishnuid;
+
+
 class MachineServer {
 
 public:

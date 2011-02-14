@@ -64,6 +64,9 @@ namespace UMS_Data
         ::ecore::EString const& getLanguage() const;
         void setLanguage(::ecore::EString const& _language);
 
+        ::UMS_Data::StatusType getStatus() const;
+        void setStatus(::UMS_Data::StatusType _status);
+
         // References
 
 
@@ -98,6 +101,8 @@ namespace UMS_Data
         ::ecore::EString m_machineDescription;
 
         ::ecore::EString m_language;
+
+        ::UMS_Data::StatusType m_status;
 
         // References
 

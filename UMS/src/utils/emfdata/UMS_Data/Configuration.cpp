@@ -60,32 +60,6 @@ Configuration::~Configuration()
 
 // Attributes
 
-::ecore::EString const& Configuration::getFilePath() const
-{
-    return m_filePath;
-}
-
-void Configuration::setFilePath(::ecore::EString const& _filePath)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_filePath = m_filePath;
-#endif
-    m_filePath = _filePath;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getConfiguration__filePath(),
-                _old_filePath,
-                m_filePath
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
 // References
 ::ecorecpp::mapping::EList< ::UMS_Data::User >& Configuration::getListConfUsers()
 {

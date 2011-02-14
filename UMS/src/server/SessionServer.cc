@@ -10,7 +10,6 @@
 #include "SystemException.hh"
 #include "UMSVishnuException.hh"
 #include "SessionServer.hh"
-#include "utilServer.hh"
 #include "OptionValueServer.hh"
 
 SessionServer::SessionServer() {
@@ -282,7 +281,7 @@ int SessionServer::recordSessionServer(std::string idmachine, std::string iduser
  std::string values = std::string("('" +msession.getSessionId()+"',"+idmachine+","+iduser+",\
  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '"+msession.getSessionKey()+"',");
    
- values.append(convertToString(msession.getState())+",");
+ values.append(convertToString(msession.getStatus())+",");
  values.append(convertToString(msession.getClosePolicy())+",");
  values.append(convertToString(msession.getTimeout())+")");
   

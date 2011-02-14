@@ -74,11 +74,9 @@ namespace UMS_Data
 
         static const int SESSIONCLOSETYPE = 19;
 
-        static const int SESSIONSTATETYPE = 20;
+        static const int STATUSTYPE = 20;
 
         static const int USER = 21;
-
-        static const int USERSTATUSTYPE = 22;
 
         static const int CONNECTOPTIONS__CLOSEPOLICY = 0;
 
@@ -98,7 +96,7 @@ namespace UMS_Data
 
         static const int SESSION__DATECLOSURE = 8;
 
-        static const int SESSION__STATE = 9;
+        static const int SESSION__STATUS = 9;
 
         static const int SESSION__CLOSEPOLICY = 10;
 
@@ -106,7 +104,7 @@ namespace UMS_Data
 
         static const int LISTSESSIONS__SESSIONS = 12;
 
-        static const int LISTSESSIONOPTIONS__SESSIONLISTOPTION = 13;
+        static const int LISTSESSIONOPTIONS__STATUS = 13;
 
         static const int LISTSESSIONOPTIONS__SESSIONCLOSEPOLICY = 14;
 
@@ -192,15 +190,15 @@ namespace UMS_Data
 
         static const int MACHINE__LANGUAGE = 55;
 
-        static const int LISTMACHINES__MACHINES = 56;
+        static const int MACHINE__STATUS = 56;
 
-        static const int LISTMACHINEOPTIONS__USERID = 57;
+        static const int LISTMACHINES__MACHINES = 57;
 
-        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 58;
+        static const int LISTMACHINEOPTIONS__USERID = 58;
 
-        static const int LISTMACHINEOPTIONS__MACHINEID = 59;
+        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 59;
 
-        static const int CONFIGURATION__FILEPATH = 60;
+        static const int LISTMACHINEOPTIONS__MACHINEID = 60;
 
         static const int CONFIGURATION__LISTCONFUSERS = 61;
 
@@ -319,11 +317,9 @@ namespace UMS_Data
 
         virtual ::ecore::EEnum_ptr getSessionCloseType();
 
-        virtual ::ecore::EEnum_ptr getSessionStateType();
-
         virtual ::ecore::EEnum_ptr getPrivilegeType();
 
-        virtual ::ecore::EEnum_ptr getUserStatusType();
+        virtual ::ecore::EEnum_ptr getStatusType();
 
         // EStructuralFeatures methods
 
@@ -346,7 +342,7 @@ namespace UMS_Data
 
         virtual ::ecore::EAttribute_ptr getSession__dateClosure();
 
-        virtual ::ecore::EAttribute_ptr getSession__state();
+        virtual ::ecore::EAttribute_ptr getSession__status();
 
         virtual ::ecore::EAttribute_ptr getSession__closePolicy();
 
@@ -354,8 +350,7 @@ namespace UMS_Data
 
         virtual ::ecore::EReference_ptr getListSessions__sessions();
 
-        virtual ::ecore::EAttribute_ptr
-                getListSessionOptions__sessionListOption();
+        virtual ::ecore::EAttribute_ptr getListSessionOptions__status();
 
         virtual ::ecore::EAttribute_ptr
                 getListSessionOptions__sessionClosePolicy();
@@ -446,6 +441,8 @@ namespace UMS_Data
 
         virtual ::ecore::EAttribute_ptr getMachine__language();
 
+        virtual ::ecore::EAttribute_ptr getMachine__status();
+
         virtual ::ecore::EReference_ptr getListMachines__machines();
 
         virtual ::ecore::EAttribute_ptr getListMachineOptions__userId();
@@ -453,8 +450,6 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getListMachineOptions__listAllmachine();
 
         virtual ::ecore::EAttribute_ptr getListMachineOptions__machineId();
-
-        virtual ::ecore::EAttribute_ptr getConfiguration__filePath();
 
         virtual ::ecore::EReference_ptr getConfiguration__listConfUsers();
 
@@ -525,11 +520,9 @@ namespace UMS_Data
 
         ::ecore::EEnum_ptr m_SessionCloseTypeEEnum;
 
-        ::ecore::EEnum_ptr m_SessionStateTypeEEnum;
-
         ::ecore::EEnum_ptr m_PrivilegeTypeEEnum;
 
-        ::ecore::EEnum_ptr m_UserStatusTypeEEnum;
+        ::ecore::EEnum_ptr m_StatusTypeEEnum;
 
         // EDataType instances 
 
@@ -554,7 +547,7 @@ namespace UMS_Data
 
         ::ecore::EAttribute_ptr m_Session__dateClosure;
 
-        ::ecore::EAttribute_ptr m_Session__state;
+        ::ecore::EAttribute_ptr m_Session__status;
 
         ::ecore::EAttribute_ptr m_Session__closePolicy;
 
@@ -562,7 +555,7 @@ namespace UMS_Data
 
         ::ecore::EReference_ptr m_ListSessions__sessions;
 
-        ::ecore::EAttribute_ptr m_ListSessionOptions__sessionListOption;
+        ::ecore::EAttribute_ptr m_ListSessionOptions__status;
 
         ::ecore::EAttribute_ptr m_ListSessionOptions__sessionClosePolicy;
 
@@ -648,6 +641,8 @@ namespace UMS_Data
 
         ::ecore::EAttribute_ptr m_Machine__language;
 
+        ::ecore::EAttribute_ptr m_Machine__status;
+
         ::ecore::EReference_ptr m_ListMachines__machines;
 
         ::ecore::EAttribute_ptr m_ListMachineOptions__userId;
@@ -655,8 +650,6 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_ListMachineOptions__listAllmachine;
 
         ::ecore::EAttribute_ptr m_ListMachineOptions__machineId;
-
-        ::ecore::EAttribute_ptr m_Configuration__filePath;
 
         ::ecore::EReference_ptr m_Configuration__listConfUsers;
 

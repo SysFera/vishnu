@@ -32,7 +32,7 @@ using namespace ::UMS_Data;
 // Default constructor
 Session::Session() :
     m_sessionId(""), m_userId(""), m_sessionKey(""), m_dateLastConnect(-1),
-            m_dateCreation(-1), m_dateClosure(-1), m_state(1),
+            m_dateCreation(-1), m_dateClosure(-1), m_status(1),
             m_closePolicy(0), m_timeout(0)
 {
 
@@ -209,26 +209,26 @@ void Session::setDateClosure(::ecore::ELong _dateClosure)
 #endif
 }
 
-::UMS_Data::SessionStateType Session::getState() const
+::UMS_Data::StatusType Session::getStatus() const
 {
-    return m_state;
+    return m_status;
 }
 
-void Session::setState(::UMS_Data::SessionStateType _state)
+void Session::setStatus(::UMS_Data::StatusType _status)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::UMS_Data::SessionStateType _old_state = m_state;
+    ::UMS_Data::StatusType _old_status = m_status;
 #endif
-    m_state = _state;
+    m_status = _status;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getSession__state(),
-                _old_state,
-                m_state
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getSession__status(),
+                _old_status,
+                m_status
         );
         eNotify(&notification);
     }

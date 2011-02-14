@@ -38,20 +38,15 @@ public:
   int close();
   std::string getSessionKey() const;
   UMS_Data::Session getData() const;
-  std::string getErrorInfo() const;
 
    //Destructor
   ~SessionProxy();
 private:
        
-  std::string serialize(const UMS_Data::ConnectOptions& options, 
-                        UMS_Data::ConnectOptions_ptr& serializedOptions);
-
   int _connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options=UMS_Data::ConnectOptions());
 
   //Attributs      
   UMS_Data::Session msession;
   std::string msessionKey;
-  std::string merrorInfo;
 };
 #endif
