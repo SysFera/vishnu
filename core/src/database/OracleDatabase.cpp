@@ -112,12 +112,22 @@ DatabaseResult*
 OracleDatabase::getResult(std::string request) {
   std::vector<std::vector<std::string> > results;
   std::vector<std::string> attributesNames;
-
+  std::vector<std::string> tmp;
+  int size;
+  int i;
   stmt = con->createStatement(request);
   res = stmt->execute();
-  res->->setCharacterStreamMode(2, 10000);
-  while(res->next()){
+  res->setCharacterStreamMode(2, 10000);
+  vector<MetaData> vec = res->getColumnListMetaData();
+  size = vec.size();
 
+  while(res->next()){
+    std::vector<std::string> tmp = std::vector<std::string>();
+    for (i=1 ; i<=size; i++){ // Oracle count from 1 to size
+      tmp.push_back(reg->getString(i));
+    }
+    results.push_back(tmp);
   }
   stmt->closeResultSet(res);
+  return new DatabaseResult(results, attributesNames);
 }
