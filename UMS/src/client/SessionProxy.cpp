@@ -129,7 +129,6 @@
   int SessionProxy::close()
   {
 
-    int res = 0;
     char* errorInfo = NULL;
     std::string msg = "call of function diet_string_set is rejected ";
 
