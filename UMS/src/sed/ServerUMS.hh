@@ -11,7 +11,7 @@
 #include <string>
 #include "internalApi.hh"
 //#include "DIET_server.h"
-#define NB_SRV 11
+#define NB_SRV 14
 
 
 //static Database* mdatabaseVishnu;
@@ -27,7 +27,10 @@ static const char* SRV[NB_SRV] = {
   "userPasswordReset",
   "machineCreate",
   "machineUpdate",
-  "machineDelete"};
+  "machineDelete",
+  "localAccountCreate",
+  "localAccountUpdate",
+  "localAccountDelete"};
 /**
  * \class ServerUMS
  * \brief This class describes the UMS server

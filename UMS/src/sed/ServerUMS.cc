@@ -40,7 +40,6 @@ void
 ServerUMS::init(std::string vishnuid) {
 
   DbFactory factory;
-  //TODO: mettre mot de passe pour access à la base de données sera passé en paramètre
   Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "vishnu_user", "vishnu_user", "vishnu");
   
   Vishnuid::mvishnuid = vishnuid;
@@ -187,13 +186,24 @@ ServerUMS::init(std::string vishnuid) {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveMachineUpdate);
   
+  /* solveMachineDelete */
+  
   mprofile = diet_profile_desc_alloc(SRV[10], 1, 1, 2);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveMachineDelete);
-
+  
+  /* solveLocalAccountCreate */
+  
+  mprofile = diet_profile_desc_alloc(SRV[11], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveLocalAccountCreate);
+  
 
   diet_profile_desc_free(mprofile);
 }

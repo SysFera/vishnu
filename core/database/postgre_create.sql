@@ -128,6 +128,7 @@ CREATE TABLE account (
   aclogin VARCHAR(255)    ,
   sshpathkey VARCHAR(255)    ,
   home VARCHAR(255)      ,
+  vishnukey VARCHAR(255)      ,
 PRIMARY KEY(numaccountid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid),
