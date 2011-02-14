@@ -1,5 +1,5 @@
-#ifndef LOCAL_ACCOUNT_PROXY_H
-#define LOCAL_ACCOUNT_PROXY_H
+#ifndef _LOCAL_ACCOUNT_PROXY_H_
+#define _LOCAL_ACCOUNT_PROXY_H_
 
 #include <string>
 #include <vector>

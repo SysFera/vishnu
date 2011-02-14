@@ -1,5 +1,5 @@
-#ifndef OPTION_VALUE_PROXY_H
-#define OPTION_VALUE_PROXY_H
+#ifndef _OPTION_VALUE_PROXY_H_
+#define _OPTION_VALUE_PROXY_H_
 
 #include <string>
 #include <vector>
