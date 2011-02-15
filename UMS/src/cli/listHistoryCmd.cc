@@ -204,12 +204,14 @@ int main (int ac, char* av[]){
 
 
 							// Display the list
-     printf("CommandId       SessionId       MachineId       CmdDescription       CmdStartTime    CmdEndTime     \n");
-     printf("--------------- --------------- --------------- -------------------- --------------- ---------------\n");
-     for(int i = 0; i < listCmd.getCommands().size(); i++) {
-        printCommand(listCmd.getCommands().get(i));
+     if(isEmpty) {
+         cout << listCmd << endl;
      }
-	
+     else {
+         for(int i = 0; i < listCmd.getCommands().size(); i++) {
+           cout << listCmd.getCommands().get(i) << endl;
+        }
+     }
 
 	}// End of try bloc
 
