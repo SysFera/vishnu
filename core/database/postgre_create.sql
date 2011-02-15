@@ -131,7 +131,7 @@ CREATE TABLE account (
   vishnukey VARCHAR(255)      ,
 PRIMARY KEY(numaccountid),
   FOREIGN KEY(users_numuserid)
-    REFERENCES users(numuserid),
+    REFERENCES users(numuserid) ON DELETE CASCADE,
   FOREIGN KEY(machine_nummachineid)
     REFERENCES machine(nummachineid) ON DELETE CASCADE);
 
