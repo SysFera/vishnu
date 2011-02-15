@@ -88,7 +88,7 @@ UserServer::add(UMS_Data::User*& user) {
     }
   }
   catch (SystemException& e) {
-	throw e;
+    throw;
  }  
   return 0;
 }//END: add(UMS_Data::User*& user)
@@ -171,7 +171,7 @@ UserServer::update(UMS_Data::User *user) {
     }
   }
   catch (SystemException& e) {
-    throw e;
+    throw;
   }  
   return 0;
 } //END: update(UMS_Data::User *user)
@@ -187,7 +187,9 @@ UserServer::deleteUser(UMS_Data::User user) {
   
   try {
     //If the user to delete is not the super VISHNU admin
-    if (user.getUserId().compare("vishnu_db_admin")!=0) {
+    if ((user.getUserId().compare("vishnu_db_admin") != 0) && 
+    (user.getUserId().compare("vishnu_user") != 0))
+    {
       //If the user exists
       if (exist()) {  
 	if (isAdmin()) {
@@ -217,7 +219,7 @@ UserServer::deleteUser(UMS_Data::User user) {
     }
   }
   catch (SystemException& e) {
-    throw e;
+    throw;
   }    
   return 0;
 }//END: deleteUser(UMS_Data::User user)
@@ -256,7 +258,7 @@ UserServer::changePassword(std::string newPassword) {
     }
   }
   catch (SystemException& e) {
-    throw e;
+    throw;
   }    
   return 0;
 }//END: changePassword(std::string newPassword)
@@ -308,7 +310,7 @@ UserServer::resetPassword(UMS_Data::User user) {
     }
   }
   catch (SystemException& e) {
-    throw e;
+    throw;
   }  
   return 0;
 }//END: resetPassword(UMS_Data::User user)
@@ -356,7 +358,7 @@ UserServer::init(){
       } 
     }
     catch (SystemException& e) {
-      throw e;
+      throw;
     }
   }//END If the userId and password have not been defined
 } //END: void init()
@@ -399,7 +401,7 @@ bool UserServer::exist(bool flagForChangePwd) {
     }
   }// END try 
   catch (SystemException& e) {
-	  throw e;
+	  throw;
   } 	
   return existUser;
 } //END: exist(bool flagForChangePwd)
@@ -416,7 +418,7 @@ UserServer::isAdmin() {
     pwd='"+muser.getPassword()+"'", " privilege")) != 0);
   } 
   catch (SystemException& e) {
-  throw e;
+  throw;
   }	
 }
 
@@ -434,7 +436,7 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
     pwd='"+muser.getPassword()+"'", attributName)) == valueOk);
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   } 	
 }
 
@@ -457,7 +459,7 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
 
   //TODO: A factoriser à mettre adans utils (return util::filter (databaseResult))
@@ -499,7 +501,7 @@ UserServer::existuserId(std::string userId) {
     }
   }// END try 
   catch (SystemException& e) {
-    throw e;
+    throw;
   } 	
   return existUser;
 }

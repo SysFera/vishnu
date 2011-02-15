@@ -32,10 +32,10 @@ public:
   LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU localAccount
-  * \fn int add() 
-  * \return raises an exception on error
+  * \fn std::string add() 
+  * \return the content of the public ssh key generated
   */
-  int 
+  std::string 
   add();
   int 
   update();

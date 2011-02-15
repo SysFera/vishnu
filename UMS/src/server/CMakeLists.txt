@@ -1,6 +1,7 @@
 
 link_directories( 
- ${VISHNU_EXCEPTION_INCLUDE_DIR}                  
+ ${VISHNU_EXCEPTION_INCLUDE_DIR}
+ ${Boost_LIBRARY_DIRS}		    
 )
 
 include_directories(
@@ -11,6 +12,7 @@ include_directories(
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
 )
 
  
@@ -32,6 +34,7 @@ target_link_libraries(ums-server
   ${EMF4CPP_LIB} 
   ${EMF4CPP_CPP_LIB}
   ${LIBPQ_LIB}
+  ${Boost_LIBRARIES}
   emf4cpp-UMS_Data
   database-vishnu
   exception-vishnu

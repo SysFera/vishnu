@@ -84,7 +84,7 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
 
   if (result->getNbTuples() != 0) {
@@ -124,7 +124,7 @@ OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
     }
   } 
   catch (SystemException& e) {
-  throw e;
+  throw;
   }   
 }
  /*

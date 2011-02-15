@@ -9,6 +9,7 @@
 #include "UMSVishnuException.hh"
 
 std::string Vishnuid::mvishnuid = "";
+std::string Vishnuid::msshkeypath = "";
 /**
 * \brief Function to convert a string to int 
 * \fn    std::string convertToString(const T& val);
@@ -21,3 +22,19 @@ int utilServer::convertToInt(std::string val) {
   str >> intValue;
   return static_cast<int> (intValue);
 }
+
+
+/*
+     size_t length;
+     std::ifstream ifile(mfilePath.c_str()); 
+ 
+     if(!ifile.is_open()) return 1;
+ 
+     ifile.seekg(0, std::ios::end);
+     length = ifile.tellg();
+     ifile.seekg(0, std::ios::beg);
+
+     configurationInString = new char[length];
+     ifile.read(configurationInString, length);
+     ifile.close();
+*/     

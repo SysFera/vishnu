@@ -10,6 +10,7 @@
 
 #include <string>
 #include "internalApi.hh"
+#include "boost/filesystem.hpp"
 //#include "DIET_server.h"
 #define NB_SRV 14
 
@@ -50,7 +51,7 @@ public :
    * \param vishnuid The id of the vishnu configuration registered in the database
    */ 
    void
-   init(std::string vishnuid);
+   init(std::string vishnuid, std::string sshkeypath);
   /**
   * \brief Constructor, raises an exception on error
   * \fn ServerUMS(std::string cfg)
