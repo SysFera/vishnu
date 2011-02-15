@@ -22,7 +22,7 @@ add_library(cli-utils
 #declare all command lines provided
 
 set(ALLCLI connect reconnect close
-		    addVishnuUser updateUser deleteUser
+		    addUser updateUser deleteUser
 				changePassword resetPassword
 				 addLocalAccount updateLocalAccount deleteLocalAccount
 				 saveConfiguration restoreConfiguration

@@ -168,14 +168,15 @@ int main (int ac, char* av[]){
 		
 							int res = listMachine(sessionKey,lsMachine,listOptions);
 
-
-							// Display the list
-     printf("machineId       Name            Site            MachineDescription    Language      \n");
-     printf("--------------- --------------- --------------- -------------------- ---------------\n");
-     for(int i = 0; i < lsMachine.getMachines().size(); i++) {
-        printMachine(lsMachine.getMachines().get(i));
-     }
-	
+      							// Display the list
+     if(isEmpty) {
+         cout << lsMachine << endl;
+     } 
+     else {
+         for(int i = 0; i < lsMachine.getMachines().size(); i++) {
+            cout << lsMachine.getMachines().get(i) << endl;
+          }
+     }	
 
 	}// End of try bloc
 
