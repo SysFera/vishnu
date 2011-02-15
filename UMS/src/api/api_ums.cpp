@@ -13,6 +13,10 @@ int vishnuInitialize(char* cfg, int argc, char** argv) {
 
 int connect(const string& userId, const string& password, string& sessionKey, const UMS_Data::ConnectOptions& connectOpt) {
 
+  if((connectOpt.getClosePolicy() < 0) || (connectOpt.getClosePolicy() > 2)) {
+     throw std::runtime_error("Invalid ClosePolicy value: its value must be 0, 1 or 2");
+  }
+
   UserProxy userProxy(userId, password);
   SessionProxy sessionProxy;
   int res = sessionProxy.connect(userProxy, connectOpt);
@@ -57,6 +61,10 @@ int close(const string&  sessionKey) {
 }
 
 int addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) {
+
+  if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
+     throw std::runtime_error("Invalid Privilege value: its value must be 0 or 1");
+  }
  
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
@@ -65,6 +73,10 @@ int addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) {
 }
 
 int updateUser(const string& sessionKey, const UMS_Data::User& user) {
+ 
+   if((user.getPrivilege() < 0) || (user.getPrivilege() > 1)) {
+     throw std::runtime_error("Invalid Privilege value: its value must be 0 or 1");
+   }
 
    SessionProxy sessionProxy(sessionKey);
    UserProxy userProxy(sessionProxy);
@@ -103,6 +115,10 @@ int resetPassword(const std::string& sessionKey, const std::string& userId) {
 
 int addMachine(const std::string& sessionKey, const UMS_Data::Machine& newMachine) {
 
+  if((newMachine.getStatus() < 0) || (newMachine.getStatus() > 1)) {
+    throw std::runtime_error("Invalid Status value: its value must be 0 or 1");
+  }
+
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(newMachine, sessionProxy);
 
@@ -110,6 +126,10 @@ int addMachine(const std::string& sessionKey, const UMS_Data::Machine& newMachin
 }
 
 int updateMachine(const std::string& sessionKey, const UMS_Data::Machine& machine) {
+
+  if((machine.getStatus() < 0) || (machine.getStatus() > 1)) {
+    throw std::runtime_error("Invalid Status value: its value must be 0 or 1");
+  }
 
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(machine, sessionProxy);
@@ -129,7 +149,6 @@ int deleteMachine(const std::string& sessionKey, const std::string& machineId) {
 
 int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount) {
 
-  
   SessionProxy sessionProxy(sessionKey);
   LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
  
@@ -216,6 +235,15 @@ int configureDefaultOption(const std::string& sessionKey, const UMS_Data::Option
 int listSessions(const std::string& sessionKey, 
                  UMS_Data::ListSessions& listSession,
                  const UMS_Data::ListSessionOptions& options) {
+
+
+  if((options.getSessionClosePolicy() < 0) || (options.getSessionClosePolicy() > 2)) {
+       throw std::runtime_error("Invalid ClosePolicy value: its value must be 0, 1 or 2");
+  }
+
+  if((options.getStatus() < 0) || (options.getStatus() > 1)) {
+       throw std::runtime_error("Invalid Privilege value: its value must be 0 or 1");
+  }
    
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListSessionOptions, UMS_Data::ListSessions> query(options, sessionProxy, "sessionList");
