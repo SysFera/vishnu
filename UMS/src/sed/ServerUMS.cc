@@ -37,12 +37,13 @@ ServerUMS::ServerUMS(std::string cfg) {
 * \param vishnuid The id of the vishnu configuration registered in the database
 */
 void
-ServerUMS::init(std::string vishnuid) {
+ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
 
   DbFactory factory;
   Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "vishnu_user", "vishnu_user", "vishnu");
   
   Vishnuid::mvishnuid = vishnuid;
+  Vishnuid::msshkeypath = sshkeypath;
   
   DatabaseResult* result;
   
@@ -50,7 +51,19 @@ ServerUMS::init(std::string vishnuid) {
   std::cout <<"SQL COMMAND:"<<sqlCommand;
   
   try {
-      
+   
+  //To check if the absolute ssh directory path exists
+  //std::ifstream ifile (Vishnuid::msshkeypath.c_str());
+  
+  //if the path doesn't exists 
+  if (!boost::filesystem::exists(Vishnuid::msshkeypath)) {
+    //boost::filesystem::is_directory<>()
+    //boost::filesystem::is_directory();
+    //TODO: faire un test que c'est un répertoire
+   SystemException e(4, "The ssh path is unrecognized"); 
+   throw e;
+  }
+    
   /*connection to the database*/
   mdatabaseVishnu->connect();
   
@@ -66,13 +79,11 @@ ServerUMS::init(std::string vishnuid) {
   UserServer admin = UserServer("vishnu_db_admin", "vishnu_db_admin");
   
     if (!admin.exist()) {
-    
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
      values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','vishnu_db_admin', 1, 1, 1)");
    
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
      values ("+Vishnuid::mvishnuid+", 'vishnu_user','vishnu_user', 1, 1, 1)");
-    
     }
     else {
     std::cout << "The default users are already defined in the database"<< std::endl;	

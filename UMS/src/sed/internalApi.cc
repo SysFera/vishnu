@@ -466,6 +466,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   char* sessionKey = NULL;
   char* laccountSerialized = NULL;
   std::string empty("");
+  std::string publicKey;
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
@@ -482,7 +483,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
   
   try {
-    localAccountServer.add();
+    publicKey = localAccountServer.add();
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {

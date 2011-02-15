@@ -82,7 +82,7 @@ MachineServer::add() {
     }
   }
   catch (SystemException& e) {
-	throw e;
+    throw;
  } 
   return 0;
 } //END: add()
@@ -159,7 +159,7 @@ MachineServer::update() {
     }
   }
   catch (SystemException& e) {
-	  throw e;
+    throw;
   }
   return 0;
 } //END: update()
@@ -199,7 +199,7 @@ MachineServer::deleteMachine() {
     }
   }
   catch (SystemException& e) {
-	  throw e;
+    throw;
   }
   return 0;
 } //END: deleteMachine()

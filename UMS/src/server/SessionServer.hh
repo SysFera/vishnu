@@ -29,11 +29,15 @@
 #include "MachineClientServer.hh"
 #include "OptionValueServer.hh"
 #include "utilServer.hh"
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/date_time/gregorian/gregorian.hpp"
 
 class UserServer;
 
 using namespace utilServer;
 using namespace UMS_Data;
+using namespace boost::posix_time;
+using namespace boost::gregorian;
 
 /**
 * \class SessionServer
