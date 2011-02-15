@@ -215,7 +215,7 @@ public:
 			  * \brief Default destructor
 			  */
 
-			  ~Options();
+			 virtual ~Options();
 	};
 
 /*
