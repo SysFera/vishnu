@@ -1,8 +1,8 @@
-#ifndef ADDVISHNUUSER_HH
-#define ADDVISHNUUSER_HH
+#ifndef ADDUSER_HH
+#define ADDUSER_HH
 
 /**
- * \file addVishnuUser.hh
+ * \file addUser.hh
  * This file defines convenients functions for the VISHNU add user  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
