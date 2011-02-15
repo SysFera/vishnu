@@ -33,7 +33,7 @@ int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)
    std::string userToString;
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";  
- 
+
    if(isNewUser) profile = diet_profile_alloc("userCreate", 1, 1, 2);
    else profile = diet_profile_alloc("userUpdate", 1, 1, 2);
    sessionKey = msessionProxy->getSessionKey();
