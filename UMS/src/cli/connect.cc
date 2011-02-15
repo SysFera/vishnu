@@ -122,6 +122,7 @@ int main (int ac, char* av[]){
 			
 			cout <<"The close policy is " << closePolicy << endl;
 
+			connectOpt.setClosePolicy(closePolicy);
 		}
 
 		if (opt.count("dietConfig")==0){
