@@ -139,43 +139,6 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
  
 }
 
-void printSession(UMS_Data::Session_ptr session) {
-
-  ostringstream os_dc;
-  ostringstream os_dcl;
-  ostringstream os_s;
-  ostringstream os_c;
-  ostringstream os_t;
-
-  char* date_dlc;
-  char* date_dc = (char*) malloc(DATE_SIZE*sizeof(char));
-  char* date_dcl = (char*) malloc(DATE_SIZE*sizeof(char));
-  boost::posix_time::ptime pt;
-  struct tm *date_tm;
-
-
-  std::string sessionId = session->getSessionId();
-  std::string userId = session->getUserId();
-  std::string sessionKey = session->getSessionKey();
-  long dateLastConnect = session->getDateLastConnect();
-  
-  //date_tm = localtime(&dateLastConnect); strftime(date_dlc, DATE_SIZE, "%m/%d %H:%M", date_tm);
-  pt =  boost::posix_time::from_time_t(dateLastConnect); date_dlc = strdup((boost::posix_time::to_simple_string(pt).c_str()));
-  long dateCreation = session->getDateCreation();
-  date_tm = localtime(&dateCreation); strftime(date_dc, DATE_SIZE, "%m/%d %H:%M", date_tm);
-  long dateClosure = session->getDateClosure();
-  date_tm = localtime(&dateClosure); strftime(date_dcl, DATE_SIZE, "%m/%d %H:%M", date_tm);
-  int state = session->getStatus(); os_s << state;
-  int closePolicy = session->getClosePolicy(); os_c << closePolicy ;
-  long timeOut = session->getTimeout(); os_t << timeOut;
-
-
-  printf("%-12s %-12s %-15s %-25s %-15s %-15s %-2s %-11s %-7s\n",
-  sessionId.c_str(), userId.c_str(), sessionKey.c_str(), date_dlc, date_dc, date_dcl,
-    (os_s.str()).c_str(), (os_c.str()).c_str(), (os_t.str()).c_str());
-
-}
-
 ostream& operator<<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
 
   std::string userId = account->getUserId();

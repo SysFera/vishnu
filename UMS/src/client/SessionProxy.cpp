@@ -27,7 +27,6 @@
   int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options)
   {
 
-    int res = 1; 
     diet_profile_t* profile = NULL; 
     char hostname[HOST_NAME_MAX_SIZE];
     std::string sshKey;
@@ -39,7 +38,11 @@
 
     sshKey = std::string(getenv("HOME"))+"/.ssh/id_rsa";
     gethostname(hostname, HOST_NAME_MAX_SIZE);  
-  
+
+    if((options.getClosePolicy() < 0) || (options.getClosePolicy() > 2)) {
+       throw std::runtime_error("Invalid ClosePolicy value");
+    }
+ 
     if(connect) {
       // SERIALIZE DATA MODEL
       const char* name = "sessionConnect";
