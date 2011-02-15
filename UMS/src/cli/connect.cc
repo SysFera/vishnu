@@ -41,7 +41,7 @@ int main (int ac, char* av[]){
 
 			/******** Callback functions ******************/
 
-//			boost::function1<void,UMS_Data::SessionCloseType> fClosePolicy( boost::bind(&UMS_Data::ConnectOptions::setClosePolicy,boost::ref(connectOpt),_1));  		
+			boost::function1<void,UMS_Data::SessionCloseType> fClosePolicy( boost::bind(&UMS_Data::ConnectOptions::setClosePolicy,boost::ref(connectOpt),_1));  		
 			boost::function1<void,int> fSessionInactivityDelay( boost::bind(&UMS_Data::ConnectOptions::setSessionInactivityDelay,boost::ref(connectOpt),_1));  		
 			boost::function1<void,string> fSubstituteUserId( boost::bind(&UMS_Data::ConnectOptions::setSubstituteUserId,boost::ref(connectOpt),_1));  		
 
@@ -80,7 +80,7 @@ int main (int ac, char* av[]){
 		opt.add("closePolicy,p",
 					 "for closing session automatically",
 					 CONFIG,
-			       closePolicy );  		
+			       fClosePolicy );  		
 					
 
 		opt.add("sessionInactivityDelay,d",
@@ -120,9 +120,7 @@ int main (int ac, char* av[]){
 	 
 		if (opt.count("closePolicy")){
 			
-			cout <<"The close policy is " << closePolicy << endl;
-
-			connectOpt.setClosePolicy(closePolicy);
+			cout <<"The close policy is " << connectOpt.getClosePolicy() << endl;
 		}
 
 		if (opt.count("dietConfig")==0){
