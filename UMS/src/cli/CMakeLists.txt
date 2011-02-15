@@ -30,22 +30,27 @@ set(ALLCLI connect reconnect close
 				 configureDefaultOption configureOption
 				 listLocalAccount listMachine listHistoryCmd listOptions listUsers listSessions)
 
+#set the prefix of command
+set (CMDPREFIX vishnu_)
 
 # macro to generate all command lines
 
 macro(genCli NAME )
+
 	set(source_files ${NAME}
 			)
 
+set(CMDNAME ${CMDPREFIX}${NAME})
+
 	#Configuration de l'executable
 	add_executable(
-	${NAME}
+	${CMDNAME}
 	${source_files}
 	)
 
 	#Configuration de l'edition de liens
 	target_link_libraries(
-	${NAME}
+	${CMDNAME}
 	${Boost_LIBRARIES}
         ${VISHNU_EXCEPTION_LIB}
         cli-utils
@@ -53,7 +58,7 @@ macro(genCli NAME )
         )
 
         install_targets(/bin/
-         ${NAME}
+         ${CMDNAME}
         )
 
 endmacro(genCli)

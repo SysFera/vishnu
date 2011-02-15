@@ -36,8 +36,6 @@ int main (int ac, char* av[]){
 
   		UMS_Data::ConnectOptions connectOpt;
   		
-			UMS_Data::SessionCloseType closePolicy;
-
 
 			/******** Callback functions ******************/
 

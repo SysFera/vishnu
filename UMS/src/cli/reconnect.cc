@@ -132,7 +132,7 @@ int main (int ac, char* av[]){
 
 					 password=getpass("Password: ");
 
-				cout << "The user passwor is " << password << endl;	
+				cout << "The user password is " << password << endl;	
 		 }
 
 
