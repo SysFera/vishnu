@@ -192,7 +192,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
- /*              // initializing DIET
+               // initializing DIET
 							 
 							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -200,10 +200,12 @@ int main (int ac, char* av[]){
               }
 
     
-		
+//std::cout << "Session key :" << 
+sessionKey = "6MkdmV5esz524OKVhzjxutdGRQnbBVlNvfxG4uMsbC2m8VSl9aiiH0U4GDUtWwNB57dxPf1gpOW/kyl4Fnb/1"
+;
 							int res = updateUser(sessionKey,newUser);
 
-*/
+
 		
 
 	}// End of try bloc

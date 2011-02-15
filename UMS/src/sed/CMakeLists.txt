@@ -1,6 +1,7 @@
 
 link_directories( 
- ${VISHNU_EXCEPTION_INCLUDE_DIR}                  
+ ${VISHNU_EXCEPTION_INCLUDE_DIR}
+ ${Boost_LIBRARY_DIRS}	                  
 )
 
 include_directories(
@@ -12,6 +13,7 @@ include_directories(
   ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${SERVER_SOURCE_DIR}
+  ${Boost_INCLUDE_DIRS}
 )
 
 add_executable(umssed 
@@ -23,6 +25,7 @@ add_executable(umssed
 target_link_libraries(umssed 
   ${DIET_SERVER_LIBRARIES}
   ${LIBPQ_LIB}
+  ${Boost_LIBRARIES}
   exception-vishnu
   database-vishnu
   ums-server

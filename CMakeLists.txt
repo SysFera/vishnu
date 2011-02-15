@@ -68,7 +68,7 @@ include(FindBoost)
 find_package(
         Boost
         1.40.0
-        REQUIRED program_options date_time
+        REQUIRED program_options date_time filesystem
 )
 
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)

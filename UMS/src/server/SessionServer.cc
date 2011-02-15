@@ -110,7 +110,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   
   } //END try 
   catch (SystemException& e) {
-	throw e;
+    throw;
   }
   return 0;
 }//END: connectSession(UserServer, MachineClientServer, ConnectOptions*)
@@ -169,7 +169,7 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
     }
   }//END Try 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
   return 0;
 }//END: reconnect(UserServer, MachineClientServer, string sessionId)
@@ -207,7 +207,7 @@ int SessionServer::close() {
     } //END If The user exist
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
   return 0;
 }//END: close()
@@ -247,7 +247,7 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
   //TODO: Dans databaseResult rajouter ce bout de code dans une fonction getFirstElement
   if (result->getNbTuples() != 0) {
@@ -268,35 +268,20 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
 */
 int 
 SessionServer::generateSessionKey(std::string salt) {
-  //TODO: enlever timeval et remove malloc	
-  struct timeval  tv;
-  struct timezone tz;
-  struct tm *tm;
-  float timeMilliseconde;
-  char *clef = (char *) malloc(100 * sizeof(char));
-  char *tmp = (char *) malloc(200 * sizeof(char)); 
   
-  srand(time(NULL));
-  gettimeofday(&tv, &tz);
-  tm = localtime(&tv.tv_sec);
-	
-  timeMilliseconde = tm->tm_hour * 3600 * 1000 + 
-  tm->tm_min * 60 * 1000 + tm->tm_sec * 1000 + tv.tv_usec/1000;
-  
-  //current time
-  sprintf(clef,"%d-%d-%d-%d:%d:%d:%d (~%0.1f ms)", tm->tm_mday, tm->tm_mon+1, tm->tm_year+1900, tm->tm_hour, 
-	  tm->tm_min, tm->tm_sec, (int)tv.tv_usec, timeMilliseconde*rand());
-    
+  //the current time
+  ptime now = microsec_clock::local_time();
+
   //for the md5 encryption
   std::string tmpSalt = "$1$" + salt + "$";
   
-  //For SHA1-512 encryption
+  //for SHA1-512 encryption by using the userId as a salt
   std::string globalSalt = "$6$"+std::string(crypt(salt.c_str(), tmpSalt.c_str()))+"$";
   
   //SHA1-512 encryption of the salt encrypted using the md5 and the current time as the clef
-  std::cout << "SessionKey generated:" << std::string(crypt(clef,globalSalt.c_str())+5) <<std::endl;
-  
-  msession.setSessionKey(std::string(crypt(clef,globalSalt.c_str())+5));
+  std::cout << "SessionKey generated:"
+  << std::string(crypt(to_simple_string(now).c_str(),globalSalt.c_str())+globalSalt.length()) <<std::endl;
+  msession.setSessionKey(std::string(crypt(to_simple_string(now).c_str(),globalSalt.c_str())+5));
   
   return 0;
 }
@@ -308,21 +293,19 @@ SessionServer::generateSessionKey(std::string salt) {
 */ 
 int 
 SessionServer::generateSessionId(std::string userId) {
-  //TODO: enlever timeval et remove malloc
-  struct timeval  tv;
-  struct timezone tz;
-  struct tm *tm;
-  char *clef = (char *) malloc(100 * sizeof(char));
   
-  srand(time(NULL));
-  gettimeofday(&tv, &tz);
-  tm = localtime(&tv.tv_sec);
-	
-  sprintf(clef,"-%d-%d-%d-%d:%d:%d:%d:%d", tm->tm_mday, tm->tm_mon+1, tm->tm_year+1900, tm->tm_hour, 
-	  tm->tm_min, tm->tm_sec, (int)tv.tv_usec, rand()%1000 + 1);
-   
-  userId.append(std::string(clef));
-  msession.setSessionId(userId);
+  std::string sessionId;
+  
+  //the current time
+  ptime now = microsec_clock::local_time();
+  std::string nowToString = to_simple_string(now.date());
+  nowToString.append("-"+to_simple_string(now.time_of_day()));
+  sessionId.append(userId+"-");
+  
+  
+  sessionId.append(nowToString+":"+convertToString(rand()%1000 + 1));
+  //sessionId.replace(" ", "");
+  msession.setSessionId(sessionId);
   
   return 0;
 } 
@@ -354,7 +337,7 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
     mdatabaseVishnu->process(sqlInsert.c_str());
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
 } 
 /**
@@ -366,22 +349,18 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
 bool 
 SessionServer::exist(bool flagSessionId) {
   
-  if (flagSessionId) {
-    try {  
-      return (getState(true) != -1);  
+  
+    try {
+      if (flagSessionId) {
+	return (getState(true) != -1);  
+      }
+      else {
+	return (getState() != -1);  
+      } 
     } 
     catch (SystemException& e) {
-      throw e;
+      throw;
     } 
-  }
-  else {
-    try {  
-      return (getState(true) != -1);  
-    } 
-    catch (SystemException& e) {
-	throw e;  
-    }
-  }
 } 
 
 
@@ -416,7 +395,7 @@ SessionServer::getState(bool flagSessionId) {
     
   }
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
  
    
@@ -454,7 +433,7 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
     }
   }
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
 }
  
