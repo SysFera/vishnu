@@ -21,8 +21,6 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession);
 std::ostream& operator<<(std::ostream& os, const UMS_Data::LocalAccount_ptr& account);
 std::ostream& operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
 
-void printSession(UMS_Data::Session_ptr session);
-
 void printMachine(UMS_Data::Machine_ptr machine);
  //std::ostream& operator<<(std::ostream& os,UMS_Data::Machine_ptr machine);
 
