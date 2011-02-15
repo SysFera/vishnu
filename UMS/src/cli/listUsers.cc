@@ -139,13 +139,14 @@ int main (int ac, char* av[]){
 
 
 							// Display the list
-     printf("FirstName       LastName        Privilege Email                          UserId         \n");
-     printf("--------------- --------------- --------- ------------------------------ ---------------\n");
-     //Imprimer la liste formatee
-      for(int i = 0; i < lsUsers.getUsers().size(); i++) {
-        printUser(lsUsers.getUsers().get(i));
+      if(isEmpty) {
+         cout << lsUsers << endl;
       }
-	
+      else {
+         for(int i = 0; i < lsUsers.getUsers().size(); i++) {
+           cout << lsUsers.getUsers().get(i) << endl;
+         }
+      }
 
 	}// End of try bloc
 
