@@ -6,6 +6,7 @@
  #include <string.h>
  #include <unistd.h>
  #include <stdlib.h>
+ #include <fstream>
 
  #include "SessionProxy.h"
  #include "UserProxy.h"
@@ -30,14 +31,44 @@
     diet_profile_t* profile = NULL; 
     char hostname[HOST_NAME_MAX_SIZE];
     std::string sshKey;
+    std::string sshKey2;
     std::string optionsToString;
     std::string sessionId ;
     char* sessionkey;
     char* errorInfo;
+    size_t length;
+    char* key;
     std::string msg = "call of function diet_string_set is rejected ";
 
     sshKey = std::string(getenv("HOME"))+"/.ssh/id_rsa";
     gethostname(hostname, HOST_NAME_MAX_SIZE);  
+
+    std::ifstream ifile(sshKey.c_str());
+    if(!ifile.is_open()) {
+        sshKey2 = std::string(getenv("HOME"))+"/.ssh/id_dsa"; 
+        std::ifstream ifile2(sshKey2.c_str());
+        if(ifile2.is_open()) {
+           ifile2.seekg(0, std::ios::end);
+           length = ifile2.tellg();
+           ifile2.seekg(0, std::ios::beg);
+
+           key = new char[length];
+           ifile2.read(key, length);
+           ifile2.close();
+        } 
+        else {
+          throw std::runtime_error("can't open file "+sshKey+" or "+sshKey2);
+        }
+    } 
+    else {
+       ifile.seekg(0, std::ios::end);
+         length = ifile.tellg();
+       ifile.seekg(0, std::ios::beg);
+ 
+       key = new char[length];
+       ifile.read(key, length);
+       ifile.close();
+    }
 
     if(connect) {
       // SERIALIZE DATA MODEL
@@ -63,7 +94,7 @@
        ERRMSG(msg.c_str());
        sendErrorMsg(msg);
     }
-    if(diet_string_set(diet_parameter(profile,2), strdup(sshKey.c_str()), DIET_VOLATILE)) {
+    if(diet_string_set(diet_parameter(profile,2), key, DIET_VOLATILE)) {
        msg += "with sshKey parameter "+sshKey;
        ERRMSG(msg.c_str());
        sendErrorMsg(msg);
@@ -112,6 +143,7 @@
      /*To check the receiving message error*/
      checkErrorMsg(errorInfo);
 
+      delete key;
     return 0;
   }
 
