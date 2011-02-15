@@ -93,7 +93,9 @@ int ConfigurationProxy::restore(bool fromFile)
      size_t length;
      std::ifstream ifile(mfilePath.c_str()); 
  
-     if(!ifile.is_open()) return 1;
+     if(!ifile.is_open()) {
+       throw std::runtime_error("can't open file "+mfilePath);
+     }
  
      ifile.seekg(0, std::ios::end);
      length = ifile.tellg();
@@ -140,7 +142,7 @@ int ConfigurationProxy::restore(bool fromFile)
    /*To check the receiving message error*/
    checkErrorMsg(errorInfo);
   
-   if(fromFile) free(configurationInString);
+   if(fromFile) delete configurationInString;
 
   return 0;
 }
