@@ -174,11 +174,13 @@ int main (int ac, char* av[]){
 
 
 							// Display the list
-     printf("Name            Value          \n");
-     printf("--------------- ---------------\n");
-     //Imprimer la liste formatee
-     for(int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
-        printOptionValue(lsOptionsValues.getOptionValues().get(i));
+     if(isEmpty) {
+        cout << lsOptionsValues << endl;
+     }
+     else {
+         for(int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
+           cout << lsOptionsValues.getOptionValues().get(i) << endl;
+         }
      }
 
 	
