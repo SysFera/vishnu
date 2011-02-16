@@ -6,7 +6,7 @@
 
 #include "UMSVishnuException.hh"
 #include "utilsClient.hpp"
-#include "OptionValueProxy.h"
+#include "OptionValueProxy.hpp"
 
 
 OptionValueProxy::OptionValueProxy(const UMS_Data::OptionValue& optionValue, const SessionProxy& session):

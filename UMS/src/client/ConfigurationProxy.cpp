@@ -8,7 +8,7 @@
 #include "UMSVishnuException.hh"
 #include "utilsClient.hpp"
 
-#include "ConfigurationProxy.h"
+#include "ConfigurationProxy.hpp"
 
 
 ConfigurationProxy::ConfigurationProxy(const std::string& filePath, const SessionProxy& session):

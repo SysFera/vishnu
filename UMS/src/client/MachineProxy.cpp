@@ -5,7 +5,7 @@
 #include <assert.h>
 
 #include "UMSVishnuException.hh"
-#include "MachineProxy.h"
+#include "MachineProxy.hpp"
 #include "utilsClient.hpp"
 
 
