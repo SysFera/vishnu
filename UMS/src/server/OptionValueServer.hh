@@ -38,7 +38,7 @@ public:
   * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
   * \param optionvalue the option data structure 
   */
-  OptionValueServer(UMS_Data::OptionValue optionvalue);
+  OptionValueServer(UMS_Data::OptionValue*& optionvalue);
   /**
   * \brief Function to configure options on the database
   * \fn    int configureOption()
@@ -63,7 +63,7 @@ public:
   * \fn UMS_Data::OptionValue getData()
   * \return  The user data structure
   */
-  UMS_Data::OptionValue 
+  UMS_Data::OptionValue* 
   getData();
   /**
   * \brief Function to get option information from the database vishnu
@@ -88,7 +88,7 @@ private:
   /**
   * \brief The option data structure
   */
-  UMS_Data::OptionValue moptionValue;
+  UMS_Data::OptionValue *moptionValue;
   /**
   * \brief An instance of vishnu database
   */

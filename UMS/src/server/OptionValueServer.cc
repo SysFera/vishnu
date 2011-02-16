@@ -13,13 +13,14 @@
 OptionValueServer::OptionValueServer() {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
+  moptionValue = NULL;
 }
 /**
 * \brief Constructor
 * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
 * \param optionvalue the option data structure 
 */
-OptionValueServer::OptionValueServer(UMS_Data::OptionValue optionvalue):moptionValue(optionvalue) {
+OptionValueServer::OptionValueServer(UMS_Data::OptionValue*& optionvalue):moptionValue(optionvalue) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -46,13 +47,16 @@ OptionValueServer::configureDefaultOption() {
 * \fn  ~OptionValueServer()
 */
 OptionValueServer::~OptionValueServer() {
+  if (moptionValue != NULL) {
+    delete moptionValue;
+  }
 }
 /**
 * \brief Function to get option data structure
 * \fn UMS_Data::OptionValue getData()
 * \return  The user data structure
 */ 
-UMS_Data::OptionValue 
+UMS_Data::OptionValue* 
 OptionValueServer::getData() {
   return moptionValue;
 }

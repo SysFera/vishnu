@@ -46,7 +46,7 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   Vishnuid::mvishnuid = vishnuid;
   Vishnuid::msshkeypath = sshkeypath;
   
-  DatabaseResult* result;
+  DatabaseResult *result;
   
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+Vishnuid::mvishnuid);
   std::cout <<"SQL COMMAND:"<<sqlCommand;
@@ -57,7 +57,7 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   //std::ifstream ifile (Vishnuid::msshkeypath.c_str());
   
   //if the path doesn't exists 
-  if (!boost::filesystem::exists(Vishnuid::msshkeypath)) {
+  if (!boost::filesystem2::exists(Vishnuid::msshkeypath)) {
     //boost::filesystem::is_directory<>()
     //boost::filesystem::is_directory();
     //TODO: faire un test que c'est un répertoire
@@ -228,7 +228,7 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   
   /* solveLocalAccountDelete */
   
-  mprofile = diet_profile_desc_alloc(SRV[12], 2, 2, 3);
+  mprofile = diet_profile_desc_alloc(SRV[13], 2, 2, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);

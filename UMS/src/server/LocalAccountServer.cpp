@@ -279,16 +279,20 @@ LocalAccountServer::deleteLocalAccount() {
 	  //if the local account exists
 	  if (exist(numMachine, numUser)) {  
 	    
+	    //To get the path od the couple private/public ssh key associated to this local account
+	    vishnukeypath = getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "vishnukey");
+	    
 	    //To remove the local account from the database
 	    mdatabaseVishnu->process("DELETE FROM account \
 	    where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
 	    
-	    //To remove the couple private/public ssh key associated to this local account
-	    vishnukeypath = getAttribut("\
-	    where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "vishnukey");
+	    
+	    std::cout << std::endl << "vishnukey:"+vishnukeypath << std::endl;
 	    
 	    cmdToremove.append(vishnukeypath+" && rm "+vishnukeypath+".pub");
 	    ret = system(cmdToremove.c_str());
+	    
+	    std::cout << std::endl << "Command to remove files:"+cmdToremove << std::endl;
 	    
 	    if (ret != 0) {
 	      UMSVishnuException e (4, "There was a problem to destroy the ssh keys associated to this local account");

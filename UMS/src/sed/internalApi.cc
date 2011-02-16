@@ -505,7 +505,36 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 */
 int
 solveLocalAccountUpdate(diet_profile_t* pb) {
+  char *sessionKey = NULL;
+  char *laccountSerialized = NULL;
+  std::string empty("");
+  std::string errorInfo = "toto";
   
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
+  std::cout<<"Local Account:"<< laccountSerialized <<std::endl;
+ 
+  /*
+  ecorecpp::parser::parser parser;
+  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  LocalAccount_ptr localAccount = parser.load(std::string(laccountSerialized))->as< LocalAccount >();
+  LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
+  
+  /*try {
+    localAccountServer.update();
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	errorInfo = convertToString(e.getMsgI())+"#";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }*/
+  diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
 }
 
 /**
