@@ -12,6 +12,7 @@
 LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session):
 mlocalAccount(localAccount), msessionProxy(session)
 {
+ msshPublicKey = "";
 }
 
 int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
@@ -19,10 +20,11 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
    diet_profile_t* profile = NULL;
    std::string sessionKey;
    std::string localAccountToString;
+   char* sshPublicKey;
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";
 
-   if(isNewLocalAccount) profile = diet_profile_alloc("localAccountCreate", 1, 1, 2);
+   if(isNewLocalAccount) profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
    else profile = diet_profile_alloc("localAccountUpdate", 1, 1, 2);
               
    sessionKey = msessionProxy.getSessionKey();
@@ -45,14 +47,30 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
    //OUT Parameters
    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+   if(isNewLocalAccount) diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
-       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-         msg += " by receiving errorInfo message";
-         ERRMSG(msg.c_str());
-         sendErrorMsg(msg);
-       }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       if(isNewLocalAccount) {
+         if(diet_string_get(diet_parameter(profile,2), &sshPublicKey, NULL)){
+           msg += " by receiving sshPluciKey content";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);
+         }
+         if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+           msg += " by receiving errorInfo message";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);
+         }
+      }
+      else {
+         if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+           msg += " by receiving errorInfo message";
+           ERRMSG(msg.c_str());
+           sendErrorMsg(msg);
+         }
+      }
+      msshPublicKey = sshPublicKey;
+      if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
    }
    else {
       sendErrorMsg(" the function diet_call is rejected");
@@ -126,9 +144,13 @@ int LocalAccountProxy::deleteLocalAccount()
   return 0;
 }
  
-SessionProxy LocalAccountProxy::getSessionProxy()
+SessionProxy LocalAccountProxy::getSessionProxy() const
 {
   return msessionProxy;
+}
+
+std::string LocalAccountProxy::getSshPublicKey() const {
+  return msshPublicKey;
 }
 
 LocalAccountProxy::~LocalAccountProxy()

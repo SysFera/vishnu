@@ -25,9 +25,6 @@ int connect(const string& userId, const string& password, string& sessionKey, co
 
   std::string envValue = "export VISHNU_SESSION_KEY="+sessionKey;
   std::cout << envValue << endl;
-  if(system(envValue.c_str())) {
-     std::cerr << "export error.." << std::endl;
-  }; 
  
  return res;
 }
@@ -45,9 +42,6 @@ int reconnect(const string& userId, const string& password, const string& sessio
 
   std::string envValue = "export VISHNU_SESSION_KEY="+sessionKey;
   std::cout << envValue << endl;
-  if(system(envValue.c_str())) {
-     std::cerr << "export error.." << std::endl;
-  };
 
  return res;
 }
@@ -147,12 +141,16 @@ int deleteMachine(const std::string& sessionKey, const std::string& machineId) {
  return machineProxy.deleteMachine();
 }
 
-int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount) {
+int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount, std::string& sshPublicKey) {
 
   SessionProxy sessionProxy(sessionKey);
   LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
+  int res = localAccountProxy.add();
+  sshPublicKey = localAccountProxy.getSshPublicKey(); 
  
- return localAccountProxy.add();
+  std::cout << "sshPublicKey = " << sshPublicKey << std::endl;
+  
+ return res;
 }
 
 int updateLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& localAccount) {
