@@ -1,9 +1,16 @@
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <algorithm>
+#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <iomanip>
 
 #include "utils.hh"
-
+#include "SessionProxy.hpp"
+#include "MachineProxy.hpp"
+#include "LocalAccountProxy.hpp"
+#include "ConfigurationProxy.hpp"
 using namespace std;
 //namespace boost::posix_time = bp;
 
@@ -11,7 +18,17 @@ using namespace std;
 
 
 
-std::string takePassword(const char* prompt){return std::string(getpass(prompt));}
+std::string takePassword(const string& prompt, const string & salt){
+
+string password=getpass(prompt.c_str());
+
+string saltTmp="$5$"+salt+"$";
+
+password=crypt(password.c_str(),saltTmp.c_str());
+
+	return password.substr(saltTmp.size());
+
+}
 
 
 void setFill(int size, ostream& os) {
@@ -28,7 +45,7 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::Session_ptr& session)
   boost::posix_time::ptime pt;
 
   std::string  sessionId = session->getSessionId();
-  
+
   std::string  sessionKey = session->getSessionKey();
 
 
@@ -49,7 +66,7 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::Session_ptr& session)
   int  status = session->getStatus();
   std::string statusStr = (status?"ACTIVE":"INACTIVE");
   int  closePolicy = session->getClosePolicy();
-  std::string closePolicyStr = (closePolicy==1?"CLOSE_ON_TIMEOUT":(closePolicy==2?"CLOSE_ON_DISCONNECT":"UNDEFINED")); 
+  std::string closePolicyStr = (closePolicy==1?"CLOSE_ON_TIMEOUT":(closePolicy==2?"CLOSE_ON_DISCONNECT":"UNDEFINED"));
   int  timeOut = session->getTimeout();
 
   os << "============ Session for " << userId << "===========" << std::endl;
@@ -77,13 +94,13 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
   size_t maxDateCreateSize = 20;
   size_t maxDateCloseSize = 20;
   size_t maxTimeOutSize = 7;
- 
+
   std::string sessionId;
   std::string userId;
   std::string dateLastConnectStr;
   std::string dateCreateStr;
   std::string dateCloseStr;
-  long timeOut; 
+  long timeOut;
   long dateLastConnect;
   long dateCreate;
   long dateClose;
@@ -97,26 +114,26 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
 
      userId = (listSession.getSessions().get(i))->getUserId();
      maxUserIdSize = max(maxUserIdSize, userId.size());
-     
-     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();   
-     pt =  boost::posix_time::from_time_t(dateLastConnect); 
-     dateLastConnectStr = boost::posix_time::to_simple_string(pt); 
+
+     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
+     pt =  boost::posix_time::from_time_t(dateLastConnect);
+     dateLastConnectStr = boost::posix_time::to_simple_string(pt);
      maxDateLastConnectSize = max(maxDateLastConnectSize, dateLastConnectStr.size());
-     
-     dateCreate = (listSession.getSessions().get(i))->getDateCreation();   
-     pt =  boost::posix_time::from_time_t(dateCreate); 
-     dateCreateStr = boost::posix_time::to_simple_string(pt); 
+
+     dateCreate = (listSession.getSessions().get(i))->getDateCreation();
+     pt =  boost::posix_time::from_time_t(dateCreate);
+     dateCreateStr = boost::posix_time::to_simple_string(pt);
      maxDateCreateSize = max(maxDateCreateSize, dateCreateStr.size());
-    
-          
-     dateClose = (listSession.getSessions().get(i))->getDateClosure();   
-     pt =  boost::posix_time::from_time_t(dateClose); 
-     dateCloseStr = boost::posix_time::to_simple_string(pt); 
+
+
+     dateClose = (listSession.getSessions().get(i))->getDateClosure();
+     pt =  boost::posix_time::from_time_t(dateClose);
+     dateCloseStr = boost::posix_time::to_simple_string(pt);
      maxDateCloseSize = max(maxDateCloseSize, dateCloseStr.size());
 
      timeOut = (listSession.getSessions().get(i))->getTimeout();
      ostringstream os_timeOut;
-     os_timeOut << timeOut; 
+     os_timeOut << timeOut;
      maxTimeOutSize = max(maxTimeOutSize, (os_timeOut.str()).size());
   }
 
@@ -136,12 +153,12 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
 
   for(int i = 0; i < listSession.getSessions().size(); i++) {
     sessionId = (listSession.getSessions().get(i))->getSessionId();
-  
+
     userId = (listSession.getSessions().get(i))->getUserId();
-  
+
     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
     pt =  boost::posix_time::from_time_t(dateLastConnect);
-    dateLastConnectStr = boost::posix_time::to_simple_string(pt); 
+    dateLastConnectStr = boost::posix_time::to_simple_string(pt);
 
     dateCreate = (listSession.getSessions().get(i))->getDateCreation();
     pt =  boost::posix_time::from_time_t(dateCreate);
@@ -152,10 +169,10 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
     dateCloseStr = boost::posix_time::to_simple_string(pt);
 
     status = (listSession.getSessions().get(i))->getStatus();
-  
+
     closePolicy = (listSession.getSessions().get(i))->getClosePolicy();
 
-    timeOut = (listSession.getSessions().get(i))->getTimeout(); 
+    timeOut = (listSession.getSessions().get(i))->getTimeout();
 
     cout << setw(maxSessionIdSize+2) << left << sessionId;
     cout << setw(maxUserIdSize+2) << left << userId;
@@ -171,7 +188,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
 
  return os;
 
- 
+
 }
 
 ostream& operator<<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
@@ -184,12 +201,12 @@ ostream& operator<<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
 
   os << "============ LocalAccount for " << acLogin << "===========" << std::endl;
   os << setw(25) << right << "UserId: " << userId << endl;
-  os << setw(25) << right << "MachineId: " << machineId << endl; 
+  os << setw(25) << right << "MachineId: " << machineId << endl;
   os << setw(25) << right << "AcLogin: "  << acLogin << endl;
   os << setw(25) << right << "SshKeyPath: "  << sshKeyPath << endl ;
   os << setw(25) << right << "HomeDirectory: " << homeDir;
-  os << endl; 
- 
+  os << endl;
+
  return os;
 }
 
@@ -197,21 +214,21 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
 
   size_t maxUserSize = 20;
   size_t maxMachineSize = 20;
-  size_t maxAcLoginSize = 20; 
-  std::string userId; 
+  size_t maxAcLoginSize = 20;
+  std::string userId;
   std::string machineId;
   std::string acLogin;
 
   for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
-     
+
      userId = (lsLocalAccount.getAccounts().get(i))->getUserId();
-     maxUserSize = max(maxUserSize, userId.size());                
+     maxUserSize = max(maxUserSize, userId.size());
 
      machineId = (lsLocalAccount.getAccounts().get(i))->getMachineId();
      maxMachineSize = max(maxMachineSize, machineId.size());
-                
+
      acLogin = (lsLocalAccount.getAccounts().get(i))->getAcLogin();
-     maxAcLoginSize = max(maxAcLoginSize, acLogin.size()); 
+     maxAcLoginSize = max(maxAcLoginSize, acLogin.size());
   }
 
   cout << setw(maxUserSize+2) << left << "userId" << setw(maxMachineSize+2) << left << "machineId" << setw(maxAcLoginSize+2) << left << "acLogin";
@@ -219,7 +236,7 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
   setFill(maxUserSize, os);
   setFill(maxMachineSize, os);
   setFill(maxAcLoginSize, os);
-  os << endl; 
+  os << endl;
 
 
   for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
@@ -227,7 +244,7 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
     machineId = (lsLocalAccount.getAccounts().get(i))->getMachineId();
     acLogin = (lsLocalAccount.getAccounts().get(i))->getAcLogin();
     os << setw(maxUserSize+2) << left <<  userId;
-    os << setw(maxMachineSize+2) << left << machineId;    
+    os << setw(maxMachineSize+2) << left << machineId;
     os << setw(maxAcLoginSize+2) << left << acLogin;
     os << endl;
   }
@@ -252,7 +269,7 @@ ostream& operator<<(ostream& os, const UMS_Data::Machine_ptr& machine) {
   os << setw(25) << right << "Description: "  << descr << endl ;
   os << setw(25) << right << "Language: " << language << endl;
   os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
-  
+
 
  return os;
 }
@@ -276,7 +293,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 
      machineId = (lsMachine.getMachines().get(i))->getMachineId();
      maxMachineIdSize = max(maxMachineIdSize, machineId.size());
-    
+
      site = (lsMachine.getMachines().get(i))->getSite();
      maxSiteSize = max(maxSiteSize, site.size());
 
@@ -293,12 +310,12 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 
 
   for(int i = 0; i < lsMachine.getMachines().size(); i++) {
-   
+
      name = (lsMachine.getMachines().get(i))->getName();
      machineId = (lsMachine.getMachines().get(i))->getMachineId();
      site = (lsMachine.getMachines().get(i))->getSite();
      status = (lsMachine.getMachines().get(i))->getStatus();
- 
+
      os << setw(maxNameSize+2) << left <<  name;
      os << setw(maxMachineIdSize+2) << left << machineId;
      os << setw(maxSiteSize+2) << left << site;
@@ -315,7 +332,7 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::Command_ptr& command)
    std::string sessionId = command->getSessionId();
    std::string machineId = command->getMachineId();
    std::string descr = command->getCmdDescription();
-   
+
    boost::posix_time::ptime pt;
 
    long startTime = command->getCmdStartTime();
@@ -350,7 +367,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
    size_t maxSessionIdSize = 20;
    size_t maxMachineIdSize = 20;
    size_t maxStartTimeSize = 20;
-   size_t maxEndTimeSize = 20; 
+   size_t maxEndTimeSize = 20;
    boost::posix_time::ptime pt;
 
 
@@ -359,7 +376,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      maxCommandIdSize = max(maxCommandIdSize, commandId.size());
 
-    
+
      sessionId = (lsCommand.getCommands().get(i))->getSessionId();
      maxSessionIdSize = max(maxSessionIdSize, sessionId.size());
 
@@ -369,15 +386,15 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
      pt =  boost::posix_time::from_time_t(startTime);
      startTimeStr = boost::posix_time::to_simple_string(pt);
-     maxStartTimeSize = (maxStartTimeSize, startTimeStr.size()); 
+     maxStartTimeSize = (maxStartTimeSize, startTimeStr.size());
 
      endTime = (lsCommand.getCommands().get(i))->getCmdEndTime();
      pt =  boost::posix_time::from_time_t(endTime);
      endTimeStr = boost::posix_time::to_simple_string(pt);
-     maxEndTimeSize = (maxEndTimeSize, endTimeStr.size()); 
-   
+     maxEndTimeSize = (maxEndTimeSize, endTimeStr.size());
+
   }
-  
+
   cout << setw(maxCommandIdSize+2) << left << "CommandId" << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxMachineIdSize+2) << left << "MachineId";
   cout << setw(maxStartTimeSize+2) << left << "Start Time" << setw(maxEndTimeSize+2) << left << "End Time";
   cout << endl;
@@ -386,10 +403,10 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
   setFill(maxMachineIdSize, os);
   setFill(maxStartTimeSize, os);
   setFill(maxEndTimeSize, os);
-  os << endl; 
+  os << endl;
 
   for(int i = 0; i < lsCommand.getCommands().size(); i++) {
-    
+
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      sessionId = (lsCommand.getCommands().get(i))->getSessionId();
      machineId = (lsCommand.getCommands().get(i))->getMachineId();
@@ -409,7 +426,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      os << setw(maxEndTimeSize+2) << left << endTimeStr;
      os << endl;
   }
- 
+
  return os;
 }
 
@@ -430,7 +447,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOption
   std::string name;
   std::string value;
   size_t maxNameSize = 20;
-  size_t maxValueSize = 20; 
+  size_t maxValueSize = 20;
 
   for(int i = 0; i < lsOptions.getOptionValues().size(); i++) {
 
@@ -451,7 +468,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOption
   for(int i = 0; i < lsOptions.getOptionValues().size(); i++) {
 
      name = (lsOptions.getOptionValues().get(i))->getOptionName();
-     value = (lsOptions.getOptionValues().get(i))->getValue();  
+     value = (lsOptions.getOptionValues().get(i))->getValue();
 
      os << setw(maxNameSize+2) << left <<  name;
      os << setw(maxValueSize+2) << left << value;
@@ -465,7 +482,7 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::User_ptr& user) {
 
   std::string firstName = user->getFirstname();
   std::string lastName = user->getLastname();
-  int privilege = user->getPrivilege(); 
+  int privilege = user->getPrivilege();
   std::string email = user->getEmail();
   std::string userId = user->getUserId();
 
@@ -524,7 +541,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      os << setw(maxUserIdSize+2) << left << userId;
      os << setw(11) << left << privilege ;
      os << endl;
-  
+
   }
 
 

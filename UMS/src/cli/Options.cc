@@ -40,13 +40,13 @@ Options::Options(Configuration* otherConf):conf(otherConf),
 									                                    config_options("Configuration"),
                                                       env_options("Environment variables"),
                                                       hidden_options("Hidden Options"){
-										  
+
 //	this->conf = conf;
 	generic_options.add_options()
 							   ("help,h", "produce help message")
 							   ;
- 
- 
+
+
 }
 
 
@@ -54,11 +54,11 @@ void Options::setGroup (const po::options_description& tmp_options,
 												const Group_type& group){
 
 
-	switch(group){                                                                    
-	    
-		case GENERIC:                                                                   
-			{ 
-				generic_options.add(tmp_options);                                           
+	switch(group){
+
+		case GENERIC:
+			{
+				generic_options.add(tmp_options);
 				break;
 			}
 		case CONFIG:
@@ -90,14 +90,14 @@ void Options::setGroup (const po::options_description& tmp_options,
 void
 Options::add(const std::string& name,
               const std::string& desc, const Group_type& group ){
-	
-	
+
+
 	po::options_description tmp_options;
 
 	tmp_options.add_options()(name.c_str(),desc.c_str());
 
 	setGroup(tmp_options,group);
-		
+
 }
 
 
@@ -159,12 +159,12 @@ void Options::notify (){
 // check if key exists in the map
 //
 int Options::count(const std::string& key)const{
-	
+
 	return (vm.count(key));
 }
 
 
-//  print visible options 
+//  print visible options
 
 
 std::ostream & operator<< (std::ostream & os, const Options & opt){
@@ -175,9 +175,9 @@ std::ostream & operator<< (std::ostream & os, const Options & opt){
 	visible.add(opt.generic_options)
 		   .add(opt.config_options)
 		   .add(opt.env_options);
-	
+
 	os << visible << endl;
-	
+
 	return os;
 }
 

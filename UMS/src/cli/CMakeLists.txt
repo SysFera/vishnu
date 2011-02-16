@@ -6,13 +6,13 @@ link_directories(${Boost_LIBRARY_DIRS}
                 )
 include_directories(${Boost_INCLUDE_DIRS}
                     ${DIET_INCLUDE_DIR}
-	            ${EMF_DATA_DIR}
+										${EMF_DATA_DIR}
                     ${UMS_DATA_DIR}
                     ${EMF4CPP_INCLUDE_DIR}
-                    ${API_SOURCE_DIR} 
-                    ${CLIENT_PROXY_SOURCE_DIR} 
+                    ${API_SOURCE_DIR}
+                    ${CLIENT_PROXY_SOURCE_DIR}
                     ${VISHNU_EXCEPTION_INCLUDE_DIR}
-                    ${CLI_SOURCE_DIR} 
+                    ${CLI_SOURCE_DIR}
               )
 
 add_library(cli-utils
@@ -55,6 +55,7 @@ set(CMDNAME ${CMDPREFIX}${NAME})
         ${VISHNU_EXCEPTION_LIB}
         cli-utils
         ums-api-client
+				crypt
         )
 
         install_targets(/bin/
