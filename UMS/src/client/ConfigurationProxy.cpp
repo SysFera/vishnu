@@ -86,7 +86,7 @@ int ConfigurationProxy::restore(bool fromFile)
    diet_profile_t* profile = NULL;
    std::string sessionKey;
    char* errorInfo;
-   char* configurationInString;
+   char* configurationInString = NULL;
    std::string msg = "call of function diet_string_set is rejected "; 
  
    if(fromFile) {
@@ -142,7 +142,7 @@ int ConfigurationProxy::restore(bool fromFile)
    /*To check the receiving message error*/
    checkErrorMsg(errorInfo);
   
-   if(fromFile) delete configurationInString;
+   if(fromFile && (configurationInString!=NULL)) delete [] configurationInString;
 
   return 0;
 }
