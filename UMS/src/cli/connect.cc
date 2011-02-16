@@ -109,18 +109,6 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-
-		if (opt.count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-		}
-
-		if (opt.count("closePolicy")){
-
-			cout <<"The close policy is " << connectOpt.getClosePolicy() << endl;
-		}
-
 		if (opt.count("dietConfig")==0){
 
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
@@ -129,23 +117,10 @@ int main (int ac, char* av[]){
 
 		}
 
-
-		if ( opt.count("help")) {
-
-			      cerr << "\nUsage: \n \n" << av[0] <<" [options] userId\n "<<endl;
-
-						cerr << opt << endl;
-
-						return 1;
-		}
-
-		else{
-
 			//Fix me
+
 			password= takePassword("Password: ",userId);// uses getpass which is obsolete.
 
-			cout << "The user password  is " << password<< endl;
-		}
 
 
 /************** Call UMS connect service *******************************/
@@ -164,10 +139,18 @@ int main (int ac, char* av[]){
 
 	catch(po::required_option& e){// a required parameter is missing
 
+		if ( opt.count("help")) { // unless help is needed
+
+			      usage(opt,"[options] userId ");
+
+		}
+		else{
+
 		cerr << e.what() <<endl;
 
 		cerr << "To get help, try <<"<< av[0] << " -h >>"<< endl;
 
+		}
 		return 1;
 	}
 	catch(std::exception& e){

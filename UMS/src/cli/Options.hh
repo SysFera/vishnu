@@ -99,6 +99,15 @@ public:
 			 */
 			explicit Options(Configuration* );
 
+
+			/**
+			 * \brief function allowing to get the configuration
+			 * \return the configuration
+			 */
+			  Configuration* getConfiguration()const;
+
+
+
 			/**
 			 * \brief function allowing to add a new non-typed option
 			 */
