@@ -1,6 +1,6 @@
 #include "saveConfiguration.hh"
 
-#include "utils.hh" 
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -8,15 +8,14 @@ using namespace std;
 
 int main (int ac, char* av[]){
 
-	try {
-                string filePath;
-                string sessionKey;
-                string dietConfig;
 
-		Configuration config(av[0]);// take the command line name
 
-		string defaultConfig = "VishnuConfig.cfg";
-		
+	string filePath;
+
+	string sessionKey;
+
+	string dietConfig;
+
 		int reqParam=0;   // to count the required parameters for the command
 
 
@@ -24,25 +23,13 @@ int main (int ac, char* av[]){
 
 
   		UMS_Data::Configuration configuration;
-    
 
-/***************  Default configuration file ***************** */
 
-		{
-    
-			ifstream f(defaultConfig.c_str());
-   
-			if (f.is_open()){
-				config.setConfigFile(defaultConfig);
-			}
-   
-			f.close();
-		}
 /**************** Describe options *************/
 
 
-		Options opt(&config );
-  
+		Options opt(av[0] );
+
 		opt.add("version,v",
 				"print version message",
 				GENERIC);
@@ -58,18 +45,19 @@ int main (int ac, char* av[]){
 											 sessionKey);
 
 		opt.add("filePath",
-					  "The path of the file in which VISHNU configuration will be saved",	
+					  "The path of the file in which VISHNU configuration will be saved",
 						HIDDEN,
 						filePath);
 
 		opt.setPosition("filePath",-1);
 
+	try {
 /**************  Parse to retrieve option values  ********************/
- 
+
 		opt.parse_cli(ac,av);
 
 		//opt.parse_cfile();
-		
+
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
@@ -79,26 +67,26 @@ int main (int ac, char* av[]){
 
 
 /********  Process **************************/
-		
+
 		if (opt.count("filePath")){
-			
+
 			cout <<"The file Path is " << filePath << endl;
 
 			reqParam=reqParam+1;
 		}
-		
+
 
 		if (opt.count("dietConfig")){
 
-                      
+
 			cout <<"The diet config file " << dietConfig << endl;
 
 		}
 
 		else{
-			
+
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-			
+
 			return 1;
 		}
 
@@ -113,9 +101,9 @@ int main (int ac, char* av[]){
 		 if ((reqParam < SCPARAM)|| (opt.count("help"))){
 
 			 cout << "Usage: " << av[0] <<" filePath"<<endl;
-			
+
 			 cout << opt << endl;
-			
+
 			 return 0;
 		 }
 
@@ -127,12 +115,12 @@ int main (int ac, char* av[]){
 
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                   
+
 				  cerr << "DIET initialization failed !" << endl;
-               
+
 				  return 1;
               }
-	
+
               saveConfiguration(sessionKey,filePath,configuration);
 
 
@@ -141,18 +129,18 @@ int main (int ac, char* av[]){
         UMS_Data::User_ptr user = configuration.getListConfUsers()[i];
         cout << user;
       }
-      //To set the machine list 
+      //To set the machine list
       for(int i = 0; i < configuration.getListConfMachines().size(); i++) {
         UMS_Data::Machine_ptr machine = configuration.getListConfMachines().get(i);
         cout << machine;
      }
-     //To set the LocalAccounts list 
+     //To set the LocalAccounts list
      for(int i = 0; i < configuration.getListConfLocalAccounts().size(); i++) {
        UMS_Data::LocalAccount_ptr localAccount = configuration.getListConfLocalAccounts().get(i);
        cout << localAccount;
      }
 
-	
+
 
 	}// End of try bloc
 
@@ -160,7 +148,7 @@ int main (int ac, char* av[]){
 		cout << e.what() <<endl;
 		return 1;
 	}
-	
+
 	return 0;
 
 }// end of main
