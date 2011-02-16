@@ -19,9 +19,9 @@ class Options;
 
 /**
  * \class Configuration
- * \brief Standard configuration class. 
+ * \brief Standard configuration class.
  */
- 
+
 class Configuration {
 private:
   std::string pgName;/*!< Program name     */
@@ -49,7 +49,7 @@ public:
    * \return the configuration file as std::string
    */
   const std::string& getConfigFile() const;
-  
+
 
   /**
    * \brief Set a new configuration file
@@ -84,7 +84,7 @@ public:
 		private:
 		  Configuration *conf;/*!< store a command configuration*/
 			po::options_description generic_options;/*!< Generic option description*/
-			po::options_description config_options;/*!< Configuration option description */ 
+			po::options_description config_options;/*!< Configuration option description */
 			po::options_description hidden_options ;/*!<Hidden option description*/
 			po::options_description env_options; /*!< environment variable option description*/
 			mutable po::variables_map vm;/*!<  map storing all parsed options  */
@@ -95,17 +95,17 @@ public:
 		public:
 			/**
 			 * \brief Constructor by variable taking a command configuration in parameter
-			 * \param 
+			 * \param
 			 */
 			explicit Options(Configuration* );
 
 			/**
-			 * \brief function allowing to add a new non-typed option 
+			 * \brief function allowing to add a new non-typed option
 			 */
 			  void add(const std::string&,const std::string&, const Group_type &);
-			
+
 			/**
-			 * 
+			 *
 			 * \brief function offering a way to add a typed option
 			 * \param name: the name of the option
 			 * \param desc: brief description of the option
@@ -116,38 +116,45 @@ public:
 				void add(const std::string& name,
                            const std::string& desc,
 						   const Group_type& group,
-						   T& value){
+						   T& value,int required=0){
 
 					po::options_description tmp_options;
 
-					if( typeid(T)== typeid(std::vector<std::string>)){
-						tmp_options.add_options()(name.c_str(),po::value<T>(&value)->multitoken(),desc.c_str());
+					po::typed_value<T>* optionvalue=po::value<T>(&value);
+
+
+					if (required){
+
+						optionvalue=optionvalue->required();
 					}
-					else{
-						tmp_options.add_options()(name.c_str(),po::value<T>(&value),desc.c_str());
-					}
+
+						tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
+
 
 					// Set the group
 
 					setGroup(tmp_options,group);
 
 				}
-			
-			template<typename T> 
+
+			template<typename T>
 				void add(const std::string& name,
                            const std::string& desc,
 						   const Group_type& group,
-							 boost::function1<void, T>& userFunc
-						   ){
+							 boost::function1<void, T>& userFunc,
+							 int required=0 ){
 
 					po::options_description tmp_options;
 
-					if( typeid(T)== typeid(std::vector<std::string>)){
-						tmp_options.add_options()(name.c_str(),po::value<T>()->multitoken()->notifier(userFunc),desc.c_str());
+					po::typed_value<T>* optionvalue=po::value<T>()->notifier(userFunc);
+
+
+					if (required){
+
+						optionvalue=optionvalue->required();
 					}
-					else{
-						tmp_options.add_options()(name.c_str(),po::value<T>()->notifier(userFunc),desc.c_str());
-					}
+
+					tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
 
 					// Set the group
 
@@ -155,10 +162,10 @@ public:
 
 				}
 			/**
-			 * \brief To set position of options 
+			 * \brief To set position of options
 			 */
-			
-			 void setPosition(const std::string &, int); 
+
+			 void setPosition(const std::string &, int);
 
 			/**
 			 * \brief To parse command line
@@ -171,46 +178,46 @@ public:
 			 */
 
 			void parse_cfile();
-			 
+
 			 /**
 			  * \brief To parse environement variable
 			  */
 
 			 void parse_env (const func1 &);
-			 
+
 			 /**
 			  * \brief To notify all  user-defined functions
 			  */
 
 			 void notify ();
-			 
+
 			 /**
 			  * \brief To check the existence of options
 			  */
 
 			 int count (const std::string&)const;
-			 
+
 			 /**
-			  * \brief To check if a value is stored 
+			  * \brief To check if a value is stored
 			  */
 
 			 bool empty ()const{return vm.empty();}
-			 
+
 			 /**
 			  * \brief To get the value of options
 			  */
-			 
+
 			 template<class T>
 				 const T & get(const std::string key)const{
 					 return(vm[key.c_str()].template as<T>());
 				 }
-			 
+
 			 /**
 			  * \brief to print options
 			  */
-	
+
 			 friend std::ostream& operator<<(std::ostream &,const Options & );
-			 
+
 			 /**
 			  * \brief Default destructor
 			  */
@@ -227,7 +234,7 @@ public:
 template<class T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v){
 	    std::copy(v.begin(), v.end(), std::ostream_iterator<T>(os, " "));
-		    
+
 		return os;
 }
 

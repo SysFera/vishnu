@@ -8,7 +8,7 @@
  */
 
 #include "Options.hh"
-#include "api_ums.h"
+#include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
@@ -38,7 +38,7 @@ struct env_name_mapper{
 	std::string operator ()(std::string name){
 
 		std::string result= "";
-		
+
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
