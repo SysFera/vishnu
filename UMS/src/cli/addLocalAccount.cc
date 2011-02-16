@@ -13,10 +13,6 @@ int main (int ac, char* av[]){
 	try {
 
 
-		Configuration config(av[0]);// take the command line name
-
-		string defaultConfig = "VishnuConfig.cfg";
-
 		int reqParam=0;   // to count the required parameters for the command
 		/******* Parsed value containers ****************/
 
@@ -44,23 +40,12 @@ int main (int ac, char* av[]){
 		std::string sshPublicKey;
 
 
-/***************  Default configuration file ***************** */
 
-		{
-
-			ifstream f(defaultConfig.c_str());
-
-			if (f.is_open()){
-				config.setConfigFile(defaultConfig);
-			}
-
-			f.close();
-		}
 /**************** Describe options *************/
 
 
 
-		Options opt(&config );
+		Options opt(av[0] );
 
 		opt.add("version,v",
 				"print version message",

@@ -11,12 +11,19 @@
 #include "MachineProxy.hpp"
 #include "LocalAccountProxy.hpp"
 #include "ConfigurationProxy.hpp"
+#include "Options.hh"
 using namespace std;
 //namespace boost::posix_time = bp;
 
 #define DATE_SIZE 25
 
+void usage (const Options & opt,const string& cmd){
 
+
+cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << cmd <<"\n\n";
+
+cout <<opt<< endl;
+}
 
 std::string takePassword(const string& prompt, const string & salt){
 
