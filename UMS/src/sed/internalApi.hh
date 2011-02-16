@@ -114,5 +114,20 @@ solveMachineDelete(diet_profile_t* pb);
 */
 int
 solveLocalAccountCreate(diet_profile_t* pb);
-
+/**
+* \brief Function to solve the service solveLocalAccountUpdate 
+* \fn    int solveLocalAccountUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveLocalAccountUpdate(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveLocalAccountDelete 
+* \fn    int solveLocalAccountDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveLocalAccountDelete(diet_profile_t* pb);
 #endif // SERVERUMS

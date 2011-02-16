@@ -38,7 +38,8 @@ ServerUMS::ServerUMS(std::string cfg) {
 */
 void
 ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
-
+  
+  //TODO: le mot de passe du rôle pour la base de données il faudra le prendre en paramètre
   DbFactory factory;
   Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "vishnu_user", "vishnu_user", "vishnu");
   
@@ -208,12 +209,32 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   
   /* solveLocalAccountCreate */
   
-  mprofile = diet_profile_desc_alloc(SRV[11], 1, 1, 2);
+  mprofile = diet_profile_desc_alloc(SRV[11], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveLocalAccountCreate);
+  
+  /* solveLocalAccountUpdate */
+  
+  mprofile = diet_profile_desc_alloc(SRV[12], 1, 1, 2);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
-  diet_service_table_add(mprofile, NULL, solveLocalAccountCreate);
+  diet_service_table_add(mprofile, NULL, solveLocalAccountUpdate);
+  
+  /* solveLocalAccountDelete */
+  
+  mprofile = diet_profile_desc_alloc(SRV[12], 2, 2, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveLocalAccountDelete);
   
 
   diet_profile_desc_free(mprofile);

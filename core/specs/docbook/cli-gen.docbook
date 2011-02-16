@@ -244,8 +244,10 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The connect command line opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>connect  </command><arg>-p<replaceable> closePolicy </replaceable></arg><arg>-d<replaceable> sessionInactivityDelay </replaceable></arg><arg>-s<replaceable> substituteUserId </replaceable></arg><arg
-              choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -317,7 +319,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>reconnect</command><arg choice="plain"><replaceable> userId  sessionId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_reconnect</command><arg choice="plain"><replaceable>userId </replaceable></arg><arg
+              choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -375,7 +378,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addUser command line adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addUser</command><arg choice="plain"><replaceable>  privilege firstname lastname email </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_add_user</command><arg choice="plain"><replaceable>firstname</replaceable></arg><arg
+              choice="plain"><replaceable>lastname</replaceable></arg><arg choice="plain"><replaceable>privilege</replaceable></arg><arg
+              choice="plain"><replaceable>email</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -475,7 +480,11 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateUser command line updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateUser</command><arg>-f<replaceable> firstname</replaceable></arg><arg>-l<replaceable> lastname</replaceable></arg><arg>-p<replaceable> privilege</replaceable></arg><arg>-m<replaceable> email</replaceable></arg><arg>-s<replaceable> status</replaceable></arg><arg
+        <cmdsynopsis><command>vishnu_update_user</command><arg choice="opt"><option>-f <replaceable>firstname</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>lastname</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>privilege</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>email</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
               choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -590,7 +599,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteUser command line removes a user from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>deleteUser</command><arg choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_delete_user</command><arg choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -669,7 +678,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The close command line closes the session identfied by the session key</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>close</command><arg choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_close</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
@@ -717,7 +726,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The changePassword command line changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>changePassword</command><arg choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_change_password</command><arg choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -775,7 +784,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The resetPassword command line resets the password of a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>resetPassword</command><arg choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_reset_password</command><arg choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -854,7 +863,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addLocalAccount command line adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addLocalAccount</command><arg choice="plain"><replaceable>  userId machineId acLogin sshKeyPath homeDirectory </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_add_local_account</command><arg choice="plain"><replaceable>userId</replaceable></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>acLogin</replaceable></arg><arg
+              choice="plain"><replaceable>sshKeyPath</replaceable></arg><arg choice="plain"><replaceable>homeDirectory</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -961,8 +972,10 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateLocalAccount command line updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateLocalAccount</command><arg>-l<replaceable> acLogin</replaceable></arg><arg>-s<replaceable> sshKeyPath</replaceable></arg><arg>-d<replaceable> homeDirectory</replaceable></arg><arg
-              choice="plain"><replaceable>userId machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_update_local_account</command><arg choice="opt"><option>-l <replaceable>acLogin</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>sshKeyPath</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>homeDirectory</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1069,7 +1082,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>deleteLocalAccount</command><arg choice="plain"><replaceable> userId machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_delete_local_account</command><arg choice="plain"><replaceable>userId</replaceable></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1155,7 +1169,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The saveConfiguration command line saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>saveConfiguration</command><arg choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_save_configuration</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
@@ -1203,7 +1217,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>restoreConfiguration</command><arg choice="plain"><replaceable> filePath</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_restore_configuration</command><arg choice="plain"><replaceable>filePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1282,7 +1296,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The addMachine command line adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addMachine</command><arg choice="plain"><replaceable>  name site language </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_add_machine</command><arg choice="plain"><replaceable>name</replaceable></arg><arg
+              choice="plain"><replaceable>site</replaceable></arg><arg choice="plain"><replaceable>language</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1382,7 +1397,10 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The updateMachine command line updates machine description</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateMachine</command><arg>-n<replaceable> name</replaceable></arg><arg>-s<replaceable> site</replaceable></arg><arg>-d</arg><arg>-l<replaceable> language</replaceable></arg><arg>-t<replaceable> status</replaceable></arg><arg
+        <cmdsynopsis><command>vishnu_update_machine</command><arg choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1497,7 +1515,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The deleteMachine command line removes a machine from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>deleteMachine</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_delete_machine</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1576,8 +1594,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listLocalAccount command line lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listLocalAccount  </command><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-i<replaceable> machineId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-a </option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1670,8 +1689,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listMachine  </command><arg>-u<replaceable> userId </replaceable></arg><arg>-a</arg><arg>-m<replaceable> machineId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-a </option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1764,8 +1783,11 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listHistoryCmd command line lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listHistoryCmd  </command><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-i<replaceable> sessionId </replaceable></arg><arg>-s<replaceable> startDateOption </replaceable></arg><arg>-e<replaceable> endDateOption </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_history_cmd</command><arg choice="opt"><option>-a </option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>sessionId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>startDateOption</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>endDateOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1872,8 +1894,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listOptions command line lists the options of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listOptions  </command><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-n<replaceable> optionName </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_options</command><arg choice="opt"><option>-a </option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>optionName</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1966,8 +1989,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listUsers command line lists VISHNU users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listUsers </command><arg>-i<replaceable> userIdOption</replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_users</command><arg choice="opt"><option>-i <replaceable>userIdOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2046,8 +2068,14 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listSessions command line lists all sessions of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listSessions  </command><arg>-t<replaceable> status </replaceable></arg><arg>-p<replaceable> sessionClosePolicy </replaceable></arg><arg>-d<replaceable> sessionInactivityDelay </replaceable></arg><arg>-m<replaceable> machineId </replaceable></arg><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-i<replaceable> sessionId </replaceable></arg><arg>-s<replaceable> startDateOption </replaceable></arg><arg>-e<replaceable> endDateOption </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_sessions</command><arg choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>sessionClosePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-a </option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>sessionId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>startDateOption</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>endDateOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2182,7 +2210,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The configureDefaultOption command line configures a default option value</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>configureDefaultOption</command><arg choice="plain"><replaceable>  optionName value </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_configure_default_option</command><arg choice="plain"><replaceable>optionName</replaceable></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2268,7 +2297,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The configureOption command line configures an option of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>configureOption</command><arg choice="plain"><replaceable>  optionName value </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_configure_option</command><arg choice="plain"><replaceable>optionName</replaceable></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2442,8 +2472,16 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>submitJob  </command><arg>-n<replaceable> name </replaceable></arg><arg>-p<replaceable> priority </replaceable></arg><arg>-q<replaceable> queue </replaceable></arg><arg>-t<replaceable> wallTime </replaceable></arg><arg>-m<replaceable> memory </replaceable></arg><arg>-P<replaceable> nbCpu </replaceable></arg><arg>-N<replaceable> nbNodesAndCpuPerNode </replaceable></arg><arg>-o<replaceable> outPutPath </replaceable></arg><arg>-e<replaceable> errorPath </replaceable></arg><arg
-              choice="plain"><replaceable> machineId scriptFilePath</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
+              choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>wallTime</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
+              choice="opt"><option>-P <replaceable>nbCpu</replaceable></option></arg><arg
+              choice="opt"><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outPutPath</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2592,7 +2630,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobInfo command line gets information on a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getJobInfo</command><arg choice="plain"><replaceable> machineId jobId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_job_info</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2678,8 +2717,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobProgress command line gets the progression status of jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getJobProgress  </command><arg>-i<replaceable> jobId </replaceable></arg><arg>-u<replaceable> jobOwner </replaceable></arg><arg
-              choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_job_progress</command><arg choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>jobOwner</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2772,7 +2812,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listQueues command line gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listQueues</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_queues</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2851,8 +2891,17 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listJobs command line gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listJobs  </command><arg>-i<replaceable> jobId </replaceable></arg><arg>-P<replaceable> nbCpu </replaceable></arg><arg>-d<replaceable> fromSubmitDate </replaceable></arg><arg>-D<replaceable> toSubmitDate </replaceable></arg><arg>-u<replaceable> owner </replaceable></arg><arg>-s<replaceable> status </replaceable></arg><arg>-p<replaceable> priority </replaceable></arg><arg>-o<replaceable> outPutPath </replaceable></arg><arg>-e<replaceable> errorPath </replaceable></arg><arg>-q<replaceable> queue </replaceable></arg><arg
-              choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_jobs</command><arg choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
+              choice="opt"><option>-P <replaceable>nbCpu</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>fromSubmitDate</replaceable></option></arg><arg
+              choice="opt"><option>-D <replaceable>toSubmitDate</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>owner</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outPutPath</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3001,7 +3050,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getJobOutPut command line gets outputPath and errorPath of a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getJobOutPut</command><arg choice="plain"><replaceable> machineId jobId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_job_out_put</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3087,7 +3137,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getAllJobsOutPut command line dynamically gets outputPath and errorPath of completed jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getAllJobsOutPut</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_all_jobs_out_put</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3166,7 +3216,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The cancelJob command line cancels a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>cancelJob</command><arg choice="plain"><replaceable> machineId jobId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3252,7 +3303,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setMachineEnv command line sets environment variables on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setMachineEnv</command><arg choice="plain"><replaceable> machineId listEnv</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_machine_env</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>listEnv</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3338,7 +3390,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setMachineRefreshPeriod command line sets the refresh period of output and error files contents</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setMachineRefreshPeriod</command><arg choice="plain"><replaceable> machineId value</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_machine_refresh_period</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3589,7 +3642,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The exportCommands command line exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>exportCommands</command><arg choice="plain"><replaceable> oldSessionKey</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="plain"><replaceable>oldSessionKey</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3668,7 +3721,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricCurrentValue command line retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getMetricCurrentValue</command><arg choice="plain"><replaceable> machineId metricType</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3754,7 +3808,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getMetricHistory command line retrieve the history of values of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getMetricHistory</command><arg choice="plain"><replaceable> machineId startTime endTime metricType</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>startTime</replaceable></arg><arg choice="plain"><replaceable>endTime</replaceable></arg><arg
+              choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3854,7 +3910,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getProcesses command line gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getProcesses</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_processes</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3933,7 +3989,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setSystemInfo command line updates the system information of a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setSystemInfo</command><arg>-m<replaceable> memory</replaceable></arg><arg>-d<replaceable> diskSpace</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4026,7 +4084,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setSystemThreshold command line sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setSystemThreshold</command><arg choice="plain"><replaceable> machineId thresholdType value</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>thresholdType</replaceable></arg><arg choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4119,7 +4178,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getSystemThreshold command line gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getSystemThreshold</command><arg choice="plain"><replaceable> machineId type</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4205,7 +4265,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineUserIdentifier command line defines the shape of the identifiers automatically generated for the users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineUserIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_user_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4284,7 +4344,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineMachineIdentifier command line defines the shape of the identifiers automatically generated for the machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineMachineIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_machine_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4363,7 +4423,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineJobIdentifier command line defines the shape of the identifiers automatically generated for the jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineJobIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_job_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4442,7 +4502,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The defineTransferIdentifier command line defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineTransferIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4521,7 +4581,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The loadShed command line load sheds a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>loadShed</command><arg choice="plain"><replaceable> machineId loadShedType</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_load_shed</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4607,7 +4668,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The setUpdateFrequency command line sets the update frequency of the IMS tables</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setUpdateFrequency</command><arg choice="plain"><replaceable> freq</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_update_frequency</command><arg choice="plain"><replaceable>freq</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4686,7 +4747,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The getUpdateFrequency command line gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getUpdateFrequency</command><arg choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_update_frequency</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
@@ -4734,8 +4795,10 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The restart command line restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>restart </command><arg>-n<replaceable> componentName </replaceable></arg><arg>-m<replaceable> machineId </replaceable></arg><arg>-f<replaceable> file</replaceable></arg><arg
-              choice="plain"><replaceable> type</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-n <replaceable>componentName</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-f <replaceable>file</replaceable></option></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4943,8 +5006,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The createFile command line creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>createFile </command><arg>-m<replaceable> mode</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_create_file</command><arg choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5030,8 +5093,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The createDir command line creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>createDir </command><arg>-m<replaceable> mode</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5117,7 +5180,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The removeFile command line removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>removeFile</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_remove_file</command><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5196,7 +5259,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The removeDir command line removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>removeDir</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_remove_dir</command><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5275,7 +5338,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The chGrp command line changes group owner of  remote files/directories. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>chGrp</command><arg choice="plain"><replaceable> path group</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_ch_grp</command><arg choice="plain"><replaceable>path</replaceable></arg><arg
+              choice="plain"><replaceable>group</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5361,7 +5425,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The chMod command line changes  access rights of remote files/directories.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>chMod</command><arg choice="plain"><replaceable> path mode</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_ch_mod</command><arg choice="plain"><replaceable>path</replaceable></arg><arg
+              choice="plain"><replaceable>mode</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5447,8 +5512,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The headOfFile command line displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>headOfFile </command><arg>-n<replaceable> nLine</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_head_of_file</command><arg choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5534,8 +5599,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The tailOfFile command line displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>tailOfFile </command><arg>-n<replaceable> nLine</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_tail_of_file</command><arg choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5621,7 +5686,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The contentOfFile command line displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>contentOfFile</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_content_of_file</command><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5700,7 +5765,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listDir command line displays  the content of a remote directory. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listDir  </command><arg>-l</arg><arg>-a</arg><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_dir</command><arg choice="opt"><option>-l </option></arg><arg
+              choice="opt"><option>-a </option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5793,8 +5859,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyFile command line executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>copyFile  </command><arg>-r</arg><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_copy_file</command><arg choice="opt"><option>-r </option></arg><arg
+              choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5902,8 +5969,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>copyAsyncFile  </command><arg>-r</arg><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_copy_async_file</command><arg choice="opt"><option>-r </option></arg><arg
+              choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6011,8 +6079,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The moveFile command line executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>moveFile  </command><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6113,8 +6181,8 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The moveAsyncFile command line executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>moveAsyncFile  </command><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6215,8 +6283,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The stopFileTransfer command line stops an execution of a set of file transfers.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>stopFileTransfer  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_stop_file_transfer</command><arg choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6309,8 +6378,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listFileTransferStatus command line displays the status of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listFileTransferStatus  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_file_transfer_status</command><arg choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6403,8 +6473,9 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The listFileTransfers command line displays the history of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listFileTransfers  </command><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg>-s<replaceable> status </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_file_transfers</command><arg choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
