@@ -18,7 +18,8 @@ public:
   int add();
   int update();
   int deleteLocalAccount();
-  SessionProxy getSessionProxy();
+  SessionProxy getSessionProxy() const;
+  std::string getSshPublicKey() const;
   ~LocalAccountProxy();
 
 private:
@@ -26,5 +27,6 @@ private:
 
   UMS_Data::LocalAccount mlocalAccount;
   SessionProxy msessionProxy;
+  std::string  msshPublicKey;
 };
 #endif

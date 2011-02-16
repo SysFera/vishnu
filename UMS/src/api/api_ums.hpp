@@ -70,7 +70,7 @@ int updateMachine(const std::string& sessionKey, const UMS_Data::Machine& machin
 
 int deleteMachine(const std::string& sessionKey, const std::string& machineId);
 
-int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount);
+int addLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& newLocalAccount, std::string&  sshPublicKey);
 
 int updateLocalAccount(const std::string& sessionKey, const UMS_Data::LocalAccount& localAccount);
 
