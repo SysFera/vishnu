@@ -27,5 +27,6 @@ target_link_libraries(ums-client-proxy
   ${EMF4CPP_CPP_LIB}
   emf4cpp-UMS_Data
   exception-vishnu
+  crypt
 )
 
