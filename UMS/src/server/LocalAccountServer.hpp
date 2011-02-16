@@ -12,6 +12,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <fstream>
 #include "SessionServer.hh"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
@@ -33,9 +34,9 @@ public:
   /**
   * \brief Function to add a new VISHNU localAccount
   * \fn std::string add() 
-  * \return the content of the public ssh key generated
+  * \return raises an exception on error
   */
-  std::string 
+  int
   add();
   int 
   update();
@@ -69,6 +70,15 @@ public:
   */
   bool 
   exist(std::string idmachine, std::string iduser);
+  /**
+  * \brief Function to get the content of the public ssh generated
+  * \fn std::string getPublicKey()
+  * \return The content of the ssh public key generated
+  */
+  std::string
+  getPublicKey();
+  
+  
   //static UMS_Data::ListLocalAccounts  list(SessionServer session, UMS_Data::ListLocalAccOptions  options);
 private:
   /////////////////////////////////
@@ -86,6 +96,10 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
+  /**
+  * \brief The content of the ssh public key generated
+  */
+  std::string msshpublickey;
   
   /////////////////////////////////
   // Functions
