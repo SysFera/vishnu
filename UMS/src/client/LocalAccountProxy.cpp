@@ -6,7 +6,7 @@
 
 #include "UMSVishnuException.hh"
 #include "utilsClient.hpp"
-#include "LocalAccountProxy.h"
+#include "LocalAccountProxy.hpp"
 
 
 LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session):

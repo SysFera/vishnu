@@ -17,7 +17,7 @@
 //class SessionProxy;
 class UserProxy;
 
-#include "UserProxy.h"
+#include "UserProxy.hpp"
 #include "Session.hpp"
 #include "ConnectOptions.hpp"
 

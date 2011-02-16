@@ -9,7 +9,7 @@
 
 //class UserProxy;
 class SessionProxy;
-#include "SessionProxy.h"
+#include "SessionProxy.hpp"
 #include "User.hpp"
 
 

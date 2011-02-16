@@ -7,7 +7,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "SessionProxy.h"
+#include "SessionProxy.hpp"
 #include "LocalAccount.hpp"
 
 class LocalAccountProxy

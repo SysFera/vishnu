@@ -10,7 +10,7 @@
 #include "UMSVishnuException.hh"
 #include "utilsClient.hpp"
 
-#include "SessionProxy.h"
+#include "SessionProxy.hpp"
 #include "Session.hpp"
 #include "ListCmdOptions.hpp"
 #include "ListCommands.hpp"

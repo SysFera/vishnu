@@ -8,8 +8,8 @@
  #include <stdlib.h>
  #include <fstream>
 
- #include "SessionProxy.h"
- #include "UserProxy.h"
+ #include "SessionProxy.hpp"
+ #include "UserProxy.hpp"
  #include "UMSVishnuException.hh"
  #include "utilsClient.hpp"
 

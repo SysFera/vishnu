@@ -11,12 +11,12 @@
 #include <cstring>
 #include <cstdlib>
 
-#include "SessionProxy.h"
-#include "MachineProxy.h"
-#include "LocalAccountProxy.h"
-#include "ConfigurationProxy.h"
-#include "OptionValueProxy.h"
-#include "QueryProxy.h"
+#include "SessionProxy.hpp"
+#include "MachineProxy.hpp"
+#include "LocalAccountProxy.hpp"
+#include "ConfigurationProxy.hpp"
+#include "OptionValueProxy.hpp"
+#include "QueryProxy.hpp"
 
 /**
    * \brief Function to initialize the SYSFERA-DS configuration

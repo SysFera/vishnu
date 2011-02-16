@@ -4,7 +4,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "UserProxy.h"
+#include "UserProxy.hpp"
 #include "UMSVishnuException.hh"
 #include "utilsClient.hpp"
 
