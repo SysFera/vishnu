@@ -30,45 +30,73 @@
 
     diet_profile_t* profile = NULL; 
     char hostname[HOST_NAME_MAX_SIZE];
-    std::string sshKey;
+    std::string sshKey1;
     std::string sshKey2;
+    std::string sshKey3;
     std::string optionsToString;
     std::string sessionId ;
     char* sessionkey;
     char* errorInfo;
     size_t length;
     char* key;
+    char* encryptedKey;
     std::string msg = "call of function diet_string_set is rejected ";
 
-    sshKey = std::string(getenv("HOME"))+"/.ssh/id_rsa";
+    sshKey1 = "/etc/ssh/ssh_host_dsa_key.pub";
+    sshKey2 = "/etc/ssh/ssh_host_rsa_key.pub";
+    sshKey3 = std::string(getenv("HOME"))+"/.vishnu";
     gethostname(hostname, HOST_NAME_MAX_SIZE);  
 
-    std::ifstream ifile(sshKey.c_str());
-    if(!ifile.is_open()) {
-        sshKey2 = std::string(getenv("HOME"))+"/.ssh/id_dsa"; 
-        std::ifstream ifile2(sshKey2.c_str());
-        if(ifile2.is_open()) {
-           ifile2.seekg(0, std::ios::end);
-           length = ifile2.tellg();
-           ifile2.seekg(0, std::ios::beg);
-
-           key = new char[length];
-           ifile2.read(key, length);
+    std::ifstream ifile;
+    std::ifstream ifile1(sshKey1.c_str());
+    std::ifstream ifile2(sshKey2.c_str());
+    std::ifstream ifile3(sshKey3.c_str());
+    
+    bool checkFile1 = ifile1.is_open();
+    bool checkFile2 = ifile2.is_open();
+    bool checkFile3 = ifile3.is_open(); 
+     
+    if(!checkFile1 && !checkFile2 && !checkFile3) {
+         throw std::runtime_error("can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
+                                  "You must copy the file of your sshKey in one of three free files:\n"
+                                  +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
+                                  +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
+                                  +"$HOME/.vishnu\n"
+                                  );
+    } 
+      
+    if(checkFile1) {
+        ifile1.close();
+        ifile.open(sshKey1.c_str());
+       if(checkFile2) {
+         ifile2.close();
+       }
+       if(checkFile3) {
+         ifile3.close();
+       }
+    }
+    else if(checkFile2) {
            ifile2.close();
-        } 
-        else {
-          throw std::runtime_error("can't open file "+sshKey+" or "+sshKey2);
-        }
+           ifile.open(sshKey2.c_str());
+           if(checkFile3) {
+             ifile3.close();
+           }
     } 
     else {
-       ifile.seekg(0, std::ios::end);
-         length = ifile.tellg();
-       ifile.seekg(0, std::ios::beg);
- 
-       key = new char[length];
-       ifile.read(key, length);
-       ifile.close();
+        ifile3.close();
+        ifile.open(sshKey3.c_str());
     }
+
+    ifile.seekg(0, std::ios::end);
+      length = ifile.tellg();
+    ifile.seekg(0, std::ios::beg);
+ 
+    key = new char[length];
+    ifile.read(key, length);
+    ifile.close();
+
+    std::string salt = "$6$"+user.getData().getUserId()+"$";                 
+    encryptedKey = crypt(key, salt.c_str());
 
     if(connect) {
       // SERIALIZE DATA MODEL
@@ -94,8 +122,8 @@
        ERRMSG(msg.c_str());
        sendErrorMsg(msg);
     }
-    if(diet_string_set(diet_parameter(profile,2), key, DIET_VOLATILE)) {
-       msg += "with sshKey parameter "+sshKey;
+    if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
+       msg += "with sshKey parameter sshKey path";
        ERRMSG(msg.c_str());
        sendErrorMsg(msg);
     }  
@@ -143,7 +171,8 @@
      /*To check the receiving message error*/
      checkErrorMsg(errorInfo);
 
-      delete key;
+      if(key!=NULL) delete [] key;
+
     return 0;
   }
 
