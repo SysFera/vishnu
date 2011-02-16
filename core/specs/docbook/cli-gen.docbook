@@ -238,7 +238,7 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>UMS connect</title>
+        <title>vishnu_connect</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -311,7 +311,7 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS reconnect</title>
+        <title>vishnu_reconnect</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -369,13 +369,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS addVishnuUser</title>
+        <title>vishnu_add_user</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addVishnuUser command line adds a new VISHNU user</para>
+        <para>The addUser command line adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addVishnuUser</command><arg choice="plain"><replaceable>  privilege firstname lastname email </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>addUser</command><arg choice="plain"><replaceable>  privilege firstname lastname email </replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -469,7 +469,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS updateUser</title>
+        <title>vishnu_update_user</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -584,7 +584,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS deleteUser</title>
+        <title>vishnu_delete_user</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -663,7 +663,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS close</title>
+        <title>vishnu_close</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -711,7 +711,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS changePassword</title>
+        <title>vishnu_change_password</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -769,7 +769,7 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS resetPassword</title>
+        <title>vishnu_reset_password</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -848,7 +848,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS addLocalAccount</title>
+        <title>vishnu_add_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -955,7 +955,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS updateLocalAccount</title>
+        <title>vishnu_update_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1063,7 +1063,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS deleteLocalAccount</title>
+        <title>vishnu_delete_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1149,7 +1149,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS saveConfiguration</title>
+        <title>vishnu_save_configuration</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1197,7 +1197,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS restoreConfiguration</title>
+        <title>vishnu_restore_configuration</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1276,7 +1276,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS addMachine</title>
+        <title>vishnu_add_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1376,7 +1376,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS updateMachine</title>
+        <title>vishnu_update_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1491,7 +1491,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS deleteMachine</title>
+        <title>vishnu_delete_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1570,7 +1570,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listLocalAccount</title>
+        <title>vishnu_list_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1664,7 +1664,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listMachine</title>
+        <title>vishnu_list_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1758,7 +1758,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listHistoryCmd</title>
+        <title>vishnu_list_history_cmd</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1866,7 +1866,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listOptions</title>
+        <title>vishnu_list_options</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -1960,7 +1960,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listUsers</title>
+        <title>vishnu_list_users</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2040,7 +2040,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS listSessions</title>
+        <title>vishnu_list_sessions</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2176,7 +2176,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS configureDefaultOption</title>
+        <title>vishnu_configure_default_option</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2262,7 +2262,7 @@
         </informaltable>
       </section>
       <section>
-        <title>UMS configureOption</title>
+        <title>vishnu_configure_option</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2436,7 +2436,7 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>TMS submitJob</title>
+        <title>vishnu_submit_job</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2586,7 +2586,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS getJobInfo</title>
+        <title>vishnu_get_job_info</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2672,7 +2672,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS getJobProgress</title>
+        <title>vishnu_get_job_progress</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2766,7 +2766,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS listQueues</title>
+        <title>vishnu_list_queues</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2845,7 +2845,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS listJobs</title>
+        <title>vishnu_list_jobs</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -2995,7 +2995,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS getJobOutPut</title>
+        <title>vishnu_get_job_out_put</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3081,7 +3081,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS getAllJobsOutPut</title>
+        <title>vishnu_get_all_jobs_out_put</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3160,7 +3160,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS cancelJob</title>
+        <title>vishnu_cancel_job</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3246,7 +3246,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS setMachineEnv</title>
+        <title>vishnu_set_machine_env</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3332,7 +3332,7 @@
         </informaltable>
       </section>
       <section>
-        <title>TMS setMachineRefreshPeriod</title>
+        <title>vishnu_set_machine_refresh_period</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3583,7 +3583,7 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>IMS exportCommands</title>
+        <title>vishnu_export_commands</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3662,7 +3662,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS getMetricCurrentValue</title>
+        <title>vishnu_get_metric_current_value</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3748,7 +3748,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS getMetricHistory</title>
+        <title>vishnu_get_metric_history</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3848,7 +3848,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS getProcesses</title>
+        <title>vishnu_get_processes</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -3927,7 +3927,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS setSystemInfo</title>
+        <title>vishnu_set_system_info</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4020,7 +4020,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS setSystemThreshold</title>
+        <title>vishnu_set_system_threshold</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4113,7 +4113,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS getSystemThreshold</title>
+        <title>vishnu_get_system_threshold</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4199,7 +4199,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS defineUserIdentifier</title>
+        <title>vishnu_define_user_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4278,7 +4278,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS defineMachineIdentifier</title>
+        <title>vishnu_define_machine_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4357,7 +4357,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS defineJobIdentifier</title>
+        <title>vishnu_define_job_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4436,7 +4436,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS defineTransferIdentifier</title>
+        <title>vishnu_define_transfer_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4515,7 +4515,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS loadShed</title>
+        <title>vishnu_load_shed</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4601,7 +4601,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS setUpdateFrequency</title>
+        <title>vishnu_set_update_frequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4680,7 +4680,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS getUpdateFrequency</title>
+        <title>vishnu_get_update_frequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4728,7 +4728,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS restart</title>
+        <title>vishnu_restart</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -4937,7 +4937,7 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>FMS createFile</title>
+        <title>vishnu_create_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5024,7 +5024,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS createDir</title>
+        <title>vishnu_create_dir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5111,7 +5111,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS removeFile</title>
+        <title>vishnu_remove_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5190,7 +5190,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS removeDir</title>
+        <title>vishnu_remove_dir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5269,7 +5269,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS chGrp</title>
+        <title>vishnu_ch_grp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5355,7 +5355,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS chMod</title>
+        <title>vishnu_ch_mod</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5441,7 +5441,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS headOfFile</title>
+        <title>vishnu_head_of_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5528,7 +5528,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS tailOfFile</title>
+        <title>vishnu_tail_of_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5615,7 +5615,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS contentOfFile</title>
+        <title>vishnu_content_of_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5694,7 +5694,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS listDir</title>
+        <title>vishnu_list_dir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5787,7 +5787,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS copyFile</title>
+        <title>vishnu_copy_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -5896,7 +5896,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS copyAsyncFile</title>
+        <title>vishnu_copy_async_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -6005,7 +6005,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS moveFile</title>
+        <title>vishnu_move_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -6107,7 +6107,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS moveAsyncFile</title>
+        <title>vishnu_move_async_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -6209,7 +6209,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS stopFileTransfer</title>
+        <title>vishnu_stop_file_transfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -6303,7 +6303,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS listFileTransferStatus</title>
+        <title>vishnu_list_file_transfer_status</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
@@ -6397,7 +6397,7 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS listFileTransfers</title>
+        <title>vishnu_list_file_transfers</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
