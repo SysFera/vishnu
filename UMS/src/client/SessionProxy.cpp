@@ -33,6 +33,7 @@
     std::string sshKey1;
     std::string sshKey2;
     std::string sshKey3;
+    std::string sshKey4;
     std::string optionsToString;
     std::string sessionId ;
     char* sessionkey;
@@ -44,24 +45,28 @@
 
     sshKey1 = "/etc/ssh/ssh_host_dsa_key.pub";
     sshKey2 = "/etc/ssh/ssh_host_rsa_key.pub";
-    sshKey3 = std::string(getenv("HOME"))+"/.vishnu";
+    sshKey3 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_dsa_key.pub";
+    sshKey4 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_rsa_key.pub";
     gethostname(hostname, HOST_NAME_MAX_SIZE);  
 
     std::ifstream ifile;
     std::ifstream ifile1(sshKey1.c_str());
     std::ifstream ifile2(sshKey2.c_str());
     std::ifstream ifile3(sshKey3.c_str());
+    std::ifstream ifile4(sshKey4.c_str());
     
     bool checkFile1 = ifile1.is_open();
     bool checkFile2 = ifile2.is_open();
     bool checkFile3 = ifile3.is_open(); 
+    bool checkFile4 = ifile4.is_open(); 
      
-    if(!checkFile1 && !checkFile2 && !checkFile3) {
+    if(!checkFile1 && !checkFile2 && !checkFile3 && !checkFile4) {
          throw std::runtime_error("can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
                                   "You must copy the file of your sshKey in one of three free files:\n"
                                   +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
                                   +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
-                                  +"$HOME/.vishnu\n"
+                                  +"$HOME/.vishnu/ssh_host_dsa_key.pub, or\n"
+                                  +"$HOME/.vishnu/ssh_host_rsa_key.pub"
                                   );
     } 
       
@@ -74,6 +79,9 @@
        if(checkFile3) {
          ifile3.close();
        }
+       if(checkFile4) {
+         ifile4.close();
+       }
     }
     else if(checkFile2) {
            ifile2.close();
@@ -81,10 +89,20 @@
            if(checkFile3) {
              ifile3.close();
            }
+           if(checkFile4) {
+             ifile4.close();
+           }
     } 
-    else {
+    else if(checkFile3) {
         ifile3.close();
         ifile.open(sshKey3.c_str());
+        if(checkFile4) {
+             ifile4.close();
+         }
+    }
+    else {
+        ifile4.close();
+        ifile.open(sshKey4.c_str());
     }
 
     ifile.seekg(0, std::ios::end);
