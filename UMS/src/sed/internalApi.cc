@@ -17,15 +17,12 @@
 int 
 solveSessionConnect(diet_profile_t* pb) {  
 
-  char* userId = NULL;
-  char* password = NULL;
-  char* clientKey = NULL;
-  char* clientHostname = NULL;
-  char* options = NULL;
+  char *userId = NULL;
+  char *password = NULL;
+  char *clientKey = NULL;
+  char *clientHostname = NULL;
+  char *options = NULL;
   std::string empty("");
-  /*UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-  ecorecpp::parser::parser parser;*/
   
   //TODO : faire des test sur les retours de if !diet_strinq_get throw ... 
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
@@ -76,11 +73,11 @@ solveSessionConnect(diet_profile_t* pb) {
 int 
 solveSessionReconnect(diet_profile_t* pb) {  
  
-  char* userId = NULL;
-  char* password = NULL;
-  char* clientKey = NULL;
-  char* clientHostname = NULL;
-  char* sessionId = NULL;
+  char *userId = NULL;
+  char *password = NULL;
+  char *clientKey = NULL;
+  char *clientHostname = NULL;
+  char *sessionId = NULL;
   std::string empty("");  
     
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
@@ -127,12 +124,12 @@ solveSessionReconnect(diet_profile_t* pb) {
 int 
 solveSessionClose(diet_profile_t* pb) {
   
-  char* _sessionKey = NULL;
+  char *sessionKey = NULL;
   std::string empty("");
   
-  diet_string_get(diet_parameter(pb,0), &_sessionKey, NULL);
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   
-  SessionServer sessionServer = SessionServer(std::string(_sessionKey));
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
   try {
     sessionServer.close();
     diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
@@ -153,8 +150,8 @@ solveSessionClose(diet_profile_t* pb) {
 */
 int 
 solveUserCreate(diet_profile_t* pb) {
-  char* sessionKey = NULL;
-  char* userSerialized = NULL;
+  char *sessionKey = NULL;
+  char *userSerialized = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -194,8 +191,8 @@ solveUserCreate(diet_profile_t* pb) {
 */
 int 
 solveUserUpdate(diet_profile_t* pb) {
-  char* sessionKey = NULL;
-  char* userSerialized = NULL;
+  char *sessionKey = NULL;
+  char *userSerialized = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -234,8 +231,8 @@ solveUserUpdate(diet_profile_t* pb) {
 */
 int 
 solveUserDelete(diet_profile_t* pb) {
-  char* sessionKey = NULL;
-  char* userId = NULL;
+  char *sessionKey = NULL;
+  char *userId = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -271,9 +268,9 @@ solveUserDelete(diet_profile_t* pb) {
 int 
 solveUserPasswordChange(diet_profile_t* pb) {
  
-  char* userId = NULL;
-  char* password = NULL;
-  char* newPassword = NULL;
+  char *userId = NULL;
+  char *password = NULL;
+  char *newPassword = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
@@ -301,6 +298,7 @@ solveUserPasswordChange(diet_profile_t* pb) {
 } 
 
 /**
+#include <core/specs/exception/UMS.hh>
 * \brief Function to solve the service solveUserPasswordReset 
 * \fn    int solveUserPasswordReset(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
@@ -308,8 +306,8 @@ solveUserPasswordChange(diet_profile_t* pb) {
 */
 int 
 solveUserPasswordReset(diet_profile_t* pb) {
-  char* sessionKey = NULL;
-  char* userId = NULL;
+  char *sessionKey = NULL;
+  char *userId = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -346,8 +344,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
 */
 int
 solveMachineCreate(diet_profile_t* pb) {
-  char* sessionKey = NULL;
-  char* machineSerialized = NULL;
+  char *sessionKey = NULL;
+  char *machineSerialized = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -385,8 +383,8 @@ solveMachineCreate(diet_profile_t* pb) {
 int
 solveMachineUpdate(diet_profile_t* pb) {
   
-  char* sessionKey = NULL;
-  char* machineSerialized = NULL;
+  char *sessionKey = NULL;
+  char *machineSerialized = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -425,8 +423,8 @@ solveMachineUpdate(diet_profile_t* pb) {
 int
 solveMachineDelete(diet_profile_t* pb) {
   
-  char* sessionKey = NULL;
-  char* machineId = NULL;
+  char *sessionKey = NULL;
+  char *machineId = NULL;
   std::string empty("");
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -463,8 +461,8 @@ solveMachineDelete(diet_profile_t* pb) {
 */
 int
 solveLocalAccountCreate(diet_profile_t* pb) {
-  char* sessionKey = NULL;
-  char* laccountSerialized = NULL;
+  char *sessionKey = NULL;
+  char *laccountSerialized = NULL;
   std::string empty("");
   std::string publicKey;
   
@@ -483,16 +481,72 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
   
   try {
-    publicKey = localAccountServer.add();
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    localAccountServer.add();
+    std::cout << "Public ssh key" << localAccountServer.getPublicKey() << std::endl;
+    diet_string_set(diet_parameter(pb,2), strdup(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
 	std::string errorInfo = convertToString(e.getMsgI())+"#";
 	errorInfo.append(e.what());
 	std::cout << "errorInfo: " << errorInfo <<std::endl;
-	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-  //diet_string_set(diet_parameter(pb,2), strdup("1#Toto"), DIET_VOLATILE);
   
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveLocalAccountUpdate 
+* \fn    int solveLocalAccountUpdate(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveLocalAccountUpdate(diet_profile_t* pb) {
+  
+}
+
+/**
+* \brief Function to solve the service solveLocalAccountDelete 
+* \fn    int solveLocalAccountDelete(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveLocalAccountDelete(diet_profile_t* pb) {
+  
+  char *sessionKey = NULL;
+  char *userId = NULL;
+  char *machineId = NULL;
+  std::string empty("");
+  std::string publicKey;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &userId, NULL);
+  std::cout<<"userId:"<< userId <<std::endl;
+  diet_string_get(diet_parameter(pb,2), &machineId, NULL);
+  std::cout<<"machineId:"<< machineId <<std::endl;
+  
+  
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UMS_Data::LocalAccount *localAccount = new UMS_Data::LocalAccount();
+  localAccount->setUserId(userId);
+  localAccount->setMachineId(machineId);
+  
+  LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
+  
+  try {
+    localAccountServer.deleteLocalAccount();
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    
+   } catch (SystemException& e) {
+	std::string errorInfo = convertToString(e.getMsgI())+"#";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
