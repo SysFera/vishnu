@@ -43,21 +43,10 @@ int main (int ac, char* av[]){
 			std::string sessionKey;
 
 
-/***************  Default configuration file ***************** */
 
-		{
-
-			ifstream f(defaultConfig.c_str());
-
-			if (f.is_open()){
-				config.setConfigFile(defaultConfig);
-			}
-
-			f.close();
-		}
 /**************** Describe options *************/
 
-		Options opt(&config );
+		Options opt(av[0] );
 
 		opt.add("version,v",
 				"print version message",

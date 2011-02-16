@@ -93,6 +93,15 @@ public:
 			void setGroup (const po::options_description&, const Group_type&);/*!< to set the option group    */
 
 		public:
+
+			/**
+			 * \brief Constructor by variable taking a string in parameter
+			 * \param the name of the command which uses the option
+			 */
+			explicit Options(const std::string& );
+
+
+
 			/**
 			 * \brief Constructor by variable taking a command configuration in parameter
 			 * \param

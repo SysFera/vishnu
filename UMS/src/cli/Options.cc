@@ -34,7 +34,23 @@ void Configuration::setConfigFile(const string& configFile) {
   this->configFile = configFile;
 }
 
-/* Standard Options constructor. Get a pointer on a config object*/
+// standard Options constructor. Get a string (command name)
+
+Options:: Options(const std::string& pgName )   : generic_options("Generic Options"),
+									                                    config_options("Configuration"),
+                                                      env_options("Environment variables"),
+                                                      hidden_options("Hidden Options"){
+
+					conf=new Configuration(pgName);
+
+					generic_options.add_options()
+							   ("help,h", "produce help message")
+							   ;
+
+
+}
+
+			/* Standard Options constructor. Get a pointer on a config object*/
 Options::Options(Configuration* otherConf):conf(otherConf),
 	                                                    generic_options("Generic Options"),
 									                                    config_options("Configuration"),
@@ -191,4 +207,4 @@ std::ostream & operator<< (std::ostream & os, const Options & opt){
 
 // The destructor
 
-Options::~Options(){}
+Options::~Options(){delete conf;}

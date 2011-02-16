@@ -10,7 +10,6 @@ int main (int ac, char* av[]){
 
 
 
-	try {
 
 
 		Configuration config(av[0]);// take the command line name
@@ -35,23 +34,11 @@ int main (int ac, char* av[]){
 
 
 
-/***************  Default configuration file ***************** */
-
-		{
-
-			ifstream f(defaultConfig.c_str());
-
-			if (f.is_open()){
-				config.setConfigFile(defaultConfig);
-			}
-
-			f.close();
-		}
 /**************** Describe options *************/
 
 
 
-		Options opt(&config );
+		Options opt(av[0] );
 
 		opt.add("version,v",
 				"print version message",
@@ -85,6 +72,7 @@ int main (int ac, char* av[]){
 												ENV,
 												sessionKey);
 
+	try {
 /**************  Parse to retrieve option values  ********************/
 
 		opt.parse_cli(ac,av);
