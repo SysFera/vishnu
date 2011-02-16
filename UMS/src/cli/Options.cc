@@ -49,6 +49,14 @@ Options::Options(Configuration* otherConf):conf(otherConf),
 
 }
 
+Configuration*
+Options::getConfiguration()const{
+
+return this->conf;
+
+
+
+}
 
 void Options::setGroup (const po::options_description& tmp_options,
 												const Group_type& group){
