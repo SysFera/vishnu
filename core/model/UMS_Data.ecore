@@ -15,13 +15,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sessionInactivityDelay"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="0">
       <eAnnotations source="Description">
-        <details key="content" value="The sessionInactivityDelay is the maximum delay in seconds between two API commands when the CLOSE_ON_TIMEOUT option is set"/>
+        <details key="content" value="is the maximum delay in seconds between two user requests when the CLOSE_ON_TIMEOUT policy is set"/>
         <details key="shortOption" value="d"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="substituteUserId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="is an option which allows an admin to open a session as if he/she was a specific user identified by his/her userId"/>
+        <details key="content" value="is an admin option which allows an admin to open a session as if she was another user identified by her userId"/>
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
