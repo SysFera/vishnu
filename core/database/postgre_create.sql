@@ -227,3 +227,73 @@ INSERT INTO vishnu (updatefreq, usercpt) VALUES (0, 0);
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIMEOUT', 3600);
      
+
+-- Put the connect rights on pgadmin3 to Role vishnu_db_admin and vishnu_user
+-- Put connection with md5 on pg_hba.conf
+-- CREATE Role Vishnu Database Administrator
+-- Put password for connection for all roles: 
+-- With psql --> ALTER USER vishnu_user WITH ENCRYPTED PASSWORD 'your password';
+
+CREATE ROLE vishnu_db_admin;
+CREATE ROLE vishnu_user;
+
+GRANT ALL ON vishnu TO "vishnu_db_admin";
+GRANT SELECT ON vishnu TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON cpu TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON description TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON optionvalue TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
+
+
+--CREATE ROLE vishnu_user;
+
+--Grant on right on table
+
+GRANT SELECT ON vishnu TO vishnu_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON cpu TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON description TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON optionvalue TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
+
+--Grant on sequences
+
+GRANT ALL ON SEQUENCE account_numaccountid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE clmachine_numclmachineid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE command_numcommandid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE cpu_cpuid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE description_numdescriptionid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE filesub_numfileid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE filetransfer_numfiletransferid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE job_numjobid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE machine_nummachineid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE optionu_numoptionid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE optionvalue_numoptionvalueid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE state_numstateid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE threshold_thresholdid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE users_numuserid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE vishnu_vishnuid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE vsession_numsessionid_seq TO vishnu_user;
+
+

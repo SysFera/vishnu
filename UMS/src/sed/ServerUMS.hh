@@ -59,10 +59,10 @@ public :
    /**
    * \brief To initialize the UMS server
    * \fn void init(std::string vishnuid)
-   * \param vishnuid The id of the vishnu configuration registered in the database
+   * \param vishnuid The password of the root user vishnu_user for the connection with the database
    */ 
    void
-   init(std::string vishnuid, std::string sshkeypath);
+   init(std::string vishnuid, std::string password);
   /**
   * \brief Constructor, raises an exception on error
   * \fn ServerUMS(std::string cfg)
