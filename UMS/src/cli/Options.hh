@@ -82,7 +82,7 @@ public:
 	 */
 	class Options {
 		private:
-		  Configuration *conf;/*!< store a command configuration*/
+			boost::shared_ptr<Configuration> conf;/*!< store a command configuration*/
 			po::options_description generic_options;/*!< Generic option description*/
 			po::options_description config_options;/*!< Configuration option description */
 			po::options_description hidden_options ;/*!<Hidden option description*/
@@ -106,14 +106,14 @@ public:
 			 * \brief Constructor by variable taking a command configuration in parameter
 			 * \param
 			 */
-			explicit Options(Configuration* );
+			explicit Options(boost::shared_ptr<Configuration> );
 
 
 			/**
 			 * \brief function allowing to get the configuration
 			 * \return the configuration
 			 */
-			  Configuration* getConfiguration()const;
+			boost::shared_ptr<Configuration> getConfiguration()const;
 
 
 
