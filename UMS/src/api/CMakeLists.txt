@@ -4,6 +4,7 @@ link_directories(
 )
 
 include_directories(
+  .
   ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_DATA_DIR}
@@ -25,3 +26,16 @@ target_link_libraries(ums-api-client
   ums-client-proxy
 )
 
+FIND_PACKAGE(SWIG REQUIRED)
+INCLUDE(${SWIG_USE_FILE})
+
+FIND_PACKAGE(PythonLibs)
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
+
+SET_SOURCE_FILES_PROPERTIES(api_ums.i PROPERTIES CPLUSPLUS ON)
+
+SET(CMAKE_SWIG_FLAGS "")
+#The module name must match the %module declaration in the interface file
+#This is why the initial name 'APIPython' was removed and replaced by APITest
+SWIG_ADD_MODULE(VISHNU_UMS python api_ums.i api_ums.cpp)
+SWIG_LINK_LIBRARIES(VISHNU_UMS ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-client)
