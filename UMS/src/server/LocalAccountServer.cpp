@@ -332,7 +332,7 @@ LocalAccountServer::deleteLocalAccount() {
 * \brief Destructor
 */ 
 LocalAccountServer::~LocalAccountServer() {
-  delete mlocalAccount;
+  //delete mlocalAccount;
 }
 /**
 * \brief Function to get localAccount information

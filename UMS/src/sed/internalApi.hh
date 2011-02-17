@@ -140,7 +140,14 @@ solveLocalAccountDelete(diet_profile_t* pb);
 */
 int
 solveConfigurationSave(diet_profile_t* pb);
-
+/**
+* \brief Function to solve the service solveConfigurationRestore 
+* \fn    int solveConfigurationRestore(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveConfigurationRestore(diet_profile_t* pb);
 /**
 * \brief Function to solve the service solveOptionValueSet 
 * \fn    int solveOptionValueSet(diet_profile_t* pb)
