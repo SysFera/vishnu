@@ -130,4 +130,29 @@ solveLocalAccountUpdate(diet_profile_t* pb);
 */
 int
 solveLocalAccountDelete(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveOptionValueSet 
+* \fn    int solveOptionValueSet(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveOptionValueSet(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveOptionValueSetDefault 
+* \fn    int solveOptionValueSetDefault(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveOptionValueSetDefault(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveRestore 
+* \fn    int solveRestore(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveRestore(diet_profile_t* pb);
+
 #endif // SERVERUMS

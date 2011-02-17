@@ -236,6 +236,32 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveLocalAccountDelete);
   
+  /* solveOptionValueSet */
+  
+  mprofile = diet_profile_desc_alloc(SRV[16], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveOptionValueSet);
+  
+  /* solveOptionValueSetDefault */
+  
+  mprofile = diet_profile_desc_alloc(SRV[17], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveOptionValueSetDefault);
+  
+  
+  /* solveRestore */
+  
+  mprofile = diet_profile_desc_alloc(SRV[24], 1, 1, 1);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveRestore);
+  
 
   diet_profile_desc_free(mprofile);
 }
