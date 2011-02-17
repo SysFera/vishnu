@@ -60,6 +60,16 @@
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
+// Handle VISHNU exceptions
+%exception {
+  try {
+    $function
+  } catch (UMSVishnuException) {
+    PyErr_SetString(PyExc_SystemError,"**** UMS EXCEPTION CATCHED! :) ****");
+    return NULL;
+  }
+}
+
 #endif
 
 #ifdef SWIGJAVA
