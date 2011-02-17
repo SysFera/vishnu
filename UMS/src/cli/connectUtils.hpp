@@ -1,3 +1,7 @@
+#ifndef CONNECTUTILS__HH
+#define CONNECTUTILS__HH
+
+
 #include<iostream>
 #include<boost/shared_ptr.hpp>
 
@@ -11,4 +15,13 @@ class Options;
 typedef boost::function1<void,UMS_Data::SessionCloseType>  fClosePolicyType;
 
 boost::shared_ptr<Options> makeConnectOptions(std::string,std::string&,int ,std::string&);
+
+
+
+
+
+
+#endif
+
+
 
