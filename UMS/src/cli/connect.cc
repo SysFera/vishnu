@@ -85,6 +85,11 @@ int main (int ac, char* av[]){
 
 		}
 
+		else{
+
+			cout << "the confih file is " << dietConfig <<endl;
+
+		}
 			//Fix me
 
 			password= takePassword("Password: ",userId);// uses getpass which is obsolete.
