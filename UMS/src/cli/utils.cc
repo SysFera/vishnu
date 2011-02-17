@@ -15,15 +15,24 @@
 using namespace std;
 //namespace boost::posix_time = bp;
 
-#define DATE_SIZE 25
 
-void usage (const Options & opt,const string& cmd){
-
+void helpUsage (const Options & opt,const string& cmd){
 
 cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << cmd <<"\n\n";
 
 cout <<opt<< endl;
 }
+
+
+void errorUsage (const Options & opt,const string& errMsg){
+
+		cerr << errMsg <<endl;
+
+		cerr << "To get help, try <<"<< opt.getConfiguration()->getPgName() << " -h >>"<< endl;
+
+}
+
+
 
 std::string takePassword(const string& prompt, const string & salt){
 
@@ -492,13 +501,16 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::User_ptr& user) {
   int privilege = user->getPrivilege();
   std::string email = user->getEmail();
   std::string userId = user->getUserId();
+  int status = user->getStatus();
 
   std::string privilegeStr = (privilege?"ADMIN":"USER");
+  std::string statusStr = (status?"ACTIVE":"INACTIVE");
 
   os << "============ User for " << userId << "===========" << std::endl;
   os << setw(25) << right << "FirstName: " << firstName << endl;
   os << setw(25) << right << "LastName: " << lastName << endl;
   os << setw(25) << right << "Privilege: "  << privilege << " (" << privilegeStr << ")" << endl;
+  os << setw(25) << right << "Status: "  << status << " (" << statusStr << ")" << endl;
   os << setw(25) << right << "Mail: "  << email << endl ;
   os << setw(25) << right << "UserId: " << userId << endl;
 
@@ -510,6 +522,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
   std::string firstname;
   std::string lastname;
   int privilege;
+  int status;
   std::string userId;
   size_t maxFirstnameSize = 20;
   size_t maxLastnameSize = 20;
@@ -528,12 +541,13 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
   }
 
   cout << setw(maxFirstnameSize+2) << left << "Firstname" << setw(maxLastnameSize+2) << left << "Lastname" << setw(maxUserIdSize+2) << left << "UserId";
-  cout << setw(11) << left << "Privilege";
+  cout << setw(11) << left << "Privilege" << left << "Status";
   cout << endl;
   setFill(maxFirstnameSize, os);
   setFill(maxLastnameSize, os);
   setFill(maxUserIdSize, os);
   setFill(9, os);
+	setFill(6, os);
   os << endl;
 
   for(int i = 0; i < lsUsers.getUsers().size(); i++) {
@@ -542,11 +556,13 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      lastname = (lsUsers.getUsers().get(i))->getLastname();
      userId = (lsUsers.getUsers().get(i))->getUserId();
      privilege = (lsUsers.getUsers().get(i))->getPrivilege();
+     status = (lsUsers.getUsers().get(i))->getStatus();
 
      os << setw(maxFirstnameSize+2) << left << firstname;
      os << setw(maxLastnameSize+2) << left << lastname;
      os << setw(maxUserIdSize+2) << left << userId;
      os << setw(11) << left << privilege ;
+     os << setw(8) << left << status ;
      os << endl;
 
   }
