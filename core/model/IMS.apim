@@ -3,7 +3,7 @@
   <modules name="IMS">
     <services name="exportCommands" description="exports all the commands made by a user during a session" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" dataType="//@typeList/@types.0" description="The key of the session of the user that submits the command (current session key)" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
-      <ports name="oldSessionKey" dataType="//@typeList/@types.0" description="The key of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
+      <ports name="oldSessionId" dataType="//@typeList/@types.0" description="The id of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
       <ports name="filename" direction="INOUT" dataType="//@typeList/@types.0" description="The path of the output file containing the Vishnu shell commands" longOptionName=""/>
     </services>
     <services name="getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
