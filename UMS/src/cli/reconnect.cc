@@ -1,5 +1,7 @@
 #include "reconnect.hh"
 #include "utils.hh"
+#include "connectUtils.hpp"
+
 namespace po = boost::program_options;
 
 using namespace std;
@@ -22,36 +24,20 @@ int main (int ac, char* av[]){
 /**************** Describe options *************/
 
 
-		Options opt(av[0] );
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC);
 
-        opt.add("dietConfig,c",
-				        "The diet config file",
-						ENV,
-						dietConfig);
-
-        opt.add("sessionKey,s",
+        opt->add("sessionKey,s",
 				        "The sessionKey",
 						ENV,
 						sessionKey);
 
-		opt.add("userId,u",
-						"represents the VISHNU user identifier",
-						HIDDEN,
-						userId,1);
-
-		opt.setPosition("userId",1);
-
-
-		 opt.add("sessionId,s",
+		 opt->add("sessionId,s",
 				 		 "represents the identifier of the session",
 						 HIDDEN,
 						 sessionId,1);
 
-		 opt.setPosition("sessionId",1);
+		 opt->setPosition("sessionId",1);
 
 
 
@@ -59,13 +45,11 @@ int main (int ac, char* av[]){
 
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		//opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+		opt->notify();
 
 
 
@@ -73,20 +57,20 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("userId")){
+		if (opt->count("userId")){
 
 			cout <<"The user identifier is " << userId << endl;
 
 		}
 
 
-		if(opt.count("sessionId")){
+		if(opt->count("sessionId")){
 
 			cout << "The session identifier is " << sessionId <<endl;
 
 		}
 
-		if (opt.count("dietConfig")){
+		if (opt->count("dietConfig")){
 
 			cout <<"The diet config file " << dietConfig << endl;
 		}
@@ -99,7 +83,7 @@ int main (int ac, char* av[]){
 		}
 
 
-		if (opt.count("sessionKey")){
+		if (opt->count("sessionKey")){
 
 			cout <<"The session key is " << sessionKey << endl;
 		}
@@ -132,16 +116,16 @@ int main (int ac, char* av[]){
 
 	catch(po::required_option& e){
 
-		 if ( opt.count("help")){
+		 if ( opt->count("help")){
 
-			helpUsage(opt,"[options] userId sessionId");
+			helpUsage(*opt,"[options] userId sessionId");
 
 			 return 0;
 		 }
 
 		 else{
 
-			errorUsage(opt,e.what());
+			errorUsage(*opt,e.what());
 
 
 		return 1;

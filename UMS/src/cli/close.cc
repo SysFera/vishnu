@@ -1,4 +1,5 @@
 #include "close.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -17,9 +18,6 @@ int main (int ac, char* av[]){
 
 		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC);
 
         opt.add("dietConfig,c",
 						"The diet config file",
@@ -51,7 +49,7 @@ int main (int ac, char* av[]){
 
 		if (opt.count("help")){
 
-			cout << "Usage: " << av[0] << endl;
+			helpUsage(opt,"[options]");
 
 			return 0;
 
