@@ -6,37 +6,26 @@ using namespace std;
 
 int main (int ac, char* av[]){
 
-	try {
-                string userId;
-                string oldPassword;
-                string newPassword;
-                string sessionId;
-                string sessionKey;
-                string dietConfig;
 
-		Configuration config(av[0]);// take the command line name
+	string userId;
 
-		string defaultConfig = "VishnuConfig.cfg";
-		
+	string oldPassword;
+
+	string newPassword;
+
+	string sessionId;
+
+	string sessionKey;
+
+	string dietConfig;
+
 		int reqParam=0;   // to count the required parameters for the command
 
-/***************  Default configuration file ***************** */
-
-		{
-    
-			ifstream f(defaultConfig.c_str());
-   
-			if (f.is_open()){
-				config.setConfigFile(defaultConfig);
-			}
-   
-			f.close();
-		}
 /**************** Describe options *************/
 
 
-		Options opt(&config );
-  
+		Options opt(av[0] );
+
 		opt.add("version,v",
 				"print version message",
 				GENERIC);
@@ -51,18 +40,15 @@ int main (int ac, char* av[]){
 								 ENV,
 					       sessionKey);
 
-
-
-
-
+	try {
 
 
 /**************  Parse to retrieve option values  ********************/
- 
+
 		opt.parse_cli(ac,av);
 
 		//opt.parse_cfile();
-		
+
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
@@ -72,9 +58,9 @@ int main (int ac, char* av[]){
 
 
 /********  Process **************************/
-		
+
 		if (opt.count("dietConfig")){
-			
+
 			cout <<"The diet config file " << dietConfig << endl;
 
 		}
@@ -82,11 +68,11 @@ int main (int ac, char* av[]){
 		else{
 
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-      
+
 			return 1;
     }
 
- 
+
 		if (opt.count("sessionKey")){
 
 			cout <<"The sessionKey is " << sessionKey << endl;
@@ -95,15 +81,15 @@ int main (int ac, char* av[]){
 
 		if (opt.count("help")){
 
-	     
+
 			cout << "Usage: " << av[0] <<endl;
 
 			cout << opt << endl;
-			
+
 			return 0;
 		}
     else{
-			      
+
 			oldPassword=getpass("old password: ");
 
 			cout << "old password is" << oldPassword <<endl;
@@ -121,15 +107,15 @@ int main (int ac, char* av[]){
 
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                   
+
 				  cerr << "DIET initialization failed !" << endl;
-               
+
 				  return 1;
               }
-	
+
               changePassword(sessionKey, oldPassword, newPassword);
 
-	
+
 
 	}// End of try bloc
 
@@ -137,7 +123,7 @@ int main (int ac, char* av[]){
 		cout << e.what() <<endl;
 		return 1;
 	}
-	
+
 	return 0;
 
 }// end of main
