@@ -61,6 +61,15 @@
           <para>Removed UMS::SessionStateType.</para><para>Added UMS::StatusType, UMS::PrivilegeType.</para><para>Modified UMS::addVishnuUser, UMS::updateUser, UMS::addLocalAccount, UMS::addMachine, UMS::updateMachine,
               UMS::listSessions, UMS::restoreConfiguration.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>17/02/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            
+             
+          <para>Renamed all commands to follow C-style command names with vishnu prefix.</para><para>Modified update_machine and export_commands.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -1399,7 +1408,7 @@
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_update_machine</command><arg choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
-              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
+              choice="opt"><option>-d </option></arg><arg choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
               choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3642,7 +3651,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_export_commands command exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="plain"><replaceable>oldSessionKey</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="plain"><replaceable>oldSessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3667,10 +3676,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>oldSessionKey</para></entry>
+                <entry><para>oldSessionId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The key of the session to export (session has ended)</para></entry>
+                <entry><para>The id of the session to export (session has ended)</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>

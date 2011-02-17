@@ -45,6 +45,15 @@
               UMS::listSessions, UMS::restoreConfiguration.</para>
           </revdescription>
         </revision>
+        <revision>
+          <revnumber>3</revnumber>
+          <date>17/02/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Renamed all commands to follow C-style command names with vishnu prefix.</para>
+            <para>Modified update_machine and export_commands.</para> 
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
