@@ -44,6 +44,14 @@
             <para>Modified UMS::restoreConfiguration and UMS::Configuration class</para>
           </revdescription>
         </revision>
+        <revision>
+          <revnumber>3</revnumber>
+          <date>17/02/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Renamed UMS::AddVishnuUser, Modified UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>

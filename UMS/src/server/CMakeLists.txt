@@ -24,6 +24,7 @@ add_library(ums-server
    OptionValueServer.cc
    MachineServer.cpp 
    LocalAccountServer.cpp
+   ConfigurationServer.cpp 
 )
 
 target_link_libraries(ums-server

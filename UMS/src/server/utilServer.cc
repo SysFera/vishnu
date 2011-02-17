@@ -9,7 +9,6 @@
 #include "UMSVishnuException.hh"
 
 std::string Vishnuid::mvishnuid = "";
-std::string Vishnuid::msshkeypath = "";
 /**
 * \brief Function to convert a string to int 
 * \fn    std::string convertToString(const T& val);

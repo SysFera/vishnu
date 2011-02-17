@@ -61,6 +61,15 @@
           <para>Removed UMS::SessionStateType.</para><para>Added UMS::StatusType, UMS::PrivilegeType.</para><para>Modified UMS::addVishnuUser, UMS::updateUser, UMS::addLocalAccount, UMS::addMachine, UMS::updateMachine,
               UMS::listSessions, UMS::restoreConfiguration.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>17/02/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            
+             
+          <para>Renamed all commands to follow C-style command names with vishnu prefix.</para><para>Modified update_machine and export_commands.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -242,7 +251,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The connect command line opens a session</para>
+        <para>The vishnu_connect command opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
@@ -317,7 +326,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
+        <para>The vishnu_reconnect command returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="plain"><replaceable>userId </replaceable></arg><arg
               choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
@@ -376,7 +385,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addUser command line adds a new VISHNU user</para>
+        <para>The vishnu_add_user command adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_add_user</command><arg choice="plain"><replaceable>firstname</replaceable></arg><arg
               choice="plain"><replaceable>lastname</replaceable></arg><arg choice="plain"><replaceable>privilege</replaceable></arg><arg
@@ -478,7 +487,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateUser command line updates the user information except the userId and the password</para>
+        <para>The vishnu_update_user command updates the user information except the userId and the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_update_user</command><arg choice="opt"><option>-f <replaceable>firstname</replaceable></option></arg><arg
               choice="opt"><option>-l <replaceable>lastname</replaceable></option></arg><arg
@@ -597,7 +606,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteUser command line removes a user from VISHNU</para>
+        <para>The vishnu_delete_user command removes a user from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_delete_user</command><arg choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -676,7 +685,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The close command line closes the session identfied by the session key</para>
+        <para>The vishnu_close command closes the session identfied by the session key</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_close</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -724,7 +733,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The changePassword command line changes the password</para>
+        <para>The vishnu_change_password command changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_change_password</command><arg choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -782,7 +791,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The resetPassword command line resets the password of a user</para>
+        <para>The vishnu_reset_password command resets the password of a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_reset_password</command><arg choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -861,7 +870,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addLocalAccount command line adds a new local user configuration </para>
+        <para>The vishnu_add_local_account command adds a new local user configuration </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_add_local_account</command><arg choice="plain"><replaceable>userId</replaceable></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>acLogin</replaceable></arg><arg
@@ -970,7 +979,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateLocalAccount command line updates a local user configuration</para>
+        <para>The vishnu_update_local_account command updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_update_local_account</command><arg choice="opt"><option>-l <replaceable>acLogin</replaceable></option></arg><arg
               choice="opt"><option>-s <replaceable>sshKeyPath</replaceable></option></arg><arg
@@ -1080,7 +1089,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</para>
+        <para>The vishnu_delete_local_account command removes a local user configuration (for a given user on a given machine) from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_delete_local_account</command><arg choice="plain"><replaceable>userId</replaceable></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
@@ -1167,7 +1176,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The saveConfiguration command line saves the configuration of VISHNU</para>
+        <para>The vishnu_save_configuration command saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_save_configuration</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1215,7 +1224,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
+        <para>The vishnu_restore_configuration command restores the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_restore_configuration</command><arg choice="plain"><replaceable>filePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1294,7 +1303,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addMachine command line adds a new machine in VISHNU</para>
+        <para>The vishnu_add_machine command adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_add_machine</command><arg choice="plain"><replaceable>name</replaceable></arg><arg
               choice="plain"><replaceable>site</replaceable></arg><arg choice="plain"><replaceable>language</replaceable></arg></cmdsynopsis>
@@ -1395,11 +1404,11 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateMachine command line updates machine description</para>
+        <para>The vishnu_update_machine command updates machine description</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_update_machine</command><arg choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
-              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
+              choice="opt"><option>-d </option></arg><arg choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
               choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1513,7 +1522,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteMachine command line removes a machine from VISHNU</para>
+        <para>The vishnu_delete_machine command removes a machine from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_delete_machine</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1592,7 +1601,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listLocalAccount command line lists the local user configurations</para>
+        <para>The vishnu_list_local_account command lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-a </option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
@@ -1687,7 +1696,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</para>
+        <para>The vishnu_list_machine command lists the machines in which  the local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-a </option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
@@ -1781,7 +1790,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listHistoryCmd command line lists the commands</para>
+        <para>The vishnu_list_history_cmd command lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_history_cmd</command><arg choice="opt"><option>-a </option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
@@ -1892,7 +1901,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listOptions command line lists the options of the user</para>
+        <para>The vishnu_list_options command lists the options of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_options</command><arg choice="opt"><option>-a </option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
@@ -1987,7 +1996,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listUsers command line lists VISHNU users</para>
+        <para>The vishnu_list_users command lists VISHNU users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_users</command><arg choice="opt"><option>-i <replaceable>userIdOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2066,7 +2075,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listSessions command line lists all sessions of the user</para>
+        <para>The vishnu_list_sessions command lists all sessions of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_sessions</command><arg choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>sessionClosePolicy</replaceable></option></arg><arg
@@ -2208,7 +2217,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureDefaultOption command line configures a default option value</para>
+        <para>The vishnu_configure_default_option command configures a default option value</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_configure_default_option</command><arg choice="plain"><replaceable>optionName</replaceable></arg><arg
               choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
@@ -2295,7 +2304,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureOption command line configures an option of the user</para>
+        <para>The vishnu_configure_option command configures an option of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_configure_option</command><arg choice="plain"><replaceable>optionName</replaceable></arg><arg
               choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
@@ -2470,7 +2479,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
+        <para>The vishnu_submit_job command submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
@@ -2628,7 +2637,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobInfo command line gets information on a job from its id</para>
+        <para>The vishnu_get_job_info command gets information on a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_job_info</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
@@ -2715,7 +2724,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobProgress command line gets the progression status of jobs</para>
+        <para>The vishnu_get_job_progress command gets the progression status of jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_job_progress</command><arg choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
               choice="opt"><option>-u <replaceable>jobOwner</replaceable></option></arg><arg
@@ -2810,7 +2819,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listQueues command line gets queues information</para>
+        <para>The vishnu_list_queues command gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_queues</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -2889,7 +2898,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listJobs command line gets a list of all submitted jobs</para>
+        <para>The vishnu_list_jobs command gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_jobs</command><arg choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
               choice="opt"><option>-P <replaceable>nbCpu</replaceable></option></arg><arg
@@ -3048,7 +3057,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobOutPut command line gets outputPath and errorPath of a job from its id</para>
+        <para>The vishnu_get_job_out_put command gets outputPath and errorPath of a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_job_out_put</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
@@ -3135,7 +3144,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getAllJobsOutPut command line dynamically gets outputPath and errorPath of completed jobs</para>
+        <para>The vishnu_get_all_jobs_out_put command dynamically gets outputPath and errorPath of completed jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_all_jobs_out_put</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3214,7 +3223,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob command line cancels a job from its id</para>
+        <para>The vishnu_cancel_job command cancels a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
@@ -3301,7 +3310,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineEnv command line sets environment variables on a remote machine</para>
+        <para>The vishnu_set_machine_env command sets environment variables on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_set_machine_env</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>listEnv</replaceable></arg></cmdsynopsis>
@@ -3388,7 +3397,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineRefreshPeriod command line sets the refresh period of output and error files contents</para>
+        <para>The vishnu_set_machine_refresh_period command sets the refresh period of output and error files contents</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_set_machine_refresh_period</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
@@ -3640,9 +3649,9 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The exportCommands command line exports all the commands made by a user during a session</para>
+        <para>The vishnu_export_commands command exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="plain"><replaceable>oldSessionKey</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="plain"><replaceable>oldSessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3667,10 +3676,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>oldSessionKey</para></entry>
+                <entry><para>oldSessionId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The key of the session to export (session has ended)</para></entry>
+                <entry><para>The id of the session to export (session has ended)</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -3719,7 +3728,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricCurrentValue command line retrieve the current value of a metric on a machine</para>
+        <para>The vishnu_get_metric_current_value command retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
@@ -3806,7 +3815,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricHistory command line retrieve the history of values of a metric on a machine</para>
+        <para>The vishnu_get_metric_history command retrieve the history of values of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>startTime</replaceable></arg><arg choice="plain"><replaceable>endTime</replaceable></arg><arg
@@ -3908,7 +3917,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getProcesses command line gets the list of the processes running over a front machine</para>
+        <para>The vishnu_get_processes command gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_processes</command><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -3987,7 +3996,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setSystemInfo command line updates the system information of a machine</para>
+        <para>The vishnu_set_system_info command updates the system information of a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg
@@ -4082,7 +4091,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setSystemThreshold command line sets a threshold on a machine of a system</para>
+        <para>The vishnu_set_system_threshold command sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>thresholdType</replaceable></arg><arg choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
@@ -4176,7 +4185,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getSystemThreshold command line gets a System threshold on a machine</para>
+        <para>The vishnu_get_system_threshold command gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
@@ -4263,7 +4272,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineUserIdentifier command line defines the shape of the identifiers automatically generated for the users</para>
+        <para>The vishnu_define_user_identifier command defines the shape of the identifiers automatically generated for the users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_define_user_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4342,7 +4351,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineMachineIdentifier command line defines the shape of the identifiers automatically generated for the machines</para>
+        <para>The vishnu_define_machine_identifier command defines the shape of the identifiers automatically generated for the machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_define_machine_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4421,7 +4430,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineJobIdentifier command line defines the shape of the identifiers automatically generated for the jobs</para>
+        <para>The vishnu_define_job_identifier command defines the shape of the identifiers automatically generated for the jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_define_job_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4500,7 +4509,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineTransferIdentifier command line defines the shape of the identifiers automatically generated for the file transfers</para>
+        <para>The vishnu_define_transfer_identifier command defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4579,7 +4588,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The loadShed command line load sheds a machine</para>
+        <para>The vishnu_load_shed command load sheds a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_load_shed</command><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
               choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
@@ -4666,7 +4675,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setUpdateFrequency command line sets the update frequency of the IMS tables</para>
+        <para>The vishnu_set_update_frequency command sets the update frequency of the IMS tables</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_set_update_frequency</command><arg choice="plain"><replaceable>freq</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4745,7 +4754,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getUpdateFrequency command line gets the update frequency of the IMS database</para>
+        <para>The vishnu_get_update_frequency command gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_get_update_frequency</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4793,7 +4802,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restart command line restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
+        <para>The vishnu_restart command restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-n <replaceable>componentName</replaceable></option></arg><arg
               choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
@@ -5004,7 +5013,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createFile command line creates  files on  remote machines.</para>
+        <para>The vishnu_create_file command creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_create_file</command><arg choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
@@ -5091,7 +5100,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createDir command line creates directories on remote machines.</para>
+        <para>The vishnu_create_dir command creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
@@ -5178,7 +5187,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeFile command line removes files from  remote hosts.</para>
+        <para>The vishnu_remove_file command removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_remove_file</command><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5257,7 +5266,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeDir command line removes  directories (and subdirectories) from  remote machines.</para>
+        <para>The vishnu_remove_dir command removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_remove_dir</command><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5336,7 +5345,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chGrp command line changes group owner of  remote files/directories. </para>
+        <para>The vishnu_ch_grp command changes group owner of  remote files/directories. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_ch_grp</command><arg choice="plain"><replaceable>path</replaceable></arg><arg
               choice="plain"><replaceable>group</replaceable></arg></cmdsynopsis>
@@ -5423,7 +5432,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chMod command line changes  access rights of remote files/directories.</para>
+        <para>The vishnu_ch_mod command changes  access rights of remote files/directories.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_ch_mod</command><arg choice="plain"><replaceable>path</replaceable></arg><arg
               choice="plain"><replaceable>mode</replaceable></arg></cmdsynopsis>
@@ -5510,7 +5519,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The headOfFile command line displays a few first lines of  files located on  remote machines.</para>
+        <para>The vishnu_head_of_file command displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_head_of_file</command><arg choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
@@ -5597,7 +5606,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The tailOfFile command line displays a few last lines of  files located on remote machines</para>
+        <para>The vishnu_tail_of_file command displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_tail_of_file</command><arg choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
@@ -5684,7 +5693,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The contentOfFile command line displays content  of  files located on remote machines</para>
+        <para>The vishnu_content_of_file command displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_content_of_file</command><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5763,7 +5772,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listDir command line displays  the content of a remote directory. </para>
+        <para>The vishnu_list_dir command displays  the content of a remote directory. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_dir</command><arg choice="opt"><option>-l </option></arg><arg
               choice="opt"><option>-a </option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
@@ -5857,7 +5866,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyFile command line executes a synchronous copy of file.</para>
+        <para>The vishnu_copy_file command executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_copy_file</command><arg choice="opt"><option>-r </option></arg><arg
               choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
@@ -5967,7 +5976,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
+        <para>The vishnu_copy_async_file command executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_copy_async_file</command><arg choice="opt"><option>-r </option></arg><arg
               choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
@@ -6077,7 +6086,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveFile command line executes a synchronous move of file.</para>
+        <para>The vishnu_move_file command executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
@@ -6179,7 +6188,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveAsyncFile command line executes an asynchronous move of file.</para>
+        <para>The vishnu_move_async_file command executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
@@ -6281,7 +6290,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopFileTransfer command line stops an execution of a set of file transfers.</para>
+        <para>The vishnu_stop_file_transfer command stops an execution of a set of file transfers.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_stop_file_transfer</command><arg choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
               choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
@@ -6376,7 +6385,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFileTransferStatus command line displays the status of all file transfers submitted by User.</para>
+        <para>The vishnu_list_file_transfer_status command displays the status of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_file_transfer_status</command><arg choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
               choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
@@ -6471,7 +6480,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFileTransfers command line displays the history of all file transfers submitted by User.</para>
+        <para>The vishnu_list_file_transfers command displays the history of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_file_transfers</command><arg choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
