@@ -234,17 +234,24 @@ int
 UserServer::changePassword(std::string newPassword) {
   std::string sqlChangePwd;
   std::string sqlUpdatePwdState;
-  
+  std::string passwordCrypted;
+  std::string salt;
   try {
     //If the user exist (the flagForChangePwd is set to true to avoid the password state checking)
-    if (exist(true)) {  
+    if (exist(true)) { 
+      
+      
+      //The passwordCrypted uses the same way used by command line interface to crypted password
+      salt = "$6$"+muser.getUserId()+"$";
+      passwordCrypted = std::string(crypt(newPassword.c_str(), salt.c_str())+salt.length()); 
+      
       //sql code to change the user password
-      sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where \
+      sqlChangePwd = "UPDATE users SET pwd='"+passwordCrypted+"'where \
       userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
         
       //sql code to update the passwordstate
       sqlUpdatePwdState = "UPDATE users SET passwordstate=1 \
-      where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"';";
+      where userid='"+muser.getUserId()+"' and pwd='"+passwordCrypted+"';";
       
       sqlChangePwd.append(sqlUpdatePwdState);
       mdatabaseVishnu->process(sqlChangePwd.c_str());
@@ -273,6 +280,9 @@ int
 UserServer::resetPassword(UMS_Data::User user) {
   std::string sqlResetPwd;
   std::string sqlUpdatePwdState;
+  std::string passwordCrypted;
+  std::string salt;
+  
   
   try {
     //If the user exists
@@ -283,12 +293,17 @@ UserServer::resetPassword(UMS_Data::User user) {
 	if (getAttribut("where userid='"+user.getUserId()+"'").size() != 0) {
 	  //generation of a new password
 	  user.setPassword(generatePassword(user.getUserId(), user.getUserId()));
+	  
+	  //The passwordCrypted uses the same way used by command line interface to crypted password
+	  salt = "$6$"+muser.getUserId()+"$";
+	  passwordCrypted = std::string(crypt(user.getPassword().c_str(), salt.c_str())+salt.length()); 
+	  
 	  //The sql code to reset the password
-	  sqlResetPwd = "UPDATE users SET pwd='"+user.getPassword()+"'where \
+	  sqlResetPwd = "UPDATE users SET pwd='"+passwordCrypted+"'where \
 	  userid='"+user.getUserId()+"';";
 	  //sql code to update the passwordstate
 	  sqlUpdatePwdState = "UPDATE users SET passwordstate=0 \
-	  where userid='"+user.getUserId()+"' and pwd='"+user.getPassword()+"';";
+	  where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"';";
 	  //Append of the previous sql code
 	  sqlResetPwd.append(sqlUpdatePwdState);
 	  //Execution of the sql code on the database

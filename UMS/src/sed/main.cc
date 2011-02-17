@@ -5,7 +5,7 @@
 
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s <file.cfg> vishnuid ssh_directory_absolute_path\n"+ std::string(cmd);
+  std::cout << "Usage: %s <file.cfg> vishnuid vishnu_user_db_password\n"+ std::string(cmd);
   return 1;
 }
 

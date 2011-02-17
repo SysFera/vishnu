@@ -33,7 +33,7 @@ LocalAccountServer::add() {
   std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, \
   aclogin, sshpathkey, home, vishnukey) values ";
   std::string cmd = "ssh-keygen -t rsa -N \"\" -f ";
-  std::string keypath = Vishnuid::msshkeypath;// = "~/.ssh/";
+  std::string keypath = std::string(getenv("HOME"))+"/.ssh/";
   int length;
   std::string publicKeyPath;
   char *publicKeyContent;
