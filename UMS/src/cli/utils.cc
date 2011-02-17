@@ -29,7 +29,7 @@ std::string takePassword(const string& prompt, const string & salt){
 
 string password=getpass(prompt.c_str());
 
-string saltTmp="$5$"+salt+"$";
+string saltTmp="$6$"+salt+"$";
 
 password=crypt(password.c_str(),saltTmp.c_str());
 
