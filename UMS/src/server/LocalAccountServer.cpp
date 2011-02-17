@@ -106,7 +106,7 @@ LocalAccountServer::add() {
 		  ifileCreated.close();
 
 		  //get the content of the file	  
-		  msshpublickey = publicKeyContent;		  
+		  msshpublickey = std::string(publicKeyContent);		  
 		  delete[] publicKeyContent;
 		  
 		}//END if the public key is created
@@ -136,7 +136,7 @@ LocalAccountServer::add() {
 	  UMSVishnuException e (4, "The machine does not exist or it is locked");
 	  throw e;
 	}
-      }//if the session key is for the owner of the local account or the user is an admin
+      }//End if the session key is for the owner of the local account or the user is an admin
       else {
 	UMSVishnuException e (4, "The userid is incompatible with the session key");
 	throw e;
@@ -150,7 +150,7 @@ LocalAccountServer::add() {
   }
   catch (SystemException& e) {
     throw;
- }
+  }
   
   return 0;
 }
@@ -212,7 +212,7 @@ LocalAccountServer::update() {
 	  
 	  }//END if the local account exists
 	  else {
-	    UMSVishnuException e (4, "The local account already exists");
+	    UMSVishnuException e (4, "The local account does not exists");
 	    throw e;
 	  }
 	} //End if the machine exists and it is not locked
