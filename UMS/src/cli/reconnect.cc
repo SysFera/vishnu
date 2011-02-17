@@ -134,18 +134,15 @@ int main (int ac, char* av[]){
 
 		 if ( opt.count("help")){
 
-			 usage(opt,"[options] userId sessionId");
-
-			 //cout << opt << endl;
+			helpUsage(opt,"[options] userId sessionId");
 
 			 return 0;
 		 }
 
 		 else{
 
-		cerr << e.what() <<endl;
+			errorUsage(opt,e.what());
 
-		cerr << "To get help, try <<"<< av[0] << " -h >>"<< endl;
 
 		return 1;
 
