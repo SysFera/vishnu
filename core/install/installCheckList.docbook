@@ -63,7 +63,7 @@
                <para>BOOST</para>
             </entry>
             <entry>
-               <para>v1.35</para>
+               <para>v1.45</para>
             </entry>
             <entry>
                <para>All</para>
@@ -177,23 +177,6 @@
          <row>
             <entry>
                <para>COMP10</para>
-            </entry>
-            <entry>
-               <para>EMF4CPP</para>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-            <entry>
-               <para>All</para>
-            </entry>
-            <entry>
-               <para/>
-            </entry>
-         </row>
-         <row>
-            <entry>
-               <para>COMP11</para>
             </entry>
             <entry>
                <para>SWIG</para>
