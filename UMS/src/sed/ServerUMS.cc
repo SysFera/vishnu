@@ -65,7 +65,8 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   }  
   
   //The default vishnu users
-  UserServer admin = UserServer("vishnu_user", "vishnu_user");
+  UserServer admin = UserServer("vishnu_user",
+  "ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.");
   
     if (!admin.exist()) {
      
@@ -224,6 +225,16 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveLocalAccountDelete);
+  
+  /* solveConfigurationSave */
+  
+  mprofile = diet_profile_desc_alloc(SRV[14], 0, 0, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveConfigurationSave);
+  
   
   /* solveOptionValueSet */
   
