@@ -508,14 +508,14 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   char *sessionKey = NULL;
   char *laccountSerialized = NULL;
   std::string empty("");
-  std::string errorInfo = "toto";
+  std::string errorInfo;
   
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
-  std::cout<<"Local Account:"<< laccountSerialized <<std::endl;
+  std::cout<<"Local Account Dans update:"<< laccountSerialized <<std::endl;
  
-  /*
+  
   ecorecpp::parser::parser parser;
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
@@ -524,7 +524,8 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   LocalAccount_ptr localAccount = parser.load(std::string(laccountSerialized))->as< LocalAccount >();
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
   
-  /*try {
+  try {
+    std::string empty("");
     localAccountServer.update();
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
@@ -533,8 +534,9 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
 	errorInfo.append(e.what());
 	std::cout << "errorInfo: " << errorInfo <<std::endl;
 	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  }*/
-  diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  
+  return 0;
 }
 
 /**
@@ -578,4 +580,69 @@ solveLocalAccountDelete(diet_profile_t* pb) {
 	diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
+}
+
+/**
+* \brief Function to solve the service solveOptionValueSet 
+* \fn    int solveOptionValueSet(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveOptionValueSet(diet_profile_t* pb) {
+  char *sessionKey = NULL;
+  char *optionValueSerialized = NULL;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  std::cout<<"options:"<< optionValueSerialized <<std::endl;
+  
+  
+  
+  
+  
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveOptionValueSetDefault 
+* \fn    int solveOptionValueSetDefault(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveOptionValueSetDefault(diet_profile_t* pb) {
+  char *sessionKey = NULL;
+  char *optionValueSerialized = NULL;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  std::cout<<"options:"<< optionValueSerialized <<std::endl;
+  
+  
+  
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveRestore 
+* \fn    int solveRestore(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveRestore(diet_profile_t* pb) {
+  
+  char *sqlcode = NULL;
+  diet_string_get(diet_parameter(pb,0), &sqlcode, NULL);
+  
+  DbFactory factory;
+  Database* db = factory.getDatabaseInstance();
+  
+  db->startTransaction(sqlcode);
+  db->commit();
+  //db->endTransaction();
+    
 }

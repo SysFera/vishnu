@@ -12,7 +12,7 @@
 #include "internalApi.hh"
 #include "boost/filesystem.hpp"
 //#include "DIET_server.h"
-#define NB_SRV 14
+#define NB_SRV 25
 
 
 //static Database* mdatabaseVishnu;
@@ -31,7 +31,18 @@ static const char* SRV[NB_SRV] = {
   "machineDelete",
   "localAccountCreate",
   "localAccountUpdate",
-  "localAccountDelete"};
+  "localAccountDelete",
+  "configurationSave",
+  "configurationRestore",
+  "optionValueSet",
+  "optionValueSetDefault",
+  "sessionList", 
+  "localAccountList",
+  "machineList",
+  "commandList",
+  "optionValueList",
+  "userList",
+  "restore"};
 /**
  * \class ServerUMS
  * \brief This class describes the UMS server
