@@ -16,6 +16,7 @@
 #include "MachineClientServer.hh"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
+#include "ConfigurationServer.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect 
@@ -130,6 +131,16 @@ solveLocalAccountUpdate(diet_profile_t* pb);
 */
 int
 solveLocalAccountDelete(diet_profile_t* pb);
+
+/**
+* \brief Function to solve the service solveConfigurationSave 
+* \fn    int solveConfigurationSave(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveConfigurationSave(diet_profile_t* pb);
+
 /**
 * \brief Function to solve the service solveOptionValueSet 
 * \fn    int solveOptionValueSet(diet_profile_t* pb)

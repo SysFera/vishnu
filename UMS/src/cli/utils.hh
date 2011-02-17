@@ -4,7 +4,10 @@
 #include "UMS_Data.hpp"
 #include <iostream>
 class Options;
-void usage (const Options &,const std::string&);
+
+void helpUsage (const Options &,const std::string&);
+void errorUsage (const Options &,const std::string&);
+
 std::string takePassword(const std::string&, const std::string&);
 
 std::ostream& operator<<(std::ostream& os, const UMS_Data::Session_ptr& session);

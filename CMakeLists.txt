@@ -4,7 +4,7 @@
 # Author: E. PAMBA CAPO-CHICHI
 # Date: 4th February 2011
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.6)
 project(UserManagementSystem)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${UserManagementSystem_SOURCE_DIR}/Cmake)
@@ -67,8 +67,8 @@ endif(EMF4CPP_FOUND)
 include(FindBoost)
 find_package(
         Boost
-        1.40.0
-        REQUIRED program_options date_time filesystem
+				1.45
+        REQUIRED program_options date_time filesystem system
 )
 
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)
