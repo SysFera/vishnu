@@ -18,7 +18,6 @@
 class Vishnuid {
   public:
     static std::string mvishnuid;
-    static std::string msshkeypath;
 };
 /**
 * \brief Function to encrypt data and password

@@ -12,7 +12,7 @@
 #include "internalApi.hh"
 #include "boost/filesystem.hpp"
 //#include "DIET_server.h"
-#define NB_SRV 14
+#define NB_SRV 25
 
 
 //static Database* mdatabaseVishnu;
@@ -31,7 +31,18 @@ static const char* SRV[NB_SRV] = {
   "machineDelete",
   "localAccountCreate",
   "localAccountUpdate",
-  "localAccountDelete"};
+  "localAccountDelete",
+  "configurationSave",
+  "configurationRestore",
+  "optionValueSet",
+  "optionValueSetDefault",
+  "sessionList", 
+  "localAccountList",
+  "machineList",
+  "commandList",
+  "optionValueList",
+  "userList",
+  "restore"};
 /**
  * \class ServerUMS
  * \brief This class describes the UMS server
@@ -48,10 +59,10 @@ public :
    /**
    * \brief To initialize the UMS server
    * \fn void init(std::string vishnuid)
-   * \param vishnuid The id of the vishnu configuration registered in the database
+   * \param vishnuid The password of the root user vishnu_user for the connection with the database
    */ 
    void
-   init(std::string vishnuid, std::string sshkeypath);
+   init(std::string vishnuid, std::string password);
   /**
   * \brief Constructor, raises an exception on error
   * \fn ServerUMS(std::string cfg)

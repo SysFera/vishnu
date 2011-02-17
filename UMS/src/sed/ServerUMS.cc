@@ -37,14 +37,13 @@ ServerUMS::ServerUMS(std::string cfg) {
 * \param vishnuid The id of the vishnu configuration registered in the database
 */
 void
-ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
+ServerUMS::init(std::string vishnuid, std::string password) {
   
   //TODO: le mot de passe du rôle pour la base de données il faudra le prendre en paramètre
   DbFactory factory;
-  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "vishnu_user", "vishnu_user", "vishnu");
+  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", "vishnu_user", password, "vishnu");
   
   Vishnuid::mvishnuid = vishnuid;
-  Vishnuid::msshkeypath = sshkeypath;
   
   DatabaseResult *result;
   
@@ -53,18 +52,7 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   
   try {
    
-  //To check if the absolute ssh directory path exists
-  //std::ifstream ifile (Vishnuid::msshkeypath.c_str());
-  
-  //if the path doesn't exists 
-  if (!boost::filesystem2::exists(Vishnuid::msshkeypath)) {
-    //boost::filesystem::is_directory<>()
-    //boost::filesystem::is_directory();
-    //TODO: faire un test que c'est un répertoire
-   SystemException e(4, "The ssh path is unrecognized"); 
-   throw e;
-  }
-    
+
   /*connection to the database*/
   mdatabaseVishnu->connect();
   
@@ -77,14 +65,16 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   }  
   
   //The default vishnu users
-  UserServer admin = UserServer("vishnu_db_admin", "vishnu_db_admin");
+  UserServer admin = UserServer("vishnu_user",
+  "ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.");
   
     if (!admin.exist()) {
+     
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-     values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','vishnu_db_admin', 1, 1, 1)");
+     values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.', 1, 1, 1)");
    
      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-     values ("+Vishnuid::mvishnuid+", 'vishnu_user','vishnu_user', 1, 1, 1)");
+     values ("+Vishnuid::mvishnuid+", 'vishnu_user','ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.', 1, 1, 1)");
     }
     else {
     std::cout << "The default users are already defined in the database"<< std::endl;	
@@ -235,6 +225,42 @@ ServerUMS::init(std::string vishnuid, std::string sshkeypath) {
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveLocalAccountDelete);
+  
+  /* solveConfigurationSave */
+  
+  mprofile = diet_profile_desc_alloc(SRV[14], 0, 0, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveConfigurationSave);
+  
+  
+  /* solveOptionValueSet */
+  
+  mprofile = diet_profile_desc_alloc(SRV[16], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveOptionValueSet);
+  
+  /* solveOptionValueSetDefault */
+  
+  mprofile = diet_profile_desc_alloc(SRV[17], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveOptionValueSetDefault);
+  
+  
+  /* solveRestore */
+  
+  mprofile = diet_profile_desc_alloc(SRV[24], 1, 1, 1);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveRestore);
   
 
   diet_profile_desc_free(mprofile);
