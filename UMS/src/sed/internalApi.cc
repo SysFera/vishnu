@@ -582,6 +582,51 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   return 0;
 }
 
+
+/**
+* \brief Function to solve the service solveConfigurationSave 
+* \fn    int solveConfigurationSave(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveConfigurationSave(diet_profile_t* pb) {
+  
+  char *sessionKey = NULL;
+  
+  std::string empty("");
+  std::string configurationSerialized("");
+  std::string errorInfo;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  
+  try {
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
+  
+  configurationServer.save();
+  const char* name = "ConfigurationSave";
+  ::ecorecpp::serializer::serializer _ser(name);
+  configurationSerialized =  _ser.serialize(configurationServer.getConfiguration());
+
+  diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+  
+  } catch (SystemException& e) {
+	errorInfo = convertToString(e.getMsgI())+"#";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+	diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  
+  
+  return 0;
+}
+
+
+
 /**
 * \brief Function to solve the service solveOptionValueSet 
 * \fn    int solveOptionValueSet(diet_profile_t* pb)
@@ -639,10 +684,18 @@ solveRestore(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sqlcode, NULL);
   
   DbFactory factory;
+  try {
   Database* db = factory.getDatabaseInstance();
   
   db->startTransaction(sqlcode);
   db->commit();
   //db->endTransaction();
-    
+  }
+   
+  catch (SystemException& e) {
+	std::string errorInfo = convertToString(e.getMsgI())+"#";
+	errorInfo.append(e.what());
+	std::cout << "errorInfo: " << errorInfo <<std::endl;
+  }
+  
 }

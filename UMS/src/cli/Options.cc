@@ -39,9 +39,9 @@ void Configuration::setConfigFile(const string& configFile) {
 Options:: Options(const std::string& pgName )   : generic_options("Generic Options"),
 									                                    config_options("Configuration"),
                                                       env_options("Environment variables"),
-                                                      hidden_options("Hidden Options"){
+                                                      hidden_options("Hidden Options"),
+					                                            conf(new Configuration(pgName)){
 
-					conf=new Configuration(pgName);
 
 					generic_options.add_options()
 							   ("help,h", "produce help message")
@@ -51,13 +51,12 @@ Options:: Options(const std::string& pgName )   : generic_options("Generic Optio
 }
 
 			/* Standard Options constructor. Get a pointer on a config object*/
-Options::Options(Configuration* otherConf):conf(otherConf),
+Options::Options(boost::shared_ptr<Configuration> otherConf):conf(otherConf),
 	                                                    generic_options("Generic Options"),
 									                                    config_options("Configuration"),
                                                       env_options("Environment variables"),
                                                       hidden_options("Hidden Options"){
 
-//	this->conf = conf;
 	generic_options.add_options()
 							   ("help,h", "produce help message")
 							   ;
@@ -65,7 +64,7 @@ Options::Options(Configuration* otherConf):conf(otherConf),
 
 }
 
-Configuration*
+boost::shared_ptr<Configuration>
 Options::getConfiguration()const{
 
 return this->conf;
@@ -207,4 +206,4 @@ std::ostream & operator<< (std::ostream & os, const Options & opt){
 
 // The destructor
 
-Options::~Options(){delete conf;}
+Options::~Options(){}

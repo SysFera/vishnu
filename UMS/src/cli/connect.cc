@@ -2,6 +2,7 @@
 
 #include "connect.hh"
 #include "utils.hh"
+#include "connectUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -10,11 +11,6 @@ using namespace std;
 
 
 int main (int ac, char* av[]){
-
-
-		Configuration config(av[0]);// take the command line name
-
-		string defaultConfig = "VishnuConfig.cfg";
 
 
 		/******* Parsed value containers ****************/
@@ -46,59 +42,42 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
-		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-				        "The diet config file",
-						ENV,
-						dietConfig);
-
-		opt.add("userId,u",
-				        "represents the VISHNU user identifier",
-						HIDDEN,
-						userId,
-						1);
-
-		opt.setPosition("userId",-1);
-
-		opt.add("closePolicy,p",
-					 "for closing session automatically",
-					 CONFIG,
-			       fClosePolicy );
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,-1, dietConfig);
 
 
-		opt.add("sessionInactivityDelay,d",
+			opt->add("sessionInactivityDelay,d",
 				      "The session inactivity delay",
 					  CONFIG,
 					  fSessionInactivityDelay);
 
-		opt.add("substituteUserId,s",
+
+			opt->add("substituteUserId,s",
 				         "The substitute user identifier",
 						 CONFIG,
 						 fSubstituteUserId);
 
+		opt->add("closePolicy,p",
+           "for closing session automatically",
+           CONFIG,
+             fClosePolicy );
 
 		try{
 
 
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		opt.parse_cfile();
+		opt->parse_cfile();
 
-		opt.parse_env(env_name_mapper());
+		opt->parse_env(env_name_mapper());
 
-		opt.notify();
+		opt->notify();
 
 
 /********  Process **************************/
 
-		if (opt.count("dietConfig")==0){
+		if (opt->count("dietConfig")==0){
 
 			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
 
@@ -128,16 +107,14 @@ int main (int ac, char* av[]){
 
 	catch(po::required_option& e){// a required parameter is missing
 
-		if ( opt.count("help")) { // unless help is needed
+		if ( opt->count("help")) { // unless help is needed
 
-			      usage(opt,"[options] userId ");
+			     helpUsage(*opt,"[options] userId ");
 
 		}
 		else{
 
-		cerr << e.what() <<endl;
-
-		cerr << "To get help, try <<"<< av[0] << " -h >>"<< endl;
+			     errorUsage(*opt,e.what());
 
 		}
 		return 1;
