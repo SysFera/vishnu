@@ -64,11 +64,10 @@ else (EMF4CPP_FOUND)
   set(EMF4CPP_DIR "" cache path "EMF4CPP installation path")
 endif(EMF4CPP_FOUND)
 
-include(FindBoost)
 find_package(
         Boost
-				1.45
-        REQUIRED program_options date_time filesystem system
+	1.45
+        REQUIRED program_options date_time filesystem system unit_test_framework
 )
 
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)
@@ -81,6 +80,14 @@ set(API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/api)
 set(CLI_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/cli)
 set(SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
 
+# gather executables and libraries under one roof
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
+
 add_subdirectory(core/database)
 add_subdirectory(UMS/src)
+# macros used to setup test environment
+include(UMSTestingMacros)
+ums_test_setup()
 add_subdirectory(UMS/test/src)
