@@ -305,14 +305,14 @@
                 <entry><para>sessionInactivityDelay</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>The sessionInactivityDelay is the maximum delay in seconds between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+                <entry><para>is the maximum delay in seconds between two user requests when the CLOSE_ON_TIMEOUT policy is set</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>substituteUserId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>s</para></entry>
-                <entry><para>is an option which allows an admin to open a session as if he/she was a specific user identified by his/her userId</para></entry>
+                <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -326,7 +326,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_reconnect command returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
+        <para>The vishnu_reconnect command reconnects to a session that is still active</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="plain"><replaceable>userId </replaceable></arg><arg
               choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
@@ -685,7 +685,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_close command closes the session identfied by the session key</para>
+        <para>The vishnu_close command closes the session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_close</command></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -1306,7 +1306,8 @@
         <para>The vishnu_add_machine command adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_add_machine</command><arg choice="plain"><replaceable>name</replaceable></arg><arg
-              choice="plain"><replaceable>site</replaceable></arg><arg choice="plain"><replaceable>language</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>site</replaceable></arg><arg choice="plain"><replaceable>language</replaceable></arg><arg
+              choice="plain"><replaceable>sshPublicKeyFile</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1355,7 +1356,14 @@
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>represents the language in which the description of the machine has been done</para></entry>
+                <entry><para>represents the language used for the description of the machine</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sshPublicKeyFile</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>contains the path to the SSH public key used by VISHNU to access local user accounts</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -1410,6 +1418,7 @@
               choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
               choice="opt"><option>-d </option></arg><arg choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
               choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-k <replaceable>sshPublicKeyFile</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1466,7 +1475,7 @@
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>represents the language in which the description of the machine has been done</para></entry>
+                <entry><para>represents the language used for the description of the machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -1474,6 +1483,13 @@
                 <entry><para><link linkend="StatusType">StatusType</link></para></entry>
                 <entry><para>t</para></entry>
                 <entry><para>represents the status of the machine</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>sshPublicKeyFile</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>contains the path to the SSH public key used by VISHNU to access local user accounts</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
