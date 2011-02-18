@@ -1,3 +1,9 @@
+/**
+  * \file LocalAccountProxy.hpp
+  * \brief This file contains the VISHNU LocalAccountProxy class.
+  * \authors Daouda Traore (daouda.traore@sysfera.com)
+  */
+
 #ifndef _LOCAL_ACCOUNT_PROXY_H_
 #define _LOCAL_ACCOUNT_PROXY_H_
 
