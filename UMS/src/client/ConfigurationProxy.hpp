@@ -1,3 +1,8 @@
+/**
+  * \file configurationProxy.hpp
+  * \brief This file contains the VISHNU configurationProxy class.
+  * \authors Daouda Traore (daouda.traore@sysfera.com)
+  */
 #ifndef _CONFIGURATION_PROXY_H_
 #define _CONFIGURATION_PROXY_H_
 
