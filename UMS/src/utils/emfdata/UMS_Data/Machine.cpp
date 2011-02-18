@@ -207,5 +207,31 @@ void Machine::setStatus(::UMS_Data::StatusType _status)
 #endif
 }
 
+::ecore::EString const& Machine::getSshPublicKey() const
+{
+    return m_sshPublicKey;
+}
+
+void Machine::setSshPublicKey(::ecore::EString const& _sshPublicKey)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_sshPublicKey = m_sshPublicKey;
+#endif
+    m_sshPublicKey = _sshPublicKey;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__sshPublicKey(),
+                _old_sshPublicKey,
+                m_sshPublicKey
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 
