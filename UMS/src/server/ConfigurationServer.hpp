@@ -33,5 +33,14 @@ private:
   */
   Database *mdatabaseVishnu;
   
+  std::string
+  userToSql(UMS_Data::User_ptr user);
+  std::string
+  machineToSql(UMS_Data::Machine_ptr machine);
+  std::string
+  machineDescToSql(UMS_Data::Machine_ptr machine);
+  
+  std::string
+  localAccountToSql(UMS_Data::LocalAccount_ptr localAccount);
 };
 #endif

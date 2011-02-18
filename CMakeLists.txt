@@ -83,3 +83,4 @@ set(SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
 
 add_subdirectory(core/database)
 add_subdirectory(UMS/src)
+add_subdirectory(UMS/test/src)
