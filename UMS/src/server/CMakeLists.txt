@@ -36,6 +36,7 @@ target_link_libraries(ums-server
   ${EMF4CPP_CPP_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
+  ${LIBCRYPT_LIB}
   emf4cpp-UMS_Data
   database-vishnu
   exception-vishnu
