@@ -28,6 +28,14 @@
               <para>Version du livrable</para>
             </revdescription>
           </revision>
+          <revision>
+            <revnumber>03</revnumber>
+            <date>18/01/2011</date>
+            <authorinitials>SysFera</authorinitials>
+            <revdescription>
+              <para>Ajout de SWIG,Python,Java dans §3.1.</para>
+            </revdescription>
+          </revision>
         </revhistory>
     </info>
     <chapter>
