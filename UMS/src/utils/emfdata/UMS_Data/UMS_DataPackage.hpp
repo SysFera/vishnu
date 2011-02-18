@@ -192,31 +192,33 @@ namespace UMS_Data
 
         static const int MACHINE__STATUS = 56;
 
-        static const int LISTMACHINES__MACHINES = 57;
+        static const int MACHINE__SSHPUBLICKEY = 57;
 
-        static const int LISTMACHINEOPTIONS__USERID = 58;
+        static const int LISTMACHINES__MACHINES = 58;
 
-        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 59;
+        static const int LISTMACHINEOPTIONS__USERID = 59;
 
-        static const int LISTMACHINEOPTIONS__MACHINEID = 60;
+        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 60;
 
-        static const int CONFIGURATION__LISTCONFUSERS = 61;
+        static const int LISTMACHINEOPTIONS__MACHINEID = 61;
 
-        static const int CONFIGURATION__LISTCONFMACHINES = 62;
+        static const int CONFIGURATION__LISTCONFUSERS = 62;
 
-        static const int CONFIGURATION__LISTCONFLOCALACCOUNTS = 63;
+        static const int CONFIGURATION__LISTCONFMACHINES = 63;
 
-        static const int OPTIONVALUE__OPTIONNAME = 64;
+        static const int CONFIGURATION__LISTCONFLOCALACCOUNTS = 64;
 
-        static const int OPTIONVALUE__VALUE = 65;
+        static const int OPTIONVALUE__OPTIONNAME = 65;
 
-        static const int LISTOPTIONSVALUES__OPTIONVALUES = 66;
+        static const int OPTIONVALUE__VALUE = 66;
 
-        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 67;
+        static const int LISTOPTIONSVALUES__OPTIONVALUES = 67;
 
-        static const int LISTOPTOPTIONS__USERID = 68;
+        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 68;
 
-        static const int LISTOPTOPTIONS__OPTIONNAME = 69;
+        static const int LISTOPTOPTIONS__USERID = 69;
+
+        static const int LISTOPTOPTIONS__OPTIONNAME = 70;
 
         // IDs for classifiers for class Command 
 
@@ -443,6 +445,8 @@ namespace UMS_Data
 
         virtual ::ecore::EAttribute_ptr getMachine__status();
 
+        virtual ::ecore::EAttribute_ptr getMachine__sshPublicKey();
+
         virtual ::ecore::EReference_ptr getListMachines__machines();
 
         virtual ::ecore::EAttribute_ptr getListMachineOptions__userId();
@@ -642,6 +646,8 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_Machine__language;
 
         ::ecore::EAttribute_ptr m_Machine__status;
+
+        ::ecore::EAttribute_ptr m_Machine__sshPublicKey;
 
         ::ecore::EReference_ptr m_ListMachines__machines;
 
