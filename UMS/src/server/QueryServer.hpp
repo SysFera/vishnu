@@ -344,10 +344,8 @@ public:
   UMS_Data::ListOptionsValues* list()
   {
      DatabaseResult *ListofOptions;
-     //TODO : A COMPLETER
-     std::string sqlListofOptions = "SELECT name, value userid, aclogin, sshpathkey, home \
-     from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
-     account.users_numuserid=users.numuserid";
+     //TODO : A COMPLETER Difference users et admin + option requeêtre correcte à faire
+     std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
 
      std::vector<std::string>::iterator ii;
      std::vector<std::string> results;
@@ -422,10 +420,8 @@ public:
   UMS_Data::ListCommands* list()
   {
      DatabaseResult *ListOfCommands;
-     //TODO : A COMPLETER
-     std::string sqlListOfCommands = "SELECT name, value userid, aclogin, sshpathkey, home \
-     from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
-     account.users_numuserid=users.numuserid";
+     //TODO : A COMPLETER sql à faire!!!
+     std::string sqlListOfCommands = "SELECT TODO";
 
      std::vector<std::string>::iterator ii;
      std::vector<std::string> results;
@@ -500,15 +496,17 @@ public:
    QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(params, session) 
   {
   }
+  
+   
 
+  
   //To list sessions 
   UMS_Data::ListSessions* list()
   {
      DatabaseResult *ListOfSessions;
      //TODO : A COMPLETER
-     std::string sqlListOfSessions = "SELECT name, value userid, aclogin, sshpathkey, home \
-     from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
-     account.users_numuserid=users.numuserid";
+     std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout \
+     from vsession, users where vsession.users_numuserid=users.numuserid";
 
      std::vector<std::string>::iterator ii;
      std::vector<std::string> results;
@@ -537,9 +535,9 @@ public:
               session->setSessionId(*(ii));
               session->setUserId(*(++ii));
               session->setSessionKey(*(++ii));
-              //session->setDateLastConnect(1297275819); //TODO: A voir avec Paco
-              //session->setDateCreation(1297276819); //TODO: A voir avec Paco
-              //session->setDateClosure(1297277819); // TODO:A voir avec Paco
+              /*session->setDateLastConnect(1297275819); //TODO: A voir avec Paco
+              session->setDateCreation(1297276819); //TODO: A voir avec Paco
+              session->setDateClosure(1297277819);*/ // TODO:A voir avec Paco
               session->setStatus(convertToInt(*(++ii)));
               session->setClosePolicy(convertToInt(*(++ii)));
               session->setTimeout(convertToInt(*(++ii)));

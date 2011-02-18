@@ -263,7 +263,66 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveOptionValueSetDefault);
   
+  /* solveListSessions */
   
+  mprofile = diet_profile_desc_alloc(SRV[18], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveListSessions)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveListSessions);
+
+  /* solveListLocalAccount */
+   
+  mprofile = diet_profile_desc_alloc(SRV[19], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveListLocalAccount)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveListLocalAccount);
+
+   /* solveListMachines */
+  
+  mprofile = diet_profile_desc_alloc(SRV[20], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveListMachines)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveListMachines);
+ 
+   /* solveListHistoryCmd */
+   
+  mprofile = diet_profile_desc_alloc(SRV[21], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveListHistoryCmd)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveListHistoryCmd);
+
+   /* solveListOptions */
+   
+  mprofile = diet_profile_desc_alloc(SRV[22], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveListOptions)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveListOptions);
+
+  /* solveListUsres */
+  
+  mprofile = diet_profile_desc_alloc(SRV[23], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveListUsres)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveListUsers);
+
   /* solveRestore */
   
   mprofile = diet_profile_desc_alloc(SRV[24], 1, 1, 1);

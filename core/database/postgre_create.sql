@@ -40,6 +40,7 @@ CREATE TABLE machine (
   network INTEGER    ,
   machineid VARCHAR(255)      ,
   status INTEGER      ,
+  sshpublickey TEXT ,
 PRIMARY KEY(nummachineid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
@@ -128,7 +129,6 @@ CREATE TABLE account (
   aclogin VARCHAR(255)    ,
   sshpathkey VARCHAR(255)    ,
   home VARCHAR(255)      ,
-  vishnukey VARCHAR(255)      ,
 PRIMARY KEY(numaccountid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE,
@@ -234,8 +234,8 @@ INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIM
 -- Put password for connection for all roles: 
 -- With psql --> ALTER USER vishnu_user WITH ENCRYPTED PASSWORD 'your password';
 
-CREATE ROLE vishnu_db_admin;
-CREATE ROLE vishnu_user;
+--CREATE ROLE vishnu_db_admin;
+--CREATE ROLE vishnu_user;
 
 GRANT ALL ON vishnu TO "vishnu_db_admin";
 GRANT SELECT ON vishnu TO "vishnu_db_admin";

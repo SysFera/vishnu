@@ -27,16 +27,16 @@ mlocalAccount(account), msessionServer(session) {
 int
 LocalAccountServer::add() {
   
-  int ret;
+  //int ret;
   std::string numMachine;
   std::string numUser;
   std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, \
-  aclogin, sshpathkey, home, vishnukey) values ";
-  std::string cmd = "ssh-keygen -t rsa -N \"\" -f ";
+  aclogin, sshpathkey, home) values ";
+  /*std::string cmd = "ssh-keygen -t rsa -N \"\" -f ";
   std::string keypath = std::string(getenv("HOME"))+"/.ssh/";
   int length;
   std::string publicKeyPath;
-  char *publicKeyContent;
+  char *publicKeyContent;*/
 
   try {
     //Creation of the object user
@@ -67,7 +67,7 @@ LocalAccountServer::add() {
 	  if (!exist(numMachine, numUser)) {  
 	    
 	    //to get the path of the private ssh key generated
-	    keypath.append(mlocalAccount->getUserId()+"_"+mlocalAccount->getMachineId());
+	    /*keypath.append(mlocalAccount->getUserId()+"_"+mlocalAccount->getMachineId());
 	    
 	    //to complete the previous cmd with the ssk key path 
 	    cmd.append(keypath);
@@ -87,12 +87,15 @@ LocalAccountServer::add() {
 	      ret = system(cmd.c_str());
 	      
 	      //if the command was succesfully executed 
-	      if (ret == 0) {
+	      if (ret == 0) {*/
 		//The sql code to insert the localAccount on the database
 		mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', '\
-		"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"', '"+keypath+"')");
+		"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
 		
-		std::ifstream ifileCreated(publicKeyPath.c_str());
+		msshpublickey = machineServer.getAttribut("where \
+		machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
+		
+		/*std::ifstream ifileCreated(publicKeyPath.c_str());
 		//if the public key is created
 		if (ifileCreated.is_open()) {
 		  
@@ -108,24 +111,24 @@ LocalAccountServer::add() {
 		  //get the content of the file	  
 		  msshpublickey = std::string(publicKeyContent);		  
 		  delete[] publicKeyContent;
-		  
-		}//END if the public key is created
+		  */
+		/*}//END if the public key is created
 		else {
 		  UMSVishnuException e (4, "The ssh key for the account has not been created");
 		  throw e;
-		}
+		}*/
 		
-	      }//END if the command was succesfully executed 
+	     /* }//END if the command was succesfully executed 
 	      else {
 		UMSVishnuException e (4, "There was a problem to generate the ssh key for this account");
 		throw e;
-	      }
-	    }//END if the key doesn't already exist on ~/.ssh
+	      }*/
+	   /* }//END if the key doesn't already exist on ~/.ssh
 	    else {
 	      UMSVishnuException e (4, "Contact the administrator: \
 	      an ssh key has been already generated for this account.");
 	      throw e;
-	    }
+	    }*/
 	  }//END if the local account does not exist
 	  else {
 	    UMSVishnuException e (4, "The local account already exists");
@@ -248,9 +251,9 @@ LocalAccountServer::deleteLocalAccount() {
   int ret;
   std::string numMachine;
   std::string numUser;
-  std::string vishnukeypath;
+  /*std::string vishnukeypath;
   std::string cmdToremove = "rm ";
-  
+  */
   try {
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
@@ -280,14 +283,14 @@ LocalAccountServer::deleteLocalAccount() {
 	  if (exist(numMachine, numUser)) {  
 	    
 	    //To get the path od the couple private/public ssh key associated to this local account
-	    vishnukeypath = getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "vishnukey");
+	    //vishnukeypath = getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "vishnukey");
 	    
 	    //To remove the local account from the database
 	    mdatabaseVishnu->process("DELETE FROM account \
 	    where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
 	    
 	    
-	    std::cout << std::endl << "vishnukey:"+vishnukeypath << std::endl;
+	    /*std::cout << std::endl << "vishnukey:"+vishnukeypath << std::endl;
 	    
 	    cmdToremove.append(vishnukeypath+" && rm "+vishnukeypath+".pub");
 	    ret = system(cmdToremove.c_str());
@@ -297,7 +300,7 @@ LocalAccountServer::deleteLocalAccount() {
 	    if (ret != 0) {
 	      UMSVishnuException e (4, "There was a problem to destroy the ssh keys associated to this local account");
 	      throw e;
-	    }
+	    }*/
 	     
 	  }//END if the local account exists
 	  else {
@@ -379,7 +382,7 @@ bool
 LocalAccountServer::exist(std::string idmachine, std::string iduser) {
  
   try {
-  return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
+    return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
   }
   catch (SystemException& e) {
     throw;
