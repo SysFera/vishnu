@@ -63,12 +63,13 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>17/02/2011</date>
+        <date>18/02/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
             
+            
              
-          <para>Renamed all commands to follow C-style command names with vishnu prefix.</para><para>Modified update_machine and export_commands.</para></revdescription>
+          <para>Renamed all commands to follow C-style command names with vishnu prefix.</para><para>Added the help option to all commands.</para><para>Modified update_machine and export_commands.</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -320,7 +321,42 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_CLOSE_POLICY</para></entry>
+                <entry><para>closePolicy</para></entry>
+                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+                <entry><para>is an option for closing session automatically</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>vishnu_reconnect</title>
