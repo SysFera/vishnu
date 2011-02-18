@@ -42,8 +42,9 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
-			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,-1, dietConfig);
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId, dietConfig);
 
+			opt->setPosition("userId",-1);
 
 			opt->add("sessionInactivityDelay,d",
 				      "The session inactivity delay",
@@ -106,26 +107,17 @@ int main (int ac, char* av[]){
               }
 
 
-							int res = connect(userId,password, sessionKey, connectOpt);
+							 connect(userId,password, sessionKey, connectOpt);
 
 	}// End of try bloc
 
 	catch(po::required_option& e){// a required parameter is missing
 
-		if ( opt->count("help")) { // unless help is needed
-
-			     helpUsage(*opt,"[options] userId ");
-
-		}
-		else{
-
-			     errorUsage(*opt,e.what());
-
-		}
-		return 1;
+			     usage(*opt,"[options] userId ","required parameter is missing");
 	}
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+
+		errorUsage(av[0], e.what());
 		return 1;
 	}
 
