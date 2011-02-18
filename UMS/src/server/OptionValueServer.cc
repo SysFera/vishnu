@@ -5,11 +5,14 @@
 * \date 31/01/2011
 */
 #include "OptionValueServer.hh"
-
+#include "UserServer.hh"
+//#include "SessionServer.hh"*/
 /**
 * \brief Constructor
 * \fn OptionValueServer() 
 */
+//TODO Prend sessionServer en paramètre et modifier getClossureInfo
+//Récupérer userid à partir de session key s'il existe
 OptionValueServer::OptionValueServer() {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -20,17 +23,70 @@ OptionValueServer::OptionValueServer() {
 * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
 * \param optionvalue the option data structure 
 */
-OptionValueServer::OptionValueServer(UMS_Data::OptionValue*& optionvalue):moptionValue(optionvalue) {
+OptionValueServer::OptionValueServer(UMS_Data::OptionValue*& optionvalue, UserServer*& user):
+moptionValue(optionvalue) , muserServer(user) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 /**
 * \brief Function to configure options on the database
 * \fn    int configureOption()
+* \param defaultOptions the flag to get data from defauts options table
 * \return  raises an exception on error
 */
 int 
-OptionValueServer::configureOption() {
+OptionValueServer::configureOption(bool defaultOptions) {
+  std::string sqlCommand;
+  
+  
+  try {
+    
+    //if the user exists
+    if (muserServer->exist()) {
+      //if the default table is used
+      if (defaultOptions) {
+	  
+	if (muserServer->isAdmin()){
+	  
+	  sqlCommand = "UPDATE optionu set defaultvalue="+moptionValue->getValue()+"\
+	  where description='"+moptionValue->getOptionName()+"'";
+	  
+	  std::cout <<"SQL COMMAND:"<<sqlCommand;
+	  mdatabaseVishnu->process(sqlCommand.c_str());
+	  
+	}
+	else {
+	  UMSVishnuException e (4, "The user is not an admin");
+	  throw e;
+	}   
+	
+      } //END if the default table is used
+      else {
+	
+	sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values\
+	("+muserServer->getAttribut("where userid='"+muserServer->getData().getUserId()+"\
+	'and pwd='"+muserServer->getData().getPassword()+"'")+",'"+ 
+	getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true) 
+	+"','"+moptionValue->getValue()+"')";
+	
+	std::cout <<"SQL COMMAND:"<<sqlCommand;
+	mdatabaseVishnu->process(sqlCommand.c_str());
+	  
+      }     
+    }//END if the user exists
+    else {
+      UMSVishnuException e (4, "The user is unknown");
+      throw e;
+    }
+    
+  } 
+  catch (SystemException& e) {
+    throw;
+  }
+  
+  
+  
+  
   return 0;
 }
 /**
