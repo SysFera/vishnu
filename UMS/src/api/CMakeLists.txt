@@ -26,7 +26,7 @@ target_link_libraries(ums-api-client
   ums-client-proxy
 )
 
-FIND_PACKAGE(SWIG REQUIRED)
+FIND_PACKAGE(SWIG 1.3.40 REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
 FIND_PACKAGE(PythonLibs)
