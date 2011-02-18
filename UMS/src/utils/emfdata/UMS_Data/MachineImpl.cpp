@@ -89,6 +89,12 @@ void Machine::_initialize()
                 m_status);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_sshPublicKey);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -135,6 +141,12 @@ void Machine::eSet(::ecore::EInt _featureID,
                 _newValue, m_status);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_sshPublicKey);
+    }
+        return;
 
     }
     throw "Error";
@@ -159,6 +171,9 @@ void Machine::eSet(::ecore::EInt _featureID,
                 m_language);
     case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
         return m_status != 1;
+    case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_sshPublicKey);
 
     }
     throw "Error";

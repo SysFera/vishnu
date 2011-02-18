@@ -385,7 +385,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="represents the language in which the description of the machine has been done"/>
+        <details key="content" value="represents the language used for the description of the machine"/>
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -394,6 +394,12 @@
       <eAnnotations source="Description">
         <details key="content" value="represents the status of the machine"/>
         <details key="shortOption" value="t"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sshPublicKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="contains the SSH public key used by VISHNU to access local user accounts"/>
+        <details key="shortOption" value="k"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
