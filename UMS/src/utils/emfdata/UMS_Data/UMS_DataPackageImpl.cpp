@@ -377,6 +377,10 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__status->setFeatureID(
             ::UMS_Data::UMS_DataPackage::MACHINE__STATUS);
     m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__status);
+    m_Machine__sshPublicKey = new ::ecore::EAttribute();
+    m_Machine__sshPublicKey->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY);
+    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__sshPublicKey);
 
     // ListMachines
     m_ListMachinesEClass = new ::ecore::EClass();
@@ -1349,6 +1353,20 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__status->setUnique(true);
     m_Machine__status->setDerived(false);
     m_Machine__status->setOrdered(true);
+    m_Machine__sshPublicKey->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Machine__sshPublicKey->setName("sshPublicKey");
+    m_Machine__sshPublicKey->setDefaultValueLiteral("");
+    m_Machine__sshPublicKey->setLowerBound(0);
+    m_Machine__sshPublicKey->setUpperBound(1);
+    m_Machine__sshPublicKey->setTransient(false);
+    m_Machine__sshPublicKey->setVolatile(false);
+    m_Machine__sshPublicKey->setChangeable(true);
+    m_Machine__sshPublicKey->setUnsettable(false);
+    m_Machine__sshPublicKey->setID(false);
+    m_Machine__sshPublicKey->setUnique(true);
+    m_Machine__sshPublicKey->setDerived(false);
+    m_Machine__sshPublicKey->setOrdered(true);
     // ListMachines
     m_ListMachinesEClass->setName("ListMachines");
     m_ListMachinesEClass->setAbstract(false);
@@ -1955,6 +1973,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getMachine__status()
 {
     return m_Machine__status;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getMachine__sshPublicKey()
+{
+    return m_Machine__sshPublicKey;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getListMachines__machines()
 {
