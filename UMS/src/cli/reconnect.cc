@@ -24,7 +24,9 @@ int main (int ac, char* av[]){
 /**************** Describe options *************/
 
 
-			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId, dietConfig);
+
+			opt->setPosition("userId",1);
 
 
         opt->add("sessionKey,s",
@@ -116,27 +118,12 @@ int main (int ac, char* av[]){
 
 	catch(po::required_option& e){
 
-		 if ( opt->count("help")){
-
-			helpUsage(*opt,"[options] userId sessionId");
-
-			 return 0;
-		 }
-
-		 else{
-
-			errorUsage(*opt,e.what());
-
-
-		return 1;
-
-		}
-
+			usage(*opt,"[options] userId sessionId","required parameter is missing");
 
 	}
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0], e.what()) ;
 		return 1;
 	}
 

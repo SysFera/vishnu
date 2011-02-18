@@ -19,6 +19,8 @@ add_library(cli-utils
  Options
  utils
  connectUtils
+ localAccountUtils
+ userUtils
 )
 #declare all command lines provided
 

@@ -94,7 +94,7 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0],e.what());
 		return 1;
 	}
 
