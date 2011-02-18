@@ -525,7 +525,6 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
   
   try {
-    std::string empty("");
     localAccountServer.update();
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
@@ -593,7 +592,6 @@ int
 solveConfigurationSave(diet_profile_t* pb) {
   
   char *sessionKey = NULL;
-  
   std::string empty("");
   std::string configurationSerialized("");
   std::string errorInfo;
@@ -601,9 +599,10 @@ solveConfigurationSave(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   
-  try {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
+  
+  try {
   
   configurationServer.save();
   const char* name = "ConfigurationSave";
@@ -614,17 +613,60 @@ solveConfigurationSave(diet_profile_t* pb) {
   diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   
   } catch (SystemException& e) {
-	errorInfo = convertToString(e.getMsgI())+"#";
-	errorInfo.append(e.what());
-	std::cout << "errorInfo: " << errorInfo <<std::endl;
-	diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
-	diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      errorInfo = convertToString(e.getMsgI())+"#";
+      errorInfo.append(e.what());
+      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+   
+  return 0;
+}
+
+/**
+* \brief Function to solve the service solveConfigurationRestore 
+* \fn    int solveConfigurationRestore(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveConfigurationRestore(diet_profile_t* pb) {
+  
+  char *sessionKey = NULL;
+  char *configurationSerialized = NULL;
+  std::string empty("");
+  std::string errorInfo;
+  
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
+  
+  diet_string_get(diet_parameter(pb,1), &configurationSerialized, NULL);
+  std::cout<<"configuration:"<< configurationSerialized <<std::endl;
+  
+  ecorecpp::parser::parser parser;
+  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UMS_Data::Configuration_ptr configuration = parser.load(std::string(configurationSerialized))->as< UMS_Data::Configuration >();
+  
+  ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
+  
+  try {
+    configurationServer.restore();
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+  } catch (SystemException& e) {
+    errorInfo = convertToString(e.getMsgI())+"#";
+    errorInfo.append(e.what());
+    std::cout << "errorInfo: " << errorInfo <<std::endl;
+    diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  
+  
   
   
   return 0;
 }
-
 
 
 /**
@@ -642,10 +684,6 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
   std::cout<<"options:"<< optionValueSerialized <<std::endl;
-  
-  
-  
-  
   
   return 0;
 }

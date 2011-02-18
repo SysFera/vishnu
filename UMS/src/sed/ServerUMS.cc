@@ -235,6 +235,15 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
   diet_service_table_add(mprofile, NULL, solveConfigurationSave);
   
+  /* solveConfigurationRestore */
+  
+  mprofile = diet_profile_desc_alloc(SRV[15], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  //if (diet_service_table_add(profile, NULL, solveSessionClose)) return 1; TODO throw exception
+  diet_service_table_add(mprofile, NULL, solveConfigurationRestore);
+  
   
   /* solveOptionValueSet */
   
