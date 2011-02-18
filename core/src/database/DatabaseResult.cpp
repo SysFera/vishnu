@@ -6,7 +6,7 @@
  */
 #include <sstream>
 #include <iostream>
-#include "DatabaseResult.hh"
+#include "DatabaseResult.hpp"
 
 /**
 * \fn DatabaseResult()
