@@ -3,6 +3,7 @@
 #include "connect.hh"
 #include "utils.hh"
 #include "connectUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -42,7 +43,7 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
-			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId, dietConfig);
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
 
 			opt->setPosition("userId",-1);
 
@@ -68,8 +69,6 @@ int main (int ac, char* av[]){
 /**************  Parse to retrieve option values  ********************/
 
 		opt->parse_cli(ac,av);
-
-		opt->parse_cfile();
 
 		opt->parse_env(env_name_mapper());
 
@@ -99,7 +98,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -108,6 +107,15 @@ int main (int ac, char* av[]){
 
 
 							 connect(userId,password, sessionKey, connectOpt);
+*/
+
+			// store sessionKey into ./session
+
+							 sessionKey="myfirstSession";
+							 std::string sessionFile=getSessionLocation(getppid());
+							 cout << "sessionFile: " << sessionFile<< endl;
+							 SessionEntry session(sessionKey,connectOpt.getClosePolicy());
+							 storeLastSession(session,sessionFile.c_str());
 
 	}// End of try bloc
 

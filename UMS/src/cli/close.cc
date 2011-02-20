@@ -1,5 +1,6 @@
 #include "close.hh"
 #include "utils.hh"
+#include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -34,8 +35,6 @@ int main (int ac, char* av[]){
 /**************  Parse to retrieve option values  ********************/
 
 		opt.parse_cli(ac,av);
-
-		//opt.parse_cfile();
 
 		opt.parse_env(env_name_mapper());
 
@@ -77,7 +76,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
 		if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
 			cerr << "DIET initialization failed !" << endl;
@@ -85,8 +84,21 @@ int main (int ac, char* av[]){
 			return 1;
 
 		}
+*/
 
-		int res=close(sessionKey);
+	// get the sessionKey
+
+               std::string sessionFile=getSessionLocation(getppid());
+
+               SessionEntry session=getLastSession(sessionFile);
+
+               sessionKey=session.getSessionKey();
+
+               cout <<"sessionKey " << sessionKey <<endl;
+
+							 removeLastSession(sessionFile);
+
+		//int res=close(sessionKey);
 
 
 

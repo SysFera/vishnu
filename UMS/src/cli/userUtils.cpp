@@ -10,19 +10,19 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType
 																										StringcallBackType& fLastname, StringcallBackType& fEmail, int type){
 
 
-	boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId, dietConfig);
+	boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId,1,dietConfig);
 
 
 	Group_type group=CONFIG;
 
 	if(type){// type =0 for "update function" and type=1 for "add function"
 
-		group=group;
+		group=HIDDEN;
 	}
 
 
 
-	opt->add("privilege",
+	opt->add("privilege,p",
                      "the privilege of the user (admin or simple user)",
                      group,
                      fPrivilege,
@@ -36,7 +36,7 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType
 
 	opt->setPosition("userId",1);
 
-	opt->add("firstname",
+	opt->add("firstname,f",
                         "The firstname of the user",
                         group,
                         fFirstname,
@@ -51,7 +51,7 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType
 	}
 
 
-	opt->add("lastname",
+	opt->add("lastname,l",
                         "The lastname of the user",
                         group,
                         fLastname,
@@ -63,7 +63,7 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType
 	}
 
 
-	opt->add("email",
+	opt->add("email,m",
                         "The email of the user",
                         group,
                         fEmail,

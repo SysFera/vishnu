@@ -1,6 +1,7 @@
 #include "reconnect.hh"
 #include "utils.hh"
 #include "connectUtils.hpp"
+#include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -24,7 +25,7 @@ int main (int ac, char* av[]){
 /**************** Describe options *************/
 
 
-			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId, dietConfig);
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
 
 			opt->setPosition("userId",1);
 
@@ -101,7 +102,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
@@ -109,8 +110,19 @@ int main (int ac, char* av[]){
 
 				  return 1;
               }
+*/
 
-              reconnect(userId, password, sessionId, sessionKey);
+				   // get the sessionKey
+
+							 std::string sessionFile=getSessionLocation(getppid());
+
+							 SessionEntry session=getLastSession(sessionFile);
+
+							 sessionKey=session.getSessionKey();
+
+							 cout <<"sessionKey " << sessionKey <<endl;
+
+              //reconnect(userId, password, sessionId, sessionKey);
 
 
 

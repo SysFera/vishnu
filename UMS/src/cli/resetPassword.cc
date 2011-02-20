@@ -1,5 +1,6 @@
 #include "resetPassword.hh"
-
+#include "connectUtils.hpp"
+#include "utils.hh"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -13,34 +14,17 @@ int main (int ac, char* av[]){
 
 	string dietConfig;
 
-		int reqParam=0;   // to count the required parameters for the command
-
 
 /**************** Describe options *************/
+	boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
+
+	      opt->setPosition("userId",-1);
 
 
-		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC);
-
-        opt.add("dietConfig,c",
-				        "The diet config file",
-						ENV,
-						dietConfig);
-
-				opt.add("sessionKey,s",
+				opt->add("sessionKey,s",
 						           "The session key",
 											 ENV,
 											 sessionKey);
-
-		opt.add("userId,u",
-						"represents the VISHNU user identifier",
-						HIDDEN,
-						userId);
-
-		opt.setPosition("userId",-1);
 
 
 
@@ -48,29 +32,22 @@ int main (int ac, char* av[]){
 
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		//opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
-
-
-
-
+		opt->notify();
 
 /********  Process **************************/
 
-		if (opt.count("userId")){
+		if (opt->count("userId")){
 
 			cout <<"The user identifier is " << userId << endl;
 
-			reqParam=reqParam+1;
 		}
 
 
-		if (opt.count("dietConfig")){
+		if (opt->count("dietConfig")){
 
 
 			cout <<"The diet config file " << dietConfig << endl;
@@ -85,23 +62,11 @@ int main (int ac, char* av[]){
 		}
 
 
-		if(opt.count("sessionKey")){
+		if(opt->count("sessionKey")){
 
 			cout << "The session Key is: " << sessionKey <<endl;
 
 		}
-
-
-		 if ((reqParam < RPPARAM)|| (opt.count("help"))){
-
-			 cout << "Usage: " << av[0] <<" userId"<<endl;
-
-			 cout << opt << endl;
-
-			 return 0;
-		 }
-
-
 
 
 /************** Call UMS connect service *******************************/
@@ -121,12 +86,24 @@ int main (int ac, char* av[]){
 
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
+
+
+	catch(po::required_option& e){// a required parameter is missing
+
+
+		usage(*opt,"[options] userId ","required parameter is missing");
+
+	}
+  catch(std::exception& e){
+
+
+		errorUsage(av[0], e.what());
+
 		return 1;
+
 	}
 
-	return 0;
+	  return 0;
 
 }// end of main
 

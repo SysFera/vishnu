@@ -1,6 +1,7 @@
 
 
 #include "deleteMachine.hh"
+#include "utils.hh"
 
 namespace po = boost::program_options;
 
@@ -8,8 +9,6 @@ using namespace std;
 
 int main (int ac, char* av[]){
 
-
-		int reqParam=0;   // to count the required parameters for the command
 		/******* Parsed value containers ****************/
 
 		string dietConfig;
@@ -19,21 +18,9 @@ int main (int ac, char* av[]){
 		std::string sessionKey;
 
 
-		/********** EMF data ************/
-
-
-
-
-
 /**************** Describe options *************/
 
-
-
 		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
 
         opt.add("dietConfig,c",
 						            "The diet config file",
@@ -43,7 +30,7 @@ int main (int ac, char* av[]){
 				opt.add("machineId",
 											"The identifier of the machine",
 												HIDDEN,
-												machineId);
+												machineId,1);
 
 				opt.setPosition("machineId",-1);
 
@@ -57,13 +44,9 @@ int main (int ac, char* av[]){
 
 		opt.parse_cli(ac,av);
 
-		opt.parse_cfile();
-
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
-
-
 
 
 
@@ -73,7 +56,6 @@ int main (int ac, char* av[]){
 
 			cout <<"The machine identifier is " << machineId << endl;
 
-			reqParam=reqParam+1;
 		}
 
 		if (opt.count("dietConfig")){
@@ -88,19 +70,6 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ((reqParam < DMPARAM) || (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<"  machineId "<<endl;
-
-			cout << opt << endl;
-
-			return 0;
-		}
-
-
-
-
-
 /************** Call UMS connect service *******************************/
 
                // initializing DIET
@@ -110,19 +79,22 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-
-
-							int res = deleteMachine(sessionKey,machineId);
-
-
+							 deleteMachine(sessionKey,machineId);
 
 
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+   catch(po::required_option& e){// a required parameter is missing
+
+          usage(opt," machineId ","required parameter is missing");
+        }
+
+        catch(std::exception& e){
+
+          errorUsage(av[0],e.what());
+
+          return 1;
+  }
 
 	return 0;
 
