@@ -31,7 +31,7 @@ DatabaseResult *ListofLocalAccount;
 std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
 where not userid='vishnu_user' and not userid='vishnu_db_admin'";
 
-std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description \
+std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description \
 where machine.nummachineid = description.machine_nummachineid";
 
 std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home \
@@ -92,6 +92,8 @@ mconfiguration= ecoreFactory->createConfiguration();
 		std::cout << machine->getSite() << std::endl;
 		machine->setStatus(convertToInt(*(++ii)));
 		std::cout << machine->getStatus() << std::endl;
+		machine->setSshPublicKey(*(++ii));
+		std::cout << machine->getSshPublicKey() << std::endl;
 		machine->setLanguage(*(++ii));
 		std::cout << machine->getLanguage() << std::endl;
 		machine->setMachineDescription(*(++ii));
@@ -139,7 +141,7 @@ mconfiguration= ecoreFactory->createConfiguration();
 int ConfigurationServer::restore() {
   std::string sqlcode = "";
   std::string sqlCodeDescMachine = "";
-  
+  std::string sqlcodeLocalAccount = "";
   
   try {
     //Creation of the object user
@@ -154,23 +156,28 @@ int ConfigurationServer::restore() {
 	mdatabaseVishnu->process("DELETE FROM users where not userid='vishnu_user' and not userid='vishnu_db_admin';\
 	DELETE FROM machine; DELETE FROM account;");
 	
+	//To insert all users 
 	for(int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
 	  UMS_Data::User_ptr user = mconfiguration->getListConfUsers().get(i);
-	  sqlcode.append(userToSql(user));
+	  userServer.add(user);
+	  //sqlcode.append(userToSql(user));
 	}
 	
+	//To get all machines
 	for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
 	  UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
+	  /*MachineServer machineServer = MachineServer(machine, msessionServer);
+	  machineServer.add();*/
 	 sqlcode.append(machineToSql(machine));
 	 //sqlCodeDescMachine.append(machineDescToSql(machine));
 	}
 	
-	
-	
         std::cout << "SQL COMMAND:" << sqlcode << std::endl;
-	//insertion of the users and machines
+	
+	//To insert machines
         mdatabaseVishnu->process(sqlcode.c_str());
 	
+	//To get machine description which needs the database number id
 	for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
 	  UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
 	 //sqlcode.append(machineToSql(machine));
@@ -178,29 +185,17 @@ int ConfigurationServer::restore() {
 	}
 	
 	std::cout << "SQL COMMAND:" << sqlCodeDescMachine << std::endl;
-	//insertion of the machine descriptions
+	
+	//To insert machines description
 	mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
 	
+	//To insert localAccount
 	for(int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
 	  UMS_Data::LocalAccount_ptr localAccount = mconfiguration->getListConfLocalAccounts().get(i);
-	  
-	  //UMS_Data::LocalAccount_ptr *localAccountCopy = new UMS_Data::LocalAccount();
-	  
-	  
-	 //sqlcode.append(machineToSql(machine));
-	 //sqlcode.append(localAccountToSql(localAccount));
-	 
-	 LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
-	 //mlocalAccountServer = new LocalAccountServer (localAccount, msessionServer);
-	 localAccountServer.add(); 
-	 /*LocalAccountServer localAccountServer = LocalAccountServer (localAccount);
-	 localAccountServer.add();
-	 */
+	  LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
+	  localAccountServer.add(); 	 
 	}
 	//delete localAccountServer;
-	
-	
-	
   
       } //End if the user is an admin
       else {
@@ -249,10 +244,11 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
 
 std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine) {
-  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status) values ";
+  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   
   sqlInsert.append("("+Vishnuid::mvishnuid+",'"+machine->getName()+"\
-  ','"+ machine->getSite()+"','"+machine->getMachineId()+"',"+convertToString(machine->getStatus())+");");
+  ','"+ machine->getSite()+"','"+machine->getMachineId()+"',\
+  "+convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
   
   
   
@@ -282,7 +278,8 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
   }
   
 }
-  
+
+/*
 std::string
 localAccountToSql(UMS_Data::LocalAccount_ptr localAccount) {
  
@@ -304,6 +301,4 @@ localAccountToSql(UMS_Data::LocalAccount_ptr localAccount) {
   sqlInsert.append("('"+numMachine+"', '"+numUser+"', '"+localAccount->getAcLogin()+"', '\
 		"+localAccount->getSshKeyPath()+"', '"+localAccount->getHomeDirectory()+"');");
   
-  
-  
-}
+}*/

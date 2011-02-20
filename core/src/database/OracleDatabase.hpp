@@ -5,10 +5,13 @@
  * \date 15/12/10
  */
 
-#ifndef _ORACLEDATABASE_H_
-#define _ORACLEDATABASE_H_
+#ifndef _ORACLEDATABASE_HH_
+#define _ORACLEDATABASE_HH_
 
+#include "InternalVishnuException.hpp"
 #include "Database.hpp"
+#include "occi.h"
+#include <vector>
 
 using namespace oracle::occi;
 /**

@@ -1,29 +1,33 @@
 #include "OracleDatabase.hpp"
 
 int
-OracleDatabase::process(){
-  if (mstmp){
+OracleDatabase::process(std::string req){
+  std::string errorMsg;
+  if (mstmt){
     try{
       mstmt->execute();
     }catch(oracle::occi::SQLException &e){
       errorMsg.append("An exception was raised executing the query \n");
-      SystemException e(2, errorMsg);
+      InternalVishnuException e(2, errorMsg);
       throw e;
     }
   }else{
     errorMsg.append(" Cannot process an empty statement \n");
-    SystemException e(2, errorMsg);
+    InternalVishnuException e(2, errorMsg);
     throw e;
   }
   return SUCCESS;
 }
 
 
-int OracleDatabase::startTransaction(string request){
+int 
+OracleDatabase::startTransaction(std::string request){
   connect();
 }
 
-int OracleDatabase::connect(){
+int 
+OracleDatabase::connect(){
+  std::string errorMsg;
   try{
     if (!menvironment){
       menvironment = Environment::createEnvironment(oracle::occi::Environment::DEFAULT);
@@ -31,7 +35,7 @@ int OracleDatabase::connect(){
     }
   }catch(oracle::occi::SQLException &e){
     errorMsg.append(" An exception was raised creating the environment and connecting \n");
-    SystemException e(2, errorMsg);
+    InternalVishnuException e(2, errorMsg);
     throw e;
   }
   return SUCCESS;
@@ -75,12 +79,13 @@ OracleDatabase::disconnect(){
 
 int
 OracleDatabase::commit(){
+  std::string errorMsg;
   if (mcon){
     try{
       mcon->commit();
     }catch(oracle::occi::SQLException &e){
       errorMsg.append("An exception was raised during commit \n");
-      SystemException e(2, errorMsg);
+      InternalVishnuException e(2, errorMsg);
       throw e;
     }
   }
@@ -89,12 +94,13 @@ OracleDatabase::commit(){
 
 int
 OracleDatabase::rollback(){
+  std::string errorMsg;
   if (mcon){
     try {
     mcon->rollback();
     }catch(oracle::occi::SQLException &e){
       errorMsg.append("An exception was raised during the rollback \n");
-      SystemException e(2, errorMsg);
+      InternalVishnuException e(2, errorMsg);
       throw e;
     }
   }
@@ -115,19 +121,24 @@ OracleDatabase::getResult(std::string request) {
   std::vector<std::string> tmp;
   int size;
   int i;
-  stmt = con->createStatement(request);
-  res = stmt->execute();
-  res->setCharacterStreamMode(2, 10000);
-  vector<MetaData> vec = res->getColumnListMetaData();
+
+  mstmt = mcon->createStatement(request);
+  mres = mstmt->executeQuery();
+  mres->setCharacterStreamMode(2, 10000);
+  std::vector<MetaData> vec = mres->getColumnListMetaData();
   size = vec.size();
 
-  while(res->next()){
+  for (i=0;i<size;i++){
+    attributesNames.push_back(vec[i].getString(vec[i].getAttributeId(i+1)));
+  }
+
+  while(mres->next()){
     std::vector<std::string> tmp = std::vector<std::string>();
     for (i=1 ; i<=size; i++){ // Oracle count from 1 to size
-      tmp.push_back(reg->getString(i));
+      tmp.push_back(mres->getString(i));
     }
     results.push_back(tmp);
   }
-  stmt->closeResultSet(res);
+  mstmt->closeResultSet(mres);
   return new DatabaseResult(results, attributesNames);
 }

@@ -10,7 +10,6 @@
 
 #include <string>
 #include "internalApi.hh"
-#include "boost/filesystem.hpp"
 //#include "DIET_server.h"
 #define NB_SRV 25
 

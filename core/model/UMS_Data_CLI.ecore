@@ -91,7 +91,60 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="represents the language in which the description of the machine has been done"/>
+        <details key="content" value="represents the language used for the description of the machine"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sshPublicKeyFile" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="contains the path to the SSH public key used by VISHNU to access local user accounts"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateMachineOptions" instanceTypeName="UpdateMachineOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the identifier of the machine"/>
+        <details key="shortOption" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the name of the machine"/>
+        <details key="shortOption" value="n"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the location of the machine"/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the description of the machine"/>
+        <details key="shortOption" value="d"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the language used for the description of the machine"/>
+        <details key="shortOption" value="l"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EEnum UMS_Data.ecore#//StatusType"
+        defaultValueLiteral="1">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the status of the machine"/>
+        <details key="shortOption" value="t"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sshPublicKeyFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="contains the path to the SSH public key used by VISHNU to access local user accounts"/>
+        <details key="shortOption" value="k"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

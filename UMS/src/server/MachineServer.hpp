@@ -85,6 +85,13 @@ public:
   std::string 
   getAttribut(std::string condition, std::string attrname = "nummachineid");
   //static UMS_Data::ListMachines list(SessionServer session, UMS_Data::LisMachineOptions options);
+  /**
+  * \brief Function to get the content of the public ssh key
+  * \fn std::string getPublicKey()
+  * \return The content of the ssh public key
+  */
+  std::string
+  getPublicKey();
   
 private:
   /////////////////////////////////
@@ -102,6 +109,10 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
+  /**
+  * \brief The content of the ssh public key
+  */
+  std::string msshpublickey;
   
   /////////////////////////////////
   // Functions
