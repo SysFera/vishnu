@@ -15,7 +15,7 @@ class Options;
 
 template <typename userIdType>
 
-boost::shared_ptr<Options> makeConnectOptions(std::string pgName,userIdType& userId,std::string& dietConfig){
+boost::shared_ptr<Options> makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& dietConfig){
 
  boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -29,7 +29,7 @@ boost::shared_ptr<Options> makeConnectOptions(std::string pgName,userIdType& use
                 "represents the VISHNU user identifier",
             HIDDEN,
             userId,
-            1);
+            req);
 
 //    opt->setPosition("userId",pos);
 

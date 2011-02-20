@@ -42,7 +42,7 @@ int usage (const Options & opt,const std::string& mess,const std::string& eWhat)
 	}
 	else{
 
-		errorUsage(opt.getConfiguration()->getPgName(),"required parameter is missing");
+		errorUsage(opt.getConfiguration()->getPgName(),eWhat);
 
 		res=1;
 	}

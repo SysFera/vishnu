@@ -18,9 +18,11 @@ include_directories(${Boost_INCLUDE_DIRS}
 add_library(cli-utils
  Options
  utils
+ sessionUtils
  connectUtils
  localAccountUtils
  userUtils
+ machineUtils
 )
 #declare all command lines provided
 

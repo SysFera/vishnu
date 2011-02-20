@@ -8,7 +8,7 @@ boost::shared_ptr<Options> makeLocalAccountOptions(std::string pgName,Stringcall
 		                                               StringcallBackType & fMachineId, StringcallBackType& fAcLogin,
 																									 StringcallBackType& fSshKeyPath, StringcallBackType & fHomeDirectory, int type){
 
-	boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId, dietConfig);
+	boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId,1,dietConfig);
 
 	opt->setPosition("userId",1);
 
