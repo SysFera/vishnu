@@ -737,3 +737,169 @@ solveRestore(diet_profile_t* pb) {
   }
   
 }
+
+/**
+* \brief Function to solve the service solveGenerique 
+* \fn int solveGenerique(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+template <class QueryParameters, class List, class QueryType>
+int
+solveGenerique(diet_profile_t* pb) {
+
+  char* sessionKey = NULL;
+  char* optionValueSerialized = NULL;
+  std::string listSerialized = "";
+  std::string empty = "";
+  std::string errorInfo;
+
+  std::cout << "=================Solve userList =================" << std::endl;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout << "=========sessionKey=" << sessionKey << "=============" << std::endl;
+  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  std::cout << "=========optionValueSerialized=" << std::endl;
+  std::cout << optionValueSerialized  << std::endl;
+
+   // CREATE DATA MODEL
+  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+  // Parse the model
+  ecorecpp::parser::parser parser;
+  QueryParameters* options = parser.load(optionValueSerialized)->as< QueryParameters >();
+  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
+  QueryType query(options, sessionServer);
+
+  try {
+
+    List* list = query.list();
+    const char* name = "list";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listSerialized =  _ser.serialize(list);
+    
+    diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+
+  } catch (SystemException& e) {
+      errorInfo = convertToString(e.getMsgI())+"#";
+      errorInfo.append(e.what());
+      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+
+ std::cout << " done" << std::endl;
+
+ return 0;
+
+}
+
+/**
+* \brief Function to solve the service solveListUsers 
+* \fn    int solveListUsers(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListUsers(diet_profile_t* pb) {
+  
+  char* sessionKey = NULL;
+  char* option = NULL;
+  std::string listUsersSerialized = "";
+  std::string empty = "";
+  std::string errorInfo;
+
+  std::cout << "=================Solve userList =================" << std::endl;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  std::cout << "=========sessionKey=" << sessionKey << "=============" << std::endl;
+  diet_string_get(diet_parameter(pb,1), &option, NULL);
+  std::cout << "=========option=" << std::endl;
+  std::cout << option  << std::endl;
+
+  // Parse the model
+  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
+  QueryUsers queryUsers(std::string(option), sessionServer);
+
+  try {
+
+    UMS_Data::ListUsers_ptr listUsers  = queryUsers.list();
+    const char* name = "list";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listUsersSerialized =  _ser.serialize(listUsers);
+
+    diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+
+  } catch (SystemException& e) {
+      errorInfo = convertToString(e.getMsgI())+"#";
+      errorInfo.append(e.what());
+      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+
+ std::cout << " done" << std::endl;
+
+ return 0;
+
+}
+
+/**
+* \brief Function to solve the service solveListMachines 
+* \fn int solveListMachines(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListMachines(diet_profile_t* pb) {
+ 
+  return solveGenerique<UMS_Data::ListMachineOptions, UMS_Data::ListMachines, QueryMachines>(pb);
+}
+
+/**
+* \brief Function to solve the service solveListLocalAccount 
+* \fn int solveListLocalAccount(diet_profile_t*& pb) 
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListLocalAccount(diet_profile_t* pb) {
+ 
+  return solveGenerique<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts, QueryLocalAccounts>(pb); 
+}
+
+/**
+* \brief Function to solve the service solveListOptions 
+* \fn int solveListOptions(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListOptions(diet_profile_t* pb) {
+
+ return solveGenerique<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues, QueryOptions>(pb); 
+}
+/**
+* \brief Function to solve the service solveListHistoryCmd 
+* \fn int solveListHistoryCmd(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListHistoryCmd(diet_profile_t* pb) {
+
+ return solveGenerique<UMS_Data::ListCmdOptions, UMS_Data::ListCommands, QueryCommands>(pb);
+}
+/**
+* \brief Function to solve the service solveListLocalAccount 
+* \fn int solveListSessions(diet_profile_t*& pb) 
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListSessions(diet_profile_t* pb) {
+ return solveGenerique<UMS_Data::ListSessionOptions, UMS_Data::ListSessions, QuerySessions>(pb);
+}

@@ -19,7 +19,12 @@
 #include "POSTGREDatabase.hh"
 #include "DbFactory.hh"
 #include "DatabaseResult.hh"
+#include "utilServer.hh"
+using namespace utilServer;
 #include "UserServer.hh"
+//#include "SessionServer.hh"
+
+class UserServer;
 
 /**
 * \class OptionValueServer
@@ -38,14 +43,15 @@ public:
   * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
   * \param optionvalue the option data structure 
   */
-  OptionValueServer(UMS_Data::OptionValue*& optionvalue);
+  OptionValueServer(UMS_Data::OptionValue*& optionvalue, UserServer*& user);
   /**
   * \brief Function to configure options on the database
   * \fn    int configureOption()
+  * \param defaultOptions the flag to get data from defauts options table
   * \return  raises an exception on error
   */
   int 
-  configureOption();
+  configureOption(bool defaultOptions = false);
   /**
   * \brief Function to configure default options on the database
   * \fn    int configureDefaultOption()
@@ -93,5 +99,9 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
+  /**
+  * \brief An object which encapsulates user data
+  */
+  UserServer *muserServer;
 };
 #endif//OPTION_VALUE_SERVER_H

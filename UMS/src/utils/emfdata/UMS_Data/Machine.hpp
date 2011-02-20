@@ -67,6 +67,9 @@ namespace UMS_Data
         ::UMS_Data::StatusType getStatus() const;
         void setStatus(::UMS_Data::StatusType _status);
 
+        ::ecore::EString const& getSshPublicKey() const;
+        void setSshPublicKey(::ecore::EString const& _sshPublicKey);
+
         // References
 
 
@@ -103,6 +106,8 @@ namespace UMS_Data
         ::ecore::EString m_language;
 
         ::UMS_Data::StatusType m_status;
+
+        ::ecore::EString m_sshPublicKey;
 
         // References
 

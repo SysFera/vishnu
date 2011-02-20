@@ -40,7 +40,7 @@ mmachine(machine), msessionServer(session)
 */
 int 
 MachineServer::add() {
-  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status) values ";
+  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   
   try {
     UserServer userServer = UserServer(msessionServer);
@@ -57,7 +57,8 @@ MachineServer::add() {
 	if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 	  
 	  mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"\
-	  ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+")");
+	  ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
+	  '"+mmachine->getSshPublicKey()+"')");
 	  
 	  //To insert the description of the machine
 	  mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
@@ -125,6 +126,12 @@ MachineServer::update() {
 	  //Set the status of the machine
 	  sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+"\
 	  where machineId='"+mmachine->getMachineId()+"';");
+	  
+	  //if a new ssh public key has been defined
+	  if (mmachine->getSshPublicKey().size() != 0) {
+	  sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'\
+	  where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+	  }
 	  
 	  //if a new language has been defined
 	  if (mmachine->getLanguage().size() != 0) {
@@ -209,7 +216,7 @@ MachineServer::deleteMachine() {
 * \brief Destructor
 */
 MachineServer::~MachineServer() {
-  delete mmachine;
+  //delete mmachine;
 }
 
 /**
@@ -253,6 +260,16 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
   else {
     return "";
   }
+}
+
+/**
+* \brief Function to get the content of the public ssh key
+* \fn std::string getPublicKey()
+* \return The content of the ssh public key 
+*/
+std::string
+MachineServer::getPublicKey() {
+  return msshpublickey;
 }
 
 /**

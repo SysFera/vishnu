@@ -121,6 +121,7 @@ CREATE TABLE machine (
   network INTEGER    ,
   machineid VARCHAR(255)      ,
   status INTEGER      ,
+  sshpublickey VARCHAR2   ,
 PRIMARY KEY(nummachineid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
@@ -257,7 +258,6 @@ CREATE TABLE account (
   aclogin VARCHAR(255)    ,
   sshpathkey VARCHAR(255)    ,
   home VARCHAR(255)      ,
-  vishnukey VARCHAR(255)      ,
 PRIMARY KEY(numaccountid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE,
