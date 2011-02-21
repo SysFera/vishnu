@@ -1,5 +1,5 @@
-#ifndef _QUERY_PROXY_H_
-#define _QUERY_PROXY_H_
+#ifndef _QUERY_SERVER_H_
+#define _QUERY_SERVER_H_
 
 #include <string>
 #include <vector>
@@ -7,7 +7,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "SessionServer.hh"
+#include "SessionServer.hpp"
 #include "ListCmdOptions.hpp"
 #include "ListCommands.hpp"
 #include "ListLocalAccOptions.hpp"
