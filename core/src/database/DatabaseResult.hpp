@@ -55,7 +55,7 @@ public :
    * \return the tuple associated to the postion
    */
   std::vector<std::string> 
-  get(unsigned int position) const;
+  get(size_t position) const;
   /**
    * \brief To get the number of fields 
    * \fn get(); 
