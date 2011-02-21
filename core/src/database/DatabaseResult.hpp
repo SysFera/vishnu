@@ -35,10 +35,10 @@ public :
   printAttributesNames();
   /**
    * \brief To get the number of tuples 
-   * \fn getNbTuples() 
+   * \fn size_t getNbTuples() 
    * \return 0 on success, an error code otherwise
    */
-  int 
+  size_t 
   getNbTuples() const;
   /**
    * \brief To get the number of fields 
