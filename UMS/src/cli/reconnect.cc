@@ -1,6 +1,7 @@
 #include "reconnect.hh"
 #include "utils.hh"
 #include "connectUtils.hpp"
+#include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -25,6 +26,8 @@ int main (int ac, char* av[]){
 
 
 			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+
+			opt->setPosition("userId",1);
 
 
         opt->add("sessionKey,s",
@@ -99,7 +102,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
@@ -107,8 +110,19 @@ int main (int ac, char* av[]){
 
 				  return 1;
               }
+*/
 
-              reconnect(userId, password, sessionId, sessionKey);
+				   // get the sessionKey
+
+							 std::string sessionFile=getSessionLocation(getppid());
+
+							 SessionEntry session=getLastSession(sessionFile);
+
+							 sessionKey=session.getSessionKey();
+
+							 cout <<"sessionKey " << sessionKey <<endl;
+
+              //reconnect(userId, password, sessionId, sessionKey);
 
 
 
@@ -116,27 +130,12 @@ int main (int ac, char* av[]){
 
 	catch(po::required_option& e){
 
-		 if ( opt->count("help")){
-
-			helpUsage(*opt,"[options] userId sessionId");
-
-			 return 0;
-		 }
-
-		 else{
-
-			errorUsage(*opt,e.what());
-
-
-		return 1;
-
-		}
-
+			usage(*opt,"[options] userId sessionId","required parameter is missing");
 
 	}
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0], e.what()) ;
 		return 1;
 	}
 

@@ -3,6 +3,7 @@
 #include "connect.hh"
 #include "utils.hh"
 #include "connectUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -42,8 +43,9 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
-			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,-1, dietConfig);
+			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
 
+			opt->setPosition("userId",-1);
 
 			opt->add("sessionInactivityDelay,d",
 				      "The session inactivity delay",
@@ -67,8 +69,6 @@ int main (int ac, char* av[]){
 /**************  Parse to retrieve option values  ********************/
 
 		opt->parse_cli(ac,av);
-
-		opt->parse_cfile();
 
 		opt->parse_env(env_name_mapper());
 
@@ -98,7 +98,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -106,26 +106,26 @@ int main (int ac, char* av[]){
               }
 
 
-							int res = connect(userId,password, sessionKey, connectOpt);
+							 connect(userId,password, sessionKey, connectOpt);
+*/
+
+			// store sessionKey into ./session
+
+							 sessionKey="myfirstSession";
+							 std::string sessionFile=getSessionLocation(getppid());
+							 cout << "sessionFile: " << sessionFile<< endl;
+							 SessionEntry session(sessionKey,connectOpt.getClosePolicy());
+							 storeLastSession(session,sessionFile.c_str());
 
 	}// End of try bloc
 
 	catch(po::required_option& e){// a required parameter is missing
 
-		if ( opt->count("help")) { // unless help is needed
-
-			     helpUsage(*opt,"[options] userId ");
-
-		}
-		else{
-
-			     errorUsage(*opt,e.what());
-
-		}
-		return 1;
+			     usage(*opt,"[options] userId ","required parameter is missing");
 	}
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+
+		errorUsage(av[0], e.what());
 		return 1;
 	}
 
