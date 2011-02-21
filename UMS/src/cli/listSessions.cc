@@ -205,17 +205,8 @@ int main (int ac, char* av[]){
 			cout <<"the session key is : " << sessionKey << endl;
 		}
 
-		if (opt.count("dietConfig")){
 
-			cout <<"The diet config file " << dietConfig << endl;
-		}
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
-
+		checkVishnuConfig(opt);
 
 		if ( opt.count("help")){
 

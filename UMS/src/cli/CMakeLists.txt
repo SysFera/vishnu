@@ -20,6 +20,7 @@ add_library(cli-utils
  utils
  sessionUtils
  connectUtils
+ configureOptionUtils
  localAccountUtils
  userUtils
  machineUtils

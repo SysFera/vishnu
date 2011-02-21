@@ -77,20 +77,10 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt->count("dietConfig")==0){
 
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+		checkVishnuConfig(*opt);
 
-			return 1;
-
-		}
-
-		else{
-
-			cout << "the confih file is " << dietConfig <<endl;
-
-		}
-			//Fix me
+		//Fix me
 
 			password= takePassword("Password: ",userId);// uses getpass which is obsolete.
 

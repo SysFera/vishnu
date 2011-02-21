@@ -4,6 +4,7 @@
 
 #include<iostream>
 #include<boost/shared_ptr.hpp>
+#include<boost/function.hpp>
 
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
