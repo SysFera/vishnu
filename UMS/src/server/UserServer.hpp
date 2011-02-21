@@ -20,8 +20,8 @@
 #include "POSTGREDatabase.hh"
 #include "DbFactory.hh"
 #include "DatabaseResult.hh"
-#include "SessionServer.hh"
-#include "utilServer.hh"
+#include "SessionServer.hpp"
+#include "utilServer.hpp"
 
 using namespace utilServer;
 class SessionServer;

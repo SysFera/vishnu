@@ -5,7 +5,7 @@
 * \date 31/01/2011
 */
 
-#include "MachineClientServer.hh"
+#include "MachineClientServer.hpp"
 /**
 * \brief Constructor
 * \fn MachineClientServer(std::string sshKey, std::string host)
@@ -41,7 +41,7 @@ int MachineClientServer::recordMachineClient() {
     }
   } //End if the machine is not on the database 
   else {
-    std::cout << "The machine is already registered";
+    std::cout << "This client machine is already registered" << std::endl;
   } 
   return 0;
 }
@@ -64,18 +64,10 @@ MachineClientServer::getId() {
   std::cout <<"SQL COMMAND:"<<sqlCommand;
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
   } 
   catch (SystemException& e) {
     throw;
-  }
-  if (result->getNbTuples() != 0) {  
-    result->print();
-    std::vector<std::string> tmp = result->get(0);
-    ii=tmp.begin();
-    return *ii;
-  } 
-  else {
-    return "";
   }
 }
 /**

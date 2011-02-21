@@ -5,7 +5,7 @@
 * \date 31/01/2011
 */
 
-#include "SessionServer.hh"
+#include "SessionServer.hpp"
 /**
 * \brief Constructor
 * \fn SessionServer()
@@ -50,15 +50,13 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   try {
     //if the user exist 
     if (user.exist()) {
-      solveConnectionMode(connectOpt, user);
-      //if a user to substitute is defined
       
+      //if a user to substitute is defined
       if (connectOpt->getSubstituteUserId().size() != 0) {
 	std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;	
 	// if the user is admin
 	if (user.isAdmin()) {
-	  //TODO faire une fonction checklogin qui vérifie 
-	  //que le userID appartient a un utilisateur qui exist et qui n'est pas blocked
+	  
 	  numSubstituteUserId = user.getAttribut("where \
 	  userid='"+connectOpt->getSubstituteUserId()+"'");
 	  
@@ -71,12 +69,12 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 	    //} 
 	  } //End If the user to substitute exist
 	  else {
-	    UMSVishnuException e(4, "The user to substitute is unknown!");
+	    UMSVishnuException e(UNKNOWN_USERID);
 	    throw e;
 	  }  
 	} // END if the user is admin
 	else {
-	  UMSVishnuException e(4, "The substitution is an admin option!");
+	  UMSVishnuException e(NO_ADMIN);
 	  throw e;
 	}
      } //End if connectOpt->getSubstituteUserId().size() != 0
@@ -84,19 +82,18 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
      //if there is not a numSubstituteUserId
      if (numUserIdToconnect.size() == 0) {
 	numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'\
-	and pwd='"+user.getData().getPassword()+"'"); 
+	and pwd='"+user.getData().getPassword()+"'");
      } //END if There is not a numSubstituteUserId 
-     /*else {
-	generateSessionKey(connectOpt->getSubstituteUserId());
-	generateSessionId(connectOpt->getSubstituteUserId());
-    }*/
-    
+     
     generateSessionKey(user.getData().getUserId());
     generateSessionId(user.getData().getUserId()); 
     
     std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
     std::cout <<" After generation SessionId:" << msession.getSessionId()<< std::endl;
-  
+    
+    //To solve the connection mode
+    solveConnectionMode(connectOpt, numUserIdToconnect);
+    
     host.recordMachineClient();
     recordSessionServer(host.getId(), numUserIdToconnect);
 	     
@@ -104,7 +101,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
     
     } // END if the user exist 
     else {
-      UMSVishnuException e(4, "The user is unknwon");
+      UMSVishnuException e(UNKNOWN_USER);
       throw e;
     }
   
@@ -149,22 +146,22 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
 	  }
 	  //if there is no session key with the previous parameters
 	  if (existSessionKey == -1) {
-	    UMSVishnuException e(4, "This session has not been opened with this machine for the corresponding user");
+	    UMSVishnuException e(SESSION_INCOMPATIBILITY);
 	    throw e;
 	  }
 	}//if the session is active
 	else {
-	  UMSVishnuException e(4, "The reconnection is impossible because the session is closed");
+	  UMSVishnuException e(SESSIONKEY_EXPIRED);
 	  throw e;
 	}	  
       }//END if state != -1
       else {
-	UMSVishnuException e(4, "The sessionId is unrecognized");
+	UMSVishnuException e(UNKNOWN_SESSION_ID);
 	throw e;
       }
     } //END IF user.exist
     else {
-      UMSVishnuException e(4, "The user is unknwon");
+      UMSVishnuException e(UNKNOWN_USER);
       throw e;
     }
   }//END Try 
@@ -201,7 +198,7 @@ int SessionServer::close() {
 	mdatabaseVishnu->process(sqlCommand.c_str());		
       } //if the session is not already closed
       else {
-	UMSVishnuException e (4, "The session key is expired. The session is already closed");
+	UMSVishnuException e (SESSIONKEY_EXPIRED);
 	throw e;
       }  
     } //END If The user exist
@@ -238,26 +235,16 @@ SessionServer::getData() {
 std::string 
 SessionServer::getAttribut(std::string condition, std::string attrname) {
   DatabaseResult* result;
-  std::vector<std::string>::iterator ii;
   
   std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
   std::cout <<"SQL COMMAND:"<<sqlCommand;
     
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
   } 
   catch (SystemException& e) {
     throw;
-  }
-  //TODO: Dans databaseResult rajouter ce bout de code dans une fonction getFirstElement
-  if (result->getNbTuples() != 0) {
-    result->print();
-    std::vector<std::string> tmp = result->get(0);  
-    ii=tmp.begin();
-    return (*ii);
-  } 
-  else {
-    return "";
   }
 }
 /**
@@ -269,6 +256,7 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
 int 
 SessionServer::generateSessionKey(std::string salt) {
   
+  std::string sessionKey;
   //the current time
   ptime now = microsec_clock::local_time();
 
@@ -276,12 +264,12 @@ SessionServer::generateSessionKey(std::string salt) {
   std::string tmpSalt = "$1$" + salt + "$";
   
   //for SHA1-512 encryption by using the userId as a salt
-  std::string globalSalt = "$6$"+std::string(crypt(salt.c_str(), tmpSalt.c_str()))+"$";
+  std::string globalSalt = "$6$"+std::string(crypt(salt.c_str(), 
+						   tmpSalt.c_str())).substr(tmpSalt.size())+"$";
   
   //SHA1-512 encryption of the salt encrypted using the md5 and the current time as the clef
-  std::cout << "SessionKey generated:"
-  << std::string(crypt(to_simple_string(now).c_str(),globalSalt.c_str())+globalSalt.length()) <<std::endl;
-  msession.setSessionKey(std::string(crypt(to_simple_string(now).c_str(),globalSalt.c_str())+5));
+  sessionKey = std::string(crypt(to_simple_string(now).c_str(), globalSalt.c_str()));
+  msession.setSessionKey(sessionKey.substr(globalSalt.size()));
   
   return 0;
 }
@@ -446,19 +434,17 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
 * \return the connection parameters are registered on the session data structure
 */
 int 
-SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, UserServer user) {
+SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::string numuserId) {
   
   OptionValueServer optionValueServer;
   
   switch (connectOpt->getClosePolicy()) {
     ////The closure mode is undefined
     case 0: 
-      msession.setClosePolicy(optionValueServer.getClosureInfo(user.getAttribut("\
-      where userid='"+user.getData().getUserId()+"'")));
+      msession.setClosePolicy(optionValueServer.getClosureInfo(numuserId));
 	//If the policy is not 2 (CLOSE_ON_DISCONNECT)
       if (msession.getClosePolicy() != 2) { 
-	msession.setTimeout(optionValueServer.getClosureInfo(user.getAttribut("\
-	where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT"));
+	msession.setTimeout(optionValueServer.getClosureInfo(numuserId, "VISHNU_TIMEOUT"));
       } 
     break;
     //The closure mode is close on timeout
@@ -468,18 +454,15 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, UserSer
 	msession.setTimeout(connectOpt->getSessionInactivityDelay());
       } //END if the timeout is defined
       else {
-	msession.setTimeout(optionValueServer.getClosureInfo(user.getAttribut("\
-	where userid='"+user.getData().getUserId()+"'"), "VISHNU_TIMEOUT"));
+	msession.setTimeout(optionValueServer.getClosureInfo(numuserId, "VISHNU_TIMEOUT"));
       }
     break;
     //The closure mode is close on disconnect
     case 2: 
       msession.setClosePolicy(2); 
     break;
-  }  
+  }
+  
+  return 0;
 }
   
-/*UMS_Data::ListSessions  SessionServer::list(SessionServer session, UMS_Data::ListSessionOptions  options)
-{
-	return 0;
-}*/

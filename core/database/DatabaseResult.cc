@@ -90,7 +90,7 @@ DatabaseResult::getNbTuples() const{
   return static_cast <int> (results.size());
 }
 /**
-* \brief To get the number of fields 
+* \brief To get a specific results using its position 
 * \fn getNbFields() 
 * \return 0 on success, an error code otherwise
 */
@@ -129,3 +129,23 @@ std::vector<std::vector<std::string> >
 DatabaseResult::getResults() const{
   return results;
 }
+
+/**
+* \brief To get the first attribut value of the first element 
+* \fn std::string getFirstElement(); 
+* \return the first attribut value of the first element
+*/
+std::string
+DatabaseResult::getFirstElement() const {
+  std::vector<std::string>::iterator ii;
+  
+  if (getNbTuples() != 0) {
+    std::vector<std::string> tmp = get(0);  
+    ii=tmp.begin();
+    return (*ii);
+  } 
+  else {
+    return "";
+  }
+}
+

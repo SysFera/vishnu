@@ -9,8 +9,7 @@
 #define _SERVERUMS_H_
 
 #include <string>
-#include "internalApi.hh"
-#include "boost/filesystem.hpp"
+#include "internalApi.hpp"
 //#include "DIET_server.h"
 #define NB_SRV 25
 
@@ -58,10 +57,11 @@ public :
    getCfg();  
    /**
    * \brief To initialize the UMS server
-   * \fn void init(std::string vishnuid)
+   * \fn int init(std::string vishnuid)
    * \param vishnuid The password of the root user vishnu_user for the connection with the database
+   * \return an error code (0 if success and 1 if an error occurs) 
    */ 
-   void
+   int
    init(std::string vishnuid, std::string password);
   /**
   * \brief Constructor, raises an exception on error

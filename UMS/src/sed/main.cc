@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "ServerUMS.hh"
+#include "ServerUMS.hpp"
 
 int
 usage(char* cmd) {
@@ -18,10 +18,14 @@ int main(int argc, char* argv[], char* envp[]) {
   }
   
   ServerUMS server(argv[1]);
-  server.init(argv[2], argv[3]);
+  res = server.init(argv[2], argv[3]);
   
-  diet_print_service_table();
-  res = diet_SeD(argv[1], argc, argv);
+  if (!res) {
+    diet_print_service_table();
+    res = diet_SeD(argv[1], argc, argv);
+  } else {
+    std::cout << "There was a problem during services initialization" << std::endl;
+  }
   
  return res; 
 }

@@ -1,7 +1,9 @@
 
 
 #include "addLocalAccount.hh"
-
+#include "utils.hh"
+#include "localAccountUtils.hpp"
+#include <boost/bind.hpp>
 namespace po = boost::program_options;
 
 using namespace std;
@@ -10,29 +12,25 @@ int main (int ac, char* av[]){
 
 
 
-	try {
 
 
-		int reqParam=0;   // to count the required parameters for the command
 		/******* Parsed value containers ****************/
 
 		string dietConfig;
-
-		std::string userId;
-
-		std::string machineId;
-
-		std::string acLogin;
-
-		std::string sshKeyPath;
-
-		std::string sessionKey;
-
-		std::string homeDirectory;
+    string sessionKey;
 
 		/********** EMF data ************/
 
 		UMS_Data::LocalAccount newAcLogin;
+
+/******** Callback functions ******************/
+
+					boost::function1<void,string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(newAcLogin),_1));
+					boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(newAcLogin),_1));
+					boost::function1<void,string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(newAcLogin),_1));
+					boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(newAcLogin),_1));
+					boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
+
 
 
 		/*****************Out parameters***/
@@ -43,71 +41,22 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
+		boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
+				                                               fAcLogin,fSshKeyPath,fHomeDirectory,1);
 
-
-		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-				opt.add("userId",
-		                 "the Vishnu user identifier of the user of the local user configuration",
-										 HIDDEN,
-										 userId);
-
-				opt.setPosition("userId",1);
-
-
-				opt.add("machineId",
-									    	"the identifier of the machine associated to the local user configuration",
-												HIDDEN,
-												machineId);
-
-				opt.setPosition("machineId",1);
-
-				opt.add("acLogin",
-												"login of the user on the associated machine",
-												HIDDEN,
-												acLogin);
-
-				opt.setPosition("acLogin",1);
-
-
-				opt.add("sshKeyPath",
-												"The path of the ssh key of the user on the associated machine",
-												HIDDEN,
-												sshKeyPath);
-
-				opt.setPosition("sshKeyPath",1);
-
-
-				opt.add("homeDirectory",
-												"The path of the home directory of the user on the associated machine",
-												HIDDEN,
-												homeDirectory);
-
-				opt.setPosition("homeDirectory",1);
-
-				opt.add("sessionKey",
+				opt->add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
 
+	try {
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+		opt->notify();
 
 
 
@@ -115,59 +64,7 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-
-
-		if (opt.count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-			newAcLogin.setUserId(userId);
-
-			reqParam=reqParam+1;
-
-		}
-
-		if(opt.count("machineId")){
-
-			cout <<"the machineId is : " << machineId << endl;
-
-			newAcLogin.setMachineId(machineId);
-
-			reqParam=reqParam+1;
-		}
-
-		if(opt.count("acLogin")){
-
-			cout << "The acLogin is " << acLogin << endl;
-
-			newAcLogin.setAcLogin(acLogin);
-
-			reqParam=reqParam+1;
-
-		}
-
-
-		if (opt.count("sshKeyPath")){
-
-			cout <<"The sshKeyPath is " << sshKeyPath << endl;
-
-			newAcLogin.setSshKeyPath(sshKeyPath);
-
-			reqParam=reqParam+1;
-
-		}
-
-		if (opt.count("homeDirectory")){
-
-			cout <<"The homeDirectory is " << homeDirectory << endl;
-
-		newAcLogin.setHomeDirectory(homeDirectory);
-
-		reqParam=reqParam+1;
-		}
-
-
-		if (opt.count("dietConfig")){
+		if (opt->count("dietConfig")){
 
 			cout <<"The diet config file " << dietConfig << endl;
 		}
@@ -178,22 +75,7 @@ int main (int ac, char* av[]){
 			return 1;
 		}
 
-
-		if ((reqParam < ALAPARAM) || (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<" userId machineId acLogin sshKeyPath homeDirectory "<<endl;
-
-
-			cout << opt << endl;
-
-
-			return 0;
-		}
-
-
-
-
-/************** Call UMS connect service *******************************/
+		/************** Call UMS connect service *******************************/
 
               // initializing DIET
 
@@ -203,17 +85,24 @@ int main (int ac, char* av[]){
               }
 
 
-							int res = addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
+							 addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
 
 
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+catch(po::required_option& e){// a required parameter is missing
 
-	return 0;
+
+	usage(*opt," userId machineId acLogin sshKeyPath homeDirectory ","required parameter is missing");
+  }
+  catch(std::exception& e){
+
+		errorUsage(av[0],e.what());
+
+		return 1;
+  }
+
+  return 0;
 
 }// end of main
 

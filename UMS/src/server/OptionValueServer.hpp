@@ -19,7 +19,10 @@
 #include "POSTGREDatabase.hh"
 #include "DbFactory.hh"
 #include "DatabaseResult.hh"
-#include "UserServer.hh"
+#include "utilServer.hpp"
+using namespace utilServer;
+
+class SessionServer;
 
 /**
 * \class OptionValueServer
@@ -36,23 +39,18 @@ public:
   /**
   * \brief Constructor
   * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
+  * \param sessionServer The object to manipulate session
   * \param optionvalue the option data structure 
   */
-  OptionValueServer(UMS_Data::OptionValue*& optionvalue);
+  OptionValueServer(UMS_Data::OptionValue*& optionvalue, SessionServer session);
   /**
   * \brief Function to configure options on the database
   * \fn    int configureOption()
+  * \param defaultOptions the flag to get data from defauts options table
   * \return  raises an exception on error
   */
   int 
-  configureOption();
-  /**
-  * \brief Function to configure default options on the database
-  * \fn    int configureDefaultOption()
-  * \return  raises an exception on error
-  */
-  int 
-  configureDefaultOption();
+  configureOption(bool defaultOptions = false);
   /**
   * \brief Destructor
   * \fn  ~OptionValueServer()
@@ -83,7 +81,7 @@ public:
   */
   int 
   getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
-  //static UMS_Data::ListOptionsValues  list(SessionServer session, UMS_Data::ListOptOptions  options);
+  
 private:
   /**
   * \brief The option data structure
@@ -93,5 +91,9 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
+  /**
+  * \brief An object which encapsulates user data
+  */
+  SessionServer *msessionServer;
 };
 #endif//OPTION_VALUE_SERVER_H

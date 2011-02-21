@@ -11,10 +11,11 @@
 #include <sstream>
 #include <exception>
 #include "SystemException.hh"
+#include "UMSVishnuException.hh"
 #include "POSTGREDatabase.hh"
 #include "DbFactory.hh"
 #include "DatabaseResult.hh"
-#include "utilServer.hh"
+#include "utilServer.hpp"
 
 /**
 * \class MachineClientServer

@@ -18,8 +18,8 @@ include_directories(
 
 add_executable(umssed 
   main.cc 
-  ServerUMS.cc 
-  internalApi.cc
+  ServerUMS.cpp 
+  internalApi.cpp
 )
 
 target_link_libraries(umssed 

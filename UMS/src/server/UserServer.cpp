@@ -5,7 +5,7 @@
 * \date 31/01/2011
 */
 
-#include "UserServer.hh"
+#include "UserServer.hpp"
 
 /**
 * \brief Constructor
@@ -18,6 +18,7 @@ UserServer::UserServer(std::string userId, std::string password) {
   muser.setUserId(userId);
   muser.setPassword(password);
   mdatabaseVishnu = factory.getDatabaseInstance();
+  msessionServer = NULL;
 }
 
 /**
@@ -26,6 +27,9 @@ UserServer::UserServer(std::string userId, std::string password) {
 * \param user The user data structure
 */
 UserServer::UserServer(const UMS_Data::User& user):muser(user) { 
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
+  msessionServer = NULL;
 }
 
 /**
@@ -49,42 +53,51 @@ UserServer::add(UMS_Data::User*& user) {
   std::string pwd;
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,\
   privilege, email, passwordstate, status) values "; 
-
+  
+  std::string passwordCrypted;
+  std::string salt;
+  
+  
   try {
     if (exist()) {  
       if (isAdmin()) {
-	//TODO :  voir stockage password avec Ibrahima
+	
 	pwd = generatePassword(user->getLastname(), user->getFirstname());
-	user->setPassword(pwd);
+	user->setPassword(pwd.substr(0,8));
+	std::cout << "password to sent by mail to the user:" << user->getPassword() << std::endl;
 	
 	//TODO voir génération Id avec Kévine
 	user->setUserId(user->getFirstname()+"_"+user->getLastname());
 	
+	//The passwordCrypted uses the same method used by command line interface to crypt password
+        salt = "$6$"+user->getUserId()+"$";
+        passwordCrypted = std::string(crypt(user->getPassword().c_str(), salt.c_str())+salt.length()); 
+    
 	//If the user to add exists
 	if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {    
 	  //Insertion of user information on the database
 	  mdatabaseVishnu->process(sqlInsert + "(" + Vishnuid::mvishnuid+", \
-	  '"+user->getUserId()+"','"+user->getPassword()+"','\
-	  "+ user->getFirstname()+"','"+user->getLastname()+"',"+ 
+	  '"+user->getUserId()+"','"+passwordCrypted+"','"
+	  + user->getFirstname()+"','"+user->getLastname()+"',"+ 
 	  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
 	  0, "+convertToString(user->getStatus())+")");
 	  
 	}// END If the user to add exists
 	else {
-	  UMSVishnuException e (4, "The userId generated already exists");
+	  UMSVishnuException e (USERID_EXISTING);
 	  throw e;
 	}  
 	  //TODO : voir envoi de mail avec kévine
 	  
       } //END if the user is an admin 
       else {
-	UMSVishnuException e (4, "The user is not an admin");
+	UMSVishnuException e (NO_ADMIN);
 	throw e;
       }
     } //END if the user exists 
     else {
-	  UMSVishnuException e (4, "The user is unknown");
-	  throw e;
+      UMSVishnuException e (UNKNOWN_USER);
+      throw e;
     }
   }
   catch (SystemException& e) {
@@ -132,7 +145,7 @@ UserServer::update(UMS_Data::User *user) {
 	      where userid='"+user->getUserId()+"';");
 	    } //End If the user is not already locked
 	    else {
-	      UMSVishnuException e (4, "The user is already locked");
+	      UMSVishnuException e (USER_ALREADY_LOCKED);
 	      throw e;
 	    }
 	  } //End If the user will be locked
@@ -146,27 +159,23 @@ UserServer::update(UMS_Data::User *user) {
 	    sqlCommand.append("UPDATE users SET privilege="+convertToString(user->getPrivilege())+""+"\
 	    where userid='"+user->getUserId()+"';");
 	  }
-	  /*else { 
-	    UMSVishnuException e (4, "It is not possible to change the privilege of an admin");
-	    throw e;    
-	  }*/
 	  
 	  std::cout <<"SQL COMMAND:"<<sqlCommand;
 	  mdatabaseVishnu->process(sqlCommand.c_str());
 	  
 	} // End if the user whose information will be updated exists
 	else {
-	  UMSVishnuException e (4, "The user whose information will be updated does not exist");
+	  UMSVishnuException e (UNKNOWN_USERID);
 	  throw e;
 	} 
       } //END if the user is an admin 
       else {
-	UMSVishnuException e (4, "The user is not an admin");
+	UMSVishnuException e (NO_ADMIN);
 	throw e;
       }
     } //END if the user exists 
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -199,17 +208,17 @@ UserServer::deleteUser(UMS_Data::User user) {
 	    mdatabaseVishnu->process("DELETE FROM users where userid='"+user.getUserId()+"'");
 	  } // End if the user who will be deleted exist
 	  else {
-	    UMSVishnuException e (4, "The user who will be deleted does not exist");
+	    UMSVishnuException e (UNKNOWN_USERID);
 	    throw e;
 	  } 
 	} //END if the user is an admin 
 	else {
-	  UMSVishnuException e (4, "The user is not an admin");
+	  UMSVishnuException e (NO_ADMIN);
 	  throw e;
 	}
       } //END if the user exists 
       else {
-	UMSVishnuException e (4, "The user is unknown");
+	UMSVishnuException e (UNKNOWN_USER);
 	throw e;
       }
     }//END If the user to delete is not the super VISHNU admin
@@ -236,22 +245,18 @@ UserServer::changePassword(std::string newPassword) {
   std::string sqlUpdatePwdState;
   std::string passwordCrypted;
   std::string salt;
+  
   try {
     //If the user exist (the flagForChangePwd is set to true to avoid the password state checking)
     if (exist(true)) { 
       
-      
-      //The passwordCrypted uses the same way used by command line interface to crypted password
-      salt = "$6$"+muser.getUserId()+"$";
-      passwordCrypted = std::string(crypt(newPassword.c_str(), salt.c_str())+salt.length()); 
-      
       //sql code to change the user password
-      sqlChangePwd = "UPDATE users SET pwd='"+passwordCrypted+"'where \
+      sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where \
       userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
         
       //sql code to update the passwordstate
       sqlUpdatePwdState = "UPDATE users SET passwordstate=1 \
-      where userid='"+muser.getUserId()+"' and pwd='"+passwordCrypted+"';";
+      where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"';";
       
       sqlChangePwd.append(sqlUpdatePwdState);
       mdatabaseVishnu->process(sqlChangePwd.c_str());
@@ -260,7 +265,7 @@ UserServer::changePassword(std::string newPassword) {
       muser.setPassword(newPassword);
     } //End If the user exist with the flagForChangePwd to true ti avoid the passwordstate checking
     else {
-      UMSVishnuException e (4, "It is not possible to change the password. The userId or/and the password are unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -282,7 +287,7 @@ UserServer::resetPassword(UMS_Data::User user) {
   std::string sqlUpdatePwdState;
   std::string passwordCrypted;
   std::string salt;
-  
+  std::string pwd;
   
   try {
     //If the user exists
@@ -292,10 +297,12 @@ UserServer::resetPassword(UMS_Data::User user) {
 	//if the user whose password will be reset exists
 	if (getAttribut("where userid='"+user.getUserId()+"'").size() != 0) {
 	  //generation of a new password
-	  user.setPassword(generatePassword(user.getUserId(), user.getUserId()));
+	  pwd = generatePassword(user.getUserId(), user.getUserId());
+	  user.setPassword(pwd.substr(0,8));
+	  std::cout << "password to sent by mail to the user:" << user.getPassword() << std::endl;
 	  
 	  //The passwordCrypted uses the same way used by command line interface to crypted password
-	  salt = "$6$"+muser.getUserId()+"$";
+	  salt = "$6$"+user.getUserId()+"$";
 	  passwordCrypted = std::string(crypt(user.getPassword().c_str(), salt.c_str())+salt.length()); 
 	  
 	  //The sql code to reset the password
@@ -310,17 +317,17 @@ UserServer::resetPassword(UMS_Data::User user) {
 	  mdatabaseVishnu->process( sqlResetPwd.c_str());
 	} // End if the user whose password will be reset exists
 	else {
-	  UMSVishnuException e (4, "The user whose information will be updated do not exist");
+	  UMSVishnuException e (UNKNOWN_USERID);
 	  throw e;
 	} 
       } //END if the user is an admin 
       else {
-	UMSVishnuException e (4, "The user is not an admin");
+	UMSVishnuException e (NO_ADMIN);
 	throw e;
       }
     } //END if the user exists 
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -353,22 +360,35 @@ UserServer::getData() {
 void 
 UserServer::init(){
   std::string numUser;
+  std::string sessionState;
   
-  //If userId and password have not been defined
+  //if userId and password have not been defined
   if ((muser.getUserId().size() == 0) && (muser.getUserId().size() == 0)) {    
     try {
       //To get the users_numuserid by using the sessionServer
       numUser = 
       msessionServer->getAttribut("where\
       sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
-     
-      //If the session key is found 
+        
+      //if the session key is found 
       if (numUser.size() != 0) {
-	muser.setUserId(getAttribut("where numuserid='"+numUser+"'", "userid"));
-	muser.setPassword(getAttribut("where numuserid='"+numUser+"'", "pwd"));
+	sessionState = 
+	msessionServer->getAttribut("where\
+	sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
+	
+	//if the session is active
+	if (convertToInt(sessionState) == 1) {	
+	  muser.setUserId(getAttribut("where numuserid='"+numUser+"'", "userid"));
+	  muser.setPassword(getAttribut("where numuserid='"+numUser+"'", "pwd"));
+	} //End if the session is active
+	else {
+	  UMSVishnuException e (SESSIONKEY_EXPIRED);
+	  throw e;
+	}
+	
       } //END If the session key is found
       else {
-	UMSVishnuException e (4, "The session key is unrecognized. The user is unknown");
+	UMSVishnuException e (SESSIONKEY_NOT_FOUND);
 	throw e;
       } 
     }
@@ -390,7 +410,7 @@ bool UserServer::exist(bool flagForChangePwd) {
       //If the user is on the database
     if (getAttribut("where userid='"+muser.getUserId()+"'and pwd='"+muser.getPassword()+"'").size() != 0) {	  
 	//If the user is not locked  
-	if (!isAttributOk("status", 0)) {
+	if (isAttributOk("status", 1)) {
 	  //if the flag to check the password state is set
 	  if (!flagForChangePwd) {
 	    //If the passwordstate is active  
@@ -398,7 +418,7 @@ bool UserServer::exist(bool flagForChangePwd) {
 	      return existUser;
 	    } //END If the passwordstate is active  
 	    else {
-	      UMSVishnuException e (7, "The user have to change her/his password");
+	      UMSVishnuException e (TEMPORARY_PASSWORD);
 	      throw e;
 	    }
 	  }//END the flag to check the password state is set
@@ -407,7 +427,7 @@ bool UserServer::exist(bool flagForChangePwd) {
 	  }  
 	} //END if the user is not locked
 	else {
-	  UMSVishnuException e (4, "The user is locked");
+	  UMSVishnuException e (USER_LOCKED);
 	  throw e;
 	}    
     }//END if the user is on the database
@@ -472,21 +492,12 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
     
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
   } 
   catch (SystemException& e) {
     throw;
   }
 
-  //TODO: A factoriser à mettre adans utils (return util::filter (databaseResult))
-  if (result->getNbTuples() != 0) {
-    result->print();
-    std::vector<std::string> tmp = result->get(0);  
-    ii=tmp.begin();
-    return (*ii);
-  } 
-  else {
-    return "";
-  }
 }
 
 /**
@@ -503,11 +514,11 @@ UserServer::existuserId(std::string userId) {
     //If the userID exists on the database
     if (getAttribut("where userid='"+userId+"'").size() != 0)	{	  
       //If the user is not locked  
-      if ( convertToInt(getAttribut("where userid='"+userId+"'", "status")) != 1) {
+      if ( convertToInt(getAttribut("where userid='"+userId+"'", "status")) == 1) {
 	return existUser;     
       } //END if the user is not locked
       else {
-	UMSVishnuException e (4, "The user is locked");
+	UMSVishnuException e (USER_LOCKED);
 	throw e;
       }    
     }//END If the userID exists on the database
@@ -532,16 +543,8 @@ std::string
 UserServer::generatePassword(std::string value1, std::string value2) {
   
   srand(time(NULL));
-  std::string salt = "$5$"+value1 + convertToString(rand())+value2+"$";
+  std::string salt = "$1$"+value1 + convertToString(rand())+value2+"$";
   std::string clef = value2+convertToString(rand());
   
-  //remove of the string used to encrypted the string which is on the crypt result
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
 }
-
-
-/* 
-UMS_Data::ListUsers  UserServer::list(SessionServer session, string userIdOptions)
-{
-	return 0;
-}*/

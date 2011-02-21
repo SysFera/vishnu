@@ -40,7 +40,7 @@ mmachine(machine), msessionServer(session)
 */
 int 
 MachineServer::add() {
-  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status) values ";
+  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   
   try {
     UserServer userServer = UserServer(msessionServer);
@@ -57,7 +57,8 @@ MachineServer::add() {
 	if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 	  
 	  mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"\
-	  ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+")");
+	  ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
+	  '"+mmachine->getSshPublicKey()+"')");
 	  
 	  //To insert the description of the machine
 	  mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
@@ -67,17 +68,17 @@ MachineServer::add() {
 	  
 	} //if the machineId does not exist
 	else {
-	  UMSVishnuException e (4, "The machineId generated already exists");
+	  UMSVishnuException e (MACHINE_EXISTING);
 	  throw e;
 	}
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	  UMSVishnuException e (NO_ADMIN);
 	  throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -126,6 +127,12 @@ MachineServer::update() {
 	  sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+"\
 	  where machineId='"+mmachine->getMachineId()+"';");
 	  
+	  //if a new ssh public key has been defined
+	  if (mmachine->getSshPublicKey().size() != 0) {
+	  sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'\
+	  where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+	  }
+	  
 	  //if a new language has been defined
 	  if (mmachine->getLanguage().size() != 0) {
 	  sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'\
@@ -143,18 +150,18 @@ MachineServer::update() {
 	  
 	} //End if the machine to update exists
 	else {
-	  UMSVishnuException e (4, "The machine is unknown");
+	  UMSVishnuException e (UNKNOWN_MACHINE);
 	  throw e;
 	}
 	
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	  UMSVishnuException e (NO_ADMIN);
 	  throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -184,17 +191,17 @@ MachineServer::deleteMachine() {
 	 mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
 	} //End if the machine to update exists
 	else {
-	  UMSVishnuException e (4, "The machine is unknown");
+	  UMSVishnuException e (UNKNOWN_MACHINE);
 	  throw e;
 	}
       } //End if the user is an admin
       else {
-	UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	UMSVishnuException e (NO_ADMIN);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -209,7 +216,7 @@ MachineServer::deleteMachine() {
 * \brief Destructor
 */
 MachineServer::~MachineServer() {
-  delete mmachine;
+  //delete mmachine;
 }
 
 /**
@@ -240,19 +247,21 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
    
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
   } 
   catch (SystemException& e) {
-    throw e;
+    throw;
   }
-  if (result->getNbTuples() != 0) {
-    result->print();
-    std::vector<std::string> tmp = result->get(0);  
-    ii=tmp.begin();
-    return (*ii);
-  } 
-  else {
-    return "";
-  }
+}
+
+/**
+* \brief Function to get the content of the public ssh key
+* \fn std::string getPublicKey()
+* \return The content of the ssh public key 
+*/
+std::string
+MachineServer::getPublicKey() {
+  return msshpublickey;
 }
 
 /**

@@ -4,42 +4,108 @@
 * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
 * \date 31/01/2011
 */
-#include "OptionValueServer.hh"
-
+#include "OptionValueServer.hpp"
+#include "UserServer.hpp"
+#include "SessionServer.hpp"
 /**
 * \brief Constructor
 * \fn OptionValueServer() 
 */
+
 OptionValueServer::OptionValueServer() {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
   moptionValue = NULL;
+  msessionServer = NULL;
 }
 /**
 * \brief Constructor
 * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
 * \param optionvalue the option data structure 
+* \param sessionServer The object to manipulate session
 */
-OptionValueServer::OptionValueServer(UMS_Data::OptionValue*& optionvalue):moptionValue(optionvalue) {
+OptionValueServer::OptionValueServer(UMS_Data::OptionValue*& optionvalue, SessionServer session):
+moptionValue(optionvalue) , msessionServer(&session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 /**
 * \brief Function to configure options on the database
 * \fn    int configureOption()
+* \param defaultOptions the flag to get data from defauts options table
 * \return  raises an exception on error
 */
 int 
-OptionValueServer::configureOption() {
-  return 0;
-}
-/**
-* \brief Function to configure default options on the database
-* \fn    int configureDefaultOption()
-* \return  raises an exception on error
-*/  
-int 
-OptionValueServer::configureDefaultOption() {
+OptionValueServer::configureOption(bool defaultOptions) {
+  std::string sqlCommand;
+  std::string numoptionid;
+  std::string optionu_numoptionid;
+  std::string numuserid;
+  
+  try {
+    UserServer userServer = UserServer(SessionServer(msessionServer->getData().getSessionKey()));
+    userServer.init();
+    //if the user exists
+    if (userServer.exist()) {
+      
+      //if the option exists
+      if (getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true).size() != 0) {
+	//if the default table is used
+	if (defaultOptions) {
+	  //if the user is an admin
+	  if (userServer.isAdmin()){
+	    sqlCommand = "UPDATE optionu set defaultvalue="+moptionValue->getValue()+"\
+	    where description='"+moptionValue->getOptionName()+"'";
+	    std::cout <<"SQL COMMAND:"<<sqlCommand;
+	    mdatabaseVishnu->process(sqlCommand.c_str());
+	  } //END if the user is an admin
+	  else {
+	    UMSVishnuException e (NO_ADMIN);
+	    throw e;
+	  }   
+	} //END if the default table is used
+	else {
+	   
+	  numuserid = userServer.getAttribut("where\
+	  userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
+	  
+	  numoptionid = getAttribut("where \
+	  description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
+	   
+	  optionu_numoptionid = getAttribut("where \
+	  users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
+	   
+	  
+	  //if the option has already defined for the user
+	  if (optionu_numoptionid.size() == 0) {
+	    sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values\
+	    ("+numuserid+",'"+ 
+	    getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true) 
+	    +"','"+moptionValue->getValue()+"')";
+	  } //End if the option has already defined for the user
+	  else {
+	    sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" \
+	    where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
+	  }
+	  std::cout <<"SQL COMMAND:"<<sqlCommand;
+	  mdatabaseVishnu->process(sqlCommand.c_str());
+	    
+	}
+      } //END if the option exists
+      else {
+	UMSVishnuException e (UNKNOWN_OPTION);
+	throw e;
+      } 
+    }//END if the user exists
+    else {
+      UMSVishnuException e (UNKNOWN_USER);
+      throw e;
+    }
+  } 
+  catch (SystemException& e) {
+    throw;
+  }
+  
   return 0;
 }
 /**
@@ -86,19 +152,10 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
 
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
   } 
   catch (SystemException& e) {
     throw;
-  }
-
-  if (result->getNbTuples() != 0) {
-    result->print();
-    std::vector<std::string> tmp = result->get(0);  
-    ii=tmp.begin();
-    return (*ii);
-  } 
-  else {
-    return "";
   }
 }
 /**
@@ -111,7 +168,6 @@ int
 OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
   
   std::string userCloseInfo;
-
   try {  
     //To get the closure information of the user identified by the numuserId 
     userCloseInfo = getAttribut ("where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
@@ -129,11 +185,5 @@ OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
   } 
   catch (SystemException& e) {
   throw;
-  }   
+  } 
 }
- /*
-UMS_Data::ListOptionsValues  OptionValueServer::list(SessionServer session, UMS_Data::ListOptOptions  options)
-{
-	return 0;
-}
-*/
