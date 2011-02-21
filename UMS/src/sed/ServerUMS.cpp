@@ -43,6 +43,7 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   DbFactory factory;
   
   //TODO: prendre en paramètre le type de base de données
+  
   //To get database instance
   Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "", 
 							  "vishnu_user", password, "vishnu");
@@ -53,8 +54,7 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   std::cout <<"SQL COMMAND:"<<sqlCommand;
   
   try {
-   
-
+  
   /*connection to the database*/
   mdatabaseVishnu->connect();
   

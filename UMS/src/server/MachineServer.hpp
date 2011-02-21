@@ -13,8 +13,8 @@
 #include <list>
 #include <iostream>
 #include <exception>
-#include "SystemException.hh"
-#include "UMSVishnuException.hh"
+#include "SystemException.hpp"
+#include "UMSVishnuException.hpp"
 #include "SessionServer.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
@@ -83,8 +83,7 @@ public:
   * \return the value of the attribut or empty string if no results
   */
   std::string 
-  getAttribut(std::string condition, std::string attrname = "nummachineid");
-  //static UMS_Data::ListMachines list(SessionServer session, UMS_Data::LisMachineOptions options);
+  getAttribut(std::string condition, std::string attrname = "nummachineid");  
   /**
   * \brief Function to get the content of the public ssh key
   * \fn std::string getPublicKey()

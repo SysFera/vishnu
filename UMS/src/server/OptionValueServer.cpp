@@ -65,31 +65,32 @@ OptionValueServer::configureOption(bool defaultOptions) {
 	  }   
 	} //END if the default table is used
 	else {
-	   
+	  
+	  //To get the database number of the userid  
 	  numuserid = userServer.getAttribut("where\
 	  userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
 	  
+	  //To get the database number of the default option
 	  numoptionid = getAttribut("where \
 	  description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
 	   
+	  //To check if this option is already defined for the user
 	  optionu_numoptionid = getAttribut("where \
 	  users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
 	   
-	  
-	  //if the option has already defined for the user
+	  //if the option has not already defined for the user
 	  if (optionu_numoptionid.size() == 0) {
 	    sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values\
 	    ("+numuserid+",'"+ 
 	    getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true) 
 	    +"','"+moptionValue->getValue()+"')";
-	  } //End if the option has already defined for the user
+	  } //End if the option has not already defined for the user
 	  else {
 	    sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" \
 	    where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
 	  }
 	  std::cout <<"SQL COMMAND:"<<sqlCommand;
 	  mdatabaseVishnu->process(sqlCommand.c_str());
-	    
 	}
       } //END if the option exists
       else {
@@ -172,7 +173,6 @@ OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
     //To get the closure information of the user identified by the numuserId 
     userCloseInfo = getAttribut ("where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
     getAttribut("where description='"+nameInfo+"'", "numoptionid", true));
-
     //If the closure information is not defined for the user	      
     if (userCloseInfo.size() == 0) {
       //To get the closure information from the table with the default options values

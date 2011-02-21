@@ -124,14 +124,14 @@ public:
          
          } 
          else {
-             UMSVishnuException e (UNKNOWN_USERID);
-             throw e;
+             UMSVishnuException e(UNKNOWN_USERID);
+            throw e ;
          }
         //To get the list of users from the database
         ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
         if (ListofUsers->getNbTuples() != 0){
-          for (int i = 0; i < static_cast <int> (ListofUsers->getNbTuples()); ++i) {
+          for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
              results.clear();
              results = ListofUsers->get(i);
              ii = results.begin();
@@ -151,13 +151,13 @@ public:
 
     } //End if the user is an admin
      else {
-         UMSVishnuException e (NO_ADMIN);
+          UMSVishnuException e (NO_ADMIN);
           throw e;
         }
       }//End if the user exists
       else {
-        UMSVishnuException e (UNKNOWN_USER);
-        throw e;
+         UMSVishnuException e (UNKNOWN_USER);
+         throw e;
        }
      }
       catch (SystemException& e) {
@@ -240,7 +240,7 @@ public:
         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
 
         if (ListofMachines->getNbTuples() != 0){
-          for (int i = 0; i < static_cast <int> (ListofMachines->getNbTuples()); ++i) {
+          for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
             results.clear();
             results = ListofMachines->get(i);
             ii = results.begin();
@@ -264,7 +264,7 @@ public:
       }
     }//End if the user exists
      else {
-       UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (4, "The user is unknown");
         throw e;
       }
     }
@@ -332,7 +332,7 @@ public:
         ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
 
         if (ListofLocalAccount->getNbTuples() != 0){
-          for (int i = 0; i < static_cast <int> (ListofLocalAccount->getNbTuples()); ++i) {
+          for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
             results.clear();
             results = ListofLocalAccount->get(i);
             ii = results.begin();
@@ -421,7 +421,7 @@ public:
         ListofOptions = mdatabaseVishnu->getResult(sqlListofOptions.c_str());
 
         if (ListofOptions->getNbTuples() != 0){
-          for (int i = 0; i < static_cast <int> (ListofOptions->getNbTuples()); ++i) {
+          for (size_t i = 0; i < ListofOptions->getNbTuples(); ++i) {
             results.clear();
             results = ListofOptions->get(i);
             ii = results.begin();
@@ -497,7 +497,7 @@ public:
         ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
 
         if (ListOfCommands->getNbTuples() != 0){
-          for (int i = 0; i < static_cast <int> (ListOfCommands->getNbTuples()); ++i) {
+          for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
             results.clear();
             results = ListOfCommands->get(i);
             ii = results.begin();
@@ -582,7 +582,7 @@ public:
         ListOfSessions = mdatabaseVishnu->getResult(sqlListOfSessions.c_str());
 
         if (ListOfSessions->getNbTuples() != 0){
-          for (int i = 0; i < static_cast <int> (ListOfSessions->getNbTuples()); ++i) {
+          for (size_t i = 0; i < ListOfSessions->getNbTuples(); ++i) {
             results.clear();
             results = ListOfSessions->get(i);
             ii = results.begin();

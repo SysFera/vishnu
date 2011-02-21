@@ -10,11 +10,11 @@
 
 #include <sstream>
 #include <exception>
-#include "SystemException.hh"
-#include "UMSVishnuException.hh"
-#include "POSTGREDatabase.hh"
-#include "DbFactory.hh"
-#include "DatabaseResult.hh"
+#include "SystemException.hpp"
+#include "UMSVishnuException.hpp"
+#include "POSTGREDatabase.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
 #include "utilServer.hpp"
 
 /**

@@ -9,7 +9,7 @@
 #define _INTERNALAPI_H_
 
 #include <exception>
-#include "SystemException.hh"
+#include "SystemException.hpp"
 #include "DIET_server.h"
 #include "UserServer.hpp"
 #include "SessionServer.hpp"

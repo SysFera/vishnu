@@ -71,46 +71,46 @@ DatabaseResult::printAttributesNames() {
 * \return 0 on success, an error code otherwise
 */
 void 
-DatabaseResult::setNbTuples(int nbtuples) {}
+DatabaseResult::setNbTuples(size_t nbtuples) {}
 /**
 * \brief To set the number of fields 
-* \fn setNbFields(int nbfields)
+* \fn setNbFields(size_t nbfields)
 * \param nbtuples The number of fields
 * \return 0 on success, an error code otherwise
 */
 void 
-DatabaseResult::setNbFields(int nbfields) {}
+DatabaseResult::setNbFields(size_t nbfields) {}
   /**
    * \brief To get the number of tuples 
-   * \fn getNbTuples() 
+   * \fn size_t getNbTuples() 
    * \return 0 on success, an error code otherwise
    */
-int 
+size_t 
 DatabaseResult::getNbTuples() const{
-  return static_cast <int> (results.size());
+  results.size();
 }
 /**
 * \brief To get the number of fields 
 * \fn getNbFields() 
 * \return 0 on success, an error code otherwise
 */
-int 
+size_t 
 DatabaseResult::getNbFields() const{
-  return static_cast <int> (attributesNames.size());
+  return attributesNames.size();
 }
 
 /**
 * \brief To get a specific results using its position 
-* \fn get(int position); 
+* \fn get(size_t position); 
 * \param position The position of the request
 * \return the tuple associated to the postion
 */
 std::vector<std::string> 
-DatabaseResult::get(unsigned int position) const{
+DatabaseResult::get(size_t position) const{
  
   std::vector<std::string> tmp;
   
-  if ((static_cast <int> (position) < 0) || (static_cast <int> (position) > getNbTuples())) {
+  if ((position < 0) || position > getNbTuples()) {
     return std::vector<std::string>();
   } 
   else {
