@@ -15,7 +15,7 @@
 
 #include "SessionProxy.hpp"
 #include "UserProxy.hpp"
-#include "UMSVishnuException.hh"
+#include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 
 /**

@@ -272,9 +272,3 @@ std::string
 MachineServer::generateMachineId() {
   return "";
 }
- /*
-UMS_Data::ListMachines MachineServer::list(SessionServer session, UMS_Data::LisMachineOptions options)
-{
-	return 0;
-}
-*/
