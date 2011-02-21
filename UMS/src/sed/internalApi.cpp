@@ -915,7 +915,7 @@ solveRestore(diet_profile_t* pb) {
   
   DbFactory factory;
   try {
-  Database* db = factory.getDatabaseInstance(MYSQLDB);
+  Database* db = factory.getDatabaseInstance();
   db->startTransaction(sqlcode);
   db->commit();
   //db->endTransaction();
