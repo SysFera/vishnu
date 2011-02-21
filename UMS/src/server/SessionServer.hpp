@@ -20,8 +20,8 @@
 #include <exception>
 #include <ctime>
 #include <sys/time.h>
-#include "SystemException.hh"
-#include "UMSVishnuException.hh"
+#include "SystemException.hpp"
+#include "UMSVishnuException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
@@ -110,7 +110,6 @@ public:
   */
   std::string 
   getAttribut(std::string condition, std::string attrname="sessionkey");
-  //static UMS_Data::ListSessions  list(SessionServer session, UMS_Data::ListSessionOptions  options);
 
   private:
   /////////////////////////////////

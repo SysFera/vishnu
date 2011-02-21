@@ -10,11 +10,7 @@
 
 #include <string>
 #include "internalApi.hpp"
-//#include "DIET_server.h"
 #define NB_SRV 25
-
-
-//static Database* mdatabaseVishnu;
   
 static const char* SRV[NB_SRV] = {
   "sessionConnect", 
@@ -74,8 +70,6 @@ public :
    * \fn ~ServerUMS()
    */
   ~ServerUMS();
-  
-  //static std::string mvishnuid;
   
 private :
   

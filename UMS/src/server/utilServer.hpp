@@ -10,7 +10,11 @@
 
 #include <iostream>
 #include <sstream>
-#include "SystemException.hh"
+#include <ctime>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/variate_generator.hpp>
+#include "SystemException.hpp"
 
 /**
 * \class Vishnuid
@@ -57,15 +61,21 @@ namespace utilServer {
   * \return int value of the corresponding string
   */
   int convertToInt(std::string val);
-  
   /**
   * \brief Function to get the string associated to SystemException  
-  * \fn    buildExceptionString(SystemException& e)
+  * \fn    std::string buildExceptionString(SystemException& e)
   * \param  e the exception caught
   * \return int value of the corresponding string
   */
   std::string
   buildExceptionString(SystemException& e);
+  /**
+  * \brief Function to get a random number  
+  * \fn    int generate_numbers()
+  * \return the number generated
+  */
+  int 
+  generate_numbers();
   }
    
 #endif//UTILSERVER
