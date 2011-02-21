@@ -1,6 +1,9 @@
 
 
 #include "updateUser.hh"
+#include "utils.hh"
+#include "userUtils.hpp"
+#include <boost/bind.hpp>
 
 namespace po = boost::program_options;
 
@@ -10,195 +13,133 @@ int main (int ac, char* av[]){
 
 
 
-
-
-
-		int reqParam=0;   // to count the required parameters for the command
-
 		/******* Parsed value containers ****************/
 
 		string dietConfig;
 
 		string sessionKey;
 
-		std::string userId;
-
-		std::string firstname;
-
-		std::string lastname;
-
-		int privilege;
-
-		std::string email;
-
 		/********** EMF data ************/
 
-	UMS_Data::User newUser;
+	UMS_Data::User upUser;
 
+/******** Callback functions ******************/
+
+
+	boost::function1<void,string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(upUser),_1));
+	boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(upUser),_1));
+	boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(upUser),_1));
+	boost::function1<void,string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(upUser),_1));
+	boost::function1<void,string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(upUser),_1));
 
 /**************** Describe options *************/
 
+	boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
 
 
-		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-        opt.add("sessionKey",
-						            "The session key",
-												ENV,
-												sessionKey);
-
-				opt.add("privilege,p",
-		                 "the privilege of the user (admin or simple user)",
-										 CONFIG,
-										 privilege);
+					opt->setPosition("userId",-1);
 
 
-				opt.add("userId,u",
-									    	"represents the VISHNU user identifier",
-												HIDDEN,
-												userId);
+					opt->add("sessionKey",
+                        "The session key",
+                        ENV,
+                        sessionKey);
 
-				opt.setPosition("userId",-1);
-
-				opt.add("firstname,f",
-												"The firstname of the user",
-												CONFIG,
-												firstname);
-
-				opt.add("lastname,l",
-												"The lastname of the user",
-												CONFIG,
-												lastname);
-
-				opt.add("email,m",
-												"The email of the user",
-												CONFIG,
-												email);
-
-
-	try {
+					try {
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
 
-		opt.parse_cfile();
-
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+						opt->parse_cli(ac,av);
 
 
+						opt->parse_env(env_name_mapper());
 
 
+						opt->notify();
 
 /********  Process **************************/
 
-		if (opt.count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-			newUser.setUserId(userId);
-
-			reqParam=reqParam+1;
-		}
-
-		if(opt.count("privilege")){
-
-			cout <<"the privilege is : " << privilege << endl;
-
-			newUser.setPrivilege(privilege);
-		}
-
-		if(opt.count("firstname")){
-
-			cout << "The firstname is " << firstname << endl;
-
-			newUser.setFirstname(firstname);
-
-		}
+						if (opt->count("userId")){
 
 
-		if (opt.count("lastname")){
+							cout <<"The user identifier is " << upUser.getUserId() << endl;
 
-			cout <<"The lastname is " << lastname << endl;
-
-			newUser.setLastname(lastname);
-
-		}
-
-		if (opt.count("email")){
-
-			cout <<"The email is " << email << endl;
-
-			newUser.setEmail(email);
-		}
+    }
 
 
-		if (opt.count("sessionKey")){
+						if(opt->count("privilege")){
 
-			cout <<"The session key is " << sessionKey << endl;
-		}
+      cout <<"the privilege is : " << upUser.getPrivilege() << endl;
+
+    }
+
+    if(opt->count("firstname")){
+
+      cout << "The firstname is " << upUser.getFirstname() << endl;
+
+    }
+
+    if (opt->count("lastname")){
+
+      cout <<"The lastname is " << upUser.getLastname() << endl;
+
+    }
+
+    if (opt->count("email")){
+
+      cout <<"The email is " <<upUser.getEmail() << endl;
+
+    }
 
 
-		if (opt.count("dietConfig")){
+    if (opt->count("dietConfig")){
 
-			cout <<"The diet config file " << dietConfig << endl;
+      cout <<"The diet config file " << dietConfig << endl;
 
-		}
-		else{
+    }
+    else{
 
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
+      cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
 
-			return 1;
-		}
+      return 1;
+    }
 
+    if (opt->count("sessionKey")){
 
-		if (( reqParam < UUPARAM )|| (opt.count("help"))){
+      cout <<"The session key is " << sessionKey << endl;
 
-			cout << "Usage: " << av[0] <<" [options] userId "<<endl;
+}
 
-			cout << opt << endl;
-
-			return 0;
-
-		}
 
 
 /************** Call UMS connect service *******************************/
 
                // initializing DIET
 
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
+                if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
 
-
-//std::cout << "Session key :" <<
-sessionKey = "6MkdmV5esz524OKVhzjxutdGRQnbBVlNvfxG4uMsbC2m8VSl9aiiH0U4GDUtWwNB57dxPf1gpOW/kyl4Fnb/1"
-;
-							int res = updateUser(sessionKey,newUser);
+               updateUser(sessionKey,upUser);
 
 
+  }// End of try bloc
+
+catch(po::required_option& e){// a required parameter is missing
 
 
-	}// End of try bloc
+  usage(*opt," userId ","required parameter is missing");
+  }
+  catch(std::exception& e){
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+    errorUsage(av[0],e.what());
 
-	return 0;
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 

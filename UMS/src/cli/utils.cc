@@ -16,21 +16,44 @@ using namespace std;
 //namespace boost::posix_time = bp;
 
 
-void helpUsage (const Options & opt,const string& cmd){
+void helpUsage (const Options& opt,const string& mess){
 
-cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << cmd <<"\n\n";
+cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << mess <<"\n\n";
 
 cout <<opt<< endl;
 }
 
 
-void errorUsage (const Options & opt,const string& errMsg){
+void errorUsage (const string & cli,const string& errMsg){
 
-		cerr << errMsg <<endl;
+		cerr << cli<<": "<<errMsg <<endl;
 
-		cerr << "To get help, try <<"<< opt.getConfiguration()->getPgName() << " -h >>"<< endl;
+		cerr << "To get help, try <<"<< cli << " -h >>"<< endl;
 
 }
+
+int usage (const Options & opt,const std::string& mess,const std::string& eWhat){
+
+	int res=0;
+
+	if(opt.count("help")){
+
+		helpUsage(opt,mess);
+	}
+	else{
+
+		errorUsage(opt.getConfiguration()->getPgName(),eWhat);
+
+		res=1;
+	}
+
+return res;
+}
+
+
+
+
+
 
 
 
@@ -153,9 +176,9 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
      maxTimeOutSize = max(maxTimeOutSize, (os_timeOut.str()).size());
   }
 
-  cout << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxUserIdSize+2) << left << "UserId" << setw(maxDateLastConnectSize+2) ;
-  cout << left << "DateLastConnect" << setw(maxDateCreateSize+2) << left << "DateCreation" << setw(maxDateCloseSize+2) << left << "DateClosure";
-  cout << setw(8) << left << "Status" << setw(13) << left << "ClosePolicy" << setw(maxTimeOutSize+2) << left << "TimeOut" << endl ;
+  os << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxUserIdSize+2) << left << "UserId" << setw(maxDateLastConnectSize+2) ;
+  os << left << "DateLastConnect" << setw(maxDateCreateSize+2) << left << "DateCreation" << setw(maxDateCloseSize+2) << left << "DateClosure";
+  os << setw(8) << left << "Status" << setw(13) << left << "ClosePolicy" << setw(maxTimeOutSize+2) << left << "TimeOut" << endl ;
   setFill(maxSessionIdSize, os);
   setFill(maxUserIdSize, os);
   setFill(maxDateLastConnectSize, os);
@@ -190,15 +213,15 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
 
     timeOut = (listSession.getSessions().get(i))->getTimeout();
 
-    cout << setw(maxSessionIdSize+2) << left << sessionId;
-    cout << setw(maxUserIdSize+2) << left << userId;
-    cout << setw(maxDateLastConnectSize+2) << left << dateLastConnectStr;
-    cout << setw(maxDateCreateSize+2) << left << dateCreateStr;
-    cout << setw(maxDateCloseSize+2) << left << dateCloseStr;
-    cout << setw(8) << left << status;
-    cout << setw(13) << left << closePolicy;
-    cout << setw(maxTimeOutSize) << left << timeOut;
-    cout << endl;
+    os << setw(maxSessionIdSize+2) << left << sessionId;
+    os << setw(maxUserIdSize+2) << left << userId;
+    os << setw(maxDateLastConnectSize+2) << left << dateLastConnectStr;
+    os << setw(maxDateCreateSize+2) << left << dateCreateStr;
+    os << setw(maxDateCloseSize+2) << left << dateCloseStr;
+    os << setw(8) << left << status;
+    os << setw(13) << left << closePolicy;
+    os << setw(maxTimeOutSize) << left << timeOut;
+    os << endl;
 
   }
 
@@ -247,8 +270,8 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
      maxAcLoginSize = max(maxAcLoginSize, acLogin.size());
   }
 
-  cout << setw(maxUserSize+2) << left << "userId" << setw(maxMachineSize+2) << left << "machineId" << setw(maxAcLoginSize+2) << left << "acLogin";
-  cout << endl;
+  os << setw(maxUserSize+2) << left << "userId" << setw(maxMachineSize+2) << left << "machineId" << setw(maxAcLoginSize+2) << left << "acLogin";
+  os << endl;
   setFill(maxUserSize, os);
   setFill(maxMachineSize, os);
   setFill(maxAcLoginSize, os);
@@ -279,7 +302,7 @@ ostream& operator<<(ostream& os, const UMS_Data::Machine_ptr& machine) {
   std::string statusStr = (status?"ACTIVE":"INACTIVE");
 
   os << "============ Machine for " << name << "===========" << std::endl;
-  os << setw(25) << right << "UserId: " << name << endl;
+  os << setw(25) << right << "Name: " << name << endl;
   os << setw(25) << right << "MachineId: " << machineId << endl;
   os << setw(25) << right << "Site: "  << site << endl;
   os << setw(25) << right << "Description: "  << descr << endl ;
@@ -315,9 +338,9 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 
   }
 
-  cout << setw(maxNameSize+2) << left << "Name" << setw(maxMachineIdSize+2) << left << "machineId" << setw(maxSiteSize+2) << left << "Site";
-  cout << setw(8) << left << "Status";
-  cout << endl;
+  os << setw(maxNameSize+2) << left << "Name" << setw(maxMachineIdSize+2) << left << "machineId" << setw(maxSiteSize+2) << left << "Site";
+  os << setw(8) << left << "Status";
+  os << endl;
   setFill(maxNameSize, os);
   setFill(maxMachineIdSize, os);
   setFill(maxSiteSize, os);
@@ -333,7 +356,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
      status = (lsMachine.getMachines().get(i))->getStatus();
 
      os << setw(maxNameSize+2) << left <<  name;
-     os << setw(maxMachineIdSize+2) << left << machineId;
+     os << setw(maxMachineIdSize+2) << left << machineId; 
      os << setw(maxSiteSize+2) << left << site;
      os << setw(8) << left << status;
      os << endl;
@@ -411,9 +434,9 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
 
   }
 
-  cout << setw(maxCommandIdSize+2) << left << "CommandId" << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxMachineIdSize+2) << left << "MachineId";
-  cout << setw(maxStartTimeSize+2) << left << "Start Time" << setw(maxEndTimeSize+2) << left << "End Time";
-  cout << endl;
+  os << setw(maxCommandIdSize+2) << left << "CommandId" << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxMachineIdSize+2) << left << "MachineId";
+  os << setw(maxStartTimeSize+2) << left << "Start Time" << setw(maxEndTimeSize+2) << left << "End Time";
+  os << endl;
   setFill(maxCommandIdSize, os);
   setFill(maxSessionIdSize, os);
   setFill(maxMachineIdSize, os);
@@ -475,8 +498,8 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOption
 
   }
 
-  cout << setw(maxNameSize+2) << left << "Name" << setw(maxValueSize+2) << left << "Value";
-  cout << endl;
+  os << setw(maxNameSize+2) << left << "Name" << setw(maxValueSize+2) << left << "Value";
+  os << endl;
   setFill(maxNameSize, os);
   setFill(maxValueSize, os);
   os << endl;
@@ -540,14 +563,14 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      maxUserIdSize = max(maxUserIdSize, userId.size());
   }
 
-  cout << setw(maxFirstnameSize+2) << left << "Firstname" << setw(maxLastnameSize+2) << left << "Lastname" << setw(maxUserIdSize+2) << left << "UserId";
-  cout << setw(11) << left << "Privilege" << left << "Status";
-  cout << endl;
+  os << setw(maxFirstnameSize+2) << left << "Firstname" << setw(maxLastnameSize+2) << left << "Lastname" << setw(maxUserIdSize+2) << left << "UserId";
+  os << setw(11) << left << "Privilege" << left << "Status";
+  os << endl;
   setFill(maxFirstnameSize, os);
   setFill(maxLastnameSize, os);
   setFill(maxUserIdSize, os);
   setFill(9, os);
-	setFill(6, os);
+  setFill(6, os);
   os << endl;
 
   for(int i = 0; i < lsUsers.getUsers().size(); i++) {

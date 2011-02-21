@@ -29,9 +29,6 @@ int main (int ac, char* av[]){
 
 		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
 
         opt.add("dietConfig,c",
 						            "The diet config file",

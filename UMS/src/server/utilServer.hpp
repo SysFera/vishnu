@@ -2,7 +2,7 @@
 * \file utilServer.hpp
 * \brief This file presents the utils functions of server objects
 * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
-* \date 31/01/2001 
+* \date 15/02/2011 
 */
 
 #ifndef _UTILSERVER_H_
@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <sstream>
+#include "SystemException.hh"
 
 /**
 * \class Vishnuid
@@ -51,10 +52,20 @@ namespace utilServer {
   }
   /**
   * \brief Function to convert a string to int 
-  * \fn    std::string convertToString(const T& val);
+  * \fn    std::string convertToString(const T& val)
   * \param  val a value to convert to string
   * \return int value of the corresponding string
   */
   int convertToInt(std::string val);
+  
+  /**
+  * \brief Function to get the string associated to SystemException  
+  * \fn    buildExceptionString(SystemException& e)
+  * \param  e the exception caught
+  * \return int value of the corresponding string
+  */
+  std::string
+  buildExceptionString(SystemException& e);
   }
+   
 #endif//UTILSERVER

@@ -1,5 +1,5 @@
 /**
- * \file internalApi.hh
+ * \file internalApi.hpp
  * \brief This file presents the internal api of UMS
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date 31/01/2001 
@@ -11,12 +11,12 @@
 #include <exception>
 #include "SystemException.hh"
 #include "DIET_server.h"
-#include "UserServer.hh"
-#include "SessionServer.hh"
-#include "MachineClientServer.hh"
+#include "UserServer.hpp"
+#include "SessionServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
 #include "ConfigurationServer.hpp"
+#include "QueryServer.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect 
@@ -165,6 +165,66 @@ solveOptionValueSet(diet_profile_t* pb);
 int
 solveOptionValueSetDefault(diet_profile_t* pb);
 /**
+* \brief Function to solve the service solveGenerique 
+* \fn    int solveGenerique(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+template <class QueryParameters, class List, class QueryType>
+int
+solveGenerique(diet_profile_t* pb); 
+
+/**
+* \brief Function to solve the service solveListUsers 
+* \fn int solveListUsers(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListUsers(diet_profile_t* pb);
+
+/**
+* \brief Function to solve the service solveListMachines 
+* \fn int solveListMachines(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListMachines(diet_profile_t* pb);
+
+/**
+* \brief Function to solve the service solveListLocalAccount 
+* \fn int solveListLocalAccount(diet_profile_t*& pb) 
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListLocalAccount(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveListOptions 
+* \fn int solveListOptions(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListOptions(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveListHistoryCmd 
+* \fn int solveListHistoryCmd(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListHistoryCmd(diet_profile_t* pb);
+/**
+* \brief Function to solve the service solveListLocalAccount 
+* \fn int solveListSessions(diet_profile_t*& pb) 
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveListSessions(diet_profile_t* pb);
+/**
 * \brief Function to solve the service solveRestore 
 * \fn    int solveRestore(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
@@ -172,5 +232,4 @@ solveOptionValueSetDefault(diet_profile_t* pb);
 */
 int
 solveRestore(diet_profile_t* pb);
-
 #endif // SERVERUMS

@@ -25,10 +25,10 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "UserServer.hh"
-#include "MachineClientServer.hh"
-#include "OptionValueServer.hh"
-#include "utilServer.hh"
+#include "UserServer.hpp"
+#include "MachineClientServer.hpp"
+#include "OptionValueServer.hpp"
+#include "utilServer.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
 
@@ -183,10 +183,10 @@ public:
   * \brief Function to solve the session connection parameters
   * \fn solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, UserServer user)
   * \param connectOpt the connection parameters
-  * \param user the object which manipulates user information
+  * \param numuserId the database number id of the user to connect
   * \return the connection parameters are registered on the session data structure
   */
   int 
-  solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, UserServer user);
+  solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::string numuserId);
 };
 #endif

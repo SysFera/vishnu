@@ -1,6 +1,9 @@
 
 
 #include "addMachine.hh"
+#include "utils.hh"
+#include "machineUtils.hpp"
+#include <boost/bind.hpp>
 
 namespace po = boost::program_options;
 
@@ -10,21 +13,10 @@ int main (int ac, char* av[]){
 
 
 
-	try {
 
-
-
-
-		int reqParam=0;   // to count the required parameters for the command
 		/******* Parsed value containers ****************/
 
 		string dietConfig;
-
-		std::string name;
-
-		std::string site;
-
-		std::string language;
 
 		std::string machineDescription;
 
@@ -36,58 +28,28 @@ int main (int ac, char* av[]){
 		UMS_Data::Machine newMachine;
 
 
-/**************** Describe options *************/
+/**************** Callback functions *************/
+
+		boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(newMachine),_1));
+		boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
+		boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
 
 
+		boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
 
-		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-				opt.add("name",
-		                 "The name of the machine",
-										 HIDDEN,
-										 name);
-
-				opt.setPosition("name",1);
-
-
-				opt.add("site",
-								"The location of the machine",
-								HIDDEN,
-								site);
-
-				opt.setPosition("site",1);
-
-				opt.add("language",
-												"The language in which the description of the machine has been done",
-												HIDDEN,
-												language);
-
-				opt.setPosition("language",1);
-
-
-				opt.add("sessionKey",
+				opt->add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
 
+				try{
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+		opt->notify();
 
 
 
@@ -95,37 +57,25 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("name")){
+		if (opt->count("name")){
 
-			cout <<"The name of the machine is " << name << endl;
+			cout <<"The name of the machine is " << newMachine.getName() << endl;
+		}
 
-			newMachine.setName(name);
+		if(opt->count("site")){
 
-			reqParam=reqParam+1;
+			cout <<"the site is : " << newMachine.getSite() << endl;
 
 		}
 
-		if(opt.count("site")){
+		if(opt->count("language")){
 
-			cout <<"the site is : " << site << endl;
-
-			newMachine.setSite(site);
-
-			reqParam=reqParam+1;
-		}
-
-		if(opt.count("language")){
-
-			cout << "The language is " << language << endl;
-
-			newMachine.setLanguage(language);
-
-			reqParam=reqParam+1;
+			cout << "The language is " << newMachine.getLanguage() << endl;
 
 		}
 
 
-		if (opt.count("dietConfig")){
+		if (opt->count("dietConfig")){
 
 			cout <<"The diet config file " << dietConfig << endl;
 		}
@@ -137,23 +87,12 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ((reqParam < AMPARAM) || (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<" name site language "<<endl;
-
-			cout << opt << endl;
-
-			return 0;
-		}
-		else{//Fix me
-
 		cout << "Enter the Machine Description:\n ";
 
 		getline(cin, machineDescription);
 
 		newMachine.setMachineDescription(machineDescription);
 
-		}
 
 
 
@@ -167,19 +106,24 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-
-
-							int res = addMachine(sessionKey,newMachine);
+							 addMachine(sessionKey,newMachine);
 
 
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
 
-	return 0;
+				catch(po::required_option& e){// a required parameter is missing
+
+					usage(*opt," name site language ","required parameter is missing");
+  }
+  catch(std::exception& e){
+
+    errorUsage(av[0],e.what());
+
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 

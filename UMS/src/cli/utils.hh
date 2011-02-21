@@ -6,7 +6,8 @@
 class Options;
 
 void helpUsage (const Options &,const std::string&);
-void errorUsage (const Options &,const std::string&);
+void errorUsage (const std::string&,const std::string&);
+int usage (const Options &,const std::string&,const std::string&);
 
 std::string takePassword(const std::string&, const std::string&);
 

@@ -1,6 +1,8 @@
 
 
 #include "deleteLocalAccount.hh"
+#include "utils.hh"
+#include "connectUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -9,14 +11,6 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-
-
-
-		Configuration config(av[0]);// take the command line name
-
-		string defaultConfig = "VishnuConfig.cfg";
-
-		int reqParam=0;   // to count the required parameters for the command
 		/******* Parsed value containers ****************/
 
 		string dietConfig;
@@ -35,39 +29,21 @@ int main (int ac, char* av[]){
 
 
 /**************** Describe options *************/
+		boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+
+		opt->setPosition("userId",1);
 
 
-
-		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-				opt.add("userId",
-		                 "the Vishnu user identifier of the user of the local user configuration",
-										 HIDDEN,
-										 userId);
-
-				opt.setPosition("userId",1);
-
-
-				opt.add("machineId",
+				opt->add("machineId",
 									    	"the identifier of the machine associated to the local user configuration",
 												HIDDEN,
-												machineId);
+												machineId,
+												1);
 
-				opt.setPosition("machineId",1);
+				opt->setPosition("machineId",1);
 
 
-
-
-				opt.add("sessionKey",
+				opt->add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
@@ -75,39 +51,30 @@ int main (int ac, char* av[]){
 	try {
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
-
-
-
+		opt->notify();
 
 
 /********  Process **************************/
 
 
 
-		if (opt.count("userId")){
+		if (opt->count("userId")){
 
 			cout <<"The user identifier is " << userId << endl;
 
-			reqParam=reqParam+1;
-
 		}
 
-		if(opt.count("machineId")){
+		if(opt->count("machineId")){
 
 			cout <<"the machineId is : " << machineId << endl;
-
-			reqParam=reqParam+1;
 		}
 
 
-		if (opt.count("dietConfig")){
+		if (opt->count("dietConfig")){
 
 			cout <<"The diet config file " << dietConfig << endl;
 		}
@@ -118,19 +85,6 @@ int main (int ac, char* av[]){
 
 			return 1;
 		}
-
-		if ((reqParam < DLAPARAM) || (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<"  userId machineId "<<endl;
-
-
-			cout << opt << endl;
-
-
-			return 0;
-		}
-
-
 
 
 /************** Call UMS connect service *******************************/
@@ -144,19 +98,24 @@ int main (int ac, char* av[]){
 
 
 
-							int res = deleteLocalAccount(sessionKey,userId,machineId);
+						 deleteLocalAccount(sessionKey,userId,machineId);
 
 
 
 
 	}// End of try bloc
+catch(po::required_option& e){// a required parameter is missing
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+  usage(*opt," userId machineId ","required parameter is missing");
+  }
+  catch(std::exception& e){
 
-	return 0;
+    errorUsage(av[0],e.what());
+
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 
