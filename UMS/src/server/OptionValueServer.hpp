@@ -13,12 +13,12 @@
 #include <list>
 #include <iostream>
 #include <exception>
-#include "SystemException.hh"
+#include "SystemException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "POSTGREDatabase.hh"
-#include "DbFactory.hh"
-#include "DatabaseResult.hh"
+#include "POSTGREDatabase.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
 #include "utilServer.hpp"
 using namespace utilServer;
 

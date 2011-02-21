@@ -20,7 +20,6 @@ int utilServer::convertToInt(std::string val) {
   str >> intValue;
   return static_cast<int> (intValue);
 }
-
 /**
 * \brief Function to get the string associated to SystemException  
 * \fn    buildExceptionString(SystemException& e)
@@ -41,3 +40,19 @@ utilServer::buildExceptionString(SystemException& e) {
   
   return errorInfo;
 }
+/**
+* \brief Function to get a random number  
+* \fn    int generate_numbers()
+* \return the number generated
+*/
+int 
+utilServer::generate_numbers() {
+  
+  boost::mt19937 gen;
+  gen.seed(static_cast<boost::uint32_t>(std::time(0)));
+  boost::uniform_int<> dist(1, 100000);
+  boost::variate_generator<boost::mt19937&, boost::uniform_int<> > die(gen, dist);
+  return die();
+  
+}
+  

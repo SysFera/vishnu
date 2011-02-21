@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <fstream>
 
-#include "UMSVishnuException.hh"
+#include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 
 #include "ConfigurationProxy.hpp"

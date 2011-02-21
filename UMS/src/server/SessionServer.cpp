@@ -269,6 +269,9 @@ SessionServer::generateSessionKey(std::string salt) {
   
   //SHA1-512 encryption of the salt encrypted using the md5 and the current time as the clef
   sessionKey = std::string(crypt(to_simple_string(now).c_str(), globalSalt.c_str()));
+ 
+  //To put a randomize number at the end to complicate the string encrypted
+  sessionKey.append(convertToString(utilServer::generate_numbers()));
   msession.setSessionKey(sessionKey.substr(globalSalt.size()));
   
   return 0;
@@ -286,13 +289,15 @@ SessionServer::generateSessionId(std::string userId) {
   
   //the current time
   ptime now = microsec_clock::local_time();
+  
+  //To get the current time as a string
   std::string nowToString = to_simple_string(now.date());
   nowToString.append("-"+to_simple_string(now.time_of_day()));
+  
+  //To construct the session key 
   sessionId.append(userId+"-");
-  
-  
-  sessionId.append(nowToString+":"+convertToString(rand()%1000 + 1));
-  //sessionId.replace(" ", "");
+  sessionId.append(nowToString+":"+convertToString(utilServer::generate_numbers()));
+
   msession.setSessionId(sessionId);
   
   return 0;
@@ -337,18 +342,17 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
 bool 
 SessionServer::exist(bool flagSessionId) {
   
-  
-    try {
-      if (flagSessionId) {
-	return (getState(true) != -1);  
-      }
-      else {
-	return (getState() != -1);  
-      } 
+  try {
+    if (flagSessionId) {
+      return (getState(true) != -1);  
+    }
+    else {
+      return (getState() != -1);  
     } 
-    catch (SystemException& e) {
-      throw;
-    } 
+  } 
+  catch (SystemException& e) {
+    throw;
+  } 
 } 
 
 
@@ -365,13 +369,10 @@ SessionServer::getState(bool flagSessionId) {
  
   try {
     if (flagSessionId) {
-	//sqlCommand = "SELECT state FROM vsession where vsessionid='"+msession.getSessionId()+"'";
       sessionState = getAttribut("where vsessionid='"+msession.getSessionId()+"'","state");
     }
     else {
-	//sqlCommand = "SELECT state FROM vsession where sessionkey='"+msession.getSessionKey()+"'";
       sessionState = getAttribut("where sessionkey='"+msession.getSessionKey()+"'","state");
-      
     }
     
     if (sessionState.size() != 0) {
@@ -407,7 +408,6 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
       and clmachine_numclmachineid="+idmachine+" and users_numuserid="+iduser);
     }
     else {
-      //sqlCommand = "SELECT sessionkey FROM vsession where vsessionid='"+msession.getSessionId()+"'";  
       key = getAttribut("where vsessionid='"+msession.getSessionId()+"'");
     }
     std::cout <<"getSessionkey function:"<< key << std::endl;
@@ -462,7 +462,6 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
       msession.setClosePolicy(2); 
     break;
   }
-  
   return 0;
 }
   

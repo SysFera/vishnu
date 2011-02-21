@@ -67,13 +67,13 @@ endif(EMF4CPP_FOUND)
 find_package(
         Boost
 	1.45
-        REQUIRED program_options date_time filesystem system unit_test_framework serialization
+        REQUIRED program_options date_time filesystem system unit_test_framework serialization random
 )
 
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)
 set(UMS_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
-set(VISHNU_EXCEPTION_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/exception)
-set(DATA_BASE_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/database)
+set(VISHNU_EXCEPTION_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/exception)
+set(DATA_BASE_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/database)
 set(CLIENT_PROXY_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/client)
 set(SERVER_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/server)
 set(API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/api)
@@ -87,7 +87,7 @@ set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
 
-add_subdirectory(core/database)
+add_subdirectory(core/src)
 add_subdirectory(UMS/src)
 # macros used to setup test environment
 include(UMSTestingMacros)

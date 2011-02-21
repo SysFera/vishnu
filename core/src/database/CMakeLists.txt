@@ -1,4 +1,4 @@
-SET( CMAKE_INSTALL_PREFIX ../../.. )
+#SET( CMAKE_INSTALL_PREFIX ../../.. )
 
 #set(ORAC_INC "/home/keo/Bureau/instantclient_11_2/sdk/include")
 #set(ORAC_LIB "/home/keo/Bureau/instantclient_11_2")
@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES(
 )
 
 LINK_DIRECTORIES(
-  ../../../lib
+  ../exception
   ${ORAC_LIB}
 )
 
