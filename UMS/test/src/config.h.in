@@ -1,0 +1,10 @@
+// config.h.in
+
+#ifndef _CONFIG_H_IN_
+#define _CONFIG_H_IN_
+
+#define TESTCONF "@TEST_CONFIG_UMS@"
+
+
+#endif /* _CONFIG_H_IN_ */
+
