@@ -46,10 +46,9 @@ public :
    * \return 0 on success, an error code otherwise
    */
   int 
-  getNbFields() const;
-  
+  getNbFields() const; 
   /**
-   * \brief To get the number of fields 
+   * \brief To get a specific results using its position 
    * \fn get(int position); 
    * \param position The position of the request
    * \return the tuple associated to the postion
@@ -64,6 +63,13 @@ public :
   std::vector<std::vector<std::string> >
   getResults() const;
   /**
+   * \brief To get the first attribut value of the first element 
+   * \fn std::string getFirstElement(); 
+   * \return the first attribut value of the first element
+   */
+   std::string
+   getFirstElement() const;
+  /**
    * \fn DatabaseResult()
    * \brief Constructor, raises an exception on error
    */
@@ -72,7 +78,7 @@ public :
    * \fn ~DatabaseResult()
    * \brief Destructor, raises an exception on error
    */
- ~DatabaseResult();
+ ~DatabaseResult(); 
 private :
   /////////////////////////////////
   // Attributes

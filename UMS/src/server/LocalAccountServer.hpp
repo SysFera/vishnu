@@ -13,7 +13,7 @@
 #include <list>
 #include <iostream>
 #include <fstream>
-#include "SessionServer.hh"
+#include "SessionServer.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include "MachineServer.hpp"
@@ -33,13 +33,23 @@ public:
   LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU localAccount
-  * \fn std::string add() 
+  * \fn int add() 
   * \return raises an exception on error
   */
   int
   add();
+  /**
+  * \brief Function to update a VISHNU localAccount
+  * \fn int update() 
+  * \return raises an exception on error
+  */
   int 
   update();
+  /**
+* \brief Function to delete a VISHNU localAccount
+* \fn int deleteLocalAccount() 
+* \return raises an exception on error
+*/
   int 
   deleteLocalAccount();
   /**
@@ -48,7 +58,7 @@ public:
   */
   ~LocalAccountServer();
   /**
-  * \brief Function to get localAccount information
+  * \brief Function to get localAccount data structure
   * \fn UMS_Data::LocalAccount getData()
   * \return  The LocalAccount data structure
   */
@@ -78,8 +88,6 @@ public:
   std::string
   getPublicKey();
   
-  
-  //static UMS_Data::ListLocalAccounts  list(SessionServer session, UMS_Data::ListLocalAccOptions  options);
 private:
   /////////////////////////////////
   // Attributes
