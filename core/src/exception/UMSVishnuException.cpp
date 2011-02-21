@@ -26,7 +26,7 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(INVALID_MAIL_ADRESS, std::string("The mail adress is invalid")));
   mp.insert(std::pair<int, std::string>(SESSION_INCOMPATIBILITY, std::string("This session identifier is incompatible with the authenticated user for the given machine")));
   mp.insert(std::pair<int, std::string>(NO_ADMIN, std::string("The user is not an administrator")));
-  mp.insert(std::pair<int, std::string>(UNKNOWN_OPTION, std::string("the name of the option is unknown")));
+//   mp.insert(std::pair<int, std::string>(UNKNOWN_OPTION, std::string("the name of the option is unknown")));
   mp.insert(std::pair<int, std::string>(UNKNOWN_SESSION_ID, std::string("The session id is unknown")));
   mp.insert(std::pair<int, std::string>(UNKNOWN_MACHINE, std::string("The machine id is unknown")));
   mp.insert(std::pair<int, std::string>(UNKNOWN_USERID, std::string("The userid is unknown")));
@@ -34,13 +34,13 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(UNKNOWN_LOCAL_ACCOUNT, std::string("The local is unknown")));
   mp.insert(std::pair<int, std::string>(COMMAND_RUNNING, std::string("Commands are running")));
   mp.insert(std::pair<int, std::string>(MACHINE_EXISTING, std::string("The machine id already exists")));
-  mp.insert(std::pair<int, std::string>(INCORRECT_DATE_OPTION, std::string("The date option is incorrect")));
+//   mp.insert(std::pair<int, std::string>(INCORRECT_DATE_OPTION, std::string("The date option is incorrect")));
   mp.insert(std::pair<int, std::string>(SAVE_CONFIG_ERROR, std::string("A problem occurs during the configuration saving ")));
   mp.insert(std::pair<int, std::string>(RESTORE_CONFIG_ERROR, std::string("A problem occurs during the configuration restoring")));
-  mp.insert(std::pair<int, std::string>(USERID_REQUIRED, std::string("The userid must be defined")));
-  mp.insert(std::pair<int, std::string>(MACHINEID_REQUIRED, std::string("The machine id must be defined")));
-  mp.insert(std::pair<int, std::string>(UNKNOWN_SESSION_OPTION, std::string("The name of the session option is unknown")));
-  mp.insert(std::pair<int, std::string>(UNKNOWN_MACHINE_FOR_SESSION, std::string("This session has been opened with another machine")));  
+//   mp.insert(std::pair<int, std::string>(USERID_REQUIRED, std::string("The userid must be defined")));
+//   mp.insert(std::pair<int, std::string>(MACHINEID_REQUIRED, std::string("The machine id must be defined")));
+//   mp.insert(std::pair<int, std::string>(UNKNOWN_SESSION_OPTION, std::string("The name of the session option is unknown")));
+//   mp.insert(std::pair<int, std::string>(UNKNOWN_MACHINE_FOR_SESSION, std::string("This session has been opened with another machine")));  
   mp.insert(std::pair<int, std::string>(TEMPORARY_PASSWORD, std::string("The password is a temporary password")));
   mp.insert(std::pair<int, std::string>(USER_LOCKED, std::string("The user is locked")));
   mp.insert(std::pair<int, std::string>(MACHINE_LOCKED, std::string("The machine is locked")));
