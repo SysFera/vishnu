@@ -73,7 +73,7 @@ ConfigurationServer::save() {
         ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 	
 	if (ListofUsers->getNbTuples() != 0){ 
-	  for (int i = 0; i < static_cast <int> (ListofUsers->getNbTuples()); ++i) {
+	  for (int i = 0; i < ListofUsers->getNbTuples(); ++i) {
 	    results.clear();
 	    results = ListofUsers->get(i);
 	    ii = results.begin();
@@ -94,7 +94,7 @@ ConfigurationServer::save() {
 	ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
 	
 	if (ListofMachines->getNbTuples() != 0){ 
-	  for (int i = 0; i < static_cast <int> (ListofMachines->getNbTuples()); ++i) {
+	  for (int i = 0; i < ListofMachines->getNbTuples(); ++i) {
 	    results.clear();
 	    results = ListofMachines->get(i);
 	    ii = results.begin();
@@ -123,7 +123,7 @@ ConfigurationServer::save() {
 	ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
 	
 	if (ListofLocalAccount->getNbTuples() != 0){ 
-	  for (int i = 0; i < static_cast <int> (ListofLocalAccount->getNbTuples()); ++i) {
+	  for (int i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
 	    results.clear();
 	    results = ListofLocalAccount->get(i);
 	    ii = results.begin();
