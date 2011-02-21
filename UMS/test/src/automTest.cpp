@@ -8,40 +8,12 @@
 #include "UMS_Data_forward.hpp"
 #include <iostream>
 #include "api_ums.hpp"
+#include "config.h"
 
 BOOST_AUTO_TEST_SUITE( test_suite )
 using namespace std;
 using namespace UMS_Data;
 
-
-// int connect           	  (string uid, string           	 pwd , string&                 key   , ConnectOptions_ptr op ){key = "lapin"; return 0;}
-// int reconnect         	  (string uid, string           	 pwd , string                  sid   , string&            key){key = "lapin"; return 0;}
-// int listSession       	  (string key, ListSessions_ptr 	 li  , ListSessionOptions_ptr  op    )                        {  	      return 0;}  
-// int listUsers         	  (string key, ListUsers_ptr    	 liu , string                  op    )                        {               return 0;}
-// int listMachines      	  (string key, ListMachines_ptr 	 lim , ListMachineOptions_ptr  op    )                        {               return 0;}
-// int listLocalAccount  	  (string key, ListLocalAccounts_ptr     lia , ListLocalAccOptions_ptr op    )                        {               return 0;}
-// int listOptions  	  (string key, ListOptionsValues_ptr     lio , ListOptOptions_ptr      op    )                        {               return 0;}
-// int listHistoryCmd  	  (string key, ListCommands_ptr          lic , ListCmdOptions_ptr      op    )                        {               return 0;}
-// int changePassword    	  (string uid, string           	 pwd , string                  newPwd)                        {    	      return 0;}
-// int deleteLocalAccount	  (string key, string           	 uid , string                  mid   )                        {    	      return 0;}
-// int restoreConfiguration  (string key, string                    pat )                                                        {    	      return 0;}
-// int resetPassword     	  (string uid, string           	 pwd )                                                        {    	      return 0;}
-// int updateUser        	  (string key, User_ptr         	 user)				  		      	      {    	      return 0;}
-// int deleteUser        	  (string key, string           	 user)				  		      	      {    	      return 0;}
-// int addVishnuUser     	  (string key, User_ptr         	 user)				  		      	      {    	      return 0;}
-// int deleteMachine     	  (string key, string           	 ma  )                                                        {    	      return 0;}
-// int resetPassword     	  (string key, int              	 uid )                                                        {    	      return 0;}
-// int addLocalAccount   	  (string key, LocalAccount_ptr 	 acc )                                                        {    	      return 0;}
-// int addMachine        	  (string key, Machine_ptr      	 ma  )                                                        {    	      return 0;}
-// int updateMachine     	  (string key, Machine_ptr      	 ma  )                                                        {    	      return 0;}
-// int updateLocalAccount	  (string key, LocalAccount_ptr 	 acc )                                                        {    	      return 0;}
-// int configureDefaultOption(string key, OptionValue_ptr 	         acc )                                                        {    	      return 0;}
-// int configureOption       (string key, OptionValue_ptr 	         acc )                                                        {    	      return 0;}
-// int vishnuInitialize  	  (string pat)                                                                             	      {    	      return 0;}
-// int restore           	  (string fil)                                                       	                              {    	      return 0;}
-// int close             	  (string key)                                                                             	      {    	      return 0;}      
-// int saveConfiguration	  (string key)                                                                                        {    	      return 0;}
-// int vishnuFinalize   	  (          )                                                                                        {    	      return 0;}
 
 
 BOOST_AUTO_TEST_CASE( my_test )
@@ -49,6 +21,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   // CREATE DATA MODEL                                                                                                                                                
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+
+  string sqlScript = TESTCONF;
 
   ////
   // Parameters
@@ -120,6 +94,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   ///////////
   // TESTS //
   ///////////
+  BOOST_REQUIRE(restore    ("initTest.sql")==0);
+
 
   // Connect normal call
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
