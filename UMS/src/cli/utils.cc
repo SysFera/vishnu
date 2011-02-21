@@ -16,21 +16,44 @@ using namespace std;
 //namespace boost::posix_time = bp;
 
 
-void helpUsage (const Options & opt,const string& cmd){
+void helpUsage (const Options& opt,const string& mess){
 
-cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << cmd <<"\n\n";
+cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << mess <<"\n\n";
 
 cout <<opt<< endl;
 }
 
 
-void errorUsage (const Options & opt,const string& errMsg){
+void errorUsage (const string & cli,const string& errMsg){
 
-		cerr << errMsg <<endl;
+		cerr << cli<<": "<<errMsg <<endl;
 
-		cerr << "To get help, try <<"<< opt.getConfiguration()->getPgName() << " -h >>"<< endl;
+		cerr << "To get help, try <<"<< cli << " -h >>"<< endl;
 
 }
+
+int usage (const Options & opt,const std::string& mess,const std::string& eWhat){
+
+	int res=0;
+
+	if(opt.count("help")){
+
+		helpUsage(opt,mess);
+	}
+	else{
+
+		errorUsage(opt.getConfiguration()->getPgName(),eWhat);
+
+		res=1;
+	}
+
+return res;
+}
+
+
+
+
+
 
 
 

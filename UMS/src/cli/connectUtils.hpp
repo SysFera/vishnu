@@ -12,12 +12,33 @@
 
 class Options;
 
-typedef boost::function1<void,UMS_Data::SessionCloseType>  fClosePolicyType;
 
-boost::shared_ptr<Options> makeConnectOptions(std::string,std::string&,int ,std::string&);
+template <typename userIdType>
+
+boost::shared_ptr<Options> makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& dietConfig){
+
+ boost::shared_ptr<Options> opt(new Options(pgName));
+
+
+        opt->add("dietConfig,c",
+                "The diet config file",
+            ENV,
+            dietConfig);
+
+    opt->add("userId,u",
+                "represents the VISHNU user identifier",
+            HIDDEN,
+            userId,
+            req);
+
+//    opt->setPosition("userId",pos);
 
 
 
+    return opt;
+
+
+}
 
 
 
