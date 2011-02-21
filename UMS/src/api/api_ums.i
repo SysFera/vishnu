@@ -49,25 +49,38 @@
 %template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 %template(ESessionList) ::ecorecpp::mapping::EList<::UMS_Data::Session>;
 
-// Remove output parameters
+// Remove output parameters from the command
 %typemap(in, numinputs=0) std::string& sessionKey(std::string temp) {
   $1 = &temp;
 }
+%typemap(in, numinputs=0) UMS_Data::ListSessions& (UMS_Data::ListSessions temp) {
+  $1 = &temp;
+}
+%typemap(in, numinputs=0) UMS_Data::ListLocalAccounts& (UMS_Data::ListLocalAccounts temp) {
+  $1 = &temp;
+}
+%typemap(in, numinputs=0) UMS_Data::ListMachines& (UMS_Data::ListMachines temp) {
+  $1 = &temp;
+}
+%typemap(in, numinputs=0) UMS_Data::ListCommands& (UMS_Data::ListCommands temp) {
+  $1 = &temp;
+}
+%typemap(in, numinputs=0) UMS_Data::ListOptionsValues& (UMS_Data::ListOptionsValues temp) {
+  $1 = &temp;
+}
+%typemap(in, numinputs=0) UMS_Data::ListUsers& (UMS_Data::ListUsers temp) {
+  $1 = &temp;
+}
 
-// Handle all returned strings
+// Add the output parameters to the result
 %typemap(argout) std::string& sessionKey {
   PyObject *o = PyString_FromString($1->c_str());
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
-// Handle VISHNU exceptions
-%exception {
-  try {
-    $function
-  } catch (UMSVishnuException) {
-    PyErr_SetString(PyExc_SystemError,"**** UMS EXCEPTION CATCHED! :) ****");
-    return NULL;
-  }
+%typemap(argout) UMS_Data::ListSessions& {
+  PyObject *resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(&temp2), SWIGTYPE_p_UMS_Data__ListSessions, SWIG_POINTER_NEW |  0 );
+  $result = SWIG_Python_AppendOutput($result, resultobj);
 }
 
 #endif
