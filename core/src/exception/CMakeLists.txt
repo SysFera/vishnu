@@ -1,4 +1,4 @@
-SET( CMAKE_INSTALL_PREFIX ../../.. )
+#SET( CMAKE_INSTALL_PREFIX ../../.. )
 
 ADD_LIBRARY(exception-vishnu
  VishnuException.cpp
