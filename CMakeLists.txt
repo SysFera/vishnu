@@ -87,7 +87,7 @@ set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
 
-add_subdirectory(core/database)
+add_subdirectory(core/src)
 add_subdirectory(UMS/src)
 # macros used to setup test environment
 include(UMSTestingMacros)

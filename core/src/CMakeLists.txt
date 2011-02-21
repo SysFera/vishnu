@@ -1,4 +1,4 @@
 add_subdirectory( exception )
-add_subdirectory( register  )
+add_subdirectory( registry  )
 add_subdirectory( database  )
 
