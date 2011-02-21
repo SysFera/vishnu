@@ -180,7 +180,7 @@ int main (int ac, char* av[]){
 
 
 
-							int res = listHistoryCmd(sessionKey,listCmd,listOptions);
+							 listHistoryCmd(sessionKey,listCmd,listOptions);
 
 
 							// Display the list

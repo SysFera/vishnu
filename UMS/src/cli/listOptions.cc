@@ -32,10 +32,6 @@ int main (int ac, char* av[]){
 
 		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
         opt.add("dietConfig,c",
 						            "The diet config file",
 												ENV,
@@ -133,11 +129,7 @@ int main (int ac, char* av[]){
 			return 0;
 		}
 
-
-
-
 /************** Call UMS connect service *******************************/
-
 
                // initializing DIET
 
@@ -147,8 +139,7 @@ int main (int ac, char* av[]){
               }
 
 
-
-							int res = listOptions(sessionKey,lsOptionsValues,lsOptions);
+							listOptions(sessionKey,lsOptionsValues,lsOptions);
 
 
 							// Display the list

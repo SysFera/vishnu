@@ -13,16 +13,9 @@ int main (int ac, char* av[]){
 
 	string dietConfig;
 
-		int reqParam=0;   // to count the required parameters for the command
-
 /**************** Describe options *************/
 
-
 		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC);
 
         opt.add("dietConfig,c",
 				        "The diet config file",
@@ -37,7 +30,8 @@ int main (int ac, char* av[]){
 		opt.add("filePath",
 					  "The path of the VISHNU configuration file",
 						HIDDEN,
-						filePath);
+						filePath,
+						1);
 
 		opt.setPosition("filePath",-1);
 
@@ -48,50 +42,16 @@ int main (int ac, char* av[]){
 
 		opt.parse_cli(ac,av);
 
-		//opt.parse_cfile();
-
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
 
-
-
-
 /********  Process **************************/
-
-		if (opt.count("filePath")){
-
-			cout <<"The file Path is " << filePath << endl;
-
-			reqParam=reqParam+1;
-		}
-
-
 
 		checkVishnuConfig(opt);
 
-		if(opt.count("sessionKey")){
-
-			cout << "The session Key is: " << sessionKey <<endl;
-
-		}
-
-
-		 if ((reqParam < RCPARAM)|| (opt.count("help"))){
-
-			 cout << "Usage: " << av[0] <<" filePath"<<endl;
-
-			 cout << opt << endl;
-
-			 return 0;
-		 }
-
-
-
-
 /************** Call UMS connect service *******************************/
-
 
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
@@ -103,16 +63,19 @@ int main (int ac, char* av[]){
 
               restoreConfiguration(sessionKey, filePath);
 
-
-
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+catch(po::required_option& e){// a required parameter is missing
 
-	return 0;
+           usage(opt,"[options] filePath ","required parameter is missing");
+  }
+  catch(std::exception& e){
+
+    errorUsage(av[0], e.what());
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 

@@ -40,7 +40,6 @@ int main (int ac, char* av[]){
 			std::string sessionKey;
 
 
-
 /**************** Describe options *************/
 
 			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
