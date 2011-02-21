@@ -1,5 +1,3 @@
-
-
 #include "listSessions.hh"
 #include "utils.hh"
 
@@ -41,12 +39,7 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
-
 		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
 
         opt.add("dietConfig,c",
 						            "The diet config file",
@@ -121,15 +114,12 @@ int main (int ac, char* av[]){
 
 		bool isEmpty=opt.empty();//if no value was given in the command line
 
-		opt.parse_cfile();
-
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
 
 /********  Process **************************/
-
 
 		if (opt.count("status")){
 
@@ -232,7 +222,7 @@ int main (int ac, char* av[]){
 
 
 
-							int res = listSessions(sessionKey,listSession,listOptions);
+							 listSessions(sessionKey,listSession,listOptions);
 
 
 							// Display the list

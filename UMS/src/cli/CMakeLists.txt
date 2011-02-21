@@ -24,6 +24,7 @@ add_library(cli-utils
  localAccountUtils
  userUtils
  machineUtils
+ listMachineUtils
 )
 #declare all command lines provided
 

@@ -22,13 +22,9 @@ int main (int ac, char* av[]){
 
 		UMS_Data::ListUsers lsUsers;
 
-
-
 /**************** Describe options *************/
 
-
 		Options opt(av[0] );
-
 
         opt.add("dietConfig,c",
 						            "The diet config file",
@@ -54,55 +50,23 @@ int main (int ac, char* av[]){
 
 		bool isEmpty=opt.empty();//if no value was given in the command line
 
-		opt.parse_cfile();
-
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
 
-
-
-
 /********  Process **************************/
 
-
-		if (opt.count("userIdOption")){
-
-			cout <<"The user identifier option is " << userIdOption << endl;
-		}
-
-		if(opt.count("sessionKey")){
-
-			cout <<"the session key is : " << sessionKey << endl;
-		}
-
-		if (opt.count("dietConfig")){
-
-			cout <<"The diet config file " << dietConfig << endl;
-		}
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
-
+		checkVishnuConfig(opt);
 
 		if ( opt.count("help")){
 
-			cout << "Usage: " << av[0] <<" [options]  "<<endl;
-
-			cout << opt << endl;
+			helpUsage(opt," [options]");
 
 			return 0;
 		}
 
-
-
-
 /************** Call UMS connect service *******************************/
-
 
                // initializing DIET
 
@@ -111,9 +75,7 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-
-
-							int res = listUsers(sessionKey,lsUsers, userIdOption);
+							 listUsers(sessionKey,lsUsers, userIdOption);
 
 
 							// Display the list
@@ -129,7 +91,9 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+
+		errorUsage(av[0], e.what());
+
 		return 1;
 	}
 

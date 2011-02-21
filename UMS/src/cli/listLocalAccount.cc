@@ -1,6 +1,8 @@
 
 #include "listLocalAccount.hh"
 #include "utils.hh"
+#include "listMachineUtils.hpp"
+#include <boost/bind.hpp>
 
 namespace po = boost::program_options;
 
@@ -13,10 +15,6 @@ int main (int ac, char* av[]){
 
 		string dietConfig;
 
-		std::string userId;
-
-		std::string machineId;
-
 		std::string sessionKey;
 
 		/********** EMF data ************/
@@ -25,35 +23,24 @@ int main (int ac, char* av[]){
 
 		UMS_Data::ListLocalAccOptions listOptions;
 
+/******** Callback functions ******************/
 
+		          boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListLocalAccOptions::setUserId,boost::ref(listOptions),_1));
+
+							boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListLocalAccOptions::setMachineId,boost::ref(listOptions),_1));
 
 /**************** Describe options *************/
 
-		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
+							boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
 
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
 
-        opt.add("adminListOption,a",
+							opt->add("adminListOption,a",
 						            "is an admin option for listing all local configurations of all users	",
 												CONFIG);
-				opt.add("userId,u",
-		                 "the Vishnu user identifier of the user of the local user configuration",
-										 CONFIG,
-										 userId);
 
-				opt.add("machineId,i",
-									    	"the identifier of the machine associated to the local user configuration",
-												CONFIG,
-												machineId);
 
-				opt.add("sessionKey",
+							opt->add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
@@ -61,73 +48,32 @@ int main (int ac, char* av[]){
 	try {
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		bool isEmpty=opt.empty();//if no value was given in the command line
+		bool isEmpty=opt->empty();//if no value was given in the command line
 
-		opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
-
-
-
+		opt->notify();
 
 
 /********  Process **************************/
 
-
-		if (opt.count("adminListOption")){
+		if (opt->count("adminListOption")){
 
 			cout <<"It is an admin list option " << endl;
 
 			listOptions.setAdminListOption(true);
 		}
 
+		checkVishnuConfig(*opt);
 
-		if (opt.count("userId")){
+		if ( opt->count("help")){
 
-			cout <<"The user identifier is " << userId << endl;
-
-			listOptions.setUserId(userId);
-
-		}
-
-		if(opt.count("machineId")){
-
-			cout <<"the machineId is : " << machineId << endl;
-
-			listOptions.setMachineId(machineId);
-		}
-
-		if(opt.count("sessionKey")){
-
-			cout <<"the session key is : " << sessionKey << endl;
-		}
-
-		if (opt.count("dietConfig")){
-
-			cout <<"The diet config file " << dietConfig << endl;
-		}
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
-
-
-		if ( opt.count("help")){
-
-			cout << "Usage: " << av[0] <<" [options]  "<<endl;
-
-			cout << opt << endl;
+			helpUsage(*opt," [options]");
 
 			return 0;
 		}
-
-
 
 
 /************** Call UMS connect service *******************************/
@@ -140,9 +86,7 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-
-
-							int res = listLocalAccount(sessionKey,lsLocalAccount,listOptions);
+							 listLocalAccount(sessionKey,lsLocalAccount,listOptions);
 
 							// Display the list
       if(isEmpty) {
@@ -157,7 +101,8 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0], e.what());
+
 		return 1;
 	}
 
