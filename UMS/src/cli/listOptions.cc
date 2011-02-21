@@ -1,7 +1,6 @@
-
-
 #include "listOptions.hh"
 #include "utils.hh"
+#include<boost/bind.hpp>
 
 namespace po = boost::program_options;
 
@@ -26,6 +25,10 @@ int main (int ac, char* av[]){
 
 		UMS_Data::ListOptOptions lsOptions;
 
+/**************** Callback functions *************/
+
+    boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListOptOptions::setUserId,boost::ref(lsOptions),_1));
+    boost::function1<void,string> fOptionName( boost::bind(&UMS_Data::ListOptOptions::setOptionName,boost::ref(lsOptions),_1));
 
 /**************** Describe options *************/
 
@@ -46,13 +49,13 @@ int main (int ac, char* av[]){
 		                 "an admin option for listing commands launched\n"
 										 "by a specific user identified by his/her userId",
 										 CONFIG,
-										 userId);
+										 fUserId);
 
 				opt.add("optionName,n",
 									    	"is an option for listing all default option values\n"
 												"defined by VISHNU administrator",
 												CONFIG,
-												optionName);
+												fOptionName);
 
 				opt.add("sessionKey",
 												"The session key",
@@ -66,18 +69,13 @@ int main (int ac, char* av[]){
 
 		bool isEmpty=opt.empty();//if no value was given in the command line
 
-		opt.parse_cfile();
-
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
 
 
-
-
 /********  Process **************************/
-
 
 		if (opt.count("listAllDeftValue")){
 
@@ -87,44 +85,11 @@ int main (int ac, char* av[]){
 		}
 
 
-		if (opt.count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-			lsOptions.setUserId(userId);
-
-		}
-
-		if(opt.count("optionName")){
-
-			cout <<"the optionName is : " << optionName << endl;
-
-			lsOptions.setOptionName(optionName);
-		}
-
-
-		if(opt.count("sessionKey")){
-
-			cout <<"the session key is : " << sessionKey << endl;
-		}
-
-		if (opt.count("dietConfig")){
-
-			cout <<"The diet config file " << dietConfig << endl;
-		}
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
-
+		checkVishnuConfig(opt);
 
 		if ( opt.count("help")){
 
-			cout << "Usage: " << av[0] <<" [options]  "<<endl;
-
-			cout << opt << endl;
+			helpUsage(opt,"[options] ");
 
 			return 0;
 		}
@@ -157,7 +122,7 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0],e.what());
 		return 1;
 	}
 

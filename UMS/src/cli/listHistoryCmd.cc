@@ -1,8 +1,7 @@
-
-
 #include "listHistoryCmd.hh"
+#include "listHistoryCmdUtils.hpp"
 #include "utils.hh"
-
+#include<boost/bind.hpp>
 namespace po = boost::program_options;
 
 using namespace std;
@@ -15,14 +14,6 @@ int main (int ac, char* av[]){
 
 		string dietConfig;
 
-		std::string userId;
-
-		std::string sessionId;
-
-		long startDateOption;
-
-		long endDateOption;
-
 		std::string sessionKey;
 
 		/********** EMF data ************/
@@ -30,52 +21,19 @@ int main (int ac, char* av[]){
 		UMS_Data::ListCommands listCmd;
 
 		UMS_Data::ListCmdOptions listOptions;
+/******** Callback functions ******************/
 
+		      boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListCmdOptions::setUserId,boost::ref(listOptions),_1));
+		      boost::function1<void,string> fSessionId( boost::bind(&UMS_Data::ListCmdOptions::setSessionId,boost::ref(listOptions),_1));
+		      boost::function1<void,long> fStartDateOption( boost::bind(&UMS_Data::ListCmdOptions::setStartDateOption,boost::ref(listOptions),_1));
+		      boost::function1<void,long> fEndDateOption( boost::bind(&UMS_Data::ListCmdOptions::setEndDateOption,boost::ref(listOptions),_1));
 
 /**************** Describe options *************/
 
+boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, fStartDateOption, fEndDateOption);
 
-		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-        opt.add("adminListOption,a",
-						            "is an admin option for listing all commands of all users	",
-												CONFIG);
-
-				opt.add("userId,u",
-		                 "an admin option for listing commands launched\n"
-										 "by a specific user identified by his/her userId",
-										 CONFIG,
-										 userId);
-
-				opt.add("sessionId,i",
-									    	"lists all commands launched within a specific session",
-												CONFIG,
-												sessionId);
-
-				opt.add("startDateOption,s",
-									    	"allows the user to organize the commands listed\n"
-												"by providing the start date\n"
-												"(the UNIX timestamp	of the start date is used)",
-												CONFIG,
-												startDateOption);
-
-				opt.add("endDateOption,e",
-									    	"allows the user to organize the commands listed\n"
-												"by providing the end date (the timestamp of the end date is used).\n"
-												"By default, the end date is the current day",
-												CONFIG,
-												endDateOption);
-
-				opt.add("sessionKey",
+				opt->add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
@@ -84,88 +42,35 @@ int main (int ac, char* av[]){
 
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		bool isEmpty=opt.empty();//if no value was given in the command line
+		bool isEmpty=opt->empty();//if no value was given in the command line
 
-		opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
-
-
+		opt->notify();
 
 
 
 /********  Process **************************/
 
 
-		if (opt.count("adminListOption")){
+		if (opt->count("adminListOption")){
 
 			cout <<"It is an admin list option " << endl;
 
 			listOptions.setAdminListOption(true);
 		}
 
+		checkVishnuConfig(*opt);
 
-		if (opt.count("userId")){
+		if ( opt->count("help")){
 
-			cout <<"The user identifier is " << userId << endl;
+			helpUsage (*opt," [options]  ");
 
-			listOptions.setUserId(userId);
-
-		}
-
-		if(opt.count("sessionId")){
-
-			cout <<"the sessionId is : " << sessionId << endl;
-
-			listOptions.setSessionId(sessionId);
-		}
-
-		if(opt.count("startDateOption")){
-
-			cout <<"the start date option is : " << startDateOption << endl;
-
-			listOptions.setStartDateOption(startDateOption );
-		}
-
-
-		if(opt.count("endDateOption")){
-
-			cout <<"the end date option is : " << endDateOption << endl;
-
-			listOptions.setEndDateOption(endDateOption );
-		}
-
-		if(opt.count("sessionKey")){
-
-			cout <<"the session key is : " << sessionKey << endl;
-		}
-
-		if (opt.count("dietConfig")){
-
-			cout <<"The diet config file " << dietConfig << endl;
-		}
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
-
-
-		if ( opt.count("help")){
-
-			cout << "Usage: " << av[0] <<" [options]  "<<endl;
-
-			cout << opt << endl;
 
 			return 0;
 		}
-
-
 
 
 /************** Call UMS connect service *******************************/
@@ -177,8 +82,6 @@ int main (int ac, char* av[]){
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
-
-
 
 							 listHistoryCmd(sessionKey,listCmd,listOptions);
 
@@ -196,7 +99,7 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0], e.what());
 		return 1;
 	}
 

@@ -1,5 +1,7 @@
 #include "listSessions.hh"
 #include "utils.hh"
+#include "listHistoryCmdUtils.hpp"
+#include<boost/bind.hpp>
 
 namespace po = boost::program_options;
 
@@ -12,145 +14,81 @@ int main (int ac, char* av[]){
 
 		string dietConfig;
 
-		int sessionInactivityDelay;
-
-		std::string machineId;
-
-		std::string userId;
-
-		std::string sessionId;
-
-		long startDateOption;
-
-		long endDateOption;
-
 		std::string sessionKey;
 
 		/********** EMF data ************/
-
-
-		UMS_Data::StatusType status;
-
-		UMS_Data::SessionCloseType sessionClosePolicy;
 
 		UMS_Data::ListSessions listSession;
 
 		UMS_Data::ListSessionOptions listOptions;
 
+/**************** Callback functions *************/
+
+		boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListSessionOptions::setUserId,boost::ref(listOptions),_1));
+
+		boost::function1<void,string> fSessionId( boost::bind(&UMS_Data::ListSessionOptions::setSessionId,boost::ref(listOptions),_1));
+
+		boost::function1<void,long> fStartDateOption( boost::bind(&UMS_Data::ListSessionOptions::setStartDateOption,boost::ref(listOptions),_1));
+
+		boost::function1<void,long> fEndDateOption( boost::bind(&UMS_Data::ListSessionOptions::setEndDateOption,boost::ref(listOptions),_1));
+
+		boost::function1<void,int> fSessionInactivityDelay( boost::bind(&UMS_Data::ListSessionOptions::setSessionInactivityDelay,boost::ref(listOptions),_1));
+
+				boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListSessionOptions::setMachineId,boost::ref(listOptions),_1));
+
+		boost::function1<void,UMS_Data::SessionCloseType> fSessionClosePolicy( boost::bind(&UMS_Data::ListSessionOptions::setSessionClosePolicy,boost::ref(listOptions),_1));
+		boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::ListSessionOptions::setStatus,boost::ref(listOptions),_1));
+
 /**************** Describe options *************/
 
-		Options opt(av[0] );
+		boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, fStartDateOption, fEndDateOption);
 
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
 
-		opt.add("status,t",
+		opt->add("status,t",
 				        "specifies the type of the sessions which will be\n"
 								"listed (INACTIVE or ACTIVE)",
 						  CONFIG,
-						  status);
+						  fStatus);
 
-		opt.add("sessionClosePolicy,p",
+		opt->add("sessionClosePolicy,p",
 				      "Specifies the closure mode of the sessions which\n"
 							"will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT)",
 						  CONFIG,
-						  sessionClosePolicy);
+						  fSessionClosePolicy);
 
-		opt.add("sessionInactivityDelay,d",
+		opt->add("sessionInactivityDelay,d",
 				      "specifies the inactivity delay in seconds\n"
 							"of the sessions which will be listed",
 					  CONFIG,
-					  sessionInactivityDelay);
+					  fSessionInactivityDelay);
 
-		opt.add("machineId,m",
+		opt->add("machineId,m",
 				       "allows the user to list sessions\n"
 							 "opened on a specific machine",
 						CONFIG,
-						machineId);
+						fMachineId);
 
-		opt.add("adminListOption,a",
-				    "is an admin option for listing\n"
-						"all sessions of all users",
-						CONFIG);
-
-		opt.add("userId,u",
-				        "is an admin option for listing\n"
-								"sessions opened by a specific user	",
-						    CONFIG,
-						    userId);
-
-		opt.add("sessionId,i",
-				        "allows the user to list all commands\n"
-								"launched within a specific session",
-						    CONFIG,
-						    sessionId);
-
-				opt.add("startDateOption,s",
-									    	"allows the user to organize the commands listed\n"
-												"by providing the start date\n"
-												"(the UNIX timestamp	of the start date is used)",
-												CONFIG,
-												startDateOption);
-
-				opt.add("endDateOption,e",
-									    	"allows the user to organize the commands listed\n"
-												"by providing the end date (the timestamp of the end date is used).\n"
-												"By default, the end date is the current day",
-												CONFIG,
-												endDateOption);
-
-
-				opt.add("sessionKey",
+				opt->add("sessionKey",
 												"The session key",
 												ENV,
 												sessionKey);
 
-	try {
+	try{
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		bool isEmpty=opt.empty();//if no value was given in the command line
+		bool isEmpty=opt->empty();//if no value was given in the command line
 
-		opt.parse_env(env_name_mapper());
+		opt->parse_env(env_name_mapper());
 
-		opt.notify();
+		opt->notify();
 
 
 /********  Process **************************/
 
-		if (opt.count("status")){
 
-			cout <<"The session state type is " << status <<endl;
-
-			listOptions.setStatus(status);
-		}
-
-		if (opt.count("sessionClosePolicy")){
-
-			cout <<"The session close policy is " << sessionClosePolicy<< endl;
-
-			listOptions.setSessionClosePolicy(sessionClosePolicy);
-		}
-
-		if (opt.count("sessionInactivityDelay")){
-
-			cout <<"The session inactivity delay is " << sessionInactivityDelay<< endl;
-
-			listOptions.setSessionInactivityDelay(sessionInactivityDelay);
-		}
-
-
-		if (opt.count("machineId")){
-
-			cout <<"The machine identifier is " << machineId << endl;
-
-			listOptions.setMachineId(machineId);
-		}
-
-		if (opt.count("adminListOption")){
+		if (opt->count("adminListOption")){
 
 			cout <<"It is an admin list option " << endl;
 
@@ -158,55 +96,14 @@ int main (int ac, char* av[]){
 		}
 
 
-		if (opt.count("userId")){
+		checkVishnuConfig(*opt);
 
-			cout <<"The user identifier is " << userId << endl;
+		if ( opt->count("help")){
 
-			listOptions.setUserId(userId);
-
-		}
-
-		if (opt.count("sessionId")){
-
-			cout <<"The session identifier is " << sessionId << endl;
-
-			listOptions.setSessionId(sessionId);
-
-		}
-
-		if(opt.count("startDateOption")){
-
-			cout <<"the start date option is : " << startDateOption << endl;
-
-			listOptions.setStartDateOption(startDateOption );
-		}
-
-
-		if(opt.count("endDateOption")){
-
-			cout <<"the end date option is : " << endDateOption << endl;
-
-			listOptions.setEndDateOption(endDateOption );
-		}
-
-
-		if(opt.count("sessionKey")){
-
-			cout <<"the session key is : " << sessionKey << endl;
-		}
-
-
-		checkVishnuConfig(opt);
-
-		if ( opt.count("help")){
-
-			cout << "Usage: " << av[0] <<" [options]  "<<endl;
-
-			cout << opt << endl;
+			helpUsage(*opt,"[options]  ");
 
 			return 0;
 		}
-
 
 
 
@@ -219,7 +116,6 @@ int main (int ac, char* av[]){
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
-
 
 
 							 listSessions(sessionKey,listSession,listOptions);
@@ -238,7 +134,7 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0],e.what());
 		return 1;
 	}
 

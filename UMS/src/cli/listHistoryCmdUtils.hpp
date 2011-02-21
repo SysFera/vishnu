@@ -15,14 +15,12 @@ class Options;
 
 typedef  boost::function1<void,std::string> StringcallBackType;
 typedef  boost::function1<void,UMS_Data::SessionCloseType> ClosePolicycallBackType;
-typedef  boost::function1<void,UMS_Data::UMS_Data::StatusType> StatuscallBackType;
+typedef  boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
 typedef  boost::function1<void,long> LongcallBackType;
 typedef  boost::function1<void,int> IntcallBackType;
 
-boost::shared_ptr<Options> makeListSessionOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
+boost::shared_ptr<Options> makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
                                                      StringcallBackType& fSessionId,
-																									StatuscallBackType& fStatus,ClosePolicycallBackType& fClosePolicy,
-																									IntcallBackType& fSessionInactivityDelay,
 																									 LongcallBackType& fStartDateOption, LongcallBackType& fEndDateOption);
 
 
