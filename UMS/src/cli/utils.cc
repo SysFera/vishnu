@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <iomanip>
-
+#include<stdexcept>
 #include "utils.hh"
 #include "SessionProxy.hpp"
 #include "MachineProxy.hpp"
@@ -31,6 +31,32 @@ void errorUsage (const string & cli,const string& errMsg){
 		cerr << "To get help, try <<"<< cli << " -h >>"<< endl;
 
 }
+
+
+void checkVishnuConfig(const Options & opt){
+
+
+if (opt.count("dietConfig")==0){
+
+
+      throw runtime_error( "Set the VISHNU_CONFIG_FILE in your environment variable");
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int usage (const Options & opt,const std::string& mess,const std::string& eWhat){
 
@@ -356,7 +382,7 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
      status = (lsMachine.getMachines().get(i))->getStatus();
 
      os << setw(maxNameSize+2) << left <<  name;
-     os << setw(maxMachineIdSize+2) << left << machineId; 
+     os << setw(maxMachineIdSize+2) << left << machineId;
      os << setw(maxSiteSize+2) << left << site;
      os << setw(8) << left << status;
      os << endl;

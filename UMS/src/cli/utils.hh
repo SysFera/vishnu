@@ -7,6 +7,7 @@ class Options;
 
 void helpUsage (const Options &,const std::string&);
 void errorUsage (const std::string&,const std::string&);
+void checkVishnuConfig(const Options &);
 int usage (const Options &,const std::string&,const std::string&);
 
 std::string takePassword(const std::string&, const std::string&);

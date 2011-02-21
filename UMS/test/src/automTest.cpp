@@ -7,41 +7,41 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include <iostream>
-
+#include "api_ums.hpp"
 
 BOOST_AUTO_TEST_SUITE( test_suite )
 using namespace std;
 using namespace UMS_Data;
 
 
-int connect           	  (string uid, string           	 pwd , string&                 key   , ConnectOptions_ptr op ){key = "lapin"; return 0;}
-int reconnect         	  (string uid, string           	 pwd , string                  sid   , string&            key){key = "lapin"; return 0;}
-int listSession       	  (string key, ListSessions_ptr 	 li  , ListSessionOptions_ptr  op    )                        {  	      return 0;}  
-int listUsers         	  (string key, ListUsers_ptr    	 liu , string                  op    )                        {               return 0;}
-int listMachines      	  (string key, ListMachines_ptr 	 lim , ListMachineOptions_ptr  op    )                        {               return 0;}
-int listLocalAccount  	  (string key, ListLocalAccounts_ptr     lia , ListLocalAccOptions_ptr op    )                        {               return 0;}
-int listOptions  	  (string key, ListOptionsValues_ptr     lio , ListOptOptions_ptr      op    )                        {               return 0;}
-int listHistoryCmd  	  (string key, ListCommands_ptr          lic , ListCmdOptions_ptr      op    )                        {               return 0;}
-int changePassword    	  (string uid, string           	 pwd , string                  newPwd)                        {    	      return 0;}
-int deleteLocalAccount	  (string key, string           	 uid , string                  mid   )                        {    	      return 0;}
-int restoreConfiguration  (string key, string                    pat )                                                        {    	      return 0;}
-int resetPassword     	  (string uid, string           	 pwd )                                                        {    	      return 0;}
-int updateUser        	  (string key, User_ptr         	 user)				  		      	      {    	      return 0;}
-int deleteUser        	  (string key, string           	 user)				  		      	      {    	      return 0;}
-int addVishnuUser     	  (string key, User_ptr         	 user)				  		      	      {    	      return 0;}
-int deleteMachine     	  (string key, string           	 ma  )                                                        {    	      return 0;}
-int resetPassword     	  (string key, int              	 uid )                                                        {    	      return 0;}
-int addLocalAccount   	  (string key, LocalAccount_ptr 	 acc )                                                        {    	      return 0;}
-int addMachine        	  (string key, Machine_ptr      	 ma  )                                                        {    	      return 0;}
-int updateMachine     	  (string key, Machine_ptr      	 ma  )                                                        {    	      return 0;}
-int updateLocalAccount	  (string key, LocalAccount_ptr 	 acc )                                                        {    	      return 0;}
-int configureDefaultOption(string key, OptionValue_ptr 	         acc )                                                        {    	      return 0;}
-int configureOption       (string key, OptionValue_ptr 	         acc )                                                        {    	      return 0;}
-int vishnuInitialize  	  (string pat)                                                                             	      {    	      return 0;}
-int restore           	  (string fil)                                                       	                              {    	      return 0;}
-int close             	  (string key)                                                                             	      {    	      return 0;}      
-int saveConfiguration	  (string key)                                                                                        {    	      return 0;}
-int vishnuFinalize   	  (          )                                                                                        {    	      return 0;}
+// int connect           	  (string uid, string           	 pwd , string&                 key   , ConnectOptions_ptr op ){key = "lapin"; return 0;}
+// int reconnect         	  (string uid, string           	 pwd , string                  sid   , string&            key){key = "lapin"; return 0;}
+// int listSession       	  (string key, ListSessions_ptr 	 li  , ListSessionOptions_ptr  op    )                        {  	      return 0;}  
+// int listUsers         	  (string key, ListUsers_ptr    	 liu , string                  op    )                        {               return 0;}
+// int listMachines      	  (string key, ListMachines_ptr 	 lim , ListMachineOptions_ptr  op    )                        {               return 0;}
+// int listLocalAccount  	  (string key, ListLocalAccounts_ptr     lia , ListLocalAccOptions_ptr op    )                        {               return 0;}
+// int listOptions  	  (string key, ListOptionsValues_ptr     lio , ListOptOptions_ptr      op    )                        {               return 0;}
+// int listHistoryCmd  	  (string key, ListCommands_ptr          lic , ListCmdOptions_ptr      op    )                        {               return 0;}
+// int changePassword    	  (string uid, string           	 pwd , string                  newPwd)                        {    	      return 0;}
+// int deleteLocalAccount	  (string key, string           	 uid , string                  mid   )                        {    	      return 0;}
+// int restoreConfiguration  (string key, string                    pat )                                                        {    	      return 0;}
+// int resetPassword     	  (string uid, string           	 pwd )                                                        {    	      return 0;}
+// int updateUser        	  (string key, User_ptr         	 user)				  		      	      {    	      return 0;}
+// int deleteUser        	  (string key, string           	 user)				  		      	      {    	      return 0;}
+// int addVishnuUser     	  (string key, User_ptr         	 user)				  		      	      {    	      return 0;}
+// int deleteMachine     	  (string key, string           	 ma  )                                                        {    	      return 0;}
+// int resetPassword     	  (string key, int              	 uid )                                                        {    	      return 0;}
+// int addLocalAccount   	  (string key, LocalAccount_ptr 	 acc )                                                        {    	      return 0;}
+// int addMachine        	  (string key, Machine_ptr      	 ma  )                                                        {    	      return 0;}
+// int updateMachine     	  (string key, Machine_ptr      	 ma  )                                                        {    	      return 0;}
+// int updateLocalAccount	  (string key, LocalAccount_ptr 	 acc )                                                        {    	      return 0;}
+// int configureDefaultOption(string key, OptionValue_ptr 	         acc )                                                        {    	      return 0;}
+// int configureOption       (string key, OptionValue_ptr 	         acc )                                                        {    	      return 0;}
+// int vishnuInitialize  	  (string pat)                                                                             	      {    	      return 0;}
+// int restore           	  (string fil)                                                       	                              {    	      return 0;}
+// int close             	  (string key)                                                                             	      {    	      return 0;}      
+// int saveConfiguration	  (string key)                                                                                        {    	      return 0;}
+// int vishnuFinalize   	  (          )                                                                                        {    	      return 0;}
 
 
 BOOST_AUTO_TEST_CASE( my_test )
@@ -63,15 +63,15 @@ BOOST_AUTO_TEST_CASE( my_test )
   string             	  sid  = "1"      ;
   string             	  sub  = ""       ;
   SessionCloseType   	  sct  = 1        ;  
-  ConnectOptions_ptr 	  cop  = ecoreFactory->createConnectOptions();
-  ListSessions_ptr   	  li   = ecoreFactory->createListSessions();
-  ListSessionOptions_ptr  opt  = ecoreFactory->createListSessionOptions();
+  ConnectOptions 	  cop  ;//= ecoreFactory->createConnectOptions();
+  ListSessions   	  li   ;//= ecoreFactory->createListSessions();
+  ListSessionOptions      opt  ;//= ecoreFactory->createListSessionOptions();
   string 	     	  pwdu = "user"  ;
   string 	     	  uidu = "user_1";
   // connect as
   string const&      	  subs = "user_1";
   // user
-  User_ptr           	  use  = ecoreFactory->createUser();
+  User           	  use  ;//= ecoreFactory->createUser();
   PrivilegeType      	  pri  = 1         ;
   string             	  rec  = string("");
   string             	  cu   = "toto_1"  ;
@@ -79,19 +79,19 @@ BOOST_AUTO_TEST_CASE( my_test )
   string             	  fina = "toto"    ;
   string             	  lana = "dupont"  ; 
   string             	  mail = "cl3m3ntlebgkidechyr@hotmail.fr";
-  ListUsers_ptr   	  liu  = ecoreFactory->createListUsers();
+  ListUsers      	  liu  ;//= ecoreFactory->createListUsers();
   // local account
-  ListLocalAccounts_ptr   lia  = ecoreFactory->createListLocalAccounts();
-  ListLocalAccOptions_ptr lioa = ecoreFactory->createListLocalAccOptions();
-  LocalAccount_ptr        lacc = ecoreFactory->createLocalAccount();
+  ListLocalAccounts       lia  ;//= ecoreFactory->createListLocalAccounts();
+  ListLocalAccOptions     lioa ;//= ecoreFactory->createListLocalAccOptions();
+  LocalAccount            lacc ;//= ecoreFactory->createLocalAccount();
   string                  mid  = "machine_1" ;
   string                  accL = "toto"      ;
   string                  ssh  = "/usr/local";
   string                  home = "/home/toto";
   // machine
-  ListMachines_ptr        lim  = ecoreFactory->createListMachines();
-  ListMachineOptions_ptr  liom = ecoreFactory->createListMachineOptions();
-  Machine_ptr             ma   = ecoreFactory->createMachine();
+  ListMachines            lim  ;//= ecoreFactory->createListMachines();
+  ListMachineOptions      liom ;//= ecoreFactory->createListMachineOptions();
+  Machine                 ma   ;//= ecoreFactory->createMachine();
   string                  maid = "machine_2";
   string                  mana = "ulysse"   ;
   string                  site = "paris"    ;
@@ -100,22 +100,22 @@ BOOST_AUTO_TEST_CASE( my_test )
   // Option value
   string                  oval = "CHOC"     ;
   string                  ona  = "NUTE"     ;
-  OptionValue_ptr         opva = ecoreFactory->createOptionValue();
-  ListOptOptions_ptr      lioo = ecoreFactory->createListOptOptions();
-  ListOptionsValues_ptr   liov = ecoreFactory->createListOptionsValues();
+  OptionValue             opva ;//= ecoreFactory->createOptionValue();
+  ListOptOptions          lioo ;//= ecoreFactory->createListOptOptions();
+  ListOptionsValues       liov ;//= ecoreFactory->createListOptionsValues();
   // Init
   string                  path = "/tmp/vishnu.cfg";
   // Command history
-  ListCommands_ptr        lic  = ecoreFactory->createListCommands();
-  ListCmdOptions_ptr      lico = ecoreFactory->createListCmdOptions();
+  ListCommands            lic  ;//= ecoreFactory->createListCommands();
+  ListCmdOptions          lico ;//= ecoreFactory->createListCmdOptions();
   // Configuration
-  Configuration_ptr       conf = ecoreFactory->createConfiguration();
+  Configuration           conf ;//= ecoreFactory->createConfiguration();
   string                  cpath = "/tmp/confile";
 
   // Setting value
-  cop->setClosePolicy(sct);
-  cop->setSessionInactivityDelay(idl);
-  cop->setSubstituteUserId(sub);
+  cop.setClosePolicy(sct);
+  cop.setSessionInactivityDelay(idl);
+  cop.setSubstituteUserId(sub);
 
   ///////////
   // TESTS //
@@ -125,85 +125,85 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
-  BOOST_CHECK  (listSession(key, li , opt      )==0);
+  BOOST_CHECK  (listSessions(key, li , opt      )==0);
   BOOST_MESSAGE("Key generated : " << key );
 
   // Connect with bad uid
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing with bad uid U1-E1" );
   BOOST_CHECK  (connect    ("bad", pwd, key, cop)!=0);
-  BOOST_CHECK  (listSession(key  , li , opt     )!=0);
+  BOOST_CHECK  (listSessions(key  , li , opt     )!=0);
 
   // Connect with bad pwd
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad pwd U1-E2");
   BOOST_CHECK  (connect    (uid, "bad", key, cop)!=0);
-  BOOST_CHECK  (listSession(key, li   , opt     )!=0);
+  BOOST_CHECK  (listSessions(key, li   , opt     )!=0);
 
 
   // Connect with timeout
   sct = 0;
-  cop->setClosePolicy(sct);
+  cop.setClosePolicy(sct);
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing timeout U1.1-B1" );
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
   sleep(10);
-  BOOST_CHECK  (listSession(key, li , opt      )!=0);
+  BOOST_CHECK  (listSessions(key, li , opt      )!=0);
 
   // Connect with bad uid
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing with bad uid U1.1-E1" );
   BOOST_CHECK  (connect    ("bad", pwd, key, cop)!=0);
-  BOOST_CHECK  (listSession(key  , li , opt     )!=0);
+  BOOST_CHECK  (listSessions(key  , li , opt     )!=0);
 
   // Connect with bad pwd
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad pwd U1.1-E2");
   BOOST_CHECK  (connect    (uid, "bad", key, cop)!=0);
-  BOOST_CHECK  (listSession(key, li   , opt     )!=0);
+  BOOST_CHECK  (listSessions(key, li   , opt     )!=0);
 
   // Connect with bad closure policy
   sct = 3;
-  cop->setClosePolicy(sct);
+  cop.setClosePolicy(sct);
   BOOST_REQUIRE(restore("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing unknown closure mode U1.1-E3");
   BOOST_CHECK  (connect(uid, pwd, key, cop )!=0);
   sct = 0;
-  cop->setClosePolicy(sct);
+  cop.setClosePolicy(sct);
 
   // Connect with a temporary password
   BOOST_REQUIRE(restore    ("clean_session_tempPwd.sql")==0);
   BOOST_MESSAGE(" Testing temporary pwd U1.1-E4");
   BOOST_CHECK  (connect    (uid, pwd, key, cop         )!=0);
-  BOOST_CHECK  (listSession(key, li , opt              )==0);
+  BOOST_CHECK  (listSessions(key, li , opt              )==0);
 
   // Connect as an other user
-  cop->setSubstituteUserId(subs);
+  cop.setSubstituteUserId(subs);
   BOOST_REQUIRE(restore    ("clean_session_tempPwd.sql")==0);
   BOOST_MESSAGE(" Testing another user session U1.1-E5");
   BOOST_CHECK  (connect    (uid, pwd, key, cop         )!=0);
-  BOOST_CHECK  (listSession(key, li , opt              )!=0);
-  cop = ecoreFactory->createConnectOptions();
+  BOOST_CHECK  (listSessions(key, li , opt              )!=0);
+  cop = *(ecoreFactory->createConnectOptions());
 
   sct = 0;
-  cop->setClosePolicy(sct);
+  cop.setClosePolicy(sct);
   BOOST_REQUIRE(restore("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing connect on disconnect U1.1-B2" );
   BOOST_CHECK  (connect(uid, pwd, key, cop )==0);
-  BOOST_CHECK(listSession(key, li, opt)!=0);
+  BOOST_CHECK(listSessions(key, li, opt)!=0);
   
   // ReConnect normal call
   // -> connect
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
-  BOOST_CHECK  (listSession(key, li , opt      )==0);
+  BOOST_CHECK  (listSessions(key, li , opt      )==0);
   // -> and then reconnect normal
-  if (li->getSessions().size() &&
-      (li->getSessions())[0])
-    rec = li->getSessions()[0]->getSessionId();
+  if (li.getSessions().size() &&
+      (li.getSessions())[0])
+    rec = li.getSessions()[0]->getSessionId();
   BOOST_CHECK(reconnect  (uid, pwd, rec, key)==0);
-  BOOST_CHECK(listSession(key, li , opt     )==0);
+  BOOST_CHECK(listSessions(key, li , opt     )==0);
 
 
   // Reconnect with bad user id
@@ -220,9 +220,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal close U1.2B");
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
-  BOOST_CHECK  (listSession(key, li , opt      )==0);
+  BOOST_CHECK  (listSessions(key, li , opt      )==0);
   BOOST_CHECK  (close      (key                )==0);
-  BOOST_CHECK  (listSession(key, li,  opt      )!=0);
+  BOOST_CHECK  (listSessions(key, li,  opt      )!=0);
 
   // Test close with bad sid
   BOOST_MESSAGE(" Testing close a bad session U1.2E1");
@@ -236,12 +236,12 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing adding a user U4-B"    );
   BOOST_REQUIRE(restore("clean_session.sql")==0);
   BOOST_CHECK(connect(uid, pwd, key, cop)==0);
-  use->setUserId   (cu)  ;
-  use->setPassword (pass);
-  use->setFirstname(fina);
-  use->setLastname (lana);
-  use->setPrivilege(pri) ;
-  use->setEmail    (mail);
+  use.setUserId   (cu)  ;
+  use.setPassword (pass);
+  use.setFirstname(fina);
+  use.setLastname (lana);
+  use.setPrivilege(pri) ;
+  use.setEmail    (mail);
   BOOST_CHECK(addVishnuUser(key, use)==0);
   BOOST_CHECK(close        (key     )==0);
 
@@ -257,39 +257,39 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing adding a user with a bad email U4-E"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
-  use->setEmail("cl3m3ntlebgkidechyrhotmail.fr");
+  use.setEmail("cl3m3ntlebgkidechyrhotmail.fr");
   BOOST_CHECK  (addVishnuUser(key, use           )!=0);
   BOOST_CHECK  (close        (key                )==0);
-  use->setEmail(mail);
+  use.setEmail(mail);
 
   // Update valid
   BOOST_MESSAGE(" Testing valid update user U4.1-B"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK  (addVishnuUser(key, use           )==0);
-  use->setEmail("cl3m3ntlebgkidechyrGRAVE@hotmail.fr");
+  use.setEmail("cl3m3ntlebgkidechyrGRAVE@hotmail.fr");
   BOOST_CHECK  (updateUser   (key, use           )==0);
-  use->setEmail(mail);
+  use.setEmail(mail);
   BOOST_CHECK  (close        (key                )==0);
 
   // Login invalid to update
   BOOST_MESSAGE(" Testing bad update parameter bad user id U4.1-E"    );
   BOOST_REQUIRE(restore("clean_session.sql"     )==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop)==0);
-  use->setUserId("");
+  use.setUserId("");
   BOOST_CHECK	 (addVishnuUser(key, use	  )==0);    
   BOOST_CHECK	 (updateUser   (key, use	  )!=0);
   BOOST_CHECK	 (close        (key               )==0);
-  use->setUserId(cu);
+  use.setUserId(cu);
 
   // Update user fails : bad email
   BOOST_MESSAGE(" Testing update a user with a bad email U4.1-E"    );
   BOOST_REQUIRE(restore   ("clean_session.sql")==0);
   BOOST_CHECK  (connect   (uid, pwd, key, cop )==0);
-  use->setEmail("cl3m3ntlebgkidechyrhotmail.fr");
+  use.setEmail("cl3m3ntlebgkidechyrhotmail.fr");
   BOOST_CHECK  (updateUser(key, use           )!=0);
   BOOST_CHECK  (close     (key                )==0);
-  use->setEmail(mail);
+  use.setEmail(mail);
 
   // Delete user 
   BOOST_MESSAGE(" Testing delete normal U4.2B"    );
@@ -351,57 +351,57 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing add local account success U4-B"    );
   BOOST_REQUIRE(restore("clean_session.sql")==0);
   BOOST_CHECK  (connect(uid, pwd, key, cop )==0);
-  lacc->setUserId       (uid);
-  lacc->setMachineId    (mid);
-  lacc->setAcLogin     (accL);
-  lacc->setSshKeyPath   (ssh);
-  lacc->setHomeDirectory(home);
-  BOOST_CHECK(addLocalAccount(key, lacc)==0);
+  lacc.setUserId       (uid);
+  lacc.setMachineId    (mid);
+  lacc.setAcLogin     (accL);
+  lacc.setSshKeyPath   (ssh);
+  lacc.setHomeDirectory(home);
+  BOOST_CHECK(addLocalAccount(key, lacc, key2)==0);
   BOOST_CHECK(close          (key      )==0);
 
   // Add local account bad machine id
   BOOST_MESSAGE(" Testing add local account bad machine U4-E"    );
   BOOST_REQUIRE(restore        ("clean_session.sql")==0);
   BOOST_CHECK  (connect        (uid, pwd , key, cop)==0);
-  lacc->setMachineId("bad");
-  BOOST_CHECK	 (addLocalAccount(key, lacc  	     )!=0);
-  BOOST_CHECK	 (close          (key        	     )==0);  
-  lacc->setMachineId(mid);
+  lacc.setMachineId("bad");
+  BOOST_CHECK	 (addLocalAccount(key, lacc, key2  )!=0);
+  BOOST_CHECK	 (close          (key        	   )==0);  
+  lacc.setMachineId(mid);
 
   // Add local account bad acc login
   BOOST_MESSAGE(" Testing add local account success U4-E"    );
   BOOST_REQUIRE(restore	 ("clean_session.sql")==0);
   BOOST_CHECK  (connect	 (uid, pwd, key, cop )==0);
-  lacc->setAcLogin("bad");
-  BOOST_CHECK	 (addLocalAccount(key, lacc	     )!=0);
+  lacc.setAcLogin("bad");
+  BOOST_CHECK	 (addLocalAccount(key, lacc, key2    )!=0);
   BOOST_CHECK	 (close          (key      	     )==0);    
-  lacc->setAcLogin(accL);
+  lacc.setAcLogin(accL);
 
   // Update local account
   BOOST_MESSAGE(" Testing update local account success U4.1-B"    );
   BOOST_REQUIRE(restore	  ("clean_session.sql")==0);
   BOOST_CHECK  (connect	  (uid, pwd , key, cop)==0);
-  lacc->setSshKeyPath("/usr/bin");
-  BOOST_CHECK(addLocalAccount   (key, lacc	      )==0);    
+  lacc.setSshKeyPath("/usr/bin");
+  BOOST_CHECK(addLocalAccount   (key, lacc, key2      )==0);    
   BOOST_CHECK(updateLocalAccount(key, lacc	      )==0);
   BOOST_CHECK(close             (key      	      )==0);
-  lacc->setSshKeyPath(ssh);
+  lacc.setSshKeyPath(ssh);
 
   // Update local account bad machine id
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
   BOOST_REQUIRE(restore           ("clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , key, cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (key, lacc  	)!=0);
-  lacc->setMachineId("bad");
+  BOOST_CHECK	 (addLocalAccount   (key, lacc, key2  	)!=0);
+  lacc.setMachineId("bad");
   BOOST_CHECK  (updateLocalAccount(key, lacc	        )==0);
   BOOST_CHECK	 (close             (key        	)==0);  
-  lacc->setMachineId(mid);
+  lacc.setMachineId(mid);
 
   // Delete local account 
   BOOST_MESSAGE(" Testing delete local account normal U4.2B"    );
   BOOST_REQUIRE(restore           ("clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , key, cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (key, lacc          )==0);
+  BOOST_CHECK	 (addLocalAccount   (key, lacc, key2    )==0);
   BOOST_CHECK	 (deleteLocalAccount(key, uid , mid     )==0);
   BOOST_CHECK	 (close             (key                )==0);  
 
@@ -409,7 +409,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing delete local account bad uid U4.2E"    );
   BOOST_REQUIRE(restore           ("clean_session.sql" )==0);
   BOOST_CHECK  (connect           (uid, pwd  , key, cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (key, lacc           )==0);
+  BOOST_CHECK	 (addLocalAccount   (key, lacc, key2     )==0);
   BOOST_CHECK	 (deleteLocalAccount(key, "bad", mid     )!=0);
   BOOST_CHECK	 (close             (key                 )==0);  
 
@@ -417,7 +417,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing delete local account bad machine"    );
   BOOST_REQUIRE(restore           ("clean_session.sql"  )==0);
   BOOST_CHECK  (connect           (uid, pwd , key  , cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (key, lacc            )==0);
+  BOOST_CHECK	 (addLocalAccount   (key, lacc, key2      )==0);
   BOOST_CHECK	 (deleteLocalAccount(key, uid , "bad"     )!=0);
   BOOST_CHECK	 (close             (key                  )==0);  
 
@@ -425,11 +425,11 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing add machine UA6.1B"    );
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
-  ma->setMachineId         (maid);
-  ma->setName              (mana);
-  ma->setSite              (site);
-  ma->setMachineDescription(desc);
-  ma->setLanguage          (lang);
+  ma.setMachineId         (maid);
+  ma.setName              (mana);
+  ma.setSite              (site);
+  ma.setMachineDescription(desc);
+  ma.setLanguage          (lang);
   BOOST_CHECK	 (addMachine (key, ma            )==0);
   BOOST_CHECK	 (close      (key                )==0);  
 
@@ -446,20 +446,20 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addMachine   (key, ma            )==0);
-  ma->setName("Machina");
+  ma.setName("Machina");
   BOOST_CHECK	 (updateMachine(key, ma            )==0);
   BOOST_CHECK	 (close        (key                )==0);  
-  ma->setName(mana);
+  ma.setName(mana);
 
   // Test update machine normal
   BOOST_MESSAGE(" Testing update machine bad machien id UA6.4E"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addMachine   (key, ma            )==0);
-  ma->setMachineId("bad");
+  ma.setMachineId("bad");
   BOOST_CHECK	 (updateMachine(key, ma            )!=0);
   BOOST_CHECK	 (close        (key                )==0);  
-  ma->setMachineId(maid);
+  ma.setMachineId(maid);
 
   // Test delete machine normal
   BOOST_MESSAGE(" Testing update machine UA6.2B"    );
@@ -474,10 +474,10 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addMachine   (key, ma            )==0);
-  ma->setMachineId("bad");
+  ma.setMachineId("bad");
   BOOST_CHECK	 (updateMachine(key, ma            )!=0);
   BOOST_CHECK	 (close        (key                )==0);  
-  ma->setMachineId(maid);
+  ma.setMachineId(maid);
 
   // Test list user
   BOOST_REQUIRE(restore  ("clean_session.sql")==0);
@@ -485,11 +485,11 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect  (uid, pwd, key, cop )==0);
   BOOST_CHECK  (listUsers(key, liu, ""       )==0);
   BOOST_CHECK  (close    (key                )==0);
-  if (li->getSessions().size()==0){
+  if (li.getSessions().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((liu->getUsers().size()>0) && (liu->getUsers()[0]->getUserId()!="admin_1" || liu->getUsers()[1]->getUserId()!="user_1"))
-    BOOST_MESSAGE(" admin: " << liu->getUsers()[0]->getUserId() << " and user: " << liu->getUsers()[1]->getUserId() );
+  if ((liu.getUsers().size()>0) && (liu.getUsers()[0]->getUserId()!="admin_1" || liu.getUsers()[1]->getUserId()!="user_1"))
+    BOOST_MESSAGE(" admin: " << liu.getUsers()[0]->getUserId() << " and user: " << liu.getUsers()[1]->getUserId() );
 
   // Test list user option user
   BOOST_REQUIRE(restore  ("clean_session.sql")==0);
@@ -497,10 +497,10 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect  (uid, pwd, key, cop )==0);
   BOOST_CHECK  (listUsers(key, liu, "admin_1")==0);
   BOOST_CHECK  (close    (key                )==0);
-  if (li->getSessions().size()==0){
+  if (li.getSessions().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((liu->getUsers().size()>0) && (liu->getUsers()[0]->getUserId()!="admin_1" || liu->getUsers()[1]))
+  if ((liu.getUsers().size()>0) && (liu.getUsers()[0]->getUserId()!="admin_1" || liu.getUsers()[1]))
     BOOST_MESSAGE(" FAILED " );
 
   // Test list user
@@ -514,81 +514,81 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql"  )==0);
   BOOST_MESSAGE(" Testing list session base U1.3.5B" );
   BOOST_CHECK  (connect    (uidu, pwdu, key, cop )==0);
-  BOOST_CHECK  (listSession(key , li  , opt      )==0);
+  BOOST_CHECK  (listSessions(key , li  , opt      )==0);
   BOOST_CHECK  (close      (key                  )==0);
-  if (li->getSessions().size()==0){
+  if (li.getSessions().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=key))
-    BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
+  if ((li.getSessions().size()>0) && (li.getSessions()[0]->getSessionKey()!=key))
+    BOOST_MESSAGE(" key: " << li.getSessions()[0]->getSessionKey() );
 
   // Test list session for an admin
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing list session base for admin UA5.1B" );
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
-  BOOST_CHECK  (listSession(key, li , opt      )==0);
+  BOOST_CHECK  (listSessions(key, li , opt      )==0);
   BOOST_CHECK  (close      (key                )==0);
-  if (li->getSessions().size()==0){
+  if (li.getSessions().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=key))
-    BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
+  if ((li.getSessions().size()>0) && (li.getSessions()[0]->getSessionKey()!=key))
+    BOOST_MESSAGE(" key: " << li.getSessions()[0]->getSessionKey() );
 
   // Test list session error
   BOOST_REQUIRE(restore    ("clean_session.sql"   )==0);
   BOOST_MESSAGE(" Testing bad key list session base 1.3.5E" );
   BOOST_CHECK  (connect    (uidu , pwdu, key, cop )==0);
-  BOOST_CHECK  (listSession("bad", li  , opt      )!=0);
+  BOOST_CHECK  (listSessions("bad", li  , opt      )!=0);
   BOOST_CHECK  (close      (key                   )==0);
 
   // Test list session opt
-  opt->setUserId(uidu);
+  opt.setUserId(uidu);
   BOOST_REQUIRE(restore    ("clean_session.sql"   )==0);
   BOOST_MESSAGE(" Testing list session base option 1.3.5B" );
   BOOST_CHECK  (connect    (uidu, pwdu, key2, cop )==0);
   BOOST_CHECK  (close      (key2                  )==0);
   BOOST_CHECK  (connect    (uid , pwd	, key , cop )==0);
-  BOOST_CHECK  (listSession(key , li 	, opt       )==0);
+  BOOST_CHECK  (listSessions(key , li 	, opt       )==0);
   BOOST_CHECK  (close      (key                   )==0);
-  opt  = ecoreFactory->createListSessionOptions();
-  if (li->getSessions().size()==0){
+  opt  = *(ecoreFactory->createListSessionOptions());
+  if (li.getSessions().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=key2))
-    BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
+  if ((li.getSessions().size()>0) && (li.getSessions()[0]->getSessionKey()!=key2))
+    BOOST_MESSAGE(" key: " << li.getSessions()[0]->getSessionKey() );
 
 
   // Test list machine
   BOOST_REQUIRE(restore     ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal list machine UA6.3B" );
   BOOST_CHECK  (connect     (uid, pwd, key , cop )==0);
-  BOOST_CHECK  (listMachines(key, lim, liom      )==0);
+  BOOST_CHECK  (listMachine(key, lim, liom      )==0);
   BOOST_CHECK  (close       (key                 )==0);
-  if (lim->getMachines().size()==0){
+  if (lim.getMachines().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((lim->getMachines().size()>0) && (lim->getMachines()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" machine: " << lim->getMachines()[0]->getMachineId() );
+  if ((lim.getMachines().size()>0) && (lim.getMachines()[0]->getMachineId()!="machine_1"))
+    BOOST_MESSAGE(" machine: " << lim.getMachines()[0]->getMachineId() );
 
   // Test list machine option mid
-  liom->setMachineId("mid");
+  liom.setMachineId("mid");
   BOOST_REQUIRE(restore     ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal list machine on a specific machine UA6.3B" );
   BOOST_CHECK  (connect     (uid, pwd, key , cop )==0);
-  BOOST_CHECK  (listMachines(key, lim, liom      )==0);
+  BOOST_CHECK  (listMachine(key, lim, liom      )==0);
   BOOST_CHECK  (close       (key                 )==0);
-  if (lim->getMachines().size()==0){
+  if (lim.getMachines().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((lim->getMachines().size()>0) && (lim->getMachines()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" machine: " << lim->getMachines()[0]->getMachineId() );
+  if ((lim.getMachines().size()>0) && (lim.getMachines()[0]->getMachineId()!="machine_1"))
+    BOOST_MESSAGE(" machine: " << lim.getMachines()[0]->getMachineId() );
 
   // Test list machine option bad mid
-  liom->setMachineId("bad");
+  liom.setMachineId("bad");
   BOOST_REQUIRE(restore     ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad mid list machine on a specific machine UA6.3E" );
   BOOST_CHECK  (connect     (uid, pwd, key , cop )==0);
-  BOOST_CHECK  (listMachines(key, lim, liom      )!=0);
+  BOOST_CHECK  (listMachine(key, lim, liom      )!=0);
   BOOST_CHECK  (close       (key                 )==0);
 
   // Test list local account
@@ -597,27 +597,27 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect         (uid, pwd, key , cop )==0);
   BOOST_CHECK  (listLocalAccount(key, lia, lioa      )==0);
   BOOST_CHECK  (close           (key                 )==0);
-  if (lia->getAccounts().size()==0){
+  if (lia.getAccounts().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((lia->getAccounts().size()>0) && (lia->getAccounts()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" account: " << lia->getAccounts()[0]->getMachineId() );
+  if ((lia.getAccounts().size()>0) && (lia.getAccounts()[0]->getMachineId()!="machine_1"))
+    BOOST_MESSAGE(" account: " << lia.getAccounts()[0]->getMachineId() );
 
   // Test list local account mid
-  lioa->setMachineId(mid);
+  lioa.setMachineId(mid);
   BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal list local account on a machine U4.3B" );
   BOOST_CHECK  (connect         (uid, pwd, key , cop )==0);
   BOOST_CHECK  (listLocalAccount(key, lia, lioa      )==0);
   BOOST_CHECK  (close           (key                 )==0);
-  if (lia->getAccounts().size()==0){
+  if (lia.getAccounts().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((lia->getAccounts().size()>0) && (lia->getAccounts()[0]->getMachineId()!="machine_1"))
-    BOOST_MESSAGE(" account: " << lia->getAccounts()[0]->getMachineId() );
+  if ((lia.getAccounts().size()>0) && (lia.getAccounts()[0]->getMachineId()!="machine_1"))
+    BOOST_MESSAGE(" account: " << lia.getAccounts()[0]->getMachineId() );
 
   // Test list local account bad mid
-  lioa->setMachineId("bad");
+  lioa.setMachineId("bad");
   BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad machine on list local account U4.3E" );
   BOOST_CHECK  (connect         (uid, pwd, key , cop )==0);
@@ -625,8 +625,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close           (key                 )==0);
 
   // Test configure default option
-  opva->setOptionName(ona);
-  opva->setValue(oval);
+  opva.setOptionName(ona);
+  opva.setValue(oval);
   BOOST_REQUIRE(restore               ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal list local account UA7-B" );
   BOOST_CHECK  (connect               (uid, pwd , key, cop )==0);
@@ -634,8 +634,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close                 (key                 )==0);
 
   // Test configure option
-  opva->setOptionName(ona);
-  opva->setValue("GLACE");
+  opva.setOptionName(ona);
+  opva.setValue("GLACE");
   BOOST_REQUIRE(restore        ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal configure option U1.3.1-B" );
   BOOST_CHECK  (connect        (uid, pwd , key, cop )==0);
@@ -643,8 +643,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close          (key                 )==0);
 
   // Test configure option bad option name
-  opva->setOptionName("bad");
-  opva->setValue     (oval);
+  opva.setOptionName("bad");
+  opva.setValue     (oval);
   BOOST_REQUIRE(restore        ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad name configure option U1.3.1E1" );
   BOOST_CHECK  (connect        (uid, pwd , key, cop )==0);
@@ -652,8 +652,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close          (key                 )==0);
 
   // Test configure option bad option name
-  opva->setOptionName(ona);
-  opva->setValue     ("100");
+  opva.setOptionName(ona);
+  opva.setValue     ("100");
   BOOST_REQUIRE(restore        ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad value configure option U1.3.1E2" );
   BOOST_CHECK  (connect        (uid, pwd , key, cop )==0);
@@ -666,14 +666,14 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect    (uid, pwd , key , cop)==0);
   BOOST_CHECK  (listOptions(key, liov, lioo     )==0);
   BOOST_CHECK  (close      (key                 )==0);
-  if (liov->getOptionValues().size()==0){
+  if (liov.getOptionValues().size()==0){
     BOOST_MESSAGE(" Error empty list returned " );
   }
-  if ((liov->getOptionValues().size()>0) && (liov->getOptionValues()[0]->getOptionName()!=ona))
-    BOOST_MESSAGE(" Option val: " << liov->getOptionValues()[0]->getOptionName() );
+  if ((liov.getOptionValues().size()>0) && (liov.getOptionValues()[0]->getOptionName()!=ona))
+    BOOST_MESSAGE(" Option val: " << liov.getOptionValues()[0]->getOptionName() );
 
   // Test list option values bad option name
-  lioo->setOptionName("bad");
+  lioo.setOptionName("bad");
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad mid list option value U1.3.2E1" );
   BOOST_CHECK  (connect    (uid, pwd , key , cop)==0);
@@ -681,8 +681,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close      (key                 )==0);
 
   // Test list option values bad uid
-  lioo->setUserId(mid);
-  lioo->setUserId("bad");
+  lioo.setUserId(mid);
+  lioo.setUserId("bad");
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad uid list option value U1.3.2E2" );
   BOOST_CHECK  (connect    (uid, pwd , key , cop)==0);
@@ -693,30 +693,30 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal initialize" );
   BOOST_CHECK  (connect         (uid, pwd , key , cop)==0);
-  BOOST_CHECK  (vishnuInitialize(path                )==0);
+  BOOST_CHECK  (vishnuInitialize((char*)path.c_str(), 0, NULL)==0);
   BOOST_CHECK  (close           (key                 )==0);
 
   // Test initialize bad conf
   BOOST_REQUIRE(restore         ("clean_session.sql"   )==0);
   BOOST_MESSAGE(" Testing initialize bad conf file" );
-  BOOST_CHECK  (vishnuInitialize("bad"                 )==0);
+  BOOST_CHECK  (vishnuInitialize((char *)"bad", 0, NULL        )==0);
 
-  // Test finalize
-  BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
-  BOOST_MESSAGE(" Testing normal finalize" );
-  BOOST_CHECK  (vishnuInitialize(path                )==0);
-  BOOST_CHECK  (vishnuFinalize  (                    )==0);
-
-  // Test finalize error 
-  BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
-  BOOST_MESSAGE(" Testing finalize not initialized" );
-  BOOST_CHECK  (vishnuFinalize  (                    )!=0);
+//  // Test finalize
+//  BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
+//  BOOST_MESSAGE(" Testing normal finalize" );
+//  BOOST_CHECK  (vishnuInitialize((char *)path.c_str(), 0, NULL)==0);
+//  BOOST_CHECK  (vishnuFinalize  (                    )==0);
+//
+//  // Test finalize error 
+//  BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
+//  BOOST_MESSAGE(" Testing finalize not initialized" );
+//  BOOST_CHECK  (vishnuFinalize  (                    )!=0);
 
   // Test Save configuration
   BOOST_MESSAGE(" Testing save conf"    );
   BOOST_REQUIRE(restore      	   ("clean_session.sql")==0);
   BOOST_CHECK	 (connect      	   (uid, pwd, key, cop )==0);
-  BOOST_CHECK	 (saveConfiguration(key                )==0);
+  BOOST_CHECK	 (saveConfiguration(key, conf          )==0);
   BOOST_CHECK	 (close            (key                )==0);
 
 
@@ -724,7 +724,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing restore conf"    );
   BOOST_REQUIRE(restore      	      ("clean_session.sql"   )==0);
   BOOST_CHECK	 (connect      	      (uid, pwd  , key  , cop)==0);
-  BOOST_CHECK	 (saveConfiguration   (key                   )==0);
+  BOOST_CHECK	 (saveConfiguration   (key, conf             )==0);
   BOOST_CHECK	 (restoreConfiguration(key, cpath            )==0);
   BOOST_CHECK	 (close               (key                   )==0);
 
@@ -732,7 +732,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing restore conf"    );
   BOOST_REQUIRE(restore      	      ("clean_session.sql"   )==0);
   BOOST_CHECK	 (connect      	      (uid, pwd  , key  , cop)==0);
-  BOOST_CHECK	 (saveConfiguration   (key                   )==0);
+  BOOST_CHECK	 (saveConfiguration   (key, conf             )==0);
   //  conf->setFilePath("bad");
   BOOST_CHECK	 (restoreConfiguration(key, cpath            )!=0);
   BOOST_CHECK	 (close               (key                   )==0);
@@ -742,9 +742,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore               ("clean_session.sql" )==0);
   BOOST_CHECK	 (connect               (uid, pwd , key , cop)==0);
   BOOST_CHECK	 (reconnect             (uid, pwd , sid , key)==0);
-  BOOST_CHECK	 (listSession           (key, li  , opt      )==0);
+  BOOST_CHECK	 (listSessions          (key, li  , opt      )==0);
   BOOST_CHECK	 (listUsers             (key, liu , ""       )==0);
-  BOOST_CHECK	 (listMachines          (key, lim , liom     )==0);
+  BOOST_CHECK	 (listMachine           (key, lim , liom     )==0);
   BOOST_CHECK	 (listLocalAccount      (key, lia , lioa     )==0);
   BOOST_CHECK	 (listOptions           (key, liov, lioo     )==0);
   BOOST_CHECK	 (changePassword        (uid, pwd , pwd      )==0);      
@@ -753,7 +753,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (deleteUser            (key, cu  	     )==0);            
   BOOST_CHECK	 (deleteMachine         (key, mid	     )==0);
   BOOST_CHECK	 (resetPassword         (key, uid	     )==0);      
-  BOOST_CHECK	 (addLocalAccount       (key, lacc           )==0);
+  BOOST_CHECK	 (addLocalAccount       (key, lacc, key2     )==0);
   BOOST_CHECK	 (addMachine            (key, ma	     )==0);
   BOOST_CHECK	 (updateMachine         (key, ma	     )==0);
   BOOST_CHECK	 (updateLocalAccount    (key, lacc           )==0);
@@ -761,7 +761,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (configureDefaultOption(key, opva	     )==0);
   BOOST_CHECK	 (configureOption       (key, opva	     )==0);            
   BOOST_CHECK	 (resetPassword         (uid, pwd            )==0);
-  BOOST_CHECK	 (saveConfiguration     (key                 )==0);
+  BOOST_CHECK	 (saveConfiguration     (key, conf           )==0);
   BOOST_CHECK	 (restoreConfiguration  (key, cpath          )==0);
   BOOST_CHECK	 (close                 (key                 )==0); 
   // Listing

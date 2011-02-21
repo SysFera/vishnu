@@ -41,13 +41,15 @@ GRANT CREATE SYNONYM, CREATE DATABASE LINK, RESOURCE TO vishnu;
 CREATE ROLE vishnu_db_admin;
 
 GRANT CONNECT, RESOURCE TO vishnu_db_admin;
-GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu TO vishnu_db_admin;
 
 -- CREATE Role Vishnu Standard User
 
 CREATE ROLE vishnu_user;
 GRANT CONNECT TO vishnu_user;
 
+-- ASSIGN Roles to "vishnu" user
+GRANT vishnu_user TO vishnu;
+GRANT vishnu_db_admin TO vishnu;
 
 
 

@@ -35,11 +35,11 @@ macro( ums_test NAME )
       #entry point
     TestRunner.cpp )
     include_directories( ${Boost_INCLUDE_DIRS}
-      #  ${EMF_INC_DIR}
-      #  ${UMS_GEN_DIR}
       ${DIET_INCLUDE_DIR}
       ${EMF_DATA_DIR}
       ${UMS_DATA_DIR}
+      ${API_SOURCE_DIR}
+      ${CLIENT_PROXY_SOURCE_DIR}
       ${EMF4CPP_INCLUDE_DIR}
       ${VISHNU_EXCEPTION_INCLUDE_DIR}
       ${DATA_BASE_INCLUDE_DIR}
@@ -56,10 +56,12 @@ macro( ums_test NAME )
       ${EMF4CPP_LIB}
       ${EMF4CPP_CPP_LIB}
       ${LIBPQ_LIB}
+      ${CLI_SOURCE_DIR}
       ${Boost_LIBRARIES}
       emf4cpp-UMS_Data
       database-vishnu
       exception-vishnu
+      ums-api-client
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
