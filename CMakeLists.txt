@@ -85,6 +85,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 
+option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
+
 add_subdirectory(core/database)
 add_subdirectory(UMS/src)
 # macros used to setup test environment

@@ -303,7 +303,7 @@ ServerUMS::init(std::string vishnuid, std::string password) {
   
   /* solveRestore */
   
-  mprofile = diet_profile_desc_alloc(SRV[24], 1, 1, 1);
+  mprofile = diet_profile_desc_alloc(SRV[24], 0, 0, 0);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveRestore)) return 1; 
  
