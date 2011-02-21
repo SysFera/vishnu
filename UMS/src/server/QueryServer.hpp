@@ -104,11 +104,6 @@ public:
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
                               where not userid='vishnu_user' and not userid='vishnu_db_admin'";
 
-  if(moption.size()!=0) {
-     sqlListofUsers.append(" and userid=");
-     sqlListofUsers.append("'"+moption+"'");
-  }
-  
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -123,6 +118,15 @@ public:
       //if the user is an admin
       if (userServer.isAdmin()) {
 
+         if(moption.size()!=0) {
+           sqlListofUsers.append(" and userid=");
+           sqlListofUsers.append("'"+moption+"'");
+         
+         } 
+         else {
+             UMSVishnuException e (UNKNOWN_USERID);
+             throw e;
+         }
         //To get the list of users from the database
         ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
@@ -147,12 +151,12 @@ public:
 
     } //End if the user is an admin
      else {
-         UMSVishnuException e (4, "The user is not an admin");
+         UMSVishnuException e (NO_ADMIN);
           throw e;
         }
       }//End if the user exists
       else {
-        UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (UNKNOWN_USER);
         throw e;
        }
      }

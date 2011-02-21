@@ -8,16 +8,9 @@ using namespace std;
 
 int main (int ac, char* av[]){
 
-
-
-	string filePath;
-
 	string sessionKey;
 
 	string dietConfig;
-
-		int reqParam=0;   // to count the required parameters for the command
-
 
 		/********** EMF Data ****************************/
 
@@ -30,9 +23,6 @@ int main (int ac, char* av[]){
 
 		Options opt(av[0] );
 
-		opt.add("version,v",
-				"print version message",
-				GENERIC);
 
         opt.add("dietConfig,c",
 				        "The diet config file",
@@ -44,70 +34,27 @@ int main (int ac, char* av[]){
 											 ENV,
 											 sessionKey);
 
-		opt.add("filePath",
-					  "The path of the file in which VISHNU configuration will be saved",
-						HIDDEN,
-						filePath);
-
-		opt.setPosition("filePath",-1);
-
 	try {
 /**************  Parse to retrieve option values  ********************/
 
 		opt.parse_cli(ac,av);
-
-		//opt.parse_cfile();
 
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
 
-
-
-
 /********  Process **************************/
 
-		if (opt.count("filePath")){
 
-			cout <<"The file Path is " << filePath << endl;
+		checkVishnuConfig(opt);
 
-			reqParam=reqParam+1;
-		}
+		if(opt.count("help")){
 
-
-		if (opt.count("dietConfig")){
-
-
-			cout <<"The diet config file " << dietConfig << endl;
-
-		}
-
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
-
-
-		if(opt.count("sessionKey")){
-
-			cout << "The session Key is: " << sessionKey <<endl;
-
-		}
-
-
-		 if ((reqParam < SCPARAM)|| (opt.count("help"))){
-
-			 cout << "Usage: " << av[0] <<" filePath"<<endl;
-
-			 cout << opt << endl;
+			helpUsage(opt,"[options]");
 
 			 return 0;
 		 }
-
-
 
 
 /************** Call UMS connect service *******************************/
@@ -121,7 +68,7 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              saveConfiguration(sessionKey,filePath,configuration);
+              saveConfiguration(sessionKey,configuration);
 
 
              //A enlever apres, c'est juste pour les tests
@@ -145,7 +92,7 @@ int main (int ac, char* av[]){
 	}// End of try bloc
 
 	catch(std::exception& e){
-		cout << e.what() <<endl;
+		errorUsage(av[0],e.what());
 		return 1;
 	}
 

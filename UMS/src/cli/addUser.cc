@@ -88,17 +88,7 @@ boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivil
 		}
 
 
-		if (opt->count("dietConfig")){
-
-			cout <<"The diet config file " << dietConfig << endl;
-
-		}
-		else{
-
-			cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-			return 1;
-		}
+		checkVishnuConfig(*opt);
 
 		if (opt->count("sessionKey")){
 

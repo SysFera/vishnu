@@ -93,17 +93,7 @@ int main (int ac, char* av[]){
     }
 
 
-    if (opt->count("dietConfig")){
-
-      cout <<"The diet config file " << dietConfig << endl;
-
-    }
-    else{
-
-      cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-      return 1;
-    }
+		checkVishnuConfig(*opt);
 
     if (opt->count("sessionKey")){
 
