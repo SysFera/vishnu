@@ -45,6 +45,9 @@ mcfg(cfg), margc(argc), margv(argv)
 UtilsProxy::UtilsProxy(const std::string& filePath):
 mfilePath(filePath)
 {
+ mcfg = NULL;
+ margc = NULL;
+ margv = NULL;
 }
 
 /**
@@ -88,7 +91,6 @@ UtilsProxy::restore() {
   // While all has not been read
   while (-1 != file.tellg()){
     file.getline(tmp, READSIZE);
-    char          tmp[READSIZE];   
     //IN Parameters
     diet_string_set(diet_parameter(profile,0), tmp, DIET_VOLATILE);
     if(!diet_call(profile)){
