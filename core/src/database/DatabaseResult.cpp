@@ -82,12 +82,12 @@ void
 DatabaseResult::setNbFields(int nbfields) {}
   /**
    * \brief To get the number of tuples 
-   * \fn getNbTuples() 
+   * \fn size_t getNbTuples() 
    * \return 0 on success, an error code otherwise
    */
-int 
+size_t 
 DatabaseResult::getNbTuples() const{
-  return static_cast <int> (results.size());
+  results.size();
 }
 /**
 * \brief To get the number of fields 
