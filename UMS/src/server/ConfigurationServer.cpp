@@ -212,7 +212,6 @@ int ConfigurationServer::restore() {
 	  LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
 	  localAccountServer.add(); 	 
 	}
-	//delete localAccountServer;
   
       } //End if the user is an admin
       else {
@@ -298,8 +297,11 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
     description) values \
     ("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+",\
     '"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
+    
   }
   catch (SystemException& e) {
     throw;
   }
+  
+  delete machinetmp;
 }

@@ -9,7 +9,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "UMSVishnuException.hh"
+#include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 #include "OptionValueProxy.hpp"
 

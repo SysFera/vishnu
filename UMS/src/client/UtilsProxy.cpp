@@ -10,7 +10,7 @@
 #include <assert.h>
 #include <fstream>
 
-#include "UMSVishnuException.hh"
+#include "UMSVishnuException.hpp"
 #include "UtilsProxy.hpp"
 #include "utilsClient.hpp"
 

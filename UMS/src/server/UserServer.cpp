@@ -57,7 +57,6 @@ UserServer::add(UMS_Data::User*& user) {
   std::string passwordCrypted;
   std::string salt;
   
-  
   try {
     if (exist()) {  
       if (isAdmin()) {
@@ -75,20 +74,20 @@ UserServer::add(UMS_Data::User*& user) {
     
 	//If the user to add exists
 	if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {    
-	  //Insertion of user information on the database
+	  
+	  //To insert user on the database
 	  mdatabaseVishnu->process(sqlInsert + "(" + Vishnuid::mvishnuid+", \
 	  '"+user->getUserId()+"','"+passwordCrypted+"','"
 	  + user->getFirstname()+"','"+user->getLastname()+"',"+ 
 	  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
 	  0, "+convertToString(user->getStatus())+")");
 	  
+	  //TODO : voir envoi de mail avec kévine
 	}// END If the user to add exists
 	else {
 	  UMSVishnuException e (USERID_EXISTING);
 	  throw e;
 	}  
-	  //TODO : voir envoi de mail avec kévine
-	  
       } //END if the user is an admin 
       else {
 	UMSVishnuException e (NO_ADMIN);
@@ -121,34 +120,36 @@ UserServer::update(UMS_Data::User *user) {
 	//if the user whose information will be updated exists
 	if (getAttribut("where userid='"+user->getUserId()+"'").size() != 0) {
 	  
-	  //TODO: concatener les UPDATE et faire un seul accès à la base
+	  //if a new fisrtname has been defined
 	  if (user->getFirstname().size() != 0) {
 	    sqlCommand.append("UPDATE users SET firstname='"+user->getFirstname()+"'"+"\
 	    where userid='"+user->getUserId()+"';");
 	  }
 	  
+	  //if a new lastname has been defined
 	  if (user->getLastname().size() != 0) {
 	    sqlCommand.append("UPDATE users SET lastname='"+user->getLastname()+"'"+"\
 	    where userid='"+user->getUserId()+"';");
 	  }
 	  
+	  //if a new email has been defined
 	  if (user->getEmail().size() != 0) {
 	    sqlCommand.append("UPDATE users SET email='"+user->getEmail()+"'"+"\
 	    where userid='"+user->getUserId()+"';");
 	  }
 	  
-	  //If the user will be locked
+	  //if the user will be locked
 	  if (user->getStatus() == 0) {
-	    //If the user is not already locked
+	    //if the user is not already locked
 	    if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != 0) {   
 	      sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""+"\
 	      where userid='"+user->getUserId()+"';");
-	    } //End If the user is not already locked
+	    } //End if the user is not already locked
 	    else {
 	      UMSVishnuException e (USER_ALREADY_LOCKED);
 	      throw e;
 	    }
-	  } //End If the user will be locked
+	  } //End if the user will be locked
 	  else {
 	    sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""+"\
 	    where userid='"+user->getUserId()+"';");
@@ -301,7 +302,7 @@ UserServer::resetPassword(UMS_Data::User user) {
 	  user.setPassword(pwd.substr(0,8));
 	  std::cout << "password to sent by mail to the user:" << user.getPassword() << std::endl;
 	  
-	  //The passwordCrypted uses the same way used by command line interface to crypted password
+	  //Encryption of the password
 	  salt = "$6$"+user.getUserId()+"$";
 	  passwordCrypted = std::string(crypt(user.getPassword().c_str(), salt.c_str())+salt.length()); 
 	  
@@ -311,7 +312,7 @@ UserServer::resetPassword(UMS_Data::User user) {
 	  //sql code to update the passwordstate
 	  sqlUpdatePwdState = "UPDATE users SET passwordstate=0 \
 	  where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"';";
-	  //Append of the previous sql code
+	  //To append the previous sql codes
 	  sqlResetPwd.append(sqlUpdatePwdState);
 	  //Execution of the sql code on the database
 	  mdatabaseVishnu->process( sqlResetPwd.c_str());
@@ -372,6 +373,7 @@ UserServer::init(){
         
       //if the session key is found 
       if (numUser.size() != 0) {
+	//To get the session state
 	sessionState = 
 	msessionServer->getAttribut("where\
 	sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
@@ -542,9 +544,8 @@ UserServer::existuserId(std::string userId) {
 std::string 
 UserServer::generatePassword(std::string value1, std::string value2) {
   
-  srand(time(NULL));
-  std::string salt = "$1$"+value1 + convertToString(rand())+value2+"$";
-  std::string clef = value2+convertToString(rand());
+  std::string salt = "$1$"+value1 + convertToString(utilServer::generate_numbers())+value2+"$";
+  std::string clef = value2+convertToString(utilServer::generate_numbers());
   
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
 }
