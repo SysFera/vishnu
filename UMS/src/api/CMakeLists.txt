@@ -34,7 +34,10 @@ INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 SET_SOURCE_FILES_PROPERTIES(api_ums.i PROPERTIES CPLUSPLUS ON)
 
-SET(CMAKE_SWIG_FLAGS "")
+#Suppress warnings about ignored operators (out_ptr::operator= and EList::operator[])
+SET(CMAKE_SWIG_FLAGS "-w362,389")
+#SET(CMAKE_SWIG_FLAGS "")
+
 #The module name must match the %module declaration in the interface file
 #This is why the initial name 'APIPython' was removed and replaced by APITest
 SWIG_ADD_MODULE(VISHNU_UMS python api_ums.i api_ums.cpp)

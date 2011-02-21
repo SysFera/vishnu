@@ -121,7 +121,7 @@ CREATE TABLE machine (
   network INTEGER    ,
   machineid VARCHAR(255)      ,
   status INTEGER      ,
-  sshpublickey VARCHAR2   ,
+  sshpublickey VARCHAR2(1000)   ,
 PRIMARY KEY(nummachineid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
@@ -438,35 +438,6 @@ BEGIN
 END; 
 
 /
-
--- CREATE Role Vishnu Database Administrator
-
-CREATE ROLE vishnu_db_admin;
-
-GRANT CONNECT, RESOURCE TO vishnu_db_admin;
-GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu TO vishnu_db_admin;
-
--- CREATE Role Vishnu Standard User
-
-CREATE ROLE vishnu_user;
-
-GRANT CONNECT TO vishnu_user;
-GRANT SELECT ON vishnu TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON users TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON state TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON cpu TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON description TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON account TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON optionvalue TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON command TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO vishnu_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON job TO vishnu_user;
 
 -- END OF THE SCRIPT
 

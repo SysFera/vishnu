@@ -88,7 +88,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-/*
+
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -97,15 +97,15 @@ int main (int ac, char* av[]){
 
 
 							 connect(userId,password, sessionKey, connectOpt);
-*/
+
 
 			// store sessionKey into ./session
 
-							 sessionKey="myfirstSession";
+			/*				 sessionKey="myfirstSession";
 							 std::string sessionFile=getSessionLocation(getppid());
 							 cout << "sessionFile: " << sessionFile<< endl;
 							 SessionEntry session(sessionKey,connectOpt.getClosePolicy());
-							 storeLastSession(session,sessionFile.c_str());
+							 storeLastSession(session,sessionFile.c_str());*/
 
 	}// End of try bloc
 
