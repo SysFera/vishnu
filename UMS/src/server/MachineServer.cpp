@@ -68,17 +68,17 @@ MachineServer::add() {
 	  
 	} //if the machineId does not exist
 	else {
-	  UMSVishnuException e (4, "The machineId generated already exists");
+	  UMSVishnuException e (MACHINE_EXISTING);
 	  throw e;
 	}
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	  UMSVishnuException e (NO_ADMIN);
 	  throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -150,18 +150,18 @@ MachineServer::update() {
 	  
 	} //End if the machine to update exists
 	else {
-	  UMSVishnuException e (4, "The machine is unknown");
+	  UMSVishnuException e (UNKNOWN_MACHINE);
 	  throw e;
 	}
 	
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	  UMSVishnuException e (NO_ADMIN);
 	  throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -191,17 +191,17 @@ MachineServer::deleteMachine() {
 	 mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
 	} //End if the machine to update exists
 	else {
-	  UMSVishnuException e (4, "The machine is unknown");
+	  UMSVishnuException e (UNKNOWN_MACHINE);
 	  throw e;
 	}
       } //End if the user is an admin
       else {
-	UMSVishnuException e (4, "The machine is not added. The user is not an admin");
+	UMSVishnuException e (NO_ADMIN);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (4, "The user is unknown");
+      UMSVishnuException e (UNKNOWN_USER);
       throw e;
     }
   }
@@ -247,18 +247,10 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
    
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
   } 
   catch (SystemException& e) {
-    throw e;
-  }
-  if (result->getNbTuples() != 0) {
-    result->print();
-    std::vector<std::string> tmp = result->get(0);  
-    ii=tmp.begin();
-    return (*ii);
-  } 
-  else {
-    return "";
+    throw;
   }
 }
 

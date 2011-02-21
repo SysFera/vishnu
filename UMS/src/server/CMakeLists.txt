@@ -17,11 +17,11 @@ include_directories(
 
  
 add_library(ums-server
-   utilServer.cc
-   SessionServer.cc
-   UserServer.cc
-   MachineClientServer.cc
-   OptionValueServer.cc
+   utilServer.cpp
+   SessionServer.cpp
+   UserServer.cpp
+   MachineClientServer.cpp
+   OptionValueServer.cpp
    MachineServer.cpp 
    LocalAccountServer.cpp
    ConfigurationServer.cpp 

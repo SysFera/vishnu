@@ -15,10 +15,10 @@
 #include <exception>
 #include "SystemException.hh"
 #include "UMSVishnuException.hh"
-#include "SessionServer.hh"
+#include "SessionServer.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include"utilServer.hh"
+#include"utilServer.hpp"
 
 using namespace utilServer;
 
