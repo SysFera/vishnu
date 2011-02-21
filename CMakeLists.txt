@@ -84,8 +84,11 @@ set(SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
+set( UMS_TEST_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/test/src/sql )
 
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
+
+set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
 
 add_subdirectory(core/src)
 add_subdirectory(UMS/src)

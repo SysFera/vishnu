@@ -45,6 +45,8 @@ macro( ums_test NAME )
       ${DATA_BASE_INCLUDE_DIR}
       ${POSTGRESQL_INCLUDE_DIR}
       ${Boost_INCLUDE_DIRS}
+      ${PROJECT_BINARY_DIR}/include
+      ${UMS_TEST_DIR}
       )
 
     # link libraries
