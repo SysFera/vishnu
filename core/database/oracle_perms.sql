@@ -14,3 +14,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.command TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.filetransfer TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.filesub TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.job TO vishnu_user;
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.vishnu TO vishnu_db_admin;
