@@ -61,21 +61,7 @@ boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig
 /********  Process **************************/
 
 
-
-    if (opt->count("dietConfig")){
-
-			cout <<"The diet config file " << dietConfig << endl;
-    }
-    else{
-
-      cerr << "Set the VISHNU_CONFIG_FILE in your environment variable" <<endl;
-
-      return 1;
-
-
-		}
-
-
+		checkVishnuConfig(*opt);
 
 
 /************** Call UMS connect service *******************************/
@@ -89,7 +75,7 @@ boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig
 
 
 
-							int res = updateLocalAccount(sessionKey,upAcLogin);
+							 updateLocalAccount(sessionKey,upAcLogin);
 
 
 
