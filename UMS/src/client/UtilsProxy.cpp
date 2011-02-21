@@ -71,8 +71,8 @@ UtilsProxy::finalize() {
 }
 /**
  * \brief Function to initialize the database 
- * \fn  void restore()
- * \return raises an exception on error
+ * \fn  int restore()
+ * \return an error code
  */
 int 
 UtilsProxy::restore() {
