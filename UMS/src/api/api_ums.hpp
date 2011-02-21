@@ -17,7 +17,7 @@
 #include "ConfigurationProxy.hpp"
 #include "OptionValueProxy.hpp"
 #include "QueryProxy.hpp"
-
+#include "UtilsProxy.hpp"
 /**
   * \brief Function to open a session 
   * \fn int connect(const std::string& userId, const std::string& password, std::string& sessionKey(), 
@@ -295,13 +295,24 @@ listUsers(const std::string& sessionKey, UMS_Data::ListUsers& listUsers,
   * \param argv
   * \return an error code 
  */
-int vishnuInitialize(char* cfg, int argc, char** argv);
+int 
+vishnuInitialize(char* cfg, int argc, char** argv);
 
 /**
   * \brief Function to finalize 
   * \fn int vishnuFinalize() 
   * \return an error code  
  */
-void vishnuFinalize();
+void
+vishnuFinalize();
+
+/**
+  * \brief Function to initialize the data base 
+  * \fn int int restore(const std::string& filePath) 
+  * \return an error code  
+ */
+int 
+restore(const std::string& filePath);
+
 
 #endif

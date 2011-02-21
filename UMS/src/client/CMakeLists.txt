@@ -19,6 +19,7 @@ add_library(ums-client-proxy
    ConfigurationProxy.cpp
    OptionValueProxy.cpp
    utilsClient.cpp
+   UtilsProxy.cpp
 )
 
 target_link_libraries(ums-client-proxy
