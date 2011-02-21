@@ -603,11 +603,8 @@ listUsers(const std::string& sessionKey,
  */
 int 
 vishnuInitialize(char* cfg, int argc, char** argv) {
-
-  if (diet_initialize(cfg, argc, argv)) {
-     return 1;
-   }
- return 0;
+ 
+  return UtilsProxy(cfg, argc, argv).initilialize();
 }
 
 /**
@@ -617,5 +614,16 @@ vishnuInitialize(char* cfg, int argc, char** argv) {
  */
 void
 vishnuFinalize() {
-   diet_finalize();
+   UtilsProxy().finalize();
+}
+
+/**
+ * \brief Function to initialize the database 
+ * \fn  void restore()
+ * \return raises an exception on error
+ */
+int
+restore(const std::string& filePath) {
+  
+  return UtilsProxy(filePath).restore();
 }
