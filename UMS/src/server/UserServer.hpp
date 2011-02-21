@@ -13,13 +13,13 @@
 #include <list>
 #include <iostream>
 #include <exception>
-#include "SystemException.hh"
-#include "UMSVishnuException.hh"
+#include "SystemException.hpp"
+#include "UMSVishnuException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "POSTGREDatabase.hh"
-#include "DbFactory.hh"
-#include "DatabaseResult.hh"
+#include "POSTGREDatabase.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
 #include "SessionServer.hpp"
 #include "utilServer.hpp"
 
@@ -150,7 +150,6 @@ public:
   */
   bool
   existuserId(std::string userId);
-  //static UMS_Data::ListUsers  list(SessionServer session, string userIdOptions);
   
 private:
   

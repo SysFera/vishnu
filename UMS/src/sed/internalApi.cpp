@@ -25,6 +25,7 @@ solveSessionConnect(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
   std::cout<<"userID:"<<userId<<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
@@ -39,20 +40,26 @@ solveSessionConnect(diet_profile_t* pb) {
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
   SessionServer sessionServer("");
   
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  //Parse the model
   ecorecpp::parser::parser parser;
   ConnectOptions_ptr connectOpt = parser.load(std::string(options))->as< ConnectOptions >();
   
   try {
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
     std::cout<<"sessionKey:"<<sessionServer.getData().getSessionKey()<<std::endl;
+    
+    //OUT Parameters
     diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
     
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameters
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -76,6 +83,7 @@ solveSessionReconnect(diet_profile_t* pb) {
   std::string empty("");  
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
   std::cout<<"userID:"<<userId<<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
@@ -98,6 +106,7 @@ solveSessionReconnect(diet_profile_t* pb) {
  
   try {   
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
+       //OUT Parameters
       diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
     
@@ -122,15 +131,18 @@ solveSessionClose(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameter
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   try {
     sessionServer.close();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+      //OUT parameter
       diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
 } 
   return 0;
@@ -149,6 +161,7 @@ solveUserCreate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
@@ -157,20 +170,26 @@ solveUserCreate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
   
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
+  
   
   User_ptr user = parser.load(std::string(userSerialized))->as< User >();
   
   try {
     userServer.init();
     userServer.add(user);
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
@@ -189,6 +208,7 @@ solveUserUpdate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
@@ -197,20 +217,25 @@ solveUserUpdate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
   
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
   
   User_ptr user = parser.load(std::string(userSerialized))->as< User >();
   
   try {
     userServer.init();
     userServer.update(user);
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   } 
   return 0;
@@ -228,6 +253,7 @@ solveUserDelete(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userId, NULL);
@@ -242,9 +268,11 @@ solveUserDelete(diet_profile_t* pb) {
   try {
     userServer.init();
     userServer.deleteUser(user);
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
+     //OUT parameter
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -266,6 +294,7 @@ solveUserPasswordChange(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
   std::cout<<"sessionKey:"<< userId <<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
@@ -278,11 +307,13 @@ solveUserPasswordChange(diet_profile_t* pb) {
   try { 
     userServer.init();
     userServer.changePassword(std::string(newPassword));
+    //OUT Parameter
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
@@ -302,6 +333,7 @@ solveUserPasswordReset(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userId, NULL);
@@ -314,14 +346,15 @@ solveUserPasswordReset(diet_profile_t* pb) {
   user.setUserId(userId);
   
   try {
-    //sessionServer.close();
     userServer.init();
     userServer.resetPassword(user);
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
@@ -340,26 +373,32 @@ solveMachineCreate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
   std::cout<<"Machine:"<< machineSerialized <<std::endl;
  
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
   Machine_ptr machine = parser.load(std::string(machineSerialized))->as< Machine >();
   MachineServer machineServer = MachineServer(machine, sessionServer);
   
   try {   
     machineServer.add();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   
@@ -379,26 +418,32 @@ solveMachineUpdate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
   std::cout<<"Machine:"<< machineSerialized <<std::endl;
  
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
   Machine_ptr machine = parser.load(std::string(machineSerialized))->as< Machine >();
   MachineServer machineServer = MachineServer(machine, sessionServer);
   
   try {   
     machineServer.update();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   
@@ -418,6 +463,7 @@ solveMachineDelete(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
@@ -431,14 +477,17 @@ solveMachineDelete(diet_profile_t* pb) {
   
   try {   
     machineServer.deleteMachine();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   
+  delete machine;
   return 0;
 }
 
@@ -456,29 +505,35 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   std::string publicKey;
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
   std::cout<<"Local Account:"<< laccountSerialized <<std::endl;
  
-  
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
   LocalAccount_ptr localAccount = parser.load(std::string(laccountSerialized))->as< LocalAccount >();
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
   
   try {
     localAccountServer.add();
     std::cout << "Public ssh key" << localAccountServer.getPublicKey() << std::endl;
+     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+      
+       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -499,27 +554,32 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
   std::cout<<"Local Account Dans update:"<< laccountSerialized <<std::endl;
  
-  
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
   LocalAccount_ptr localAccount = parser.load(std::string(laccountSerialized))->as< LocalAccount >();
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
   
   try {
     localAccountServer.update();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   
@@ -542,6 +602,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   std::string publicKey;
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userId, NULL);
@@ -559,13 +620,17 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   
   try {
     localAccountServer.deleteLocalAccount();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
     
    } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  
+  delete localAccount;
   return 0;
 }
 
@@ -584,6 +649,7 @@ solveConfigurationSave(diet_profile_t* pb) {
   std::string configurationSerialized("");
   std::string errorInfo;
   
+   //IN Parameter
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   
@@ -596,13 +662,16 @@ solveConfigurationSave(diet_profile_t* pb) {
   const char* name = "ConfigurationSave";
   ::ecorecpp::serializer::serializer _ser(name);
   configurationSerialized =  _ser.serialize(configurationServer.getData());
-
+  
+   //OUT Parameters
   diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
   diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+      
+       //OUT Parameters
       diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -624,27 +693,32 @@ solveConfigurationRestore(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
-  
   diet_string_get(diet_parameter(pb,1), &configurationSerialized, NULL);
   std::cout<<"configuration:"<< configurationSerialized <<std::endl;
   
-  ecorecpp::parser::parser parser;
+  //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  
+  //Parse the model
+  ecorecpp::parser::parser parser;
   UMS_Data::Configuration_ptr configuration = parser.load(std::string(configurationSerialized))->as< UMS_Data::Configuration >();
   
   ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
   
   try {
     configurationServer.restore();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   
@@ -665,7 +739,7 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
-  
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
@@ -684,10 +758,12 @@ solveOptionValueSet(diet_profile_t* pb) {
   
   try {
     optionValueServer.configureOption();
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }  
   return 0;
@@ -706,17 +782,17 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   
-  
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
   std::cout<<"options:"<< optionValueSerialized <<std::endl;
   
-  // CREATE DATA MODEL
+  //CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 
-  // Parse the model
+  //Parse the model
   ecorecpp::parser::parser parser;
   UMS_Data::OptionValue_ptr optionValue = parser.load(optionValueSerialized)->as< UMS_Data::OptionValue >();
 
@@ -725,11 +801,13 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   
   try {
     optionValueServer.configureOption(true);
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (SystemException& e) {
-    errorInfo =  utilServer::buildExceptionString(e);
-    std::cout << "errorInfo: " << errorInfo <<std::endl;
-    diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      errorInfo =  utilServer::buildExceptionString(e);
+      std::cout << "errorInfo: " << errorInfo <<std::endl;
+       //OUT Parameter
+      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   
   return 0;
@@ -752,7 +830,8 @@ solveGenerique(diet_profile_t* pb) {
   std::string errorInfo;
 
   std::cout << "=================Solve userList =================" << std::endl;
-
+  
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout << "=========sessionKey=" << sessionKey << "=============" << std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
@@ -776,12 +855,15 @@ solveGenerique(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     listSerialized =  _ser.serialize(list);
     
+     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+      
+      //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -808,7 +890,8 @@ solveListUsers(diet_profile_t* pb) {
   std::string errorInfo;
 
   std::cout << "=================Solve userList =================" << std::endl;
-
+  
+   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   std::cout << "=========sessionKey=" << sessionKey << "=============" << std::endl;
   diet_string_get(diet_parameter(pb,1), &option, NULL);
@@ -825,13 +908,16 @@ solveListUsers(diet_profile_t* pb) {
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
     listUsersSerialized =  _ser.serialize(listUsers);
-
+    
+     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (SystemException& e) {
       errorInfo =  utilServer::buildExceptionString(e);
       std::cout << "errorInfo: " << errorInfo <<std::endl;
+      
+       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }

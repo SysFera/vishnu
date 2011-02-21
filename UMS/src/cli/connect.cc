@@ -101,7 +101,7 @@ int main (int ac, char* av[]){
 
 			// store sessionKey into ./session
 
-			/*				 sessionKey="myfirstSession";
+							/* sessionKey="myfirstSession";
 							 std::string sessionFile=getSessionLocation(getppid());
 							 cout << "sessionFile: " << sessionFile<< endl;
 							 SessionEntry session(sessionKey,connectOpt.getClosePolicy());
