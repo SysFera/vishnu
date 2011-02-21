@@ -1,5 +1,8 @@
 #include "addUser.hh"
+#include "utils.hh"
+#include "userUtils.hpp"
 #include<boost/bind.hpp>
+
 namespace po = boost::program_options;
 
 using namespace std;
@@ -8,11 +11,6 @@ int main (int ac, char* av[]){
 
 
 
-	try {
-
-
-
-		int reqParam=0;   // to count the required parameters for the command
 
 		string sessionKey;
 
@@ -34,72 +32,23 @@ int main (int ac, char* av[]){
 
 
 /**************** Describe options *************/
+boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
 
 
-
-		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-				opt.add("sessionKey,s",
-	                        "The session key",
-													ENV,
-												  sessionKey);
-
-				opt.add("privilege",
-		                 "the privilege of the user (admin or simple user)",
-										 HIDDEN,
-										 fPrivilege);
-
-				opt.setPosition("privilege",1);
+        opt->add("sessionKey",
+                        "The session key",
+                        ENV,
+                        sessionKey);
 
 
-				opt.add("userId,u",
-									    	"represents the VISHNU user identifier",
-												HIDDEN,
-												fUserId);
-
-				opt.setPosition("userId",1);
-
-				opt.add("firstname",
-												"The firstname of the user",
-												HIDDEN,
-												fFirstname);
-
-				opt.setPosition("firstname",1);
-
-
-				opt.add("lastname",
-												"The lastname of the user",
-												HIDDEN,
-												fLastname);
-
-				opt.setPosition("lastname",1);
-
-
-				opt.add("email",
-												"The email of the user",
-												HIDDEN,
-												fEmail);
-
-				opt.setPosition("email",1);
-
+				try{
 /**************  Parse to retrieve option values  ********************/
 
-		opt.parse_cli(ac,av);
+		opt->parse_cli(ac,av);
 
-		opt.parse_cfile();
+		opt->parse_env(env_name_mapper());
 
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+		opt->notify();
 
 
 
@@ -107,44 +56,39 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt.count("userId")){
+		if (opt->count("userId")){
 
 			cout <<"The user identifier is " << newUser.getUserId() << endl;
 
-			reqParam=reqParam+1;
 		}
 
-		if(opt.count("privilege")){
+		if(opt->count("privilege")){
 
 			cout <<"the privilege is : " << newUser.getPrivilege() << endl;
 
-			reqParam=reqParam+1;
 		}
 
-		if(opt.count("firstname")){
+		if(opt->count("firstname")){
 
 			cout << "The firstname is " << newUser.getFirstname() << endl;
 
-			reqParam=reqParam+1;
 		}
 
 
-		if (opt.count("lastname")){
+		if (opt->count("lastname")){
 
 			cout <<"The lastname is " << newUser.getLastname() << endl;
 
-			reqParam=reqParam+1;
 		}
 
-		if (opt.count("email")){
+		if (opt->count("email")){
 
 			cout <<"The email is " <<newUser.getEmail() << endl;
 
-			reqParam=reqParam+1;
 		}
 
 
-		if (opt.count("dietConfig")){
+		if (opt->count("dietConfig")){
 
 			cout <<"The diet config file " << dietConfig << endl;
 
@@ -156,7 +100,7 @@ int main (int ac, char* av[]){
 			return 1;
 		}
 
-		if (opt.count("sessionKey")){
+		if (opt->count("sessionKey")){
 
 			cout <<"The session key is " << sessionKey << endl;
 
@@ -170,17 +114,6 @@ int main (int ac, char* av[]){
 		}
 
 
-		if ((reqParam < AVUPARAM) || (opt.count("help"))){
-
-			cout << "Usage: " << av[0] <<" privilege userId firstname lastname email"<<endl;
-
-			cout << opt << endl;
-
-			return 1;
-
-		}
-
-
 
 /************** Call UMS connect service *******************************/
 
@@ -191,22 +124,24 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-
-
-							int res = addVishnuUser(sessionKey,newUser);
-
-
+							 addVishnuUser(sessionKey,newUser);
 
 
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+catch(po::required_option& e){// a required parameter is missing
 
-	return 0;
+
+  usage(*opt," privilege userId firstname lastname email ","required parameter is missing");
+  }
+  catch(std::exception& e){
+
+    errorUsage(av[0],e.what());
+
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
-
 
