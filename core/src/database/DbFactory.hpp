@@ -43,7 +43,7 @@ public :
   ~DbFactory();
   /**
    * \brief Function to create a database. The database created depends on the type parameter
-   * \fn   Database* create(int type)
+   * \fn   Database* create(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0)
    * \param type The type of database to create
    * \return A database or a nil pointer
    */
