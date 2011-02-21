@@ -121,7 +121,7 @@ CREATE TABLE machine (
   network INTEGER    ,
   machineid VARCHAR(255)      ,
   status INTEGER      ,
-  sshpublickey VARCHAR2   ,
+  sshpublickey VARCHAR2(1000)   ,
 PRIMARY KEY(nummachineid),
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
