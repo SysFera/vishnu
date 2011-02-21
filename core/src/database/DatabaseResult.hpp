@@ -45,7 +45,7 @@ public :
    * \fn getNbFields() 
    * \return 0 on success, an error code otherwise
    */
-  int 
+  size_t 
   getNbFields() const;
   
   /**
@@ -87,11 +87,11 @@ private :
   /**
    * \brief The number of fields
    */
-   int fields;
+   size_t fields;
   /**
    * \brief The number of tuples
    */
-   int tuples;
+   size_t tuples;
   /**
    * \brief The database results
    */
@@ -106,20 +106,20 @@ private :
   
   /**
    * \brief To set the number of tuples 
-   * \fn setNbTuples(int nbtuples)
+   * \fn setNbTuples(size_t nbtuples)
    * \param nbtuples The number of tuples
    * \return 0 on success, an error code otherwise
    */
   void 
-  setNbTuples(int nbtuples);
+  setNbTuples(size_t nbtuples);
   /**
    * \brief To set the number of fields 
-   * \fn setNbFields(int nbfields)
+   * \fn setNbFields(size_t nbfields)
    * \param nbtuples The number of fields
    * \return 0 on success, an error code otherwise
    */
   void 
-  setNbFields(int nbfields);
+  setNbFields(size_t nbfields);
   
 };
 
