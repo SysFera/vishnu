@@ -1,5 +1,5 @@
 #include "changePassword.hh"
-
+#include "utils.hh"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -7,28 +7,18 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-	string userId;
 
 	string oldPassword;
 
 	string newPassword;
 
-	string sessionId;
-
 	string sessionKey;
 
 	string dietConfig;
 
-		int reqParam=0;   // to count the required parameters for the command
-
 /**************** Describe options *************/
 
-
 		Options opt(av[0] );
-
-		opt.add("version,v",
-				"print version message",
-				GENERIC);
 
         opt.add("dietConfig,c",
 				        "The diet config file",
@@ -47,17 +37,22 @@ int main (int ac, char* av[]){
 
 		opt.parse_cli(ac,av);
 
-		//opt.parse_cfile();
-
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
 
 
 
-
-
 /********  Process **************************/
+
+
+		if (opt.count("help")){
+
+      helpUsage(opt,"[options]");
+
+      return 0;
+
+    }
 
 		if (opt.count("dietConfig")){
 
@@ -79,16 +74,6 @@ int main (int ac, char* av[]){
 		}
 
 
-		if (opt.count("help")){
-
-
-			cout << "Usage: " << av[0] <<endl;
-
-			cout << opt << endl;
-
-			return 0;
-		}
-    else{
 
 			oldPassword=getpass("old password: ");
 
@@ -97,7 +82,7 @@ int main (int ac, char* av[]){
 			newPassword=getpass("new password: ");
 
 			cout << "The new password is "<< newPassword <<endl;
-		}
+
 
 
 
@@ -119,13 +104,13 @@ int main (int ac, char* av[]){
 
 	}// End of try bloc
 
-	catch(std::exception& e){
-		cout << e.what() <<endl;
-		return 1;
-	}
+  catch(std::exception& e){
 
-	return 0;
+    errorUsage(av[0], e.what());
+    return 1;
+  }
 
-}// end of main
+  return 0;
 
+}//
 

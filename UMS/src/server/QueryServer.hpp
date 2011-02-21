@@ -46,6 +46,17 @@ public:
   };
 
   virtual ListObject* list() = 0;
+
+  void addOptionRequest(const std::string& name, const std::string& value, std::string& request) {
+     request.append(" and "+name+"=");
+     request.append("'"+value+"'");
+  }
+
+  void addCondition(const std::string& name, const std::string& value, std::string& request) {
+     request.append(" where "+name+"=");
+     request.append("'"+value+"'");
+  }
+
   virtual ~QueryServer() 
   {
   }
@@ -93,6 +104,11 @@ public:
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
                               where not userid='vishnu_user' and not userid='vishnu_db_admin'";
 
+  if(moption.size()!=0) {
+     sqlListofUsers.append(" and userid=");
+     sqlListofUsers.append("'"+moption+"'");
+  }
+  
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -187,6 +203,21 @@ public:
   std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description \
    where machine.nummachineid = description.machine_nummachineid";
 
+  //IMPORTANT : le test de UserId doit apparaître avant le test de machineId
+  if((mparameters->getUserId()).size()!=0) {
+
+    sqlListofMachines =   "SELECT machineid, name, site, machine.status, lang, description, userid from machine, description, account, users \
+    where machine.nummachineid = description.machine_nummachineid and account.machine_nummachineid=machine.nummachineid and \
+    account.users_numuserid=users.numuserid";
+      addOptionRequest("userid", mparameters->getUserId(), sqlListofMachines); 
+  }
+  if((mparameters->getMachineId()).size()!=0) {
+      addOptionRequest("machineid", mparameters->getMachineId(), sqlListofMachines);
+  }
+  if(mparameters->isListAllmachine()) {
+    //TODO
+  }
+
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -268,6 +299,17 @@ public:
      from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
      account.users_numuserid=users.numuserid";
 
+    if((mparameters->getUserId()).size()!=0) {
+      addOptionRequest("userid", mparameters->getUserId(), sqlListofLocalAccount);
+    }
+    if((mparameters->getMachineId()).size()!=0) {
+      addOptionRequest("machineid", mparameters->getMachineId(), sqlListofLocalAccount);
+    }
+    if(mparameters->isAdminListOption()) {
+    //TODO
+    }
+
+
      std::vector<std::string>::iterator ii;
      std::vector<std::string> results;
      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -346,6 +388,16 @@ public:
      DatabaseResult *ListofOptions;
      //TODO : A COMPLETER Difference users et admin + option requeêtre correcte à faire
      std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
+
+     if((mparameters->getUserId()).size()!=0) {
+       //TODO
+     }
+     if((mparameters->getOptionName()).size()!=0) {
+       addCondition("description", mparameters->getOptionName(), sqlListofOptions);
+     }
+     if(mparameters->isListAllDeftValue()) {
+      //TODO
+     }
 
      std::vector<std::string>::iterator ii;
      std::vector<std::string> results;

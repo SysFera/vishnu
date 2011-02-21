@@ -67,7 +67,7 @@ endif(EMF4CPP_FOUND)
 find_package(
         Boost
 	1.45
-        REQUIRED program_options date_time filesystem system unit_test_framework
+        REQUIRED program_options date_time filesystem system unit_test_framework serialization
 )
 
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)
