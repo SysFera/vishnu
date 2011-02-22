@@ -5,8 +5,14 @@
 #include <iostream>
 class Options;
 
+typedef enum{
+PARAMERROR,
+EXECERROR
+}ErrorType;
+
+
 void helpUsage (const Options &,const std::string&);
-void errorUsage (const std::string&,const std::string&);
+void errorUsage (const std::string&,const std::string&,const ErrorType& err=PARAMERROR);
 void checkVishnuConfig(const Options &);
 int usage (const Options &,const std::string&,const std::string&);
 
