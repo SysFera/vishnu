@@ -16,6 +16,7 @@ using namespace std;
 //namespace boost::posix_time = bp;
 
 
+
 void helpUsage (const Options& opt,const string& mess){
 
 cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << mess <<"\n\n";
@@ -24,12 +25,13 @@ cout <<opt<< endl;
 }
 
 
-void errorUsage (const string & cli,const string& errMsg){
+void errorUsage (const string & cli,const string& errMsg,const ErrorType& err){
 
 		cerr << cli<<": "<<errMsg <<endl;
 
+		if(err==PARAMERROR){
 		cerr << "To get help, try <<"<< cli << " -h >>"<< endl;
-
+		}
 }
 
 
@@ -44,17 +46,6 @@ if (opt.count("dietConfig")==0){
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
