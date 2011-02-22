@@ -60,7 +60,7 @@ OptionValueServer::configureOption(bool defaultOptions) {
 	    mdatabaseVishnu->process(sqlCommand.c_str());
 	  } //END if the user is an admin
 	  else {
-	    UMSVishnuException e (NO_ADMIN);
+	    UMSVishnuException e (ERRCODE_NO_ADMIN);
 	    throw e;
 	  }   
 	} //END if the default table is used
@@ -94,12 +94,12 @@ OptionValueServer::configureOption(bool defaultOptions) {
 	}
       } //END if the option exists
       else {
-	UMSVishnuException e (UNKNOWN_OPTION);
+	UMSVishnuException e (ERRCODE_UNKNOWN_OPTION);
 	throw e;
       } 
     }//END if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   } 

@@ -68,17 +68,17 @@ MachineServer::add() {
 	  
 	} //if the machineId does not exist
 	else {
-	  UMSVishnuException e (MACHINE_EXISTING);
+	  UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
 	  throw e;
 	}
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (NO_ADMIN);
+	  UMSVishnuException e (ERRCODE_NO_ADMIN);
 	  throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -150,18 +150,18 @@ MachineServer::update() {
 	  
 	} //End if the machine to update exists
 	else {
-	  UMSVishnuException e (UNKNOWN_MACHINE);
+	  UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
 	  throw e;
 	}
 	
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (NO_ADMIN);
+	  UMSVishnuException e (ERRCODE_NO_ADMIN);
 	  throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -191,17 +191,17 @@ MachineServer::deleteMachine() {
 	 mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
 	} //End if the machine to update exists
 	else {
-	  UMSVishnuException e (UNKNOWN_MACHINE);
+	  UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
 	  throw e;
 	}
       } //End if the user is an admin
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }

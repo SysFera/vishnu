@@ -67,22 +67,22 @@ LocalAccountServer::add() {
 	    
 	  }//END if the local account does not exist
 	  else {
-	    UMSVishnuException e (LOCAL_ACCOUNT_EXIST);
+	    UMSVishnuException e (ERRCODE_LOCAL_ACCOUNT_EXIST);
 	    throw e;
 	  }
 	} //End if the machine exists and it is not locked
 	else {
-	  UMSVishnuException e (UNUSABLE_MACHINE);
+	  UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
 	  throw e;
 	}
       }//End if the session key is for the owner of the local account or the user is an admin
       else {
-	UMSVishnuException e (INCOMPATIBLE_USER_SESSION);
+	UMSVishnuException e (ERRCODE_INCOMPATIBLE_USER_SESSION);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
     //delete machine;
@@ -156,22 +156,22 @@ LocalAccountServer::update() {
 	  
 	  }//END if the local account exists
 	  else {
-	    UMSVishnuException e (UNKNOWN_LOCAL_ACCOUNT);
+	    UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
 	    throw e;
 	  }
 	} //End if the machine exists and it is not locked
 	else {
-	  UMSVishnuException e (UNUSABLE_MACHINE);
+	  UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
 	  throw e;
 	}
       }//if the session key is for the owner of the local account or the user is an admin
       else {
-	UMSVishnuException e (INCOMPATIBLE_USER_SESSION);
+	UMSVishnuException e (ERRCODE_INCOMPATIBLE_USER_SESSION);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
     //delete machine;
@@ -228,22 +228,22 @@ LocalAccountServer::deleteLocalAccount() {
 	         
 	  }//END if the local account exists
 	  else {
-	    UMSVishnuException e (UNKNOWN_LOCAL_ACCOUNT);
+	    UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
 	    throw e;
 	  }
 	} //END if the machine exists and it is not locked
 	else {
-	  UMSVishnuException e (UNUSABLE_MACHINE);
+	  UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
 	  throw e;
 	}
       }//END if the session key is for the owner of the local account or the user is an admin
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
