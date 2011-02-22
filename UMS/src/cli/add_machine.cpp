@@ -92,12 +92,21 @@ int main (int ac, char* av[]){
 				catch(po::required_option& e){// a required parameter is missing
 
 					usage(*opt," name site language sshPublicKeyFile ","required parameter is missing");
-  }
-  catch(std::exception& e){
 
-    errorUsage(av[0],e.what());
+				}
 
-    return 1;
+				catch(VishnuException& e){// catch all Vishnu runtime error
+
+					errorUsage(av[0], e.getMsg(),EXECERROR);
+
+					return e.getMsgI() ;
+				}
+
+				catch(std::exception& e){
+
+					errorUsage(av[0],e.what());
+
+					return 1;
   }
 
   return 0;
