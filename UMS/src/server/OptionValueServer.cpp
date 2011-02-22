@@ -103,7 +103,7 @@ OptionValueServer::configureOption(bool defaultOptions) {
       throw e;
     }
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   
@@ -155,7 +155,7 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 }
@@ -183,7 +183,7 @@ OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
       return convertToInt(userCloseInfo);
     }
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
   throw;
   } 
 }

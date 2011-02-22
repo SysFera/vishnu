@@ -82,7 +82,7 @@ MachineServer::add() {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
  } 
   return 0;
@@ -165,7 +165,7 @@ MachineServer::update() {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   return 0;
@@ -205,7 +205,7 @@ MachineServer::deleteMachine() {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   return 0;
@@ -249,7 +249,7 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 }

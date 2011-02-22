@@ -10,7 +10,7 @@
 
 #include <sstream>
 #include <exception>
-#include "SystemException.hpp"
+#include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
