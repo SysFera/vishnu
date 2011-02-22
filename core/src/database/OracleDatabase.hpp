@@ -26,22 +26,24 @@ public :
    * \param request The request to process
    * \return raises an exception on error
    */
-  int 
+  int
   process(std::string request);
+
   /**
    * \brief To start a transaction with the database
    * \fn int startTransaction(std::string request)
    * \param request The series of requests to process
    * \return raises an exception on error
    */
-  int 
+  int
   startTransaction(std::string request);
+
   /**
   * \brief To make a connection to the database
   * \fn int connect()
   * \return raises an exception on error
   */
-  int 
+  int
   connect();
   /**
    * \fn OracleDatabase(std::string hostname,
@@ -57,15 +59,17 @@ public :
    * \brief Constructor, raises an exception on error
    */
   OracleDatabase(std::string hostname,
-		  std::string username,
-		  std::string pwd,
-		  std::string database = "",
-		  unsigned int port = 0);
+                 std::string username,
+                 std::string pwd,
+                 std::string database = "",
+                 unsigned int port = 0);
+
   /**
    * \fn ~POSTGREDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~OracleDatabase();
+
   /**
    * \brief To commit a postgresql transaction
    * \fn int commit()
@@ -73,6 +77,15 @@ public :
    */
   int
   commit ();
+
+  /**
+   * \brief To cancel a transaction
+   * \fn int rollback()
+   * \return raises an exception on error
+   */
+  int
+  rollback();
+
   /**
    * \brief To set the db to use
    * \fn int setDatabase(std::string db)
@@ -81,6 +94,7 @@ public :
    */
   int
   setDatabase(std::string db);
+
   /**
   * \brief To get the result of a select request
   * \fn DatabaseResult* getResult()
@@ -89,23 +103,16 @@ public :
   */
   DatabaseResult*
   getResult(std::string request);
-  /**
-  * \brief To cancel a transaction
-  * \fn int rollback()
-  * \return raises an exception on error
-  */
-  int
-  rollback();
 
 private :
-  
+
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
 
   /**
    * \brief The oracle environnement
-   */  
+   */
   Environment *menvironment;
   /**
    * \brief The connection structure
@@ -119,7 +126,7 @@ private :
    * The result of a request
    */
   ResultSet   *mres;
-  
+
   /**
    * \brief The host of the base
    */
@@ -148,11 +155,11 @@ private :
    * \brief The current transaction
    */
   std::string SQLtransaction;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
-  
+
   /**
    * \brief To disconnect from the database
    * \fn int disconnect()
@@ -161,6 +168,5 @@ private :
   int
   disconnect();
 };
-
 
 #endif // POSTGREDATABASE
