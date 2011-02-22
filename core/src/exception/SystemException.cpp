@@ -33,13 +33,12 @@ SystemException::getTypeS() const{
 
 void 
 SystemException::initMsg(){
-  mp.insert(std::pair<int, std::string>(1, std::string("Error in a DIET call")));
-  mp.insert(std::pair<int, std::string>(2, std::string("Error with the database")));
-  mp.insert(std::pair<int, std::string>(3, std::string("Error with a system call")));
-  mp.insert(std::pair<int, std::string>(4, std::string("Error bad parameters")));
-  mp.insert(std::pair<int, std::string>(5, std::string("Error invalid component")));
-  mp.insert(std::pair<int, std::string>(6, std::string("Error invalid mapper")));
-  mp.insert(std::pair<int, std::string>(7, std::string("Error it is a temporary password")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DIET, std::string("Internal Error: SysDS service failure")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Internal Error: Database returned an error")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Internal Error: Database connection failure")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Internal Error: System call failure")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Internal Error: Invalid component")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Internal Error: Invalid mapper")));
 }
 
 std::string
@@ -47,5 +46,5 @@ SystemException::getMsg() const{
   if (mp.count(mval)){
     return mp[mval];
   }
-  return "Unknown error code.\n";
+  return "Internal Error: Unknown error code.\n";
 }
