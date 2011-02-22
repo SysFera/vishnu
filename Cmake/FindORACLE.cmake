@@ -7,27 +7,32 @@ SET( ORACLE_FOUND_STRING "Whether an Oracle installation was found." )
 find_path(ORACLE_INCLUDE_DIR
  occi.h
   paths
-  ${ORACLE}/include
-  $ENV{ORACLE}/include
+  ${ORACLE_DIR}/include
+  ${ORACLE_DIR}/sdk/include
+  ${ORACLE_DIR}/rdbms/public
+  $ENV{ORACLE_DIR}/include
   /usr/include
   /usr/local/include
   /opt/local/include
 )
-
+MESSAGE( "ORACLE_DIR: ${ORACLE_DIR}")
+MESSAGE( "ORACLE_INCLUDE_DIR: ${ORACLE_INCLUDE_DIR}")
 find_library(ORACLE_OCCI_LIB
   occi
   paths
-  ${ORACLE}/lib
-  $ENV{ORACLE}/lib
+  ${ORACLE_DIR}
+  ${ORACLE_DIR}/lib
+  $ENV{ORACLE_DIR}/lib
   /usr/lib
   /usr/local/lib
 )
-
+MESSAGE( "ORACLE_OCCI_LIB: ${ORACLE_OCCI_LIB}")
 find_library(ORACLE_OCIICUS_LIB
   ociicus
   paths
-  ${ORACLE}/lib
-  $ENV{ORACLE}/lib
+  ${ORACLE_DIR}
+  ${ORACLE_DIR}/lib
+  $ENV{ORACLE_DIR}/lib
   /usr/lib
   /usr/local/lib
 )
