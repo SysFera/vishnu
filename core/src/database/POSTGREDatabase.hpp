@@ -1,6 +1,6 @@
 /**
  * \file POSTGREDatabase.hh
- * \brief This file presents a PostGreSQL database.
+ * \brief This class is used to access a PostGreSQL database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10
  */
@@ -10,9 +10,10 @@
 
 #include "Database.hpp"
 #include "libpq-fe.h"
+
 /**
- * \class POSGREDatabase
- * \brief POSTRE implementation of the Database class
+ * \class POSTGREDatabase
+ * \brief POSTGRESQL implementation of the Database class
  */
 class POSTGREDatabase : public Database {
 public :
@@ -22,23 +23,26 @@ public :
    * \param request The request to process
    * \return raises an exception on error
    */
-  int 
+  int
   process(std::string request);
+
   /**
    * \brief To start a transaction with the database
    * \fn int startTransaction(std::string request)
    * \param request The series of requests to process
    * \return raises an exception on error
    */
-  int 
+  int
   startTransaction(std::string request);
+
   /**
   * \brief To make a connection to the database
   * \fn int connect()
   * \return raises an exception on error
   */
-  int 
+  int
   connect();
+
   /**
    * \fn POSTGREDatabase(std::string hostname,
    *		         std::string username,
@@ -53,15 +57,17 @@ public :
    * \brief Constructor, raises an exception on error
    */
   POSTGREDatabase(std::string hostname,
-		  std::string username,
-		  std::string pwd,
-		  std::string database = "",
-		  unsigned int port = 0);
+                  std::string username,
+                  std::string pwd,
+                  std::string database = "",
+                  unsigned int port = 0);
+
   /**
    * \fn ~POSTGREDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~POSTGREDatabase();
+
   /**
    * \brief To commit a postgresql transaction
    * \fn int commit()
@@ -69,6 +75,15 @@ public :
    */
   int
   commit ();
+
+  /**
+   * \brief To cancel a transaction
+   * \fn int rollback()
+   * \return raises an exception on error
+   */
+  int
+  rollback();
+
   /**
    * \brief To set the db to use
    * \fn int setDatabase(std::string db)
@@ -77,6 +92,7 @@ public :
    */
   int
   setDatabase(std::string db);
+
   /**
   * \brief To get the result of a select request
   * \fn DatabaseResult* getResult()
@@ -85,20 +101,14 @@ public :
   */
   DatabaseResult*
   getResult(std::string request);
-  /**
-  * \brief To cancel a transaction
-  * \fn int rollback()
-  * \return raises an exception on error
-  */
-  int
-  rollback();
+
 
 private :
-  
+
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
-  
+
   /**
   * \brief A PostgreSQL structure
   */
@@ -131,11 +141,11 @@ private :
    * \brief The current transaction
    */
   std::string mSQLtransaction;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
-  
+
   /**
    * \brief To disconnect from the database
    * \fn int disconnect()
