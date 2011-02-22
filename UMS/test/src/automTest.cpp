@@ -18,6 +18,15 @@ using namespace UMS_Data;
 
 BOOST_AUTO_TEST_CASE( my_test )
 {
+
+  int argc = 2;
+  char* argv[argc];
+  argv[0]= (char*)"./automTest";
+  argv[1]=getenv("VISHNU_CONFIG_FILE");
+  if (diet_initialize(argv[1], argc, argv)) {
+     std::cerr << "Error in diet_initialize..." << std::endl;
+  }
+
   // CREATE DATA MODEL                                                                                                                                                
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
