@@ -19,6 +19,10 @@
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "VishnuException.hpp"
 #include "SystemException.hpp"
+#include "POSTGREDatabase.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
+#include "VishnuException.hpp"
 
 using namespace boost::posix_time;
 using namespace boost::gregorian;
@@ -107,10 +111,22 @@ namespace utilServer {
   int isCpt (const char * s);
 
   void
-  getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type,
-	     std::string name, std::string site);
+  getKeywords (int* size, Format_t* array,
+               const char* format,
+               int cpt, IdType type,
+	             std::string name,
+               std::string site);
   std::string
-  getGeneratedName (const char* format, int cpt, IdType type,
-		  std::string name = "", std::string site ="");
-  }
+  getGeneratedName (const char* format,
+                    int cpt,
+                    IdType type,
+                    std::string name = "",
+                    std::string site ="");
+
+  std::string
+  getAttrVishnu(std::string attrname, std::string vishnuid);
+
+  void
+  incrementCpt(std::string cptName, int cpt);
+}
 #endif//UTILSERVER

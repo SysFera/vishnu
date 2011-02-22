@@ -45,7 +45,7 @@ ConfigurationServer::save() {
   DatabaseResult *ListofLocalAccount;
 
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
-  where not userid='vishnu_user' and not userid='vishnu_db_admin'";
+  where not userid='"+utilServer::ROOTUSERNAME+"'";
 
   std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description \
   where machine.nummachineid = description.machine_nummachineid";
@@ -174,7 +174,7 @@ int ConfigurationServer::restore() {
       if (userServer.isAdmin()) {
 
 
-        mdatabaseVishnu->process("DELETE FROM users where not userid='vishnu_user' and not userid='vishnu_db_admin';\
+        mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';\
         DELETE FROM machine; DELETE FROM account;");
 
         //To insert all users
@@ -260,9 +260,9 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
 
   return (sqlInsert + "(" + Vishnuid::mvishnuid+", \
   '"+user->getUserId()+"','"+user->getPassword()+"','"
-                                                 + user->getFirstname()+"','"+user->getLastname()+"',"+
-                                                                                                  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
-                                                                                                  0, "+convertToString(user->getStatus())+");");
+  + user->getFirstname()+"','"+user->getLastname()+"',"+
+  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
+  0, "+convertToString(user->getStatus())+");");
 }
 
 /**

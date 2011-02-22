@@ -149,7 +149,7 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
     sqlCommand = "SELECT "+attrname+" FROM optionvalue "+condition;
   }
 
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());

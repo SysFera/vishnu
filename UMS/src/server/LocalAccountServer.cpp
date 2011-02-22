@@ -59,8 +59,8 @@ LocalAccountServer::add() {
           if (!exist(numMachine, numUser)) {
 
             //The sql code to insert the localAccount on the database
-            mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', '\
-            "+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
+            mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', \
+            '"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
 
             msshpublickey = machineServer.getAttribut("where \
             machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
@@ -282,7 +282,7 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
   std::vector<std::string>::iterator ii;
 
   std::string sqlCommand("SELECT "+attrname+" FROM account "+condition);
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());

@@ -14,6 +14,7 @@ include_directories(
   ${DATA_BASE_INCLUDE_DIR}
   ${SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
+  ${REGISTRY_SOURCE_DIR}
 )
 
 add_executable(umssed

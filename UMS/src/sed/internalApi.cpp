@@ -1003,10 +1003,7 @@ solveRestore(diet_profile_t* pb) {
   Database* db = factory.getDatabaseInstance();
   std::cout << "processing : " << sqlcode << std::endl;
   db->process(sqlcode);
-  //db->commit();
-  //db->endTransaction();
   }
-
   catch (VishnuException& e) {
     errorInfo =  utilServer::buildExceptionString(e);
     std::cout << "errorInfo: " << errorInfo <<std::endl;
