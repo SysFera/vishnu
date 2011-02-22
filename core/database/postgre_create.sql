@@ -264,7 +264,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
 
 --Grant on right on table
 
-GRANT SELECT ON vishnu TO vishnu_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_user";
