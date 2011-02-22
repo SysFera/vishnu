@@ -121,15 +121,17 @@ public:
          if(moption.size()!=0) {
            sqlListofUsers.append(" and userid=");
            sqlListofUsers.append("'"+moption+"'");
+           //To get the list of users from the database where id=moption
+           ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
+           if(ListofUsers->getNbTuples()==0) {
+             UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
+             throw e ;
+           }
          } 
-         else {
-            std::cout << "ERRCODE_UNKNOWN_USERID=" << ERRCODE_UNKNOWN_USERID << std::endl;
-            UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
-            throw e ;
-         }
-         
-        //To get the list of users from the database
-        ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
+         else { 
+           //To get the list of users from the database
+           ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
+        }
 
         if (ListofUsers->getNbTuples() != 0){
           for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
@@ -208,21 +210,6 @@ public:
   std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description \
    where machine.nummachineid = description.machine_nummachineid";
 
-  //IMPORTANT : le test de UserId doit apparaître avant le test de machineId
-  if((mparameters->getUserId()).size()!=0) {
-
-    sqlListofMachines =   "SELECT machineid, name, site, machine.status, lang, description, userid from machine, description, account, users \
-    where machine.nummachineid = description.machine_nummachineid and account.machine_nummachineid=machine.nummachineid and \
-    account.users_numuserid=users.numuserid";
-      addOptionRequest("userid", mparameters->getUserId(), sqlListofMachines); 
-  }
-  if((mparameters->getMachineId()).size()!=0) {
-      addOptionRequest("machineid", mparameters->getMachineId(), sqlListofMachines);
-  }
-  if(mparameters->isListAllmachine()) {
-    //TODO
-  }
-
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -234,16 +221,58 @@ public:
     userServer.init();
     //if the user exists 
     if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
+      size_t userIdSize = mparameters->getUserId().size();
+      size_t machineIdSize = mparameters->getMachineId().size();
+      bool isListAll = mparameters->isListAllmachine();
+      
+      if ((!userServer.isAdmin())&&(userIdSize!=0 || machineIdSize!=0 || isListAll)) {
+        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        throw e;
+      }
 
-        //To get the list of machines from the database
+      //IMPORTANT : The order of if test is important
+     if(userIdSize!=0) {
+        sqlListofMachines =   "SELECT machineid, name, site, machine.status, lang, description, userid from machine, description, account, users \
+        where machine.nummachineid = description.machine_nummachineid and account.machine_nummachineid=machine.nummachineid and \
+        account.users_numuserid=users.numuserid";
+        addOptionRequest("userid", mparameters->getUserId(), sqlListofMachines);
+ 
+        //To get the list of machines from the database where userid = mparameters->getUserId()
         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+        if(ListofMachines->getNbTuples()==0) {
+           UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
+           throw e ;
+        } 
+      }
 
-        if (ListofMachines->getNbTuples() != 0){
-          for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
-            results.clear();
-            results = ListofMachines->get(i);
+      if(machineIdSize!=0) {
+        addOptionRequest("machineid", mparameters->getMachineId(), sqlListofMachines);
+        //To get the list of machines from the database where machineid = mparameters->getMachineId()
+        ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+        if(ListofMachines->getNbTuples()==0) {
+          UMSVishnuException e(ERRCODE_UNKNOWN_MACHINE);
+          throw e ;
+        }
+      }
+      if(!isListAll) {
+         if(userIdSize==0) {
+             sqlListofMachines =   "SELECT machineid, name, site, machine.status, lang, description, userid from machine, description, account, users \
+               where machine.nummachineid = description.machine_nummachineid and account.machine_nummachineid=machine.nummachineid and \
+               account.users_numuserid=users.numuserid";
+         }
+         std::cout << "userid=" << userServer.getData().getUserId() << std::endl;
+         addOptionRequest("userid", userServer.getData().getUserId(), sqlListofMachines);
+         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str()); 
+      }
+      else { 
+      //To get the list of machines from the database
+        ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+      }
+
+      if (ListofMachines->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofMachines->get(i);
             ii = results.begin();
                 UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
                 machine->setMachineId(*ii);
@@ -257,12 +286,6 @@ public:
             }
         }
  
-
-    } //End if the user is an admin
-      else {
-        UMSVishnuException e (4, "The user is not an admin");
-        throw e;
-      }
     }//End if the user exists
      else {
         UMSVishnuException e (4, "The user is unknown");
