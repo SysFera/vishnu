@@ -1,4 +1,4 @@
-GRANT SELECT ON vishnu.vishnu TO vishnu_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.vishnu TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.users TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.machine TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu.clmachine TO vishnu_user;
