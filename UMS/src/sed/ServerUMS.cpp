@@ -82,7 +82,7 @@ ServerUMS::init(std::string vishnuid, std::string password) {
     std::cout << "The default users are already defined in the database"<< std::endl;	
     }
       
-  } catch (SystemException& e) {
+  } catch (VishnuException& e) {
 	std::cout << "Message generique <-> 1: " << e.getMsg()<<std::endl;
 	std::cout << "Details supplementaires 2: " << e.what() <<std::endl;
 	exit(0);

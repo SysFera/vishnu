@@ -14,7 +14,7 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/variate_generator.hpp>
-#include "SystemException.hpp"
+#include "VishnuException.hpp"
 
 /**
 * \class Vishnuid
@@ -62,13 +62,13 @@ namespace utilServer {
   */
   int convertToInt(std::string val);
   /**
-  * \brief Function to get the string associated to SystemException  
-  * \fn    std::string buildExceptionString(SystemException& e)
+  * \brief Function to get the string associated to VishnuException  
+  * \fn    std::string buildExceptionString(VishnuException& e)
   * \param  e the exception caught
   * \return int value of the corresponding string
   */
   std::string
-  buildExceptionString(SystemException& e);
+  buildExceptionString(VishnuException& e);
   /**
   * \brief Function to get a random number  
   * \fn    int generate_numbers()

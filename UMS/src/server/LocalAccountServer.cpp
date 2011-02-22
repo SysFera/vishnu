@@ -87,7 +87,7 @@ LocalAccountServer::add() {
     }
     //delete machine;
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   
@@ -176,7 +176,7 @@ LocalAccountServer::update() {
     }
     //delete machine;
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
  }
   
@@ -247,7 +247,7 @@ LocalAccountServer::deleteLocalAccount() {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
  }
  
@@ -288,7 +288,7 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   
@@ -305,7 +305,7 @@ LocalAccountServer::exist(std::string idmachine, std::string iduser) {
   try {
     return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   
