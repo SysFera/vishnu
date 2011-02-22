@@ -12,9 +12,9 @@ UserException::getTypeS() const{
   return std::string("User");
 }
 
-void 
+void
 UserException::initMsg(){
-  mp.insert(std::pair<int, std::string>(4, std::string("Error bad parameters.")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVALID_PARAM, std::string("Error invalid parameters")));
 }
 
 std::string
