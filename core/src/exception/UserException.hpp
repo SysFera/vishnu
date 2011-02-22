@@ -8,6 +8,9 @@
 
 #include "VishnuException.hpp"
 
+// RESERVED CODES FROM 10 TO 19
+static const int ERRCODE_INVALID_PARAM = 10;
+
 class UserException :
   public VishnuException {
 public:
