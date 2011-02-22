@@ -1,3 +1,12 @@
+-- This script is for initialization of the VISHNU PostgreSQL database
+-- Script name          : postgre_create.sql
+-- Script owner         : SysFera SAS
+
+-- REVISIONS
+-- Revision nb          : 1.0
+-- Revision date        : 27/01/11
+-- Revision author      : Benjamin Isnard <benjamin.isnard@sysfera.com>
+-- Revision comment     : initial version
 
 CREATE TABLE optionu (
   numoptionid SERIAL  NOT NULL ,
@@ -235,17 +244,11 @@ vishnuid SERIAL  NOT NULL ,
   machinecpt INTEGER      ,
 
 
-INSERT INTO vishnu (updatefreq, formatiduser, formatidmachine, formatidjob, formatidfiletransfer, usercpt, 
-machinecpt, jobcpt, fileSubcpt) VALUES (0, 'U_$CPT', 'MA_$CPT', 'J_$CPT', 'FT_$CPT', 0, 0, 0, 0);
-
-INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
-INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIMEOUT', 3600);
-     
 
 -- Put the connect rights on pgadmin3 to Role vishnu_db_admin and vishnu_user
 -- Put connection with md5 on pg_hba.conf
 -- CREATE Role Vishnu Database Administrator
--- Put password for connection for all roles: 
+-- Put password for connection for all roles:
 -- With psql --> ALTER USER vishnu_user WITH ENCRYPTED PASSWORD 'your password';
 
 --CREATE ROLE vishnu_db_admin;
