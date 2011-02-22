@@ -19,6 +19,7 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include"utilServer.hpp"
+#include "Vishnuid.hpp"
 
 using namespace utilServer;
 
