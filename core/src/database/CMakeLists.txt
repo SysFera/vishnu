@@ -1,30 +1,63 @@
-#SET( CMAKE_INSTALL_PREFIX ../../.. )
+# DATABASE SOURCES & INCLUDES
 
-#set(ORAC_INC "/home/keo/Bureau/instantclient_11_2/sdk/include")
-#set(ORAC_LIB "/home/keo/Bureau/instantclient_11_2")
+SET (DB_SRC
+  DbFactory.cpp
+  Database.cpp
+  DatabaseResult.cpp
+)
+
+IF (POSTGRESQL_FOUND)
+  SET (DB_INCLUDE_DIRECTORIES
+    ${DB_INCLUDE_DIRECTORIES}
+    ${POSTGRESQL_INCLUDE_DIR}
+  )
+  SET (DB_LIBS
+    ${DB_LIBS}
+    ${POSTGRESQL_LIB}
+  )
+  SET (DB_SRC
+    ${DB_SRC}
+    POSTGREDatabase.cpp
+  )
+ENDIF (POSTGRESQL_FOUND)
+
+IF (ORACLE_FOUND)
+  SET (DB_INCLUDE_DIRECTORIES
+    ${DB_INCLUDE_DIRECTORIES}
+    ${ORACLE_INCLUDE_DIR}
+  )
+  SET (DB_LIBS
+    ${DB_LIBS}
+    ${ORACLE_LIBS}
+  )
+  SET (DB_SRC
+    ${DB_SRC}
+    OracleDatabase.cpp
+  )
+ENDIF (ORACLE_FOUND)
 
 INCLUDE_DIRECTORIES(
- /usr/include/postgresql 
+  ${DB_INCLUDE_DIRECTORIES}
  ../exception/
- ${ORAC_INC}
 )
 
 LINK_DIRECTORIES(
   ../exception
-  ${ORAC_LIB}
 )
+
+# DATABASE LIBRARY
+
+ADD_LIBRARY(database-vishnu
+  ${DB_SRC}
+)
+
+TARGET_LINK_LIBRARIES(database-vishnu  ${DB_LIBS})
+
+# EXECS
 
 ADD_EXECUTABLE(mainDB
   main.cpp
-  )
-
-ADD_LIBRARY(database-vishnu
-  DbFactory.cpp
-  Database.cpp
-  DatabaseResult.cpp
-  POSTGREDatabase.cpp
-#  OracleDatabase.cpp
-  )
+ )
 
 # Compiler avec oracle :
 # - Recuperer dans le depot svn les libs et les includes du dossier :
@@ -39,8 +72,6 @@ ADD_LIBRARY(database-vishnu
 # Le test effectif n'a pas ete realisé car pas de base oracle ici
 
 
-TARGET_LINK_LIBRARIES(mainDB -lpq database-vishnu exception-vishnu 
-#  -lociicus -locci
-)
+TARGET_LINK_LIBRARIES(mainDB ${POSTGRESQL_LIB} ${ORACLE_LIBS} database-vishnu exception-vishnu)
 
 install( TARGETS database-vishnu DESTINATION lib )
