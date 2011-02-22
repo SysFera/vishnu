@@ -8,16 +8,16 @@
 
 #include "VishnuException.hpp"
 
-class SystemException :
-  public VishnuException {
+static const int ERRCODE_DIET = 1;
+static const int ERRCODE_DBERR = 2;
+static const int ERRCODE_DBCONN = 3;
+static const int ERRCODE_SYSTEM = 4;
+static const int ERRCODE_INVCOMP = 5;
+static const int ERRCODE_INVMAPPER = 6;
+
+class SystemException : public VishnuException {
+  
 public:
-
-
-private :
-
-protected :
-
-public :
 
   /**
    * \brief Default constructor
