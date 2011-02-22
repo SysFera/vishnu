@@ -27,7 +27,7 @@ connect(const string& userId,
         const string& password, 
         string& sessionKey, 
         const UMS_Data::ConnectOptions& connectOpt) 
-                                                  throw(SystemException) 
+                                                  throw(UserException) 
 {
 
   if((connectOpt.getClosePolicy() < 0) || (connectOpt.getClosePolicy() > 2)) {
@@ -63,7 +63,7 @@ reconnect(const string& userId,
           const string& password, 
           const string& sessionId, 
           string& sessionKey) 
-                            throw(SystemException)
+                            throw(UserException)
 {
 
   UserProxy userProxy(userId, password);
@@ -89,7 +89,7 @@ reconnect(const string& userId,
  */
 int 
 close(const string&  sessionKey) 
-                               throw(SystemException)
+                               throw(UserException)
 {
 
  return SessionProxy(sessionKey).close();;
@@ -105,8 +105,7 @@ close(const string&  sessionKey)
  * \return raises an exception on error 
  */
 int 
-addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) 
-                                                                     throw(SystemException)
+addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) //throw(UserException) 
 {
 
   if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
@@ -130,7 +129,7 @@ addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser)
 int 
 updateUser(const string& sessionKey, 
            const UMS_Data::User& user) 
-                                     throw(SystemException)
+                                     throw(UserException)
 {
  
    if((user.getPrivilege() < 0) || (user.getPrivilege() > 1)) {
@@ -154,7 +153,7 @@ updateUser(const string& sessionKey,
 int 
 deleteUser(const string& sessionKey, 
            const string& userId)
-                               throw(SystemException)
+                               throw(UserException)
 {
 
 
@@ -180,7 +179,7 @@ int
 changePassword(const std::string& userId, 
                const std::string& password, 
                const std::string& passwordNew)
-                                             throw(SystemException) 
+                                             throw(UserException) 
 {
 
   UMS_Data::User user;
@@ -201,7 +200,7 @@ changePassword(const std::string& userId,
 int
 resetPassword(const std::string& sessionKey, 
               const std::string& userId) 
-                                       throw(SystemException)
+                                       throw(UserException)
 {
 
   UMS_Data::User user;
@@ -224,7 +223,7 @@ resetPassword(const std::string& sessionKey,
 int 
 addMachine(const std::string& sessionKey, 
            const UMS_Data::Machine& newMachine) 
-                                              throw(SystemException)
+                                              throw(UserException)
 {
 
   if((newMachine.getStatus() < 0) || (newMachine.getStatus() > 1)) {
@@ -248,7 +247,7 @@ addMachine(const std::string& sessionKey,
 int 
 updateMachine(const std::string& sessionKey,
               const UMS_Data::Machine& machine) 
-                                              throw(SystemException)
+                                              throw(UserException)
 {
 
   if((machine.getStatus() < 0) || (machine.getStatus() > 1)) {
@@ -272,7 +271,7 @@ updateMachine(const std::string& sessionKey,
 int 
 deleteMachine(const std::string& sessionKey,
               const std::string& machineId)
-                                          throw(SystemException)
+                                          throw(UserException)
 {
 
   UMS_Data::Machine machine;
@@ -297,7 +296,7 @@ int
 addLocalAccount(const std::string& sessionKey, 
                 const UMS_Data::LocalAccount& newLocalAccount, 
                 std::string& sshPublicKey)
-                                         throw(SystemException)
+                                         throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -321,7 +320,7 @@ addLocalAccount(const std::string& sessionKey,
 int
 updateLocalAccount(const std::string& sessionKey, 
                    const UMS_Data::LocalAccount& localAccount) 
-                                                             throw(SystemException)
+                                                             throw(UserException)
 {
 
  SessionProxy sessionProxy(sessionKey);
@@ -344,7 +343,7 @@ int
 deleteLocalAccount(const std::string& sessionKey, 
                    const std::string& userId, 
                    const std::string& machineId) 
-                                               throw(SystemException)
+                                               throw(UserException)
 {
 
   UMS_Data::LocalAccount localAccount;
@@ -368,7 +367,7 @@ deleteLocalAccount(const std::string& sessionKey,
 int 
 saveConfiguration(const std::string& sessionKey, 
                  UMS_Data::Configuration& config) 
-                                                throw(SystemException)
+                                                throw(UserException)
 {
  
    std::string filePath = std::string(getenv("HOME"))+"/.vishnu/toto.cfg"; 
@@ -415,7 +414,7 @@ saveConfiguration(const std::string& sessionKey,
 int 
 restoreConfiguration(const std::string& sessionKey, 
                      const std::string& filePath) 
-                                                throw(SystemException)
+                                                throw(UserException)
 {
 
    SessionProxy sessionProxy(sessionKey);
@@ -435,7 +434,7 @@ restoreConfiguration(const std::string& sessionKey,
 int
 configureOption(const std::string& sessionKey, 
                 const UMS_Data::OptionValue& optionValue) 
-                                                        throw(SystemException)
+                                                        throw(UserException)
 {
  
   SessionProxy sessionProxy(sessionKey);
@@ -455,7 +454,7 @@ configureOption(const std::string& sessionKey,
 int
 configureDefaultOption(const std::string& sessionKey, 
                        const UMS_Data::OptionValue& optionValue) 
-                                                               throw(SystemException)
+                                                               throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -480,7 +479,7 @@ int
 listSessions(const std::string& sessionKey, 
              UMS_Data::ListSessions& listSession,
              const UMS_Data::ListSessionOptions& options)
-                                                        throw(SystemException)
+                                                        throw(UserException)
 {
 
 
@@ -526,7 +525,7 @@ int
 listLocalAccount(const std::string& sessionKey, 
                  UMS_Data::ListLocalAccounts& listLocalAcc,
                  const UMS_Data::ListLocalAccOptions& options)
-                                                             throw(SystemException)
+                                                             throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -562,8 +561,8 @@ listLocalAccount(const std::string& sessionKey,
 int
 listMachine(const std::string& sessionKey, 
             UMS_Data::ListMachines& listMachine,
-            const UMS_Data::ListMachineOptions& options)
-                                                       throw(SystemException)
+            const UMS_Data::ListMachineOptions& options) 
+                                                        throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -600,7 +599,7 @@ int
 listHistoryCmd(const std::string& sessionKey, 
                UMS_Data::ListCommands& listCommands,
                const UMS_Data::ListCmdOptions& options)
-                                                      throw(SystemException)
+                                                      throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -636,7 +635,7 @@ int
 listOptions(const std::string& sessionKey, 
             UMS_Data::ListOptionsValues& listOptValues,
             const UMS_Data::ListOptOptions& options)
-                                                   throw(SystemException)
+                                                   throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -672,7 +671,7 @@ int
 listUsers(const std::string& sessionKey, 
           UMS_Data::ListUsers& listUsers, 
           const std::string& userIdOption)
-                                         throw(SystemException)
+                                         throw(UserException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -727,6 +726,13 @@ vishnuFinalize() {
  */
 int
 restore(const std::string& filePath) {
+
+  int argc = 2;
+  char* argv[argc];
+  argv[0] = (char*)"./automTest";
+  argv[1] = getenv("VISHNU_CONFIG_FILE");
+  std::cout << argv[0] << " " << argv[1] << std::endl;
+  UtilsProxy utilsProxy(filePath, argv[1],  argc, argv) ;
   
-  return UtilsProxy(filePath).restore();
+  return utilsProxy.restore();
 }

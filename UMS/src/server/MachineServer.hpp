@@ -13,7 +13,7 @@
 #include <list>
 #include <iostream>
 #include <exception>
-#include "SystemException.hpp"
+#include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SessionServer.hpp"
 #include "UMS_Data.hpp"
