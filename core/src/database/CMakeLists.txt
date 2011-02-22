@@ -28,7 +28,8 @@ IF (ORACLE_FOUND)
   )
   SET (DB_LIBS
     ${DB_LIBS}
-    ${ORACLE_LIBS}
+    ${ORACLE_OCCI_LIB}
+    ${ORACLE_OCIICUS_LIB}
   )
   SET (DB_SRC
     ${DB_SRC}
