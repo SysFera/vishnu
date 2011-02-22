@@ -25,6 +25,7 @@ add_library(ums-server
    MachineServer.cpp
    LocalAccountServer.cpp
    ConfigurationServer.cpp
+   Vishnuid.cpp
 )
 
 target_link_libraries(ums-server
