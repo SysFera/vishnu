@@ -22,32 +22,38 @@ ServerUMS::getCfg() {
 * \brief Constructor, raises an exception on error
 * \fn ServerUMS(std::string cfg)
 * \param cfg The vishnu configuration filepath
-* \param vishnuid The id of the vishnu configuration registered in the database which will be used
 */
 ServerUMS::ServerUMS(std::string cfg) {
   mvishnucfg = cfg;
   mprofile = NULL;
-  //mvishnuid = vishnuid;
-  //Vishnuid::mvishnuid = vishnuid;
 }
 
 /**
 * \brief To initialize the UMS server
 * \fn int init(std::string vishnuid)
-* \param vishnuid The id of the vishnu configuration registered in the database
+* \param vishnuId The id of the vishnu configuration registered in the database
+* \param dbType   The type of the database (POSTGREDB|ORACLEDB)
+* \param dbHost   The host of the database server
+* \param dbUsername The name of the database user on the server
+* \param dbPassword The password of the database user on the server
 * \return an error code (0 if success and 1 if an error occurs)
 */
 int
-ServerUMS::init(std::string vishnuid, std::string password) {
+ServerUMS::init(int vishnuId,
+                int dbType,
+                std::string dbHost,
+                std::string dbUsername,
+                std::string dbPassword) {
 
   DbFactory factory;
 
-  //TODO: prendre en paramètre le type de base de données
-
   //To get database instance
-  Database *mdatabaseVishnu = factory.getDatabaseInstance(POSTGREDB, "",
-                                                          "vishnu_user", password, "vishnu");
-  Vishnuid::mvishnuid = vishnuid;
+  Database *mdatabaseVishnu = factory.getDatabaseInstance(dbType,
+                                                          dbHost,
+                                                          dbUsername,
+                                                          dbPassword,
+                                                          DATABASENAME);
+  Vishnuid::mvishnuid = convertToString(vishnuId);
   DatabaseResult *result;
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+Vishnuid::mvishnuid);
