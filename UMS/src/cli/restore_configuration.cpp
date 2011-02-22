@@ -69,6 +69,14 @@ catch(po::required_option& e){// a required parameter is missing
 
            usage(opt,"[options] filePath ","required parameter is missing");
   }
+
+catch(VishnuException& e){// catch all Vishnu runtime error
+
+	errorUsage(av[0], e.getMsg(),EXECERROR);
+
+	return e.getMsgI() ;
+}
+
   catch(std::exception& e){
 
     errorUsage(av[0], e.what());
