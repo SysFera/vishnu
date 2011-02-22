@@ -46,14 +46,6 @@ public :
 };
 
 /**
-* \class Vishnuid
-* \brief The Vishnuid class encapsulates the global vishnu id
-*/
-class Vishnuid {
-  public:
-    static std::string mvishnuid;
-};
-/**
 * \brief Function to encrypt data and password
 * \fn    char* crypt(const char* clef, const char* salt);
 * \param clef is the data to be encrypted
@@ -105,7 +97,6 @@ namespace utilServer {
   */
   int 
   generate_numbers();
-  }
   
   int isMonth (const char * s);
   int isYear (const char * s);
@@ -122,5 +113,5 @@ namespace utilServer {
   std::string 
   getGeneratedName (const char* format, int cpt, IdType type, 
 		  std::string name = "", std::string site ="");
-  
+  }
 #endif//UTILSERVER

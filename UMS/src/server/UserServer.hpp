@@ -22,6 +22,7 @@
 #include "DatabaseResult.hpp"
 #include "SessionServer.hpp"
 #include "utilServer.hpp"
+#include "Vishnuid.hpp"
 
 using namespace utilServer;
 class SessionServer;
