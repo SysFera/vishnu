@@ -55,30 +55,16 @@ ServerUMS::init(std::string vishnuid, std::string password) {
 
   try {
 
-  /*connection to the database*/
-  mdatabaseVishnu->connect();
+    /*connection to the database*/
+    mdatabaseVishnu->connect();
 
-  /* Checking of vishnuid on the database */
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    /* Checking of vishnuid on the database */
+    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
 
-  if (result->getResults().size() == 0) {
-  SystemException e(4, "The vishnuid is unrecognized");
-  throw e;
-  }
+    if (result->getResults().size() == 0) {
+      SystemException e(4, "The vishnuid is unrecognized");
+      throw e;
 
-  //The default vishnu users
-  UserServer admin = UserServer("vishnu_user",
-  "ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.");
-
-    if (!admin.exist()) {
-      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-      values ("+Vishnuid::mvishnuid+", 'vishnu_db_admin','ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.', 1, 1, 1)");
-
-      mdatabaseVishnu->process("insert into users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)\
-      values ("+Vishnuid::mvishnuid+", 'vishnu_user','ztV1aPn8GPzSLab1EL5kBaqyyJLrL3XXxSVgdl1.TPhghpkUXejxSLPntLq8keE/iJZXpXkGo848XzLYJMFvB.', 1, 1, 1)");
-    }
-    else {
-      std::cout << "The default users are already defined in the database"<< std::endl;
     }
 
   } catch (VishnuException& e) {
