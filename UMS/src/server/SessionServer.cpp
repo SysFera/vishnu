@@ -106,7 +106,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
     }
   
   } //END try 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   return 0;
@@ -165,7 +165,7 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
       throw e;
     }
   }//END Try 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   return 0;
@@ -203,7 +203,7 @@ int SessionServer::close() {
       }  
     } //END If The user exist
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   return 0;
@@ -243,7 +243,7 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 }
@@ -329,7 +329,7 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
   try {
     mdatabaseVishnu->process(sqlInsert.c_str());
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 } 
@@ -350,7 +350,7 @@ SessionServer::exist(bool flagSessionId) {
       return (getState() != -1);  
     } 
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   } 
 } 
@@ -383,7 +383,7 @@ SessionServer::getState(bool flagSessionId) {
     }
     
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
  
@@ -420,7 +420,7 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
       return -1;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 }

@@ -121,12 +121,13 @@ public:
          if(moption.size()!=0) {
            sqlListofUsers.append(" and userid=");
            sqlListofUsers.append("'"+moption+"'");
-         
          } 
          else {
-             UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
+            std::cout << "ERRCODE_UNKNOWN_USERID=" << ERRCODE_UNKNOWN_USERID << std::endl;
+            UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
             throw e ;
          }
+         
         //To get the list of users from the database
         ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
@@ -160,7 +161,7 @@ public:
          throw e;
        }
      }
-      catch (SystemException& e) {
+      catch (VishnuException& e) {
         throw;
       }
  
@@ -268,7 +269,7 @@ public:
         throw e;
       }
     }
-    catch (SystemException& e) {
+    catch (VishnuException& e) {
       throw;
     } 
 
@@ -358,7 +359,7 @@ public:
          throw e;
        }
      }
-     catch (SystemException& e) {
+     catch (VishnuException& e) {
         throw;
      }
 
@@ -443,7 +444,7 @@ public:
          throw e;
        }
      }
-     catch (SystemException& e) {
+     catch (VishnuException& e) {
         throw;
      }
 
@@ -524,7 +525,7 @@ public:
          throw e;
        }
      }
-     catch (SystemException& e) {
+     catch (VishnuException& e) {
         throw;
      }
 
@@ -612,7 +613,7 @@ public:
          throw e;
        }
      }
-     catch (SystemException& e) {
+     catch (VishnuException& e) {
         throw;
      }
 

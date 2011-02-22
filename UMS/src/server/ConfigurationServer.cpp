@@ -148,7 +148,7 @@ ConfigurationServer::save() {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }  
   return 0;
@@ -224,7 +224,7 @@ int ConfigurationServer::restore() {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   return 0;
@@ -299,7 +299,7 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
     '"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
     
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
   
