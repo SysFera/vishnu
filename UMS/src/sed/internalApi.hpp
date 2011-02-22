@@ -9,6 +9,7 @@
 #define _INTERNALAPI_H_
 
 #include <exception>
+#include "VishnuException.hpp"
 #include "SystemException.hpp"
 #include "DIET_server.h"
 #include "UserServer.hpp"

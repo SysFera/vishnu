@@ -20,7 +20,7 @@
 #include <exception>
 #include <ctime>
 #include <sys/time.h>
-#include "SystemException.hpp"
+#include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data.hpp"

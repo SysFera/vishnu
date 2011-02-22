@@ -36,7 +36,7 @@ int MachineClientServer::recordMachineClient() {
     try {
       mdatabaseVishnu->process(sqlCmd.c_str());
     } 
-    catch (SystemException& e) {
+    catch (VishnuException& e) {
       throw;
     }
   } //End if the machine is not on the database 
@@ -66,7 +66,7 @@ MachineClientServer::getId() {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 }
@@ -103,7 +103,7 @@ bool MachineClientServer::exist(){
   try {
     return (getId().size() != 0);
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 }

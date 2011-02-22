@@ -99,7 +99,7 @@ UserServer::add(UMS_Data::User*& user) {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
  }  
   return 0;
@@ -180,7 +180,7 @@ UserServer::update(UMS_Data::User *user) {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }  
   return 0;
@@ -228,7 +228,7 @@ UserServer::deleteUser(UMS_Data::User user) {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }    
   return 0;
@@ -270,7 +270,7 @@ UserServer::changePassword(std::string newPassword) {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }    
   return 0;
@@ -332,7 +332,7 @@ UserServer::resetPassword(UMS_Data::User user) {
       throw e;
     }
   }
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }  
   return 0;
@@ -394,7 +394,7 @@ UserServer::init(){
 	throw e;
       } 
     }
-    catch (SystemException& e) {
+    catch (VishnuException& e) {
       throw;
     }
   }//END If the userId and password have not been defined
@@ -437,7 +437,7 @@ bool UserServer::exist(bool flagForChangePwd) {
       existUser = false;
     }
   }// END try 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
 	  throw;
   } 	
   return existUser;
@@ -454,7 +454,7 @@ UserServer::isAdmin() {
     return (convertToInt (getAttribut("where userid='"+muser.getUserId()+"'and \
     pwd='"+muser.getPassword()+"'", " privilege")) != 0);
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
   throw;
   }	
 }
@@ -472,7 +472,7 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
     return (convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and \
     pwd='"+muser.getPassword()+"'", attributName)) == valueOk);
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   } 	
 }
@@ -496,7 +496,7 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
   } 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   }
 
@@ -528,7 +528,7 @@ UserServer::existuserId(std::string userId) {
       existUser = false;
     }
   }// END try 
-  catch (SystemException& e) {
+  catch (VishnuException& e) {
     throw;
   } 	
   return existUser;
