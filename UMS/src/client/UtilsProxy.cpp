@@ -42,9 +42,12 @@ mcfg(cfg), margc(argc), margv(argv)
 {
 }
 
-UtilsProxy::UtilsProxy(const std::string& filePath, char* cfg, int argc, char** argv):
-mfilePath(filePath), mcfg(cfg), margc(argc), margv(argv)
+UtilsProxy::UtilsProxy(const std::string& filePath):
+mfilePath(filePath)
 {
+  mcfg  = NULL;
+  margc = NULL;
+  margv = NULL;
 }
 
 /**
@@ -77,11 +80,6 @@ UtilsProxy::finalize() {
 int 
 UtilsProxy::restore() {
 
-  if(initilialize()) {
-    std::cerr << "Error in diet initialization....." << std::endl;
-    return -1;
-  };
-
   int READSIZE = 1000;
   diet_profile_t* profile = NULL;
   //profile = diet_profile_alloc("restore", 0, 0, 0);
@@ -94,15 +92,17 @@ UtilsProxy::restore() {
   while (-1 != file.tellg()){
     char* tmp = new char[READSIZE];
     file.getline(tmp, READSIZE);
+    if (strcmp(tmp, "")==0){
+	break;
+    }
     profile = diet_profile_alloc("restore", 0, 0, 0);
-    std::cout << tmp << std::endl;
+    std::cout << "Query sent :" << tmp << std::endl;
     //IN Parameters
     diet_string_set(diet_parameter(profile,0), tmp, DIET_VOLATILE);
     if(!diet_call(profile)){
       std::cerr << "Failed to restore database " << std::endl;
     }
   }
-  finalize();
   return 0;
 }
 
