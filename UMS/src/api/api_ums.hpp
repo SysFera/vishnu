@@ -18,7 +18,7 @@
 #include "OptionValueProxy.hpp"
 #include "QueryProxy.hpp"
 #include "UtilsProxy.hpp"
-#include "SystemException.hpp"
+#include "UserException.hpp"
 /**
  * \brief Function to open a session 
  * \fn int connect(const std::string& userId,
@@ -38,7 +38,7 @@ connect(const std::string& userId,
         const std::string& password, 
         std::string& sessionKey, 
         const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions())
-                                                                             throw(SystemException); 
+                                                                             throw(UserException); 
 
 /**
  * \brief Function to return the sessionKey of a session in which the user was disconnected previously without closing it
@@ -57,7 +57,7 @@ reconnect(const std::string& userId,
           const std::string& password, 
           const std::string& sessionId, 
           std::string& sessionKey) 
-                                 throw(SystemException);
+                                 throw(UserException);
 
 /**
  * \brief Function to close the session identfied by the session key
@@ -67,7 +67,7 @@ reconnect(const std::string& userId,
  */
 int 
 close(const std::string& sessionKey) 
-                                   throw(SystemException);
+                                   throw(UserException);
 
 /**
  * \brief Function to add a new user in VISHNU
@@ -80,7 +80,7 @@ close(const std::string& sessionKey)
 int 
 addVishnuUser(const std::string& sessionKey, 
               const UMS_Data::User& newUser) 
-                                           throw(SystemException);
+                                           ;//throw(UserException);
 
 /**
  * \brief Function to update the user information except the userId and the password
@@ -93,7 +93,7 @@ addVishnuUser(const std::string& sessionKey,
 int 
 updateUser(const std::string& sessionKey, 
            const UMS_Data::User& user) 
-                                     throw(SystemException);
+                                     throw(UserException);
 
 /**
  * \brief Function to remove a user from VISHNU
@@ -106,7 +106,7 @@ updateUser(const std::string& sessionKey,
 int 
 deleteUser(const std::string& sessionKey,
            const std::string& userId)
-                                    throw(SystemException);
+                                    throw(UserException);
 
 /**
  * \brief Function to change the password
@@ -122,7 +122,7 @@ int
 changePassword(const std::string& userId, 
                const std::string& password, 
                const std::string& passwordNew)
-                                             throw(SystemException);
+                                             throw(UserException);
 
 /**
  * \brief Function to reset the password of a user
@@ -135,7 +135,7 @@ changePassword(const std::string& userId,
 int 
 resetPassword(const std::string& sessionKey, 
               const std::string& userId)
-                                       throw(SystemException);
+                                       throw(UserException);
 
 /**
  * \brief Function to add a new machine in VISHNU
@@ -149,7 +149,7 @@ resetPassword(const std::string& sessionKey,
 int 
 addMachine(const std::string& sessionKey, 
            const UMS_Data::Machine& newMachine)
-                                              throw(SystemException);
+                                              throw(UserException);
 
 /**
  * \brief Function to update machine description 
@@ -162,7 +162,7 @@ addMachine(const std::string& sessionKey,
 int
 updateMachine(const std::string& sessionKey, 
               const UMS_Data::Machine& machine)
-                                              throw(SystemException);
+                                              throw(UserException);
 
 /**
  * \brief Function to remove a machine from VISHNU
@@ -175,7 +175,7 @@ updateMachine(const std::string& sessionKey,
 int 
 deleteMachine(const std::string& sessionKey, 
               const std::string& machineId)
-                                           throw(SystemException);
+                                           throw(UserException);
 
 /**
  * \brief Function to add a new local user configuration
@@ -191,7 +191,7 @@ int
 addLocalAccount(const std::string& sessionKey,
                 const UMS_Data::LocalAccount& newLocalAccount, 
                 std::string&  sshPublicKey)
-                                          throw(SystemException);
+                                          throw(UserException);
 
 /**
  * \brief Function to update a local user configuration
@@ -204,7 +204,7 @@ addLocalAccount(const std::string& sessionKey,
 int
 updateLocalAccount(const std::string& sessionKey, 
                    const UMS_Data::LocalAccount& localAccount)
-                                                             throw(SystemException);
+                                                             throw(UserException);
 
 /**
  * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU
@@ -220,7 +220,7 @@ int
 deleteLocalAccount(const std::string& sessionKey, 
                    const std::string& userId, 
                    const std::string& machineId) 
-                                               throw(SystemException);
+                                               throw(UserException);
 
 /**
  * \brief Function to save the configuration of VISHNU
@@ -234,7 +234,7 @@ deleteLocalAccount(const std::string& sessionKey,
 int
 saveConfiguration(const std::string& sessionKey,
                   UMS_Data::Configuration& config)
-                                                 throw(SystemException);
+                                                 throw(UserException);
 
 /**
  * \brief Function to restore the configuration of VISHNU
@@ -247,7 +247,7 @@ saveConfiguration(const std::string& sessionKey,
 int
 restoreConfiguration(const std::string& sessionKey, 
                      const std::string& filePath)
-                                                throw(SystemException);
+                                                throw(UserException);
 
 /**
  * \brief Function to configure an option of the user
@@ -260,7 +260,7 @@ restoreConfiguration(const std::string& sessionKey,
 int
 configureOption(const std::string& sessionKey,
                 const UMS_Data::OptionValue& optionValue)
-                                                        throw(SystemException);
+                                                        throw(UserException);
 
 /**
  * \brief Function to configure a default option value
@@ -273,7 +273,7 @@ configureOption(const std::string& sessionKey,
 int
 configureDefaultOption(const std::string& sessionKey, 
                        const UMS_Data::OptionValue& optionValue)
-                                                               throw(SystemException);
+                                                               throw(UserException);
 /**
  * \brief Function to list all sessions of the user
  * \fn int listSessions(const std::string& sessionKey,
@@ -290,7 +290,7 @@ int
 listSessions(const std::string& sessionKey,
              UMS_Data::ListSessions& listSession, 
              const UMS_Data::ListSessionOptions& options=UMS_Data::ListSessionOptions())
-                                                                                       throw(SystemException);
+                                                                                       throw(UserException);
 
 /**
  * \brief Function to list the local user configurations
@@ -307,7 +307,7 @@ int
 listLocalAccount(const std::string& sessionKey, 
                  UMS_Data::ListLocalAccounts& listLocalAcc,
                  const UMS_Data::ListLocalAccOptions& options=UMS_Data::ListLocalAccOptions())
-                                                                                              throw(SystemException); 
+                                                                                              throw(UserException); 
 
 /**
  * \brief Function to list the machines in which the local user configurations are defined for the given user
@@ -324,7 +324,7 @@ int
 listMachine(const std::string& sessionKey, 
             UMS_Data::ListMachines& listMachine,
             const UMS_Data::ListMachineOptions& options=UMS_Data::ListMachineOptions())
-                                                                                      throw(SystemException) ;
+                                                                                      throw(UserException) ;
 
 /**
  * \brief Function to list the commands
@@ -341,7 +341,7 @@ int
 listHistoryCmd(const std::string& sessionKey, 
                UMS_Data::ListCommands& listCommands,
                const UMS_Data::ListCmdOptions& options=UMS_Data::ListCmdOptions())
-                                                                                 throw(SystemException);
+                                                                                 throw(UserException);
 
 /**
  * \brief Function to list the options of the user
@@ -357,7 +357,7 @@ int
 listOptions(const std::string& sessionKey,
             UMS_Data::ListOptionsValues& listOptValues,
             const UMS_Data::ListOptOptions& options=UMS_Data::ListOptOptions())
-                                                                             throw(SystemException) ;
+                                                                             throw(UserException) ;
 
 /**
  * \brief Function to list VISHNU users
@@ -373,7 +373,7 @@ int
 listUsers(const std::string& sessionKey, 
           UMS_Data::ListUsers& listUsers, 
           const std::string& userIdOption=std::string())
-                                                       throw(SystemException);
+                                                       throw(UserException);
 
 /**
  * \brief Function to initialize the SYSFERA-DS configuration

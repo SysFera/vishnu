@@ -21,13 +21,13 @@ int utilServer::convertToInt(std::string val) {
   return static_cast<int> (intValue);
 }
 /**
-* \brief Function to get the string associated to SystemException  
-* \fn    buildExceptionString(SystemException& e)
+* \brief Function to get the string associated to VishnuException  
+* \fn    buildExceptionString(VishnuException& e)
 * \param  e the exception caught
 * \return int value of the corresponding string
 */
 std::string
-utilServer::buildExceptionString(SystemException& e) {
+utilServer::buildExceptionString(VishnuException& e) {
   std::string errorInfo;
   
   //To get the error code associated to the exception follows by #
