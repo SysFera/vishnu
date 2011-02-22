@@ -41,6 +41,9 @@ mmachine(machine), msessionServer(session)
 int
 MachineServer::add() {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
+  std::string idMachineGenerated;
+  int machineCpt;
+
 
   try {
     UserServer userServer = UserServer(msessionServer);
@@ -50,8 +53,18 @@ MachineServer::add() {
     if (userServer.exist()) {
       //if the user is an admin
       if (userServer.isAdmin()) {
-        //TODO:  generation Machine Id avec Kévine
-        mmachine->setMachineId(mmachine->getName()+"_"+mmachine->getName());
+
+
+        machineCpt = convertToInt(getAttrVishnu("machinecpt", Vishnuid::mvishnuid));
+        //Generation of userid
+        idMachineGenerated =
+        getGeneratedName(getAttrVishnu("formatidmachine", Vishnuid::mvishnuid).c_str(),
+                                                  machineCpt,
+                                                  MACHINE,
+                                                  mmachine->getName());
+
+        utilServer::incrementCpt("machinecpt", machineCpt);
+        mmachine->setMachineId(idMachineGenerated);
 
         //if the machineId does not exist
         if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
@@ -243,7 +256,7 @@ DatabaseResult* result;
 std::vector<std::string>::iterator ii;
 
 std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
-std::cout <<"SQL COMMAND:"<<sqlCommand;
+std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());

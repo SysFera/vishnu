@@ -54,24 +54,34 @@ UserServer::add(UMS_Data::User*& user) {
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,\
   privilege, email, passwordstate, status) values ";
 
+  std::string idUserGenerated;
   std::string passwordCrypted;
   std::string salt;
+  int userCpt;
+
 
   try {
     if (exist()) {
       if (isAdmin()) {
 
+        //Generation of password
         pwd = generatePassword(user->getLastname(), user->getFirstname());
         user->setPassword(pwd.substr(0,8));
         std::cout << "password to sent by mail to the user:" << user->getPassword() << std::endl;
 
-        //TODO voir génération Id avec Kévine
+        userCpt = convertToInt(getAttrVishnu("usercpt", Vishnuid::mvishnuid));
+        //Generation of userid
+        idUserGenerated =
+        getGeneratedName(getAttrVishnu("formatiduser", Vishnuid::mvishnuid).c_str(),
+                                                      userCpt,
+                                                      USER,
+                                                      user->getLastname());
 
+        utilServer::incrementCpt("usercpt", userCpt);
 
-        std::string idgenerated = utilServer::getGeneratedName("$UNAME_$CPT", 0, USER, user->getLastname());
-        std::cout << "idgenerated" << idgenerated << std::endl;
+        std::cout << "idgenerated" << idUserGenerated << std::endl;
 
-        user->setUserId(idgenerated);
+        user->setUserId(idUserGenerated);
 
         //The passwordCrypted uses the same method used by command line interface to crypt password
         salt = "$6$"+user->getUserId()+"$";
@@ -202,9 +212,7 @@ UserServer::deleteUser(UMS_Data::User user) {
 
   try {
     //If the user to delete is not the super VISHNU admin
-    if ((user.getUserId().compare("vishnu_db_admin") != 0) &&
-    (user.getUserId().compare("vishnu_user") != 0))
-    {
+    if (user.getUserId().compare(utilServer::ROOTUSERNAME) != 0) {
       //If the user exists
       if (exist()) {
         if (isAdmin()) {
@@ -229,7 +237,7 @@ UserServer::deleteUser(UMS_Data::User user) {
       }
     }//END If the user to delete is not the super VISHNU admin
     else {
-      UMSVishnuException e (4, "It is not possible to delete this user. It is the VISHNU root user");
+      UserException e (ERRCODE_INVALID_PARAM, "It is not possible to delete this user. It is the VISHNU root user");
       throw e;
     }
   }
@@ -495,7 +503,7 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
   std::vector<std::string>::iterator ii;
 
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());

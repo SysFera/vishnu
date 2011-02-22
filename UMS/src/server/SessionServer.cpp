@@ -247,6 +247,20 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
     throw;
   }
 }
+
+/**
+* \brief Function to log the session information
+* \fn int saveConnection(std::string commandName)
+* \param cmdName The command to log
+* \param attrname the name of the attribut to get
+* \return raises an exception on error
+*/
+int
+SessionServer::saveConnection() {
+  return 0;
+}
+
+
 /**
 * \brief Function to generate the session key
 * \fn    int generateSessionKey(std::string salt)

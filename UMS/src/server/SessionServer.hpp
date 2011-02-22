@@ -12,8 +12,8 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <ecore.hpp> 
-#include <ecorecpp.hpp> 
+#include <ecore.hpp>
+#include <ecorecpp.hpp>
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -64,30 +64,30 @@ public:
   SessionServer(const UMS_Data::Session& session);
   /**
   * \brief Function to connect the session
-  * \fn int connectSession(UserServer, MachineClientServer, ConnectOptions* ) 
+  * \fn int connectSession(UserServer, MachineClientServer, ConnectOptions* )
   * \param user The object which manipulates user information
   * \param host The object which manipulates client machine information
   * \param connectOpt The options data structure for connection
   * \return raises an exception on error
   */
-  int 
+  int
   connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions* connectOpt);
   /**
   * \brief Function to reconnect the session
-  * \fn int reconnect(UserServer, MachineClientServer, std::string sessionId) 
+  * \fn int reconnect(UserServer, MachineClientServer, std::string sessionId)
   * \param user The object which manipulates user information
   * \param host The object which manipulates client machine information
   * \param sessionId The session identifier
   * \return raises an exception on error
   */
-  int 
+  int
   reconnect(UserServer user, MachineClientServer host, std::string sessionId);
   /**
   * \brief Function to close the session
   * \fn int close()
   * \return raises an exception on error
   */
-  int 
+  int
   close();
   /**
   * \brief Destructor
@@ -99,7 +99,7 @@ public:
   * \fn UMS_Data::Session getData()
   * \return  The session data structure
   */
-  UMS_Data::Session 
+  UMS_Data::Session
   getData();
   /**
   * \brief Function to get user information from the database vishnu
@@ -108,22 +108,30 @@ public:
   * \param attrname the name of the attribut to get
   * \return the value of the attribut or empty string if no results
   */
-  std::string 
+  std::string
   getAttribut(std::string condition, std::string attrname="sessionkey");
-
+  /**
+  * \brief Function to log the session information
+  * \fn int saveConnection(std::string commandName)
+  * \param cmdName The command to log
+  * \param attrname the name of the attribut to get
+  * \return raises an exception on error
+  */
+  int
+  saveConnection();
   private:
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
   /**
   * \brief The session data structure
-  */  
+  */
   UMS_Data::Session msession;
   /**
   * \brief An instance of vishnu database
   */
   Database* mdatabaseVishnu;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
@@ -133,7 +141,7 @@ public:
   * \param salt This string is used to perturb the algorithm
   * \return an encrypted message registered on the session data structure
   */
-  int 
+  int
   generateSessionKey(std::string salt);
   /**
   * \brief Function to generate the session identifier
@@ -141,7 +149,7 @@ public:
   * \param userId the userId of the owner of the session
   * \return record the the session id on the session data structure
   */
-  int 
+  int
   generateSessionId(std::string userId);
   /**
   * \brief Function to record the session on the database
@@ -150,7 +158,7 @@ public:
   * \param iduser the database number id of the owner of the session
   * \return record the the session id on the session data structure
   */
-  int 
+  int
   recordSessionServer(std::string idmachine, std::string iduser);
   /**
   * \brief Function to check the session on database
@@ -158,7 +166,7 @@ public:
   * \param flagSessionId A flag to check the session id
   * \return true if the session key (or sessionId) exists else false
   */
-  bool  
+  bool
   exist(bool flagSessionId = false);
   /**
   * \brief Function to check the session on database
@@ -166,7 +174,7 @@ public:
   * \param flagSessionId A flag to check the session identifier
   * \return the session status
   */
-  int 
+  int
   getState(bool flagSessionId = false);
   /**
   * \brief Function to check the session on database
@@ -176,7 +184,7 @@ public:
   * \param flagAdmin A flag for an admin to get the session key from another user
   * \return 0 on success and -1 if there is no results
   */
-  int 
+  int
   getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin = false);
   /**
   * \brief Function to solve the session connection parameters
@@ -185,7 +193,7 @@ public:
   * \param numuserId the database number id of the user to connect
   * \return the connection parameters are registered on the session data structure
   */
-  int 
+  int
   solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::string numuserId);
 };
 #endif

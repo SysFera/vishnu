@@ -221,3 +221,43 @@ utilServer::getGeneratedName (const char* format, int cpt, IdType type,
   }
   return res;
 }
+
+std::string
+utilServer::getAttrVishnu(std::string attrname, std::string vishnuid) {
+
+  DbFactory factory;
+  Database *databaseVishnu;
+  DatabaseResult *result;
+
+  std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);//+mvishnuid);
+  std::cout <<"SQL COMMAND:"<<sqlCommand;
+
+  try {
+    databaseVishnu = factory.getDatabaseInstance();
+    result = databaseVishnu->getResult(sqlCommand.c_str());
+    return result->getFirstElement();
+  }
+  catch (VishnuException& e) {
+    throw;
+  }
+}
+//Increment compteur
+void
+utilServer::incrementCpt(std::string cptName, int cpt) {
+
+  DbFactory factory;
+  Database *databaseVishnu;
+
+  cpt = cpt+1;
+
+  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+convertToString(cpt));
+  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
+
+  try {
+    databaseVishnu = factory.getDatabaseInstance();
+    databaseVishnu->process(sqlCommand.c_str());
+  }
+  catch (VishnuException& e) {
+    throw;
+  }
+}

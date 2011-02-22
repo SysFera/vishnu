@@ -61,7 +61,7 @@ MachineClientServer::getId() {
   sqlCommand.append(mmachineSSHKey+ "' and name='");
   sqlCommand.append(mhostname+"'");
 
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
