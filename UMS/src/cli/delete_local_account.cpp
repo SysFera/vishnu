@@ -98,7 +98,15 @@ catch(po::required_option& e){// a required parameter is missing
 
   usage(*opt," userId machineId ","required parameter is missing");
   }
-  catch(std::exception& e){
+
+catch(VishnuException& e){// catch all Vishnu runtime error
+
+	errorUsage(av[0], e.getMsg(),EXECERROR);
+
+	return e.getMsgI() ;
+}
+
+catch(std::exception& e){
 
     errorUsage(av[0],e.what());
 

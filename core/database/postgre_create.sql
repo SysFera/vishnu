@@ -222,7 +222,21 @@ PRIMARY KEY(numjobid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
-INSERT INTO vishnu (updatefreq, usercpt) VALUES (0, 0);
+
+vishnuid SERIAL  NOT NULL ,
+  updatefreq INTEGER    ,
+  formatiduser VARCHAR(255)    ,
+  formatidjob VARCHAR(255)    ,
+  formatidfiletransfer VARCHAR(255)    ,
+  formatidmachine VARCHAR(255)    ,
+  usercpt INTEGER    ,
+  jobcpt INTEGER    ,
+  fileSubcpt INTEGER    ,
+  machinecpt INTEGER      ,
+
+
+INSERT INTO vishnu (updatefreq, formatiduser, formatidmachine, formatidjob, formatidfiletransfer, usercpt, 
+machinecpt, jobcpt, fileSubcpt) VALUES (0, 'U_$CPT', 'MA_$CPT', 'J_$CPT', 'FT_$CPT', 0, 0, 0, 0);
 
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIMEOUT', 3600);
