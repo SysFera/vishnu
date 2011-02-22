@@ -31,8 +31,7 @@ void checkErrorMsg(const std::string& msg) {
     isCode >> ret;
     char* message = strtok(NULL, codeInString);
     if(message!=NULL) {
-      std::cout << "ERROR: code d'erreur de retour = " << ret << std::endl;
-      std::cout << "ERROR: " << message << std::endl;
+      std::cout << "ERROR:" << message << std::endl;
       UMSVishnuException e(ret, message);
       throw e;
       }
