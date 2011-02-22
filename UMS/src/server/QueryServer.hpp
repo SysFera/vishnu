@@ -352,7 +352,7 @@ public:
         size_t machineIdSize = mparameters->getMachineId().size();
         bool isListAll = mparameters->isAdminListOption();
 
-        if ((!userServer.isAdmin()) && (userIdSize!=0 && isListAll)) {
+        if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
           UMSVishnuException e (ERRCODE_NO_ADMIN);
           throw e;
         }
@@ -369,7 +369,7 @@ public:
 
         //The admin option
         if(userIdSize!=0) {
-
+          sqlListofLocalAccount=sqlListofLocalAccountInitial;
           addOptionRequest("userid", mparameters->getUserId(), sqlListofLocalAccount);
 
           //To get the list of machines from the database where userid = mparameters->getUserId()
