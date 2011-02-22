@@ -727,6 +727,13 @@ vishnuFinalize() {
  */
 int
 restore(const std::string& filePath) {
+
+  int argc = 2;
+  char* argv[argc];
+  argv[0] = (char*)"./automTest";
+  argv[1] = getenv("VISHNU_CONFIG_FILE");
+  std::cout << argv[0] << " " << argv[1] << std::endl;
+  UtilsProxy utilsProxy(filePath, argv[1],  argc, argv) ;
   
-  return UtilsProxy(filePath).restore();
+  return utilsProxy.restore();
 }
