@@ -1,5 +1,17 @@
+/**
+ * \file OracleDatabase.cpp
+ * \brief This file implements an Oracle 11g database.
+ * \author Kevin Coulomb
+ * \date 31/01/2011
+ */
 #include "OracleDatabase.hpp"
 
+/**
+ * \brief Function to process the request in the database
+ * \fn    int process(std::string request)
+ * \param request The request to process
+ * \return raises an exception on error
+ */
 int
 OracleDatabase::process(std::string req){
   std::string errorMsg;
@@ -8,24 +20,33 @@ OracleDatabase::process(std::string req){
       mstmt->execute();
     }catch(oracle::occi::SQLException &e){
       errorMsg.append("An exception was raised executing the query \n");
-      InternalVishnuException e(2, errorMsg);
-      throw e;
+      throw SystemException(ERRCODE_DBERR, errorMsg);
     }
   }else{
     errorMsg.append(" Cannot process an empty statement \n");
-    InternalVishnuException e(2, errorMsg);
-    throw e;
+    throw SystemException(ERRCODE_DBERR, errorMsg);
   }
   return SUCCESS;
 }
 
-
-int 
+/**
+ * \brief To start a transaction with the database
+ * \fn int startTransaction(std::string request)
+ * \param request The series of requests to process
+ * \return raises an exception on error
+ */
+int
 OracleDatabase::startTransaction(std::string request){
   connect();
+  return SUCCESS;
 }
 
-int 
+/**
+ * \brief To make a connection to the database
+ * \fn int connect()
+ * \return raises an exception on error
+ */
+int
 OracleDatabase::connect(){
   std::string errorMsg;
   try{
@@ -35,41 +56,39 @@ OracleDatabase::connect(){
     }
   }catch(oracle::occi::SQLException &e){
     errorMsg.append(" An exception was raised creating the environment and connecting \n");
-    InternalVishnuException e(2, errorMsg);
-    throw e;
+    throw SystemException(ERRCODE_DBCONN, errorMsg);
   }
   return SUCCESS;
 }
 
+/**
+ * \fn Database()
+ * \brief Constructor
+ */
 OracleDatabase::OracleDatabase(std::string hostname,
-			       std::string username,
-			       std::string pwd,
-			       std::string database,
-			       unsigned int port):Database(){
-  if (port < 0) {
-    SystemException e(2, "The port value is incorrect");
-    throw e; 
-  }
-
-  mhost        = hostname;
-  musername    = username;
-  mpwd         = pwd;
-  mdatabase    = database;
-  misConnected = false;
-  mport        = port;     
-  mcon         = NULL;
-  menvironment = NULL;
-  mres         = NULL;
-  mstmt        = NULL;
+                               std::string username,
+                               std::string pwd,
+                               std::string database,
+                               unsigned int port)
+  :Database(), menvironment(NULL), mcon(NULL), mstmt(NULL), mres(NULL),
+   mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port),
+   misConnected(false) {
 }
 
-
+/**
+ * \fn ~Database()
+ * \brief Destructor
+ */
 OracleDatabase::~OracleDatabase(){
   disconnect();
 }
 
-
-int 
+/**
+ * \brief To disconnect from the database
+ * \fn disconnect()
+ * \return 0
+ */
+int
 OracleDatabase::disconnect(){
   menvironment->terminateConnection(mcon);
   mcon         = NULL;
@@ -77,6 +96,11 @@ OracleDatabase::disconnect(){
   return SUCCESS;
 }
 
+/**
+ * \brief To commit a To commit a postgresql transaction transaction
+ * \fn int commit()
+ * \return raises an exception on error
+ */
 int
 OracleDatabase::commit(){
   std::string errorMsg;
@@ -85,13 +109,20 @@ OracleDatabase::commit(){
       mcon->commit();
     }catch(oracle::occi::SQLException &e){
       errorMsg.append("An exception was raised during commit \n");
-      InternalVishnuException e(2, errorMsg);
-      throw e;
+      throw SystemException(ERRCODE_DBERR, errorMsg);
     }
+  } else {
+    throw SystemException(ERRCODE_DBCONN, "Database is not connected");
   }
   return SUCCESS;
 }
 
+
+/**
+ * \brief To cancel a transaction
+ * \fn int rollback()
+ * \return raises an exception on error
+ */
 int
 OracleDatabase::rollback(){
   std::string errorMsg;
@@ -100,45 +131,66 @@ OracleDatabase::rollback(){
     mcon->rollback();
     }catch(oracle::occi::SQLException &e){
       errorMsg.append("An exception was raised during the rollback \n");
-      InternalVishnuException e(2, errorMsg);
-      throw e;
+      throw SystemException(ERRCODE_DBERR, errorMsg);
     }
+  } else {
+    throw SystemException(ERRCODE_DBCONN, "Database is not connected");
   }
   return SUCCESS;
 }
 
+/**
+ * \brief To set the name of the database to use
+ * \param db The name of database to use
+ * \return raises an exception on error
+ */
 int
 OracleDatabase::setDatabase(std::string db){
   mdatabase = db;
   return SUCCESS;
 }
 
-
+/**
+ * \brief To get the result of a select request
+ * \fn DatabaseResult* getResult()
+ * \param request The request to process
+ * \return An object which encapsulates the database results
+ */
 DatabaseResult*
 OracleDatabase::getResult(std::string request) {
   std::vector<std::vector<std::string> > results;
   std::vector<std::string> attributesNames;
   std::vector<std::string> tmp;
+  std::string errorMsg;
   int size;
   int i;
 
-  mstmt = mcon->createStatement(request);
-  mres = mstmt->executeQuery();
-  mres->setCharacterStreamMode(2, 10000);
-  std::vector<MetaData> vec = mres->getColumnListMetaData();
-  size = vec.size();
-
-  for (i=0;i<size;i++){
-    attributesNames.push_back(vec[i].getString(vec[i].getAttributeId(i+1)));
+  if (mcon == NULL) {
+    throw SystemException(ERRCODE_DBCONN, "Database is not connected");
   }
+  try {
+    mstmt = mcon->createStatement(request);
+    mres = mstmt->executeQuery();
+    mres->setCharacterStreamMode(2, 10000);
+    std::vector<MetaData> vec = mres->getColumnListMetaData();
+    size = vec.size();
 
-  while(mres->next()){
-    std::vector<std::string> tmp = std::vector<std::string>();
-    for (i=1 ; i<=size; i++){ // Oracle count from 1 to size
-      tmp.push_back(mres->getString(i));
+    for (i=0;i<size;i++){
+      attributesNames.push_back(vec[i].getString(vec[i].getAttributeId(i+1)));
     }
-    results.push_back(tmp);
+
+    while(mres->next()){
+      std::vector<std::string> tmp = std::vector<std::string>();
+      for (i=1 ; i<=size; i++){ // Oracle count from 1 to size
+        tmp.push_back(mres->getString(i));
+      }
+      results.push_back(tmp);
+    }
+    mstmt->closeResultSet(mres);
+  } catch(oracle::occi::SQLException &e){
+    errorMsg.append("SQL Failure in getResult");
+    throw SystemException(ERRCODE_DBERR, errorMsg);
   }
-  mstmt->closeResultSet(mres);
+
   return new DatabaseResult(results, attributesNames);
 }
