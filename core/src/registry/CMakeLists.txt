@@ -1,11 +1,11 @@
-SET( CMAKE_INSTALL_PREFIX ../../.. )
+#SET( CMAKE_INSTALL_PREFIX ../../.. )
 
 INCLUDE_DIRECTORIES(
- ../exception/
+ ${VISHNU_EXCEPTION_INCLUDE_DIR}
 )
 
 LINK_DIRECTORIES(
-  ../../../lib
+#  ../../../lib
 )
 
 ADD_EXECUTABLE(mainReg

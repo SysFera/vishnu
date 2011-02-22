@@ -85,17 +85,17 @@ UserServer::add(UMS_Data::User*& user) {
 	  //TODO : voir envoi de mail avec kévine
 	}// END If the user to add exists
 	else {
-	  UMSVishnuException e (USERID_EXISTING);
+	  UMSVishnuException e (ERRCODE_USERID_EXISTING);
 	  throw e;
 	}  
       } //END if the user is an admin 
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     } //END if the user exists 
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -146,7 +146,7 @@ UserServer::update(UMS_Data::User *user) {
 	      where userid='"+user->getUserId()+"';");
 	    } //End if the user is not already locked
 	    else {
-	      UMSVishnuException e (USER_ALREADY_LOCKED);
+	      UMSVishnuException e (ERRCODE_USER_ALREADY_LOCKED);
 	      throw e;
 	    }
 	  } //End if the user will be locked
@@ -166,17 +166,17 @@ UserServer::update(UMS_Data::User *user) {
 	  
 	} // End if the user whose information will be updated exists
 	else {
-	  UMSVishnuException e (UNKNOWN_USERID);
+	  UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
 	  throw e;
 	} 
       } //END if the user is an admin 
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     } //END if the user exists 
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -209,17 +209,17 @@ UserServer::deleteUser(UMS_Data::User user) {
 	    mdatabaseVishnu->process("DELETE FROM users where userid='"+user.getUserId()+"'");
 	  } // End if the user who will be deleted exist
 	  else {
-	    UMSVishnuException e (UNKNOWN_USERID);
+	    UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
 	    throw e;
 	  } 
 	} //END if the user is an admin 
 	else {
-	  UMSVishnuException e (NO_ADMIN);
+	  UMSVishnuException e (ERRCODE_NO_ADMIN);
 	  throw e;
 	}
       } //END if the user exists 
       else {
-	UMSVishnuException e (UNKNOWN_USER);
+	UMSVishnuException e (ERRCODE_UNKNOWN_USER);
 	throw e;
       }
     }//END If the user to delete is not the super VISHNU admin
@@ -266,7 +266,7 @@ UserServer::changePassword(std::string newPassword) {
       muser.setPassword(newPassword);
     } //End If the user exist with the flagForChangePwd to true ti avoid the passwordstate checking
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -318,17 +318,17 @@ UserServer::resetPassword(UMS_Data::User user) {
 	  mdatabaseVishnu->process( sqlResetPwd.c_str());
 	} // End if the user whose password will be reset exists
 	else {
-	  UMSVishnuException e (UNKNOWN_USERID);
+	  UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
 	  throw e;
 	} 
       } //END if the user is an admin 
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     } //END if the user exists 
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -384,13 +384,13 @@ UserServer::init(){
 	  muser.setPassword(getAttribut("where numuserid='"+numUser+"'", "pwd"));
 	} //End if the session is active
 	else {
-	  UMSVishnuException e (SESSIONKEY_EXPIRED);
+	  UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
 	  throw e;
 	}
 	
       } //END If the session key is found
       else {
-	UMSVishnuException e (SESSIONKEY_NOT_FOUND);
+	UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
 	throw e;
       } 
     }
@@ -420,7 +420,7 @@ bool UserServer::exist(bool flagForChangePwd) {
 	      return existUser;
 	    } //END If the passwordstate is active  
 	    else {
-	      UMSVishnuException e (TEMPORARY_PASSWORD);
+	      UMSVishnuException e (ERRCODE_TEMPORARY_PASSWORD);
 	      throw e;
 	    }
 	  }//END the flag to check the password state is set
@@ -429,7 +429,7 @@ bool UserServer::exist(bool flagForChangePwd) {
 	  }  
 	} //END if the user is not locked
 	else {
-	  UMSVishnuException e (USER_LOCKED);
+	  UMSVishnuException e (ERRCODE_USER_LOCKED);
 	  throw e;
 	}    
     }//END if the user is on the database
@@ -520,7 +520,7 @@ UserServer::existuserId(std::string userId) {
 	return existUser;     
       } //END if the user is not locked
       else {
-	UMSVishnuException e (USER_LOCKED);
+	UMSVishnuException e (ERRCODE_USER_LOCKED);
 	throw e;
       }    
     }//END If the userID exists on the database

@@ -69,12 +69,12 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 	    //} 
 	  } //End If the user to substitute exist
 	  else {
-	    UMSVishnuException e(UNKNOWN_USERID);
+	    UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
 	    throw e;
 	  }  
 	} // END if the user is admin
 	else {
-	  UMSVishnuException e(NO_ADMIN);
+	  UMSVishnuException e(ERRCODE_NO_ADMIN);
 	  throw e;
 	}
      } //End if connectOpt->getSubstituteUserId().size() != 0
@@ -101,7 +101,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
     
     } // END if the user exist 
     else {
-      UMSVishnuException e(UNKNOWN_USER);
+      UMSVishnuException e(ERRCODE_UNKNOWN_USER);
       throw e;
     }
   
@@ -146,22 +146,22 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
 	  }
 	  //if there is no session key with the previous parameters
 	  if (existSessionKey == -1) {
-	    UMSVishnuException e(SESSION_INCOMPATIBILITY);
+	    UMSVishnuException e(ERRCODE_SESSION_INCOMPATIBILITY);
 	    throw e;
 	  }
 	}//if the session is active
 	else {
-	  UMSVishnuException e(SESSIONKEY_EXPIRED);
+	  UMSVishnuException e(ERRCODE_SESSIONKEY_EXPIRED);
 	  throw e;
 	}	  
       }//END if state != -1
       else {
-	UMSVishnuException e(UNKNOWN_SESSION_ID);
+	UMSVishnuException e(ERRCODE_UNKNOWN_SESSION_ID);
 	throw e;
       }
     } //END IF user.exist
     else {
-      UMSVishnuException e(UNKNOWN_USER);
+      UMSVishnuException e(ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }//END Try 
@@ -198,7 +198,7 @@ int SessionServer::close() {
 	mdatabaseVishnu->process(sqlCommand.c_str());		
       } //if the session is not already closed
       else {
-	UMSVishnuException e (SESSIONKEY_EXPIRED);
+	UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
 	throw e;
       }  
     } //END If The user exist

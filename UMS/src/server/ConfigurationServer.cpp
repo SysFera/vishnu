@@ -139,12 +139,12 @@ ConfigurationServer::save() {
 	}	
       } //End if the user is an admin
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }
@@ -215,12 +215,12 @@ int ConfigurationServer::restore() {
   
       } //End if the user is an admin
       else {
-	UMSVishnuException e (NO_ADMIN);
+	UMSVishnuException e (ERRCODE_NO_ADMIN);
 	throw e;
       }
     }//End if the user exists
     else {
-      UMSVishnuException e (UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }

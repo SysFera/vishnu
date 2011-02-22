@@ -18,6 +18,7 @@
 #include "OptionValueProxy.hpp"
 #include "QueryProxy.hpp"
 #include "UtilsProxy.hpp"
+#include "SystemException.hpp"
 /**
  * \brief Function to open a session 
  * \fn int connect(const std::string& userId,

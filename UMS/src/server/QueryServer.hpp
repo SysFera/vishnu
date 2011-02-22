@@ -124,7 +124,7 @@ public:
          
          } 
          else {
-             UMSVishnuException e(UNKNOWN_USERID);
+             UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
             throw e ;
          }
         //To get the list of users from the database
@@ -151,12 +151,12 @@ public:
 
     } //End if the user is an admin
      else {
-          UMSVishnuException e (NO_ADMIN);
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
           throw e;
         }
       }//End if the user exists
       else {
-         UMSVishnuException e (UNKNOWN_USER);
+         UMSVishnuException e (ERRCODE_UNKNOWN_USER);
          throw e;
        }
      }
