@@ -97,7 +97,7 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              //changePassword(userId,sessionKey, oldPassword, newPassword);
+              changePassword(userId,oldPassword, newPassword);
 
 
 
