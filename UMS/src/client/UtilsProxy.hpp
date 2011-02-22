@@ -41,7 +41,7 @@ public:
   /**
    * \fn UtilsProxy(const std::string filePath, char* cfg, int argc, char** argv)
    */
-  UtilsProxy(const std::string& filePath, char* cfg, int argc, char** argv);
+  UtilsProxy(const std::string& filePath);
  
   /**
    * \brief Function to initialize the SYSFERA-DS configuration 
