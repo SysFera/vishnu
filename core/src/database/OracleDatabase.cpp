@@ -52,10 +52,11 @@ OracleDatabase::connect(){
   try{
     if (!menvironment){
       menvironment = Environment::createEnvironment(oracle::occi::Environment::DEFAULT);
-      mcon = menvironment->createConnection(musername, mpwd, mdatabase);
+      mcon = menvironment->createConnection(musername, mpwd, mhost);
     }
   }catch(oracle::occi::SQLException &e){
-    errorMsg.append(" An exception was raised creating the environment and connecting \n");
+    errorMsg.append("Exception raised during database connection: ");
+    errorMsg.append(e.getMessage());
     throw SystemException(ERRCODE_DBCONN, errorMsg);
   }
   return SUCCESS;
@@ -91,6 +92,7 @@ OracleDatabase::~OracleDatabase(){
 int
 OracleDatabase::disconnect(){
   menvironment->terminateConnection(mcon);
+  Environment::terminateEnvironment(menvironment);
   mcon         = NULL;
   menvironment = NULL;
   return SUCCESS;
@@ -176,6 +178,7 @@ OracleDatabase::getResult(std::string request) {
     size = vec.size();
 
     for (i=0;i<size;i++){
+      // TODO check column type
       attributesNames.push_back(vec[i].getString(vec[i].getAttributeId(i+1)));
     }
 
@@ -188,7 +191,8 @@ OracleDatabase::getResult(std::string request) {
     }
     mstmt->closeResultSet(mres);
   } catch(oracle::occi::SQLException &e){
-    errorMsg.append("SQL Failure in getResult");
+    errorMsg.append("SQL Failure in getResult: ");
+    errorMsg.append(e.getMessage());
     throw SystemException(ERRCODE_DBERR, errorMsg);
   }
 

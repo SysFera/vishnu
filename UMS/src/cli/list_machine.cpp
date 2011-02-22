@@ -93,7 +93,7 @@ int main (int ac, char* av[]){
 							 listMachine(sessionKey,lsMachine,listOptions);
 
       							// Display the list
-     if(isEmpty) {
+     if(isEmpty || opt->count("listAllmachine")) {
          cout << lsMachine << endl;
      }
      else {
