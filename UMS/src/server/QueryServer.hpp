@@ -210,6 +210,12 @@ public:
   std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description \
   where machine.nummachineid = description.machine_nummachineid";
 
+  std::string sqlListofMachinesWithJointure = "SELECT machineid, name, site, machine.status, lang, description, userid \
+   from machine, description, account, users where machine.nummachineid = description.machine_nummachineid \
+   and account.machine_nummachineid=machine.nummachineid and account.users_numuserid=users.numuserid";
+
+   std::string sqlListofMachinesIntial =  sqlListofMachines;
+
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -225,52 +231,53 @@ public:
       size_t machineIdSize = mparameters->getMachineId().size();
       bool isListAll = mparameters->isListAllmachine();
       
-      if ((!userServer.isAdmin())&&(userIdSize!=0 || machineIdSize!=0 || isListAll)) {
+      if ((!userServer.isAdmin()) && userIdSize!=0) {
         UMSVishnuException e (ERRCODE_NO_ADMIN);
         throw e;
       }
 
       //IMPORTANT : The order of if test is important
-     if(userIdSize!=0) {
-        sqlListofMachines =   "SELECT machineid, name, site, machine.status, lang, description, userid from machine, description, account, users \
-        where machine.nummachineid = description.machine_nummachineid and account.machine_nummachineid=machine.nummachineid and \
-        account.users_numuserid=users.numuserid";
+      if(!isListAll) {
+         sqlListofMachines = sqlListofMachinesWithJointure;
+         addOptionRequest("userid", userServer.getData().getUserId(), sqlListofMachines);
+         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str()); 
+      }
+      else {  
+        //To get the list of machines from the database
+        ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+      }
+
+      //The admin option
+      if(userIdSize!=0) {
+        
+        sqlListofMachines = sqlListofMachinesWithJointure;
         addOptionRequest("userid", mparameters->getUserId(), sqlListofMachines);
- 
+
         //To get the list of machines from the database where userid = mparameters->getUserId()
         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
         if(ListofMachines->getNbTuples()==0) {
            UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
            throw e ;
-        } 
+        }
       }
 
       if(machineIdSize!=0) {
-        addOptionRequest("machineid", mparameters->getMachineId(), sqlListofMachines);
-        //To get the list of machines from the database where machineid = mparameters->getMachineId()
-        ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
-        if(ListofMachines->getNbTuples()==0) {
-          UMSVishnuException e(ERRCODE_UNKNOWN_MACHINE);
-          throw e ;
-        }
-      }
-      if(!isListAll) {
-         if(userIdSize==0) {
-             sqlListofMachines =   "SELECT machineid, name, site, machine.status, lang, description, userid from machine, description, account, users \
-               where machine.nummachineid = description.machine_nummachineid and account.machine_nummachineid=machine.nummachineid and \
-               account.users_numuserid=users.numuserid";
+         if(!isListAll && userIdSize==0) {
+           sqlListofMachines=sqlListofMachinesIntial; 
          }
-         std::cout << "userid=" << userServer.getData().getUserId() << std::endl;
-         addOptionRequest("userid", userServer.getData().getUserId(), sqlListofMachines);
-         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str()); 
-      }
-      else { 
-      //To get the list of machines from the database
-        ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
-      }
+         addOptionRequest("machineid", mparameters->getMachineId(), sqlListofMachines);
+         //To get the list of machines from the database where machineid = mparameters->getMachineId()
+         ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
 
-      if (ListofMachines->getNbTuples() != 0){
-        for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
+         if(ListofMachines->getNbTuples()==0) {
+            UMSVishnuException e(ERRCODE_UNKNOWN_MACHINE);
+            throw e ;
+         }
+      }
+     
+
+     if (ListofMachines->getNbTuples() != 0){
+       for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
           results.clear();
           results = ListofMachines->get(i);
             ii = results.begin();
@@ -327,16 +334,7 @@ public:
     from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
     account.users_numuserid=users.numuserid";
 
-    if((mparameters->getUserId()).size()!=0) {
-      addOptionRequest("userid", mparameters->getUserId(), sqlListofLocalAccount);
-    }
-    if((mparameters->getMachineId()).size()!=0) {
-      addOptionRequest("machineid", mparameters->getMachineId(), sqlListofLocalAccount);
-    }
-    if(mparameters->isAdminListOption()) {
-    //TODO
-    }
-
+    std::string sqlListofLocalAccountInitial = sqlListofLocalAccount;
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -349,14 +347,55 @@ public:
       userServer.init();
       //if the user exists
       if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
 
-        //To get the list of local accounts from the database
-        ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+        size_t userIdSize = mparameters->getUserId().size();
+        size_t machineIdSize = mparameters->getMachineId().size();
+        bool isListAll = mparameters->isAdminListOption();
 
-        if (ListofLocalAccount->getNbTuples() != 0){
-          for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
+        if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
+          throw e;
+        }
+
+        //IMPORTANT : The order of if test is important
+        if(!isListAll) {
+          addOptionRequest("userid", userServer.getData().getUserId(), sqlListofLocalAccount);
+          ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+        }
+        else { // Is an admin option
+          //To get the list of machines from the database
+          ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+        }
+
+        //The admin option
+        if(userIdSize!=0) {
+          sqlListofLocalAccount=sqlListofLocalAccountInitial;
+          addOptionRequest("userid", mparameters->getUserId(), sqlListofLocalAccount);
+
+          //To get the list of machines from the database where userid = mparameters->getUserId()
+          ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+          if(ListofLocalAccount->getNbTuples()==0) {
+            UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
+            throw e ;
+          }
+        }
+     
+        if(machineIdSize!=0) {
+          if(!isListAll && userIdSize==0) {
+            sqlListofLocalAccount=sqlListofLocalAccountInitial;
+          }
+          addOptionRequest("machineid", mparameters->getMachineId(), sqlListofLocalAccount);
+          //To get the list of machines from the database where machineid = mparameters->getMachineId()
+          ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+
+          if(ListofLocalAccount->getNbTuples()==0) {
+            UMSVishnuException e(ERRCODE_UNKNOWN_MACHINE);
+            throw e ;
+          }
+        }
+ 
+       if (ListofLocalAccount->getNbTuples() != 0){
+         for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
             results.clear();
             results = ListofLocalAccount->get(i);
             ii = results.begin();
@@ -370,11 +409,6 @@ public:
 
               mlistObject->getAccounts().push_back(localAccount);
           }
-        }
-      } //End if the user is an admin
-      else {
-          UMSVishnuException e (4, "The user is not an admin");
-          throw e;
         }
       }//End if the user exists
       else {

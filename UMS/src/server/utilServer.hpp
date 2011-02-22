@@ -65,6 +65,7 @@ char* crypt(const char* clef, const char* salt);
 namespace utilServer {
 
   static const std::string ROOTUSERNAME = "root";
+  static const std::string DATABASENAME = "vishnu";
 
   /**
   * \brief Generic function to convert an object to string

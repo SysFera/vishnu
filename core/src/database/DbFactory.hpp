@@ -9,7 +9,6 @@
 #define _DBFACTORY_H_
 
 #include "Database.hpp"
-#include "POSTGREDatabase.hpp"
 
 /**
  * \brief Constant used for creating mysql databases
@@ -56,4 +55,4 @@ private :
 
 
 #endif // _DBFACTORY_H_
-  
+
