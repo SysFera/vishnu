@@ -146,7 +146,7 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
 	  }
 	  //if there is no session key with the previous parameters
 	  if (existSessionKey == -1) {
-	    UMSVishnuException e(ERRCODE_SESSION_INCOMPATIBILITY);
+	    UMSVishnuException e(ERRCODE_SESSIONKEY_NOT_FOUND);
 	    throw e;
 	  }
 	}//if the session is active
