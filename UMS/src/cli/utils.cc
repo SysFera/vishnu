@@ -344,8 +344,6 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
   size_t maxNameSize = 20;
   size_t maxMachineIdSize = 20;
   size_t maxSiteSize = 20;
-  size_t maxDescrSisze = 20;
-  size_t maxLanguageSize = 20;
   std::string name;
   std::string machineId;
   std::string site;

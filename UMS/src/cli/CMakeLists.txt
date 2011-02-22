@@ -25,17 +25,18 @@ add_library(cli-utils
  userUtils
  machineUtils
  listMachineUtils
+ listHistoryCmdUtils
 )
 #declare all command lines provided
 
 set(ALLCLI connect reconnect close
-		    addUser updateUser deleteUser
-				changePassword resetPassword
-				 addLocalAccount updateLocalAccount deleteLocalAccount
-				 saveConfiguration restoreConfiguration
-				 addMachine updateMachine deleteMachine
-				 configureDefaultOption configureOption
-				 listLocalAccount listMachine listHistoryCmd listOptions listUsers listSessions)
+		    add_user update_user delete_user
+				change_password reset_password
+				 add_local_account update_local_account delete_local_account
+				 save_configuration restore_configuration
+				 add_machine update_machine delete_machine
+				 configure_default_option configure_option
+				 list_local_account list_machine list_history_cmd list_options list_users list_sessions)
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)

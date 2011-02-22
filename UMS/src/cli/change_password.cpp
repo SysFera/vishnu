@@ -8,6 +8,9 @@ int main (int ac, char* av[]){
 
 
 
+
+	string userId;
+
 	string oldPassword;
 
 	string newPassword;
@@ -24,6 +27,13 @@ int main (int ac, char* av[]){
 				        "The diet config file",
 						ENV,
 						dietConfig);
+
+				opt.add("userId",
+				        "The VISHNU user identifier",
+						HIDDEN,
+						userId,
+						1);
+				opt.setPosition("userId",-1);
 
 				opt.add("sessionKey,s",
 						    "The session Key",
@@ -64,11 +74,11 @@ int main (int ac, char* av[]){
 
 
 
-			oldPassword=getpass("old password: ");
+			oldPassword=takePassword("old password: ",userId);
 
 			cout << "old password is" << oldPassword <<endl;
 
-			newPassword=getpass("new password: ");
+			newPassword=takePassword("new password: ",userId);
 
 			cout << "The new password is "<< newPassword <<endl;
 
@@ -87,12 +97,16 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              changePassword(sessionKey, oldPassword, newPassword);
+              //changePassword(userId,sessionKey, oldPassword, newPassword);
 
 
 
 	}// End of try bloc
 
+ catch(po::required_option& e){// a required parameter is missing
+
+           usage(opt,"[options] userId ","required parameter is missing");
+  }
   catch(std::exception& e){
 
     errorUsage(av[0], e.what());
@@ -101,5 +115,6 @@ int main (int ac, char* av[]){
 
   return 0;
 
-}//
+}// end of main
+
 

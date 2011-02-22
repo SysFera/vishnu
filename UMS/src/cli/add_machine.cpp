@@ -34,6 +34,7 @@ int main (int ac, char* av[]){
 		boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
 		boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
 
+		 boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(newMachine),_1));
 
 		boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
 
@@ -41,6 +42,15 @@ int main (int ac, char* av[]){
 												"The session key",
 												ENV,
 												sessionKey);
+
+				opt->add("sshPublicKeyFile,k",
+                      "The the path to the SSH public key used by VISHNU to access local user accounts",
+                        HIDDEN,
+                        fSshPublicKeyFile,
+												1);
+
+				opt->setPosition("sshPublicKeyFile",1);
+
 
 				try{
 /**************  Parse to retrieve option values  ********************/
@@ -53,27 +63,7 @@ int main (int ac, char* av[]){
 
 
 
-
-
 /********  Process **************************/
-
-		if (opt->count("name")){
-
-			cout <<"The name of the machine is " << newMachine.getName() << endl;
-		}
-
-		if(opt->count("site")){
-
-			cout <<"the site is : " << newMachine.getSite() << endl;
-
-		}
-
-		if(opt->count("language")){
-
-			cout << "The language is " << newMachine.getLanguage() << endl;
-
-		}
-
 
 
 		checkVishnuConfig(*opt);
@@ -83,10 +73,6 @@ int main (int ac, char* av[]){
 		getline(cin, machineDescription);
 
 		newMachine.setMachineDescription(machineDescription);
-
-
-
-
 
 /************** Call UMS connect service *******************************/
 
@@ -105,7 +91,7 @@ int main (int ac, char* av[]){
 
 				catch(po::required_option& e){// a required parameter is missing
 
-					usage(*opt," name site language ","required parameter is missing");
+					usage(*opt," name site language sshPublicKeyFile ","required parameter is missing");
   }
   catch(std::exception& e){
 
