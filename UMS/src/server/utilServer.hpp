@@ -11,10 +11,39 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#include <cstdio>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/variate_generator.hpp>
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/date_time/gregorian/gregorian.hpp"
 #include "VishnuException.hpp"
+#include "SystemException.hpp"
+
+using namespace boost::posix_time;
+using namespace boost::gregorian;
+
+/**
+* \enum IdType
+* \brief The type of id generated
+*/
+typedef enum IdType{
+  MACHINE = 0,
+  USER = 1,
+  JOB = 2, 
+  FILETRANSFERT = 3
+} IdType;
+
+/**
+* \class Format_t
+* \brief The class used to get the variables of the string to parse
+*/
+class Format_t{
+public :
+  int start;
+  int end;
+  std::string value;
+};
 
 /**
 * \class Vishnuid
@@ -62,8 +91,8 @@ namespace utilServer {
   */
   int convertToInt(std::string val);
   /**
-  * \brief Function to get the string associated to VishnuException  
-  * \fn    std::string buildExceptionString(VishnuException& e)
+  * \brief Function to get the string associated to SystemException  
+  * \fn    std::string buildExceptionString(SystemException& e)
   * \param  e the exception caught
   * \return int value of the corresponding string
   */
@@ -77,5 +106,21 @@ namespace utilServer {
   int 
   generate_numbers();
   }
-   
+  
+  int isMonth (const char * s);
+  int isYear (const char * s);
+  int isSite (const char * s);
+  int isType (const char * s);
+  int isUName (const char * s);
+  int isMaName (const char * s);
+  int isDay (const char * s);
+  int isCpt (const char * s);
+  
+  void 
+  getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type, 
+	     std::string name, std::string site);
+  std::string 
+  getGeneratedName (const char* format, int cpt, IdType type, 
+		  std::string name = "", std::string site ="");
+  
 #endif//UTILSERVER
