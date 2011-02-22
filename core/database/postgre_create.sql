@@ -232,19 +232,6 @@ PRIMARY KEY(numjobid),
     REFERENCES command(numcommandid));
 
 
-vishnuid SERIAL  NOT NULL ,
-  updatefreq INTEGER    ,
-  formatiduser VARCHAR(255)    ,
-  formatidjob VARCHAR(255)    ,
-  formatidfiletransfer VARCHAR(255)    ,
-  formatidmachine VARCHAR(255)    ,
-  usercpt INTEGER    ,
-  jobcpt INTEGER    ,
-  fileSubcpt INTEGER    ,
-  machinecpt INTEGER      ,
-
-
-
 -- Put the connect rights on pgadmin3 to Role vishnu_db_admin and vishnu_user
 -- Put connection with md5 on pg_hba.conf
 -- CREATE Role Vishnu Database Administrator

@@ -116,14 +116,14 @@ BOOST_AUTO_TEST_CASE( my_test )
   // Connect with bad uid
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing with bad uid U1-E1" );
-  BOOST_CHECK  (connect    ("bad", pwd, key, cop)!=0);
-  BOOST_CHECK  (listSessions(key  , li , opt     )!=0);
+  BOOST_CHECK_THROW  (connect    ("bad", pwd, key, cop), VishnuException);
+  BOOST_CHECK_THROW  (listSessions(key  , li , opt     ), VishnuException);
 
   // Connect with bad pwd
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad pwd U1-E2");
-  BOOST_CHECK  (connect    (uid, "bad", key, cop)!=0);
-  BOOST_CHECK  (listSessions(key, li   , opt     )!=0);
+  BOOST_CHECK_THROW  (connect    (uid, "bad", key, cop), VishnuException);
+  BOOST_CHECK_THROW  (listSessions(key, li   , opt     ), VishnuException);
 
 
   // Connect with timeout
@@ -133,41 +133,41 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing timeout U1.1-B1" );
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
   sleep(10);
-  BOOST_CHECK  (listSessions(key, li , opt      )!=0);
+  BOOST_CHECK_THROW  (listSessions(key, li , opt      ), VishnuException);
 
   // Connect with bad uid
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing with bad uid U1.1-E1" );
-  BOOST_CHECK  (connect    ("bad", pwd, key, cop)!=0);
-  BOOST_CHECK  (listSessions(key  , li , opt     )!=0);
+  BOOST_CHECK_THROW  (connect    ("bad", pwd, key, cop), VishnuException);
+  BOOST_CHECK_THROW  (listSessions(key  , li , opt     ), VishnuException);
 
   // Connect with bad pwd
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad pwd U1.1-E2");
-  BOOST_CHECK  (connect    (uid, "bad", key, cop)!=0);
-  BOOST_CHECK  (listSessions(key, li   , opt     )!=0);
+  BOOST_CHECK_THROW  (connect    (uid, "bad", key, cop), VishnuException);
+  BOOST_CHECK_THROW  (listSessions(key, li   , opt     ), VishnuException);
 
   // Connect with bad closure policy
   sct = 3;
   cop.setClosePolicy(sct);
   BOOST_REQUIRE(restore("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing unknown closure mode U1.1-E3");
-  BOOST_CHECK  (connect(uid, pwd, key, cop )!=0);
+  BOOST_CHECK_THROW  (connect(uid, pwd, key, cop ), VishnuException);
   sct = 0;
   cop.setClosePolicy(sct);
 
   // Connect with a temporary password
   BOOST_REQUIRE(restore    ("clean_session_tempPwd.sql")==0);
   BOOST_MESSAGE(" Testing temporary pwd U1.1-E4");
-  BOOST_CHECK  (connect    (uid, pwd, key, cop         )!=0);
+  BOOST_CHECK_THROW  (connect    (uid, pwd, key, cop         ), VishnuException);
   BOOST_CHECK  (listSessions(key, li , opt              )==0);
 
   // Connect as an other user
   cop.setSubstituteUserId(subs);
   BOOST_REQUIRE(restore    ("clean_session_tempPwd.sql")==0);
   BOOST_MESSAGE(" Testing another user session U1.1-E5");
-  BOOST_CHECK  (connect    (uid, pwd, key, cop         )!=0);
-  BOOST_CHECK  (listSessions(key, li , opt              )!=0);
+  BOOST_CHECK_THROW  (connect    (uid, pwd, key, cop         ), VishnuException);
+  BOOST_CHECK_THROW  (listSessions(key, li , opt              ), VishnuException);
   cop = *(ecoreFactory->createConnectOptions());
 
   sct = 0;
@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore("clean_session.sql")==0);
   BOOST_MESSAGE(" Testing connect on disconnect U1.1-B2" );
   BOOST_CHECK  (connect(uid, pwd, key, cop )==0);
-  BOOST_CHECK(listSessions(key, li, opt)!=0);
+  BOOST_CHECK_THROW(listSessions(key, li, opt), VishnuException);
   
   // ReConnect normal call
   // -> connect
@@ -194,12 +194,12 @@ BOOST_AUTO_TEST_CASE( my_test )
   // Reconnect with bad user id
   BOOST_REQUIRE(restore  ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing error uid reconnect U1.5-E1");
-  BOOST_CHECK  (reconnect("bad", pwd, sid, key)!=0);
+  BOOST_CHECK_THROW  (reconnect("bad", pwd, sid, key), VishnuException);
 
   // Reconnect with bad password
   BOOST_REQUIRE(restore  ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing error pwd reconnect U1.5-E2");
-  BOOST_CHECK  (reconnect(uid, "bad", sid, key)!=0);
+  BOOST_CHECK_THROW  (reconnect(uid, "bad", sid, key), VishnuException);
 
   // Test normal close
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
@@ -207,15 +207,15 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
   BOOST_CHECK  (listSessions(key, li , opt      )==0);
   BOOST_CHECK  (close      (key                )==0);
-  BOOST_CHECK  (listSessions(key, li,  opt      )!=0);
+  BOOST_CHECK_THROW  (listSessions(key, li,  opt      ), VishnuException);
 
   // Test close with bad sid
   BOOST_MESSAGE(" Testing close a bad session U1.2E1");
-  BOOST_CHECK(close("toto")!=0);
+  BOOST_CHECK_THROW(close("toto"), VishnuException);
 
   // Test closing an already closed session
   BOOST_MESSAGE(" Testing close a closed session U1.2E2");
-  BOOST_CHECK(close(key)!=0);
+  BOOST_CHECK_THROW(close(key), VishnuException);
 
   // Add user
   BOOST_MESSAGE(" Testing adding a user U4-B"    );
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addVishnuUser(key, use           )==0);
-  BOOST_CHECK	 (addVishnuUser(key, use           )!=0);
+  BOOST_CHECK_THROW	 (addVishnuUser(key, use           ), VishnuException);
   BOOST_CHECK	 (close        (key                )==0);
 
   // Add user bad email
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   use.setEmail("cl3m3ntlebgkidechyrhotmail.fr");
-  BOOST_CHECK  (addVishnuUser(key, use           )!=0);
+  BOOST_CHECK_THROW  (addVishnuUser(key, use           ), VishnuException);
   BOOST_CHECK  (close        (key                )==0);
   use.setEmail(mail);
 
@@ -263,7 +263,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect      (uid, pwd, key, cop)==0);
   use.setUserId("");
   BOOST_CHECK	 (addVishnuUser(key, use	  )==0);    
-  BOOST_CHECK	 (updateUser   (key, use	  )!=0);
+  BOOST_CHECK_THROW	 (updateUser   (key, use	  ), VishnuException);
   BOOST_CHECK	 (close        (key               )==0);
   use.setUserId(cu);
 
@@ -272,7 +272,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore   ("clean_session.sql")==0);
   BOOST_CHECK  (connect   (uid, pwd, key, cop )==0);
   use.setEmail("cl3m3ntlebgkidechyrhotmail.fr");
-  BOOST_CHECK  (updateUser(key, use           )!=0);
+  BOOST_CHECK_THROW  (updateUser(key, use           ), VishnuException);
   BOOST_CHECK  (close     (key                )==0);
   use.setEmail(mail);
 
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing delete bad uid U4.2E"    );
   BOOST_REQUIRE(restore   ("clean_session.sql")==0);
   BOOST_CHECK	 (connect   (uid, pwd, key, cop )==0);
-  BOOST_CHECK	 (deleteUser(key, cu            )!=0);
+  BOOST_CHECK_THROW	 (deleteUser(key, cu            ), VishnuException);
   BOOST_CHECK	 (close     (key                )==0);
 
 
@@ -305,7 +305,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore	("clean_session.sql"  )==0);
   BOOST_CHECK	 (connect	(uid  , pwd, key, cop )==0);
   BOOST_CHECK	 (addVishnuUser (key  , use           )==0);
-  BOOST_CHECK	 (changePassword("bad", pass, "newPwd")!=0);
+  BOOST_CHECK_THROW	 (changePassword("bad", pass, "newPwd"), VishnuException);
   BOOST_CHECK	 (close         (key                  )==0);
 
   // Change pwd bad pwd
@@ -313,7 +313,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore	("clean_session.sql")==0);
   BOOST_CHECK	 (connect	(uid, pwd , key, cop)==0);
   BOOST_CHECK	 (addVishnuUser (key, use           )==0);
-  BOOST_CHECK	 (changePassword(cu, "bad", "newPwd")!=0);
+  BOOST_CHECK_THROW	 (changePassword(cu, "bad", "newPwd"), VishnuException);
   BOOST_CHECK	 (close         (key                )==0);
 
   // Reset pwd ok
@@ -329,7 +329,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      ("clean_session.sql" )==0);
   BOOST_CHECK	 (connect      (uid, pwd  , key, cop)==0);
   BOOST_CHECK	 (addVishnuUser(key, use            )==0);
-  BOOST_CHECK	 (resetPassword(key, "bad"          )!=0);
+  BOOST_CHECK_THROW	 (resetPassword(key, "bad"          ), VishnuException);
   BOOST_CHECK	 (close        (key                 )==0);
 
   // Add local account
@@ -349,7 +349,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore        ("clean_session.sql")==0);
   BOOST_CHECK  (connect        (uid, pwd , key, cop)==0);
   lacc.setMachineId("bad");
-  BOOST_CHECK	 (addLocalAccount(key, lacc, key2  )!=0);
+  BOOST_CHECK_THROW	 (addLocalAccount(key, lacc, key2  ), VishnuException);
   BOOST_CHECK	 (close          (key        	   )==0);  
   lacc.setMachineId(mid);
 
@@ -358,7 +358,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore	 ("clean_session.sql")==0);
   BOOST_CHECK  (connect	 (uid, pwd, key, cop )==0);
   lacc.setAcLogin("bad");
-  BOOST_CHECK	 (addLocalAccount(key, lacc, key2    )!=0);
+  BOOST_CHECK_THROW	 (addLocalAccount(key, lacc, key2    ), VishnuException);
   BOOST_CHECK	 (close          (key      	     )==0);    
   lacc.setAcLogin(accL);
 
@@ -376,7 +376,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
   BOOST_REQUIRE(restore           ("clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , key, cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (key, lacc, key2  	)!=0);
+  BOOST_CHECK_THROW	 (addLocalAccount   (key, lacc, key2  	), VishnuException);
   lacc.setMachineId("bad");
   BOOST_CHECK  (updateLocalAccount(key, lacc	        )==0);
   BOOST_CHECK	 (close             (key        	)==0);  
@@ -395,7 +395,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore           ("clean_session.sql" )==0);
   BOOST_CHECK  (connect           (uid, pwd  , key, cop)==0);
   BOOST_CHECK	 (addLocalAccount   (key, lacc, key2     )==0);
-  BOOST_CHECK	 (deleteLocalAccount(key, "bad", mid     )!=0);
+  BOOST_CHECK_THROW	 (deleteLocalAccount(key, "bad", mid     ), VishnuException);
   BOOST_CHECK	 (close             (key                 )==0);  
 
   // Delete local accountbad uid
@@ -403,7 +403,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore           ("clean_session.sql"  )==0);
   BOOST_CHECK  (connect           (uid, pwd , key  , cop)==0);
   BOOST_CHECK	 (addLocalAccount   (key, lacc, key2      )==0);
-  BOOST_CHECK	 (deleteLocalAccount(key, uid , "bad"     )!=0);
+  BOOST_CHECK_THROW	 (deleteLocalAccount(key, uid , "bad"     ), VishnuException);
   BOOST_CHECK	 (close             (key                  )==0);  
 
   // Test add machine normal
@@ -423,7 +423,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql")==0);
   BOOST_CHECK  (connect    (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addMachine (key, ma            )==0);
-  BOOST_CHECK	 (addMachine (key, ma            )!=0);
+  BOOST_CHECK_THROW	 (addMachine (key, ma            ), VishnuException);
   BOOST_CHECK	 (close      (key                )==0);  
 
   // Test update machine normal
@@ -442,7 +442,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addMachine   (key, ma            )==0);
   ma.setMachineId("bad");
-  BOOST_CHECK	 (updateMachine(key, ma            )!=0);
+  BOOST_CHECK_THROW	 (updateMachine(key, ma            ), VishnuException);
   BOOST_CHECK	 (close        (key                )==0);  
   ma.setMachineId(maid);
 
@@ -460,7 +460,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK	 (addMachine   (key, ma            )==0);
   ma.setMachineId("bad");
-  BOOST_CHECK	 (updateMachine(key, ma            )!=0);
+  BOOST_CHECK_THROW	 (updateMachine(key, ma            ), VishnuException);
   BOOST_CHECK	 (close        (key                )==0);  
   ma.setMachineId(maid);
 
@@ -492,7 +492,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore  ("clean_session.sql"  )==0);
   BOOST_MESSAGE(" Testing bad key list user UA5.2E" );
   BOOST_CHECK  (connect  (uid  , pwd, key, cop )==0);
-  BOOST_CHECK  (listUsers("bad", liu, ""       )!=0);
+  BOOST_CHECK_THROW  (listUsers("bad", liu, ""       ), VishnuException);
   BOOST_CHECK  (close    (key                  )==0);
 
   // Test list session
@@ -523,7 +523,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql"   )==0);
   BOOST_MESSAGE(" Testing bad key list session base 1.3.5E" );
   BOOST_CHECK  (connect    (uidu , pwdu, key, cop )==0);
-  BOOST_CHECK  (listSessions("bad", li  , opt      )!=0);
+  BOOST_CHECK_THROW  (listSessions("bad", li  , opt      ), VishnuException);
   BOOST_CHECK  (close      (key                   )==0);
 
   // Test list session opt
@@ -573,7 +573,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore     ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad mid list machine on a specific machine UA6.3E" );
   BOOST_CHECK  (connect     (uid, pwd, key , cop )==0);
-  BOOST_CHECK  (listMachine(key, lim, liom      )!=0);
+  BOOST_CHECK_THROW  (listMachine(key, lim, liom      ), VishnuException);
   BOOST_CHECK  (close       (key                 )==0);
 
   // Test list local account
@@ -606,7 +606,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad machine on list local account U4.3E" );
   BOOST_CHECK  (connect         (uid, pwd, key , cop )==0);
-  BOOST_CHECK  (listLocalAccount(key, lia, lioa      )!=0);
+  BOOST_CHECK_THROW  (listLocalAccount(key, lia, lioa      ), VishnuException);
   BOOST_CHECK  (close           (key                 )==0);
 
   // Test configure default option
@@ -633,7 +633,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore        ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad name configure option U1.3.1E1" );
   BOOST_CHECK  (connect        (uid, pwd , key, cop )==0);
-  BOOST_CHECK  (configureOption(key, opva           )!=0);
+  BOOST_CHECK_THROW  (configureOption(key, opva           ), VishnuException);
   BOOST_CHECK  (close          (key                 )==0);
 
   // Test configure option bad option name
@@ -642,7 +642,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore        ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad value configure option U1.3.1E2" );
   BOOST_CHECK  (connect        (uid, pwd , key, cop )==0);
-  BOOST_CHECK  (configureOption(key, opva           )!=0);
+  BOOST_CHECK_THROW  (configureOption(key, opva           ), VishnuException);
   BOOST_CHECK  (close          (key                 )==0);
 
   // Test list option values
@@ -662,7 +662,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad mid list option value U1.3.2E1" );
   BOOST_CHECK  (connect    (uid, pwd , key , cop)==0);
-  BOOST_CHECK  (listOptions(key, liov, lioo     )!=0);
+  BOOST_CHECK_THROW  (listOptions(key, liov, lioo     ), VishnuException);
   BOOST_CHECK  (close      (key                 )==0);
 
   // Test list option values bad uid
@@ -671,7 +671,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore    ("clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad uid list option value U1.3.2E2" );
   BOOST_CHECK  (connect    (uid, pwd , key , cop)==0);
-  BOOST_CHECK  (listOptions(key, liov, lioo     )!=0);
+  BOOST_CHECK_THROW  (listOptions(key, liov, lioo     ), VishnuException);
   BOOST_CHECK  (close      (key                 )==0);
 
   // Test initialize
@@ -695,7 +695,7 @@ BOOST_AUTO_TEST_CASE( my_test )
 //  // Test finalize error 
 //  BOOST_REQUIRE(restore         ("clean_session.sql" )==0);
 //  BOOST_MESSAGE(" Testing finalize not initialized" );
-//  BOOST_CHECK  (vishnuFinalize  (                    )!=0);
+//  BOOST_CHECK  (vishnuFinalize  (                    ), VishnuException);
 
   // Test Save configuration
   BOOST_MESSAGE(" Testing save conf"    );
@@ -719,7 +719,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (connect      	      (uid, pwd  , key  , cop)==0);
   BOOST_CHECK	 (saveConfiguration   (key, conf             )==0);
   //  conf->setFilePath("bad");
-  BOOST_CHECK	 (restoreConfiguration(key, cpath            )!=0);
+  BOOST_CHECK_THROW	 (restoreConfiguration(key, cpath            ), VishnuException);
   BOOST_CHECK	 (close               (key                   )==0);
 
   // History, make all commands once and test list them
