@@ -177,14 +177,15 @@ deleteUser(const string& sessionKey,
  * \return raises an exception on error 
  */
 int
-changePassword(const std::string& sessionKey, 
+changePassword(const std::string& userId, 
                const std::string& password, 
                const std::string& passwordNew)
                                              throw(SystemException) 
 {
 
-  SessionProxy sessionProxy(sessionKey);
-  UserProxy userProxy(sessionProxy);
+  UMS_Data::User user;
+  user.setUserId(userId);
+  UserProxy userProxy(user);
 
  return userProxy.changePassword(password, passwordNew);
 }
