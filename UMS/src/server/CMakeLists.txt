@@ -42,3 +42,4 @@ target_link_libraries(ums-server
   exception-vishnu
 )
 
+install( TARGETS ums-server DESTINATION lib )
