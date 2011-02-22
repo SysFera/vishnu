@@ -25,7 +25,7 @@ MachineClientServer::MachineClientServer(std::string sshKey, std::string host) {
 * \return raises an exception on error
 */
 int MachineClientServer::recordMachineClient() {
-  
+
   //If the machine is not on the database
   if (!exist()) {
     std::string sqlCmd = std::string("insert into clmachine (sshkey, name) values ('");
@@ -35,14 +35,14 @@ int MachineClientServer::recordMachineClient() {
 
     try {
       mdatabaseVishnu->process(sqlCmd.c_str());
-    } 
+    }
     catch (VishnuException& e) {
       throw;
     }
-  } //End if the machine is not on the database 
+  } //End if the machine is not on the database
   else {
     std::cout << "This client machine is already registered" << std::endl;
-  } 
+  }
   return 0;
 }
 
@@ -52,8 +52,8 @@ int MachineClientServer::recordMachineClient() {
 * \return raises an exception on error
 */
 std::string
-MachineClientServer::getId() {	
-    
+MachineClientServer::getId() {
+
   DatabaseResult* result;
   std::vector<std::string>::iterator ii;
 
@@ -65,7 +65,7 @@ MachineClientServer::getId() {
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
-  } 
+  }
   catch (VishnuException& e) {
     throw;
   }
@@ -83,7 +83,7 @@ std::string MachineClientServer::getSSHKey() const{
 * \brief Function to get the hostname of the client machine
 * \fn std::string getHost()
 * \return raises an exception on error
-*/  
+*/
 std::string MachineClientServer::getHost() const{
   return mhostname;
 }
@@ -102,7 +102,7 @@ MachineClientServer::~MachineClientServer() {
 bool MachineClientServer::exist(){
   try {
     return (getId().size() != 0);
-  } 
+  }
   catch (VishnuException& e) {
     throw;
   }

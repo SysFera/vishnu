@@ -28,36 +28,36 @@ class QueryServer
 {
 public:
 
-  explicit 
-  QueryServer(const SessionServer session):msessionServer(session) 
+  explicit
+  QueryServer(const SessionServer session):msessionServer(session)
   {
-     mlistObject = NULL;
-     DbFactory factory;
-     mdatabaseVishnu = factory.getDatabaseInstance(); 
+    mlistObject = NULL;
+    DbFactory factory;
+    mdatabaseVishnu = factory.getDatabaseInstance();
   }
 
   QueryServer(QueryParameters *params, const SessionServer& session):
-     mparameters(params), msessionServer(session) 
+    mparameters(params), msessionServer(session)
   {
-  
-     mlistObject = NULL;
-     DbFactory factory;
-     mdatabaseVishnu = factory.getDatabaseInstance();
+
+    mlistObject = NULL;
+    DbFactory factory;
+    mdatabaseVishnu = factory.getDatabaseInstance();
   };
 
   virtual ListObject* list() = 0;
 
   void addOptionRequest(const std::string& name, const std::string& value, std::string& request) {
-     request.append(" and "+name+"=");
-     request.append("'"+value+"'");
+    request.append(" and "+name+"=");
+    request.append("'"+value+"'");
   }
 
   void addCondition(const std::string& name, const std::string& value, std::string& request) {
-     request.append(" where "+name+"=");
-     request.append("'"+value+"'");
+    request.append(" where "+name+"=");
+    request.append("'"+value+"'");
   }
 
-  virtual ~QueryServer() 
+  virtual ~QueryServer()
   {
   }
 
@@ -68,8 +68,8 @@ protected:
   ListObject* mlistObject;
 
   /**
-   * \brief An instance of vishnu database
-   */
+  * \brief An instance of vishnu database
+  */
   Database *mdatabaseVishnu;
 
 
@@ -77,30 +77,30 @@ protected:
 
 //////////////////////////////////////////////////QueryUsers Class/////////////////////////////////////////////////
 //QueryUsers class
-class QueryUsers 
+class QueryUsers
 {
 
 public:
   //Constructors
   explicit QueryUsers(const SessionServer session):msessionServer(session)
   {
-     mlistUsers = NULL;
-     DbFactory factory;
-     mdatabaseVishnu = factory.getDatabaseInstance();
+    mlistUsers = NULL;
+    DbFactory factory;
+    mdatabaseVishnu = factory.getDatabaseInstance();
   }
-  
+
   QueryUsers(const std::string& option, const SessionServer& session):
-   moption(option), msessionServer(session) 
+  moption(option), msessionServer(session)
   {
-     mlistUsers = NULL;
-     DbFactory factory;
-     mdatabaseVishnu = factory.getDatabaseInstance();
+    mlistUsers = NULL;
+    DbFactory factory;
+    mdatabaseVishnu = factory.getDatabaseInstance();
   }
- 
-  //To list users 
+
+  //To list users
   UMS_Data::ListUsers* list() {
-  
-  DatabaseResult *ListofUsers;  
+
+  DatabaseResult *ListofUsers;
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
                               where not userid='vishnu_user' and not userid='vishnu_db_admin'";
 
@@ -113,7 +113,7 @@ public:
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the user exists 
+    //if the user exists
     if (userServer.exist()) {
       //if the user is an admin
       if (userServer.isAdmin()) {
@@ -135,44 +135,44 @@ public:
 
         if (ListofUsers->getNbTuples() != 0){
           for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
-             results.clear();
-             results = ListofUsers->get(i);
-             ii = results.begin();
-            
-               UMS_Data::User_ptr user = ecoreFactory->createUser();
-               user->setUserId(*ii);
-               user->setPassword(*(++ii));
-               user->setFirstname(*(++ii));
-               user->setLastname(*(++ii));
-               user->setPrivilege(convertToInt(*(++ii)));
-               user->setEmail(*(++ii));
-               user->setStatus(convertToInt(*(++ii)));
+            results.clear();
+            results = ListofUsers->get(i);
+            ii = results.begin();
 
-               mlistUsers->getUsers().push_back(user); 
-           }
+              UMS_Data::User_ptr user = ecoreFactory->createUser();
+              user->setUserId(*ii);
+              user->setPassword(*(++ii));
+              user->setFirstname(*(++ii));
+              user->setLastname(*(++ii));
+              user->setPrivilege(convertToInt(*(++ii)));
+              user->setEmail(*(++ii));
+              user->setStatus(convertToInt(*(++ii)));
+
+              mlistUsers->getUsers().push_back(user);
+          }
         }
 
     } //End if the user is an admin
-     else {
+    else {
           UMSVishnuException e (ERRCODE_NO_ADMIN);
           throw e;
         }
       }//End if the user exists
       else {
-         UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-         throw e;
-       }
-     }
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+        throw e;
+      }
+    }
       catch (VishnuException& e) {
         throw;
       }
- 
-     return mlistUsers; 
-   }
 
-  //Destructor 
+    return mlistUsers;
+  }
+
+  //Destructor
   ~QueryUsers() {
-   }
+  }
 
   private:
 
@@ -181,8 +181,8 @@ public:
   ListUsers* mlistUsers;
 
   /**
-   * \brief An instance of vishnu database
-   */
+  * \brief An instance of vishnu database
+  */
   Database *mdatabaseVishnu;
 
 };
@@ -198,7 +198,7 @@ public:
   {
   }
   QueryMachines(UMS_Data::ListMachineOptions_ptr params, const SessionServer& session):
-   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session) 
+  QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
   {
   }
 
@@ -208,7 +208,7 @@ public:
 
   DatabaseResult *ListofMachines;
   std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description \
-   where machine.nummachineid = description.machine_nummachineid";
+  where machine.nummachineid = description.machine_nummachineid";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -219,7 +219,7 @@ public:
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the user exists 
+    //if the user exists
     if (userServer.exist()) {
       size_t userIdSize = mparameters->getUserId().size();
       size_t machineIdSize = mparameters->getMachineId().size();
@@ -284,24 +284,24 @@ public:
 
                 mlistObject->getMachines().push_back(machine);
             }
-        }
- 
+      }
+
     }//End if the user exists
-     else {
+    else {
         UMSVishnuException e (4, "The user is unknown");
         throw e;
       }
     }
     catch (VishnuException& e) {
       throw;
-    } 
+    }
 
     return mlistObject;
-  } 
+  }
 
-  //Destructor 
+  //Destructor
   ~QueryMachines() {
-   }
+  }
 };
 
 //////////////////////////////////////////////////QueryLocalAccounts Class/////////////////////////////////////////////////
@@ -315,17 +315,17 @@ public:
   {
   }
   QueryLocalAccounts(UMS_Data::ListLocalAccOptions_ptr params, const SessionServer& session):
-   QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(params, session) 
+  QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(params, session)
   {
   }
 
-  //To list LocalAccounts 
+  //To list LocalAccounts
   UMS_Data::ListLocalAccounts* list()
   {
-     DatabaseResult *ListofLocalAccount;
-     std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home \
-     from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
-     account.users_numuserid=users.numuserid";
+    DatabaseResult *ListofLocalAccount;
+    std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home \
+    from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
+    account.users_numuserid=users.numuserid";
 
     if((mparameters->getUserId()).size()!=0) {
       addOptionRequest("userid", mparameters->getUserId(), sqlListofLocalAccount);
@@ -338,19 +338,19 @@ public:
     }
 
 
-     std::vector<std::string>::iterator ii;
-     std::vector<std::string> results;
-     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-     mlistObject = ecoreFactory->createListLocalAccounts();
+    std::vector<std::string>::iterator ii;
+    std::vector<std::string> results;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createListLocalAccounts();
 
-     try {
-       //Creation of the object user
-       UserServer userServer = UserServer(msessionServer);
-       userServer.init();
-       //if the user exists 
-       if (userServer.exist()) {
+    try {
+      //Creation of the object user
+      UserServer userServer = UserServer(msessionServer);
+      userServer.init();
+      //if the user exists
+      if (userServer.exist()) {
       //if the user is an admin
-       if (userServer.isAdmin()) {
+      if (userServer.isAdmin()) {
 
         //To get the list of local accounts from the database
         ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
@@ -360,38 +360,38 @@ public:
             results.clear();
             results = ListofLocalAccount->get(i);
             ii = results.begin();
-            
+
               UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
               localAccount->setMachineId(*ii);
               localAccount->setUserId(*(++ii));
               localAccount->setAcLogin(*(++ii));
               localAccount->setSshKeyPath(*(++ii));
               localAccount->setHomeDirectory(*(++ii));
-                
+
               mlistObject->getAccounts().push_back(localAccount);
           }
         }
       } //End if the user is an admin
-       else {
-           UMSVishnuException e (4, "The user is not an admin");
-           throw e;
-         }
+      else {
+          UMSVishnuException e (4, "The user is not an admin");
+          throw e;
+        }
       }//End if the user exists
       else {
-         UMSVishnuException e (4, "The user is unknown");
-         throw e;
-       }
-     }
-     catch (VishnuException& e) {
+        UMSVishnuException e (4, "The user is unknown");
+        throw e;
+      }
+    }
+    catch (VishnuException& e) {
         throw;
-     }
+    }
 
-     return mlistObject;
-   }
+    return mlistObject;
+  }
 
-   //Destructor 
+  //Destructor
   ~QueryLocalAccounts() {
-   }
+  }
 
 };
 
@@ -406,40 +406,40 @@ public:
   {
   }
   QueryOptions(UMS_Data::ListOptOptions_ptr params, const SessionServer& session):
-   QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(params, session) 
+  QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(params, session)
   {
   }
 
-  //To list Options Values 
+  //To list Options Values
   UMS_Data::ListOptionsValues* list()
   {
-     DatabaseResult *ListofOptions;
-     //TODO : A COMPLETER Difference users et admin + option requeêtre correcte à faire
-     std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
+    DatabaseResult *ListofOptions;
+    //TODO : A COMPLETER Difference users et admin + option requeêtre correcte à faire
+    std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
 
-     if((mparameters->getUserId()).size()!=0) {
-       //TODO
-     }
-     if((mparameters->getOptionName()).size()!=0) {
-       addCondition("description", mparameters->getOptionName(), sqlListofOptions);
-     }
-     if(mparameters->isListAllDeftValue()) {
+    if((mparameters->getUserId()).size()!=0) {
       //TODO
-     }
+    }
+    if((mparameters->getOptionName()).size()!=0) {
+      addCondition("description", mparameters->getOptionName(), sqlListofOptions);
+    }
+    if(mparameters->isListAllDeftValue()) {
+      //TODO
+    }
 
-     std::vector<std::string>::iterator ii;
-     std::vector<std::string> results;
-     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-     mlistObject = ecoreFactory->createListOptionsValues(); 
+    std::vector<std::string>::iterator ii;
+    std::vector<std::string> results;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createListOptionsValues();
 
-     try {
-       //Creation of the object user
-       UserServer userServer = UserServer(msessionServer);
-       userServer.init();
-       //if the user exists 
-       if (userServer.exist()) {
+    try {
+      //Creation of the object user
+      UserServer userServer = UserServer(msessionServer);
+      userServer.init();
+      //if the user exists
+      if (userServer.exist()) {
       //if the user is an admin
-       if (userServer.isAdmin()) {
+      if (userServer.isAdmin()) {
 
         //To get the list of options values from the database
         ListofOptions = mdatabaseVishnu->getResult(sqlListofOptions.c_str());
@@ -449,34 +449,34 @@ public:
             results.clear();
             results = ListofOptions->get(i);
             ii = results.begin();
-            
+
               UMS_Data::OptionValue_ptr optionValue = ecoreFactory->createOptionValue();;
               optionValue->setOptionName(*ii);
               optionValue->setValue(*(++ii));
               mlistObject->getOptionValues().push_back(optionValue);
-           }
+          }
         }
       } //End if the user is an admin
-       else {
-           UMSVishnuException e (4, "The user is not an admin");
-           throw e;
-         }
+      else {
+          UMSVishnuException e (4, "The user is not an admin");
+          throw e;
+        }
       }//End if the user exists
       else {
-         UMSVishnuException e (4, "The user is unknown");
-         throw e;
-       }
-     }
-     catch (VishnuException& e) {
+        UMSVishnuException e (4, "The user is unknown");
+        throw e;
+      }
+    }
+    catch (VishnuException& e) {
         throw;
-     }
+    }
 
-     return mlistObject;
-   }
+    return mlistObject;
+  }
 
-   //Destructor 
+  //Destructor
   ~QueryOptions() {
-   }
+  }
 
 };
 
@@ -492,30 +492,30 @@ public:
   {
   }
   QueryCommands(UMS_Data::ListCmdOptions_ptr params, const SessionServer& session):
-   QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>(params, session) 
+  QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>(params, session)
   {
   }
 
-  //To list commands 
+  //To list commands
   UMS_Data::ListCommands* list()
   {
-     DatabaseResult *ListOfCommands;
-     //TODO : A COMPLETER sql à faire!!!
-     std::string sqlListOfCommands = "SELECT TODO";
+    DatabaseResult *ListOfCommands;
+    //TODO : A COMPLETER sql à faire!!!
+    std::string sqlListOfCommands = "SELECT TODO";
 
-     std::vector<std::string>::iterator ii;
-     std::vector<std::string> results;
-     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-     mlistObject = ecoreFactory->createListCommands(); 
+    std::vector<std::string>::iterator ii;
+    std::vector<std::string> results;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createListCommands();
 
-     try {
-       //Creation of the object user
-       UserServer userServer = UserServer(msessionServer);
-       userServer.init();
-       //if the user exists 
-       if (userServer.exist()) {
+    try {
+      //Creation of the object user
+      UserServer userServer = UserServer(msessionServer);
+      userServer.init();
+      //if the user exists
+      if (userServer.exist()) {
       //if the user is an admin
-       if (userServer.isAdmin()) {
+      if (userServer.isAdmin()) {
 
         //To get the list of commands from the database
         ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
@@ -525,7 +525,7 @@ public:
             results.clear();
             results = ListOfCommands->get(i);
             ii = results.begin();
-           
+
               UMS_Data::Command_ptr command = ecoreFactory->createCommand();
               command->setCommandId(*ii);
               command->setSessionId(*(++ii));
@@ -533,31 +533,31 @@ public:
               command->setCmdDescription(*(++ii));
               //command->setCmdStartTime(convertToInt(*(++ii))); //TODO: A voir avec Paco
               //command->setCmdEndTime(convertToInt(*(++ii))); //TODO: A voir avec Paco
-           
+
               mlistObject->getCommands().push_back(command);
-           }
+          }
         }
       } //End if the user is an admin
-       else {
-           UMSVishnuException e (4, "The user is not an admin");
-           throw e;
-         }
+      else {
+          UMSVishnuException e (4, "The user is not an admin");
+          throw e;
+        }
       }//End if the user exists
       else {
-         UMSVishnuException e (4, "The user is unknown");
-         throw e;
-       }
-     }
-     catch (VishnuException& e) {
+        UMSVishnuException e (4, "The user is unknown");
+        throw e;
+      }
+    }
+    catch (VishnuException& e) {
         throw;
-     }
+    }
 
-     return mlistObject;
-   }
+    return mlistObject;
+  }
 
-   //Destructor 
+  //Destructor
   ~QueryCommands() {
-   }
+  }
 
 };
 
@@ -573,34 +573,34 @@ public:
   {
   }
   QuerySessions(UMS_Data::ListSessionOptions_ptr params, const SessionServer& session):
-   QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(params, session) 
+  QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(params, session)
   {
   }
-  
-   
 
-  
-  //To list sessions 
+
+
+
+  //To list sessions
   UMS_Data::ListSessions* list()
   {
-     DatabaseResult *ListOfSessions;
-     //TODO : A COMPLETER
-     std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout \
-     from vsession, users where vsession.users_numuserid=users.numuserid";
+    DatabaseResult *ListOfSessions;
+    //TODO : A COMPLETER
+    std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout \
+    from vsession, users where vsession.users_numuserid=users.numuserid";
 
-     std::vector<std::string>::iterator ii;
-     std::vector<std::string> results;
-     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-     mlistObject = ecoreFactory->createListSessions(); 
+    std::vector<std::string>::iterator ii;
+    std::vector<std::string> results;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createListSessions();
 
-     try {
-       //Creation of the object user
-       UserServer userServer = UserServer(msessionServer);
-       userServer.init();
-       //if the user exists 
-       if (userServer.exist()) {
+    try {
+      //Creation of the object user
+      UserServer userServer = UserServer(msessionServer);
+      userServer.init();
+      //if the user exists
+      if (userServer.exist()) {
       //if the user is an admin
-       if (userServer.isAdmin()) {
+      if (userServer.isAdmin()) {
 
         //To get the list of sessions from the database
         ListOfSessions = mdatabaseVishnu->getResult(sqlListOfSessions.c_str());
@@ -610,7 +610,7 @@ public:
             results.clear();
             results = ListOfSessions->get(i);
             ii = results.begin();
-           
+
               UMS_Data::Session_ptr session = ecoreFactory->createSession();
               session->setSessionId(*(ii));
               session->setUserId(*(++ii));
@@ -623,29 +623,29 @@ public:
               session->setTimeout(convertToInt(*(++ii)));
 
               mlistObject->getSessions().push_back(session);
-           }
+          }
         }
       } //End if the user is an admin
-       else {
-           UMSVishnuException e (4, "The user is not an admin");
-           throw e;
-         }
+      else {
+          UMSVishnuException e (4, "The user is not an admin");
+          throw e;
+        }
       }//End if the user exists
       else {
-         UMSVishnuException e (4, "The user is unknown");
-         throw e;
-       }
-     }
-     catch (VishnuException& e) {
+        UMSVishnuException e (4, "The user is unknown");
+        throw e;
+      }
+    }
+    catch (VishnuException& e) {
         throw;
-     }
+    }
 
-     return mlistObject;
-   }
+    return mlistObject;
+  }
 
-   //Destructor 
+  //Destructor
   ~QuerySessions() {
-   }
+  }
 
 };
 

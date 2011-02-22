@@ -12,8 +12,8 @@
 * \fn MachineServer(UMS_Data::Machine*& machine)
 * \param machine The machine data structure
 */
-MachineServer::MachineServer(UMS_Data::Machine*& machine): 
-mmachine(machine) 
+MachineServer::MachineServer(UMS_Data::Machine*& machine):
+mmachine(machine)
 {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -26,8 +26,8 @@ mmachine(machine)
 * \param machine The machine data structure
 * \param session The object which encapsulates session data
 */
-MachineServer::MachineServer(UMS_Data::Machine*& machine, SessionServer& session): 
-mmachine(machine), msessionServer(session) 
+MachineServer::MachineServer(UMS_Data::Machine*& machine, SessionServer& session):
+mmachine(machine), msessionServer(session)
 {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -35,46 +35,46 @@ mmachine(machine), msessionServer(session)
 
 /**
 * \brief Function to add a new VISHNU machine
-* \fn int add() 
+* \fn int add()
 * \return raises an exception on error
 */
-int 
+int
 MachineServer::add() {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
-  
+
   try {
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    
-    //if the user exists 
+
+    //if the user exists
     if (userServer.exist()) {
       //if the user is an admin
-      if (userServer.isAdmin()) {  
-	//TODO:  generation Machine Id avec Kévine
-	mmachine->setMachineId(mmachine->getName()+"_"+mmachine->getName());
-	
-	//if the machineId does not exist
-	if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
-	  
-	  mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"\
-	  ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
-	  '"+mmachine->getSshPublicKey()+"')");
-	  
-	  //To insert the description of the machine
-	  mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
-	  description) values \
-	  ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",\
-	  '"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
-	  
-	} //if the machineId does not exist
-	else {
-	  UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
-	  throw e;
-	}
+      if (userServer.isAdmin()) {
+        //TODO:  generation Machine Id avec Kévine
+        mmachine->setMachineId(mmachine->getName()+"_"+mmachine->getName());
+
+        //if the machineId does not exist
+        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
+
+          mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"\
+          ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
+          '"+mmachine->getSshPublicKey()+"')");
+
+          //To insert the description of the machine
+          mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
+          description) values \
+          ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",\
+          '"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
+
+        } //if the machineId does not exist
+        else {
+          UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
+          throw e;
+        }
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (ERRCODE_NO_ADMIN);
-	  throw e;
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
+          throw e;
       }
     }//End if the user exists
     else {
@@ -84,80 +84,80 @@ MachineServer::add() {
   }
   catch (VishnuException& e) {
     throw;
- } 
+}
   return 0;
 } //END: add()
 
 /**
 * \brief Function to update a VISHNU machine
-* \fn int update() 
+* \fn int update()
 * \return raises an exception on error
 */
-int 
+int
 MachineServer::update() {
-  
+
   std::string sqlCommand = "";
-  
+
   try {
-    
+
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
-  
-    //if the user exists 
+
+    //if the user exists
     if (userServer.exist()) {
       //if the user is an admin
-      if (userServer.isAdmin()) {  
-	
-	//if the machine to update exists
-	if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
-	  
-	  //if a new machine name has been defined
-	  if (mmachine->getName().size() != 0) {
-	  sqlCommand.append("UPDATE machine SET name='"+mmachine->getName()+"'\
-	  where machineId='"+mmachine->getMachineId()+"';");
-	  }
-	  
-	  //if a new site has been defined
-	  if (mmachine->getSite().size() != 0) {
-	  sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
-	  where machineId='"+mmachine->getMachineId()+"';");
-	  }
-	  
-	  //Set the status of the machine
-	  sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+"\
-	  where machineId='"+mmachine->getMachineId()+"';");
-	  
-	  //if a new ssh public key has been defined
-	  if (mmachine->getSshPublicKey().size() != 0) {
-	  sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'\
-	  where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
-	  }
-	  
-	  //if a new language has been defined
-	  if (mmachine->getLanguage().size() != 0) {
-	  sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'\
-	  where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");	  
-	  }
-	  
-	  //if a new machine description has been defined
-	  if (mmachine->getMachineDescription().size() != 0) {
-	  sqlCommand.append("UPDATE description SET description='"+mmachine->getMachineDescription()+"'\
-	  where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
-	  }
-	  
-	  std::cout <<"SQL COMMAND:"<<sqlCommand;
-	  mdatabaseVishnu->process(sqlCommand.c_str());
-	  
-	} //End if the machine to update exists
-	else {
-	  UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
-	  throw e;
-	}
-	
+      if (userServer.isAdmin()) {
+
+        //if the machine to update exists
+        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
+
+          //if a new machine name has been defined
+          if (mmachine->getName().size() != 0) {
+          sqlCommand.append("UPDATE machine SET name='"+mmachine->getName()+"'\
+          where machineId='"+mmachine->getMachineId()+"';");
+          }
+
+          //if a new site has been defined
+          if (mmachine->getSite().size() != 0) {
+          sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
+          where machineId='"+mmachine->getMachineId()+"';");
+          }
+
+          //Set the status of the machine
+          sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+"\
+          where machineId='"+mmachine->getMachineId()+"';");
+
+          //if a new ssh public key has been defined
+          if (mmachine->getSshPublicKey().size() != 0) {
+          sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'\
+          where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          }
+
+          //if a new language has been defined
+          if (mmachine->getLanguage().size() != 0) {
+          sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'\
+          where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          }
+
+          //if a new machine description has been defined
+          if (mmachine->getMachineDescription().size() != 0) {
+          sqlCommand.append("UPDATE description SET description='"+mmachine->getMachineDescription()+"'\
+          where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          }
+
+          std::cout <<"SQL COMMAND:"<<sqlCommand;
+          mdatabaseVishnu->process(sqlCommand.c_str());
+
+        } //End if the machine to update exists
+        else {
+          UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
+          throw e;
+        }
+
       } //End if the user is an admin
       else {
-	  UMSVishnuException e (ERRCODE_NO_ADMIN);
-	  throw e;
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
+          throw e;
       }
     }//End if the user exists
     else {
@@ -173,31 +173,31 @@ MachineServer::update() {
 
 /**
 * \brief Function to delete a VISHNU machine
-* \fn int deleteMachine() 
+* \fn int deleteMachine()
 * \return raises an exception on error
 */
-int 
+int
 MachineServer::deleteMachine() {
   try {
-    
+
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
-    //if the user exists 
+    //if the user exists
     if (userServer.exist()) {
       //if the user is an admin
-      if (userServer.isAdmin()) {  
-	//if the machine to update exists
-	if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
-	 mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
-	} //End if the machine to update exists
-	else {
-	  UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
-	  throw e;
-	}
+      if (userServer.isAdmin()) {
+        //if the machine to update exists
+        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
+        mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
+        } //End if the machine to update exists
+        else {
+          UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
+          throw e;
+        }
       } //End if the user is an admin
       else {
-	UMSVishnuException e (ERRCODE_NO_ADMIN);
-	throw e;
+        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        throw e;
       }
     }//End if the user exists
     else {
@@ -224,7 +224,7 @@ MachineServer::~MachineServer() {
 * \fn UMS_Data::Machine* getData()
 * \return  The user data structure
 */
-UMS_Data::Machine* 
+UMS_Data::Machine*
 MachineServer::getData() {
   return mmachine;
 }
@@ -236,19 +236,19 @@ MachineServer::getData() {
 * \param attrname the name of the attribut to get
 * \return the value of the attribut or empty string if no results
 */
-  
-std::string 
+
+std::string
 MachineServer::getAttribut(std::string condition, std::string attrname) {
- DatabaseResult* result;
- std::vector<std::string>::iterator ii;
- 
- std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
- std::cout <<"SQL COMMAND:"<<sqlCommand;
-   
+DatabaseResult* result;
+std::vector<std::string>::iterator ii;
+
+std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
+std::cout <<"SQL COMMAND:"<<sqlCommand;
+
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     return result->getFirstElement();
-  } 
+  }
   catch (VishnuException& e) {
     throw;
   }
@@ -257,7 +257,7 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
 /**
 * \brief Function to get the content of the public ssh key
 * \fn std::string getPublicKey()
-* \return The content of the ssh public key 
+* \return The content of the ssh public key
 */
 std::string
 MachineServer::getPublicKey() {
@@ -268,7 +268,7 @@ MachineServer::getPublicKey() {
 * \brief Function to generate a machine id
 * \fn generateMachineId()
 */
-std::string 
+std::string
 MachineServer::generateMachineId() {
   return "";
 }
