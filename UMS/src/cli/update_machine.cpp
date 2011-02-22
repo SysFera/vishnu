@@ -12,17 +12,9 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-
-
 		/******* Parsed value containers ****************/
 
 		string dietConfig;
-
-		std::string name;
-
-		std::string site;
-
-		std::string language;
 
 		std::string machineDescription;
 
@@ -44,6 +36,8 @@ int main (int ac, char* av[]){
 		boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(upMachine),_1));
 
 			boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
+			boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(upMachine),_1));
+			boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
 
 			boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage);
@@ -62,9 +56,19 @@ int main (int ac, char* av[]){
 				opt->setPosition("machineId",-1);
 
 				opt->add("machineDescription,d",
+											"The status of the machine",
+												CONFIG,
+												fStatus);
+
+				opt->add("status,t",
 											"The description of the machine",
 												CONFIG,
-												machineDescription);
+												fStatus);
+
+				opt->add("sshPublicKeyFile,k",
+											"The the path to the SSH public key used by VISHNU to access local user accounts",
+												CONFIG,
+												fSshPublicKeyFile);
 
         try{
 
@@ -77,35 +81,8 @@ int main (int ac, char* av[]){
 
 		opt->notify();
 
-
-
-
-
 /********  Process **************************/
 
-		if (opt->count("machineId")){
-
-			cout <<"The machine identifier is " << machineId << endl;
-
-		}
-
-		if (opt->count("name")){
-
-			cout <<"The name of the machine is " <<  upMachine.getName() << endl;
-
-		}
-
-		if(opt->count("site")){
-
-			cout <<"the site is : " << upMachine.getSite() << endl;
-
-		}
-
-		if(opt->count("language")){
-
-			cout << "The language is " <<  upMachine.getMachineId() << endl;
-
-		}
 
 		if(opt->count("machineDescription")){//Fix me
 
