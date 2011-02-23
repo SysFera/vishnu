@@ -66,9 +66,9 @@ ServerUMS::init(int vishnuId,
 
     /* Checking of vishnuid on the database */
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-
+    std::cout.flush();
     if (result->getResults().size() == 0) {
-      SystemException e(4, "The vishnuid is unrecognized");
+      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
 
     }
