@@ -75,6 +75,7 @@ namespace utilServer {
 
   static const std::string ROOTUSERNAME = "root";
   static const std::string DATABASENAME = "vishnu";
+  static const std::string UMSMAPPERNAME = "UMS";
 
   /**
   * \brief Generic function to convert an object to string

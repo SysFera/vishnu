@@ -23,6 +23,7 @@ class UMSMapper : Mapper{
 public :
   UMSMapper(MapperRegistry* reg, string name);
   UMSMapper();
+  ~UMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper()
@@ -36,7 +37,7 @@ public :
    * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
+  virtual int
   unregisterMapper();
 
   /**

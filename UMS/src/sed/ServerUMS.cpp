@@ -1,5 +1,5 @@
 /**
-* \file ServerUMS.cc
+* \file ServerUMS.cpp
 * \brief This file presents the implementation of the UMS server.
 * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
 * \date 31/01/2001
@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "ServerUMS.hpp"
+#include "UMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 /**
 * \brief To get the path of the configuration file used by the UMS server
@@ -63,6 +65,14 @@ ServerUMS::init(int vishnuId,
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
+
+    UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), utilServer::UMSMAPPERNAME);
+    mapper->registerMapper();
+
+    int mapperkey = mapper->code("vishnu_close");
+
+
+    std::cout << "Mapper key:" << mapperkey << " Mapper retour" << mapper->finalize(mapperkey) << std::endl;
 
     /* Checking of vishnuid on the database */
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
