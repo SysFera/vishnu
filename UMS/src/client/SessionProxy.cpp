@@ -7,10 +7,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <fstream>
 
 #include "SessionProxy.hpp"
@@ -114,8 +110,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
      if(checkFile4) {
        ifile4.close();
      }
-  }
-  else if(checkFile2) {
+  } else if(checkFile2) {
          ifile2.close();
          ifile.open(sshKey2.c_str());
          if(checkFile3) {
@@ -124,15 +119,13 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
          if(checkFile4) {
            ifile4.close();
          }
-  } 
-  else if(checkFile3) {
+  } else if(checkFile3) {
       ifile3.close();
       ifile.open(sshKey3.c_str());
       if(checkFile4) {
          ifile4.close();
       }
-  }
-  else {
+  } else {
       ifile4.close();
       ifile.open(sshKey4.c_str());
   }
@@ -177,7 +170,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
      msg += "with sshKey parameter sshKey path";
      errMsg(msg);
      sendErrorMsg(msg);
-  }  
+  } 
   if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
      msg += "with hostname parameter "+std::string(hostname);
      errMsg(msg);
@@ -212,9 +205,9 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
          errMsg(msg);
          sendErrorMsg(msg);
       }
-  
       msession.setSessionKey(sessionkey);
-      if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+      //Print successfull message if erroInfo is empty
+      printSuccessMessage(errorInfo);
    } else {
        sendErrorMsg(" the function diet_call is rejected");
   }
@@ -222,7 +215,9 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   /*To check the receiving message error*/
   checkErrorMsg(errorInfo);
 
-  if(key!=NULL) delete [] key;
+  if(key!=NULL) {
+    delete [] key;
+  }
 
   return 0;
 }
@@ -282,9 +277,8 @@ int SessionProxy::close()
          errMsg(msg);
          sendErrorMsg(msg);
       }
-      
-      if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
-  
+      //Print successfull message if erroInfo is empty
+      printSuccessMessage(errorInfo);
    } else {  
       sendErrorMsg(" the function diet_call is rejected"); 
    }

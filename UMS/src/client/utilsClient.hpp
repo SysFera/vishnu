@@ -27,6 +27,15 @@ inline void errMsg(const std::string& msg) {
 }
 
 /**
+ * \brief Function to print success message 
+ * \fn inline void printSuccessMessage(char* errorInfo) 
+ * \param errorInfo to check 
+ */
+inline void printSuccessMessage(char* errorInfo) {
+  if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+}
+
+/**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
  * \fn void sendErrorMsg(const std::string& msg) 
  * \param msg to spread 
@@ -39,5 +48,6 @@ void sendErrorMsg(const std::string& msg);
  * \param msg to split 
  */
 void checkErrorMsg(const std::string& msg);
+
 
 #endif

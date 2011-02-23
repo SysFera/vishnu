@@ -5,7 +5,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 #include "SessionServer.hpp"
 #include "ListCmdOptions.hpp"
@@ -52,11 +52,39 @@ public:
     request.append("'"+value+"'");
   }
 
+  template <class T>
+  void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
+    std::ostringstream osValue;
+    osValue << value;
+    request.append(" and "+name+"=");
+    request.append("'"+osValue.str()+"'");
+  }
+
   void addCondition(const std::string& name, const std::string& value, std::string& request) {
     request.append(" where "+name+"=");
     request.append("'"+value+"'");
   }
 
+  template <class T>
+  void addIntegerCondition(const std::string& name, T& value, std::string& request) {
+    std::ostringstream osValue;
+    osValue << value;
+    request.append(" where "+name+"=");
+    request.append("'"+osValue.str()+"'");
+  }
+
+  long convertToTimeType(std::string date) {
+    
+    if(date.size()==0) return 0;
+   
+      boost::posix_time::ptime pt(time_from_string(date));
+      boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
+      time_duration::sec_type time = (pt - epoch).total_seconds();
+
+    return time_t(time);
+
+  }
+  
   virtual ~QueryServer()
   {
   }
@@ -295,7 +323,7 @@ public:
 
     }//End if the user exists
     else {
-        UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
     }
@@ -412,7 +440,7 @@ public:
         }
       }//End if the user exists
       else {
-        UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
     }
@@ -448,19 +476,10 @@ public:
   UMS_Data::ListOptionsValues* list()
   {
     DatabaseResult *ListofOptions;
-    //TODO : A COMPLETER Difference users et admin + option requeêtre correcte à faire
     std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
-
-    if((mparameters->getUserId()).size()!=0) {
-      //TODO
-    }
-    if((mparameters->getOptionName()).size()!=0) {
-      addCondition("description", mparameters->getOptionName(), sqlListofOptions);
-    }
-    if(mparameters->isListAllDeftValue()) {
-      //TODO
-    }
-
+    std::string sqlListofOptionValues = "SELECT description, value, userid from optionu, optionvalue, users\
+                                               where optionu.numoptionid=optionvalue.optionu_numoptionid and\
+                                               optionvalue.users_numuserid=users.numuserid";
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -471,10 +490,31 @@ public:
       UserServer userServer = UserServer(msessionServer);
       userServer.init();
       //if the user exists
-      if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
+    if (userServer.exist()) {
 
+        size_t userIdSize = mparameters->getUserId().size();
+        size_t nameSize = mparameters->getOptionName().size();
+        bool listAllDefault = mparameters->isListAllDeftValue();
+
+        if ((!userServer.isAdmin()) && (userIdSize!=0)) {
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
+          throw e;
+        }
+        
+        if(!listAllDefault) {
+          
+          if(userIdSize==0) {
+            sqlListofOptions = sqlListofOptionValues;
+            addOptionRequest("userid", userServer.getData().getUserId(), sqlListofOptions);
+          } else {
+            sqlListofOptions = sqlListofOptionValues;
+            addOptionRequest("userid", mparameters->getUserId(), sqlListofOptions);
+          }
+
+          if(nameSize!=0) {
+            addOptionRequest("description", mparameters->getOptionName(), sqlListofOptions);
+          }
+        }
         //To get the list of options values from the database
         ListofOptions = mdatabaseVishnu->getResult(sqlListofOptions.c_str());
 
@@ -490,14 +530,13 @@ public:
               mlistObject->getOptionValues().push_back(optionValue);
           }
         }
-      } //End if the user is an admin
       else {
-          UMSVishnuException e (4, "The user is not an admin");
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
           throw e;
         }
       }//End if the user exists
       else {
-        UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
     }
@@ -565,6 +604,7 @@ public:
               command->setSessionId(*(++ii));
               command->setMachineId(*(++ii));
               command->setCmdDescription(*(++ii));
+              //convertToTimeType
               //command->setCmdStartTime(convertToInt(*(++ii))); //TODO: A voir avec Paco
               //command->setCmdEndTime(convertToInt(*(++ii))); //TODO: A voir avec Paco
 
@@ -573,12 +613,12 @@ public:
         }
       } //End if the user is an admin
       else {
-          UMSVishnuException e (4, "The user is not an admin");
+          UMSVishnuException e (ERRCODE_NO_ADMIN);
           throw e;
         }
       }//End if the user exists
       else {
-        UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
     }
@@ -611,16 +651,68 @@ public:
   {
   }
 
+  void processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& sqlRequest)
+  {
+   
+    size_t userIdSize = options->getUserId().size();
+    bool listAll = options->isAdminListOption();
 
+    if ((!userServer.isAdmin()) && (userIdSize!=0 || listAll)) {
+       UMSVishnuException e (ERRCODE_NO_ADMIN);
+       throw e;
+    }
+   
+    if(options->getMachineId().size()!=0) {
+       sqlRequest = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect,\
+         creation, closure, name from vsession, users, clmachine where vsession.users_numuserid=users.numuserid\
+         and vsession.clmachine_numclmachineid=clmachine.numclmachineid";
+       addOptionRequest("name", options->getMachineId(), sqlRequest);
+    }
+
+    if(userIdSize!=0) {
+      addOptionRequest("userid", options->getUserId(), sqlRequest);
+    } else {
+            if(!listAll) {
+               addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest); 
+            }
+    } 
+
+    int status = options->getStatus();
+    addIntegerOptionRequest("state", status, sqlRequest);
+    
+    if(options->getSessionClosePolicy()) {
+       int closePolicy = options->getSessionClosePolicy();
+       addIntegerOptionRequest("closepolicy", closePolicy, sqlRequest);
+    }
+
+    if(options->getSessionInactivityDelay()) {
+      int timeOut = options->getSessionInactivityDelay(); 
+      addIntegerOptionRequest("timeout", timeOut, sqlRequest);
+    }
+   
+    if(options->getSessionId().size()!=0) {
+      addOptionRequest("vsessionid", options->getSessionId(), sqlRequest);
+    }
+
+    if(options->getStartDateOption()!=-1) {
+      long startDate = options->getStartDateOption();
+      addIntegerOptionRequest("creation", startDate, sqlRequest);
+    }
+   
+    if(options->getEndDateOption()!=-1) {
+      long endDate = options->getEndDateOption();
+      addIntegerOptionRequest("closure", endDate, sqlRequest);
+    }
+
+  }
 
 
   //To list sessions
   UMS_Data::ListSessions* list()
   {
     DatabaseResult *ListOfSessions;
-    //TODO : A COMPLETER
-    std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout \
-    from vsession, users where vsession.users_numuserid=users.numuserid";
+    std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect, \
+    creation, closure from vsession, users where vsession.users_numuserid=users.numuserid";
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -633,9 +725,9 @@ public:
       userServer.init();
       //if the user exists
       if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
 
+        processOptions(userServer, mparameters, sqlListOfSessions);      
+  
         //To get the list of sessions from the database
         ListOfSessions = mdatabaseVishnu->getResult(sqlListOfSessions.c_str());
 
@@ -649,24 +741,19 @@ public:
               session->setSessionId(*(ii));
               session->setUserId(*(++ii));
               session->setSessionKey(*(++ii));
-              /*session->setDateLastConnect(1297275819); //TODO: A voir avec Paco
-              session->setDateCreation(1297276819); //TODO: A voir avec Paco
-              session->setDateClosure(1297277819);*/ // TODO:A voir avec Paco
               session->setStatus(convertToInt(*(++ii)));
               session->setClosePolicy(convertToInt(*(++ii)));
               session->setTimeout(convertToInt(*(++ii)));
+              session->setDateLastConnect(convertToTimeType(*(++ii))); 
+              session->setDateCreation(convertToTimeType(*(++ii))); 
+              session->setDateClosure(convertToTimeType(*(++ii))); 
 
               mlistObject->getSessions().push_back(session);
           }
         }
-      } //End if the user is an admin
-      else {
-          UMSVishnuException e (4, "The user is not an admin");
-          throw e;
-        }
       }//End if the user exists
       else {
-        UMSVishnuException e (4, "The user is unknown");
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
     }
