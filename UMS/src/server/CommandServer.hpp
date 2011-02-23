@@ -42,7 +42,7 @@ public:
   * \return raises an exception on error
   */
 	int
-	record(std::string cmdType,
+	record(CmdType cmdType,
          std::string startTime = "CURRENT_TIMESTAMP",
          std::string endTime = "CURRENT_TIMESTAMP");
   /**

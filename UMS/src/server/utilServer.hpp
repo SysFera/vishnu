@@ -36,6 +36,19 @@ class Vishnuid {
     static std::string mvishnuid;
 };
 
+//TODO à mettre dans mapper
+/**
+* \enum CmdType
+* \brief The type of the command
+*/
+typedef enum CmdType{
+  UMS = 0,
+  TMS = 1,
+  FMS = 2,
+  IMS = 3
+} CmdType;
+
+
 /**
 * \enum IdType
 * \brief The type of id generated
