@@ -5,16 +5,20 @@
  * \date 31/01/2011
  */
 #include "OracleDatabase.hpp"
+#include "utilVishnu.hpp"
+
+using namespace std;
+using namespace vishnu;
 
 /**
  * \brief Function to process the request in the database
- * \fn    int process(std::string request)
+ * \fn    int process(string request)
  * \param request The request to process
  * \return raises an exception on error
  */
 int
-OracleDatabase::process(std::string req){
-  std::string errorMsg;
+OracleDatabase::process(string req){
+  string errorMsg;
   if (mstmt){
     try{
       mstmt->execute();
@@ -31,12 +35,12 @@ OracleDatabase::process(std::string req){
 
 /**
  * \brief To start a transaction with the database
- * \fn int startTransaction(std::string request)
+ * \fn int startTransaction(string request)
  * \param request The series of requests to process
  * \return raises an exception on error
  */
 int
-OracleDatabase::startTransaction(std::string request){
+OracleDatabase::startTransaction(string request){
   connect();
   return SUCCESS;
 }
@@ -48,7 +52,7 @@ OracleDatabase::startTransaction(std::string request){
  */
 int
 OracleDatabase::connect(){
-  std::string errorMsg;
+  string errorMsg;
   try{
     if (!menvironment){
       menvironment = Environment::createEnvironment(oracle::occi::Environment::DEFAULT);
@@ -66,10 +70,10 @@ OracleDatabase::connect(){
  * \fn Database()
  * \brief Constructor
  */
-OracleDatabase::OracleDatabase(std::string hostname,
-                               std::string username,
-                               std::string pwd,
-                               std::string database,
+OracleDatabase::OracleDatabase(string hostname,
+                               string username,
+                               string pwd,
+                               string database,
                                unsigned int port)
   :Database(), menvironment(NULL), mcon(NULL), mstmt(NULL), mres(NULL),
    mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port),
@@ -105,7 +109,7 @@ OracleDatabase::disconnect(){
  */
 int
 OracleDatabase::commit(){
-  std::string errorMsg;
+  string errorMsg;
   if (mcon){
     try{
       mcon->commit();
@@ -127,7 +131,7 @@ OracleDatabase::commit(){
  */
 int
 OracleDatabase::rollback(){
-  std::string errorMsg;
+  string errorMsg;
   if (mcon){
     try {
     mcon->rollback();
@@ -147,7 +151,7 @@ OracleDatabase::rollback(){
  * \return raises an exception on error
  */
 int
-OracleDatabase::setDatabase(std::string db){
+OracleDatabase::setDatabase(string db){
   mdatabase = db;
   return SUCCESS;
 }
@@ -159,11 +163,11 @@ OracleDatabase::setDatabase(std::string db){
  * \return An object which encapsulates the database results
  */
 DatabaseResult*
-OracleDatabase::getResult(std::string request) {
-  std::vector<std::vector<std::string> > results;
-  std::vector<std::string> attributesNames;
-  std::string errorMsg;
-  int size;
+OracleDatabase::getResult(string request) {
+  vector<vector<string> > results;
+  vector<string> colNames;
+  string errorMsg;
+  int nbCol;
   int i;
 
   if (mcon == NULL) {
@@ -173,20 +177,34 @@ OracleDatabase::getResult(std::string request) {
     mstmt = mcon->createStatement(request);
     mres = mstmt->executeQuery();
     mres->setCharacterStreamMode(2, 10000);
-    std::vector<MetaData> vec = mres->getColumnListMetaData();
-    size = vec.size();
+    vector<MetaData> vec = mres->getColumnListMetaData();
+    nbCol = vec.size();
+    vector<int> colTypes(nbCol);
+    colNames.resize(nbCol);
 
-    for (i=0;i<size;i++){
-      // TODO check column type
-      attributesNames.push_back(vec[i].getString(vec[i].getAttributeId(i+1)));
+    for (i=0;i<nbCol;i++){
+      colTypes[i] = vec[i].getInt(MetaData::ATTR_DATA_TYPE);
+      colNames[i] = vec[i].getString(MetaData::ATTR_NAME);
     }
 
     while(mres->next()){
-      std::vector<std::string> tmp = std::vector<std::string>();
-      for (i=1 ; i<=size; i++){ // Oracle count from 1 to size
-        tmp.push_back(mres->getString(i));
+      vector<string> rowValues = vector<string>();
+      for (i=1 ; i<=nbCol; i++){ // Oracle count from 1 to size
+        switch(colTypes[i]) {
+          case OCCI_SQLT_NUM:
+            rowValues.push_back(convertToString(mres->getInt(i)));
+            break;
+          case OCCI_SQLT_CHR:
+            rowValues.push_back(mres->getString(i));
+            break;
+          default:
+            errorMsg.append("Unknown column type (column: ");
+            errorMsg.append(colNames[i]);
+            errorMsg.append(")");
+            throw SystemException(ERRCODE_DBERR, errorMsg);
+        }
       }
-      results.push_back(tmp);
+      results.push_back(rowValues);
     }
     mstmt->closeResultSet(mres);
   } catch(oracle::occi::SQLException &e){
@@ -195,5 +213,5 @@ OracleDatabase::getResult(std::string request) {
     throw SystemException(ERRCODE_DBERR, errorMsg);
   }
 
-  return new DatabaseResult(results, attributesNames);
+  return new DatabaseResult(results, colNames);
 }
