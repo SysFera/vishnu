@@ -57,7 +57,7 @@ ServerUMS::init(int vishnuId,
   DatabaseResult *result;
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+Vishnuid::mvishnuid);
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout <<"SQL COMMAND:"<<sqlCommand<<std::endl;
 
   try {
 

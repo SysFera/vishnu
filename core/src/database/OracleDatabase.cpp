@@ -167,8 +167,8 @@ OracleDatabase::getResult(string request) {
   vector<vector<string> > results;
   vector<string> colNames;
   string errorMsg;
-  int nbCol;
-  int i;
+  unsigned int nbCol;
+  unsigned int i;
 
   if (mcon == NULL) {
     throw SystemException(ERRCODE_DBCONN, "Database is not connected");
@@ -186,16 +186,40 @@ OracleDatabase::getResult(string request) {
       colTypes[i] = vec[i].getInt(MetaData::ATTR_DATA_TYPE);
       colNames[i] = vec[i].getString(MetaData::ATTR_NAME);
     }
-
+//     unsigned int nbRows = mres->getNumArrayRows();
+//     cout << "RESULT CONTAINS " << nbRows << " ROW(s)" << endl;
+    int row = 0;
     while(mres->next()){
+//     for (int row=0; row < nbRows; row++) {
+      cout << "*** ROW " << row++ << endl;
       vector<string> rowValues = vector<string>();
-      for (i=1 ; i<=nbCol; i++){ // Oracle count from 1 to size
+      for (unsigned int i=0 ; i<nbCol; i++){
+        cout << i << " : " << colNames[i] << " : ";
+        cout << ((colTypes[i] == OCCI_SQLT_NUM) ? "NUM" : "OTHER") << endl;
+        unsigned int colId = i + 1; // Oracle count from 1 to size
+        string colValue;
+        Number num1;
+        if (mres->isNull(colId)) {
+          cout << "NULL COLUMN" << endl;
+          continue;
+        }
+        if (mres->isTruncated(colId)) {
+          cout << "TRUNCATED COLUMN" << endl;
+          continue;
+        }
         switch(colTypes[i]) {
           case OCCI_SQLT_NUM:
-            rowValues.push_back(convertToString(mres->getInt(i)));
+            cout << "Getting number : colId=" << colId << endl;
+            num1 = mres->getNumber(colId);
+            if (!num1.isNull()) {
+//               cout << "NUMBER IS " << ((int) num1) << endl;
+//               colValue = num1.toText(menvironment,"9999999");
+            } else
+              cout << "NULL Number value!" << endl;
             break;
           case OCCI_SQLT_CHR:
-            rowValues.push_back(mres->getString(i));
+            cout << "Getting String : colId=" << colId << endl;
+            colValue = mres->getString(colId);
             break;
           default:
             errorMsg.append("Unknown column type (column: ");
@@ -203,6 +227,8 @@ OracleDatabase::getResult(string request) {
             errorMsg.append(")");
             throw SystemException(ERRCODE_DBERR, errorMsg);
         }
+        cout << "VALUE:" << colValue << endl;
+        rowValues.push_back(colValue);
       }
       results.push_back(rowValues);
     }
