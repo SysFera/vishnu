@@ -11,9 +11,9 @@
  * \param msg to spread 
  */
 void sendErrorMsg(const std::string& msg) {
-    std::string msgWithHead = "Error: "+msg;
-    UMSVishnuException e(1, msgWithHead);
-    throw e;
+  std::string msgWithHead = "Error: "+msg;
+  UMSVishnuException e(1, msgWithHead);
+  throw e;
 }
 
 /**

@@ -7,7 +7,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
@@ -41,8 +40,12 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";
 
-   if(isNewLocalAccount) profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
-   else profile = diet_profile_alloc("localAccountUpdate", 1, 1, 2);
+   if(isNewLocalAccount) { 
+     profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
+   }
+   else {
+     profile = diet_profile_alloc("localAccountUpdate", 1, 1, 2);
+   }
               
    sessionKey = msessionProxy.getSessionKey();
 
@@ -65,7 +68,9 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
    //OUT Parameters
    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-   if(isNewLocalAccount) diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+   if(isNewLocalAccount) {
+     diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+   }
 
    if(!diet_call(profile)) {
        if(isNewLocalAccount) {
@@ -88,7 +93,8 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
          }
       }
       msshPublicKey = sshPublicKey;
-      if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+      //Print successfull message if erroInfo is empty
+      printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected");
@@ -165,7 +171,8 @@ int LocalAccountProxy::deleteLocalAccount()
          errMsg(msg);
          sendErrorMsg(msg); 
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
      sendErrorMsg(" the function diet_call is rejected");

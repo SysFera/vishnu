@@ -7,7 +7,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 #include <fstream>
 
 #include "UMSVishnuException.hpp"
@@ -68,7 +67,7 @@ UtilsProxy::initilialize() {
  * \fn  void finalize()
  * \return raises an exception on error
  */
-int
+void
 UtilsProxy::finalize() {
  diet_finalize();
 }
