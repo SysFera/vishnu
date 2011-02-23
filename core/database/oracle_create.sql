@@ -27,12 +27,12 @@ CREATE SEQUENCE s_vishnu;
 
 CREATE OR REPLACE TRIGGER AINC_vishnu
 BEFORE INSERT  ON vishnu
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.vishnuid IS NULL) THEN 
-    SELECT s_vishnu.NEXTVAL INTO :NEW.vishnuid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.vishnuid IS NULL) THEN
+    SELECT s_vishnu.NEXTVAL INTO :NEW.vishnuid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -57,11 +57,11 @@ CREATE SEQUENCE s_users;
 
 CREATE OR REPLACE TRIGGER AINC_users
 BEFORE INSERT  ON users
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numuserid IS NULL) THEN 
-    SELECT s_users.NEXTVAL INTO :NEW.numuserid FROM DUAL; 
-  END IF; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numuserid IS NULL) THEN
+    SELECT s_users.NEXTVAL INTO :NEW.numuserid FROM DUAL;
+  END IF;
 END;
 
 /
@@ -79,12 +79,12 @@ CREATE SEQUENCE s_optionu;
 
 CREATE OR REPLACE TRIGGER AINC_optionu
 BEFORE INSERT  ON optionu
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numoptionid IS NULL) THEN 
-    SELECT s_optionu.NEXTVAL INTO :NEW.numoptionid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numoptionid IS NULL) THEN
+    SELECT s_optionu.NEXTVAL INTO :NEW.numoptionid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -100,12 +100,12 @@ CREATE SEQUENCE s_clmachine;
 
 CREATE OR REPLACE TRIGGER AINC_clmachine
 BEFORE INSERT  ON clmachine
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numclmachineid IS NULL) THEN 
-    SELECT s_clmachine.NEXTVAL INTO :NEW.numclmachineid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numclmachineid IS NULL) THEN
+    SELECT s_clmachine.NEXTVAL INTO :NEW.numclmachineid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -130,12 +130,12 @@ CREATE SEQUENCE s_machine;
 
 CREATE OR REPLACE TRIGGER AINC_machine
 BEFORE INSERT  ON machine
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.nummachineid IS NULL) THEN 
-    SELECT s_machine.NEXTVAL INTO :NEW.nummachineid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.nummachineid IS NULL) THEN
+    SELECT s_machine.NEXTVAL INTO :NEW.nummachineid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -157,12 +157,12 @@ CREATE SEQUENCE s_state;
 
 CREATE OR REPLACE TRIGGER AINC_state
 BEFORE INSERT  ON state
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numstateid IS NULL) THEN 
-    SELECT s_state.NEXTVAL INTO :NEW.numstateid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numstateid IS NULL) THEN
+    SELECT s_state.NEXTVAL INTO :NEW.numstateid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -183,12 +183,12 @@ CREATE SEQUENCE s_cpu;
 
 CREATE OR REPLACE TRIGGER AINC_cpu
 BEFORE INSERT  ON cpu
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.cpuid IS NULL) THEN 
-    SELECT s_cpu.NEXTVAL INTO :NEW.cpuid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.cpuid IS NULL) THEN
+    SELECT s_cpu.NEXTVAL INTO :NEW.cpuid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -207,12 +207,12 @@ CREATE SEQUENCE s_description;
 
 CREATE OR REPLACE TRIGGER AINC_description
 BEFORE INSERT  ON description
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numdescriptionid IS NULL) THEN 
-    SELECT s_description.NEXTVAL INTO :NEW.numdescriptionid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numdescriptionid IS NULL) THEN
+    SELECT s_description.NEXTVAL INTO :NEW.numdescriptionid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -240,12 +240,12 @@ CREATE SEQUENCE s_vsession;
 
 CREATE OR REPLACE TRIGGER AINC_vsession
 BEFORE INSERT  ON vsession
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numsessionid IS NULL) THEN 
-    SELECT s_vsession.NEXTVAL INTO :NEW.numsessionid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numsessionid IS NULL) THEN
+    SELECT s_vsession.NEXTVAL INTO :NEW.numsessionid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -268,12 +268,12 @@ CREATE SEQUENCE s_account;
 
 CREATE OR REPLACE TRIGGER AINC_account
 BEFORE INSERT  ON account
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numaccountid IS NULL) THEN 
-    SELECT s_account.NEXTVAL INTO :NEW.numaccountid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numaccountid IS NULL) THEN
+    SELECT s_account.NEXTVAL INTO :NEW.numaccountid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -294,12 +294,12 @@ CREATE SEQUENCE s_optionvalue;
 
 CREATE OR REPLACE TRIGGER AINC_optionvalue
 BEFORE INSERT  ON optionvalue
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numoptionvalueid IS NULL) THEN 
-    SELECT s_optionvalue.NEXTVAL INTO :NEW.numoptionvalueid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numoptionvalueid IS NULL) THEN
+    SELECT s_optionvalue.NEXTVAL INTO :NEW.numoptionvalueid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -321,12 +321,12 @@ CREATE SEQUENCE s_threshold;
 
 CREATE OR REPLACE TRIGGER AINC_threshold
 BEFORE INSERT  ON threshold
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.thresholdid IS NULL) THEN 
-    SELECT s_threshold.NEXTVAL INTO :NEW.thresholdid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.thresholdid IS NULL) THEN
+    SELECT s_threshold.NEXTVAL INTO :NEW.thresholdid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -335,7 +335,7 @@ END;
 CREATE TABLE command (
   numcommandid INTEGER   NOT NULL ,
   vsession_numsessionid INTEGER   NOT NULL ,
-  starttype TIMESTAMP    ,
+  starttime TIMESTAMP    ,
   endtime TIMESTAMP    ,
   description VARCHAR(255)    ,
   ctype INTEGER      ,
@@ -347,12 +347,12 @@ CREATE SEQUENCE s_command;
 
 CREATE OR REPLACE TRIGGER AINC_command
 BEFORE INSERT  ON command
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numcommandid IS NULL) THEN 
-    SELECT s_command.NEXTVAL INTO :NEW.numcommandid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numcommandid IS NULL) THEN
+    SELECT s_command.NEXTVAL INTO :NEW.numcommandid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -377,12 +377,12 @@ CREATE SEQUENCE s_filetransfer;
 
 CREATE OR REPLACE TRIGGER AINC_filetransfer
 BEFORE INSERT  ON filetransfer
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numfiletransferid IS NULL) THEN 
-    SELECT s_filetransfer.NEXTVAL INTO :NEW.numfiletransferid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numfiletransferid IS NULL) THEN
+    SELECT s_filetransfer.NEXTVAL INTO :NEW.numfiletransferid FROM DUAL;
+  END IF;
+END;
 
 /
 
@@ -402,11 +402,11 @@ CREATE SEQUENCE s_filesub;
 
 CREATE OR REPLACE TRIGGER AINC_filesub
 BEFORE INSERT  ON filesub
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numfileid IS NULL) THEN 
-    SELECT s_filesub.NEXTVAL INTO :NEW.numfileid FROM DUAL; 
-  END IF; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numfileid IS NULL) THEN
+    SELECT s_filesub.NEXTVAL INTO :NEW.numfileid FROM DUAL;
+  END IF;
 END;
 
 /
@@ -430,12 +430,12 @@ CREATE SEQUENCE s_job;
 
 CREATE OR REPLACE TRIGGER AINC_job
 BEFORE INSERT  ON job
-FOR EACH ROW 
-BEGIN 
-  IF (:NEW.numjobid IS NULL) THEN 
-    SELECT s_job.NEXTVAL INTO :NEW.numjobid FROM DUAL; 
-  END IF; 
-END; 
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numjobid IS NULL) THEN
+    SELECT s_job.NEXTVAL INTO :NEW.numjobid FROM DUAL;
+  END IF;
+END;
 
 /
 

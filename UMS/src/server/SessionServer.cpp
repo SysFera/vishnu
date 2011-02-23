@@ -249,14 +249,22 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
 }
 
 /**
-* \brief Function to log the session information
-* \fn int saveConnection(std::string commandName)
-* \param cmdName The command to log
-* \param attrname the name of the attribut to get
+* \brief Function to save the date of the last connection
+* \fn int saveConnection()
 * \return raises an exception on error
 */
 int
 SessionServer::saveConnection() {
+
+  std::string sqlCommand = "UPDATE vsession SET lastconnect=CURRENT_TIMESTAMP\
+  WHERE sessionkey='"+msession.getSessionKey()+"'";
+
+  try {
+    mdatabaseVishnu->process(sqlCommand.c_str());
+  }
+  catch (VishnuException& e) {
+    throw;
+  }
   return 0;
 }
 

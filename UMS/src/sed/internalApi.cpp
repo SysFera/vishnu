@@ -147,6 +147,20 @@ solveSessionClose(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   try {
     sessionServer.close();
+
+    //MAPPER CREATION
+    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_close");
+    mapper->code(std::string(sessionKey), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+    std::cout << "key : " << mapperkey << endl;
+    std::cout << "Mapper result" << cmd << std::endl;
+    CommandServer commandServer = CommandServer(cmd, sessionServer);
+    commandServer.record(0);
+
+
+    //To save the last connection on the database
+    sessionServer.saveConnection();
     //OUT Parameter
     diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
