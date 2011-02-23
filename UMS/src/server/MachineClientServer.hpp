@@ -29,41 +29,41 @@ public:
   * \param sshKey The ssh key of the client machine
   * \param host The name of the client host
   */
-  MachineClientServer(std::string sshKey, std::string host); 
+  MachineClientServer(std::string sshKey, std::string host);
   /**
   * \brief Function to record the client machine on the database
   * \fn int recordMachineClient()
   * \return raises an exception on error
   */
-  int 
+  int
   recordMachineClient();
   /**
   * \brief Function to get the id number of the client machine
   * \fn std::string getId()
   * \return raises an exception on error
   */
-  std::string 
+  std::string
   getId();
   /**
   * \brief Function to get the ssh key of the client machine
   * \fn std::string getSSHKey()
   * \return raises an exception on error
   */
-  std::string 
+  std::string
   getSSHKey() const;
   /**
   * \brief Function to get the hostname of the client machine
   * \fn std::string getHost()
   * \return raises an exception on error
   */
-  std::string 
+  std::string
   getHost() const;
   /**
   * \fn ~MachineClientServer()
   * \brief Destructor
   */
   ~MachineClientServer();
-  
+
 private:
    /////////////////////////////////
   // Attributes
@@ -80,7 +80,7 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
@@ -91,4 +91,4 @@ private:
   */
   bool exist();
 };
-#endif//MACHINE_CLIENT_SERVER_H 
+#endif//MACHINE_CLIENT_SERVER_H
