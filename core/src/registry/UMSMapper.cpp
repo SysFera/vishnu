@@ -70,3 +70,59 @@ UMSMapper::getKey(const string& command, string& key){
     }
   }
 }
+
+int
+UMSMapper::code(const string& cmd, unsigned int code){
+  map<int, string>::iterator it;
+  int size;
+  string key;
+  // If existing code -> add to the existing entry
+  if(code){
+    it = mcmd.find(code);
+    if (it==mcmd.end()){
+      throw new SystemException(ERRCODE_SYSTEM, "Error wrong code to build command: "+cmd);
+    }
+    it->second += "#";
+    if (cmd.compare("")==0){
+      it->second += " ";
+    }else {
+      it->second += cmd;
+    }
+    return 0;
+  }
+
+  // Else creating a new unique key and insert in the map
+  pthread_mutex_lock(&mutex);
+  size = mcmd.size() + 1;
+  while (true){
+    it = mcmd.find(size);
+    if (it==mcmd.end()){
+      break;
+    }
+    size++;
+  }
+  getKey(cmd, key);
+  mcmd.insert(pair<int, string>(size, key));
+  pthread_mutex_unlock(&mutex);
+
+}
+
+string
+UMSMapper::finalize(int key){
+  map<int, string>::iterator it;
+  string res;
+  pthread_mutex_lock(&mutex);
+  it = mcmd.find(key);
+  if (it==mcmd.end()){
+    throw new SystemException(ERRCODE_SYSTEM, "Unknown key to finalize");
+  }
+  res = it->second;
+  mcmd.erase(it->first);
+  pthread_mutex_unlock(&mutex);
+}
+
+string
+UMSMapper::decodeCPP (const string& msg){
+  // TODO
+  return "";
+}

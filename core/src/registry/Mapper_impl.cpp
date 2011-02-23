@@ -51,3 +51,18 @@ Mapper_impl::getKey(const string& command, string& key){
     }
   }
 }
+
+int
+Mapper_impl::code(const string& cmd, unsigned int code ) {
+  return 0;
+}
+ 
+string
+Mapper_impl::finalize(int key){
+  return "";
+}
+  
+string
+Mapper_impl::decodeCPP (const string& msg){
+  return "";
+}
