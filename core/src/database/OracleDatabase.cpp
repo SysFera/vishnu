@@ -162,7 +162,6 @@ DatabaseResult*
 OracleDatabase::getResult(std::string request) {
   std::vector<std::vector<std::string> > results;
   std::vector<std::string> attributesNames;
-  std::vector<std::string> tmp;
   std::string errorMsg;
   int size;
   int i;

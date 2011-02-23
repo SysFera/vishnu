@@ -151,10 +151,6 @@ private :
    * \brief If the connection is right
    */
   bool misConnected;
-  /**
-   * \brief The current transaction
-   */
-  std::string SQLtransaction;
 
   /////////////////////////////////
   // Functions
