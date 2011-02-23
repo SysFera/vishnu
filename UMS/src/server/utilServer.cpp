@@ -117,77 +117,68 @@ utilServer::getKeywords (int* size, Format_t* array, const char* format, int cpt
   strftime (month, 3, "%m", &tmtime);
   strftime (day, 3, "%d", &tmtime);
 
-  /*struct tm = to_tm(ptime);
-  year = std::string(now.date().year());
-  month = std::string(now.date().month());
-  day = std::string(now.date().day());
-*/
-  #ifdef DEBUG
-  fprintf (stderr, "Temps : an ->%s<- \n", year.c_str());
-  fprintf (stderr, "Temps : mois ->%s<- \n", month.c_str());
-  fprintf (stderr, "Temps : jour ->%s<- \n", day.c_str());
-#endif
   // Loop parsing for the variables, setting their position and their value
   for (i=0;i<strlen (format);i++){
     if (format[i]=='$'){
       if (isDay (format+i+1)){
-  array[*size].start = i;
-  array[*size].end = i+3;
-  array[*size].value.append (std::string (day));
-  (*size) ++;
-      }else if (isMonth (format+i+1)){
-  array[*size].value = std::string (month);
-  array[*size].start = i;
-  array[*size].end = i+5;
-  (*size) ++;
-      }else if (isYear (format+i+1)){
-  array[*size].start = i;
-  array[*size].end = i+4;
-  array[*size].value = std::string (year);
-  (*size) ++;
-      }else if (isCpt (format+i+1)){
-  char tmp[10];
-  sprintf (tmp, "%d", cpt);
-  array[*size].value = std::string (tmp);
-  array[*size].start = i;
-  array[*size].end = i+3;
-  (*size) ++;
-      }else if (isSite (format+i+1)){
-  array[*size].value = site;
-  array[*size].start = i;
-  array[*size].end = i+4;
-  (*size) ++;
-      }else if (isMaName (format+i+1)){
-  array[*size].value = name;
-  array[*size].start = i;
-  array[*size].end = i+6;
-  (*size) ++;
-      }else if (isUName (format+i+1)){
-  array[*size].value = name;
-  array[*size].start = i;
-  array[*size].end = i+5;
-  (*size) ++;
-      }else if (isType (format+i+1)){
-  switch (type){
-    case 0 :
-      array[*size].value = "M";
-      break;
-    case 1 :
-      array[*size].value = "U";
-      break;
-    case 2 :
-      array[*size].value = "J";
-      break;
-    case 3 :
-      array[*size].value = "F";
-      break;
-  }
-  array[*size].start = i;
-  array[*size].end = i+4;
-  (*size) ++;
-      } else {
-  SystemException e (ERRCODE_SYSTEM, "It is not possible to parse "+std::string(format));
-  throw e;
+        array[*size].start = i;
+        array[*size].end = i+3;
+        array[*size].value.append (std::string (day));
+        (*size) ++;
+            }else if (isMonth (format+i+1)){
+        array[*size].value = std::string (month);
+        array[*size].start = i;
+        array[*size].end = i+5;
+        (*size) ++;
+            }else if (isYear (format+i+1)){
+        array[*size].start = i;
+        array[*size].end = i+4;
+        array[*size].value = std::string (year);
+        (*size) ++;
+            }else if (isCpt (format+i+1)){
+        char tmp[10];
+        sprintf (tmp, "%d", cpt);
+        array[*size].value = std::string (tmp);
+        array[*size].start = i;
+        array[*size].end = i+3;
+        (*size) ++;
+            }else if (isSite (format+i+1)){
+        array[*size].value = site;
+        array[*size].start = i;
+        array[*size].end = i+4;
+        (*size) ++;
+            }else if (isMaName (format+i+1)){
+        array[*size].value = name;
+        array[*size].start = i;
+        array[*size].end = i+6;
+        (*size) ++;
+            }else if (isUName (format+i+1)){
+        array[*size].value = name;
+        array[*size].start = i;
+        array[*size].end = i+5;
+        (*size) ++;
+      } else if (isType (format+i+1)) {
+                switch (type){
+                  case 0 :
+                    array[*size].value = "M";
+                    break;
+                  case 1 :
+                    array[*size].value = "U";
+                    break;
+                  case 2 :
+                    array[*size].value = "J";
+                    break;
+                  case 3 :
+                    array[*size].value = "F";
+                    break;
+                }
+                array[*size].start = i;
+                array[*size].end = i+4;
+                (*size) ++;
+      }
+      else {
+        SystemException e (ERRCODE_SYSTEM, "It is not possible to parse "+std::string(format));
+        throw e;
       }
     }
   }
@@ -203,23 +194,33 @@ utilServer::getGeneratedName (const char* format, int cpt, IdType type,
   int  i;
   int  size;
   Format_t *keywords;
-  keywords = new Format_t[strlen(format)+1];
-  getKeywords (&size, keywords, format, cpt, type, name, site); // Getting var and their value
 
-  // Building the id using the format and the values of the var
-  if (size>0)
-    res.append (format, keywords[0].start);
-  else
-    res = std::string (format);
-  for (i=0;i<size;i++){
-    res.append (keywords[i].value);
-    // If other variables
-    if (*(format+keywords[i].end+1) != '\0' && i!=size-1)
-      res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
-    // If text after the variable
-    else if (*(format+keywords[i].end+1) != '\0' ){
-      res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
+  //if the format is not defined
+  if (std::string(format).size() != 0) {
+
+    keywords = new Format_t[strlen(format)+1];
+    getKeywords (&size, keywords, format, cpt, type, name, site); // Getting var and their value
+
+    // Building the id using the format and the values of the var
+
+    if (size>0)
+      res.append (format, keywords[0].start);
+    else
+      res = std::string (format);
+    for (i=0;i<size;i++){
+      res.append (keywords[i].value);
+      // If other variables
+      if (*(format+keywords[i].end+1) != '\0' && i!=size-1)
+        res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
+      // If text after the variable
+      else if (*(format+keywords[i].end+1) != '\0' ){
+        res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
+      }
     }
+  } //END if the format is not defined
+  else {
+    SystemException e (ERRCODE_SYSTEM, "The corresponding format has to be defined");
+    throw e;
   }
   return res;
 }

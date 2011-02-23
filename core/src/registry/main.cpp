@@ -37,7 +37,7 @@ int main(int argc, char** argv){
     titi += tmp.str();
     tmp2 << (i%5+1);
     key = tmp2.str();
-    mr->getMapper(titi, &m);
+    m = mr->getMapper(titi);
     m->getCommand(key, command);
     cout << " key = " << key << " and command = " << command << " for mapper " << titi << endl;
   }

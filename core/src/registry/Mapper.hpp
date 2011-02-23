@@ -25,21 +25,22 @@ public :
   Mapper(MapperRegistry* reg);
   Mapper();
   ~Mapper();
+  Mapper(const Mapper& m);
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper() = 0
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  registerMapper() = 0;
+  registerMapper(){return 0;}
 
   /**
    * \brief To unregister a mapper in the list of active mapper
    * \fn virtual int unregisterMapper() = 0
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
-  unregisterMapper() = 0;
+  virtual int
+  unregisterMapper() {return 0;}
 
   /**
    * \brief To get the command corresponding to a key
@@ -47,7 +48,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getCommand(const string& key,string& command) = 0;
+  getCommand(const string& key,string& command) {return 0;}
 
   /**
    * \brief To get the key corresponding to a command
@@ -55,7 +56,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getKey(const string& command, string& key) = 0;
+  getKey(const string& command, string& key) {return 0;}
 
   /**
    * \brief Function to add an element to code
@@ -65,7 +66,7 @@ public :
    * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
    */
   virtual int
-  code(const string& cmd, unsigned int code = 0) = 0;
+  code(const string& cmd, unsigned int code = 0) {return 0;}
 
   /**
    * \brief To end a command, delete it from the map and get its value
@@ -74,7 +75,7 @@ public :
    * \return The coded value of the command
    */
   virtual string
-  finalize(int key) = 0;
+  finalize(int key) {return "";}
 
   /**
    * \brief To get, from a coded string, the CPP command that made it
@@ -83,7 +84,7 @@ public :
    * \return The CPP command
    */
   virtual string
-  decodeCPP (const string& msg) = 0 ;
+  decodeCPP (const string& msg) {return "";}
 
 protected:
   MapperRegistry* mreg;
