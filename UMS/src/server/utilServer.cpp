@@ -7,6 +7,8 @@
 
 #include "utilServer.hpp"
 
+std::string Vishnuid::mvishnuid = "";
+
 /**
 * \brief Function to convert a string to int
 * \fn    std::string convertToString(const T& val);
