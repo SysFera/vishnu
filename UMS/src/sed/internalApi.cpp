@@ -130,9 +130,19 @@ solveSessionClose(diet_profile_t* pb) {
   char *sessionKey = NULL;
   std::string empty("");
   std::string errorInfo;
+  int mapperkey;
+  std::string cmd;
+  Mapper* mapper;
 
   //IN Parameter
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+
+  mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+  mapperkey = mapper->code("vishnu_close");
+  mapper->code(std::string(sessionKey), mapperkey);
+  cmd = mapper->finalize(mapperkey);
+  std::cout << "key : " << mapperkey << endl;
+  std::cout << "Mapper result" << cmd << std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   try {

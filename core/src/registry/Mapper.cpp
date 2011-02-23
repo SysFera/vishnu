@@ -13,6 +13,9 @@ Mapper::Mapper(){
   }
 }
 
+Mapper::Mapper(const Mapper& m){
+ *this = m;
+}
 Mapper::~Mapper(){
   pthread_mutex_destroy(&mutex);
 }
