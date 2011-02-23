@@ -10,7 +10,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
@@ -165,7 +164,8 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
          errMsg(msg);
          sendErrorMsg(msg); 
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected"); 
@@ -226,7 +226,8 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
           errMsg(msg);
           sendErrorMsg(msg);
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
        sendErrorMsg(" the function diet_call is rejected");
