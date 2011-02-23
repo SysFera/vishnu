@@ -178,7 +178,7 @@ CREATE TABLE command (
   vsession_numsessionid INTEGER   NOT NULL ,
   starttime TIMESTAMP    ,
   endtime TIMESTAMP    ,
-  description VARCHAR(255)    ,
+  description TEXT    ,
   ctype INTEGER      ,
 PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)
