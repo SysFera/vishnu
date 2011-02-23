@@ -130,9 +130,7 @@ solveSessionClose(diet_profile_t* pb) {
   char *sessionKey = NULL;
   std::string empty("");
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-
 
   //IN Parameter
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
