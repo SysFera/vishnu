@@ -28,6 +28,15 @@ using namespace boost::posix_time;
 using namespace boost::gregorian;
 
 /**
+* \class Vishnuid
+* \brief The Vishnuid class encapsulates the global vishnu id
+*/
+class Vishnuid {
+  public:
+    static std::string mvishnuid;
+};
+
+/**
 * \enum IdType
 * \brief The type of id generated
 */
@@ -66,6 +75,7 @@ namespace utilServer {
 
   static const std::string ROOTUSERNAME = "root";
   static const std::string DATABASENAME = "vishnu";
+  static const std::string UMSMAPPERNAME = "UMS";
 
   /**
   * \brief Generic function to convert an object to string

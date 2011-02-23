@@ -19,7 +19,6 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include"utilServer.hpp"
-#include "Vishnuid.hpp"
 
 using namespace utilServer;
 
@@ -45,24 +44,24 @@ public:
   MachineServer(UMS_Data::Machine*& machine, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU machine
-  * \fn int add() 
+  * \fn int add()
   * \return raises an exception on error
   */
-  int 
+  int
   add();
   /**
   * \brief Function to update a VISHNU machine
-  * \fn int update() 
+  * \fn int update()
   * \return raises an exception on error
   */
-  int 
+  int
   update();
   /**
   * \brief Function to delete a VISHNU machine
-  * \fn int deleteMachine() 
+  * \fn int deleteMachine()
   * \return raises an exception on error
   */
-  int 
+  int
   deleteMachine();
   /**
   * \fn ~MachineServer()
@@ -83,8 +82,8 @@ public:
   * \param attrname the name of the attribut to get
   * \return the value of the attribut or empty string if no results
   */
-  std::string 
-  getAttribut(std::string condition, std::string attrname = "nummachineid");  
+  std::string
+  getAttribut(std::string condition, std::string attrname = "nummachineid");
   /**
   * \brief Function to get the content of the public ssh key
   * \fn std::string getPublicKey()
@@ -92,7 +91,7 @@ public:
   */
   std::string
   getPublicKey();
-  
+
 private:
   /////////////////////////////////
   // Attributes
@@ -113,7 +112,7 @@ private:
   * \brief The content of the ssh public key
   */
   std::string msshpublickey;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
@@ -121,7 +120,7 @@ private:
   * \brief Function to generate a machine id
   * \fn generateMachineId()
   */
-  std::string 
+  std::string
   generateMachineId();
 };
 #endif

@@ -22,7 +22,6 @@
 #include "DatabaseResult.hpp"
 #include "SessionServer.hpp"
 #include "utilServer.hpp"
-#include "Vishnuid.hpp"
 
 using namespace utilServer;
 class SessionServer;
@@ -35,38 +34,38 @@ class UserServer {
 public:
   /**
   * \brief Constructor
-  * \fn UserServer(std::string userId, std::string password) 
+  * \fn UserServer(std::string userId, std::string password)
   * \param userId The userId of the user
   * \param password The password of the user
   */
   UserServer(std::string userId, std::string password);
   /**
   * \brief Constructor
-  * \fn UserServer(const UMS_Data::User& user) 
+  * \fn UserServer(const UMS_Data::User& user)
   * \param user The user data structure
   */
   UserServer(const UMS_Data::User& user);
   /**
   * \brief Constructor
-  * \fn UserServer(SessionServer sessionServer) 
+  * \fn UserServer(SessionServer sessionServer)
   * \param sessionServer The object to manipulate session
   */
   UserServer(SessionServer sessionServer);
   /**
   * \brief Function to add a new VISHNU user
-  * \fn int add(UMS_Data::User*& user) 
+  * \fn int add(UMS_Data::User*& user)
   * \param user The user data structure
   * \return raises an exception on error
   */
-  int 
+  int
   add(UMS_Data::User*& user);
   /**
   * \brief Function to update user information
-  * \fn int update(UMS_Data::User*& user) 
+  * \fn int update(UMS_Data::User*& user)
   * \param user The user data structure
   * \return raises an exception on error
   */
-  int 
+  int
   update(UMS_Data::User* user);
   /**
   * \brief Function to delete VISHNU user
@@ -74,7 +73,7 @@ public:
   * \param user The user data structure
   * \return raises an exception on error
   */
-  int 
+  int
   deleteUser(UMS_Data::User user);
   /**
   * \brief Function to change VISHNU user password
@@ -82,7 +81,7 @@ public:
   * \param newPassword The new password of the user
   * \return raises an exception on error
   */
-  int 
+  int
   changePassword(std::string newPassword);
   /**
   * \brief Function to change VISHNU user password
@@ -90,7 +89,7 @@ public:
   * \param user The user data structure
   * \return raises an exception on error
   */
-  int 
+  int
   resetPassword(UMS_Data::User user);
   /**
   * \fn ~UserServer()
@@ -102,13 +101,13 @@ public:
   * \fn UMS_Data::User getData()
   * \return  The user data structure
   */
-  UMS_Data::User 
+  UMS_Data::User
   getData();
   /**
-  * \brief Function to initialize user data for constructor with sessionServer 
+  * \brief Function to initialize user data for constructor with sessionServer
   * \fn init()
   */
-  void 
+  void
   init();
   /**
   * \brief Function to check user on database
@@ -116,14 +115,14 @@ public:
   * \param flagForChangePwd A flag to check the password state
   * \return true if the password state has not to be checked else false
   */
-  bool 
+  bool
   exist(bool flagForChangePwd = false);
   /**
   * \brief Function to check the VISHNU user privilege
   * \fn bool isAdmin()
   * \return true if the user is an admin else false
   */
-  bool 
+  bool
   isAdmin();
   /**
   * \brief Function to check the user attribut value
@@ -132,7 +131,7 @@ public:
   * \param valueOk the value which will be compare to attribut name value
   * \return true if the attributName value is valueOk
   */
-  bool 
+  bool
   isAttributOk(std::string attributName, int valueOk);//return if the password state ok
   /**
   * \brief Function to get user information from the database vishnu
@@ -141,7 +140,7 @@ public:
   * \param attrname the name of the attribut to get
   * \return the value of the attribut or empty string if no results
   */
-  std::string 
+  std::string
   getAttribut(std::string condition, std::string attrname = "numuserid");
   /**
   * \brief Function to check a userId
@@ -151,9 +150,9 @@ public:
   */
   bool
   existuserId(std::string userId);
-  
+
 private:
-  
+
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
@@ -180,8 +179,8 @@ private:
   * \param value2 a string used to generate the password
   * \return an encrypted message
   */
-  std::string 
+  std::string
   generatePassword(std::string value1, std::string value2);
-	
+
 };
 #endif

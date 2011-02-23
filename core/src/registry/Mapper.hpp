@@ -10,7 +10,9 @@
 
 #include <map>
 
+#include <pthread.h>
 #include "MapperRegistry.hpp"
+
 class MapperRegistry;
 using namespace std;
 
@@ -22,21 +24,23 @@ class Mapper{
 public :
   Mapper(MapperRegistry* reg);
   Mapper();
+  ~Mapper();
+  Mapper(const Mapper& m);
   /**
    * \brief To register a mapper in the list of active mapper
    * \fn virtual int registerMapper() = 0
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  registerMapper() = 0;
+  registerMapper(){return 0;}
 
   /**
    * \brief To unregister a mapper in the list of active mapper
    * \fn virtual int unregisterMapper() = 0
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
-  unregisterMapper() = 0;
+  virtual int
+  unregisterMapper() {return 0;}
 
   /**
    * \brief To get the command corresponding to a key
@@ -44,7 +48,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getCommand(const string& key,string& command) = 0;
+  getCommand(const string& key,string& command) {return 0;}
 
   /**
    * \brief To get the key corresponding to a command
@@ -52,13 +56,43 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getKey(const string& command, string& key) = 0;
+  getKey(const string& command, string& key) {return 0;}
+
+  /**
+   * \brief Function to add an element to code
+   * \fn  virtual int code(const string& cmd, unsigned int code = 0) = 0;
+   * \param cmd The string to add
+   * \param code If 0, the code is created, otherwize it is the key in the map to add the string
+   * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
+   */
+  virtual int
+  code(const string& cmd, unsigned int code = 0) {return 0;}
+
+  /**
+   * \brief To end a command, delete it from the map and get its value
+   * \fn virtual string finalize(int key) = 0;
+   * \param The entry in the map to get an remove
+   * \return The coded value of the command
+   */
+  virtual string
+  finalize(int key) {return "";}
+
+  /**
+   * \brief To get, from a coded string, the CPP command that made it
+   * \fn virtual string decodeCPP (const string& msg) = 0 ;
+   * \param msg The coded string
+   * \return The CPP command
+   */
+  virtual string
+  decodeCPP (const string& msg) {return "";}
 
 protected:
   MapperRegistry* mreg;
   map<string, string> mmap;
   string mname;
 
+  map<int, string> mcmd;
+  pthread_mutex_t mutex;
 private:
 };
 

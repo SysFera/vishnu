@@ -80,6 +80,6 @@ genCli(${cli})
 
 endforeach(cli)
 
-
+install( TARGETS cli-utils DESTINATION lib )
 
 
