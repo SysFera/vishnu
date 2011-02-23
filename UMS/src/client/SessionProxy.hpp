@@ -10,7 +10,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 //EMF
 #include <ecore.hpp> // Ecore metamodel
