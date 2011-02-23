@@ -176,7 +176,7 @@ PRIMARY KEY(thresholdid),
 CREATE TABLE command (
   numcommandid SERIAL  NOT NULL ,
   vsession_numsessionid INTEGER   NOT NULL ,
-  starttype TIMESTAMP    ,
+  starttime TIMESTAMP    ,
   endtime TIMESTAMP    ,
   description VARCHAR(255)    ,
   ctype INTEGER      ,
@@ -232,14 +232,9 @@ PRIMARY KEY(numjobid),
     REFERENCES command(numcommandid));
 
 
--- Put the connect rights on pgadmin3 to Role vishnu_db_admin and vishnu_user
--- Put connection with md5 on pg_hba.conf
--- CREATE Role Vishnu Database Administrator
--- Put password for connection for all roles:
--- With psql --> ALTER USER vishnu_user WITH ENCRYPTED PASSWORD 'your password';
 
--- CREATE ROLE vishnu_db_admin;
--- CREATE ROLE vishnu_user;
+-- Role Creation;
+
 CREATE USER vishnu_user WITH PASSWORD 'vishnu_user';
 CREATE USER vishnu_db_admin;
 
