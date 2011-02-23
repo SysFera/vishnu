@@ -155,8 +155,8 @@ solveSessionClose(diet_profile_t* pb) {
     cmd = mapper->finalize(mapperkey);
     std::cout << "key : " << mapperkey << endl;
     std::cout << "Mapper result" << cmd << std::endl;
-    CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(0);
+    //CommandServer commandServer = CommandServer(cmd, sessionServer);
+    //commandServer.record(0);
 
 
     //To save the last connection on the database
