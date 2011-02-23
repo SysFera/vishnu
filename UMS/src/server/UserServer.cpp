@@ -70,6 +70,7 @@ UserServer::add(UMS_Data::User*& user) {
         std::cout << "password to sent by mail to the user:" << user->getPassword() << std::endl;
 
         userCpt = convertToInt(getAttrVishnu("usercpt", Vishnuid::mvishnuid));
+
         //Generation of userid
         idUserGenerated =
         getGeneratedName(getAttrVishnu("formatiduser", Vishnuid::mvishnuid).c_str(),

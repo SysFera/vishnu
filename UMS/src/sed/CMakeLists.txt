@@ -26,6 +26,7 @@ add_executable(umssed
 target_link_libraries(umssed
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
+  register-vishnu
   exception-vishnu
   database-vishnu
   ums-server

@@ -11,7 +11,7 @@
 
 #include <map>
 
-#include "InternalVishnuException.hpp"
+#include "SystemException.hpp"
 #include "Mapper.hpp"
 
 using namespace std;
@@ -29,7 +29,7 @@ public :
    * \param m The mapper
    * \return 0 on success, an error code otherwise
    */
-  int 
+  int
   addMapper(string s, Mapper* m);
   /**
    * \brief To get a mapper
@@ -38,15 +38,15 @@ public :
    * \param mapper The mapper (OUT)
    * \return 0 on success, an error code otherwise
    */
-  int 
-  getMapper(const string& name, Mapper** mapper);
+  Mapper*
+  getMapper(const string& name);
   /**
    * \brief To remove a mapper off the list of active mapper
    * \fn int removeMapper(string s)
    * \param s Mapper name
    * \return 0 on success, an error code otherwise
    */
-  int 
+  int
   removeMapper(string s);
   /**
    * \brief Default destructor
@@ -69,14 +69,14 @@ private :
   /**
    * \brief Exception to be thrown
    */
-  InternalVishnuException me;
+  SystemException me;
   /**
    * \brief Return if the list contains the string
    * \fn bool contains(string s)
    * \param s The searched string
    * \return Return true if the list contains the s string
    */
-  bool 
+  bool
   contains(string s);
   /**
    * \brief The registry

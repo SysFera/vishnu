@@ -31,7 +31,7 @@ connect(const string& userId,
 {
 
   if((connectOpt.getClosePolicy() < 0) || (connectOpt.getClosePolicy() > 2)) {
-     throw std::runtime_error("Invalid ClosePolicy value: its value must be 0, 1 or 2");
+    throw UserException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
   }
 
   UserProxy userProxy(userId, password);
@@ -105,11 +105,11 @@ close(const string&  sessionKey)
  * \return raises an exception on error 
  */
 int 
-addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) //throw(UserException) 
+addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) throw(UserException) 
 {
 
   if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
-     throw std::runtime_error("Invalid Privilege value: its value must be 0 or 1");
+    throw UserException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
   }
  
   SessionProxy sessionProxy(sessionKey);
@@ -133,7 +133,7 @@ updateUser(const string& sessionKey,
 {
  
    if((user.getPrivilege() < 0) || (user.getPrivilege() > 1)) {
-     throw std::runtime_error("Invalid Privilege value: its value must be 0 or 1");
+     throw UserException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
    }
 
    SessionProxy sessionProxy(sessionKey);
@@ -227,7 +227,7 @@ addMachine(const std::string& sessionKey,
 {
 
   if((newMachine.getStatus() < 0) || (newMachine.getStatus() > 1)) {
-    throw std::runtime_error("Invalid Status value: its value must be 0 or 1");
+    throw UserException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
 
   SessionProxy sessionProxy(sessionKey);
@@ -251,7 +251,7 @@ updateMachine(const std::string& sessionKey,
 {
 
   if((machine.getStatus() < 0) || (machine.getStatus() > 1)) {
-    throw std::runtime_error("Invalid Status value: its value must be 0 or 1");
+    throw UserException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
 
   SessionProxy sessionProxy(sessionKey);
@@ -484,11 +484,11 @@ listSessions(const std::string& sessionKey,
 
 
   if((options.getSessionClosePolicy() < 0) || (options.getSessionClosePolicy() > 2)) {
-       throw std::runtime_error("Invalid ClosePolicy value: its value must be 0, 1 or 2");
+    throw UserException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
   }
 
   if((options.getStatus() < 0) || (options.getStatus() > 1)) {
-       throw std::runtime_error("Invalid Privilege value: its value must be 0 or 1");
+    throw UserException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
   }
    
   SessionProxy sessionProxy(sessionKey);

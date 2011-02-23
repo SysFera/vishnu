@@ -80,7 +80,7 @@ close(const std::string& sessionKey)
 int 
 addVishnuUser(const std::string& sessionKey, 
               const UMS_Data::User& newUser) 
-                                           ;//throw(UserException);
+                                            throw(UserException);
 
 /**
  * \brief Function to update the user information except the userId and the password

@@ -238,8 +238,19 @@ PRIMARY KEY(numjobid),
 -- Put password for connection for all roles:
 -- With psql --> ALTER USER vishnu_user WITH ENCRYPTED PASSWORD 'your password';
 
---CREATE ROLE vishnu_db_admin;
---CREATE ROLE vishnu_user;
+-- CREATE ROLE vishnu_db_admin;
+-- CREATE ROLE vishnu_user;
+CREATE USER vishnu_user WITH PASSWORD 'vishnu_user';
+CREATE USER vishnu_db_admin;
+
+grant connect
+on database vishnu
+to vishnu_user;
+
+grant connect
+on database vishnu
+to vishnu_db_admin;
+
 
 GRANT ALL ON vishnu TO "vishnu_db_admin";
 GRANT SELECT ON vishnu TO "vishnu_db_admin";

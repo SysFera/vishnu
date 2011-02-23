@@ -1,5 +1,5 @@
 /**
- * \file ServerUMS.hh
+ * \file ServerUMS.hpp
  * \brief This file presents the implementation of the UMS server.
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date 31/01/2001
