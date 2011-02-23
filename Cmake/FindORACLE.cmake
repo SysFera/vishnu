@@ -15,8 +15,7 @@ find_path(ORACLE_INCLUDE_DIR
   /usr/local/include
   /opt/local/include
 )
-MESSAGE( "ORACLE_DIR: ${ORACLE_DIR}")
-MESSAGE( "ORACLE_INCLUDE_DIR: ${ORACLE_INCLUDE_DIR}")
+
 find_library(ORACLE_OCCI_LIB
   occi
   paths
@@ -26,9 +25,9 @@ find_library(ORACLE_OCCI_LIB
   /usr/lib
   /usr/local/lib
 )
-MESSAGE( "ORACLE_OCCI_LIB: ${ORACLE_OCCI_LIB}")
-find_library(ORACLE_OCIICUS_LIB
-  ociicus
+
+find_library(ORACLE_CLNTSH_LIB
+  clntsh
   paths
   ${ORACLE_DIR}
   ${ORACLE_DIR}/lib
