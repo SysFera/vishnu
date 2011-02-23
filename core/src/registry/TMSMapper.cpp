@@ -30,14 +30,14 @@ TMSMapper::registerMapper(){
   return 0;
 }
 
-int 
+int
 TMSMapper::unregisterMapper(){
   return mreg->removeMapper(mname);
 }
 
 int
 TMSMapper::getCommand(const string& key,string& command){
-  map<string, string>::const_iterator it; 
+  map<string, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (key.compare(it->first)==0){
       command = it->second;
@@ -48,7 +48,7 @@ TMSMapper::getCommand(const string& key,string& command){
 
 int
 TMSMapper::getKey(const string& command, string& key){
-  map<string, string>::const_iterator it; 
+  map<string, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (command.compare(it->second)==0){
       key = it->first;

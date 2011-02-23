@@ -7,7 +7,10 @@
 
 #include "Mapper_impl.hpp"
 
-Mapper_impl::Mapper_impl(){
+Mapper_impl::Mapper_impl():Mapper(){
+};
+
+Mapper_impl::~Mapper_impl(){
 };
 
 Mapper_impl::Mapper_impl(MapperRegistry* reg, string na):Mapper(reg){
@@ -25,14 +28,14 @@ Mapper_impl::registerMapper(){
   return 0;
 }
 
-int 
+int
 Mapper_impl::unregisterMapper(){
   return mreg->removeMapper(mname);
 }
 
 int
 Mapper_impl::getCommand(const string& key,string& command){
-  map<string, string>::const_iterator it; 
+  map<string, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (key.compare(it->first)==0){
       command = it->second;
@@ -43,7 +46,7 @@ Mapper_impl::getCommand(const string& key,string& command){
 
 int
 Mapper_impl::getKey(const string& command, string& key){
-  map<string, string>::const_iterator it; 
+  map<string, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (command.compare(it->second)==0){
       key = it->first;
@@ -56,12 +59,12 @@ int
 Mapper_impl::code(const string& cmd, unsigned int code ) {
   return 0;
 }
- 
+
 string
 Mapper_impl::finalize(int key){
   return "";
 }
-  
+
 string
 Mapper_impl::decodeCPP (const string& msg){
   return "";
