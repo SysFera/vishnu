@@ -77,7 +77,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-/*
+
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -87,10 +87,9 @@ int main (int ac, char* av[]){
 
 							 connect(userId,password, sessionKey, connectOpt);
 
-*/
+
 			// store sessionKey into $HOME/.vishnu/sessions
 
-							 sessionKey="myfirstSession";
 							 std::string sessionFile=getSessionLocation(getppid());
 							 cout << "sessionFile: " << sessionFile<< endl;
 							 SessionEntry session(sessionKey,0);

@@ -32,7 +32,7 @@ static const int ERRCODE_UNUSABLE_MACHINE = 36;
 static const int ERRCODE_LOCAL_ACCOUNT_EXIST = 37;
 static const int ERRCODE_UNKNOWN_LOCAL_ACCOUNT = 38;
 
-static const int ERRCODE_SAVE_CONFIG_ERROR = 39; 
+static const int ERRCODE_SAVE_CONFIG_ERROR = 39;
 static const int ERRCODE_RESTORE_CONFIG_ERROR = 40;
 
 static const int ERRCODE_UNKNOWN_OPTION = 41;
@@ -51,7 +51,7 @@ public:
    * \brief Copy constructor
    * \fn UMSVishnuException()
    */
-  UMSVishnuException(UMSVishnuException& e);
+  UMSVishnuException(const UMSVishnuException& e);
   /**
    * \brief Constructor
    * \fn UMSVishnuException()
