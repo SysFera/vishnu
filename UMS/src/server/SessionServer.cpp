@@ -6,6 +6,7 @@
 */
 
 #include "SessionServer.hpp"
+#include "CommandServer.hpp"
 /**
 * \brief Constructor
 * \fn SessionServer()
@@ -179,6 +180,9 @@ int SessionServer::close() {
 
   std::string sqlCommand = "UPDATE vsession SET state=0 WHERE sessionkey='";
   int state;
+  int mapperkey;
+  Mapper* mapper;
+  std::string cmd;
 
   try {
     UserServer user = UserServer(SessionServer(msession.getSessionKey()));
@@ -192,10 +196,23 @@ int SessionServer::close() {
       if (state != 0) {
       //TODO: if no running commands ==> vérifier dans la table commande qu'il n'y a pas de commande à status
         //active
+
+
         sqlCommand.append(msession.getSessionKey()+"';");
         sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP\
         WHERE sessionkey='"+msession.getSessionKey()+"';");
         mdatabaseVishnu->process(sqlCommand.c_str());
+
+        //MAPPER CREATION
+        mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+        mapperkey = mapper->code("vishnu_close");
+        mapper->code(msession.getSessionKey(), mapperkey);
+        cmd = mapper->finalize(mapperkey);
+
+        //COMMAND REGISTRATION
+        CommandServer commandServer = CommandServer(cmd, SessionServer(msession.getSessionKey()));
+        commandServer.record(UMS);
+
       } //if the session is not already closed
       else {
         UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
@@ -249,14 +266,22 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
 }
 
 /**
-* \brief Function to log the session information
-* \fn int saveConnection(std::string commandName)
-* \param cmdName The command to log
-* \param attrname the name of the attribut to get
+* \brief Function to save the date of the last connection
+* \fn int saveConnection()
 * \return raises an exception on error
 */
 int
 SessionServer::saveConnection() {
+
+  std::string sqlCommand = "UPDATE vsession SET lastconnect=CURRENT_TIMESTAMP\
+  WHERE sessionkey='"+msession.getSessionKey()+"'";
+
+  try {
+    mdatabaseVishnu->process(sqlCommand.c_str());
+  }
+  catch (VishnuException& e) {
+    throw;
+  }
   return 0;
 }
 

@@ -11,8 +11,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
-#include <ecore.hpp> 
+#include <ecore.hpp>
 #include <ecorecpp.hpp>
 #include "SessionServer.hpp"
 #include "UMS_Data.hpp"
@@ -23,7 +22,7 @@
 * \brief Implementation of the ConfigurationServer class
 */
 class ConfigurationServer {
- 
+
 public:
   /**
   * \brief Constructor
@@ -40,17 +39,17 @@ public:
   ConfigurationServer(UMS_Data::Configuration*& configuration, SessionServer session);
   /**
   * \brief Function to save a VISHNU configuration
-  * \fn int save() 
+  * \fn int save()
   * \return raises an exception on error
   */
-  int 
+  int
   save();
   /**
   * \brief Function to restore a VISHNU configuration
-  * \fn int restore() 
+  * \fn int restore()
   * \return raises an exception on error
   */
-  int 
+  int
   restore();
   /**
   * \fn ~ConfigurationServer()
@@ -62,11 +61,11 @@ public:
   * \fn UMS_Data::Configuration*  getData()
   * \return  The LocalAccount data structure
   */
-  UMS_Data::Configuration* 
+  UMS_Data::Configuration*
   getData();
-  
+
 private:
-  
+
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
@@ -82,13 +81,13 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
   /**
   * \brief Function to get the sql code of users from a VISHNU configuration
-  * \fn std::string userToSql(UMS_Data::User_ptr user) 
+  * \fn std::string userToSql(UMS_Data::User_ptr user)
   * \return the sql code containing the sql code of users
   */
   std::string

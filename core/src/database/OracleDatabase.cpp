@@ -167,15 +167,17 @@ OracleDatabase::getResult(string request) {
   vector<vector<string> > results;
   vector<string> colNames;
   string errorMsg;
-  int nbCol;
-  int i;
+  unsigned int nbCol;
+  unsigned int i;
 
   if (mcon == NULL) {
     throw SystemException(ERRCODE_DBCONN, "Database is not connected");
   }
   try {
+    cout << "Creating ORACLE SQL Query" << endl;
     mstmt = mcon->createStatement(request);
     mres = mstmt->executeQuery();
+    cout << "ORACLE SQL Query Done" << endl;
     mres->setCharacterStreamMode(2, 10000);
     vector<MetaData> vec = mres->getColumnListMetaData();
     nbCol = vec.size();
@@ -186,23 +188,43 @@ OracleDatabase::getResult(string request) {
       colTypes[i] = vec[i].getInt(MetaData::ATTR_DATA_TYPE);
       colNames[i] = vec[i].getString(MetaData::ATTR_NAME);
     }
-
+    int row = 0;
     while(mres->next()){
+      cout << "*** ROW " << row++ << endl;
       vector<string> rowValues = vector<string>();
-      for (i=1 ; i<=nbCol; i++){ // Oracle count from 1 to size
-        switch(colTypes[i]) {
-          case OCCI_SQLT_NUM:
-            rowValues.push_back(convertToString(mres->getInt(i)));
-            break;
-          case OCCI_SQLT_CHR:
-            rowValues.push_back(mres->getString(i));
-            break;
-          default:
-            errorMsg.append("Unknown column type (column: ");
-            errorMsg.append(colNames[i]);
-            errorMsg.append(")");
-            throw SystemException(ERRCODE_DBERR, errorMsg);
+      for (unsigned int i=0 ; i<nbCol; i++){
+        cout << i << " : " << colNames[i] << " : ";
+        cout << ((colTypes[i] == OCCI_SQLT_NUM) ? "NUM" : "OTHER") << endl;
+        unsigned int colId = i + 1; // Oracle count from 1 to size
+        string colValue = "";
+        Number num1;
+        if (mres->isNull(colId)) {
+          cout << "NULL COLUMN" << endl;
+        } else if (mres->isTruncated(colId)) {
+          cout << "TRUNCATED COLUMN" << endl;
+        } else {
+          switch(colTypes[i]) {
+            case OCCIIBFLOAT:
+              cout << "Getting BFloat : colId=" << colId << endl;
+              colValue = convertToString(mres->getInt(colId));
+              break;
+            case OCCI_SQLT_CHR:
+              cout << "Getting String : colId=" << colId << endl;
+              colValue = mres->getString(colId);
+              if (colValue.empty())
+                cout << "WARNING: EMPTY STRING!" << endl;
+              break;
+            default:
+              errorMsg.append("Unknown column type (column: ");
+              errorMsg.append(colNames[i]);
+              errorMsg.append(", type value=");
+              errorMsg.append(convertToString(colTypes[i]));
+              errorMsg.append(")");
+              throw SystemException(ERRCODE_DBERR, errorMsg);
+          }
         }
+        cout << "VALUE:" << colValue << endl;
+        rowValues.push_back(colValue);
       }
       results.push_back(rowValues);
     }
