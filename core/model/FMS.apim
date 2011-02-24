@@ -149,6 +149,7 @@
     </resultCodeList>
   </modules>
   <envVariableList>
+    <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU"/>
     <envVariables name="VISHNU_TRANSFER_CMD" description="It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}." isUserOption="true"/>
   </envVariableList>
 </API>

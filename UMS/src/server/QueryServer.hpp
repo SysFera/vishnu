@@ -76,11 +76,12 @@ public:
   long convertToTimeType(std::string date) {
     
     if(date.size()==0) return 0;
-   
+         
       boost::posix_time::ptime pt(time_from_string(date));
       boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
       time_duration::sec_type time = (pt - epoch).total_seconds();
-
+     
+      std::cout << "**********TimeValue=" << time_t(time) << "********************" << std::endl;
     return time_t(time);
 
   }
@@ -579,6 +580,7 @@ public:
   void processOptions(UserServer userServer, const UMS_Data::ListCmdOptions_ptr& options, std::string& sqlRequest)
   {
 
+    boost::posix_time::ptime pt;
     size_t userIdSize = options->getUserId().size();
     bool listAll = options->isAdminListOption();
 
@@ -601,19 +603,21 @@ public:
 
     long startDate = options->getStartDateOption();
     if(startDate!=-1) {
-       //TO complete
-       addIntegerOptionRequest("starttype", startDate, sqlRequest);
+       pt =  boost::posix_time::from_time_t(startDate);
+       std::string startDateStr =  boost::posix_time::to_simple_string(pt);
+       addOptionRequest("starttime", startDateStr, sqlRequest);
     }
 
     long endDate = options->getEndDateOption();
     if(endDate!=-1) {
-       //TO complete
-       addIntegerOptionRequest("endtime", startDate, sqlRequest);
+       pt =  boost::posix_time::from_time_t(endDate);
+       std::string endDateStr =  boost::posix_time::to_simple_string(pt);
+       addOptionRequest("endtime", endDateStr, sqlRequest);
     }
 
   }
 
-  void listSpecificCommand(UserServer userServer, UMS_Data::ListCommands_ptr& listObject, CommandType type) {
+  void getListOfCommands(UserServer userServer, UMS_Data::ListCommands_ptr& listObject) {
 
         bool IsCommandType = true;
         DatabaseResult *ListOfCommands;
@@ -623,34 +627,11 @@ public:
 
         UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
         
-        switch(type) {
-          case JOB:
-               sqlListOfCommands = "SELECT jobid, vsessionid, name, description, starttype, endtime, userid from\
-                                 job, vsession, clmachine, command, users where job.command_numcommandid=command.numcommandid and\
-                                 command.vsession_numsessionid=vsession.numsessionid and\
-                                 vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";   
-              
-            break;
-          case FILETRANSFERT:
-              sqlListOfCommands = "SELECT filetransferid, vsessionid, name, description, starttype, endtime, userid from\
-                                 filetransfer, vsession, clmachine, command, users where filetransfer.command_numcommandid=command.numcommandid and\
-                                 command.vsession_numsessionid=vsession.numsessionid and\
-                                 vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid"; 
-            break;
-          case FILESUB:
-              sqlListOfCommands = "SELECT fileid, vsessionid, clmachine.name, description, starttype, endtime, userid from\
-                                 filesub, vsession, clmachine, command, users where filesub.command_numcommandid=command.numcommandid and\
-                                 command.vsession_numsessionid=vsession.numsessionid and\
-                                 vsession.clmachine_numclmachineid=clmachine.numclmachineid and vsession.users_numuserid=users.numuserid";
-            break;
-          default:
-            IsCommandType = false;
- 
-        }
-       
-        if(IsCommandType) {
-
-         processOptions(userServer, mparameters, sqlListOfCommands);
+        sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from\
+                             vsession, clmachine, command, users where command.vsession_numsessionid=vsession.numsessionid and\
+                             vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";   
+         
+        processOptions(userServer, mparameters, sqlListOfCommands);
  
          //To get the list of commands from the database
          ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
@@ -671,7 +652,7 @@ public:
               listObject->getCommands().push_back(command);
           }
         }
-      }
+   
    }
 
   //To list commands
@@ -687,12 +668,8 @@ public:
       //if the user exists
       if (userServer.exist()) {
         
-         //get job commands
-         listSpecificCommand(userServer, mlistObject, JOB); 
-         //get filetransfert commands
-         listSpecificCommand(userServer, mlistObject, FILETRANSFERT);
-         //get filesub commands
-         listSpecificCommand(userServer, mlistObject, FILESUB); 
+         //get list commands
+          getListOfCommands(userServer, mlistObject); 
 
       }//End if the user exists
       else {
@@ -731,7 +708,8 @@ public:
 
   void processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& sqlRequest)
   {
-   
+  
+    boost::posix_time::ptime pt; 
     size_t userIdSize = options->getUserId().size();
     bool listAll = options->isAdminListOption();
 
@@ -774,14 +752,16 @@ public:
 
     long startDate = options->getStartDateOption();
     if(startDate!=-1) {
-      //TO COMPLETE
-      addIntegerOptionRequest("creation", startDate, sqlRequest);
+      pt =  boost::posix_time::from_time_t(startDate);
+      std::string startDateStr =  boost::posix_time::to_simple_string(pt);
+      addOptionRequest("creation", startDateStr, sqlRequest);
     }
   
     long endDate = options->getEndDateOption(); 
     if(endDate!=-1) {
-      //TO COMPLETE
-      addIntegerOptionRequest("closure", endDate, sqlRequest);
+      pt =  boost::posix_time::from_time_t(endDate);
+      std::string endDateStr =  boost::posix_time::to_simple_string(pt);
+      addIntegerOptionRequest("closure", endDateStr, sqlRequest);
     }
 
   }

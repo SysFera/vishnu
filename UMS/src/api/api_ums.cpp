@@ -105,7 +105,7 @@ close(const string&  sessionKey)
  * \return raises an exception on error 
  */
 int 
-addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) throw(UserException) 
+addUser(const string& sessionKey, UMS_Data::User& newUser) throw(UserException) 
 {
 
   if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
@@ -114,8 +114,9 @@ addVishnuUser(const string& sessionKey, const UMS_Data::User& newUser) throw(Use
  
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
+  int res = userProxy.add(newUser);
 
- return userProxy.add(newUser);
+ return res;
 }
 
 /**
@@ -222,7 +223,7 @@ resetPassword(const std::string& sessionKey,
  */
 int 
 addMachine(const std::string& sessionKey, 
-           const UMS_Data::Machine& newMachine) 
+           UMS_Data::Machine& newMachine) 
                                               throw(UserException)
 {
 
@@ -232,8 +233,10 @@ addMachine(const std::string& sessionKey,
 
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(newMachine, sessionProxy);
-
- return machineProxy.add();
+  int res = machineProxy.add();
+  newMachine = machineProxy.getData();
+ 
+ return res;
 }
 
 /**

@@ -103,7 +103,9 @@
       <resultCodes name="DB_ERROR" description="A problem occurs with the database" value="-13"/>
     </resultCodeList>
   </modules>
-  <envVariableList/>
+  <envVariableList>
+    <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU"/>
+  </envVariableList>
   <typeList>
     <types name="string" description="String standard">
       <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EString"/>
