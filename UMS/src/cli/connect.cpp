@@ -10,11 +10,6 @@ namespace po = boost::program_options;
 
 using namespace std;
 
-bfs::path home_dir;
-bfs::path session_dir;
-bfs::path proc_dir("/proc");
-const char *lockname = "vishnu1";
-
 int main (int ac, char* av[]){
 
 

@@ -16,7 +16,6 @@ using namespace std;
 //namespace boost::posix_time = bp;
 
 
-
 void helpUsage (const Options& opt,const string& mess){
 
 cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << mess <<"\n\n";

@@ -1,5 +1,11 @@
 #include "daemon_cleaner.hpp"
 #include "sessionUtils.hpp"
+
+bfs::path home_dir;
+bfs::path session_dir;
+bfs::path proc_dir("/proc");
+const char *lockname = "vishnu1";
+
 bool pid_exists(const std::string& pid)
 {
   extern bfs::path proc_dir;
@@ -26,15 +32,15 @@ void deleter()
       exit(EXIT_SUCCESS);
     }
 
-    std:: cout << "daemon cleaner initialized"<<std::endl;   
+    std:: cout << "daemon cleaner initialized"<<std::endl;
     while(true) {
-      
+
       bfs::directory_iterator it = bfs::directory_iterator(session_dir);
-    
+
       for (; it != bfs::directory_iterator(); ++it) {
         const bfs::path current_path = it->path();
         std::string pid = (current_path.filename()).string();
-        
+
         if (!pid_exists(pid)) {
           // close all sessions opened by disconnect mode before deleting file
           /*SessionContainer allSessions=getAllSessions(pid);
@@ -43,7 +49,7 @@ void deleter()
 
             // close (session.getSessionKey);
            }
-            
+
           }*/
           bfs::remove(current_path);
         }
