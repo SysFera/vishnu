@@ -25,7 +25,8 @@ void deleter()
       std::cout << "cleaning process: already running" << std::endl;
       exit(EXIT_SUCCESS);
     }
-   
+
+    std:: cout << "daemon cleaner initialized"<<std::endl;   
     while(true) {
       
       bfs::directory_iterator it = bfs::directory_iterator(session_dir);
@@ -33,19 +34,17 @@ void deleter()
       for (; it != bfs::directory_iterator(); ++it) {
         const bfs::path current_path = it->path();
         std::string pid = (current_path.filename()).string();
+        
         if (!pid_exists(pid)) {
           // close all sessions opened by disconnect mode before deleting file
-
-          SessionContainer allSessions=getAllSessions(pid);
+          /*SessionContainer allSessions=getAllSessions(pid);
           BOOST_FOREACH (const SessionEntry& session, allSessions){
            if(1==session.getClosePolicy()) {
 
             // close (session.getSessionKey);
-
            }
             
-            
-          }
+          }*/
           bfs::remove(current_path);
         }
       }
@@ -63,10 +62,6 @@ void deleter()
 
 
 
-
-
-
-
 void cleaner()
 {
   extern bfs::path home_dir;
@@ -76,7 +71,7 @@ void cleaner()
   session_dir = home_dir ;
   session_dir /= ".vishnu";
   session_dir /= "sessions";
-
+  std::cout << "cleaning process: initialized"<< std::endl;
   pid_t pid = fork();
 
   if (pid < 0) {

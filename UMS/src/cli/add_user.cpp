@@ -1,6 +1,7 @@
 #include "addUser.hh"
 #include "utils.hh"
 #include "userUtils.hpp"
+#include "sessionUtils.hpp"
 #include<boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -113,8 +114,21 @@ int main (int ac, char* av[]){
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
+// get the sessionKey
 
-							 addVishnuUser(sessionKey,newUser);
+               std::string sessionFile=getSessionLocation(getppid());
+
+               SessionEntry session=getLastSession(sessionFile);
+
+               sessionKey=session.getSessionKey();
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the last session key was " << sessionKey <<endl;
+
+							 //addUser(sessionKey,newUser);
+
+               }
 
 
 	}// End of try bloc
