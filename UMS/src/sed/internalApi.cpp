@@ -57,8 +57,8 @@ solveSessionConnect(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameters
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -111,8 +111,8 @@ solveSessionReconnect(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -141,8 +141,8 @@ solveSessionClose(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT parameter
       diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
 }
@@ -189,8 +189,8 @@ solveUserCreate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -235,8 +235,8 @@ solveUserUpdate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -275,8 +275,8 @@ solveUserDelete(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
     //OUT parameter
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
@@ -313,8 +313,8 @@ solveUserPasswordChange(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -354,8 +354,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -398,8 +398,8 @@ solveMachineCreate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -443,8 +443,8 @@ solveMachineUpdate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -483,8 +483,8 @@ solveMachineDelete(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -532,8 +532,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
 
       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -579,8 +579,8 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -626,8 +626,8 @@ solveLocalAccountDelete(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -670,8 +670,8 @@ solveConfigurationSave(diet_profile_t* pb) {
   diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
 
       //OUT Parameters
       diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
@@ -718,8 +718,8 @@ solveConfigurationRestore(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -763,8 +763,8 @@ solveOptionValueSet(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -806,8 +806,8 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -862,8 +862,8 @@ solveGenerique(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
 
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -916,8 +916,8 @@ solveListUsers(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  utilServer::buildExceptionString(e);
-      std::cout << "errorInfo: " << errorInfo <<std::endl;
+      errorInfo =  e.buildExceptionString();
+      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -1007,8 +1007,8 @@ solveRestore(diet_profile_t* pb) {
   db->process(sqlcode);
   }
   catch (VishnuException& e) {
-    errorInfo =  utilServer::buildExceptionString(e);
-    std::cout << "errorInfo: " << errorInfo <<std::endl;
+    errorInfo =  e.buildExceptionString();
+    std::cout << "Exception: " << errorInfo <<std::endl;
   }
 return 0;
 }
