@@ -92,7 +92,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-/*
+
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
@@ -100,14 +100,14 @@ int main (int ac, char* av[]){
 
 				  return 1;
               }
-*/
+
 
 				   // store the sessionKey
 
 
-              //reconnect(userId, password, sessionId, sessionKey);
+              reconnect(userId, password, sessionId, sessionKey);
 
-               sessionKey="mySecondSession";
+
                std::string sessionFile=getSessionLocation(getppid());
                cout << "sessionFile: " << sessionFile<< endl;
                SessionEntry session(sessionKey,0);
