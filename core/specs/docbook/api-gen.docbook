@@ -66,7 +66,7 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
             
-          <para>Renamed UMS::AddVishnuUser, Modified UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para></revdescription>
+          <para>Renamed UMS::AddVishnuUser, Modified UMS::addMachine, UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -531,7 +531,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The reconnect() function returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
+        <para>The reconnect() function reconnects to a session that is still active</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -635,7 +635,7 @@
                 <entry><para>newUser</para></entry>
                 <entry><para><link linkend="User">User</link></para></entry>
                 <entry><para>Object containing the new user information</para></entry>
-                <entry><para>IN</para></entry>
+                <entry><para>INOUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -706,7 +706,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>addUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const User&amp; <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>addUser</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>User&amp; <parameter>newUser</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::updateUser</title>
@@ -948,7 +948,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The close() function closes the session identfied by the session key</para>
+        <para>The close() function closes the session</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -1714,7 +1714,7 @@
                 <entry><para>newMachine</para></entry>
                 <entry><para><link linkend="Machine">Machine</link></para></entry>
                 <entry><para>is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU</para></entry>
-                <entry><para>IN</para></entry>
+                <entry><para>INOUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -1773,7 +1773,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>addMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Machine&amp; <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>addMachine</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Machine&amp; <parameter>newMachine</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function UMS::updateMachine</title>
@@ -3000,12 +3000,12 @@
             <row>
               <entry><para>sessionInactivityDelay</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>The sessionInactivityDelay is the maximum delay in seconds between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+              <entry><para>is the maximum delay in seconds between two user requests when the CLOSE_ON_TIMEOUT policy is set</para></entry>
             </row>
             <row>
               <entry><para>substituteUserId</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>is an option which allows an admin to open a session as if he/she was a specific user identified by his/her userId</para></entry>
+              <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3473,12 +3473,17 @@
             <row>
               <entry><para>language</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>represents the language in which the description of the machine has been done</para></entry>
+              <entry><para>represents the language used for the description of the machine</para></entry>
             </row>
             <row>
               <entry><para>status</para></entry>
               <entry><para><link linkend="StatusType">StatusType</link></para></entry>
               <entry><para>represents the status of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>sshPublicKey</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>contains the SSH public key used by VISHNU to access local user accounts</para></entry>
             </row>
           </tbody>
         </tgroup>
