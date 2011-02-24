@@ -81,6 +81,8 @@ set(API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/api)
 set(CLI_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/cli)
 set(SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
 set(REGISTRY_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/registry)
+set(UTILVISHNU_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/utils)
+
 
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)

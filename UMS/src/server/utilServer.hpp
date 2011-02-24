@@ -24,6 +24,7 @@
 #include "DatabaseResult.hpp"
 #include "VishnuException.hpp"
 
+using namespace vishnu;
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 
@@ -35,19 +36,6 @@ class Vishnuid {
   public:
     static std::string mvishnuid;
 };
-
-//TODO à mettre dans mapper
-/**
-* \enum CmdType
-* \brief The type of the command
-*/
-typedef enum CmdType{
-  UMS = 0,
-  TMS = 1,
-  FMS = 2,
-  IMS = 3
-} CmdType;
-
 
 /**
 * \enum IdType
@@ -90,33 +78,6 @@ namespace utilServer {
   static const std::string DATABASENAME = "vishnu";
   static const std::string UMSMAPPERNAME = "UMS";
 
-  /**
-  * \brief Generic function to convert an object to string
-  * \fn    std::string convertToString(const T& val);
-  * \param T is a generic data to be transformed to string
-  * \return the string version of T
-  */
-  template <class T>
-  std::string convertToString(T val) {
-    std::ostringstream out;
-    out << val;
-    return out.str();
-  }
-  /**
-  * \brief Function to convert a string to int
-  * \fn    std::string convertToString(const T& val)
-  * \param  val a value to convert to string
-  * \return int value of the corresponding string
-  */
-  int convertToInt(std::string val);
-  /**
-  * \brief Function to get the string associated to SystemException
-  * \fn    std::string buildExceptionString(SystemException& e)
-  * \param  e the exception caught
-  * \return int value of the corresponding string
-  */
-  std::string
-  buildExceptionString(VishnuException& e);
   /**
   * \brief Function to get a random number
   * \fn    int generate_numbers()
