@@ -127,7 +127,8 @@ public:
 			 * \brief function offering a way to add a typed option
 			 * \param name: the name of the option
 			 * \param desc: brief description of the option
-			 :/ \param group: a group which option belongs to
+			 * \param group: a group which option belongs to
+			 * \param value: the value of the option
 			 */
 
 			template<class T>

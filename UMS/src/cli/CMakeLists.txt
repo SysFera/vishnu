@@ -18,6 +18,7 @@ include_directories(${Boost_INCLUDE_DIRS}
 add_library(cli-utils
  Options
  utils
+ daemon_cleaner
  sessionUtils
  connectUtils
  configureOptionUtils
@@ -64,6 +65,7 @@ set(CMDNAME ${CMDPREFIX}${NAME})
         cli-utils
         ums-api-client
 				crypt
+        -pthread
         )
 
         install_targets(/bin/
