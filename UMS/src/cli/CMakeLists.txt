@@ -13,6 +13,7 @@ include_directories(${Boost_INCLUDE_DIRS}
                     ${CLIENT_PROXY_SOURCE_DIR}
                     ${VISHNU_EXCEPTION_INCLUDE_DIR}
                     ${CLI_SOURCE_DIR}
+                    ${UTILVISHNU_SOURCE_DIR}
               )
 
 add_library(cli-utils
