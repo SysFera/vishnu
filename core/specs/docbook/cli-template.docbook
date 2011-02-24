@@ -53,6 +53,7 @@
             <para>Renamed all commands to follow C-style command names with vishnu prefix.</para>
             <para>Added the help option to all commands.</para>
             <para>Modified update_machine and export_commands.</para> 
+            <para>Removed the VISHNU_SESSION_KEY environment variable on all commands.</para>
           </revdescription>
         </revision>
       </revhistory>
@@ -177,8 +178,11 @@
           </tgroup>
         </informaltable>
         
-	<para>The following table contains the list of environment variables information, a required flag and a user option flag. When the user option flag 
-	is true, the environment variable can be defined as a user option stored in the database.</para>
+	<para>The following table contains the list of environment variables information. 
+        These environment variables can be mandatory or optional and the value will be overriden by the
+        corresponding command-line option if applicable. When the user option flag is true, the
+        value for this variable can be defined persistently as a user option stored in the database (see the
+        &quot;vishnu_configure_option&quot; command.</para>
 	
 	<para><emphasis role="bold">Environment variables</emphasis></para>
         <informaltable>
@@ -201,8 +205,8 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>VISHNU_CONFIG_FILE</para></entry>
+                <entry><para>N/A</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>This is an example of an environment variable</para></entry>
                 <entry><para>YES</para></entry>

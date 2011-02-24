@@ -117,6 +117,12 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
               <para>The value of this environment variable represents the session close policy. Overriden by the -p option.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
@@ -148,6 +154,17 @@ commands in that session) by setting the session close policy (at connection tim
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -188,9 +205,9 @@ the session (e.g. job submission or file transfers). After the session is closed
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -221,6 +238,17 @@ the session (e.g. job submission or file transfers). After the session is closed
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -265,9 +293,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -327,9 +355,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -368,9 +396,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -428,9 +456,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -488,9 +516,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -562,9 +590,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -622,9 +650,9 @@ homeDirectory path must be provided.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -726,9 +754,9 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -767,9 +795,9 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
         <title>ENVIRONMENT</title>
         <variablelist>
           <varlistentry>
-            <term><envar>VISHNU_SESSION_KEY</envar></term>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is the key of the current session. Overriden by the -null option.</para>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
