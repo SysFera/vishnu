@@ -9,6 +9,7 @@ include_directories(
   ${UMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
 )
 
 add_library(ums-client-proxy

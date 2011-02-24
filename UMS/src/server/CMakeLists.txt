@@ -14,6 +14,7 @@ include_directories(
   ${POSTGRESQL_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
 )
 
 
@@ -42,6 +43,7 @@ target_link_libraries(ums-server
   database-vishnu
   exception-vishnu
   register-vishnu
+  utils-vishnu
 )
 
 install( TARGETS ums-server DESTINATION lib )
