@@ -227,15 +227,15 @@ BOOST_AUTO_TEST_CASE( my_test )
   use.setLastname (lana);
   use.setPrivilege(pri) ;
   use.setEmail    (mail);
-  BOOST_CHECK(addVishnuUser(key, use)==0);
+  BOOST_CHECK(addUser(key, use)==0);
   BOOST_CHECK(close        (key     )==0);
 
   // Login already in db
   BOOST_MESSAGE(" Testing adding the same user twice U4-E"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
-  BOOST_CHECK	 (addVishnuUser(key, use           )==0);
-  BOOST_CHECK_THROW	 (addVishnuUser(key, use           ), VishnuException);
+  BOOST_CHECK	 (addUser(key, use           )==0);
+  BOOST_CHECK_THROW	 (addUser(key, use           ), VishnuException);
   BOOST_CHECK	 (close        (key                )==0);
 
   // Add user bad email
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
   use.setEmail("cl3m3ntlebgkidechyrhotmail.fr");
-  BOOST_CHECK_THROW  (addVishnuUser(key, use           ), VishnuException);
+  BOOST_CHECK_THROW  (addUser(key, use           ), VishnuException);
   BOOST_CHECK  (close        (key                )==0);
   use.setEmail(mail);
 
@@ -251,7 +251,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing valid update user U4.1-B"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop )==0);
-  BOOST_CHECK  (addVishnuUser(key, use           )==0);
+  BOOST_CHECK  (addUser(key, use           )==0);
   use.setEmail("cl3m3ntlebgkidechyrGRAVE@hotmail.fr");
   BOOST_CHECK  (updateUser   (key, use           )==0);
   use.setEmail(mail);
@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore("clean_session.sql"     )==0);
   BOOST_CHECK  (connect      (uid, pwd, key, cop)==0);
   use.setUserId("");
-  BOOST_CHECK	 (addVishnuUser(key, use	  )==0);    
+  BOOST_CHECK	 (addUser(key, use	  )==0);    
   BOOST_CHECK_THROW	 (updateUser   (key, use	  ), VishnuException);
   BOOST_CHECK	 (close        (key               )==0);
   use.setUserId(cu);
@@ -280,7 +280,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing delete normal U4.2B"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
-  BOOST_CHECK	 (addVishnuUser(key, use	   )==0);     
+  BOOST_CHECK	 (addUser(key, use	   )==0);     
   BOOST_CHECK	 (deleteUser   (key, cu 	   )==0);
   BOOST_CHECK	 (close        (key                )==0);
 
@@ -296,7 +296,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing change password normal U1.3.3"    );
   BOOST_REQUIRE(restore("clean_session.sql"       )==0);
   BOOST_CHECK	 (connect       (uid, pwd , key, cop)==0);
-  BOOST_CHECK	 (addVishnuUser (key, use           )==0);
+  BOOST_CHECK	 (addUser (key, use           )==0);
   BOOST_CHECK	 (changePassword(cu , pass, "newPwd")==0);
   BOOST_CHECK	 (close         (key                )==0);
 
@@ -304,7 +304,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing change password bad uid U1.3.3E"    );
   BOOST_REQUIRE(restore	("clean_session.sql"  )==0);
   BOOST_CHECK	 (connect	(uid  , pwd, key, cop )==0);
-  BOOST_CHECK	 (addVishnuUser (key  , use           )==0);
+  BOOST_CHECK	 (addUser (key  , use           )==0);
   BOOST_CHECK_THROW	 (changePassword("bad", pass, "newPwd"), VishnuException);
   BOOST_CHECK	 (close         (key                  )==0);
 
@@ -312,7 +312,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing change password bad pwd U1.3.3E"    );
   BOOST_REQUIRE(restore	("clean_session.sql")==0);
   BOOST_CHECK	 (connect	(uid, pwd , key, cop)==0);
-  BOOST_CHECK	 (addVishnuUser (key, use           )==0);
+  BOOST_CHECK	 (addUser (key, use           )==0);
   BOOST_CHECK_THROW	 (changePassword(cu, "bad", "newPwd"), VishnuException);
   BOOST_CHECK	 (close         (key                )==0);
 
@@ -320,7 +320,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
-  BOOST_CHECK	 (addVishnuUser(key, use           )==0);
+  BOOST_CHECK	 (addUser(key, use           )==0);
   BOOST_CHECK	 (resetPassword(key, cu            )==0);
   BOOST_CHECK	 (close        (key                )==0);
 
@@ -328,7 +328,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
   BOOST_REQUIRE(restore      ("clean_session.sql" )==0);
   BOOST_CHECK	 (connect      (uid, pwd  , key, cop)==0);
-  BOOST_CHECK	 (addVishnuUser(key, use            )==0);
+  BOOST_CHECK	 (addUser(key, use            )==0);
   BOOST_CHECK_THROW	 (resetPassword(key, "bad"          ), VishnuException);
   BOOST_CHECK	 (close        (key                 )==0);
 
@@ -733,7 +733,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (listLocalAccount      (key, lia , lioa     )==0);
   BOOST_CHECK	 (listOptions           (key, liov, lioo     )==0);
   BOOST_CHECK	 (changePassword        (uid, pwd , pwd      )==0);      
-  BOOST_CHECK	 (addVishnuUser         (key, use 	     )==0);   
+  BOOST_CHECK	 (addUser         (key, use 	     )==0);   
   BOOST_CHECK	 (updateUser            (key, use 	     )==0);
   BOOST_CHECK	 (deleteUser            (key, cu  	     )==0);            
   BOOST_CHECK	 (deleteMachine         (key, mid	     )==0);

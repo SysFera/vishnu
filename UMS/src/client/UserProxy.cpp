@@ -44,26 +44,101 @@ UserProxy::UserProxy(SessionProxy session):
 UserProxy::UserProxy(const UMS_Data::User& user):
  muser(user)
 {
- msessionProxy = NULL;
+  msessionProxy = NULL;
 }
 
 /**
- * \brief Function to combine add() and update() into one function 
- * \fn  int _addUserInformation(const UMS_Data::User& user, bool isNewUser=true)
- * \param user The object which encapsulates the user information 
- * \param isNewUser to select the call of add or update function 
+ * \brief Function to add new user 
+ * \fn  int add(UMS_Data::User& user)
+ * \param user The object which encapsulates the user information
+ * \return raises an exception on error
+ */
+int UserProxy::add(UMS_Data::User& user)
+{
+   diet_profile_t* profile = NULL;
+   std::string sessionKey;
+   char* userToString;
+   char* errorInfo;
+   char* userInString;
+   std::string msg = "call of function diet_string_set is rejected ";  
+
+   profile = diet_profile_alloc("userCreate", 1, 1, 3);
+   sessionKey = msessionProxy->getSessionKey();
+
+   const char* name = "add";
+   ::ecorecpp::serializer::serializer _ser(name);
+   //To serialize the user object in to userToString 
+   userToString =  strdup(_ser.serialize(const_cast<UMS_Data::User_ptr>(&user)).c_str());
+   std::cout << "userToString = " << userToString  << std::endl;
+   //IN Parameters
+   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+     msg += "with sessionKey parameter "+sessionKey;
+     errMsg(msg);
+     sendErrorMsg(msg); 
+   }
+   if(diet_string_set(diet_parameter(profile,1), userToString, DIET_VOLATILE)) {
+     msg += "with userToString parameter "+std::string(userToString);
+     errMsg(msg);
+     sendErrorMsg(msg); 
+   }
+   
+   //OUT Parameters
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+   if(!diet_call(profile)) {
+       if(diet_string_get(diet_parameter(profile,2), &userInString, NULL)){
+          msg += " by receiving User serialized  message";
+          errMsg(msg);
+          sendErrorMsg(msg);
+       }
+       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+          msg += " by receiving errorInfo message";
+          errMsg(msg);
+          sendErrorMsg(msg); 
+       }
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
+   }  
+   else {
+      sendErrorMsg(" the function diet_call is rejected");
+   }
+
+    /*To check the receiving message error*/ 
+    checkErrorMsg(errorInfo);
+
+    std::cout << "userToString=" << userToString << std::endl;
+    // CREATE DATA MODEL
+    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+    //Parse the model
+    ecorecpp::parser::parser parser;
+    //To set the muser
+    UMS_Data::User_ptr user_ptr = parser.load(std::string(userInString))->as< UMS_Data::User >();
+ 
+    user = *user_ptr;
+    muser = user;
+ 
+   return 0;
+}
+
+/**
+ * \brief Function to update user information 
+ * \fn  int update(const UMS_Data::User& user)
+ * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */ 
-int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)
+int UserProxy::update(const UMS_Data::User& user)
 {
    diet_profile_t* profile = NULL;
    std::string sessionKey;
    std::string userToString;
    char* errorInfo;
-   std::string msg = "call of function diet_string_set is rejected ";  
+   std::string msg = "call of function diet_string_set is rejected ";
 
-   if(isNewUser) profile = diet_profile_alloc("userCreate", 1, 1, 2);
-   else profile = diet_profile_alloc("userUpdate", 1, 1, 2);
+   profile = diet_profile_alloc("userUpdate", 1, 1, 2);
+   
    sessionKey = msessionProxy->getSessionKey();
 
    const char* name = "addUserInformation";
@@ -75,14 +150,14 @@ int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
      msg += "with sessionKey parameter "+sessionKey;
      errMsg(msg);
-     sendErrorMsg(msg); 
+     sendErrorMsg(msg);
    }
    if(diet_string_set(diet_parameter(profile,1), strdup(userToString.c_str()), DIET_VOLATILE)) {
      msg += "with userToString parameter "+userToString;
      errMsg(msg);
-     sendErrorMsg(msg); 
+     sendErrorMsg(msg);
    }
-   
+
    //OUT Parameters
    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
@@ -90,40 +165,19 @@ int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)
        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
           msg += " by receiving errorInfo message";
           errMsg(msg);
-          sendErrorMsg(msg); 
+          sendErrorMsg(msg);
        }
        //Print successfull message if erroInfo is empty
        printSuccessMessage(errorInfo);
-   }  
+   }
    else {
       sendErrorMsg(" the function diet_call is rejected");
    }
-  
-   /*To check the receiving message error*/ 
+
+   /*To check the receiving message error*/
     checkErrorMsg(errorInfo);
 
    return 0;
-}
-
-/**
- * \brief Function to add new user 
- * \fn  int add(const UMS_Data::User& user)
- * \param user The object which encapsulates the user information
- * \return raises an exception on error
- */
-int UserProxy::add(const UMS_Data::User& user) {
-  return _addUserInformation(user); 
-}
-
-/**
- * \brief Function to update user information 
- * \fn  int update(const UMS_Data::User& user)
- * \param user The object which encapsulates the user information
- * \return raises an exception on error
- */ 
-int UserProxy::update(const UMS_Data::User& user)
-{
-   return _addUserInformation(user, false);
 }
 
 /**
