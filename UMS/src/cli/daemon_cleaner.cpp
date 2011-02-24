@@ -33,6 +33,7 @@ void deleter()
     }
 
     std:: cout << "daemon cleaner initialized"<<std::endl;
+
     while(true) {
 
       bfs::directory_iterator it = bfs::directory_iterator(session_dir);

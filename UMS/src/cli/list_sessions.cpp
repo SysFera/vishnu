@@ -2,7 +2,7 @@
 #include "utils.hh"
 #include "listHistoryCmdUtils.hpp"
 #include<boost/bind.hpp>
-
+#include "sessionUtils.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -117,9 +117,24 @@ int main (int ac, char* av[]){
                return 1;
               }
 
+// get the sessionKey
+
+               std::string sessionFile=getSessionLocation(getppid());
+
+               SessionEntry session=getLastSession(sessionFile);
+
+               sessionKey=session.getSessionKey();
+
+               if(false==sessionKey.empty()){
 
 							 listSessions(sessionKey,listSession,listOptions);
 
+               }
+               else{
+                 std::cerr << "There is no open session"<< std::endl;
+                  return 1;
+
+               }
 
 							// Display the list
       if(isEmpty) {
