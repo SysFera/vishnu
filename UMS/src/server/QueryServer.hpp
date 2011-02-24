@@ -560,6 +560,13 @@ class QueryCommands: public QueryServer<UMS_Data::ListCmdOptions, UMS_Data::List
 {
 
 public:
+
+  typedef enum {
+     JOB,
+     FILESUB,
+     FILETRANSFERT
+  } CommandType;
+
   //Constructors
   QueryCommands(const SessionServer session):QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>(session)
   {
@@ -569,17 +576,109 @@ public:
   {
   }
 
+  void processOptions(UserServer userServer, const UMS_Data::ListCmdOptions_ptr& options, std::string& sqlRequest)
+  {
+
+    size_t userIdSize = options->getUserId().size();
+    bool listAll = options->isAdminListOption();
+
+    if ((!userServer.isAdmin()) && (userIdSize!=0 || listAll)) {
+       UMSVishnuException e (ERRCODE_NO_ADMIN);
+       throw e;
+    }
+
+    if(userIdSize!=0) {
+      addOptionRequest("userid", options->getUserId(), sqlRequest);
+    } else {
+            if(!listAll) {
+               addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+            }
+    }
+
+    if(options->getSessionId().size()!=0) {
+      addOptionRequest("vsessionid", options->getSessionId(), sqlRequest);
+    }
+
+    long startDate = options->getStartDateOption();
+    if(startDate!=-1) {
+       //TO complete
+       addIntegerOptionRequest("starttype", startDate, sqlRequest);
+    }
+
+    long endDate = options->getEndDateOption();
+    if(endDate!=-1) {
+       //TO complete
+       addIntegerOptionRequest("endtime", startDate, sqlRequest);
+    }
+
+  }
+
+  void listSpecificCommand(UserServer userServer, UMS_Data::ListCommands_ptr& listObject, CommandType type) {
+
+        bool IsCommandType = true;
+        DatabaseResult *ListOfCommands;
+        std::string sqlListOfCommands;
+        std::vector<std::string>::iterator ii;
+        std::vector<std::string> results;
+
+        UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+        
+        switch(type) {
+          case JOB:
+               sqlListOfCommands = "SELECT jobid, vsessionid, name, description, starttype, endtime, userid from\
+                                 job, vsession, clmachine, command, users where job.command_numcommandid=command.numcommandid and\
+                                 command.vsession_numsessionid=vsession.numsessionid and\
+                                 vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";   
+              
+            break;
+          case FILETRANSFERT:
+              sqlListOfCommands = "SELECT filetransferid, vsessionid, name, description, starttype, endtime, userid from\
+                                 filetransfer, vsession, clmachine, command, users where filetransfer.command_numcommandid=command.numcommandid and\
+                                 command.vsession_numsessionid=vsession.numsessionid and\
+                                 vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid"; 
+            break;
+          case FILESUB:
+              sqlListOfCommands = "SELECT fileid, vsessionid, clmachine.name, description, starttype, endtime, userid from\
+                                 filesub, vsession, clmachine, command, users where filesub.command_numcommandid=command.numcommandid and\
+                                 command.vsession_numsessionid=vsession.numsessionid and\
+                                 vsession.clmachine_numclmachineid=clmachine.numclmachineid and vsession.users_numuserid=users.numuserid";
+            break;
+          default:
+            IsCommandType = false;
+ 
+        }
+       
+        if(IsCommandType) {
+
+         processOptions(userServer, mparameters, sqlListOfCommands);
+ 
+         //To get the list of commands from the database
+         ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
+         if (ListOfCommands->getNbTuples() != 0){
+           for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
+             results.clear();
+             results = ListOfCommands->get(i);
+             ii = results.begin();
+
+              UMS_Data::Command_ptr command = ecoreFactory->createCommand();
+              command->setCommandId(*ii);
+              command->setSessionId(*(++ii));
+              command->setMachineId(*(++ii));
+              command->setCmdDescription(*(++ii));
+              command->setCmdStartTime(convertToTimeType(*(++ii))); 
+              command->setCmdEndTime(convertToTimeType(*(++ii))); 
+
+              listObject->getCommands().push_back(command);
+          }
+        }
+      }
+   }
+
   //To list commands
   UMS_Data::ListCommands* list()
   {
-    DatabaseResult *ListOfCommands;
-    //TODO : A COMPLETER sql à faire!!!
-    std::string sqlListOfCommands = "SELECT TODO";
-
-    std::vector<std::string>::iterator ii;
-    std::vector<std::string> results;
-    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-    mlistObject = ecoreFactory->createListCommands();
+     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+     mlistObject = ecoreFactory->createListCommands();
 
     try {
       //Creation of the object user
@@ -587,35 +686,14 @@ public:
       userServer.init();
       //if the user exists
       if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
+        
+         //get job commands
+         listSpecificCommand(userServer, mlistObject, JOB); 
+         //get filetransfert commands
+         listSpecificCommand(userServer, mlistObject, FILETRANSFERT);
+         //get filesub commands
+         listSpecificCommand(userServer, mlistObject, FILESUB); 
 
-        //To get the list of commands from the database
-        ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
-
-        if (ListOfCommands->getNbTuples() != 0){
-          for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
-            results.clear();
-            results = ListOfCommands->get(i);
-            ii = results.begin();
-
-              UMS_Data::Command_ptr command = ecoreFactory->createCommand();
-              command->setCommandId(*ii);
-              command->setSessionId(*(++ii));
-              command->setMachineId(*(++ii));
-              command->setCmdDescription(*(++ii));
-              //convertToTimeType
-              //command->setCmdStartTime(convertToInt(*(++ii))); //TODO: A voir avec Paco
-              //command->setCmdEndTime(convertToInt(*(++ii))); //TODO: A voir avec Paco
-
-              mlistObject->getCommands().push_back(command);
-          }
-        }
-      } //End if the user is an admin
-      else {
-          UMSVishnuException e (ERRCODE_NO_ADMIN);
-          throw e;
-        }
       }//End if the user exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_USER);
@@ -679,14 +757,14 @@ public:
 
     int status = options->getStatus();
     addIntegerOptionRequest("state", status, sqlRequest);
-    
-    if(options->getSessionClosePolicy()) {
-       int closePolicy = options->getSessionClosePolicy();
+
+    int closePolicy = options->getSessionClosePolicy(); 
+    if(closePolicy) {
        addIntegerOptionRequest("closepolicy", closePolicy, sqlRequest);
     }
 
-    if(options->getSessionInactivityDelay()) {
-      int timeOut = options->getSessionInactivityDelay(); 
+    int timeOut = options->getSessionInactivityDelay();
+    if(timeOut) {
       addIntegerOptionRequest("timeout", timeOut, sqlRequest);
     }
    
@@ -694,13 +772,15 @@ public:
       addOptionRequest("vsessionid", options->getSessionId(), sqlRequest);
     }
 
-    if(options->getStartDateOption()!=-1) {
-      long startDate = options->getStartDateOption();
+    long startDate = options->getStartDateOption();
+    if(startDate!=-1) {
+      //TO COMPLETE
       addIntegerOptionRequest("creation", startDate, sqlRequest);
     }
-   
-    if(options->getEndDateOption()!=-1) {
-      long endDate = options->getEndDateOption();
+  
+    long endDate = options->getEndDateOption(); 
+    if(endDate!=-1) {
+      //TO COMPLETE
       addIntegerOptionRequest("closure", endDate, sqlRequest);
     }
 
