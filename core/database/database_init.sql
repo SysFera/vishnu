@@ -18,5 +18,5 @@ INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIM
 
 -- Creates the vishnu default administrator (root)
 INSERT INTO users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)
-VALUES(1, 'root',''8vU7h/n6KOW8reLF1Lt2/5gzjZ.HvGK3A9doVMbmPtaYKkkCoWrMKiPa7s.fEigSTS5gQmX5F8BlW2XotCeHa0' where userid='root';', 1, 1, 1);
+VALUES(1, 'root','8vU7h/n6KOW8reLF1Lt2/5gzjZ.HvGK3A9doVMbmPtaYKkkCoWrMKiPa7s.fEigSTS5gQmX5F8BlW2XotCeHa0', 1, 1, 1);
 
