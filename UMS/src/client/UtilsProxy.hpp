@@ -10,7 +10,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 #include "DIET_client.h"
 
@@ -55,7 +54,7 @@ public:
    * \fn  void finalize()
    * \return raises an exception on error
    */
-  int 
+  void 
   finalize();
    /**
    * \brief Function to initialize the database 

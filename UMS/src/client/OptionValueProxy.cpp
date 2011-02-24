@@ -7,7 +7,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
@@ -39,8 +38,12 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";
 
-   if(defaultValue) profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
-   else profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
+   if(defaultValue) {
+     profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
+   }
+   else {
+     profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
+   }
    sessionKey = msessionProxy.getSessionKey();
 
    const char* name = "optionValueSet";
@@ -69,7 +72,8 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
          errMsg(msg);
          sendErrorMsg(msg);
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected");

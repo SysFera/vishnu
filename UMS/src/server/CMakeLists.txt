@@ -13,6 +13,7 @@ include_directories(
   ${DATA_BASE_INCLUDE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
+  ${REGISTRY_SOURCE_DIR}
 )
 
 
@@ -25,6 +26,7 @@ add_library(ums-server
    MachineServer.cpp
    LocalAccountServer.cpp
    ConfigurationServer.cpp
+   CommandServer.cpp
 )
 
 target_link_libraries(ums-server
@@ -39,6 +41,7 @@ target_link_libraries(ums-server
   emf4cpp-UMS_Data
   database-vishnu
   exception-vishnu
+  register-vishnu
 )
 
 install( TARGETS ums-server DESTINATION lib )

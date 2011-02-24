@@ -7,7 +7,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 #include "UMSVishnuException.hpp"
 #include "MachineProxy.hpp"
@@ -40,8 +39,12 @@ int MachineProxy::_addMachineInformation(bool isNewMachine)
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";
 
-   if(isNewMachine) profile = diet_profile_alloc("machineCreate", 1, 1, 2);
-   else profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+   if(isNewMachine) {
+     profile = diet_profile_alloc("machineCreate", 1, 1, 2);
+   }
+   else {
+     profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+   }
 
    sessionKey = msessionProxy.getSessionKey();
 
@@ -71,7 +74,8 @@ int MachineProxy::_addMachineInformation(bool isNewMachine)
          errMsg(msg);
          sendErrorMsg(msg);
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected");
@@ -141,7 +145,8 @@ int MachineProxy::deleteMachine()
          errMsg(msg);
          sendErrorMsg(msg); 
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected"); 
