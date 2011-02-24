@@ -11,9 +11,7 @@
 #include <cstring>
 #include <exception>
 #include <map>
-
-
-
+#include "utilVishnu.hpp"
 
 class VishnuException :
   public std::exception {
@@ -22,10 +20,10 @@ public:
 typedef enum ExceptionType{
   UMS  	    = 0 ,
   TMS  	    = 1 ,
-  FMS  	    = 2 , 
+  FMS  	    = 2 ,
   IMS  	    = 3 ,
   INTERNAL  = 4 ,
-  NONE      = 5   
+  NONE      = 5
 } ExceptionType;
 
 private :
@@ -35,7 +33,7 @@ protected :
   /**
    * \brief Map containing The generic messages
    */
-  mutable std::map<int, std::string> mp;  
+  mutable std::map<int, std::string> mp;
   /**
    *  \brief A complementatry message to the exception
    */
@@ -88,7 +86,7 @@ public :
   getTypeS() const {return "";};
   /**
    * \brief To get a complement to the message
-   * \fn virtual const char* what()const 
+   * \fn virtual const char* what()const
    * \return Returns a complement to the generic error message
    */
   virtual const char*
@@ -139,7 +137,14 @@ public :
    * \fn virtual void initMsg()
    */
   virtual void
-  initMsg() =0;
+  initMsg() = 0;
+  /**
+  * \brief Function to get the string associated to the exception
+  * \fn    std::string buildExceptionString()
+  * \return the exception as a string
+  */
+  std::string
+  buildExceptionString();
 };
 
 #endif // VISHNUEXCEPTION
