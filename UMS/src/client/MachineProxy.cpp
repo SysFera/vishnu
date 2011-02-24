@@ -25,27 +25,21 @@ mmachine(machine), msessionProxy(session)
 }
 
 /**
- * \brief Function to combine add() and update() into one function 
- * \fn  int _addMachineInformation(bool isNewMachine=true); 
- * \param isNewMachine to select the call of add or update function 
+ * \brief Function to add a new machine 
+ * \fn  int add()
  * \return raises an exception on error
- */ 
-int MachineProxy::_addMachineInformation(bool isNewMachine)
+ */
+int MachineProxy::add()
 {
 
    diet_profile_t* profile = NULL;
    std::string sessionKey;
    std::string machineToString;
+   char* machineInString;
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";
 
-   if(isNewMachine) {
-     profile = diet_profile_alloc("machineCreate", 1, 1, 2);
-   }
-   else {
-     profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
-   }
-
+   profile = diet_profile_alloc("machineCreate", 1, 1, 3);
    sessionKey = msessionProxy.getSessionKey();
 
    const char* name = "addMachineInformation";
@@ -58,6 +52,78 @@ int MachineProxy::_addMachineInformation(bool isNewMachine)
      msg += "with sessionKey parameter "+sessionKey;
      errMsg(msg);
      sendErrorMsg(msg); 
+   }
+   if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+     msg += "with machineToString parameter "+machineToString;
+     errMsg(msg);
+     sendErrorMsg(msg);
+   }
+
+   //OUT Parameters
+   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+   if(!diet_call(profile)) {
+       if(diet_string_get(diet_parameter(profile,2), &machineInString, NULL)){
+          msg += " by receiving Machine serialized  message";
+          errMsg(msg);
+          sendErrorMsg(msg);
+       }
+       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+         msg += " by receiving errorInfo message";
+         errMsg(msg);
+         sendErrorMsg(msg);
+       }
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
+   }
+   else {
+      sendErrorMsg(" the function diet_call is rejected");
+   }
+
+   /*To check the receiving message error*/
+   checkErrorMsg(errorInfo);
+
+   // CREATE DATA MODEL
+   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+   //Parse the model
+   ecorecpp::parser::parser parser;
+   //To set the mconfiguration 
+   UMS_Data::Machine_ptr machine_ptr = parser.load(machineInString)->as< UMS_Data::Machine >();
+
+   mmachine = *machine_ptr;
+  
+  return 0;
+}
+
+/**
+ * \brief Function to update machine description 
+ * \fn  int update()
+ * \return raises an exception on error
+ */ 
+int MachineProxy::update()
+{
+   diet_profile_t* profile = NULL;
+   std::string sessionKey;
+   std::string machineToString;
+   char* errorInfo;
+   std::string msg = "call of function diet_string_set is rejected ";
+
+   profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+   sessionKey = msessionProxy.getSessionKey();
+
+   const char* name = "addMachineInformation";
+   ::ecorecpp::serializer::serializer _ser(name);
+   //To serialize the mmachine object in to machineToString 
+   machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
+
+   //IN Parameters
+   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+     msg += "with sessionKey parameter "+sessionKey;
+     errMsg(msg);
+     sendErrorMsg(msg);
    }
    if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
      msg += "with machineToString parameter "+machineToString;
@@ -81,30 +147,10 @@ int MachineProxy::_addMachineInformation(bool isNewMachine)
       sendErrorMsg(" the function diet_call is rejected");
    }
 
-    /*To check the receiving message error*/
-    checkErrorMsg(errorInfo);
+   /*To check the receiving message error*/
+   checkErrorMsg(errorInfo);
 
   return 0;
-}
-
-/**
- * \brief Function to add a new machine 
- * \fn  int add()
- * \return raises an exception on error
- */
-int MachineProxy::add()
-{
-  return _addMachineInformation();
-}
-
-/**
- * \brief Function to update machine description 
- * \fn  int update()
- * \return raises an exception on error
- */ 
-int MachineProxy::update()
-{
-  return _addMachineInformation(false);
 }
 
 /**

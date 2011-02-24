@@ -114,7 +114,7 @@ boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivil
                return 1;
               }
 
-							 addVishnuUser(sessionKey,newUser);
+							 addUser(sessionKey,newUser);
 
 
 	}// End of try bloc

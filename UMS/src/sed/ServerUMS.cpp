@@ -69,11 +69,6 @@ ServerUMS::init(int vishnuId,
     UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), utilServer::UMSMAPPERNAME);
     mapper->registerMapper();
 
-    int mapperkey = mapper->code("vishnu_close");
-
-
-    std::cout << "Mapper key:" << mapperkey << " Mapper retour" << mapper->finalize(mapperkey) << std::endl;
-
     /* Checking of vishnuid on the database */
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     std::cout.flush();
