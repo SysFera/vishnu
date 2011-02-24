@@ -89,5 +89,13 @@
 %include "various.i"
 #endif
 
+// Remove the parameters of vishnuInitialize
+%typemap(in, numinputs=0) int argc {
+  $1 = 0;
+}
+%typemap(in, numinputs=0) char** argv {
+  $1 = NULL;
+}
+
 %include "api_ums.hpp"
 
