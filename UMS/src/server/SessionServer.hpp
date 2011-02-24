@@ -31,6 +31,9 @@
 #include "utilServer.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
+#include "UMSMapper.hpp"
+#include "MapperRegistry.hpp"
+
 
 class UserServer;
 
@@ -111,10 +114,8 @@ public:
   std::string
   getAttribut(std::string condition, std::string attrname="sessionkey");
   /**
-  * \brief Function to log the session information
-  * \fn int saveConnection(std::string commandName)
-  * \param cmdName The command to log
-  * \param attrname the name of the attribut to get
+  * \brief Function to save the date of the last connection
+  * \fn int saveConnection()
   * \return raises an exception on error
   */
   int

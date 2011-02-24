@@ -18,10 +18,7 @@
 #include "LocalAccountServer.hpp"
 #include "ConfigurationServer.hpp"
 #include "QueryServer.hpp"
-#include "UMSMapper.hpp"
-#include "MapperRegistry.hpp"
-
-
+#include "CommandServer.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect
