@@ -84,9 +84,12 @@ int main (int ac, char* av[]){
 
                sessionKey=session.getSessionKey();
 
-               cout <<"sessionKey " << sessionKey <<endl;
+               if(false==sessionKey.empty()){
+
+               cout <<"the last session key was " << sessionKey <<endl;
 
 							 removeLastSession(sessionFile);
+               }
 
 		//int res=close(sessionKey);
 

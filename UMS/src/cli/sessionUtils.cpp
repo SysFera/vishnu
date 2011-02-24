@@ -61,19 +61,20 @@ void storeLastSession(const SessionEntry& session,const std::string& terminal){
 		saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
 
 	}
-  catch(archive_exception& e){
+  catch(std::exception& e){
 
-		    if (e.code== archive_exception:: input_stream_error){// first session for this terminal
+		    //if (e.code== archive_exception:: input_stream_error){// first session for this terminal
 
 					allSessions.push_back(session);
 
 					saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
 
-				}
-				else{
+          exit (EXIT_SUCCESS);
+			//	}
+				//else{
 
-			throw;
-				}
+		//	throw;
+			//	}
 	}
 }
 
@@ -108,9 +109,18 @@ SessionEntry getLastSession(const std::string& terminal){
 			 throw std::runtime_error("there is no open session ");
 		 }
 		 else{
+       std::cerr<< "there is no open session \n";
 			 throw;
 		 }
 	}
+  catch(...){
+
+
+    std::cerr<< "there is no open session \n";
+
+    exit (EXIT_FAILURE);
+
+  }
 
 }
 
