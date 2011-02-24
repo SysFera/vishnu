@@ -71,14 +71,6 @@ public:
 
 private:
 
-  /**
-   * \brief Function to combine add() and update() into one function 
-   * \fn  int _addMachineInformation(bool isNewMachine=true); 
-   * \param isNewMachine to select the call of add or update function 
-   * \return raises an exception on error
-   */
-  int _addMachineInformation(bool isNewMachine=true);
-
    /////////////////////////////////
   // Attributes
   /////////////////////////////////
