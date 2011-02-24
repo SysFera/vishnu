@@ -202,7 +202,7 @@ solveUserCreate(diet_profile_t* pb) {
 
     //To save the last connection on the database
     sessionServer.saveConnection();
-
+    
     //MAPPER CREATION
     mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_user");
@@ -214,14 +214,20 @@ solveUserCreate(diet_profile_t* pb) {
     CommandServer commandServer = CommandServer(cmd, sessionServer);
     commandServer.record(UMS);
 
+    //To serialize the user object
+    const char* name = "solveUserCreate";
+    ::ecorecpp::serializer::serializer _ser(name);
+    std::string userSerializedUpdate = _ser.serialize(user);
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(userSerializedUpdate.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -496,14 +502,20 @@ solveMachineCreate(diet_profile_t* pb) {
     CommandServer commandServer = CommandServer(cmd, sessionServer);
     commandServer.record(UMS);
 
+    //To serialize the user object
+    const char* name = "solveMachineCreate";
+    ::ecorecpp::serializer::serializer _ser(name);
+    std::string machineSerializedUpdate = _ser.serialize(machine);
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(machineSerializedUpdate.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 
   return 0;
