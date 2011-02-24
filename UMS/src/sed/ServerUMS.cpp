@@ -69,11 +69,6 @@ ServerUMS::init(int vishnuId,
     UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), utilServer::UMSMAPPERNAME);
     mapper->registerMapper();
 
-    int mapperkey = mapper->code("vishnu_close");
-
-
-    std::cout << "Mapper key:" << mapperkey << " Mapper retour" << mapper->finalize(mapperkey) << std::endl;
-
     /* Checking of vishnuid on the database */
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
     std::cout.flush();
@@ -126,10 +121,11 @@ ServerUMS::init(int vishnuId,
 
   /* solveUserCreate */
 
-  mprofile = diet_profile_desc_alloc(SRV[3], 1, 1, 2);
+  mprofile = diet_profile_desc_alloc(SRV[3], 1, 1, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveUserCreate)) return 1;
 
   /* solveUserUpdate */
@@ -167,10 +163,11 @@ ServerUMS::init(int vishnuId,
 
   /* solveMachineCreate */
 
-  mprofile = diet_profile_desc_alloc(SRV[8], 1, 1, 2);
+  mprofile = diet_profile_desc_alloc(SRV[8], 1, 1, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveMachineCreate)) return 1;
 
   /* solveMachineUpdate */

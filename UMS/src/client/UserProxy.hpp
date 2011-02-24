@@ -47,11 +47,11 @@ public:
   explicit UserProxy(const UMS_Data::User& user);
   /**
    * \brief Function to add new user 
-   * \fn  int add(const UMS_Data::User& user)
+   * \fn  int add(UMS_Data::User& user)
    * \param user The object which encapsulates the user information
    * \return raises an exception on error
    */
-  int add(const UMS_Data::User& newUser);
+  int add(UMS_Data::User& newUser);
   /**
    * \brief Function to update user information 
    * \fn  int update(const UMS_Data::User& user)
@@ -103,15 +103,6 @@ public:
   ~UserProxy();
 
 private:
-
-  /**
-   * \brief Function to combine add() and update() into one function 
-   * \fn  int _addUserInformation(const UMS_Data::User& user, bool isNewUser=true)
-   * \param user The object which encapsulates the user information 
-   * \param isNewUser to select the call of add or update function 
-   * \return raises an exception on error
-   */
-  int _addUserInformation(const UMS_Data::User& user, bool isNewUser=true);
 
    /////////////////////////////////
   // Attributes

@@ -47,7 +47,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getCommand(const string& key,string& command);
+  getCommand(const int& key,string& command);
 
   /**
    * \brief To get the key corresponding to a command
@@ -55,7 +55,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getKey(const string& command, string& key);
+  getKey(const string& command, int& key);
 
   /**
    * \brief Function to add an element to code

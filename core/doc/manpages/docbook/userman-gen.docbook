@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl"
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
+<book
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(user)">
+  <info>
+    <author>
+      <personname>
+        <firstname/>
+        <surname>SysFera SAS</surname>
+      </personname>
+      <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
+      <address>
+        <email>info@sysfera.com</email>
+      </address>
+    </author>
+    <title>User Manual</title>
+    <date>February 2011</date>
+    <copyright>
+      <year>2011</year>
+      <holder>SysFera SAS</holder>
+    </copyright>
+    <legalnotice>
+      <para>These manual pages are provided under the following conditions:</para>
+      <para>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</para>
+      <orderedlist>
+        <listitem>
+          <para>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</para>
+        </listitem>
+        <listitem>
+          <para>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para>
+        </listitem>
+      </orderedlist>
+      <para>This software is governed by the CECILL licence under French law and
+abiding by the rules of distribution of free software.  You can  use, 
+modify and/ or redistribute the software under the terms of the CeCILL
+license as circulated by CEA, CNRS and INRIA at the following URL
+&quot;http://www.cecill.info&quot;.</para>
+      <para>As a counterpart to the access to the source code and  rights to copy,
+modify and redistribute granted by the license, users are provided only
+with a limited warranty  and the software's author,  the holder of the
+economic rights,  and the successive licensors  have only  limited
+liability.</para>
+      <para>In this respect, the user's attention is drawn to the risks associated
+with loading,  using,  modifying and/or developing or reproducing the
+software by the user in light of its specific status of free software,
+that may mean  that it is complicated to manipulate,  and  that  also
+therefore means  that it is reserved for developers  and  experienced
+professionals having in-depth computer knowledge. Users are therefore
+encouraged to load and test the software's suitability as regards their
+requirements in conditions enabling the security of their systems and/or 
+data to be ensured and,  more generally, to use and operate it in the 
+same conditions as regards security.</para>
+    </legalnotice>
+    <productname>VISHNU</productname>
+    <releaseinfo>1.0</releaseinfo>
+  </info>
+  <reference>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_connect</refname>
+        <refpurpose>opens a session</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>Opening a VISHNU session is the first step before using any other VISHNU command.
+This command authenticates the user, who must be registered in the VISHNU system
+by an administrator.  It also creates a session that remains open after the command is
+completed and until the session is either manually or automatically closed.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>closePolicy</replaceable></option></term>
+            <listitem>
+              <para>is an option for closing session automatically.
+Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>sessionInactivityDelay</replaceable></option></term>
+            <listitem>
+              <para>is the maximum delay in seconds between two user requests when the CLOSE_ON_TIMEOUT policy is set.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>substituteUserId</replaceable></option></term>
+            <listitem>
+              <para>is an admin option which allows an admin to open a session as if she was another user identified by her userId.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CLOSE_POLICY</envar></term>
+            <listitem>
+              <para>The value of this environment variable represents the session close policy. Overriden by the -p option.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_reconnect</refname>
+        <refpurpose>reconnects to a session that is still active</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId </replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows to reuse a session that has been opened previously and that has not yet
+been closed. A user can disconnect from a session without closing it (for example if there are running
+commands in that session) by setting the session close policy (at connection time) to CLOSE_ON_TIMEOUT.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_close</refname>
+        <refpurpose>closes the session</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_close</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command closes the session that is currently active in the terminal. It will return
+an error if there are still some active requests that have been submitted by the user during
+the session (e.g. job submission or file transfers). After the session is closed it cannot be re-opened.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_change_password</refname>
+        <refpurpose>changes the password</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_change_password</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_add_local_account</refname>
+        <refpurpose>adds a new local user configuration </refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_add_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>acLogin</replaceable></arg><arg choice="plain"><replaceable>sshKeyPath</replaceable></arg><arg
+              choice="plain"><replaceable>homeDirectory</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>A local user configuration must be added to allow the user identified by userId to connect on a machine identified by machineId.
+This configuration must match an existing system account on that machine with a login that matches acLogin.
+The parameters sshKeyPath (absolute path to the user's private SSH key, used for file transfers) and the
+homeDirectory path must be provided.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_update_local_account</refname>
+        <refpurpose>updates a local user configuration</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_update_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-l <replaceable>acLogin</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>sshKeyPath</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>homeDirectory</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-l <replaceable>acLogin</replaceable></option></term>
+            <listitem>
+              <para>accLogin represents the login of the user on the associated machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>sshKeyPath</replaceable></option></term>
+            <listitem>
+              <para>sshKeyPath is the path of the ssh key of the user on the associated machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>homeDirectory</replaceable></option></term>
+            <listitem>
+              <para>HomeDirectory is the path of the home directory of the user on the associated machine.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_delete_local_account</refname>
+        <refpurpose>removes a local user configuration (for a given user on a given machine) from VISHNU</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_delete_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_list_local_account</refname>
+        <refpurpose>lists the local user configurations</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>adminListOption</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing all local configurations of all users .</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing the local configurations of a specific user .</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-i <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>is an option for listing local user configurations on a specific machine.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_list_machine</refname>
+        <refpurpose>lists the machines in which  the local user configurations are defined for the given user</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing machines in which a specific user has a local configuration.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>listAllmachine</replaceable></option></term>
+            <listitem>
+              <para>is an option for listing all VISHNU machines.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>is an option for listing information about a specific machine.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_list_history_cmd</refname>
+        <refpurpose>lists the commands</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_list_history_cmd</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>sessionId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>startDateOption</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>endDateOption</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>adminListOption</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing all commands of all users.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing commands launched by a specific user identified by his/her userId.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-i <replaceable>sessionId</replaceable></option></term>
+            <listitem>
+              <para>lists all commands launched within a specific session.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>startDateOption</replaceable></option></term>
+            <listitem>
+              <para>allows the user to organize the commands listed by providing  the start date (the UNIX timestamp of the start date is used).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-e <replaceable>endDateOption</replaceable></option></term>
+            <listitem>
+              <para>allows the user to organize the commands listed by providing  the end date (the timestamp of the end date is used). By default, the end date is the current day.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_list_options</refname>
+        <refpurpose>lists the options of the user</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_list_options</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>optionName</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>listAllDeftValue</replaceable></option></term>
+            <listitem>
+              <para>is an option for listing all default option values defined by VISHNU administrator.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing the options of a specific user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>optionName</replaceable></option></term>
+            <listitem>
+              <para> allows the user to get the value of a specific option identified by its name  .</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_list_sessions</refname>
+        <refpurpose>lists all sessions of the user</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_list_sessions</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>sessionClosePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>sessionId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>startDateOption</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>endDateOption</replaceable></option></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-t <replaceable>status</replaceable></option></term>
+            <listitem>
+              <para>specifies the status of the sessions which will be listed.
+Predefined values are: INACTIVE, ACTIVE.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>sessionClosePolicy</replaceable></option></term>
+            <listitem>
+              <para>specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT).
+Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>sessionInactivityDelay</replaceable></option></term>
+            <listitem>
+              <para>specifies the inactivity delay in seconds of the sessions which will be listed.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>allows the user to list sessions opened on a specific machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>adminListOption</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing all sessions of all users.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>userId</replaceable></option></term>
+            <listitem>
+              <para>is an admin option for listing sessions opened by a specific user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-i <replaceable>sessionId</replaceable></option></term>
+            <listitem>
+              <para>allows the user to list all commands launched within a specific session.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>startDateOption</replaceable></option></term>
+            <listitem>
+              <para>allows the user to organize the commands listed by providing  the start date (the UNIX timestamp of the start date is used).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-e <replaceable>endDateOption</replaceable></option></term>
+            <listitem>
+              <para>allows the user to organize the commands listed by providing  the end date (the timestamp of the end date is used). By default, the end date is the current day.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_configure_option</refname>
+        <refpurpose>configures an option of the user</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_configure_option</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>optionName</replaceable></arg><arg choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+      </refsect1>
+    </refentry>
+  </reference>
+</book>
