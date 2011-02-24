@@ -88,7 +88,7 @@ public :
 
 protected:
   MapperRegistry* mreg;
-  map<string, string> mmap;
+  map<int, string> mmap;
   string mname;
 
   map<int, string> mcmd;

@@ -129,6 +129,7 @@ int main (int ac, char* av[]){
 							 //addUser(sessionKey,newUser);
 
                }
+							 addUser(sessionKey,newUser);
 
 
 	}// End of try bloc

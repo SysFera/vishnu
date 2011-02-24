@@ -2,96 +2,96 @@
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="FMS">
     <services name="createFile" description="creates  files on  remote machines." resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path" longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description="The file access permissions in octal numeral system" optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="644"/>
     </services>
     <services name="createDir" description="creates directories on remote machines." resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path" longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description="the new directories permission access in octal numeral system" optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="755"/>
     </services>
     <services name="removeFile" description="removes files from  remote hosts." resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to remove following the pattern  [host:]file path" longOptionName=""/>
     </services>
     <services name="removeDir" description="removes  directories (and subdirectories) from  remote machines." resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to remove following the pattern  [host:]directory path" longOptionName=""/>
     </services>
     <services name="chGrp" description="changes group owner of  remote files/directories. " resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory"/>
     </services>
     <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="VISHNU_OK INVALID_SESSION_KEY DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description=" the access rigths of file/directory in octal system." longOptionName=""/>
     </services>
     <services name="headOfFile" description="displays a few first lines of  files located on  remote machines." resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The first &quot;nLine&quot; lines of the file" shortOptionLetter="" longOptionName=""/>
       <ports name="nLine" dataType="//@modules.0/@typeList/@types.1" description="Number of lines to display" optional="true" shortOptionLetter="n" longOptionName="" defaultValueLiteral="10"/>
     </services>
     <services name="tailOfFile" description="displays a few last lines of  files located on remote machines" resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The last &quot;nLine&quot; lines of the file" longOptionName=""/>
       <ports name="nLine" dataType="//@modules.0/@typeList/@types.1" description="number of lines to display" optional="true" shortOptionLetter="n" longOptionName="line" defaultValueLiteral="10"/>
     </services>
     <services name="contentOfFile" description="displays content  of  files located on remote machines" resultCodes="VISHNU_OK INVALID_SESSION_KEY INVALID_MACHINE_ID FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_INVALID_CFG_FILE FMS_SERVER_UNAVAILABLE FMS_PERMISSION_DENIED DB_ERROR">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to display following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The content of the file" longOptionName=""/>
     </services>
     <services name="listDir" description="displays  the content of a remote directory. " resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
       <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.4" description="The content of the directory  (only files names with short format, all files informations with long format)" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command" optional="true" longOptionName=""/>
     </services>
     <services name="copyFile" description="executes a synchronous copy of file." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter="r"/>
     </services>
     <services name="copyAsyncFile" description="executes an asynchronous copy of file." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options" optional="true" shortOptionLetter="r"/>
     </services>
     <services name="moveFile" description="executes a synchronous move of file." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The move command options" optional="true" shortOptionLetter="r" longOptionName=""/>
     </services>
     <services name="moveAsyncFile" description="executes an asynchronous move of file." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file" longOptionName=""/>
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The mv command options" optional="true" shortOptionLetter="r"/>
     </services>
     <services name="stopFileTransfer" description="stops an execution of a set of file transfers." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.10" description="The stop file transfer command options" optional="true" longOptionName=""/>
     </services>
     <services name="listFileTransferStatus" description="displays the status of all file transfers submitted by User." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.11" description="The filter options " optional="true" shortOptionLetter="" longOptionName=""/>
     </services>
     <services name="listFileTransfers" description="displays the history of all file transfers submitted by User." resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.9" description="The filter options  " optional="true" longOptionName=""/>
     </services>
     <services name="getFilesInfo" description="displays the information  of  files." isCommand="false" resultCodes="DB_ERROR FMS_INVALID_CFG_FILE FMS_INVALID_PARAMETER FMS_INVALID_PATH FMS_PERMISSION_DENIED FMS_SERVER_UNAVAILABLE INVALID_MACHINE_ID INVALID_SESSION_KEY VISHNU_OK">
-      <ports name="sessionKey" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName="" envOption="VISHNU_SESSION_KEY"/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="pathList" dataType="//@modules.0/@typeList/@types.0" description="The file whose inode information will be displayed"/>
       <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.12" description="The  inode information" shortOptionLetter="" longOptionName=""/>
     </services>
@@ -149,7 +149,7 @@
     </resultCodeList>
   </modules>
   <envVariableList>
+    <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU"/>
     <envVariables name="VISHNU_TRANSFER_CMD" description="It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}." isUserOption="true"/>
-    <envVariables name="VISHNU_SESSION_KEY" description="the session identifier"/>
   </envVariableList>
 </API>
