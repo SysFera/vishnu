@@ -15,6 +15,7 @@ include_directories(
   ${SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
 )
 
 add_executable(umssed

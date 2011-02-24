@@ -9,11 +9,39 @@
 #define __UMSMAPPER__HH__
 
 #include <map>
+#include <vector>
 
 #include "Mapper.hpp"
 #include "MapperRegistry.hpp"
+#include "utilVishnu.hpp"
 
 using namespace std;
+
+const int VISHNU_CONNECT                  = 1 ;
+const int VISHNU_RECONNECT 	     	  = 2 ;
+const int VISHNU_CLOSE 	     	          = 3 ;
+const int VISHNU_ADD_VISHNU_USER   	  = 4 ;
+const int VISHNU_UPDATE_VISHNU_USER 	  = 5 ;
+const int VISHNU_DELETE_VISHNU_USER 	  = 6 ;
+const int VISHNU_CHANGE_PASSWORD   	  = 7 ;
+const int VISHNU_RESET_PASSWORD    	  = 8 ;
+const int VISHNU_ADD_LOCAL_ACCOUNT        = 9 ;
+const int VISHNU_UPDATE_LOCAL_ACCOUNT     = 10;
+const int VISHNU_DELETE_LOCAL_ACCOUNT     = 11;
+const int VISHNU_SAVE_CONFIGURATION       = 12;
+const int VISHNU_RESTORE_CONFIGURATION    = 13;
+const int VISHNU_ADD_MACHINE 	          = 14;
+const int VISHNU_UPDATE_MACHINE           = 15;
+const int VISHNU_DELETE_MACHINE           = 16;
+const int VISHNU_LIST_LOCAL_ACCOUNT       = 17;
+const int VISHNU_LIST_MACHINE 	          = 18;
+const int VISHNU_LIST_HISTORY_CMD         = 19;
+const int VISHNU_LIST_OPTIONS 	          = 20;
+const int VISHNU_LIST_USERS 	          = 21;
+const int VISHNU_LIST_SESSIONS 	          = 22;
+const int VISHNU_CONFIGURE_DEFAULT_OPTION = 23;
+const int VISHNU_CONFIGURE_OPTION	  = 24;
+
 
 /**
  * \class UMSMapper
@@ -46,7 +74,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getCommand(const string& key,string& command);
+  getCommand(const int& key,string& command);
 
   /**
    * \brief To get the key corresponding to a command
@@ -54,7 +82,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getKey(const string& command, string& key);
+  getKey(const string& command, int& key);
 
   /**
    * \brief Function to add an element to code
@@ -87,6 +115,77 @@ public :
 
 protected:
 private:
+
+
+string
+decodeClose(vector<int> separator, const string& msg);
+
+string
+decodeAddUser(vector<int> separator, const string& msg);
+
+string
+decodeUpUser(vector<int> separator, const string& msg);
+
+string
+decodeDelUser(vector<int> separator, const string& msg);
+
+string
+decodeChangePwd(vector<int> separator, const string& msg);
+
+string
+decodeResetPwd(vector<int> separator, const string& msg);
+
+string
+decodeAddAcc(vector<int> separator, const string& msg);
+
+string
+decodeUpAcc(vector<int> separator, const string& msg);
+
+string
+decodeDelAcc(vector<int> separator, const string& msg);
+
+string
+decodeSaveConf(vector<int> separator, const string& msg);
+
+string
+decodeRestoreConf(vector<int> separator, const string& msg);
+
+string
+decodeAddM(vector<int> separator, const string& msg);
+
+string
+decodeUpM(vector<int> separator, const string& msg);
+
+string
+decodeDelM(vector<int> separator, const string& msg);
+
+string
+decodeListAcc(vector<int> separator, const string& msg);
+
+string
+decodeListM(vector<int> separator, const string& msg);
+
+string
+decodeListH(vector<int> separator, const string& msg);
+
+string
+decodeListOp(vector<int> separator, const string& msg);
+
+string
+decodeListUser(vector<int> separator, const string& msg);
+
+string
+decodeListSession(vector<int> separator, const string& msg);
+
+string
+decodeConfDefaultOp(vector<int> separator, const string& msg);
+
+string
+decodeConfOp(vector<int> separator, const string& msg);
+
+void
+findSeparator(const string& s, vector<int>& vec);
+
 };
 
 

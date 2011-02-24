@@ -10,38 +10,6 @@
 std::string Vishnuid::mvishnuid = "";
 
 /**
-* \brief Function to convert a string to int
-* \fn    std::string convertToString(const T& val);
-* \param  val a value to convert to string
-* \return int value of the corresponding string
-*/
-int utilServer::convertToInt(std::string val) {
-  int intValue;
-  std::istringstream str(val);
-  str >> intValue;
-  return intValue;
-}
-/**
-* \brief Function to get the string associated to SystemException
-* \fn    buildExceptionString(SystemException& e)
-* \param  e the exception caught
-* \return int value of the corresponding string
-*/
-std::string
-utilServer::buildExceptionString(VishnuException& e) {
-  std::string errorInfo;
-
-  //To get the error code associated to the exception follows by #
-  errorInfo = utilServer::convertToString(e.getMsgI())+"#";
-
-  //To get exception information
-  errorInfo.append(e.getMsg());
-  errorInfo.append(" ");
-  errorInfo.append(e.what());
-
-  return errorInfo;
-}
-/**
 * \brief Function to get a random number
 * \fn    int generate_numbers()
 * \return the number generated
@@ -253,7 +221,7 @@ utilServer::incrementCpt(std::string cptName, int cpt) {
 
   cpt = cpt+1;
 
-  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+convertToString(cpt));
+  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+vishnu::convertToString(cpt));
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   try {

@@ -15,11 +15,11 @@ Mapper_impl2::~Mapper_impl2(){
 
 Mapper_impl2::Mapper_impl2(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<string, string>("1", "submitJob"));
-  mmap.insert (pair<string, string>("2", "submitfile"));
-  mmap.insert (pair<string, string>("3", "getjobinfo"));
-  mmap.insert (pair<string, string>("4", "getjobfile"));
-  mmap.insert (pair<string, string>("5", "canceljob"));
+  mmap.insert (pair<int, string>(1, "submitJob"));
+  mmap.insert (pair<int, string>(2, "submitfile"));
+  mmap.insert (pair<int, string>(3, "getjobinfo"));
+  mmap.insert (pair<int, string>(4, "getjobfile"));
+  mmap.insert (pair<int, string>(5, "canceljob"));
 };
 
 int
@@ -34,10 +34,10 @@ Mapper_impl2::unregisterMapper(){
 }
 
 int
-Mapper_impl2::getCommand(const string& key,string& command){
-  map<string, string>::const_iterator it;
+Mapper_impl2::getCommand(const int& key,string& command){
+  map<int, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
-    if (key.compare(it->first)==0){
+    if (key==it->first){
       command = it->second;
       return 0;
     }
@@ -45,8 +45,8 @@ Mapper_impl2::getCommand(const string& key,string& command){
 }
 
 int
-Mapper_impl2::getKey(const string& command, string& key){
-  map<string, string>::const_iterator it;
+Mapper_impl2::getKey(const string& command, int& key){
+  map<int, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (command.compare(it->second)==0){
       key = it->first;

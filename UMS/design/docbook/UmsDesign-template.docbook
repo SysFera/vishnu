@@ -26,6 +26,14 @@
           <para>Deliverable version</para>
         </revdescription>
         </revision>
+        <revision>
+          <revnumber>2</revnumber>
+          <date>24/02/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Modified addUser and addMachine signature.</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>

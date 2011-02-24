@@ -11,6 +11,7 @@ include_directories(
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
 )
 
 add_library(ums-api-client
