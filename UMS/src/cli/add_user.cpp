@@ -32,7 +32,7 @@ int main (int ac, char* av[]){
 
 
 /**************** Describe options *************/
-boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
+      boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
 
 
         opt->add("sessionKey",
@@ -119,10 +119,11 @@ boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivil
 
 	}// End of try bloc
 
-catch(po::required_option& e){// a required parameter is missing
+  catch(po::required_option& e){// a required parameter is missing
 
 
-  usage(*opt," privilege userId firstname lastname email ","required parameter is missing");
+    usage(*opt," privilege userId firstname lastname email ","required parameter is missing");
+   
   }
 
 catch(VishnuException& e){// catch all Vishnu runtime error

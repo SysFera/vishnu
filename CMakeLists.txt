@@ -67,8 +67,9 @@ endif(EMF4CPP_FOUND)
 find_package(
         Boost
 	1.45
-        REQUIRED program_options date_time filesystem system unit_test_framework serialization random
+        REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random
 )
+add_definitions( "-DBOOST_FILESYSTEM_VERSION=3" )
 
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)
 set(UMS_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)

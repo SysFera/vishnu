@@ -24,7 +24,7 @@ using namespace boost::archive;
 class SessionEntry{
 public:
 	SessionEntry(){}
-	SessionEntry(const std::string& sessionKey_, int closePolicy_=0);
+	SessionEntry(const std::string sessionKey_, int closePolicy_=0);
 	std::string getSessionKey()const;
 	int  getClosePolicy()const;
 friend	std::ostream& operator <<(std::ostream& os, const SessionEntry& session);

@@ -4,11 +4,16 @@
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "daemon_cleaner.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 
+bfs::path home_dir;
+bfs::path session_dir;
+bfs::path proc_dir("/proc");
+const char *lockname = "vishnu";
 
 int main (int ac, char* av[]){
 
@@ -45,21 +50,12 @@ int main (int ac, char* av[]){
 
 			opt->setPosition("userId",-1);
 
-			opt->add("sessionInactivityDelay,d",
-				      "The session inactivity delay",
-					  CONFIG,
-					  fSessionInactivityDelay);
+			opt->add("sessionInactivityDelay,d", "The session inactivity delay",CONFIG,fSessionInactivityDelay);
 
 
-			opt->add("substituteUserId,s",
-				         "The substitute user identifier",
-						 CONFIG,
-						 fSubstituteUserId);
+			opt->add("substituteUserId,s","The substitute user identifier",CONFIG,fSubstituteUserId);
 
-		opt->add("closePolicy,p",
-           "for closing session automatically",
-           CONFIG,
-             fClosePolicy );
+		opt->add("closePolicy,p","for closing session automatically",CONFIG,fClosePolicy );
 
 		try{
 
@@ -86,7 +82,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-
+/*
                // initializing DIET
               if (diet_initialize(dietConfig.c_str(), ac, av)) {
                     cerr << "DIET initialization failed !" << endl;
@@ -96,14 +92,15 @@ int main (int ac, char* av[]){
 
 							 connect(userId,password, sessionKey, connectOpt);
 
+*/
+			// store sessionKey into $HOME/.vishnu/sessions
 
-			// store sessionKey into ./session
-
-							/* sessionKey="myfirstSession";
+							 sessionKey="myfirstSession";
 							 std::string sessionFile=getSessionLocation(getppid());
 							 cout << "sessionFile: " << sessionFile<< endl;
-							 SessionEntry session(sessionKey,connectOpt.getClosePolicy());
-							 storeLastSession(session,sessionFile.c_str());*/
+							 SessionEntry session(sessionKey,0);
+							 storeLastSession(session,sessionFile.c_str());
+               //cleaner();
 
 	}// End of try bloc
 
@@ -119,7 +116,6 @@ catch(VishnuException& e){// catch all Vishnu runtime error
 			return e.getMsgI() ;
 
 }
-
 
 	catch(std::exception& e){
 
