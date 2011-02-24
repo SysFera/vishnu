@@ -180,9 +180,6 @@ int SessionServer::close() {
 
   std::string sqlCommand = "UPDATE vsession SET state=0 WHERE sessionkey='";
   int state;
-  int mapperkey;
-  Mapper* mapper;
-  std::string cmd;
 
   try {
     UserServer user = UserServer(SessionServer(msession.getSessionKey()));
@@ -203,15 +200,6 @@ int SessionServer::close() {
         WHERE sessionkey='"+msession.getSessionKey()+"';");
         mdatabaseVishnu->process(sqlCommand.c_str());
 
-        //MAPPER CREATION
-        mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
-        mapperkey = mapper->code("vishnu_close");
-        mapper->code(msession.getSessionKey(), mapperkey);
-        cmd = mapper->finalize(mapperkey);
-
-        //COMMAND REGISTRATION
-        CommandServer commandServer = CommandServer(cmd, SessionServer(msession.getSessionKey()));
-        commandServer.record(UMS);
 
       } //if the session is not already closed
       else {

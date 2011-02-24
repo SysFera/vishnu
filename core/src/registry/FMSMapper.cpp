@@ -12,24 +12,24 @@ FMSMapper::FMSMapper(){
 
 FMSMapper::FMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<string, string>("1", "createFile"));
-  mmap.insert (pair<string, string>("2", "createDir"));
-  mmap.insert (pair<string, string>("3", "removeFile"));
-  mmap.insert (pair<string, string>("4", "removeDir"));
-  mmap.insert (pair<string, string>("5", "chGrp"));
-  mmap.insert (pair<string, string>("6", "chMod"));
-  mmap.insert (pair<string, string>("7", "headOfFile"));
-  mmap.insert (pair<string, string>("8", "tailOfFile"));
-  mmap.insert (pair<string, string>("9", "contentOfFile"));
-  mmap.insert (pair<string, string>("10", "listDir"));
-  mmap.insert (pair<string, string>("11", "copyFile"));
-  mmap.insert (pair<string, string>("12", "copyAsyncFile"));
-  mmap.insert (pair<string, string>("13", "moveFile"));
-  mmap.insert (pair<string, string>("14", "moveAsyncFile"));
-  mmap.insert (pair<string, string>("15", "listFileTransferStatus"));
-  mmap.insert (pair<string, string>("16", "listFileTransfers"));
-  mmap.insert (pair<string, string>("17", "stopFileTransfer"));
-  mmap.insert (pair<string, string>("18", "getFileInfo"));
+  mmap.insert (pair<int, string>(1, "createFile"));
+  mmap.insert (pair<int, string>(2, "createDir"));
+  mmap.insert (pair<int, string>(3, "removeFile"));
+  mmap.insert (pair<int, string>(4, "removeDir"));
+  mmap.insert (pair<int, string>(5, "chGrp"));
+  mmap.insert (pair<int, string>(6, "chMod"));
+  mmap.insert (pair<int, string>(7, "headOfFile"));
+  mmap.insert (pair<int, string>(8, "tailOfFile"));
+  mmap.insert (pair<int, string>(9, "contentOfFile"));
+  mmap.insert (pair<int, string>(10, "listDir"));
+  mmap.insert (pair<int, string>(11, "copyFile"));
+  mmap.insert (pair<int, string>(12, "copyAsyncFile"));
+  mmap.insert (pair<int, string>(13, "moveFile"));
+  mmap.insert (pair<int, string>(14, "moveAsyncFile"));
+  mmap.insert (pair<int, string>(15, "listFileTransferStatus"));
+  mmap.insert (pair<int, string>(16, "listFileTransfers"));
+  mmap.insert (pair<int, string>(17, "stopFileTransfer"));
+  mmap.insert (pair<int, string>(18, "getFileInfo"));
 };
 
 int
@@ -44,10 +44,10 @@ FMSMapper::unregisterMapper(){
 }
 
 int
-FMSMapper::getCommand(const string& key,string& command){
-  map<string, string>::const_iterator it;
+FMSMapper::getCommand(const int& key,string& command){
+  map<int, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
-    if (key.compare(it->first)==0){
+    if (key==it->first){
       command = it->second;
       return 0;
     }
@@ -55,8 +55,8 @@ FMSMapper::getCommand(const string& key,string& command){
 }
 
 int
-FMSMapper::getKey(const string& command, string& key){
-  map<string, string>::const_iterator it;
+FMSMapper::getKey(const string& command, int& key){
+  map<int, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (command.compare(it->second)==0){
       key = it->first;

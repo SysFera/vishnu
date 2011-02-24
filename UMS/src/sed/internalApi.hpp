@@ -19,6 +19,8 @@
 #include "ConfigurationServer.hpp"
 #include "QueryServer.hpp"
 #include "CommandServer.hpp"
+#include "UMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 /**
 * \brief Function to solve the service sessionConnect

@@ -12,16 +12,16 @@ TMSMapper::TMSMapper(){
 
 TMSMapper::TMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<string, string>("1", "submitJob"));
-  mmap.insert (pair<string, string>("2", "getJobInfo"));
-  mmap.insert (pair<string, string>("3", "getJobProgress"));
-  mmap.insert (pair<string, string>("4", "listQueues"));
-  mmap.insert (pair<string, string>("5", "listJobs"));
-  mmap.insert (pair<string, string>("6", "getJobOutPut"));
-  mmap.insert (pair<string, string>("7", "getAllJobsOutPut"));
-  mmap.insert (pair<string, string>("8", "cancelJob"));
-  mmap.insert (pair<string, string>("9", "setMachineEnv"));
-  mmap.insert (pair<string, string>("10", "setMachineRefreshPeriod"));
+  mmap.insert (pair<int, string>(1, "submitJob"));
+  mmap.insert (pair<int, string>(2, "getJobInfo"));
+  mmap.insert (pair<int, string>(3, "getJobProgress"));
+  mmap.insert (pair<int, string>(4, "listQueues"));
+  mmap.insert (pair<int, string>(5, "listJobs"));
+  mmap.insert (pair<int, string>(6, "getJobOutPut"));
+  mmap.insert (pair<int, string>(7, "getAllJobsOutPut"));
+  mmap.insert (pair<int, string>(8, "cancelJob"));
+  mmap.insert (pair<int, string>(9, "setMachineEnv"));
+  mmap.insert (pair<int, string>(10, "setMachineRefreshPeriod"));
 };
 
 int
@@ -36,10 +36,10 @@ TMSMapper::unregisterMapper(){
 }
 
 int
-TMSMapper::getCommand(const string& key,string& command){
-  map<string, string>::const_iterator it;
+TMSMapper::getCommand(const int& key,string& command){
+  map<int, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
-    if (key.compare(it->first)==0){
+    if (key==it->first){
       command = it->second;
       return 0;
     }
@@ -47,8 +47,8 @@ TMSMapper::getCommand(const string& key,string& command){
 }
 
 int
-TMSMapper::getKey(const string& command, string& key){
-  map<string, string>::const_iterator it;
+TMSMapper::getKey(const string& command, int& key){
+  map<int, string>::const_iterator it;
   for (it = mmap.begin() ; it != mmap.end() ; it++){
     if (command.compare(it->second)==0){
       key = it->first;
