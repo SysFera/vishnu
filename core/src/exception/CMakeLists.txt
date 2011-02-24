@@ -1,5 +1,9 @@
 #SET( CMAKE_INSTALL_PREFIX ../../.. )
 
+INCLUDE_DIRECTORIES(
+ ${UTILVISHNU_SOURCE_DIR}
+)
+
 ADD_LIBRARY(exception-vishnu
  VishnuException.cpp
  SystemException.cpp

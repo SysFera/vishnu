@@ -13,6 +13,18 @@
 #include "SessionServer.hpp"
 #include "utilServer.hpp"
 
+
+/**
+* \enum CmdType
+* \brief The type of the command
+*/
+typedef enum CmdType{
+  UMS = 0,
+  TMS = 1,
+  FMS = 2,
+  IMS = 3
+} CmdType;
+
 /**
 * \class CommandServer
 * \brief Implementation of the CommandServer class
