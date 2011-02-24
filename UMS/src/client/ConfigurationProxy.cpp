@@ -125,7 +125,7 @@ int ConfigurationProxy::restore(bool fromFile)
      std::ifstream ifile(mfilePath.c_str()); 
  
      if(!ifile.is_open()) {
-       throw std::runtime_error("can't open file "+mfilePath);
+       throw UserException(1, "can't open file "+mfilePath);
      }
  
      ifile.seekg(0, std::ios::end);

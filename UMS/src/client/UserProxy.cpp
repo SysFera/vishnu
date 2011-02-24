@@ -195,7 +195,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
    profile = diet_profile_alloc("userPasswordChange", 2, 2, 3);
 
    //IN Parameters  
-   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
+   if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
       msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
       errMsg(msg);
       sendErrorMsg(msg); 
