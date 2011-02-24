@@ -24,6 +24,6 @@ ADD_LIBRARY(register-vishnu
   TMSMapper.cpp
   )
 
-TARGET_LINK_LIBRARIES(mainReg register-vishnu exception-vishnu)
+TARGET_LINK_LIBRARIES(mainReg register-vishnu exception-vishnu utils-vishnu)
 
 install( TARGETS register-vishnu DESTINATION lib )
