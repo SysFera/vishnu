@@ -92,7 +92,8 @@ int UserProxy::_addUserInformation(const UMS_Data::User& user, bool isNewUser)
           errMsg(msg);
           sendErrorMsg(msg); 
        }
-       if(strlen(errorInfo)==0)  std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }  
    else {
       sendErrorMsg(" the function diet_call is rejected");
@@ -165,7 +166,8 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
          errMsg(msg);
          sendErrorMsg(msg);
       }
-      if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+      //Print successfull message if erroInfo is empty
+      printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected");
@@ -220,7 +222,8 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
           errMsg(msg);
           sendErrorMsg(msg);   
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected"); 
@@ -268,7 +271,8 @@ int UserProxy::resetPassword(UMS_Data::User& user)
           errMsg(msg);
           sendErrorMsg(msg);     
        }
-       if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+       //Print successfull message if erroInfo is empty
+       printSuccessMessage(errorInfo);
    }
    else {
       sendErrorMsg(" the function diet_call is rejected"); 

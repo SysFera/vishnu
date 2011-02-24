@@ -337,7 +337,7 @@ CREATE TABLE command (
   vsession_numsessionid BINARY_FLOAT   NOT NULL ,
   starttype TIMESTAMP    ,
   endtime TIMESTAMP    ,
-  description VARCHAR2(255)    ,
+  description VARCHAR2(1000)    ,
   ctype BINARY_FLOAT      ,
 PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)

@@ -10,7 +10,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <assert.h>
 
 #include "SessionProxy.hpp"
 #include "LocalAccount.hpp"
