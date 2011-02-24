@@ -13,7 +13,7 @@ using namespace std;
 bfs::path home_dir;
 bfs::path session_dir;
 bfs::path proc_dir("/proc");
-const char *lockname = "vishnu";
+const char *lockname = "vishnu1";
 
 int main (int ac, char* av[]){
 
@@ -100,7 +100,7 @@ int main (int ac, char* av[]){
 							 cout << "sessionFile: " << sessionFile<< endl;
 							 SessionEntry session(sessionKey,0);
 							 storeLastSession(session,sessionFile.c_str());
-               //cleaner();
+               cleaner();
 
 	}// End of try bloc
 

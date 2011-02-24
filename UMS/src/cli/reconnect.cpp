@@ -102,18 +102,16 @@ int main (int ac, char* av[]){
               }
 */
 
-				   // get the sessionKey
+				   // store the sessionKey
 
-							 std::string sessionFile=getSessionLocation(getppid());
-
-							 SessionEntry session=getLastSession(sessionFile);
-
-							 sessionKey=session.getSessionKey();
-
-							 cout <<"sessionKey " << sessionKey <<endl;
 
               //reconnect(userId, password, sessionId, sessionKey);
 
+               sessionKey="mySecondSession";
+               std::string sessionFile=getSessionLocation(getppid());
+               cout << "sessionFile: " << sessionFile<< endl;
+               SessionEntry session(sessionKey,0);
+               storeLastSession(session,sessionFile.c_str());
 
 
 	}// End of try bloc
