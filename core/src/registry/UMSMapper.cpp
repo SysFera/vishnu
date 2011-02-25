@@ -6,22 +6,38 @@
  */
 
 #include "UMSMapper.hpp"
+#include "UMS_Data.hpp"
+#include "UMS_Data_forward.hpp"
+#include "UserServer.hpp"
+#include "SessionServer.hpp"
+#include "MachineServer.hpp"
+#include "LocalAccountServer.hpp"
+#include "ConfigurationServer.hpp"
+#include "QueryServer.hpp"
+#include "CommandServer.hpp"
+
 using namespace vishnu;
 
 UMSMapper::UMSMapper(){
+  //CREATE DATA MODEL
+  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 };
 
 UMSMapper::~UMSMapper(){
 };
 
 UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
+  //CREATE DATA MODEL
+  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   mname = na;
   mmap.insert (pair<int, string>(VISHNU_CONNECT           	, "vishnu_connect"));
   mmap.insert (pair<int, string>(VISHNU_RECONNECT 	  	, "vishnu_reconnect"));
   mmap.insert (pair<int, string>(VISHNU_CLOSE 	          	, "vishnu_close"));
-  mmap.insert (pair<int, string>(VISHNU_ADD_VISHNU_USER   	, "vishnu_add_vishnu_user"));
-  mmap.insert (pair<int, string>(VISHNU_UPDATE_VISHNU_USER	, "vishnu_update_vishnu_user"));
-  mmap.insert (pair<int, string>(VISHNU_DELETE_VISHNU_USER	, "vishnu_delete_vishnu_user"));
+  mmap.insert (pair<int, string>(VISHNU_ADD_VISHNU_USER   	, "vishnu_add_user"));
+  mmap.insert (pair<int, string>(VISHNU_UPDATE_VISHNU_USER	, "vishnu_update_user"));
+  mmap.insert (pair<int, string>(VISHNU_DELETE_VISHNU_USER	, "vishnu_delete_user"));
   mmap.insert (pair<int, string>(VISHNU_CHANGE_PASSWORD   	, "vishnu_change_password"));
   mmap.insert (pair<int, string>(VISHNU_RESET_PASSWORD    	, "vishnu_reset_password"));
   mmap.insert (pair<int, string>(VISHNU_ADD_LOCAL_ACCOUNT 	, "vishnu_add_local_account"));
@@ -82,8 +98,6 @@ UMSMapper::code(const string& cmd, unsigned int code){
   string key;
   int keycode;
   // If existing code -> add to the existing entry
-
-  std::cout << "3"<< std::endl;
   if(code){
     it = mcmd.find(code);
     if (it==mcmd.end()){
@@ -100,24 +114,16 @@ UMSMapper::code(const string& cmd, unsigned int code){
 
   // Else creating a new unique key and insert in the map
   pthread_mutex_lock(&mutex);
-
-  std::cout << "4"<< std::endl;
   size = mcmd.size() + 1;
-
-  std::cout << "5"<< std::endl;
   while (true){
-
-  std::cout << "6"<< std::endl;
     it = mcmd.find(size);
     if (it==mcmd.end()){
       break;
     }
     size++;
   }
-  std::cout << "key generated in code :" << size << std::endl;
   getKey(cmd, keycode);
   key = convertToString(keycode);
-  std::cout << "command inserted :" << key << std::endl;
   mcmd.insert(pair<int, string>(size, key));
   pthread_mutex_unlock(&mutex);
   return size;
@@ -247,48 +253,214 @@ UMSMapper::findSeparator(const string& s, vector<int>& vec){
   }
 }
 
+// %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
+string
+UMSMapper::decodeClose(vector<int> separator, const string& msg){ 
+  return (mcmd.find(VISHNU_CLOSE))->second;
+}
 
 string
-UMSMapper::decodeClose(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeAddUser(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_ADD_VISHNU_USER))->second;
+  res += getU(u);
+  u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+  res += getU(u);
+  return res;
+}
 
 string
-UMSMapper::decodeAddUser(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeUpUser(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_UPDATE_VISHNU_USER))->second;
+  res += getU(u);
+  u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+  res += getU(u);
+  return res;
+}
 
 string
-UMSMapper::decodeUpUser(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_DELETE_VISHNU_USER))->second;
+  u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+  res += getU(u);
+  return res;
+}
 
 string
-UMSMapper::decodeDelUser(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeChangePwd(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_DELETE_VISHNU_USER))->second;
+  u    = msg.substr(separator.at(0), separator.at(1));
+  res += getU(u);
+  res+= " ";
+  u    = msg.substr(separator.at(1), msg.size()-separator.at(1));
+  res += getU(u);
+  return res;
+}
 
 string
-UMSMapper::decodeChangePwd(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeResetPwd(vector<int> separator, const string& msg){
+  string res = string("");
+  res += (mcmd.find(VISHNU_RESET_PASSWORD))->second;
+  res += msg.substr(separator.at(0), msg.size()-separator.at(0));
+  return res;
+}
 
 string
-UMSMapper::decodeResetPwd(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_ADD_LOCAL_ACCOUNT))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  LocalAccount_ptr ac = parser.load(std::string(a))->as< LocalAccount >();
+  res+=" ";
+  res += ac->getUserId();
+  res+=" ";
+  res += ac->getMachineId();
+  res+=" ";
+  res += ac->getAcLogin();
+  res+=" ";
+  res += ac->getSshKeyPath();
+  res+=" ";
+  res += ac->getHomeDirectory();
+  return res;
+}
 
 string
-UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_UPDATE_LOCAL_ACCOUNT))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  LocalAccount_ptr ac = parser.load(std::string(a))->as< LocalAccount >();
+
+  a = ac->getAcLogin();
+  if (a.compare("")){
+    res+=" -l ";
+    res+=a;
+  }
+  a = ac->getSshKeyPath();
+  if (a.compare("")){
+    res+=" -s ";
+    res+=a;
+  }
+  a = ac->getHomeDirectory();
+  if (a.compare("")){
+    res+=" -d ";
+    res+=a;
+  }
+  res+=" ";
+  res += ac->getUserId();
+  res+=" ";
+  res += ac->getMachineId();
+  return res;
+}
 
 string
-UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){ return ""; }
-
-string
-UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){  
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
+  u    = msg.substr(separator.at(0), separator.at(1));
+  res += getU(u);
+  res+= " ";
+  u    = msg.substr(separator.at(1), msg.size()-separator.at(1));
+  res += getU(u);
+  return res;
+}
 
 string
 UMSMapper::decodeSaveConf(vector<int> separator, const string& msg){ return ""; }
 
 string
-UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){ 
+  string res = string("");
+  res += (mcmd.find(VISHNU_RESTORE_CONFIGURATION))->second;
+  res += msg.substr(separator.at(0), msg.size()-separator.at(0));
+  return res;
+}
 
 string
-UMSMapper::decodeAddM(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeAddM(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_ADD_MACHINE))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  Machine_ptr ac = parser.load(std::string(a))->as< Machine >();
+  res+=" ";
+  res += ac->getName();
+  res+=" ";
+  res += ac->getSite();
+  res+=" ";
+  res += ac->getLanguage();
+  res+=" ";
+  res += ac->getSshPublicKey();
+  return res;
+}
 
 string
-UMSMapper::decodeUpM(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeUpM(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_UPDATE_MACHINE))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  Machine_ptr ac = parser.load(std::string(a))->as< Machine >();
+  res+=" ";
+  a = ac->getName();
+  if (a.compare("")){
+    res+=" -n ";
+    res+=a;
+  } 
+  a = ac->getSite();
+  if (a.compare("")){
+    res+=" -n ";
+    res+=a;
+  } 
+  a = ac->getMachineDescription();
+  if (a.compare("")){
+    res+=" -d ";
+    res+=a;
+  } 
+  a = ac->getStatus();
+  if (a.compare("")){
+    res+=" -t ";
+    res+=a;
+  } 
+  a = ac->getLanguage();
+  if (a.compare("")){
+    res+=" -t ";
+    res+=a;
+  } 
+  a = ac->getSshPublicKey();
+  if (a.compare("")){
+    res+=" -k ";
+    res+=a;
+  } 
+}
 
 string
-UMSMapper::decodeDelM(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeDelM(vector<int> separator, const string& msg){
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_DELETE_MACHINE))->second;
+  u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+  res += getU(u);
+  return res;
+}
 
 string
 UMSMapper::decodeListAcc(vector<int> separator, const string& msg){ return ""; }
@@ -313,3 +485,24 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){ return
 
 string
 UMSMapper::decodeConfOp(vector<int> separator, const string& msg){ return ""; }
+
+
+string
+UMSMapper::getU(string serial){
+  string res = string("");
+
+  ecorecpp::parser::parser parser;
+  User_ptr user = parser.load(std::string(serial))->as< User >();
+
+  res+=" ";
+  res += user->getFirstname();
+  res+=" ";
+  res += user->getLastname();
+  res+=" ";
+  res += user->getPrivilege();
+  res+=" ";
+  res += user->getEmail();
+  return res;
+
+}
+
