@@ -42,6 +42,8 @@ INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 FIND_PACKAGE(Java REQUIRED)
 FIND_PATH(JAVA_INCLUDE_DIR jni.h
   $ENV{JAVA_HOME}/include
+  /usr/lib/jvm/java/include
+  /usr/lib/jvm/java-6*/include
   /usr/lib/jvm/java-6-sun-1.6.0.22/include
 )
 INCLUDE_DIRECTORIES(
