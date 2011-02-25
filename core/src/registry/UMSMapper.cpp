@@ -379,8 +379,11 @@ UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
   return res;
 }
 
+// %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
-UMSMapper::decodeSaveConf(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeSaveConf(vector<int> separator, const string& msg){
+  return (mcmd.find(VISHNU_SAVE_CONFIGURATION))->second;
+}
 
 string
 UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){ 
@@ -463,28 +466,201 @@ UMSMapper::decodeDelM(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListAcc(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeListAcc(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_LIST_LOCAL_ACCOUNT))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  ListLocalAccOptions_ptr ac = parser.load(std::string(a))->as< ListLocalAccOptions >();
+  if (ac->isAdminListOption()){
+    res+=" -a ";
+  }
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  a = ac->getMachineId();
+  if (a.compare("")){
+    res+=" -i ";
+    res+=a;
+  }
+  return res;
+}
 
 string
-UMSMapper::decodeListM(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeListM(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_LIST_MACHINE))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  ListMachineOptions_ptr ac = parser.load(std::string(a))->as< ListMachineOptions >();
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  if (ac->isListAllmachine()){
+    res+=" -a ";
+  }
+  a = ac->getMachineId();
+  if (a.compare("")){
+    res+=" -m ";
+    res+=a;
+  }
+  return res;
+}
 
 string
-UMSMapper::decodeListH(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeListH(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_LIST_HISTORY_CMD))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  ListCmdOptions_ptr ac = parser.load(std::string(a))->as< ListCmdOptions >();
+  if (ac->isAdminListOption()){
+    res+=" -a ";
+  }
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  a = ac->getSessionId();
+  if (a.compare("")){
+    res+=" -i ";
+    res+=a;
+  }
+  a = ac->getStartDateOption();
+  if (a.compare("")){
+    res+=" -s ";
+    res+=a;
+  }
+  a = ac->getEndDateOption();
+  if (a.compare("")){
+    res+=" -e ";
+    res+=a;
+  }
+  return res;
+}
 
 string
-UMSMapper::decodeListOp(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeListOp(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_LIST_OPTIONS))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  ListOptOptions_ptr ac = parser.load(std::string(a))->as< ListOptOptions >();
+  if (ac->isListAllDeftValue()){
+    res+=" -a ";
+  }
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  a = ac->getOptionName();
+  if (a.compare("")){
+    res+=" -n ";
+    res+=a;
+  }
+  return res;
+}
 
 string
-UMSMapper::decodeListUser(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeListUser(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_LIST_USERS))->second;
+  res += msg.substr(separator.at(0), msg.size()-separator.at(0));
+  return res;
+}
 
 string
-UMSMapper::decodeListSession(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeListSession(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string a;
+  res += (mcmd.find(VISHNU_LIST_SESSIONS))->second;
+  a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  ListSessionOptions_ptr ac = parser.load(std::string(a))->as< ListSessionOptions >();
+  res+=" -t ";
+  res += convertToString(ac->getStatus());
+  res+=" -p ";
+  res += convertToString(ac->getSessionClosePolicy());
+  a = ac->getMachineId();
+  res+=" -d ";
+  res += ac->getSessionInactivityDelay();
+  a = ac->getMachineId();
+  if (a.compare("")){
+    res+=" -m ";
+    res+=a;
+  }
+  if (ac->isAdminListOption()){
+    res+=" -a ";
+  }
+  a = ac->getUserId();
+  if (a.compare("")){
+    res+=" -u ";
+    res+=a;
+  }
+  a = ac->getMachineId();
+  if (a.compare("")){
+    res+=" -m ";
+    res+=a;
+  }
+  a = ac->getSessionId();
+  if (a.compare("")){
+    res+=" -i ";
+    res+=a;
+  }
+  a = ac->getStartDateOption();
+  if (a.compare("")){
+    res+=" -s ";
+    res+=a;
+  }
+  a = ac->getEndDateOption();
+  if (a.compare("")){
+    res+=" -e ";
+    res+=a;
+  }
+  return res;
+}
 
 string
-UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
+  u    = msg.substr(separator.at(0), separator.at(1));
+  res += getU(u);
+  res+= " ";
+  u    = msg.substr(separator.at(1), msg.size()-separator.at(1));
+  res += getU(u);
+  return res;
+}
 
 string
-UMSMapper::decodeConfOp(vector<int> separator, const string& msg){ return ""; }
+UMSMapper::decodeConfOp(vector<int> separator, const string& msg){ 
+  string res = string("");
+  string u;
+  res += (mcmd.find(VISHNU_CONFIGURE_OPTION))->second;
+  u    = msg.substr(separator.at(0), separator.at(1));
+  res += getU(u);
+  res+= " ";
+  u    = msg.substr(separator.at(1), msg.size()-separator.at(1));
+  res += getU(u);
+  return res;
+}
 
 
 string
