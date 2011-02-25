@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ConnectOptions 	  cop  ;//= ecoreFactory->createConnectOptions();
   ListSessions_ptr   	  li   = ecoreFactory->createListSessions();
   ListSessionOptions      opt  ;//= ecoreFactory->createListSessionOptions();
-  string 	     	  pwdu = "user"  ;
+  string 	     	  pwdu = "toto"  ;
   string 	     	  uidu = "user_1";
   // connect as
   string const&      	  subs = "user_1";
@@ -335,7 +335,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
   BOOST_CHECK    (resetPassword(key, uid, np       )==0);
-  BOOST_CHECK    (changePassword(cu, np, pwd       )==0);  
+  cout << "new mdp : " << np << endl;
+  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);  
   BOOST_CHECK	 (close        (key                )==0);
 
   // Reset pwd bad uid
