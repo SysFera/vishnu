@@ -14,4 +14,18 @@ ADD_LIBRARY(exception-vishnu
 )
 
 
-install( TARGETS exception-vishnu DESTINATION lib )
+INSTALL( TARGETS exception-vishnu DESTINATION lib )
+
+
+INSTALL( FILES
+    VishnuException.hpp
+    UserException.hpp
+    SystemException.hpp
+    UMSVishnuException.hpp
+    TMSVishnuException.hpp
+    FMSVishnuException.hpp
+    IMSVishnuException.hpp
+
+    DESTINATION
+    include
+)
