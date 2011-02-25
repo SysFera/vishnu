@@ -116,6 +116,7 @@ addUser(const string& sessionKey, UMS_Data::User& newUser) throw(UserException)
   UserProxy userProxy(sessionProxy);
   int res = userProxy.add(newUser);
 
+  std::cout << "*****User Password:" << newUser.getPassword() << "*********" << std::endl;
  return res;
 }
 
@@ -213,7 +214,7 @@ resetPassword(const std::string& sessionKey,
 
   int res = userProxy.resetPassword(user);
   tmpPassword = (userProxy.getData()).getPassword();
-
+  cout << "************************tmpPassword=" << tmpPassword << "************" << std::endl;
  return res;
 }
 
