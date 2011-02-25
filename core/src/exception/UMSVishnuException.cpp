@@ -44,4 +44,5 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_CLOSURE_MODE, std::string("The closure mode is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_INCORRECT_TIMEOUT, std::string("The value of the timeout is incorrect")));
 
+  mp.insert(std::pair<int, std::string>(ERRCODE_ROOT_USER_ONLY, std::string("It can be done by the root user only")));
 }
