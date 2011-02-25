@@ -19,7 +19,7 @@ include_directories(
 )
 
 add_executable(umssed
-  main.cc
+  umssed.cpp
   ServerUMS.cpp
   internalApi.cpp
 )
@@ -32,6 +32,24 @@ target_link_libraries(umssed
   database-vishnu
   ums-server
 )
+
+add_executable(monitor
+  monitorMain.cpp
+  MonitorUMS.cpp
+  internalApi.cpp
+)
+
+target_link_libraries(monitor
+  ${DIET_SERVER_LIBRARIES}
+  ${Boost_LIBRARIES}
+  register-vishnu
+  exception-vishnu
+  database-vishnu
+  ums-server
+)
+
+
+
 
 install_targets(/sbin/
  umssed
