@@ -41,7 +41,7 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_RESTORE_CONFIG_ERROR, std::string("A problem occurs during the configuration restoring")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_OPTION, std::string("The name of the user option is unknown")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_CLOSURE_MODE, std::string("The closure mode is unknown")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_CLOSURE_MODE, std::string("The closure policy is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_INCORRECT_TIMEOUT, std::string("The value of the timeout is incorrect")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_ROOT_USER_ONLY, std::string("It can be done by the root user only")));
