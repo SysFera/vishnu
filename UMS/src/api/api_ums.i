@@ -19,7 +19,7 @@
 %include "ecore_forward.hpp"
 
 // All EMF includes (same as in UMS_Data.hpp)
-%include "UMS_Data/Command.hpp"
+%include "UMS_Data_forward.hpp"
 %include "UMS_Data/ConnectOptions.hpp"
 %include "UMS_Data/Session.hpp"
 %include "UMS_Data/ListSessions.hpp"
