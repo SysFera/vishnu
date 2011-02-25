@@ -88,7 +88,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   bool checkFile4 = ifile4.is_open(); 
   //To check if at least on file can be oponed     
   if(!checkFile1 && !checkFile2 && !checkFile3 && !checkFile4) {
-       throw UserException(1, "can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
+       throw UMSVishnuException(1, "can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
                                 "You must copy the file of your sshKey in one of three free files:\n"
                                 +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
                                 +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
