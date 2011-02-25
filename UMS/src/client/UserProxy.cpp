@@ -106,7 +106,6 @@ int UserProxy::add(UMS_Data::User& user)
     /*To check the receiving message error*/ 
     checkErrorMsg(errorInfo);
 
-    std::cout << "userToString=" << userToString << std::endl;
     // CREATE DATA MODEL
     UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
     ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
