@@ -81,6 +81,7 @@ macro( ums_test NAME )
         COMMAND ${CMAKE_COMMAND}
         -DTEST_PROG=${NAME}
         -DBIN_PATH=${BIN_DIR}
+	-DVISHNU_CONFIG=${UMS_TEST_DIR}/client.cfg
         -DREPORT_PATH=${REPORT_OUTPUT_PATH}
         -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
       add_dependencies( test-xml ${NAME}-xml )

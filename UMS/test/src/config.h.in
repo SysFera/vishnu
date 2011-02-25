@@ -4,6 +4,7 @@
 #define _CONFIG_H_IN_
 
 #define TESTCONF "@TEST_CONFIG_UMS@"
+#define TESTF "@TEST_SQL@"
 
 
 #endif /* _CONFIG_H_IN_ */
