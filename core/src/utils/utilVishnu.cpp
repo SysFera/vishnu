@@ -20,3 +20,12 @@ vishnu::convertToInt(std::string val) {
   str >> intValue;
   return intValue;
 }
+
+std::string 
+vishnu::cryptPassword(const std::string& salt, const std::string password) {
+ 
+  std::string saltTmp="$6$"+salt+"$";
+  std::string encryptedPassword=crypt(password.c_str(),saltTmp.c_str());
+
+ return encryptedPassword.substr(saltTmp.size()); 
+}
