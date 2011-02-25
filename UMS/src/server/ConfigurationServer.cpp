@@ -64,10 +64,10 @@ ConfigurationServer::save() {
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the userid is the super vishnu admin userid
+    //if the user exists
     if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
-      //if the user exists
-      if (userServer.exist()) {
+      //if the user is an admin
+      if (userServer.isAdmin()) {
         //To get the list of users from the database
         ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
@@ -136,14 +136,14 @@ ConfigurationServer::save() {
             mconfiguration->getListConfLocalAccounts().push_back(localAccount);
           }
         }
-      } //End if the user exists
+      } //End if the user is an admin
       else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+        UMSVishnuException e (ERRCODE_NO_ADMIN);
         throw e;
       }
-    }//End if the userid is the super vishnu admin userid
+    }//End //if the user exists
     else {
-      UMSVishnuException e (ERRCODE_ROOT_USER_ONLY);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
   }

@@ -441,13 +441,15 @@ solveUserPasswordReset(diet_profile_t* pb) {
     commandServer.record(UMS);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup((user.getPassword()).c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -1101,7 +1103,7 @@ solveGenerique(diet_profile_t* pb) {
   std::string empty = "";
   std::string errorInfo;
 
-  std::cout << "=================Solve userList =================" << std::endl;
+  std::cout << "=================Solve Generique =================" << std::endl;
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
@@ -1172,7 +1174,7 @@ solveListUsers(diet_profile_t* pb) {
 
   // Parse the model
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
-  QueryUsers queryUsers(std::string(option), sessionServer);
+  ListUsersServer queryUsers(std::string(option), sessionServer);
 
   try {
 
@@ -1193,7 +1195,7 @@ solveListUsers(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 
-std::cout << " done" << std::endl;
+  std::cout << " done" << std::endl;
 
 return 0;
 
@@ -1208,7 +1210,7 @@ return 0;
 int
 solveListMachines(diet_profile_t* pb) {
 
-  return solveGenerique<UMS_Data::ListMachineOptions, UMS_Data::ListMachines, QueryMachines>(pb);
+  return solveGenerique<UMS_Data::ListMachineOptions, UMS_Data::ListMachines, ListMachinesServer>(pb);
 }
 
 /**
@@ -1220,7 +1222,7 @@ solveListMachines(diet_profile_t* pb) {
 int
 solveListLocalAccount(diet_profile_t* pb) {
 
-  return solveGenerique<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts, QueryLocalAccounts>(pb);
+  return solveGenerique<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts, ListLocalAccountsServer>(pb);
 }
 
 /**
@@ -1232,7 +1234,7 @@ solveListLocalAccount(diet_profile_t* pb) {
 int
 solveListOptions(diet_profile_t* pb) {
 
-return solveGenerique<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues, QueryOptions>(pb);
+  return solveGenerique<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues, ListOptionsValuesServer>(pb);
 }
 /**
 * \brief Function to solve the service solveListHistoryCmd
@@ -1243,7 +1245,7 @@ return solveGenerique<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues, Que
 int
 solveListHistoryCmd(diet_profile_t* pb) {
 
-return solveGenerique<UMS_Data::ListCmdOptions, UMS_Data::ListCommands, QueryCommands>(pb);
+  return solveGenerique<UMS_Data::ListCmdOptions, UMS_Data::ListCommands, ListCommandsServer>(pb);
 }
 /**
 * \brief Function to solve the service solveListLocalAccount
@@ -1253,7 +1255,8 @@ return solveGenerique<UMS_Data::ListCmdOptions, UMS_Data::ListCommands, QueryCom
 */
 int
 solveListSessions(diet_profile_t* pb) {
-return solveGenerique<UMS_Data::ListSessionOptions, UMS_Data::ListSessions, QuerySessions>(pb);
+ 
+  return solveGenerique<UMS_Data::ListSessionOptions, UMS_Data::ListSessions, ListSessionsServer>(pb);
 }
 
 

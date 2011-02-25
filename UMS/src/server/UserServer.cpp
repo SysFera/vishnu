@@ -297,7 +297,7 @@ UserServer::changePassword(std::string newPassword) {
 * \return raises an exception on error
 */
 int
-UserServer::resetPassword(UMS_Data::User user) {
+UserServer::resetPassword(UMS_Data::User& user) {
   std::string sqlResetPwd;
   std::string sqlUpdatePwdState;
   std::string passwordCrypted;

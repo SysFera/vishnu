@@ -134,7 +134,8 @@ changePassword(const std::string& userId,
  */
 int 
 resetPassword(const std::string& sessionKey, 
-              const std::string& userId)
+              const std::string& userId,
+              std::string& tmpPassword)
                                        throw(UserException);
 
 /**
