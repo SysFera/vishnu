@@ -2,6 +2,7 @@
 
 #include "deleteMachine.hh"
 #include "utils.hh"
+#include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -34,10 +35,6 @@ int main (int ac, char* av[]){
 
 				opt.setPosition("machineId",-1);
 
-				opt.add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 /**************  Parse to retrieve option values  ********************/
@@ -70,7 +67,19 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 deleteMachine(sessionKey,machineId);
+
+    // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+							 
+               deleteMachine(sessionKey,machineId);
+
+               }
+
 
 
 	}// End of try bloc

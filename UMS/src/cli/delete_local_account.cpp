@@ -2,6 +2,7 @@
 
 #include "deleteLocalAccount.hh"
 #include "utils.hh"
+#include "sessionUtils.hpp"
 #include "connectUtils.hpp"
 
 namespace po = boost::program_options;
@@ -22,12 +23,6 @@ int main (int ac, char* av[]){
 		std::string sessionKey;
 
 
-		/********** EMF data ************/
-
-
-
-
-
 /**************** Describe options *************/
 		boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
 
@@ -43,10 +38,6 @@ int main (int ac, char* av[]){
 				opt->setPosition("machineId",1);
 
 
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 /**************  Parse to retrieve option values  ********************/
@@ -59,7 +50,6 @@ int main (int ac, char* av[]){
 
 
 /********  Process **************************/
-
 
 
 		if (opt->count("userId")){
@@ -86,10 +76,18 @@ int main (int ac, char* av[]){
                return 1;
               }
 
+                //get the sessionKey
+                
+                sessionKey=getLastSessionKey(getppid());
 
+               if(false==sessionKey.empty()){
 
-						 deleteLocalAccount(sessionKey,userId,machineId);
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+						 
+               deleteLocalAccount(sessionKey,userId,machineId);
+               
 
+               }
 
 
 

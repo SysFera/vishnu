@@ -5,13 +5,17 @@
 #include<iostream>
 using namespace std;
 
-boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
+boost::shared_ptr<Options> makeUserOptions(std::string pgName,std::string & dietConfig,
 		                                                   privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
 																										StringcallBackType& fLastname, StringcallBackType& fEmail, int type){
 
 
-	boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId,1,dietConfig);
+	boost::shared_ptr<Options> opt(new Options(pgName));
 
+  opt->add("dietConfig,c",
+                "The diet config file",
+            ENV,
+            dietConfig);
 
 	Group_type group=CONFIG;
 
@@ -34,7 +38,6 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType
 	}
 
 
-	opt->setPosition("userId",1);
 
 	opt->add("firstname,f",
                         "The firstname of the user",

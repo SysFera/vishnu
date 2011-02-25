@@ -1,5 +1,6 @@
 #include "listHistoryCmd.hh"
 #include "listHistoryCmdUtils.hpp"
+#include "sessionUtils.hpp"
 #include "utils.hh"
 #include<boost/bind.hpp>
 namespace po = boost::program_options;
@@ -32,11 +33,6 @@ int main (int ac, char* av[]){
 
 boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, fStartDateOption, fEndDateOption);
 
-
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 
@@ -83,7 +79,19 @@ boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietCon
                return 1;
               }
 
-							 listHistoryCmd(sessionKey,listCmd,listOptions);
+
+ // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+							 
+               listHistoryCmd(sessionKey,listCmd,listOptions);
+
+
+               }
 
 
 							// Display the list

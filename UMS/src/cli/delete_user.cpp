@@ -1,6 +1,7 @@
 #include "deleteUser.hh"
 #include "utils.hh"
 #include "connectUtils.hpp"
+#include "sessionUtils.hpp"
 #include<boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -26,8 +27,6 @@ int main (int ac, char* av[]){
 		boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
 
 		opt->setPosition("userId",-1);
-
-		opt->add("sessionKey,s","The session Key",ENV,sessionKey);
 
 
 	try {
@@ -62,7 +61,16 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 deleteUser(sessionKey, userId);
+                sessionKey=getLastSessionKey(getppid());
+
+                if(false==sessionKey.empty()){
+
+                  cout << "the current session key is " << sessionKey <<endl;
+							 
+                  deleteUser(sessionKey, userId);
+
+                }
+
 
 
 	}// End of try bloc
