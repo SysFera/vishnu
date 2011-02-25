@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ListLocalAccounts_ptr   lia  = ecoreFactory->createListLocalAccounts();
   ListLocalAccOptions     lioa ;//= ecoreFactory->createListLocalAccOptions();
   LocalAccount            lacc ;//= ecoreFactory->createLocalAccount();
-  string                  mid  = "machine_1" ;
+  string                  mid  = "M_1" ;
   string                  accL = "toto"      ;
   string                  ssh  = "/usr/local";
   string                  home = "/home/toto";
@@ -285,8 +285,15 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing delete normal U4.2B"    );
   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
+  use  = ecoreFactory->createUser();
+  use->setUserId   (cu)  ;
+  use->setPassword (pass);
+  use->setFirstname(fina);
+  use->setLastname (lana);
+  use->setPrivilege(pri) ;
+  use->setEmail    (mail);
   BOOST_CHECK	 (addUser(key, *use	   )==0);     
-  BOOST_CHECK	 (deleteUser   (key, cu 	   )==0);
+  BOOST_CHECK	 (deleteUser   (key, use->getUserId() 	   )==0);
   BOOST_CHECK	 (close        (key                )==0);
 
   // Delete user  bad uid
@@ -301,8 +308,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing change password normal U1.3.3"    );
   BOOST_REQUIRE(restore("clean_session.sql"       )==0);
   BOOST_CHECK	 (connect       (uid, pwd , key, cop)==0);
-  BOOST_CHECK	 (addUser (key, *use           )==0);
-  BOOST_CHECK	 (changePassword(cu , pass, "newPwd")==0);
+  BOOST_CHECK	 (changePassword(uid , pwd, "newPwd")==0);
+  BOOST_CHECK	 (changePassword(uid , "newPwd", pwd)==0);
   BOOST_CHECK	 (close         (key                )==0);
 
   // Change pwd bad uid
@@ -321,13 +328,12 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK_THROW	 (changePassword(cu, "bad", "newPwd"), VishnuException);
   BOOST_CHECK	 (close         (key                )==0);
 
-  // Reset pwd ok
-  BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
-  BOOST_REQUIRE(restore      ("clean_session.sql")==0);
-  BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
-  BOOST_CHECK	 (addUser(key, *use           )==0);
-  BOOST_CHECK    (resetPassword(key, cu            )==0);
-  BOOST_CHECK	 (close        (key                )==0);
+//   // Reset pwd ok
+//   BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
+//   BOOST_REQUIRE(restore      ("clean_session.sql")==0);
+//   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
+//   BOOST_CHECK    (resetPassword(key, uid            )==0);
+//  BOOST_CHECK	 (close        (key                )==0);
 
   // Reset pwd bad uid
   BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
