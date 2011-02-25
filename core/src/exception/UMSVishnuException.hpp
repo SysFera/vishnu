@@ -39,6 +39,8 @@ static const int ERRCODE_UNKNOWN_OPTION = 41;
 static const int ERRCODE_UNKNOWN_CLOSURE_MODE = 42;
 static const int ERRCODE_INCORRECT_TIMEOUT = 43;
 
+static const int ERRCODE_ROOT_USER_ONLY = 44;
+
 class UMSVishnuException: public UserException{
 
 public:

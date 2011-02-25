@@ -64,11 +64,10 @@ ConfigurationServer::save() {
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the user exists
-    if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
-
+    //if the userid is the super vishnu admin userid
+    if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+      //if the user exists
+      if (userServer.exist()) {
         //To get the list of users from the database
         ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
@@ -137,14 +136,14 @@ ConfigurationServer::save() {
             mconfiguration->getListConfLocalAccounts().push_back(localAccount);
           }
         }
-      } //End if the user is an admin
+      } //End if the user exists
       else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
-    }//End if the user exists
+    }//End if the userid is the super vishnu admin userid
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_ROOT_USER_ONLY);
       throw e;
     }
   }
@@ -168,19 +167,19 @@ int ConfigurationServer::restore() {
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the user exists
-    if (userServer.exist()) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
-
+    //if the userid is the super vishnu admin userid
+    if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+      //if the user exists
+      if (userServer.exist()) {
 
         mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';\
         DELETE FROM machine; DELETE FROM account;");
 
-        //To insert all users
+        //To get all users
         for(int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
           UMS_Data::User_ptr user = mconfiguration->getListConfUsers().get(i);
-          userServer.add(user);
+          //userServer.add(user);
+          sqlcode.append(userToSql(user));
         }
 
         //To get all machines
@@ -191,13 +190,12 @@ int ConfigurationServer::restore() {
 
         std::cout << "SQL COMMAND:" << sqlcode << std::endl;
 
-        //To insert machines
+        //To insert machines and users
         mdatabaseVishnu->process(sqlcode.c_str());
 
-        //To get machine description which needs the database number id
+        //To get machines description
         for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
           UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
-          //sqlcode.append(machineToSql(machine));
           sqlCodeDescMachine.append(machineDescToSql(machine));
         }
 
@@ -212,15 +210,14 @@ int ConfigurationServer::restore() {
           LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
           localAccountServer.add();
         }
-
-      } //End if the user is an admin
+      } //End if the user exists
       else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
       }
-    }//End if the user exists
+    }//End if the userid is the super vishnu admin userid
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_ROOT_USER_ONLY);
       throw e;
     }
   }

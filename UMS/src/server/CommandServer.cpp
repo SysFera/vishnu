@@ -7,6 +7,18 @@
 
 #include "CommandServer.hpp"
 
+
+/**
+* \brief Constructor
+* \fn CommandServer(SessionServer session)
+* \param session The object which encapsulates session data
+*/
+CommandServer::CommandServer(SessionServer session):msessionServer(session) {
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
+  mcommand = "";
+}
+
 /**
 * \brief Constructor
 * \fn CommandServer(std::string cmd, SessionServer session)
@@ -57,6 +69,32 @@ CommandServer::record(CmdType cmdType,
   }
 
   return 0;
+}
+
+/**
+* \brief Function to check if commands are running
+* \fn    bool isRunning()
+* \return true if commands are running else false
+*/
+bool
+CommandServer::isRunning() {
+  DatabaseResult* result;
+  std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL \
+  and vsession_numsessionid=");
+
+  sqlCommand.append(msessionServer.getAttribut("WHERE \
+  sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
+
+  std::cout << "SQL COMMAND:" << sqlCommand;
+
+  try {
+    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return (result->getNbTuples() != 0);
+  }
+  catch (VishnuException& e) {
+    throw;
+  }
+
 }
 
 /**
