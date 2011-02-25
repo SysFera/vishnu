@@ -42,6 +42,8 @@ INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 FIND_PACKAGE(Java REQUIRED)
 FIND_PATH(JAVA_INCLUDE_DIR jni.h
   $ENV{JAVA_HOME}/include
+  /usr/lib/jvm/java/include
+  /usr/lib/jvm/java-6*/include
   /usr/lib/jvm/java-6-sun-1.6.0.22/include
 )
 INCLUDE_DIRECTORIES(
@@ -53,6 +55,7 @@ INCLUDE_DIRECTORIES(
 SET_SOURCE_FILES_PROPERTIES(api_ums.i PROPERTIES CPLUSPLUS ON)
 #Install swig language-specific generated files in a dedicated directory
 SET (CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/swig_output)
+file(MAKE_DIRECTORY ${CMAKE_SWIG_OUTDIR})
 #Suppress warnings about ignored operators (out_ptr::operator= and EList::operator[])
 SET(CMAKE_SWIG_FLAGS "-w362,389")
 
@@ -63,7 +66,7 @@ SWIG_LINK_LIBRARIES(VISHNU_UMS ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-cl
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_UMS_REAL_NAME} DESTINATION lib )
 
 ## JAVA MODULE
-SET(CMAKE_SWIG_FLAGS "-w503" "-package" "com.sysfera.vishnu.ws")
+SET(CMAKE_SWIG_FLAGS "-w503" "-package" "com.sysfera.vishnu.ws.internal")
 SWIG_ADD_MODULE(VISHNU_UMS java api_ums.i api_ums.cpp)
 SWIG_LINK_LIBRARIES(VISHNU_UMS ${JAVA_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-client exception-vishnu)
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_UMS_REAL_NAME} DESTINATION lib )
