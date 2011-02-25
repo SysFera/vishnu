@@ -16,7 +16,7 @@ class Options;
 typedef  boost::function1<void,std::string> StringcallBackType;
 typedef boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
 
-boost::shared_ptr<Options> makeUserOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
+boost::shared_ptr<Options> makeUserOptions(std::string pgName,std::string & dietConfig,
                                                    privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
                                                    StringcallBackType& fLastName, StringcallBackType & fEmail, int type=0);
 

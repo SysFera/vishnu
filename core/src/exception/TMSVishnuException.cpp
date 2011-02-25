@@ -1,14 +1,14 @@
 #include "TMSVishnuException.hpp"
 
 
-TMSVishnuException::TMSVishnuException(TMSVishnuException& e):SystemException(e){
+TMSVishnuException::TMSVishnuException(TMSVishnuException& e):UserException(e){
   mtype = VishnuException::TMS;
 }
 
-TMSVishnuException::TMSVishnuException(int msg, std::string msgComp):SystemException(msg, msgComp){
+TMSVishnuException::TMSVishnuException(int msg, std::string msgComp):UserException(msg, msgComp){
   mtype = VishnuException::TMS;
 }
 
-TMSVishnuException::TMSVishnuException():SystemException(){
+TMSVishnuException::TMSVishnuException():UserException(){
   mtype = VishnuException::TMS;
 }

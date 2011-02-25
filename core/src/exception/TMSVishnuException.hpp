@@ -6,11 +6,11 @@
 #ifndef __TMSVISHNUEXCEPTION__
 #define __TMSVISHNUEXCEPTION__
 
-#include "SystemException.hpp"
+#include "UserException.hpp"
 
 static const int TNBERR = 5;
 
-class TMSVishnuException: public SystemException{
+class TMSVishnuException: public UserException{
 private :
 protected:
 public:

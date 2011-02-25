@@ -6,9 +6,9 @@
 #ifndef __IMSVISHNUEXCEPTION__
 #define __IMSVISHNUEXCEPTION__
 
-#include "SystemException.hpp"
+#include "UserException.hpp"
 
-class IMSVishnuException: public SystemException{
+class IMSVishnuException: public UserException{
 private :
 protected:
 public:
