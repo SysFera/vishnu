@@ -183,8 +183,11 @@ decodeConfDefaultOp(vector<int> separator, const string& msg);
 string
 decodeConfOp(vector<int> separator, const string& msg);
 
-void
+  void
 findSeparator(const string& s, vector<int>& vec);
+  
+  string
+  getU(string serial);
 
 };
 

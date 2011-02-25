@@ -1,5 +1,3 @@
-#SET( CMAKE_INSTALL_PREFIX ../../.. )
-
 INCLUDE_DIRECTORIES(
  ${UTILVISHNU_SOURCE_DIR}
 )
@@ -15,15 +13,5 @@ ADD_LIBRARY(exception-vishnu
  InternalVishnuException.cpp
 )
 
-ADD_EXECUTABLE(mainEx
-  main.cpp
-  UMS.cpp
-  TMS.cpp
-  IMS.cpp
-  FMS.cpp
-  )
-
-target_link_libraries(mainEx
-  exception-vishnu)
 
 install( TARGETS exception-vishnu DESTINATION lib )
