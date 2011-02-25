@@ -25,6 +25,7 @@ TARGET_LINK_LIBRARIES(ums-api-client
   emf4cpp-UMS_Data
   exception-vishnu
   ums-client-proxy
+  utils-vishnu
 )
 
 # Requirements for PYTHON
