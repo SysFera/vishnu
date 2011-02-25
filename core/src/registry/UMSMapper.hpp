@@ -190,13 +190,13 @@ public :
   finalize(int key);
 
   /**
-   * \brief To get, from a coded string, the CPP command that made it
-   * \fn virtual string decodeCPP (const string& msg);
+   * \brief To get, from a coded string, the cli like command that made it
+   * \fn virtual string decode (const string& msg);
    * \param msg The coded string
-   * \return The CPP command
+   * \return The cli like command
    */
   virtual string
-  decodeCPP (const string& msg);
+  decode (const string& msg);
 
 
 protected:

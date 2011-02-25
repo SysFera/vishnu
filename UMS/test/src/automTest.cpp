@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ConnectOptions 	  cop  ;//= ecoreFactory->createConnectOptions();
   ListSessions_ptr   	  li   = ecoreFactory->createListSessions();
   ListSessionOptions      opt  ;//= ecoreFactory->createListSessionOptions();
-  string 	     	  pwdu = "user"  ;
+  string 	     	  pwdu = "toto"  ;
   string 	     	  uidu = "user_1";
   // connect as
   string const&      	  subs = "user_1";
