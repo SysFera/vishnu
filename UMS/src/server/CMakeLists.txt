@@ -28,6 +28,7 @@ add_library(ums-server
    LocalAccountServer.cpp
    ConfigurationServer.cpp
    CommandServer.cpp
+   ListUsersServer.cpp
 )
 
 target_link_libraries(ums-server
