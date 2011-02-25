@@ -8,6 +8,7 @@
 
 // this includes the typemaps for STL strings
 %include "std_string.i"
+%include "std_except.i"
 
 // this includes the required type declarations for EMF4CPP
 // WARNING: some may be missing!
@@ -98,4 +99,6 @@
 }
 
 %include "api_ums.hpp"
+%include "VishnuException.hpp"
+%include "UserException.hpp"
 
