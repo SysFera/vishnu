@@ -30,8 +30,6 @@
  * the variable is ignored.
  */
 
-const unsigned int UMPARAM=1;
-
 
 struct env_name_mapper{
 
@@ -43,12 +41,6 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
-								if(name=="VISHNU_SESSION_KEY"){
-
-									result="sessionKey";
-								}
-
-
 
 		return result;
 	}

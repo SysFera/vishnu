@@ -27,11 +27,6 @@ struct env_name_mapper{
 	std::string operator ()(std::string name){
 
 		std::string result= "";
-
-		if (name=="VISHNU_SESSION_KEY") {
-
-			result="sessionKey";
-		}
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";

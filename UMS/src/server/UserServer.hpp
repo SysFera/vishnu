@@ -92,7 +92,7 @@ public:
   * \return raises an exception on error
   */
   int
-  resetPassword(UMS_Data::User user);
+  resetPassword(UMS_Data::User& user);
   /**
   * \fn ~UserServer()
   * \brief Destructor
