@@ -6,11 +6,11 @@
 #ifndef __FMSVISHNUEXCEPTION__
 #define __FMSVISHNUEXCEPTION__
 
-#include "SystemException.hpp"
+#include "UserException.hpp"
 
 static const int FNBERR = 5;
 
-class FMSVishnuException: public SystemException{
+class FMSVishnuException: public UserException{
 private :
 protected:
 public:

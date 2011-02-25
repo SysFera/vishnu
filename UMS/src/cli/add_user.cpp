@@ -33,13 +33,7 @@ int main (int ac, char* av[]){
 
 
 /**************** Describe options *************/
-      boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
-
-
-        opt->add("sessionKey",
-                        "The session key",
-                        ENV,
-                        sessionKey);
+      boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
 
 
 				try{
@@ -50,9 +44,6 @@ int main (int ac, char* av[]){
 		opt->parse_env(env_name_mapper());
 
 		opt->notify();
-
-
-
 
 
 /********  Process **************************/
@@ -91,19 +82,6 @@ int main (int ac, char* av[]){
 
 		checkVishnuConfig(*opt);
 
-		if (opt->count("sessionKey")){
-
-			cout <<"The session key is " << sessionKey << endl;
-
-		}
-
-		else{
-
-			cerr << "Set the VISHNU_SESSION_KEY" <<endl;
-
-			return 1;
-		}
-
 
 
 /************** Call UMS connect service *******************************/
@@ -114,22 +92,18 @@ int main (int ac, char* av[]){
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
-// get the sessionKey
 
-               std::string sessionFile=getSessionLocation(getppid());
+                // get the sessionKey
 
-               SessionEntry session=getLastSession(sessionFile);
-
-               sessionKey=session.getSessionKey();
+                sessionKey=getLastSessionKey(getppid());
 
                if(false==sessionKey.empty()){
 
-               cout <<"the last session key was " << sessionKey <<endl;
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-							 //addUser(sessionKey,newUser);
+							 addUser(sessionKey,newUser);
 
                }
-							 addUser(sessionKey,newUser);
 
 
 	}// End of try bloc
@@ -137,7 +111,7 @@ int main (int ac, char* av[]){
   catch(po::required_option& e){// a required parameter is missing
 
 
-    usage(*opt," privilege userId firstname lastname email ","required parameter is missing");
+    usage(*opt," privilege firstname lastname email ","required parameter is missing");
    
   }
 

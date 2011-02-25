@@ -1,5 +1,6 @@
 #include "configureDefaultOption.hh"
 #include "configureOptionUtils.hpp"
+#include "sessionUtils.hpp"
 #include "utils.hh"
 #include <boost/bind.hpp>
 
@@ -31,10 +32,6 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt= makeConfigureOptions(av[0],dietConfig,fOptionName, fValue);
 
-        opt->add("sessionKey",
-                        "The session key",
-                        ENV,
-                        sessionKey);
 
   try {
 
@@ -61,7 +58,24 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-               configureDefaultOption(sessionKey,optionValue);
+
+ // get the sessionKey
+
+
+                sessionKey=getLastSessionKey(getppid());
+
+
+               if(false==sessionKey.empty()){
+
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+
+
+                configureDefaultOption(sessionKey,optionValue);
+
+
+               }
+
 
 
   }// End of try bloc
