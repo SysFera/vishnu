@@ -19,6 +19,7 @@
 #include "QueryProxy.hpp"
 #include "UtilsProxy.hpp"
 #include "UserException.hpp"
+#include "utilVishnu.hpp"
 /**
  * \brief Function to open a session 
  * \fn int connect(const std::string& userId,

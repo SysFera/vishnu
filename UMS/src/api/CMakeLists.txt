@@ -25,6 +25,7 @@ target_link_libraries(ums-api-client
   emf4cpp-UMS_Data
   exception-vishnu
   ums-client-proxy
+  utils-vishnu
 )
 
 FIND_PACKAGE(SWIG 1.3.40 REQUIRED)

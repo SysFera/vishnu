@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <cstring>
 
 static const int PASSWORD_MAX_SIZE = 8;
 
@@ -36,6 +37,7 @@ namespace vishnu {
   */
   int convertToInt(std::string val);
 
+  std::string cryptPassword(const std::string& salt, const std::string password) ;
 }
 
 #endif // _UTILVISHNU_H_

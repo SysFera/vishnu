@@ -34,7 +34,9 @@ connect(const string& userId,
     throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
   }
 
-  UserProxy userProxy(userId, password);
+  std::string encryptedPassword = vishnu::cryptPassword(userId, password);
+
+  UserProxy userProxy(userId, encryptedPassword);
   SessionProxy sessionProxy;
   int res = sessionProxy.connect(userProxy, connectOpt);
 
@@ -66,7 +68,9 @@ reconnect(const string& userId,
                             throw(UserException)
 {
 
-  UserProxy userProxy(userId, password);
+  std::string encryptedPassword = vishnu::cryptPassword(userId, password);
+
+  UserProxy userProxy(userId, encryptedPassword);
   UMS_Data::Session session;
   session.setSessionId(sessionId);
   SessionProxy sessionProxy(session);
@@ -187,8 +191,11 @@ changePassword(const std::string& userId,
   UMS_Data::User user;
   user.setUserId(userId);
   UserProxy userProxy(user);
+ 
+  std::string encryptedPassword = vishnu::cryptPassword(userId, password);
+  std::string encryptedPasswordNew = vishnu::cryptPassword(userId, passwordNew);
 
- return userProxy.changePassword(password, passwordNew);
+ return userProxy.changePassword(encryptedPassword, encryptedPasswordNew);
 }
 
 /**

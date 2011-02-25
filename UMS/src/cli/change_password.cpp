@@ -71,7 +71,7 @@ int main (int ac, char* av[]){
 
 			oldPassword=takePassword("old password: ",userId);
 
-			cout << "old password is" << oldPassword <<endl;
+			cout << "old password is " << oldPassword <<endl;
 
 			newPassword=takePassword("new password: ",userId);
 
