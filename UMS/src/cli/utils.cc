@@ -75,13 +75,10 @@ return res;
 
 std::string takePassword(const string& prompt, const string & salt){
 
-string password=getpass(prompt.c_str());
+   string password=getpass(prompt.c_str());
 
-string saltTmp="$6$"+salt+"$";
 
-password=crypt(password.c_str(),saltTmp.c_str());
-
-	return password.substr(saltTmp.size());
+  return password;
 
 }
 
