@@ -24,23 +24,26 @@ using namespace utilServer;
 
 class SessionServer;
 
+static const std::string CLOSEPOLICY_OPT = "VISHNU_CLOSE_POLICY";
+static const std::string TIMEOUT_OPT = "VISHNU_TIMEOUT";
+
 /**
 * \class OptionValueServer
 * \brief Implementation of the OptionValueServer class
 */
-class OptionValueServer { 
-  
+class OptionValueServer {
+
 public:
   /**
   * \brief Constructor
-  * \fn OptionValueServer() 
+  * \fn OptionValueServer()
   */
   OptionValueServer();
   /**
   * \brief Constructor
   * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
   * \param sessionServer The object to manipulate session
-  * \param optionvalue the option data structure 
+  * \param optionvalue the option data structure
   */
   OptionValueServer(UMS_Data::OptionValue*& optionvalue, SessionServer session);
   /**
@@ -49,7 +52,7 @@ public:
   * \param defaultOptions the flag to get data from defauts options table
   * \return  raises an exception on error
   */
-  int 
+  int
   configureOption(bool defaultOptions = false);
   /**
   * \brief Destructor
@@ -61,7 +64,7 @@ public:
   * \fn UMS_Data::OptionValue getData()
   * \return  The user data structure
   */
-  UMS_Data::OptionValue* 
+  UMS_Data::OptionValue*
   getData();
   /**
   * \brief Function to get option information from the database vishnu
@@ -71,18 +74,21 @@ public:
   * \param defaultOptions the flag to get data from defauts options table
   * \return the value of the attribut or empty string if no results
   */
-  std::string 
+  std::string
   getAttribut(std::string condition, std::string attrname="value", bool defaultOptions=false);
   /**
   * \brief Function to get closure information from the database vishnu
   * \fn getAttribut(std::string condition, std::string attrname, defaultOptions);
   * \param numuserId The database number id of the user who wants to get closure information
-  * \param nameInfo the name of the closure information 
+  * \param nameInfo the name of the closure information
   */
-  int 
+  int
   getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
-  
+
 private:
+  /////////////////////////////////
+  // Attributes
+  /////////////////////////////////
   /**
   * \brief The option data structure
   */
@@ -95,5 +101,16 @@ private:
   * \brief An object which encapsulates user data
   */
   SessionServer *msessionServer;
+
+  /////////////////////////////////
+  // Function
+  /////////////////////////////////
+  /**
+  * \brief Function to check the value for a specific option
+  * \fn bool isCorrectValue()
+  * \return  true if the option value is correct else false
+  */
+  bool
+  isCorrectValue();
 };
 #endif//OPTION_VALUE_SERVER_H
