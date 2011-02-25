@@ -68,10 +68,6 @@ int main (int ac, char* av[]){
 						CONFIG,
 						fMachineId);
 
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try{
 /**************  Parse to retrieve option values  ********************/
@@ -117,24 +113,21 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-// get the sessionKey
 
-               std::string sessionFile=getSessionLocation(getppid());
+ // get the sessionKey
 
-               SessionEntry session=getLastSession(sessionFile);
-
-               sessionKey=session.getSessionKey();
+                sessionKey=getLastSessionKey(getppid());
 
                if(false==sessionKey.empty()){
 
-							 listSessions(sessionKey,listSession,listOptions);
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+               listSessions(sessionKey,listSession,listOptions);
+
 
                }
-               else{
-                 std::cerr << "There is no open session"<< std::endl;
-                  return 1;
 
-               }
+               
 
 							// Display the list
       if(isEmpty) {

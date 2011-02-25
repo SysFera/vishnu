@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   argv[0]= (char*)"./automTest";
   argv[1]=getenv("VISHNU_CONFIG_FILE");
   if (diet_initialize(argv[1], argc, argv)) {
-     std::cerr << "Error in diet_initialize..." << std::endl;
+    BOOST_TEST_MESSAGE( "Error in diet_initialize..." );
   }
 
   // CREATE DATA MODEL                                                                                                                                                

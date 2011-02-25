@@ -1,6 +1,7 @@
 #include "saveConfiguration.hh"
 
 #include "utils.hh"
+#include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -28,11 +29,6 @@ int main (int ac, char* av[]){
 				        "The diet config file",
 						ENV,
 						dietConfig);
-
-				opt.add("sessionKey,s",
-						           "The session key",
-											 ENV,
-											 sessionKey);
 
 	try {
 /**************  Parse to retrieve option values  ********************/
@@ -68,8 +64,19 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              saveConfiguration(sessionKey,configuration);
+    
+ // get the sessionKey
 
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+                saveConfiguration(sessionKey,configuration);
+
+
+               }
 
              //A enlever apres, c'est juste pour les tests
       for(int i = 0; i < configuration.getListConfUsers().size(); i++) {

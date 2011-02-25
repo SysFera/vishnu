@@ -55,4 +55,6 @@ SessionEntry getLastSession(const std::string&);
 void removeLastSession(const std::string &);
 std::string getSessionLocation(int tpid);
 
+void storeLastSessionKey(const std::string& ,int,int);
+std::string getLastSessionKey(int);
 #endif
