@@ -329,19 +329,21 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK_THROW	 (changePassword(cu, "bad", "newPwd"), VishnuException);
   BOOST_CHECK	 (close         (key                )==0);
 
-//   // Reset pwd ok
-//   BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
-//   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
-//   BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
-//   BOOST_CHECK    (resetPassword(key, uid            )==0);
-//  BOOST_CHECK	 (close        (key                )==0);
+  // Reset pwd ok
+  string np;
+  BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
+  BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
+  BOOST_CHECK	 (connect      (uid, pwd, key, cop )==0);
+  BOOST_CHECK    (resetPassword(key, uid, np       )==0);
+  BOOST_CHECK    (changePassword(cu, np, pwd       )==0);  
+  BOOST_CHECK	 (close        (key                )==0);
 
   // Reset pwd bad uid
   BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql" )==0);
   BOOST_CHECK	 (connect      (uid, pwd  , key, cop)==0);
   BOOST_CHECK	 (addUser(key, *use            )==0);
-  BOOST_CHECK_THROW	 (resetPassword(key, "bad"          ), VishnuException);
+  BOOST_CHECK_THROW	 (resetPassword(key, "bad", np          ), VishnuException);
   BOOST_CHECK	 (close        (key                 )==0);
 
   // Add local account
@@ -762,7 +764,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (updateUser            (key, *use 	     )==0);
   BOOST_CHECK	 (deleteUser            (key, cu  	     )==0);            
   BOOST_CHECK	 (deleteMachine         (key, mid	     )==0);
-  BOOST_CHECK	 (resetPassword         (key, uid	     )==0);      
+  BOOST_CHECK	 (resetPassword         (key, uid, np	     )==0);      
   BOOST_CHECK	 (addLocalAccount       (key, lacc, key2     )==0);
   BOOST_CHECK	 (addMachine            (key, ma	     )==0);
   BOOST_CHECK	 (updateMachine         (key, ma	     )==0);
@@ -770,7 +772,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (deleteLocalAccount    (key, uid , mid      )==0);      
   BOOST_CHECK	 (configureDefaultOption(key, opva	     )==0);
   BOOST_CHECK	 (configureOption       (key, opva	     )==0);            
-  BOOST_CHECK	 (resetPassword         (uid, pwd            )==0);
   BOOST_CHECK	 (saveConfiguration     (key, conf           )==0);
   BOOST_CHECK	 (restoreConfiguration  (key, cpath          )==0);
   BOOST_CHECK	 (close                 (key                 )==0); 
