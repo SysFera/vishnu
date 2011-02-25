@@ -11,6 +11,8 @@
 #include <iostream>
 #include <sstream>
 
+static const int PASSWORD_MAX_SIZE = 8;
+
 namespace vishnu {
 
   /**

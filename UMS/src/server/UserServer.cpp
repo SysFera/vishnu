@@ -66,9 +66,10 @@ UserServer::add(UMS_Data::User*& user) {
 
         //Generation of password
         pwd = generatePassword(user->getLastname(), user->getFirstname());
-        user->setPassword(pwd.substr(0,8));
+        user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
         std::cout << "password to sent by mail to the user:" << user->getPassword() << std::endl;
 
+        //To get the user counter
         userCpt = convertToInt(getAttrVishnu("usercpt", Vishnuid::mvishnuid));
 
         //Generation of userid
@@ -84,7 +85,7 @@ UserServer::add(UMS_Data::User*& user) {
 
         user->setUserId(idUserGenerated);
 
-        //The passwordCrypted uses the same method used by command line interface to crypt password
+        //To get the password encrypted
         salt = "$6$"+user->getUserId()+"$";
         passwordCrypted = std::string(crypt(user->getPassword().c_str(), salt.c_str())+salt.length());
 
@@ -98,7 +99,6 @@ UserServer::add(UMS_Data::User*& user) {
           convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
           0, "+convertToString(user->getStatus())+")");
 
-          //TODO : voir envoi de mail avec kévine
         }// END If the user to add exists
         else {
           UMSVishnuException e (ERRCODE_USERID_EXISTING);
@@ -313,7 +313,7 @@ UserServer::resetPassword(UMS_Data::User user) {
         if (getAttribut("where userid='"+user.getUserId()+"'").size() != 0) {
           //generation of a new password
           pwd = generatePassword(user.getUserId(), user.getUserId());
-          user.setPassword(pwd.substr(0,8));
+          user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
           std::cout << "password to sent by mail to the user:" << user.getPassword() << std::endl;
 
           //Encryption of the password
