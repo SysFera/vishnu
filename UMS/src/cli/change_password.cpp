@@ -1,12 +1,11 @@
 #include "changePassword.hh"
 #include "utils.hh"
+#include "sessionUtils.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
 
 int main (int ac, char* av[]){
-
-
 
 
 	string userId;
@@ -35,10 +34,6 @@ int main (int ac, char* av[]){
 						1);
 				opt.setPosition("userId",-1);
 
-				opt.add("sessionKey,s",
-						    "The session Key",
-								 ENV,
-					       sessionKey);
 
 	try {
 
@@ -97,7 +92,24 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              changePassword(userId,oldPassword, newPassword);
+
+
+      // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+              
+               changePassword(userId,oldPassword, newPassword);
+
+
+               }
+
+
+
+
 
 
 

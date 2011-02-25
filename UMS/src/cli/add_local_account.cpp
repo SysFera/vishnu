@@ -1,6 +1,7 @@
 #include "addLocalAccount.hh"
 #include "utils.hh"
 #include "localAccountUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 namespace po = boost::program_options;
 
@@ -42,10 +43,6 @@ int main (int ac, char* av[]){
 		boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
 				                                               fAcLogin,fSshKeyPath,fHomeDirectory,1);
 
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 /**************  Parse to retrieve option values  ********************/
@@ -55,8 +52,6 @@ int main (int ac, char* av[]){
 		opt->parse_env(env_name_mapper());
 
 		opt->notify();
-
-
 
 
 
@@ -75,7 +70,22 @@ int main (int ac, char* av[]){
               }
 
 
-							 addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
+                //get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+							 
+               addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
+
+
+               }
+
+
+
+
 
 
 	}// End of try bloc

@@ -3,6 +3,7 @@
 #include "updateMachine.hh"
 #include "utils.hh"
 #include "machineUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -42,10 +43,6 @@ int main (int ac, char* av[]){
 
 			boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage);
 
-        opt->add("sessionKey",
-                        "The session key",
-                        ENV,
-                        sessionKey);
 
 				opt->add("machineId",
 											"The identifier of the machine",
@@ -107,7 +104,23 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 updateMachine(sessionKey,upMachine);
+
+ // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+							 
+               updateMachine(sessionKey,upMachine);
+
+
+               }
+
+
+
+
 
 	}// End of try bloc
 

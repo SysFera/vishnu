@@ -3,6 +3,7 @@
 #include "addMachine.hh"
 #include "utils.hh"
 #include "machineUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -38,12 +39,8 @@ int main (int ac, char* av[]){
 
 		boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
 
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
-
-				opt->add("sshPublicKeyFile,k",
+				
+    opt->add("sshPublicKeyFile,k",
                       "The the path to the SSH public key used by VISHNU to access local user accounts",
                         HIDDEN,
                         fSshPublicKeyFile,
@@ -83,7 +80,22 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 addMachine(sessionKey,newMachine);
+
+ // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+               addMachine(sessionKey,newMachine);
+
+
+               }
+
+
+
 
 
 	}// End of try bloc

@@ -90,10 +90,9 @@ int main (int ac, char* av[]){
 
 			// store sessionKey into $HOME/.vishnu/sessions
 
-							 std::string sessionFile=getSessionLocation(getppid());
-							 cout << "sessionFile: " << sessionFile<< endl;
-							 SessionEntry session(sessionKey,0);
-							 storeLastSession(session,sessionFile.c_str());
+							 storeLastSessionKey(sessionKey,connectOpt.getClosePolicy(),getppid());
+
+
                cleaner();
 
 	}// End of try bloc

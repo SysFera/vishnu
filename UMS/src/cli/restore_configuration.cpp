@@ -1,5 +1,6 @@
 #include "restoreConfiguration.hh"
 #include "utils.hh"
+#include "sessionUtils.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -22,10 +23,6 @@ int main (int ac, char* av[]){
 						ENV,
 						dietConfig);
 
-				opt.add("sessionKey,s",
-						           "The session key",
-											 ENV,
-											 sessionKey);
 
 		opt.add("filePath",
 					  "The path of the VISHNU configuration file",
@@ -61,7 +58,19 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              restoreConfiguration(sessionKey, filePath);
+
+ // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+             
+                restoreConfiguration(sessionKey, filePath);
+
+               }
+
 
 	}// End of try bloc
 
