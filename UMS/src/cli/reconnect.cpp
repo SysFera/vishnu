@@ -30,11 +30,6 @@ int main (int ac, char* av[]){
 			opt->setPosition("userId",1);
 
 
-        opt->add("sessionKey,s",
-				        "The sessionKey",
-						ENV,
-						sessionKey);
-
 		 opt->add("sessionId,s",
 				 		 "represents the identifier of the session",
 						 HIDDEN,
@@ -53,9 +48,6 @@ int main (int ac, char* av[]){
 		opt->parse_env(env_name_mapper());
 
 		opt->notify();
-
-
-
 
 
 /********  Process **************************/
@@ -101,17 +93,13 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-
 				   // store the sessionKey
-
 
               reconnect(userId, password, sessionId, sessionKey);
 
+       // store the session information
 
-               std::string sessionFile=getSessionLocation(getppid());
-               cout << "sessionFile: " << sessionFile<< endl;
-               SessionEntry session(sessionKey,0);
-               storeLastSession(session,sessionFile.c_str());
+        storeLastSessionKey(sessionKey,0,getppid());
 
 
 	}// End of try bloc
