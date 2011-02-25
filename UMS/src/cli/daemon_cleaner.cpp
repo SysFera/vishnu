@@ -5,7 +5,7 @@
 bfs::path home_dir;
 bfs::path session_dir;
 bfs::path proc_dir("/proc");
-const char *lockname = "vishnu1";
+const char *lockname = "vishnu2";
 
 bool pid_exists(const std::string& pid)
 {
@@ -50,7 +50,7 @@ void deleter()
 
           BOOST_FOREACH (const SessionEntry& session, allSessions){
          
-            if(1==session.getClosePolicy()) {
+            if(2==session.getClosePolicy()) {
 
              close (session.getSessionKey());
          
