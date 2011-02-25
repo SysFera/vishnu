@@ -27,14 +27,20 @@ target_link_libraries(ums-api-client
   ums-client-proxy
 )
 
+# Requirements for PYTHON
 FIND_PACKAGE(SWIG 1.3.40 REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
-FIND_PACKAGE(PythonLibs)
+FIND_PACKAGE(PythonLibs REQUIRED)
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
+# Requirements for JAVA
+FIND_PACKAGE(Java REQUIRED)
+
+# General SWIG configuration
 SET_SOURCE_FILES_PROPERTIES(api_ums.i PROPERTIES CPLUSPLUS ON)
-# SET (CMAKE_SWIG_OUTDIR ${CMAKE_INSTALL_PREFIX}/lib)
+#Install swig language-specific generated files in a dedicated directory
+SET (CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/swig_output)
 
 #Suppress warnings about ignored operators (out_ptr::operator= and EList::operator[])
 SET(CMAKE_SWIG_FLAGS "-w362,389")
@@ -46,4 +52,5 @@ SWIG_ADD_MODULE(VISHNU_UMS python api_ums.i api_ums.cpp)
 SWIG_LINK_LIBRARIES(VISHNU_UMS ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-client)
 
 install( TARGETS ums-api-client DESTINATION lib )
-install( TARGETS _VISHNU_UMS DESTINATION lib )
+install( TARGETS ${SWIG_MODULE_VISHNU_UMS_REAL_NAME} DESTINATION lib )
+install( DIRECTORY ${CMAKE_SWIG_OUTDIR} DESTINATION lib)
