@@ -1,5 +1,6 @@
 #include "resetPassword.hh"
 #include "connectUtils.hpp"
+#include "sessionUtils.hpp"
 #include "utils.hh"
 namespace po = boost::program_options;
 
@@ -19,12 +20,6 @@ int main (int ac, char* av[]){
 	boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
 
 	      opt->setPosition("userId",-1);
-
-
-				opt->add("sessionKey,s",
-						           "The session key",
-											 ENV,
-											 sessionKey);
 
 
 
@@ -68,8 +63,20 @@ int main (int ac, char* av[]){
 				  return 1;
               }
 
-              resetPassword(sessionKey,userId);
 
+    // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+                resetPassword(sessionKey,userId);
+
+
+               }
+          
 
 
 	}// End of try bloc

@@ -1,6 +1,7 @@
 #include "listMachine.hh"
 #include "utils.hh"
 #include "listMachineUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -36,11 +37,6 @@ int main (int ac, char* av[]){
 		                    "An option for listing all VISHNU machines",
 										    CONFIG);
 
-
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 
@@ -90,7 +86,20 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 listMachine(sessionKey,lsMachine,listOptions);
+							
+    // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+                listMachine(sessionKey,lsMachine,listOptions);
+
+
+               }
+ 
 
       							// Display the list
      if(isEmpty || opt->count("listAllmachine")) {

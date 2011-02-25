@@ -2,6 +2,7 @@
 
 #include "listUsers.hh"
 #include "utils.hh"
+#include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
 
@@ -37,10 +38,6 @@ int main (int ac, char* av[]){
 										 CONFIG,
 										 userIdOption);
 
-				opt.add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 
@@ -75,9 +72,22 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 listUsers(sessionKey,lsUsers, userIdOption);
 
 
+	 // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+               listUsers(sessionKey,lsUsers, userIdOption);
+
+
+               }
+						 
+    
 							// Display the list
       if(isEmpty) {
          cout << lsUsers << endl;
