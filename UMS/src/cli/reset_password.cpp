@@ -71,9 +71,9 @@ int main (int ac, char* av[]){
                if(false==sessionKey.empty()){
 
                cout <<"the current sessionkey is: " << sessionKey <<endl;
-    
-                resetPassword(sessionKey,userId);
-
+                std::string tmpPassword;
+                resetPassword(sessionKey,userId, tmpPassword);
+                cout <<"tmpPassword=" << tmpPassword << std::endl;
 
                }
           
