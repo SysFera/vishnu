@@ -19,10 +19,12 @@ public:
   ListCommandsServer(const SessionServer session):
     QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>(session)
   {
+    mcommandName ="vishnu_list_history_cmd";
   }
   ListCommandsServer(UMS_Data::ListCmdOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>(params, session)
   {
+    mcommandName ="vishnu_list_history_cmd";
   }
 
   //To process options
@@ -98,8 +100,8 @@ public:
            command->setCmdEndTime(convertToTimeType(*(++ii)));
 
            listObject->getCommands().push_back(command);
-          }
-        }
+       }
+     }
 
   }
 
@@ -132,10 +134,18 @@ public:
     return mlistObject;
   }
 
+  std::string getCommandName() 
+  {
+    return mcommandName;
+  }
+
   //Destructor
   ~ListCommandsServer() {
   }
 
+  private:
+
+  std::string mcommandName;
 };
 
 #endif

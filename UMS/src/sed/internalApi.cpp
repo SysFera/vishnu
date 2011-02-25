@@ -1102,6 +1102,10 @@ solveGenerique(diet_profile_t* pb) {
   std::string listSerialized = "";
   std::string empty = "";
   std::string errorInfo;
+  int mapperkey;
+  Mapper* mapper;
+  std::string cmd;
+
 
   std::cout << "=================Solve Generique =================" << std::endl;
 
@@ -1128,6 +1132,18 @@ solveGenerique(diet_profile_t* pb) {
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
     listSerialized =  _ser.serialize(list);
+
+     //MAPPER CREATION
+    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapperkey = mapper->code(query.getCommandName());
+    mapper->code(std::string(sessionKey), mapperkey);
+    mapper->code(std::string(optionValueSerialized), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    //COMMAND REGISTRATION
+    CommandServer commandServer = CommandServer(cmd, sessionServer);
+    commandServer.record(UMS);
+
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -1162,6 +1178,9 @@ solveListUsers(diet_profile_t* pb) {
   std::string listUsersSerialized = "";
   std::string empty = "";
   std::string errorInfo;
+  int mapperkey;
+  Mapper* mapper;
+  std::string cmd;
 
   std::cout << "=================Solve userList =================" << std::endl;
 
@@ -1182,6 +1201,17 @@ solveListUsers(diet_profile_t* pb) {
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
     listUsersSerialized =  _ser.serialize(listUsers);
+ 
+     //MAPPER CREATION
+    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_list_users");
+    mapper->code(std::string(sessionKey), mapperkey);
+    mapper->code(std::string(option), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    //COMMAND REGISTRATION
+    CommandServer commandServer = CommandServer(cmd, sessionServer);
+    commandServer.record(UMS);
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
