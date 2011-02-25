@@ -34,6 +34,7 @@ FIND_PACKAGE(PythonLibs)
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 SET_SOURCE_FILES_PROPERTIES(api_ums.i PROPERTIES CPLUSPLUS ON)
+SET (CMAKE_SWIG_OUTDIR ${CMAKE_INSTALL_PREFIX}/lib)
 
 #Suppress warnings about ignored operators (out_ptr::operator= and EList::operator[])
 SET(CMAKE_SWIG_FLAGS "-w362,389")
@@ -45,3 +46,4 @@ SWIG_ADD_MODULE(VISHNU_UMS python api_ums.i api_ums.cpp)
 SWIG_LINK_LIBRARIES(VISHNU_UMS ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-client)
 
 install( TARGETS ums-api-client DESTINATION lib )
+install( TARGETS _VISHNU_UMS DESTINATION lib )
