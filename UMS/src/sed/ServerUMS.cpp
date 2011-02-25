@@ -79,8 +79,8 @@ ServerUMS::init(int vishnuId,
     }
 
   } catch (VishnuException& e) {
-        std::cout << "Message generique <-> 1: " << e.getMsg()<<std::endl;
-        std::cout << "Details supplementaires 2: " << e.what() <<std::endl;
+        std::cout << "Error: " << e.getMsg()<<std::endl;
+        std::cout << e.what() <<std::endl;
         exit(0);
   }
 

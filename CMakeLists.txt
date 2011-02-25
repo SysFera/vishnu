@@ -93,6 +93,7 @@ set( UMS_TEST_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/test/src/sql )
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
 
 set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
+set (TEST_SQL "${UMS_TEST_DIR}")
 
 add_subdirectory(core/src)
 add_subdirectory(UMS/src)
