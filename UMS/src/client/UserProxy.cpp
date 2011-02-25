@@ -69,7 +69,6 @@ int UserProxy::add(UMS_Data::User& user)
    ::ecorecpp::serializer::serializer _ser(name);
    //To serialize the user object in to userToString 
    userToString =  strdup(_ser.serialize(const_cast<UMS_Data::User_ptr>(&user)).c_str());
-   std::cout << "userToString = " << userToString  << std::endl;
    //IN Parameters
    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
      msg += "with sessionKey parameter "+sessionKey;
@@ -298,10 +297,11 @@ int UserProxy::resetPassword(UMS_Data::User& user)
 {
 
    diet_profile_t* profile = NULL;
+   char* tmpPassword;
    char* errorInfo;
    std::string msg = "call of function diet_string_set is rejected ";
 
-   profile = diet_profile_alloc("userPasswordReset", 1, 1, 2);
+   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
 
    //IN Parameters  
    if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
@@ -318,9 +318,15 @@ int UserProxy::resetPassword(UMS_Data::User& user)
 
    //OUT Parameters
    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
    if(!diet_call(profile)) {
-       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+       if(diet_string_get(diet_parameter(profile,2), &tmpPassword, NULL)){
+          msg += " by receiving tmpPassWord message";
+          errMsg(msg);
+          sendErrorMsg(msg);     
+       }
+       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
           msg += " by receiving errorInfo message";
           errMsg(msg);
           sendErrorMsg(msg);     
@@ -333,6 +339,10 @@ int UserProxy::resetPassword(UMS_Data::User& user)
    }
     /*To check the receiving message error*/
     checkErrorMsg(errorInfo);
+
+    /*To set the temporary password*/
+    muser.setUserId(user.getUserId());
+    muser.setPassword(std::string(tmpPassword));
 
   return 0;
 }
