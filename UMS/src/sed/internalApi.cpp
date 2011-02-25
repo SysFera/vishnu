@@ -441,13 +441,15 @@ solveUserPasswordReset(diet_profile_t* pb) {
     commandServer.record(UMS);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup((user.getPassword()).c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
