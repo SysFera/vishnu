@@ -36,13 +36,8 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
-
-                if (name=="VISHNU_SESSION_KEY") {
-
-                        result="sessionKey";
-                }
-
-                return result;
+                
+              return result;
         }
 };
 
