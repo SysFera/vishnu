@@ -51,8 +51,6 @@ void storeLastSession(const SessionEntry& session,const std::string& terminal){
 	SessionContainer allSessions;
 
 
-	try{
-
 		allSessions=getAllSessions(terminal);
 
 
@@ -60,22 +58,6 @@ void storeLastSession(const SessionEntry& session,const std::string& terminal){
 
 		saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
 
-	}
-  catch(std::exception& e){
-
-		    //if (e.code== archive_exception:: input_stream_error){// first session for this terminal
-
-					allSessions.push_back(session);
-
-					saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
-
-          exit (EXIT_SUCCESS);
-			//	}
-				//else{
-
-		//	throw;
-			//	}
-	}
 }
 
 
@@ -83,9 +65,14 @@ void storeLastSession(const SessionEntry& session,const std::string& terminal){
 SessionContainer getAllSessions(const std::string& terminal){
 
 	SessionContainer allSessions;
+  
+  bfs::path pid_file(terminal);
+
+  if( bfs::exists(pid_file) && !bfs::is_empty(pid_file)){
 
 	getFromFile<text_iarchive>(allSessions, terminal.c_str());
 
+  }
 	return allSessions;
 
 }
@@ -94,33 +81,18 @@ SessionEntry getLastSession(const std::string& terminal){
 
 	SessionContainer allSessions;
 
-	try{
 
 		allSessions=getAllSessions(terminal);
 
+    if(allSessions.empty()){
+
+      throw std::runtime_error("There is no open session");
+
+    }
+
+
 				return allSessions.back();
 
-	}
-
-	catch(archive_exception& e){
-
-		 if ((e.code== archive_exception:: input_stream_error) || (e.code== archive_exception:: invalid_signature)  ){// there  is  session stored
-
-			 throw std::runtime_error("there is no open session ");
-		 }
-		 else{
-       std::cerr<< "there is no open session \n";
-			 throw;
-		 }
-	}
-  catch(...){
-
-
-    std::cerr<< "there is no open session \n";
-
-    exit (EXIT_FAILURE);
-
-  }
 
 }
 
@@ -131,13 +103,15 @@ void removeLastSession(const std::string & terminal){
 
 	SessionContainer allSessions;
 
-	  try{
 
 			    allSessions=getAllSessions(terminal);
 
-					         allSessions.pop_back();
 
-									 if (allSessions.size()){
+
+          if (!allSessions.empty()){
+
+
+					         allSessions.pop_back();
 
 
 									  saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
@@ -151,23 +125,8 @@ void removeLastSession(const std::string & terminal){
 
 												file.close();
 											}
+                      std::cerr << "all sessions have been closed\n"; 
 									 }
-									  }
-
-  catch(archive_exception& e){
-
-		     if (e.code== archive_exception:: input_stream_error){// there  is  session stored
-
-					        throw std::runtime_error("there is no open session ");
-									     }
-
-	 if(e.code== archive_exception:: output_stream_error){
-
-								throw std::runtime_error("all sessions are closed now");
-								                }
-
-
-	}
 
 }
 
@@ -200,4 +159,29 @@ std::string getSessionLocation(int tpid){
 
 }
 
+void storeLastSessionKey(const std::string& sessionKey ,int closePolicy,int ppid){
 
+  std::string sessionFile=getSessionLocation(ppid);
+              
+
+  std:: cout << "sessionFile: " << sessionFile<< std::endl;
+  
+  SessionEntry session(sessionKey,closePolicy);
+
+  storeLastSession(session,sessionFile.c_str());
+
+
+}
+
+std::string getLastSessionKey(int ppid){
+
+std::string sessionFile=getSessionLocation(ppid);
+
+
+SessionEntry session=getLastSession(sessionFile);
+
+
+return(session.getSessionKey());
+
+
+}

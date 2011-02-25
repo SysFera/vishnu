@@ -25,11 +25,6 @@ int main (int ac, char* av[]){
 						ENV,
 						dietConfig);
 
-		opt.add("sessionKey,s",
-						 "The session Key",
-						 ENV,
-						 sessionKey);
-
 	try {
 
 /**************  Parse to retrieve option values  ********************/
@@ -39,9 +34,6 @@ int main (int ac, char* av[]){
 		opt.parse_env(env_name_mapper());
 
 		opt.notify();
-
-
-
 
 
 /********  Process **************************/
@@ -66,7 +58,7 @@ int main (int ac, char* av[]){
 
 /************** Call UMS connect service *******************************/
 
-/*
+
 		if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
 			cerr << "DIET initialization failed !" << endl;
@@ -74,24 +66,25 @@ int main (int ac, char* av[]){
 			return 1;
 
 		}
-*/
+
 
 	// get the sessionKey
 
-               std::string sessionFile=getSessionLocation(getppid());
 
-               SessionEntry session=getLastSession(sessionFile);
 
-               sessionKey=session.getSessionKey();
+               sessionKey=getLastSessionKey(getppid());
 
                if(false==sessionKey.empty()){
 
-               cout <<"the last session key was " << sessionKey <<endl;
+               std::string sessionFile=getSessionLocation(getppid());
+
+               cout <<"the session with sessionkey: " << sessionKey << "  is closed"<<endl;
 
 							 removeLastSession(sessionFile);
+		            
+               close(sessionKey);
                }
 
-		//int res=close(sessionKey);
 
 
 

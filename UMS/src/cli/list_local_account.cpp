@@ -2,6 +2,7 @@
 #include "listLocalAccount.hh"
 #include "utils.hh"
 #include "listMachineUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -39,11 +40,6 @@ int main (int ac, char* av[]){
 						            "is an admin option for listing all local configurations of all users	",
 												CONFIG);
 
-
-							opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try {
 /**************  Parse to retrieve option values  ********************/
@@ -86,7 +82,20 @@ int main (int ac, char* av[]){
                return 1;
               }
 
-							 listLocalAccount(sessionKey,lsLocalAccount,listOptions);
+
+ // get the sessionKey
+
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+							
+                listLocalAccount(sessionKey,lsLocalAccount,listOptions);
+
+
+               }
+
 
 							// Display the list
       if(isEmpty) {

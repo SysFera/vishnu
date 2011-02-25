@@ -3,6 +3,7 @@
 #include "updateUser.hh"
 #include "utils.hh"
 #include "userUtils.hpp"
+#include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
@@ -34,21 +35,22 @@ int main (int ac, char* av[]){
 
 /**************** Describe options *************/
 
-	boost::shared_ptr<Options>opt= makeUserOptions(av[0], fUserId,dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
+	boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
 
+
+
+  opt->add("userId,u",
+                "represents the VISHNU user identifier",
+            HIDDEN,
+            fUserId,
+            1);
 
 
 					opt->setPosition("userId",-1);
 
 
-					opt->add("sessionKey",
-                        "The session key",
-                        ENV,
-                        sessionKey);
-
 					try {
 /**************  Parse to retrieve option values  ********************/
-
 
 						opt->parse_cli(ac,av);
 
@@ -111,9 +113,18 @@ int main (int ac, char* av[]){
                     cerr << "DIET initialization failed !" << endl;
                return 1;
               }
+              
 
+
+// get the session key
+
+sessionKey=getLastSessionKey(getppid());
+
+if(false==sessionKey.empty()){
+ 
+ cout << "the current session key is " << sessionKey <<endl; 
                updateUser(sessionKey,upUser);
-
+}
 
   }// End of try bloc
 

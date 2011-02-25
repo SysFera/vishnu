@@ -98,8 +98,6 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
     host.recordMachineClient();
     recordSessionServer(host.getId(), numUserIdToconnect);
 
-    //TODO: machineServer et commanderServer à enregistrer dans la base de données donc créer un commanderServer
-
     } // END if the user exist
     else {
       UMSVishnuException e(ERRCODE_UNKNOWN_USER);
@@ -183,7 +181,7 @@ int SessionServer::close() {
 
   try {
     UserServer user = UserServer(SessionServer(msession.getSessionKey()));
-
+    CommandServer commanderServer = CommandServer(SessionServer(msession.getSessionKey()));
     //The init function initializes login and password using the sessionKey
     user.init();
       //If The user exist
@@ -191,16 +189,17 @@ int SessionServer::close() {
       state = getState();
       //if the session is not already closed
       if (state != 0) {
-      //TODO: if no running commands ==> vérifier dans la table commande qu'il n'y a pas de commande à status
-        //active
-
-
-        sqlCommand.append(msession.getSessionKey()+"';");
-        sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP\
-        WHERE sessionkey='"+msession.getSessionKey()+"';");
-        mdatabaseVishnu->process(sqlCommand.c_str());
-
-
+        //if no running commands
+       if (!commanderServer.isRunning()) {
+          sqlCommand.append(msession.getSessionKey()+"';");
+          sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP\
+          WHERE sessionkey='"+msession.getSessionKey()+"';");
+          mdatabaseVishnu->process(sqlCommand.c_str());
+        }
+        else {
+          UMSVishnuException e (ERRCODE_COMMAND_RUNNING);
+          throw e;
+        }
       } //if the session is not already closed
       else {
         UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);

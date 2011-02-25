@@ -1,5 +1,6 @@
 #include "daemon_cleaner.hpp"
 #include "sessionUtils.hpp"
+#include "connect.hh"
 
 bfs::path home_dir;
 bfs::path session_dir;
@@ -33,6 +34,7 @@ void deleter()
     }
 
     std:: cout << "daemon cleaner initialized"<<std::endl;
+
     while(true) {
 
       bfs::directory_iterator it = bfs::directory_iterator(session_dir);
@@ -43,18 +45,25 @@ void deleter()
 
         if (!pid_exists(pid)) {
           // close all sessions opened by disconnect mode before deleting file
-          /*SessionContainer allSessions=getAllSessions(pid);
+          SessionContainer allSessions=getAllSessions(pid);
+          if (false==allSessions.empty()){
+
           BOOST_FOREACH (const SessionEntry& session, allSessions){
-           if(1==session.getClosePolicy()) {
+         
+            if(1==session.getClosePolicy()) {
 
-            // close (session.getSessionKey);
-           }
-
-          }*/
+             close (session.getSessionKey());
+         
+            }
+         
+          }
+         
+          }
+          
           bfs::remove(current_path);
+       
         }
       }
-
       btt::sleep(bpt::seconds(5));
     }
 
@@ -77,7 +86,6 @@ void cleaner()
   session_dir = home_dir ;
   session_dir /= ".vishnu";
   session_dir /= "sessions";
-  std::cout << "cleaning process: initialized"<< std::endl;
   pid_t pid = fork();
 
   if (pid < 0) {

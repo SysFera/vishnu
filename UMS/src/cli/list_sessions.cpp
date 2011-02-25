@@ -2,7 +2,7 @@
 #include "utils.hh"
 #include "listHistoryCmdUtils.hpp"
 #include<boost/bind.hpp>
-
+#include "sessionUtils.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -68,10 +68,6 @@ int main (int ac, char* av[]){
 						CONFIG,
 						fMachineId);
 
-				opt->add("sessionKey",
-												"The session key",
-												ENV,
-												sessionKey);
 
 	try{
 /**************  Parse to retrieve option values  ********************/
@@ -118,8 +114,20 @@ int main (int ac, char* av[]){
               }
 
 
-							 listSessions(sessionKey,listSession,listOptions);
+ // get the sessionKey
 
+                sessionKey=getLastSessionKey(getppid());
+
+               if(false==sessionKey.empty()){
+
+               cout <<"the current sessionkey is: " << sessionKey <<endl;
+    
+               listSessions(sessionKey,listSession,listOptions);
+
+
+               }
+
+               
 
 							// Display the list
       if(isEmpty) {
