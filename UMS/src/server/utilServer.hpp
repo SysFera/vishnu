@@ -22,7 +22,7 @@
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
-#include "VishnuException.hpp"
+#include "utilVishnu.hpp"
 
 using namespace vishnu;
 using namespace boost::posix_time;
@@ -183,9 +183,23 @@ namespace utilServer {
                     std::string name = "",
                     std::string site ="");
 
+  /**
+  * \brief Function to get information from the table vishnu
+  * \fn    string getAttrVishnu(string attrname, string vishnuid)
+  * \param attrname the name of the attribut
+  * \param vishnuid the id of the vishnu configuration
+  * \return the corresponding attribut
+  */
   std::string
   getAttrVishnu(std::string attrname, std::string vishnuid);
 
+  /**
+  * \brief Function to increment a counter of the table vishnu
+  * \fn    incrementCpt(std::string cptName, int cpt)
+  * \param cptName the name of the counter to increment
+  * \param cpt     the current value of the counter
+  * \return raises an exception
+  */
   void
   incrementCpt(std::string cptName, int cpt);
 }

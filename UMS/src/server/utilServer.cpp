@@ -63,7 +63,21 @@ utilServer::isCpt (const char * s) {
   return (s[0]=='C' && s[1]=='P' && s[2]=='T');
 }
 
-// Function to get the variables from the format and set their value
+/**
+* \brief Parse the format and fill the array with the variable and their value
+* \fn void getKeywords(int* size, Format_t* array,
+*                      const char* format,
+*                      int cpt, IdType type,
+*                      std::string name,
+*                      std::string site)
+* \param size Size of the array (OUT)
+* \param array Array to fill with variables and their value (OUT)
+* \param format The string to parse
+* \param cpt Value of the counter variable
+* \param type Type of the id to generate
+* \param name Name of the user or machine
+* \param site Site of the machine
+*/
 void
 utilServer::getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type,
       std::string name, std::string site) {
@@ -152,7 +166,19 @@ utilServer::getKeywords (int* size, Format_t* array, const char* format, int cpt
   }
 }
 
-// Function to get the generated name
+/**
+* \brief Function to generate an ID
+* \fn std::string getGeneratedName (const char* format,
+*                                   int cpt,
+*                                   IdType type,
+*                                   std::string name = "",
+*                                   std::string site ="")
+* \param format Format to use to generate the id
+* \param cpt Value of the counter to use
+* \param type Type of the id generated
+* \param name Name of the user or machine (optionnal)
+* \param site Site of the machine (optionnal)
+*/
 std::string
 utilServer::getGeneratedName (const char* format, int cpt, IdType type,
       std::string name , std::string site ) {
@@ -193,6 +219,13 @@ utilServer::getGeneratedName (const char* format, int cpt, IdType type,
   return res;
 }
 
+/**
+* \brief Function to get information from the table vishnu
+* \fn    string getAttrVishnu(string attrname, string vishnuid)
+* \param attrname the name of the attribut
+* \param vishnuid the id of the vishnu configuration
+* \return the corresponding attribut
+*/
 std::string
 utilServer::getAttrVishnu(std::string attrname, std::string vishnuid) {
 
@@ -212,7 +245,13 @@ utilServer::getAttrVishnu(std::string attrname, std::string vishnuid) {
     throw;
   }
 }
-//Increment compteur
+/**
+* \brief Function to increment a counter of the table vishnu
+* \fn    incrementCpt(std::string cptName, int cpt)
+* \param cptName the name of the counter to increment
+* \param cpt     the current value of the counter
+* \return raises an exception
+*/
 void
 utilServer::incrementCpt(std::string cptName, int cpt) {
 

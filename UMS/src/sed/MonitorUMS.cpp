@@ -83,13 +83,13 @@ MonitorUMS::run() {
 
   std::string sqlClosure;
   std::string sqlCommand("SELECT sessionkey from vsession where \
-  EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1");
+  EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 \
+  and closepolicy=1");
 
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
-
-  try {
-    while (true) {
+  while (true) {
+    try {
       DatabaseResult *result = mdatabaseVishnu->getResult(sqlCommand.c_str());
 
       if (result->getNbTuples() != 0) {
@@ -108,7 +108,6 @@ MonitorUMS::run() {
           }
           std::cout << std::endl;
         }
-
         mdatabaseVishnu->process(sqlClosure.c_str());
         sqlClosure = "";
       }
@@ -116,10 +115,11 @@ MonitorUMS::run() {
         std::cout << "No sessions to close" << std::endl ;
       }
       sleep(minterval);
-    }
-  } catch (VishnuException& e) {
+
+    } catch (VishnuException& e) {
       string errorInfo =  e.buildExceptionString();
       std::cout << "Exception: " << errorInfo <<std::endl;
+    }
   }
   return 0;
 }
