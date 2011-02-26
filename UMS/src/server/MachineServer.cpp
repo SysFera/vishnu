@@ -63,7 +63,7 @@ MachineServer::add() {
                                                   MACHINE,
                                                   mmachine->getName());
 
-        utilServer::incrementCpt("machinecpt", machineCpt);
+        incrementCpt("machinecpt", machineCpt);
         mmachine->setMachineId(idMachineGenerated);
 
         //if the machineId does not exist
@@ -275,13 +275,4 @@ std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 std::string
 MachineServer::getPublicKey() {
   return msshpublickey;
-}
-
-/**
-* \brief Function to generate a machine id
-* \fn generateMachineId()
-*/
-std::string
-MachineServer::generateMachineId() {
-  return "";
 }
