@@ -15,6 +15,7 @@
 MonitorUMS::MonitorUMS(int interval) {
 std::cout << "INTERVAL:" << interval << endl;;
 minterval = interval;
+mdatabaseVishnu = NULL;
 }
 
 /**
@@ -103,6 +104,10 @@ MonitorUMS::run() {
 
           if (!commandServer.isRunning()) {
             sqlClosure.append("UPDATE vsession SET state=0 WHERE sessionkey='");
+            sqlClosure.append(sessionServer.getData().getSessionKey());
+            sqlClosure.append("';");
+
+            sqlClosure.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP WHERE sessionkey='");
             sqlClosure.append(sessionServer.getData().getSessionKey());
             sqlClosure.append("';");
           }
