@@ -1,5 +1,5 @@
 /**
- * \file POSTGREDatabase.hh
+ * \file POSTGREDatabase.hpp
  * \brief This class is used to access a PostGreSQL database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10

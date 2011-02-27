@@ -1,5 +1,5 @@
 /**
- * \file OracleDatabase.hh
+ * \file OracleDatabase.hpp
  * \brief This file presents a PostGreSQL database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10
