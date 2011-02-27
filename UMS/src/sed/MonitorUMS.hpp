@@ -22,7 +22,7 @@ public :
    * \fn MonitorUMS(int interval)
    * \param interval The interval in seconds to check the database
    */
-  MonitorUMS(int interval);
+  MonitorUMS(int interval = 1);
 
   /**
    * \brief Destructor
