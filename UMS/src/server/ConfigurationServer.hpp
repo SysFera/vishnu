@@ -18,7 +18,7 @@
 #include "UMS_Data_forward.hpp"
 
 /**
-* \class LocalAccountServer
+* \class ConfigurationServer
 * \brief Implementation of the ConfigurationServer class
 */
 class ConfigurationServer {

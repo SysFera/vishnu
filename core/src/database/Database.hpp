@@ -1,5 +1,5 @@
 /**
- * \file Database.hh
+ * \file Database.hpp
  * \brief This file presents an abstract database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10 
