@@ -69,8 +69,8 @@ MachineServer::add() {
         //if the machineId does not exist
         if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 
-          mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"\
-          ','"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
+          mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"'\
+          ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
           '"+mmachine->getSshPublicKey()+"')");
 
           //To insert the description of the machine
