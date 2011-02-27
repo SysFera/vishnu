@@ -97,8 +97,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,4),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,5),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSessionConnect)) return 1;
 
+  if (diet_service_table_add(mprofile, NULL, solveSessionConnect)) {
+    return 1;
+  }
 
   /* solveSessionReconnect */
 
@@ -110,14 +112,20 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,4),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,5),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSessionReconnect)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveSessionReconnect)) {
+    return 1;
+  }
 
   /* solveSessionClose */
 
   mprofile = diet_profile_desc_alloc(SRV[2], 0, 0, 1);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveSessionClose)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveSessionClose)) {
+    return 1;
+  }
 
   /* solveUserCreate */
 
@@ -126,7 +134,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveUserCreate)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveUserCreate)) {
+    return 1;
+  }
 
   /* solveUserUpdate */
 
@@ -134,7 +145,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveUserUpdate)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveUserUpdate)) {
+    return 1;
+  }
 
   /* solveUserDelete */
 
@@ -142,7 +156,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveUserDelete)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveUserDelete)) {
+    return 1;
+  }
 
   /* solveUserPasswordChange */
 
@@ -151,7 +168,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveUserPasswordChange)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveUserPasswordChange)) {
+    return 1;
+  }
 
   /* solveUserPasswordReset */
 
@@ -160,7 +180,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveUserPasswordReset)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveUserPasswordReset)) {
+    return 1;
+  }
 
   /* solveMachineCreate */
 
@@ -169,7 +192,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveMachineCreate)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveMachineCreate)) {
+    return 1;
+  }
 
   /* solveMachineUpdate */
 
@@ -177,7 +203,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveMachineUpdate)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveMachineUpdate)) {
+    return 1;
+  }
 
   /* solveMachineDelete */
 
@@ -185,7 +214,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveMachineDelete)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveMachineDelete)) {
+    return 1;
+  }
 
   /* solveLocalAccountCreate */
 
@@ -194,7 +226,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveLocalAccountCreate)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveLocalAccountCreate)) {
+    return 1;
+  }
 
   /* solveLocalAccountUpdate */
 
@@ -202,7 +237,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveLocalAccountUpdate)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveLocalAccountUpdate)) {
+    return 1;
+  }
 
   /* solveLocalAccountDelete */
 
@@ -211,7 +249,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveLocalAccountDelete)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveLocalAccountDelete)) {
+    return 1;
+  }
 
   /* solveConfigurationSave */
 
@@ -219,7 +260,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveConfigurationSave)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveConfigurationSave)) {
+    return 1;
+  }
 
   /* solveConfigurationRestore */
 
@@ -227,8 +271,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveConfigurationRestore)) return 1;
 
+  if (diet_service_table_add(mprofile, NULL, solveConfigurationRestore)) {
+    return 1;
+  }
 
   /* solveOptionValueSet */
 
@@ -236,7 +282,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveOptionValueSet)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveOptionValueSet)) {
+    return 1;
+  }
 
   /* solveOptionValueSetDefault */
 
@@ -244,7 +293,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveOptionValueSetDefault)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveOptionValueSetDefault)) {
+    return 1;
+  }
 
   /* solveListSessions */
 
@@ -253,7 +305,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveListSessions)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveListSessions)) {
+    return 1;
+  }
 
   /* solveListLocalAccount */
 
@@ -262,7 +317,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveListLocalAccount)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveListLocalAccount)) {
+    return 1;
+  }
 
   /* solveListMachines */
 
@@ -271,7 +329,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveListMachines)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveListMachines)) {
+    return 1;
+  }
 
   /* solveListHistoryCmd */
 
@@ -280,7 +341,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveListHistoryCmd)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveListHistoryCmd)) {
+    return 1;
+  }
 
   /* solveListOptions */
 
@@ -289,7 +353,10 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveListOptions)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveListOptions)) {
+    return 1;
+  }
 
   /* solveListUsres */
 
@@ -298,13 +365,18 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveListUsers)) return 1;
+
+  if (diet_service_table_add(mprofile, NULL, solveListUsers)) {
+    return 1;
+  }
 
   /* solveRestore */
 
   mprofile = diet_profile_desc_alloc(SRV[24], 0, 0, 0);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveRestore)) return 1;
+  if (diet_service_table_add(mprofile, NULL, solveRestore)) {
+    return 1;
+  }
 
   diet_profile_desc_free(mprofile);
 
