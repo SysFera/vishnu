@@ -357,14 +357,14 @@ UserServer::init(){
     //To get the users_numuserid by using the sessionServer
     numUser =
     msessionServer->getAttribut("where"
-    "sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
+    " sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
 
     //if the session key is found
     if (numUser.size() != 0) {
       //To get the session state
       sessionState =
       msessionServer->getAttribut("where"
-      "sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
+      " sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
 
       //if the session is active
       if (convertToInt(sessionState) == 1) {
