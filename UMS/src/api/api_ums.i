@@ -64,14 +64,13 @@
 #ifdef SWIGPYTHON
 
 // Remove output parameters from the command
-%typemap(in, numinputs=0) std::string& sessionKey(std::string temp) {
+%typemap(in, numinputs=0) UMS_Data::Session& session(UMS_Data::Session temp) {
   $1 = &temp;
 }
 
 // Add the output parameters to the result
-%typemap(argout) const std::string& sessionKey {}
-%typemap(argout) std::string& sessionKey {
-  PyObject *o = PyString_FromString($1->c_str());
+%typemap(argout) UMS_Data::Session& session {
+  PyObject *o = PyString_FromString($1->getSessionKey().c_str());
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
