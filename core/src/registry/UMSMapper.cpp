@@ -676,18 +676,37 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
 string
 UMSMapper::getU(string serial){
   string res = string("");
-
+  string tmp;
   ecorecpp::parser::parser parser;
   User_ptr user = parser.load(std::string(serial))->as< User >();
 
-  res+=" ";
-  res += user->getFirstname();
-  res+=" ";
-  res += user->getLastname();
-  res+=" ";
-  res += user->getPrivilege();
-  res+=" ";
-  res += user->getEmail();
+  tmp = user->getFirstname();
+  cout << " val : ->" << tmp << "<- " << endl;
+  if(tmp.compare("")!=0){
+    res+=" ";
+    res += user->getFirstname();
+  }
+  tmp = user->getLastname();
+  cout << " val : ->" << tmp << "<- " << endl;
+  if(tmp.compare("")!=0){
+    res+=" ";
+    res += user->getLastname();
+  }
+
+  cout << " val : ->" << tmp << "<- " << endl;
+  if(user->getPrivilege()>0){
+    res+=" ";
+    res += convertToString(user->getPrivilege());
+  }
+  else{
+    res += " 0";
+  }
+  tmp = user->getEmail();
+  cout << " val : ->" << tmp << "<- " << endl;
+  if(tmp.compare("")!=0){
+    res+=" ";
+    res += user->getEmail();
+  }
   return res;
 
 }
