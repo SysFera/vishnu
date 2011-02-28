@@ -1,13 +1,13 @@
-#ifndef LISTSESSIONS_HH
-#define LISTSESSIONS_HH
+#ifndef DELETEMACHINE_HH
+#define DELETEMACHINE_HH
 
 /**
- * \file listSessions.hh
- * This file defines convenients functions for the VISHNU list session  process
+ * \file delete_machine.hpp
+ * This file defines convenients functions for the VISHNU delete machine  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -31,7 +31,6 @@
  */
 
 
-
 struct env_name_mapper{
 
 	std::string operator ()(std::string name){
@@ -42,7 +41,6 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
-
 
 		return result;
 	}

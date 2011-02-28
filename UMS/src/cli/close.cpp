@@ -1,5 +1,5 @@
-#include "close.hh"
-#include "utils.hh"
+#include "close.hpp"
+#include "utils.hpp"
 #include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
@@ -9,102 +9,107 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-	string sessionKey;
+  string sessionKey;
 
 
-	string dietConfig;
+  string dietConfig;
 
-/**************** Describe options *************/
-
-
-		Options opt(av[0] );
+  /**************** Describe options *************/
 
 
-        opt.add("dietConfig,c",
-						"The diet config file",
-						ENV,
-						dietConfig);
-
-	try {
-
-/**************  Parse to retrieve option values  ********************/
-
-		opt.parse_cli(ac,av);
-
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+  Options opt(av[0] );
 
 
-/********  Process **************************/
+  opt.add("dietConfig,c",
+          "The diet config file",
+          ENV,
+          dietConfig);
 
-		if (opt.count("help")){
+  try {
 
-			helpUsage(opt,"[options]");
+    /**************  Parse to retrieve option values  ********************/
 
-			return 0;
+    opt.parse_cli(ac,av);
 
-		}
+    opt.parse_env(env_name_mapper());
 
-
-		if (opt.count("sessionKey")){
-
-			cout <<"your session key is " << sessionKey << endl;
-		}
-
+    opt.notify();
 
 
-		checkVishnuConfig(opt);
+    /********  Process **************************/
 
-/************** Call UMS connect service *******************************/
+    if (opt.count("help")){
 
+      helpUsage(opt,"[options]");
 
-		if (diet_initialize(dietConfig.c_str(), ac, av)) {
+      return 0;
 
-			cerr << "DIET initialization failed !" << endl;
-
-			return 1;
-
-		}
+    }
 
 
-	// get the sessionKey
+    if (opt.count("sessionKey")){
+
+      cout <<"your session key is " << sessionKey << endl;
+    }
 
 
 
-               sessionKey=getLastSessionKey(getppid());
+    checkVishnuConfig(opt);
 
-               if(false==sessionKey.empty()){
+    /************** Call UMS connect service *******************************/
 
-               std::string sessionFile=getSessionLocation(getppid());
+    
+       if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
-               cout <<"the session with sessionkey: " << sessionKey << "  is closed"<<endl;
+       cerr << "DIET initialization failed !" << endl;
 
-							 removeLastSession(sessionFile);
-		            
-               close(sessionKey);
-               }
+       return 1;
+
+       }
+       
+
+    // get the sessionKey
 
 
 
+    sessionKey=getLastSessionKey(getppid());
+
+    if(false==sessionKey.empty()){
+
+      std::string sessionFile=getSessionLocation(getppid());
+
+      cout <<"the session with sessionkey: " << sessionKey << "  is closed"<<endl;
+
+      removeLastSession(sessionFile);
+
+      close(sessionKey);
+    }
 
 
-	}// End of try bloc
 
-	catch(VishnuException& e){// catch all Vishnu runtime error
+  }// End of try bloc
 
-		errorUsage(av[0], e.getMsg(),EXECERROR);
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-		return e.getMsgI() ;
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-	}
+    return e.getMsgI() ;
 
-	catch(std::exception& e){
-		errorUsage(av[0],e.what());
-		return 1;
-	}
+  }
 
-	return 0;
+  catch(std::exception& e){// catch all std runtime error
+    errorUsage(av[0],e.what());
+    return 1;
+  }
+
+  catch(...){// catch other runtime error
+    errorUsage(av[0],"unknown error",EXECERROR);
+    return 1;
+  }
+
+
+
+  return 0;
 
 }// end of main
 

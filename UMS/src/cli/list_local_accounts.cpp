@@ -1,8 +1,7 @@
 
-
-#include "update_local_account.hpp"
+#include "list_local_accounts.hpp"
 #include "utils.hpp"
-#include "localAccountUtils.hpp"
+#include "listMachineUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 
@@ -13,36 +12,41 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-
   /******* Parsed value containers ****************/
 
   string dietConfig;
 
-  std::string sshKeyPath;
-
   std::string sessionKey;
-
 
   /********** EMF data ************/
 
-  UMS_Data::LocalAccount upAcLogin;
+  UMS_Data::ListLocalAccounts lsLocalAccount;
+
+  UMS_Data::ListLocalAccOptions listOptions;
+
   /******** Callback functions ******************/
 
-  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(upAcLogin),_1));
-  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(upAcLogin),_1));
-  boost::function1<void,string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(upAcLogin),_1));
-  boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(upAcLogin),_1));
-  boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(upAcLogin),_1));
+  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListLocalAccOptions::setUserId,boost::ref(listOptions),_1));
+
+  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListLocalAccOptions::setMachineId,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
-                                                         fAcLogin,fSshKeyPath,fHomeDirectory);
+
+  boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
+
+
+  opt->add("adminListOption,a",
+           "is an admin option for listing all local configurations of all users	",
+           CONFIG);
+
 
   try {
     /**************  Parse to retrieve option values  ********************/
 
     opt->parse_cli(ac,av);
+
+    bool isEmpty=opt->empty();//if no value was given in the command line
 
     opt->parse_env(env_name_mapper());
 
@@ -51,11 +55,25 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
+    if (opt->count("adminListOption")){
+
+      cout <<"It is an admin list option " << endl;
+
+      listOptions.setAdminListOption(true);
+    }
 
     checkVishnuConfig(*opt);
 
+    if ( opt->count("help")){
+
+      helpUsage(*opt," [options]");
+
+      return 0;
+    }
+
 
     /************** Call UMS connect service *******************************/
+
 
     // initializing DIET
 
@@ -65,7 +83,7 @@ int main (int ac, char* av[]){
     }
 
 
-    //get the sessionKey
+    // get the sessionKey
 
     sessionKey=getLastSessionKey(getppid());
 
@@ -73,34 +91,34 @@ int main (int ac, char* av[]){
 
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-      updateLocalAccount(sessionKey,upAcLogin);
+      listLocalAccount(sessionKey,lsLocalAccount,listOptions);
 
 
     }
 
 
-
-
-
+    // Display the list
+    if(isEmpty) {
+      cout << lsLocalAccount << endl;
+    }
+    else {
+      for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
+        cout << lsLocalAccount.getAccounts().get(i) ;
+      }
+    }
 
   }// End of try bloc
-
-  catch(po::required_option& e){// a required parameter is missing
-
-
-    usage(*opt," userId machineId","required parameter is missing");
-  }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
 
     errorUsage(av[0], e.getMsg(),EXECERROR);
 
     return e.getMsgI() ;
+
   }
 
   catch(std::exception& e){
-
-    errorUsage(av[0],e.what());
+    errorUsage(av[0], e.what());
 
     return 1;
   }

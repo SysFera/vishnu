@@ -1,13 +1,13 @@
-#ifndef LISTMACHINE_HH
-#define LISTMACHINE_HH
+#ifndef LISTSESSIONS_HH
+#define LISTSESSIONS_HH
 
 /**
- * \file listMachine.hh
- * This file defines convenients functions for the VISHNU list Machine  process
+ * \file list_session.hpp
+ * This file defines convenients functions for the VISHNU list session  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -42,6 +42,7 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
+
 
 		return result;
 	}

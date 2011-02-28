@@ -1,24 +1,18 @@
-#ifndef LISTUSERS_HH
-#define LISTUSERS_HH
+#ifndef SAVECONFIGURATION_HH
+#define SAVECONFIGURATION_HH
 
 /**
- * \file listUsers.hh
- * This file defines convenients functions for the VISHNU list users  process
+ * \file save_configuration.hpp
+ * This file declares convenient include files for the VISHNU save configuration process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
-#include <cstdlib>
 
-
-//EMF
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
-#include "UMS_Data.hpp"
 
 
 /*
@@ -34,19 +28,22 @@
 
 struct env_name_mapper{
 
-	std::string operator ()(std::string name){
+        std::string operator ()(std::string name){
 
-		std::string result= "";
+                std::string result= "";
 
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
                 }
-
-
-		return result;
-	}
+                
+             return result;
+        }
 };
+
+
+
+
 
 
 

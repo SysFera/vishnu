@@ -1,9 +1,9 @@
-#ifndef OPTIONS_HH
-#define OPTIONS_HH
+#ifndef OPTIONS_HPP
+#define OPTIONS_HPP
 
 
 /**
- * \file Option.hh
+ * \file Option.hpp
  * \brief This file defines a class to handle command line options.
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -23,44 +23,44 @@ class Options;
  */
 
 class Configuration {
-private:
-  std::string pgName;/*!< Program name     */
-  std::string configFile;/*!< configuration file   */
-public:
-  /**
-   * \brief Default constructor
-   */
-   Configuration();
+  private:
+    std::string pgName;/*!< Program name     */
+    std::string configFile;/*!< configuration file   */
+  public:
+    /**
+     * \brief Default constructor
+     */
+    Configuration();
 
-  /**
-   * \brief Constructor by variable
-   * \param pgName: The program name
-   */
- explicit Configuration(const std::string& pgName);
+    /**
+     * \brief Constructor by variable
+     * \param pgName: The program name
+     */
+    explicit Configuration(const std::string& pgName);
 
-  /**
-   * \brief get the program name
-   * \return the program name as std::string
-   */
-  const std::string& getPgName() const;
+    /**
+     * \brief get the program name
+     * \return the program name as std::string
+     */
+    const std::string& getPgName() const;
 
-  /**
-   * \brief Get the configuration file
-   * \return the configuration file as std::string
-   */
-  const std::string& getConfigFile() const;
+    /**
+     * \brief Get the configuration file
+     * \return the configuration file as std::string
+     */
+    const std::string& getConfigFile() const;
 
 
-  /**
-   * \brief Set a new configuration file
-   * \param configFile: the new configuration file to set
-   */
-  void setConfigFile(const std::string& configFile);
+    /**
+     * \brief Set a new configuration file
+     * \param configFile: the new configuration file to set
+     */
+    void setConfigFile(const std::string& configFile);
 };
 
- /**
-  * \brief function type used to map environnement variable name
-  */
+/**
+ * \brief function type used to map environnement variable name
+ */
 	typedef boost::function1<std::string, std::string> func1;
 
 

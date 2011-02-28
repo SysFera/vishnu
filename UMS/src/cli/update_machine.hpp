@@ -1,13 +1,13 @@
-#ifndef ADDMACHINE_HH
-#define ADDMACHINE_HH
+#ifndef UPDATEMACHINE_HH
+#define UPDATEMACHINE_HH
 
 /**
- * \file addMachine.hh
- * This file defines convenients functions for the VISHNU add machine  process
+ * \file update_machine.hpp
+ * This file defines convenients functions for the VISHNU update machine  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -30,8 +30,6 @@
  * the variable is ignored.
  */
 
-const unsigned int AMPARAM=3;
-
 
 struct env_name_mapper{
 
@@ -43,7 +41,6 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
-
 
 		return result;
 	}
