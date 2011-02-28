@@ -50,6 +50,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ConnectOptions 	  cop  ;//= ecoreFactory->createConnectOptions();
   ListSessions_ptr   	  li   = ecoreFactory->createListSessions();
   ListSessionOptions      opt  ;//= ecoreFactory->createListSessionOptions();
+  Session                 sess ;
   string 	     	  pwdu = "toto"  ;
   string 	     	  uidu = "user_1";
   // connect as
@@ -192,7 +193,7 @@ BOOST_AUTO_TEST_CASE( my_test )
        (li->getSessions())[0]){
      rec = li->getSessions()[0]->getSessionId();
      std::cout << "session_id : "<< rec << std::endl;
-     BOOST_CHECK(reconnect  (uid, pwd, rec, key)==0);
+     BOOST_CHECK(reconnect  (uid, pwd, rec, sess)==0);
      BOOST_CHECK(listSessions(key, *li , opt     )==0);
    }else{
      BOOST_MESSAGE("FAILURE INVALID SESSION KEY TO RECONNECT");
@@ -201,12 +202,12 @@ BOOST_AUTO_TEST_CASE( my_test )
   // Reconnect with bad user id
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing error uid reconnect U1.5-E1");
-  BOOST_CHECK_THROW  (reconnect("bad", pwd, sid, key), VishnuException);
+  BOOST_CHECK_THROW  (reconnect("bad", pwd, sid, sess), VishnuException);
 
   // Reconnect with bad password
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing error pwd reconnect U1.5-E2");
-  BOOST_CHECK_THROW  (reconnect(uid, "bad", sid, key), VishnuException);
+  BOOST_CHECK_THROW  (reconnect(uid, "bad", sid, sess), VishnuException);
 
   // Test normal close
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
@@ -754,7 +755,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing history cmd"    );
   BOOST_REQUIRE(restore               (sqlScript+"/clean_session.sql" )==0);
   BOOST_CHECK	 (connect               (uid, pwd , key , cop)==0);
-  BOOST_CHECK	 (reconnect             (uid, pwd , sid , key)==0);
+  BOOST_CHECK	 (reconnect             (uid, pwd , sid , sess)==0);
   BOOST_CHECK	 (listSessions          (key, *li , opt      )==0);
   BOOST_CHECK	 (listUsers             (key, *liu , ""       )==0);
   BOOST_CHECK	 (listMachine           (key, *lim , liom     )==0);
