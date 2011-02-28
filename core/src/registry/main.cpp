@@ -7,8 +7,7 @@
 
 #include "MapperRegistry.hpp"
 #include "Mapper.hpp"
-#include "Mapper_impl.hpp"
-#include "Mapper_impl2.hpp"
+#include "UMSMapper.hpp"
 
 using namespace std;
 
@@ -20,25 +19,32 @@ int main(int argc, char** argv){
   if (argc>1)
     name = string(argv[1]);
   MapperRegistry* mr = MapperRegistry::getInstance();
-  Mapper_impl  mapper ;
-  Mapper_impl2 mapper2;
-  Mapper* m = NULL;
+  UMSMapper mapper = UMSMapper(mr, "UMS");
+//   Mapper* m = NULL;
 
-  mapper  = Mapper_impl(mr, name+"0");
-  mapper.registerMapper();
-  mapper2 = Mapper_impl2(mr, name+"1");
-  mapper2.registerMapper();
-
+//   mapper  = Mapper_impl(mr, "UMS");
+   mapper.registerMapper();
+  string s;
+  cout << " XXXXXXXXXXXXXXXXXXX" << endl;
   for (i=0; i<6;i++){
-    ostringstream tmp2;
-    ostringstream tmp;
-    tmp << (i%2);
-    titi = name;
-    titi += tmp.str();
-    tmp2 << (i%5+1);
-    key = tmp2.str();
-    m = mr->getMapper(titi);
-    m->getCommand(key, command);
-    cout << " key = " << key << " and command = " << command << " for mapper " << titi << endl;
+//     ostringstream tmp2;
+//     ostringstream tmp;
+//     tmp << (i%2);
+//     titi = name;
+//     titi += tmp.str();
+//     tmp2 << (i%5+1);
+//     key = tmp2.str();
+//    m = mr.getMapper("UMS");
+    //    m.getCommand(key, command);
+    //    cout << " key = " << key << " and command = " << command << " for mapper " << titi << endl;
+    try{
+      cout << "code value2 " << VISHNU_CLOSE << endl;
+      j = mapper.code("vishnu_close")  ;
+      s = mapper.finalize(j)         ;
+      cout << "Res coded :" << s << endl;
+      cout << "Res decoded :" <<  mapper.decode(s) << endl;
+    }catch (SystemException *e){
+      cout << "msg : " << e->what() << endl;
+    }
   }
 }
