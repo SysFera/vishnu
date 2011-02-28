@@ -51,11 +51,11 @@ CommandServer::record(CmdType cmdType,
                       std::string startTime,
                       std::string endTime) {
 
-  std::string sqlCmd = std::string("insert into command (vsession_numsessionid, starttime,\
-  endtime, description, ctype) values (");
+  std::string sqlCmd = std::string("insert into command (vsession_numsessionid, starttime,"
+  "endtime, description, ctype) values (");
 
-  sqlCmd.append(msessionServer.getAttribut("WHERE \
-  sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
+  sqlCmd.append(msessionServer.getAttribut("WHERE "
+  "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
   sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+")");
   std::cout << "SQL COMMAND:" << sqlCmd;
@@ -72,11 +72,11 @@ CommandServer::record(CmdType cmdType,
 bool
 CommandServer::isRunning() {
   DatabaseResult* result;
-  std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL \
-  and vsession_numsessionid=");
+  std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL "
+  "and vsession_numsessionid=");
 
-  sqlCommand.append(msessionServer.getAttribut("WHERE \
-  sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
+  sqlCommand.append(msessionServer.getAttribut("WHERE "
+  "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
   std::cout << "SQL COMMAND:" << sqlCommand;
 

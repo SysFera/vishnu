@@ -51,8 +51,8 @@ UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServ
 int
 UserServer::add(UMS_Data::User*& user) {
   std::string pwd;
-  std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,\
-  privilege, email, passwordstate, status) values ";
+  std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
+  "privilege, email, passwordstate, status) values ";
 
   std::string idUserGenerated;
   std::string passwordCrypted;
@@ -91,11 +91,11 @@ UserServer::add(UMS_Data::User*& user) {
       if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
 
         //To insert user on the database
-        mdatabaseVishnu->process(sqlInsert + "(" + Vishnuid::mvishnuid+", \
-        '"+user->getUserId()+"','"+passwordCrypted+"','"
+        mdatabaseVishnu->process(sqlInsert + "(" + Vishnuid::mvishnuid+", "
+        "'"+user->getUserId()+"','"+passwordCrypted+"','"
         + user->getFirstname()+"','"+user->getLastname()+"',"+
-        convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
-        0, "+convertToString(user->getStatus())+")");
+        convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
+        "0, "+convertToString(user->getStatus())+")");
 
       }// END If the user to add exists
       else {
@@ -132,28 +132,28 @@ UserServer::update(UMS_Data::User *user) {
 
         //if a new fisrtname has been defined
         if (user->getFirstname().size() != 0) {
-          sqlCommand.append("UPDATE users SET firstname='"+user->getFirstname()+"'"+"\
-          where userid='"+user->getUserId()+"';");
+          sqlCommand.append("UPDATE users SET firstname='"+user->getFirstname()+"'"
+          " where userid='"+user->getUserId()+"';");
         }
 
         //if a new lastname has been defined
         if (user->getLastname().size() != 0) {
-          sqlCommand.append("UPDATE users SET lastname='"+user->getLastname()+"'"+"\
-          where userid='"+user->getUserId()+"';");
+          sqlCommand.append("UPDATE users SET lastname='"+user->getLastname()+"'"
+          " where userid='"+user->getUserId()+"';");
         }
 
         //if a new email has been defined
         if (user->getEmail().size() != 0) {
-          sqlCommand.append("UPDATE users SET email='"+user->getEmail()+"'"+"\
-          where userid='"+user->getUserId()+"';");
+          sqlCommand.append("UPDATE users SET email='"+user->getEmail()+"'"
+          " where userid='"+user->getUserId()+"';");
         }
 
         //if the user will be locked
         if (user->getStatus() == 0) {
           //if the user is not already locked
           if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != 0) {
-            sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""+"\
-            where userid='"+user->getUserId()+"';");
+            sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
+            " where userid='"+user->getUserId()+"';");
           } //End if the user is not already locked
           else {
             UMSVishnuException e (ERRCODE_USER_ALREADY_LOCKED);
@@ -161,14 +161,14 @@ UserServer::update(UMS_Data::User *user) {
           }
         } //End if the user will be locked
         else {
-          sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""+"\
-          where userid='"+user->getUserId()+"';");
+          sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
+          " where userid='"+user->getUserId()+"';");
         }
 
         // if the user whose privilege will be updated is not an admin
         if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
-          sqlCommand.append("UPDATE users SET privilege="+convertToString(user->getPrivilege())+""+"\
-          where userid='"+user->getUserId()+"';");
+          sqlCommand.append("UPDATE users SET privilege="+convertToString(user->getPrivilege())+""
+          " where userid='"+user->getUserId()+"';");
         }
 
         std::cout <<"SQL COMMAND:"<<sqlCommand;
@@ -251,12 +251,12 @@ UserServer::changePassword(std::string newPassword) {
   if (exist(true)) {
 
     //sql code to change the user password
-    sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where \
-    userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
+    sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
+    "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"';";
 
     //sql code to update the passwordstate
-    sqlUpdatePwdState = "UPDATE users SET passwordstate=1 \
-    where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"';";
+    sqlUpdatePwdState = "UPDATE users SET passwordstate=1 "
+    "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"';";
 
     sqlChangePwd.append(sqlUpdatePwdState);
     mdatabaseVishnu->process(sqlChangePwd.c_str());
@@ -300,11 +300,11 @@ UserServer::resetPassword(UMS_Data::User& user) {
         passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
 
         //The sql code to reset the password
-        sqlResetPwd = "UPDATE users SET pwd='"+passwordCrypted+"'where \
-        userid='"+user.getUserId()+"';";
+        sqlResetPwd = "UPDATE users SET pwd='"+passwordCrypted+"' where "
+        "userid='"+user.getUserId()+"';";
         //sql code to update the passwordstate
-        sqlUpdatePwdState = "UPDATE users SET passwordstate=0 \
-        where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"';";
+        sqlUpdatePwdState = "UPDATE users SET passwordstate=0 "
+        "where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"';";
         //To append the previous sql codes
         sqlResetPwd.append(sqlUpdatePwdState);
         //Execution of the sql code on the database
@@ -356,15 +356,15 @@ UserServer::init(){
   if ((muser.getUserId().size() == 0) && (muser.getUserId().size() == 0)) {
     //To get the users_numuserid by using the sessionServer
     numUser =
-    msessionServer->getAttribut("where\
-    sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
+    msessionServer->getAttribut("where"
+    "sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
 
     //if the session key is found
     if (numUser.size() != 0) {
       //To get the session state
       sessionState =
-      msessionServer->getAttribut("where\
-      sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
+      msessionServer->getAttribut("where"
+      "sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
 
       //if the session is active
       if (convertToInt(sessionState) == 1) {
@@ -431,8 +431,8 @@ bool UserServer::exist(bool flagForChangePwd) {
 bool
 UserServer::isAdmin() {
 
-    return (convertToInt (getAttribut("where userid='"+muser.getUserId()+"'and \
-    pwd='"+muser.getPassword()+"'", " privilege")) != 0);
+    return (convertToInt (getAttribut("where userid='"+muser.getUserId()+"'and "
+    "pwd='"+muser.getPassword()+"'", " privilege")) != 0);
 }
 
 /**
@@ -444,8 +444,8 @@ UserServer::isAdmin() {
 */
 bool
 UserServer::isAttributOk(std::string attributName, int valueOk) {
-    return (convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and \
-    pwd='"+muser.getPassword()+"'", attributName)) == valueOk);
+    return (convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and "
+    "pwd='"+muser.getPassword()+"'", attributName)) == valueOk);
 }
 
 /**

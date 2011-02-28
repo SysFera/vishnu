@@ -234,16 +234,12 @@ utilServer::getAttrVishnu(std::string attrname, std::string vishnuid) {
   DatabaseResult *result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout << "SQL COMMAND:"<< sqlCommand;
 
-  try {
-    databaseVishnu = factory.getDatabaseInstance();
-    result = databaseVishnu->getResult(sqlCommand.c_str());
-    return result->getFirstElement();
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  databaseVishnu = factory.getDatabaseInstance();
+  result = databaseVishnu->getResult(sqlCommand.c_str());
+  return result->getFirstElement();
+
 }
 /**
 * \brief Function to increment a counter of the table vishnu
@@ -263,11 +259,7 @@ utilServer::incrementCpt(std::string cptName, int cpt) {
   std::string sqlCommand("UPDATE vishnu set "+cptName+"="+vishnu::convertToString(cpt));
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
-  try {
-    databaseVishnu = factory.getDatabaseInstance();
-    databaseVishnu->process(sqlCommand.c_str());
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  databaseVishnu = factory.getDatabaseInstance();
+  databaseVishnu->process(sqlCommand.c_str());
+
 }
