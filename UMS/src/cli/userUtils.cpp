@@ -25,20 +25,6 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,std::string & diet
   }
 
 
-
-  opt->add("privilege,p",
-           "the privilege of the user (admin or simple user)",
-           group,
-           fPrivilege,
-           type);
-
-
-  if(type){
-    opt->setPosition("privilege",1);
-  }
-
-
-
   opt->add("firstname,f",
            "The firstname of the user",
            group,
@@ -65,6 +51,16 @@ boost::shared_ptr<Options> makeUserOptions(std::string pgName,std::string & diet
 
   }
 
+  opt->add("privilege,p",
+           "the privilege of the user (admin or simple user)",
+           group,
+           fPrivilege,
+           type);
+
+
+  if(type){
+    opt->setPosition("privilege",1);
+  }
 
   opt->add("email,m",
            "The email of the user",
