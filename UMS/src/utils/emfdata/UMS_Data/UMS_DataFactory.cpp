@@ -25,8 +25,9 @@ std::auto_ptr< ::UMS_Data::UMS_DataFactory > UMS_DataFactory::s_instance;
 
 ::UMS_Data::UMS_DataFactory_ptr UMS_DataFactory::_instance()
 {
-    if (!s_instance.get())
+    if (!s_instance.get()) {
         new UMS_DataFactory();
+    }
     return s_instance.get();
 }
 
