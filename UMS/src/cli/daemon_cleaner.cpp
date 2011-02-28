@@ -19,7 +19,7 @@ bool pid_exists(const std::string& pid)
 
 
 
-void deleter()
+void deleter(char* dietConfig,int ac,char* av[])
 {
 
   extern bfs::path daemon_file;
@@ -60,6 +60,16 @@ void deleter()
 
               if(session.getClosePolicy()==2) {//that session is open by disconnect mode
 
+
+                if (vishnuInitialize(dietConfig, ac, av)) {
+     
+                  syslog(LOG_ERR,"DIET initialization failed !");
+     
+                  exit (EXIT_FAILURE);
+   
+                }
+
+
                 close (session.getSessionKey()); // and need to be closed
 
               }
@@ -85,7 +95,7 @@ void deleter()
 
 
 
-void cleaner()
+void cleaner(char* dietConfig,int ac,char* av[])
 {
   // declare all global variables
   extern bfs::path home_dir;
@@ -133,7 +143,7 @@ void cleaner()
   if (pid < 0) {
     std::cerr << "cleaning process: fork() failed" << std::endl;
   } else if (0 == pid) {
-    deleter();
+    deleter(dietConfig,ac,av);
   }
 
   return;

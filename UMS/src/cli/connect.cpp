@@ -79,7 +79,7 @@ int main (int ac, char* av[]){
 
     /************** Call UMS connect service *******************************/
 
-    cleaner();// lauch the daemon cleaner if it is not already running
+    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
