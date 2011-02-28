@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <cstring>
 #include <exception>
 #include <map>
 #include "utilVishnu.hpp"
