@@ -51,9 +51,14 @@ solveSessionConnect(diet_profile_t* pb) {
   try {
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
     std::cout<<"sessionKey:"<<sessionServer.getData().getSessionKey()<<std::endl;
+    //To serialize the user object
+    const char* name = "solveConnect";
+    ::ecorecpp::serializer::serializer _ser(name);
+    UMS_Data::Session session = sessionServer.getData();
+    std::string sessionSerializedUpdate = _ser.serialize(const_cast<UMS_Data::Session_ptr>(&session));
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
