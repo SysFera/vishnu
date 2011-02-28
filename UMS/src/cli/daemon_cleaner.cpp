@@ -5,7 +5,7 @@
 bfs::path home_dir;
 bfs::path session_dir;
 bfs::path proc_dir("/proc");
-const char *lockname = "vishnu2";
+const char *lockname = "vishnu3";
 
 bool pid_exists(const std::string& pid)
 {
@@ -49,8 +49,9 @@ void deleter()
           if (false==allSessions.empty()){
 
           BOOST_FOREACH (const SessionEntry& session, allSessions){
-         
-            if(2==session.getClosePolicy()) {
+           std::cout << "closePolicy: "<< session.getClosePolicy() << std::endl;
+ 
+            if(2==session.getClosePolicy()) {// session open with CLOSE_ON_DISCONNECT mode
 
              close (session.getSessionKey());
          

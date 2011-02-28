@@ -18,9 +18,10 @@
 #include "SessionServer.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include"utilServer.hpp"
+#include "utilServer.hpp"
 
 using namespace utilServer;
+
 
 /**
 * \class MachineServer
@@ -113,14 +114,5 @@ private:
   */
   std::string msshpublickey;
 
-  /////////////////////////////////
-  // Functions
-  /////////////////////////////////
-  /**
-  * \brief Function to generate a machine id
-  * \fn generateMachineId()
-  */
-  std::string
-  generateMachineId();
 };
 #endif

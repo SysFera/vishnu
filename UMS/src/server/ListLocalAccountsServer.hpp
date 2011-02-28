@@ -19,10 +19,12 @@ public:
   ListLocalAccountsServer(const SessionServer session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(session)
   {
+    mcommandName = "vishnu_list_local_account";
   }
   ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(params, session)
   {
+    mcommandName = "vishnu_list_local_account";
   }
 
   //To process options
@@ -121,11 +123,19 @@ public:
     return mlistObject;
   }
 
+  std::string getCommandName()
+  {
+    return mcommandName;
+  }
+
   //Destructor
   ~ListLocalAccountsServer() 
   {
   }
 
+  private:
+
+  std::string mcommandName;
 };
 
 #endif

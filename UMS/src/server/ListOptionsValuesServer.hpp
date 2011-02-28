@@ -20,10 +20,12 @@ public:
   ListOptionsValuesServer(const SessionServer session):
     QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(session)
   {
+    mcommandName = "vishnu_list_options";
   }
   ListOptionsValuesServer(UMS_Data::ListOptOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(params, session)
   {
+    mcommandName = "vishnu_list_options";
   }
 
   //To process options
@@ -36,7 +38,7 @@ public:
      size_t userIdSize = options->getUserId().size();
      size_t nameSize = options->getOptionName().size();
      bool listAllDefault = options->isListAllDeftValue();
-
+     
      if ((!userServer.isAdmin()) && (userIdSize!=0)) {
         UMSVishnuException e (ERRCODE_NO_ADMIN);
         throw e;
@@ -92,14 +94,11 @@ public:
               optionValue->setValue(*(++ii));
               mlistObject->getOptionValues().push_back(optionValue);
           }
-        } else {
-            UMSVishnuException e (ERRCODE_NO_ADMIN);
-            throw e;
-          }
-      } else {
+       } 
+    } else {
         UMSVishnuException e (ERRCODE_UNKNOWN_USER);
         throw e;
-      }
+     }
   }
   catch (VishnuException& e) {
         throw;
@@ -108,11 +107,19 @@ public:
     return mlistObject;
   }
 
+  std::string getCommandName() 
+  {
+    return mcommandName;
+  }
+
   //Destructor
   ~ListOptionsValuesServer()
   {
   }
 
+  private:
+
+  std::string mcommandName;
 };
 
 #endif

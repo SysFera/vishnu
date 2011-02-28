@@ -20,10 +20,12 @@ public:
   ListMachinesServer(const SessionServer session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(session)
   {
+    mcommandName = "vishnu_list_machine";
   }
   ListMachinesServer(UMS_Data::ListMachineOptions_ptr params, const SessionServer& session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
   {
+    mcommandName = "vishnu_list_machine";
   }
 
   //To process options
@@ -127,12 +129,19 @@ public:
 
     return mlistObject;
   }
- 
+
+  std::string getCommandName()
+  {
+    return mcommandName;
+  } 
   //Destructor
   ~ListMachinesServer()
   {
   }
 
+  private:
+
+  std::string mcommandName;
 };
 
 #endif

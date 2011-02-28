@@ -191,7 +191,7 @@ changePassword(const std::string& userId,
   UMS_Data::User user;
   user.setUserId(userId);
   UserProxy userProxy(user);
- 
+
   std::string encryptedPassword = vishnu::cryptPassword(userId, password);
   std::string encryptedPasswordNew = vishnu::cryptPassword(userId, passwordNew);
 
@@ -719,7 +719,7 @@ listUsers(const std::string& sessionKey,
 int
 vishnuInitialize(char* cfg, int argc, char** argv) {
 
-  return UtilsProxy(cfg, argc, argv).initilialize();
+  return UtilsProxy(cfg, argc, argv).initialize();
 }
 
 /**
