@@ -10,6 +10,10 @@
 
 static const int TNBERR = 5;
 
+/**
+ * \class TMSVishnuException
+ * \brief Specialisation of the user exception for the TMS module
+ */
 class TMSVishnuException: public UserException{
 private :
 protected:
