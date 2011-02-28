@@ -1,3 +1,11 @@
+/* ----------------------------------------------------
+ * LICENCE
+ *
+ * api_ums.i
+ *
+ * SWIG file for the VISHNU UMS API
+ */
+
 %module VISHNU_UMS
 
 %{
@@ -71,6 +79,10 @@
 
 #ifdef SWIGJAVA
 %include "various.i"
+// Use a specific typemap for strings passed by reference
+%include "string.i"
+%apply std::string &INOUT { std::string& tmpPassword };
+%apply std::string &INOUT { std::string& sshPublicKey };
 #endif
 
 // Remove the parameters of vishnuInitialize
