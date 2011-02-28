@@ -95,7 +95,7 @@ int main (int ac, char* av[]){
 
 
     // Display the list
-    if(isEmpty) {
+    if(isEmpty || (opt->count("adminListOption"))) {
       cout << listCmd << endl;
     }
     else {

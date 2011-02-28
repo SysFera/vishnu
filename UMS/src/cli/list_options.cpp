@@ -116,7 +116,7 @@ int main (int ac, char* av[]){
 
 
     // Display the list
-    if(isEmpty) {
+    if(isEmpty || (opt.count("listAllDeftValue")) ) {
       cout << lsOptionsValues << endl;
     }
     else {
