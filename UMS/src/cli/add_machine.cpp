@@ -1,7 +1,6 @@
 
-
-#include "addMachine.hh"
-#include "utils.hh"
+#include "add_machine.hpp"
+#include "utils.hpp"
 #include "machineUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
@@ -15,110 +14,110 @@ int main (int ac, char* av[]){
 
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
+  string dietConfig;
 
-		std::string machineDescription;
+  std::string machineDescription;
 
-		std::string sessionKey;
-
-
-		/********** EMF data ************/
-
-		UMS_Data::Machine newMachine;
+  std::string sessionKey;
 
 
-/**************** Callback functions *************/
+  /********** EMF data ************/
 
-		boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(newMachine),_1));
-		boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
-		boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
-
-		 boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(newMachine),_1));
-
-		boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
-
-				
-    opt->add("sshPublicKeyFile,k",
-                      "The the path to the SSH public key used by VISHNU to access local user accounts",
-                        HIDDEN,
-                        fSshPublicKeyFile,
-												1);
-
-				opt->setPosition("sshPublicKeyFile",1);
+  UMS_Data::Machine newMachine;
 
 
-				try{
-/**************  Parse to retrieve option values  ********************/
+  /**************** Callback functions *************/
 
-		opt->parse_cli(ac,av);
+  boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(newMachine),_1));
+  boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
+  boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
 
-		opt->parse_env(env_name_mapper());
+  boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(newMachine),_1));
 
-		opt->notify();
-
-
-
-/********  Process **************************/
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
 
 
-		checkVishnuConfig(*opt);
+  opt->add("sshPublicKeyFile,k",
+           "The the path to the SSH public key used by VISHNU to access local user accounts",
+           HIDDEN,
+           fSshPublicKeyFile,
+           1);
 
-		cout << "Enter the Machine Description:\n ";
-
-		getline(cin, machineDescription);
-
-		newMachine.setMachineDescription(machineDescription);
-
-/************** Call UMS connect service *******************************/
-
-               // initializing DIET
-
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
+  opt->setPosition("sshPublicKeyFile",1);
 
 
- // get the sessionKey
+  try{
+    /**************  Parse to retrieve option values  ********************/
 
-                sessionKey=getLastSessionKey(getppid());
+    opt->parse_cli(ac,av);
 
-               if(false==sessionKey.empty()){
+    opt->parse_env(env_name_mapper());
 
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-    
-               addMachine(sessionKey,newMachine);
-
-
-               }
+    opt->notify();
 
 
 
+    /********  Process **************************/
 
 
-	}// End of try bloc
+    checkVishnuConfig(*opt);
+
+    cout << "Enter the Machine Description:\n ";
+
+    getline(cin, machineDescription);
+
+    newMachine.setMachineDescription(machineDescription);
+
+    /************** Call UMS connect service *******************************/
+
+    // initializing DIET
+
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
 
 
-				catch(po::required_option& e){// a required parameter is missing
+    // get the sessionKey
 
-					usage(*opt," name site language sshPublicKeyFile ","required parameter is missing");
+    sessionKey=getLastSessionKey(getppid());
 
-				}
+    if(false==sessionKey.empty()){
 
-				catch(VishnuException& e){// catch all Vishnu runtime error
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-					errorUsage(av[0], e.getMsg(),EXECERROR);
+      addMachine(sessionKey,newMachine);
 
-					return e.getMsgI() ;
-				}
 
-				catch(std::exception& e){
+    }
 
-					errorUsage(av[0],e.what());
 
-					return 1;
+
+
+
+  }// End of try bloc
+
+
+  catch(po::required_option& e){// a required parameter is missing
+
+    usage(*opt," name site language sshPublicKeyFile ","required parameter is missing");
+
+  }
+
+  catch(VishnuException& e){// catch all Vishnu runtime error
+
+    errorUsage(av[0], e.getMsg(),EXECERROR);
+
+    return e.getMsgI() ;
+  }
+
+  catch(std::exception& e){
+
+    errorUsage(av[0],e.what());
+
+    return 1;
   }
 
   return 0;

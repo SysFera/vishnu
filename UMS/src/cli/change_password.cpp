@@ -1,5 +1,5 @@
-#include "changePassword.hh"
-#include "utils.hh"
+#include "change_password.hpp"
+#include "utils.hpp"
 #include "sessionUtils.hpp"
 namespace po = boost::program_options;
 
@@ -8,50 +8,50 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-	string userId;
+  string userId;
 
-	string oldPassword;
+  string oldPassword;
 
-	string newPassword;
+  string newPassword;
 
-	string sessionKey;
+  string sessionKey;
 
-	string dietConfig;
+  string dietConfig;
 
-/**************** Describe options *************/
+  /**************** Describe options *************/
 
-		Options opt(av[0] );
+  Options opt(av[0] );
 
-        opt.add("dietConfig,c",
-				        "The diet config file",
-						ENV,
-						dietConfig);
+  opt.add("dietConfig,c",
+          "The diet config file",
+          ENV,
+          dietConfig);
 
-				opt.add("userId",
-				        "The VISHNU user identifier",
-						HIDDEN,
-						userId,
-						1);
-				opt.setPosition("userId",-1);
-
-
-	try {
+  opt.add("userId",
+          "The VISHNU user identifier",
+          HIDDEN,
+          userId,
+          1);
+  opt.setPosition("userId",-1);
 
 
-/**************  Parse to retrieve option values  ********************/
-
-		opt.parse_cli(ac,av);
-
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+  try {
 
 
+    /**************  Parse to retrieve option values  ********************/
 
-/********  Process **************************/
+    opt.parse_cli(ac,av);
+
+    opt.parse_env(env_name_mapper());
+
+    opt.notify();
 
 
-		if (opt.count("help")){
+
+    /********  Process **************************/
+
+
+    if (opt.count("help")){
 
       helpUsage(opt,"[options]");
 
@@ -60,73 +60,64 @@ int main (int ac, char* av[]){
     }
 
 
-		checkVishnuConfig(opt);
-
-		if (opt.count("sessionKey")){
-
-			cout <<"The sessionKey is " << sessionKey << endl;
-		}
+    checkVishnuConfig(opt);
 
 
 
-			oldPassword=takePassword("old password: ",userId);
+    oldPassword=takePassword("old password: ");
 
-			cout << "old password is " << oldPassword <<endl;
+    cout << "old password is " << oldPassword <<endl;
 
-			newPassword=takePassword("new password: ",userId);
+    newPassword=takePassword("new password: ");
 
-			cout << "The new password is "<< newPassword <<endl;
+    cout << "The new password is "<< newPassword <<endl;
 
 
 
 
-
-/************** Call UMS connect service *******************************/
-
-
-               // initializing DIET
-              if (diet_initialize(dietConfig.c_str(), ac, av)) {
-
-				  cerr << "DIET initialization failed !" << endl;
-
-				  return 1;
-              }
+    /************** Call UMS connect service *******************************/
 
 
+    // initializing DIET
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
-      // get the sessionKey
+      cerr << "DIET initialization failed !" << endl;
 
-                sessionKey=getLastSessionKey(getppid());
-
-               if(false==sessionKey.empty()){
-
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-              
-               changePassword(userId,oldPassword, newPassword);
+      return 1;
+    }
 
 
-               }
 
+    // get the sessionKey
+
+    sessionKey=getLastSessionKey(getppid());
+
+    if(false==sessionKey.empty()){
+
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
+
+      changePassword(userId,oldPassword, newPassword);
+
+
+    }
 
 
 
 
+  }// End of try bloc
 
+  catch(po::required_option& e){// a required parameter is missing
 
-	}// End of try bloc
-
- catch(po::required_option& e){// a required parameter is missing
-
-           usage(opt,"[options] userId ","required parameter is missing");
+    usage(opt,"[options] userId ","required parameter is missing");
   }
 
- catch(VishnuException& e){// catch all Vishnu runtime error
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-	errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-	return e.getMsgI() ;
+    return e.getMsgI() ;
 
-}
+  }
 
 
   catch(std::exception& e){

@@ -1,5 +1,5 @@
-#include "addLocalAccount.hh"
-#include "utils.hh"
+#include "add_local_account.hpp"
+#include "utils.hpp"
 #include "localAccountUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
@@ -13,103 +13,100 @@ int main (int ac, char* av[]){
 
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
-    string sessionKey;
+  string dietConfig;
+  string sessionKey;
 
-		/********** EMF data ************/
+  /********** EMF data ************/
 
-		UMS_Data::LocalAccount newAcLogin;
+  UMS_Data::LocalAccount newAcLogin;
 
-/******** Callback functions ******************/
+  /******** Callback functions ******************/
 
-					boost::function1<void,string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(newAcLogin),_1));
-					boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(newAcLogin),_1));
-					boost::function1<void,string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(newAcLogin),_1));
-					boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(newAcLogin),_1));
-					boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
-
-
-
-		/*****************Out parameters***/
-
-		std::string sshPublicKey;
+  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(newAcLogin),_1));
+  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(newAcLogin),_1));
+  boost::function1<void,string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(newAcLogin),_1));
+  boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(newAcLogin),_1));
+  boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
 
 
 
-/**************** Describe options *************/
+  /*****************Out parameters***/
 
-		boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
-				                                               fAcLogin,fSshKeyPath,fHomeDirectory,1);
-
-
-	try {
-/**************  Parse to retrieve option values  ********************/
-
-		opt->parse_cli(ac,av);
-
-		opt->parse_env(env_name_mapper());
-
-		opt->notify();
+  std::string sshPublicKey;
 
 
 
-/********  Process **************************/
+  /**************** Describe options *************/
+
+  boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
+                                                         fAcLogin,fSshKeyPath,fHomeDirectory,1);
 
 
-		checkVishnuConfig(*opt);
+  try {
+    /**************  Parse to retrieve option values  ********************/
 
-		/************** Call UMS connect service *******************************/
+    opt->parse_cli(ac,av);
 
-              // initializing DIET
+    opt->parse_env(env_name_mapper());
 
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
-
-
-                //get the sessionKey
-
-                sessionKey=getLastSessionKey(getppid());
-
-               if(false==sessionKey.empty()){
-
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-							 
-               addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
-
-
-               }
+    opt->notify();
 
 
 
+    /********  Process **************************/
+
+
+    checkVishnuConfig(*opt);
+
+    /************** Call UMS connect service *******************************/
+
+    // initializing DIET
+
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
+
+
+    //get the sessionKey
+
+    sessionKey=getLastSessionKey(getppid());
+
+    if(false==sessionKey.empty()){
+
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
+
+      addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
+
+
+    }
 
 
 
-	}// End of try bloc
+  }// End of try bloc
 
-catch(po::required_option& e){// a required parameter is missing
+  catch(po::required_option& e){// a required parameter is missing
 
 
-	usage(*opt," userId machineId acLogin sshKeyPath homeDirectory ","required parameter is missing");
+    usage(*opt," userId machineId acLogin sshKeyPath homeDirectory ","required parameter is missing");
   }
 
 
-catch(VishnuException& e){// catch all Vishnu runtime error
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-	errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
 
-				      return e.getMsgI() ;
-}
+    return e.getMsgI() ;
+  }
 
   catch(std::exception& e){
 
-		errorUsage(av[0],e.what());
+    errorUsage(av[0],e.what());
 
-		return 1;
+    return 1;
   }
 
   return 0;

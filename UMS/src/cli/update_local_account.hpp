@@ -1,18 +1,24 @@
-#ifndef RESETPASSWORD_HH
-#define RESETPASSWORD_HH
+#ifndef UPDATELOCALACCOUNT_HH
+#define UPDATELOCALACCOUNT_HH
 
 /**
- * \file resetPassword.hh
- * This file declares convenient include files for the VISHNU reset password process
+ * \file update_localAccount.hpp
+ * This file defines convenients functions for the VISHNU update local account  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
+#include <cstdlib>
 
+
+//EMF
+#include <ecore.hpp> // Ecore metamodel
+#include <ecorecpp.hpp> // EMF4CPP utils
+#include "UMS_Data.hpp"
 
 
 /*
@@ -24,29 +30,23 @@
  * the variable is ignored.
  */
 
+const unsigned int ULAPARAM=2;// the number of required parameters for the updateLocalAccount command
 
-const unsigned int RPPARAM=1;
 
 struct env_name_mapper{
 
-        std::string operator ()(std::string name){
+	std::string operator ()(std::string name){
 
-                std::string result= "";
+		std::string result= "";
 
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
                 }
 
-
-
-                return result;
-        }
+		return result;
+	}
 };
-
-
-
-
 
 
 

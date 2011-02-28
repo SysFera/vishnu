@@ -6,9 +6,9 @@
 #include <boost/filesystem/fstream.hpp>
 namespace bfs = boost::filesystem;
 
-typedef std::list<SessionEntry> SessionContainer;
+SessionEntry::SessionEntry( int closePolicy_):closePolicy(closePolicy_){}
 
-SessionEntry::SessionEntry(const std::string sessionKey_, int closePolicy_):sessionKey(sessionKey_),closePolicy(closePolicy_){}
+SessionEntry::SessionEntry(const std::string& sessionKey_, int closePolicy_):sessionKey(sessionKey_),closePolicy(closePolicy_){}
 
 std::string SessionEntry::getSessionKey()const{return sessionKey;}
   int  SessionEntry::getClosePolicy()const{return closePolicy;}

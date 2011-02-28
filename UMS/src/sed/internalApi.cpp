@@ -106,8 +106,14 @@ solveSessionReconnect(diet_profile_t* pb) {
 
   try {
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
+      //To serialize the user object
+      const char* name = "solveReconnect";
+      ::ecorecpp::serializer::serializer _ser(name);
+      UMS_Data::Session session = sessionServer.getData();
+      std::string sessionSerializedUpdate = _ser.serialize(const_cast<UMS_Data::Session_ptr>(&session));
+      
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,5), strdup(sessionServer.getData().getSessionKey().c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
@@ -1123,17 +1129,18 @@ solveGenerique(diet_profile_t* pb) {
   // Parse the model
   ecorecpp::parser::parser parser;
   QueryParameters* options = parser.load(optionValueSerialized)->as< QueryParameters >();
+
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
   QueryType query(options, sessionServer);
 
   try {
 
     List* list = query.list();
-    const char* name = "list";
-    ::ecorecpp::serializer::serializer _ser(name);
-    listSerialized =  _ser.serialize(list);
 
-     //MAPPER CREATION
+    //To save the last connection on the database
+    sessionServer.saveConnection();
+
+    //MAPPER CREATION
     mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
     mapper->code(std::string(sessionKey), mapperkey);
@@ -1144,6 +1151,9 @@ solveGenerique(diet_profile_t* pb) {
     CommandServer commandServer = CommandServer(cmd, sessionServer);
     commandServer.record(UMS);
 
+    const char* name = "list";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listSerialized =  _ser.serialize(list);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -1191,18 +1201,17 @@ solveListUsers(diet_profile_t* pb) {
   std::cout << "=========option=" << std::endl;
   std::cout << option  << std::endl;
 
-  // Parse the model
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
   ListUsersServer queryUsers(std::string(option), sessionServer);
 
   try {
 
     UMS_Data::ListUsers_ptr listUsers  = queryUsers.list();
-    const char* name = "list";
-    ::ecorecpp::serializer::serializer _ser(name);
-    listUsersSerialized =  _ser.serialize(listUsers);
+  
+    //To save the last connection on the database
+    sessionServer.saveConnection();
  
-     //MAPPER CREATION
+    //MAPPER CREATION
     mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_list_users");
     mapper->code(std::string(sessionKey), mapperkey);
@@ -1212,6 +1221,10 @@ solveListUsers(diet_profile_t* pb) {
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
     commandServer.record(UMS);
+    
+    const char* name = "listUsers";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listUsersSerialized =  _ser.serialize(listUsers);
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
@@ -1227,7 +1240,7 @@ solveListUsers(diet_profile_t* pb) {
 
   std::cout << " done" << std::endl;
 
-return 0;
+  return 0;
 
 }
 

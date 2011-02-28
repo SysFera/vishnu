@@ -1,5 +1,5 @@
-#include "reconnect.hh"
-#include "utils.hh"
+#include "reconnect.hpp"
+#include "utils.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
 
@@ -16,32 +16,32 @@ int main (int ac, char* av[]){
 
 	string sessionId;
 
-	string sessionKey;
-
 	string dietConfig;
 
+/********* Out parameters     *****************/
+
+  UMS_Data::Session session;
+
+  /**************** Describe options *************/
 
 
-/**************** Describe options *************/
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+
+  opt->setPosition("userId",1);
 
 
-			boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+  opt->add("sessionId,s",
+           "represents the identifier of the session",
+           HIDDEN,
+           sessionId,1);
 
-			opt->setPosition("userId",1);
-
-
-		 opt->add("sessionId,s",
-				 		 "represents the identifier of the session",
-						 HIDDEN,
-						 sessionId,1);
-
-		 opt->setPosition("sessionId",1);
+  opt->setPosition("sessionId",1);
 
 
 
-	try {
+  try {
 
-/**************  Parse to retrieve option values  ********************/
+    /**************  Parse to retrieve option values  ********************/
 
 		opt->parse_cli(ac,av);
 
@@ -52,77 +52,56 @@ int main (int ac, char* av[]){
 
 /********  Process **************************/
 
-		if (opt->count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-		}
-
-
-		if(opt->count("sessionId")){
-
-			cout << "The session identifier is " << sessionId <<endl;
-
-		}
-
-
 		checkVishnuConfig(*opt);
 
-		if (opt->count("sessionKey")){
 
-			cout <<"The session key is " << sessionKey << endl;
-		}
+    //Fix me
+    password=takePassword("Password: ");
 
-
-
-		//Fix me
-					 password=takePassword("Password: ",userId);
-
-				cout << "The user password is " << password << endl;
+    cout << "The user password is " << password << endl;
 
 
+    /************** Call UMS reconnect service *******************************/
 
-/************** Call UMS connect service *******************************/
+    
+    // initializing DIET
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
+    cerr << "DIET initialization failed !" << endl;
 
-               // initializing DIET
-              if (diet_initialize(dietConfig.c_str(), ac, av)) {
-
-				  cerr << "DIET initialization failed !" << endl;
-
-				  return 1;
-              }
-
-				   // store the sessionKey
-
-              reconnect(userId, password, sessionId, sessionKey);
-
-       // store the session information
-
-        storeLastSessionKey(sessionKey,0,getppid());
+    return 1;
+    }
 
 
-	}// End of try bloc
+//    reconnect(userId, password, sessionId, session);
+   
 
-	catch(po::required_option& e){
+    // store the session information
 
-			usage(*opt,"[options] userId sessionId","required parameter is missing");
+    storeLastSessionKey(session.getSessionKey(),session.getClosePolicy(),getppid());
 
-	}
-catch(VishnuException& e){// catch all Vishnu runtime error
 
-      errorUsage(av[0], e.getMsg(),EXECERROR);
+  }// End of try bloc
 
-      return e.getMsgI() ;
+  catch(po::required_option& e){
 
-}
+    usage(*opt,"[options] userId sessionId","required parameter is missing");
 
-	catch(std::exception& e){
-		errorUsage(av[0], e.what()) ;
-		return 1;
-	}
+  }
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-	return 0;
+    errorUsage(av[0], e.getMsg(),EXECERROR);
+
+    return e.getMsgI() ;
+
+  }
+
+  catch(std::exception& e){
+    errorUsage(av[0], e.what()) ;
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 

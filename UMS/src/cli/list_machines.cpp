@@ -1,14 +1,14 @@
-#include "list_history_cmd.hpp"
-#include "listHistoryCmdUtils.hpp"
-#include "sessionUtils.hpp"
+#include "list_machines.hpp"
 #include "utils.hpp"
-#include<boost/bind.hpp>
+#include "listMachineUtils.hpp"
+#include "sessionUtils.hpp"
+#include <boost/bind.hpp>
+
 namespace po = boost::program_options;
 
 using namespace std;
 
 int main (int ac, char* av[]){
-
 
 
   /******* Parsed value containers ****************/
@@ -19,19 +19,23 @@ int main (int ac, char* av[]){
 
   /********** EMF data ************/
 
-  UMS_Data::ListCommands listCmd;
+  UMS_Data::ListMachines lsMachine;
 
-  UMS_Data::ListCmdOptions listOptions;
+  UMS_Data::ListMachineOptions listOptions;
+
   /******** Callback functions ******************/
 
-  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListCmdOptions::setUserId,boost::ref(listOptions),_1));
-  boost::function1<void,string> fSessionId( boost::bind(&UMS_Data::ListCmdOptions::setSessionId,boost::ref(listOptions),_1));
-  boost::function1<void,long> fStartDateOption( boost::bind(&UMS_Data::ListCmdOptions::setStartDateOption,boost::ref(listOptions),_1));
-  boost::function1<void,long> fEndDateOption( boost::bind(&UMS_Data::ListCmdOptions::setEndDateOption,boost::ref(listOptions),_1));
+  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListMachineOptions::setUserId,boost::ref(listOptions),_1));
+  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, fStartDateOption, fEndDateOption);
+  boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
+
+
+  opt->add("listAllmachine,a",
+           "An option for listing all VISHNU machines",
+           CONFIG);
 
 
   try {
@@ -47,27 +51,30 @@ int main (int ac, char* av[]){
     opt->notify();
 
 
-
     /********  Process **************************/
 
+    if (opt->count("listAllmachine")){
 
-    if (opt->count("adminListOption")){
+      cout <<"We nedd to list all VISHNU machines " << endl;
 
-      cout <<"It is an admin list option " << endl;
-
-      listOptions.setAdminListOption(true);
+      listOptions.setListAllmachine(true);
     }
+
+
+    if(opt->count("sessionKey")){
+
+      cout <<"the session key is : " << sessionKey << endl;
+    }
+
 
     checkVishnuConfig(*opt);
 
     if ( opt->count("help")){
 
-      helpUsage (*opt," [options]  ");
-
+      helpUsage(*opt," [options]");
 
       return 0;
     }
-
 
     /************** Call UMS connect service *******************************/
 
@@ -88,28 +95,30 @@ int main (int ac, char* av[]){
 
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-      listHistoryCmd(sessionKey,listCmd,listOptions);
+      listMachine(sessionKey,lsMachine,listOptions);
 
 
     }
 
 
     // Display the list
-    if(isEmpty) {
-      cout << listCmd << endl;
+    if(isEmpty || opt->count("listAllmachine")) {
+      cout << lsMachine << endl;
     }
     else {
-      for(int i = 0; i < listCmd.getCommands().size(); i++) {
-        cout << listCmd.getCommands().get(i) << endl;
+      for(int i = 0; i < lsMachine.getMachines().size(); i++) {
+        cout << lsMachine.getMachines().get(i) << endl;
       }
     }
 
   }// End of try bloc
+
   catch(VishnuException& e){// catch all Vishnu runtime error
 
     errorUsage(av[0], e.getMsg(),EXECERROR);
 
     return e.getMsgI() ;
+
   }
 
   catch(std::exception& e){
