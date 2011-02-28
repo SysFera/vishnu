@@ -1,7 +1,8 @@
 /**
  * \file SessionProxy.cpp
  * \brief This file contains the VISHNU SessionProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #include <string>
 #include <vector>
@@ -62,8 +63,8 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::string sshKey3;
   std::string sshKey4;
   std::string optionsToString;
-  std::string sessionId ;
-  char* sessionkey;
+  char* sessionInString;
+  char* sessionKey;
   char* errorInfo;
   size_t length;
   char* key;
@@ -146,10 +147,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
     ::ecorecpp::serializer::serializer _ser(name);
     //To serialize the options object in to optionsToString 
     optionsToString =  _ser.serialize(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
-  }
-
-  if(connect) {
-     profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
+    profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
   } else {
     profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);
   }
@@ -182,9 +180,8 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
      sendErrorMsg(msg);
     } 
   } else {
-    sessionId = msession.getSessionId();
-    if(diet_string_set(diet_parameter(profile,4), strdup(sessionId.c_str()), DIET_VOLATILE)) {
-      msg += "with sessionId parameter "+sessionId;
+    if(diet_string_set(diet_parameter(profile,4), strdup((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
+      msg += "with sessionId parameter "+msession.getSessionId();
       errMsg(msg);
       sendErrorMsg(msg);
     }
@@ -194,17 +191,24 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-     if(diet_string_get(diet_parameter(profile,5), &sessionkey, NULL)){
-         msg += " by receiving sessionKey value";
-         errMsg(msg);
-         sendErrorMsg(msg);
+     if(connect) {
+        if(diet_string_get(diet_parameter(profile,5), &sessionKey, NULL)){
+           msg += " by receiving sessionKey value";
+           errMsg(msg);
+           sendErrorMsg(msg);
+       }
+     } else {
+         if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
+           msg += " by receiving sessionInString value";
+           errMsg(msg);
+           sendErrorMsg(msg);
+        }
      }
      if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
          msg += " to receiving errorInfo message";
          errMsg(msg);
          sendErrorMsg(msg);
       }
-      msession.setSessionKey(sessionkey);
       //Print successfull message if erroInfo is empty
       printSuccessMessage(errorInfo);
    } else {
@@ -213,7 +217,20 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 
   /*To check the receiving message error*/
   checkErrorMsg(errorInfo);
+  
+  if(connect) {
+    msession.setSessionKey(sessionKey);
+  } else {
+    // CREATE DATA MODEL
+    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 
+    //Parse the model
+    ecorecpp::parser::parser parser;
+    //To set the muser
+    UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
+    msession = *session_ptr;
+  }
   if(key!=NULL) {
     delete [] key;
   }

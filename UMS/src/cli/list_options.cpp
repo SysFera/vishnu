@@ -1,5 +1,5 @@
-#include "listOptions.hh"
-#include "utils.hh"
+#include "list_options.hpp"
+#include "utils.hpp"
 #include "sessionUtils.hpp"
 #include<boost/bind.hpp>
 
@@ -10,139 +10,139 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
+  string dietConfig;
 
-		std::string userId;
+  std::string userId;
 
-		std::string optionName;
+  std::string optionName;
 
-		std::string sessionKey;
+  std::string sessionKey;
 
-		/********** EMF data ************/
+  /********** EMF data ************/
 
-		UMS_Data::ListOptionsValues lsOptionsValues;
+  UMS_Data::ListOptionsValues lsOptionsValues;
 
-		UMS_Data::ListOptOptions lsOptions;
+  UMS_Data::ListOptOptions lsOptions;
 
-/**************** Callback functions *************/
+  /**************** Callback functions *************/
 
-    boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListOptOptions::setUserId,boost::ref(lsOptions),_1));
-    boost::function1<void,string> fOptionName( boost::bind(&UMS_Data::ListOptOptions::setOptionName,boost::ref(lsOptions),_1));
+  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListOptOptions::setUserId,boost::ref(lsOptions),_1));
+  boost::function1<void,string> fOptionName( boost::bind(&UMS_Data::ListOptOptions::setOptionName,boost::ref(lsOptions),_1));
 
-/**************** Describe options *************/
-
-
-		Options opt(av[0] );
-
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
-
-        opt.add("listAllDeftValue,a",
-						            "is an option for listing all default option values\n"
-												"defined by VISHNU administrator",
-												CONFIG);
-
-				opt.add("userId,u",
-		                 "an admin option for listing commands launched\n"
-										 "by a specific user identified by his/her userId",
-										 CONFIG,
-										 fUserId);
-
-				opt.add("optionName,n",
-									    	"is an option for listing all default option values\n"
-												"defined by VISHNU administrator",
-												CONFIG,
-												fOptionName);
+  /**************** Describe options *************/
 
 
-	try {
-/**************  Parse to retrieve option values  ********************/
+  Options opt(av[0] );
 
-		opt.parse_cli(ac,av);
+  opt.add("dietConfig,c",
+          "The diet config file",
+          ENV,
+          dietConfig);
 
-		bool isEmpty=opt.empty();//if no value was given in the command line
+  opt.add("listAllDeftValue,a",
+          "is an option for listing all default option values\n"
+          "defined by VISHNU administrator",
+          CONFIG);
 
-		opt.parse_env(env_name_mapper());
+  opt.add("userId,u",
+          "an admin option for listing commands launched\n"
+          "by a specific user identified by his/her userId",
+          CONFIG,
+          fUserId);
 
-		opt.notify();
-
-
-/********  Process **************************/
-
-		if (opt.count("listAllDeftValue")){
-
-			cout <<"It is an admin list option " << endl;
-
-			lsOptions.setListAllDeftValue(true);
-		}
-
-
-		checkVishnuConfig(opt);
-
-		if ( opt.count("help")){
-
-			helpUsage(opt,"[options] ");
-
-			return 0;
-		}
-
-/************** Call UMS connect service *******************************/
-
-               // initializing DIET
-
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
+  opt.add("optionName,n",
+          "is an option for listing all default option values\n"
+          "defined by VISHNU administrator",
+          CONFIG,
+          fOptionName);
 
 
+  try {
+    /**************  Parse to retrieve option values  ********************/
 
-	 // get the sessionKey
+    opt.parse_cli(ac,av);
 
-                sessionKey=getLastSessionKey(getppid());
+    bool isEmpty=opt.empty();//if no value was given in the command line
 
-               if(false==sessionKey.empty()){
+    opt.parse_env(env_name_mapper());
 
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-    
-               listOptions(sessionKey,lsOptionsValues,lsOptions);
-
-
-               }
+    opt.notify();
 
 
-							// Display the list
-     if(isEmpty) {
-        cout << lsOptionsValues << endl;
-     }
-     else {
-         for(int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
-           cout << lsOptionsValues.getOptionValues().get(i) << endl;
-         }
-     }
+    /********  Process **************************/
+
+    if (opt.count("listAllDeftValue")){
+
+      cout <<"It is an admin list option " << endl;
+
+      lsOptions.setListAllDeftValue(true);
+    }
+
+
+    checkVishnuConfig(opt);
+
+    if ( opt.count("help")){
+
+      helpUsage(opt,"[options] ");
+
+      return 0;
+    }
+
+    /************** Call UMS connect service *******************************/
+
+    // initializing DIET
+
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
 
 
 
-	}// End of try bloc
+    // get the sessionKey
 
-	catch(VishnuException& e){// catch all Vishnu runtime error
+    sessionKey=getLastSessionKey(getppid());
 
-		errorUsage(av[0], e.getMsg(),EXECERROR);
+    if(false==sessionKey.empty()){
 
-		return e.getMsgI() ;
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-	}
+      listOptions(sessionKey,lsOptionsValues,lsOptions);
 
-	catch(std::exception& e){
-		errorUsage(av[0],e.what());
-		return 1;
-	}
 
-	return 0;
+    }
+
+
+    // Display the list
+    if(isEmpty) {
+      cout << lsOptionsValues << endl;
+    }
+    else {
+      for(int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
+        cout << lsOptionsValues.getOptionValues().get(i) << endl;
+      }
+    }
+
+
+
+  }// End of try bloc
+
+  catch(VishnuException& e){// catch all Vishnu runtime error
+
+    errorUsage(av[0], e.getMsg(),EXECERROR);
+
+    return e.getMsgI() ;
+
+  }
+
+  catch(std::exception& e){
+    errorUsage(av[0],e.what());
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 

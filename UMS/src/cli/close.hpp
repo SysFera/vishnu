@@ -1,13 +1,13 @@
-#ifndef CLOSE_HH
-#define CLOSE_HH
+#ifndef CLOSE_HPP
+#define CLOSE_HPP
 
 /**
- * \file close.hh
+ * \file close.hpp
  * This file declares convenients include files for the VISHNU close session process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -24,13 +24,16 @@
 
 struct env_name_mapper{
 
-	std::string operator ()(std::string name){
+  std::string operator ()(std::string name){
 
-		std::string result= "";
-                if (name=="VISHNU_CONFIG_FILE") {
+  
+    std::string result= "";
 
-                        result="dietConfig";
-                }
+    if (name=="VISHNU_CONFIG_FILE") {
+
+      result="dietConfig";
+      
+    }
 
 		return result;
 	}

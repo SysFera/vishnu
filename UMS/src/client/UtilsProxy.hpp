@@ -1,15 +1,11 @@
 /**
  * \file UtilsProxy.hpp
  * \brief This file contains the VISHNU UtilsProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _UTILS_PROXY_H_
 #define _UTILS_PROXY_H_
-
-#include <string>
-#include <vector>
-#include <list>
-#include <iostream>
 
 #include "DIET_client.h"
 

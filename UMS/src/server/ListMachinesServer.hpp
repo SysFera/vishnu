@@ -1,3 +1,10 @@
+/**
+ * \file ListMachinesServer.hpp
+ * \brief This file contains the VISHNU QueryServer class.
+ * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+ * \date February 2011 
+ */
 #ifndef _LIST_MACHINES_SERVER_
 #define _LIST_MACHINES_SERVER_
 
@@ -12,23 +19,48 @@
 #include "ListMachineOptions.hpp"
 #include "ListMachines.hpp"
 
+/**
+ * \class ListMachinesServer 
+ * \brief ListMachinesServer class implementation 
+ */
 class ListMachinesServer: public QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>
 {
 
 public:
-  //Constructors
+
+  /**
+   * \fn ListMachinesServer(const SessionServer session)
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
+   * \brief Constructor, raises an exception on error
+   */
   ListMachinesServer(const SessionServer session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(session)
   {
     mcommandName = "vishnu_list_machine";
   }
+  /**
+   * \fn ListMachinesServer(const UMS_Data::ListSessionOptions_ptr params,
+   *                        const SessionServer& session)
+   * \param params The object which encapsulates the information of ListMachinesServer options 
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
+   * \brief Constructor, raises an exception on error
+   */
   ListMachinesServer(UMS_Data::ListMachineOptions_ptr params, const SessionServer& session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
   {
     mcommandName = "vishnu_list_machine";
   }
 
-  //To process options
+  /**
+   * \brief Function to treat the ListMachinesServer options 
+   * \fn void processOptions(UserServer userServer,
+   *                         const UMS_Data::ListMachineOptions_ptr& options
+   *                         std::string& sqlRequest)
+   * \param userServer the object which encapsulates user information
+   * \param options the object which contains the ListMachinesServer options values
+   * \param sqlRequest the sql data base request
+   * \return raises an exception on error
+   */
   void processOptions(UserServer userServer, const UMS_Data::ListMachineOptions_ptr& options, std::string& sqlRequest) 
   {
     std::string sqlListofMachinesWithJointure = "SELECT machineid, name, site, machine.status, lang, description, userid \
@@ -53,32 +85,31 @@ public:
 
     //The admin option
     if(userIdSize!=0) {
+      //To check if the user id is correct 
+      checkUserId(options->getUserId());      
+      
       sqlRequest = sqlListofMachinesWithJointure;
       addOptionRequest("userid", options->getUserId(), sqlRequest);
-
-      DatabaseResult *ListofMachines = mdatabaseVishnu->getResult(sqlRequest.c_str());
-      if(ListofMachines->getNbTuples()==0) {
-         UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
-         throw e ;
-      }
     }
 
     if(machineIdSize!=0) {
+      //To check if the machine id is correct
+      checkMachineId(options->getMachineId());      
+
       if(!isListAll && userIdSize==0) {
          sqlRequest=sqlListofMachinesIntial;
       }
       addOptionRequest("machineid", options->getMachineId(), sqlRequest);
-      
-      DatabaseResult *ListofMachines = mdatabaseVishnu->getResult(sqlRequest.c_str());
-      if(ListofMachines->getNbTuples()==0) {
-        UMSVishnuException e(ERRCODE_UNKNOWN_MACHINE);
-        throw e ;
-      }
     }
  
  }
 
- //To list sessions
+ /**
+  * \brief Function to list machines information 
+  * \fn UMS_Data::ListMachines* list()
+  * \return The pointer to the UMS_Data::ListMachines containing machines information
+  * \return raises an exception on error
+  */
  UMS_Data::ListMachines* list()
  {
     DatabaseResult *ListofMachines;
@@ -130,18 +161,35 @@ public:
     return mlistObject;
   }
 
+  /**
+   * \brief Function to get the name of the ListMachinesServer command line 
+   * \fn std::string getCommandName() 
+   * \return The the name of the ListMachinesServer command line 
+   */
   std::string getCommandName()
   {
     return mcommandName;
   } 
-  //Destructor
+  
+  /**
+   * \fn ~ListMachinesServer()
+   * \brief Destructor, raises an exception on error
+   */
   ~ListMachinesServer()
   {
   }
 
   private:
 
+   /////////////////////////////////
+  // Attributes
+  /////////////////////////////////
+
+  /**
+  * \brief The name of the ListMachinesServer command line 
+  */
   std::string mcommandName;
+
 };
 
 #endif

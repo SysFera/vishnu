@@ -38,7 +38,7 @@ set(ALLCLI connect reconnect close
 				 save_configuration restore_configuration
 				 add_machine update_machine delete_machine
 				 configure_default_option configure_option
-				 list_local_account list_machine list_history_cmd list_options list_users list_sessions)
+				 list_local_accounts list_machines list_history_cmd list_options list_users list_sessions)
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)

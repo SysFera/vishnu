@@ -1,5 +1,5 @@
-#include "restoreConfiguration.hh"
-#include "utils.hh"
+#include "restore_configuration.hpp"
+#include "utils.hpp"
 #include "sessionUtils.hpp"
 namespace po = boost::program_options;
 
@@ -8,83 +8,83 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-	string filePath;
+  string filePath;
 
-	string sessionKey;
+  string sessionKey;
 
-	string dietConfig;
+  string dietConfig;
 
-/**************** Describe options *************/
+  /**************** Describe options *************/
 
-		Options opt(av[0] );
+  Options opt(av[0] );
 
-        opt.add("dietConfig,c",
-				        "The diet config file",
-						ENV,
-						dietConfig);
-
-
-		opt.add("filePath",
-					  "The path of the VISHNU configuration file",
-						HIDDEN,
-						filePath,
-						1);
-
-		opt.setPosition("filePath",-1);
+  opt.add("dietConfig,c",
+          "The diet config file",
+          ENV,
+          dietConfig);
 
 
-		try {
+  opt.add("filePath",
+          "The path of the VISHNU configuration file",
+          HIDDEN,
+          filePath,
+          1);
 
-/**************  Parse to retrieve option values  ********************/
-
-		opt.parse_cli(ac,av);
-
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+  opt.setPosition("filePath",-1);
 
 
-/********  Process **************************/
+  try {
 
-		checkVishnuConfig(opt);
+    /**************  Parse to retrieve option values  ********************/
 
-/************** Call UMS connect service *******************************/
+    opt.parse_cli(ac,av);
 
-               // initializing DIET
-              if (diet_initialize(dietConfig.c_str(), ac, av)) {
+    opt.parse_env(env_name_mapper());
 
-				  cerr << "DIET initialization failed !" << endl;
-
-				  return 1;
-              }
+    opt.notify();
 
 
- // get the sessionKey
+    /********  Process **************************/
 
-                sessionKey=getLastSessionKey(getppid());
+    checkVishnuConfig(opt);
 
-               if(false==sessionKey.empty()){
+    /************** Call UMS connect service *******************************/
 
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-             
-                restoreConfiguration(sessionKey, filePath);
+    // initializing DIET
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
-               }
+      cerr << "DIET initialization failed !" << endl;
+
+      return 1;
+    }
 
 
-	}// End of try bloc
+    // get the sessionKey
 
-catch(po::required_option& e){// a required parameter is missing
+    sessionKey=getLastSessionKey(getppid());
 
-           usage(opt,"[options] filePath ","required parameter is missing");
+    if(false==sessionKey.empty()){
+
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
+
+      restoreConfiguration(sessionKey, filePath);
+
+    }
+
+
+  }// End of try bloc
+
+  catch(po::required_option& e){// a required parameter is missing
+
+    usage(opt,"[options] filePath ","required parameter is missing");
   }
 
-catch(VishnuException& e){// catch all Vishnu runtime error
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-	errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-	return e.getMsgI() ;
-}
+    return e.getMsgI() ;
+  }
 
   catch(std::exception& e){
 

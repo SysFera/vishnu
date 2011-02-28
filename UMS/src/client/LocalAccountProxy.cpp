@@ -1,13 +1,9 @@
 /**
  * \file LocalAccountProxy.cpp
  * \brief This file contains the VISHNU LocalAccountProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
-#include <string>
-#include <vector>
-#include <list>
-#include <iostream>
-
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 #include "LocalAccountProxy.hpp"

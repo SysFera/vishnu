@@ -87,11 +87,26 @@ public :
   decodeCPP (const string& msg) {return "";}
 
 protected:
+  /**
+   * \brief The mapper registry
+   */
   MapperRegistry* mreg;
+  /**
+   * \brief The map containing the function and their code
+   */
   map<int, string> mmap;
+  /**
+   * \brief The name of the mapper
+   */
   string mname;
 
+  /**
+   * \brief Map used to store the string that are decoded
+   */
   map<int, string> mcmd;
+  /**
+   * \brief Mutex to protect the id generation for the mcmd map
+   */
   pthread_mutex_t mutex;
 private:
 };

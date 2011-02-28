@@ -1,5 +1,5 @@
-#include "deleteUser.hh"
-#include "utils.hh"
+#include "delete_user.hpp"
+#include "utils.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
 #include<boost/bind.hpp>
@@ -12,81 +12,81 @@ int main (int ac, char* av[]){
 
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
+  string dietConfig;
 
-		string sessionKey;
+  string sessionKey;
 
-		std::string userId;
-
-
-
-/**************** Describe options *************/
-
-		boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
-
-		opt->setPosition("userId",-1);
-
-
-	try {
-
-/**************  Parse to retrieve option values  ********************/
-
-		opt->parse_cli(ac,av);
-
-		opt->parse_env(env_name_mapper());
-
-		opt->notify();
-
-
-/********  Process **************************/
-
-		if (opt->count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-		}
+  std::string userId;
 
 
 
-		checkVishnuConfig(*opt);
+  /**************** Describe options *************/
 
-/************** Call UMS connect service *******************************/
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
 
-               // initializing DIET
-
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
-
-                sessionKey=getLastSessionKey(getppid());
-
-                if(false==sessionKey.empty()){
-
-                  cout << "the current session key is " << sessionKey <<endl;
-							 
-                  deleteUser(sessionKey, userId);
-
-                }
+  opt->setPosition("userId",-1);
 
 
+  try {
 
-	}// End of try bloc
+    /**************  Parse to retrieve option values  ********************/
 
-catch(po::required_option& e){// a required parameter is missing
+    opt->parse_cli(ac,av);
 
-  usage(*opt," userId","required parameter is missing");
+    opt->parse_env(env_name_mapper());
+
+    opt->notify();
+
+
+    /********  Process **************************/
+
+    if (opt->count("userId")){
+
+      cout <<"The user identifier is " << userId << endl;
+
+    }
+
+
+
+    checkVishnuConfig(*opt);
+
+    /************** Call UMS connect service *******************************/
+
+    // initializing DIET
+
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
+
+    sessionKey=getLastSessionKey(getppid());
+
+    if(false==sessionKey.empty()){
+
+      cout << "the current session key is " << sessionKey <<endl;
+
+      deleteUser(sessionKey, userId);
+
+    }
+
+
+
+  }// End of try bloc
+
+  catch(po::required_option& e){// a required parameter is missing
+
+    usage(*opt," userId","required parameter is missing");
   }
 
-catch(VishnuException& e){// catch all Vishnu runtime error
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-	errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-	return e.getMsgI() ;
+    return e.getMsgI() ;
 
-}
+  }
 
   catch(std::exception& e){
 

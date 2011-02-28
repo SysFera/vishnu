@@ -1,13 +1,13 @@
-#ifndef UPDATELOCALACCOUNT_HH
-#define UPDATELOCALACCOUNT_HH
+#ifndef LISTMACHINE_HH
+#define LISTMACHINE_HH
 
 /**
- * \file updateLocalAccount.hh
- * This file defines convenients functions for the VISHNU update local account  process
+ * \file list_machines.hpp
+ * This file defines convenients functions for the VISHNU list Machine  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -30,7 +30,6 @@
  * the variable is ignored.
  */
 
-const unsigned int ULAPARAM=2;// the number of required parameters for the updateLocalAccount command
 
 
 struct env_name_mapper{
