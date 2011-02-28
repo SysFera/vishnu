@@ -1,3 +1,10 @@
+/**
+ * \file ListLocalAccountsServer.hpp
+ * \brief This file contains the VISHNU QueryServer class.
+ * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+ * \date February 2011 
+ */
 #ifndef _LIST_LOCAL_ACCOUNTS
 #define _LIST_LOCAL_ACCOUNTS
 
@@ -11,23 +18,48 @@
 #include "ListLocalAccOptions.hpp"
 #include "ListLocalAccounts.hpp"
 
+/**
+ * \class ListLocalAccountsServer 
+ * \brief ListLocalAccountsServer class implementation 
+ */
 class ListLocalAccountsServer: public QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>
 {
 
 public:
-  //Constructors
+  
+  /**
+   * \fn ListLocalAccountsServer(const SessionServer session)
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
+   * \brief Constructor, raises an exception on error
+   */
   ListLocalAccountsServer(const SessionServer session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(session)
   {
     mcommandName = "vishnu_list_local_account";
   }
+  /**
+   * \fn ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params,
+   *                             const SessionServer& session)
+   * \param params The object which encapsulates the information of ListLocalAccountsServer options 
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
+   * \brief Constructor, raises an exception on error
+   */
   ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(params, session)
   {
     mcommandName = "vishnu_list_local_account";
   }
 
-  //To process options
+  /**
+   * \brief Function to treat the ListLocalAccountsServer options 
+   * \fn void processOptions(UserServer userServer,
+   *                         const UMS_Data::ListLocalAccOptions_ptr& options
+   *                         std::string& sqlRequest)
+   * \param userServer the object which encapsulates user information
+   * \param options the object which contains the ListLocalAccountsServer options 
+   * \param sqlRequest the sql data base request
+   * \return raises an exception on error
+   */
   void processOptions(UserServer userServer, const UMS_Data::ListLocalAccOptions_ptr& options, std::string& sqlRequest)
   {
      std::string sqlListofLocalAccountInitial = sqlRequest;
@@ -46,32 +78,32 @@ public:
      }
      //The admin option
      if(userIdSize!=0) {
+        //To check if the user id is correct 
+        checkUserId(options->getUserId());
+        
         sqlRequest=sqlListofLocalAccountInitial;
         addOptionRequest("userid", options->getUserId(), sqlRequest);
-
-        DatabaseResult *ListofLocalAccount = mdatabaseVishnu->getResult(sqlRequest.c_str());
-        if(ListofLocalAccount->getNbTuples()==0) {
-          UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
-          throw e ;
-        }
      }
 
      if(machineIdSize!=0) {
+        //To check if the machine id is correct
+        checkMachineId(options->getMachineId());
+
         if(!isListAll && userIdSize==0) {
           sqlRequest=sqlListofLocalAccountInitial;
+          addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
         }
         addOptionRequest("machineid", options->getMachineId(), sqlRequest);
-        
-        DatabaseResult *ListofLocalAccount = mdatabaseVishnu->getResult(sqlRequest.c_str());
-        if(ListofLocalAccount->getNbTuples()==0) {
-           UMSVishnuException e(ERRCODE_UNKNOWN_MACHINE);
-           throw e ;
-         }
      }
 
   }
 
-  //To list sessions
+  /**
+   * \brief Function to list locoal accounts information 
+   * \fn UMS_Data::ListLocalAccounts* list()
+   * \return The pointer to the UMS_Data::ListLocalAccounts containing local accounts information
+   * \return raises an exception on error
+   */
   UMS_Data::ListLocalAccounts* list()
   {
     DatabaseResult *ListofLocalAccount;
@@ -123,19 +155,36 @@ public:
     return mlistObject;
   }
 
+  /**
+   * \brief Function to get the name of the ListLocalAccountsServer command line 
+   * \fn std::string getCommandName() 
+   * \return The the name of the ListLocalAccountsServer command line 
+   */ 
   std::string getCommandName()
   {
     return mcommandName;
   }
 
-  //Destructor
+  /**
+   * \fn ~ListLocalAccountsServer()
+   * \brief Destructor, raises an exception on error
+   */
   ~ListLocalAccountsServer() 
   {
   }
 
   private:
 
+   /////////////////////////////////
+  // Attributes
+  /////////////////////////////////
+
+
+  /**
+  * \brief The name of the ListLocalAccountsServer command line 
+  */
   std::string mcommandName;
+
 };
 
 #endif
