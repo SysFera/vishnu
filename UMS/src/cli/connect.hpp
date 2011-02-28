@@ -1,19 +1,17 @@
-#ifndef DELETEUSER_HH
-#define DELETEUSER_HH
+#ifndef CONNECT_HPP
+#define CONNECT_HPP
 
 /**
- * \file deleteUser.hh
- * This file defines convenients functions for the VISHNU delete user process
+ * \file connect.hpp
+ * This file defines convenients functions for the VISHNU connexion process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
-#include <cstdlib>
-
 
 //EMF
 #include <ecore.hpp> // Ecore metamodel
@@ -31,7 +29,6 @@
  * the variable is ignored.
  */
 
-const unsigned int DUPARAM=1;
 
 struct env_name_mapper{
 
@@ -43,6 +40,7 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
+
 
 		return result;
 	}

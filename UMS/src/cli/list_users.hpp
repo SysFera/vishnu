@@ -1,13 +1,13 @@
-#ifndef ADDLOCALACCOUNT_HH
-#define ADDLOCALACCOUNT_HH
+#ifndef LISTUSERS_HH
+#define LISTUSERS_HH
 
 /**
- * \file addLocalAccount.hh
- * This file defines convenients functions for the VISHNU add local account  process
+ * \file list_users.hpp
+ * This file defines convenients functions for the VISHNU list users  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -31,6 +31,7 @@
  */
 
 
+
 struct env_name_mapper{
 
 	std::string operator ()(std::string name){
@@ -41,6 +42,7 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
+
 
 		return result;
 	}

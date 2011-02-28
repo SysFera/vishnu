@@ -1,7 +1,5 @@
-
-
-#include "updateMachine.hh"
-#include "utils.hh"
+#include "update_machine.hpp"
+#include "utils.hpp"
 #include "machineUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
@@ -13,134 +11,133 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
+  string dietConfig;
 
-		std::string machineDescription;
+  std::string machineDescription;
 
-		std::string machineId;
-
-		std::string sessionKey;
+  std::string sessionKey;
 
 
-		/********** EMF data ************/
+  /********** EMF data ************/
 
-		UMS_Data::Machine upMachine;
+  UMS_Data::Machine upMachine;
 
 
 
-/**************** Describe options *************/
+  /**************** Describe options *************/
 
-		boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(upMachine),_1));
+  boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(upMachine),_1));
 
-		boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(upMachine),_1));
+  boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(upMachine),_1));
+  
+  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::Machine::setMachineId,boost::ref(upMachine),_1));
 
-			boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
-			boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(upMachine),_1));
-			boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
+  boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
 
+  boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(upMachine),_1));
 
-			boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage);
-
-
-				opt->add("machineId",
-											"The identifier of the machine",
-												HIDDEN,
-												machineId,
-												1);
-
-				opt->setPosition("machineId",-1);
-
-				opt->add("machineDescription,d",
-											"The status of the machine",
-												CONFIG,
-												fStatus);
-
-				opt->add("status,t",
-											"The description of the machine",
-												CONFIG,
-												fStatus);
-
-				opt->add("sshPublicKeyFile,k",
-											"The the path to the SSH public key used by VISHNU to access local user accounts",
-												CONFIG,
-												fSshPublicKeyFile);
-
-        try{
+  boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
 
-/**************  Parse to retrieve option values  ********************/
-
-		opt->parse_cli(ac,av);
-
-		opt->parse_env(env_name_mapper());
-
-		opt->notify();
-
-/********  Process **************************/
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage);
 
 
-		if(opt->count("machineDescription")){//Fix me
+  opt->add("machineId",
+           "The identifier of the machine",
+           HIDDEN,
+           fMachineId,
+           1);
 
-		cout << "Enter the Machine Description:\n ";
+  opt->setPosition("machineId",-1);
 
+  opt->add("machineDescription,d",
+           "The status of the machine",
+           CONFIG,
+           fStatus);
 
-		getline(cin, machineDescription);
+  opt->add("status,t",
+           "The description of the machine",
+           CONFIG,
+           fStatus);
 
-		upMachine.setMachineDescription(machineDescription);
+  opt->add("sshPublicKeyFile,k",
+           "The the path to the SSH public key used by VISHNU to access local user accounts",
+           CONFIG,
+           fSshPublicKeyFile);
 
-		}
-
-
-		checkVishnuConfig(*opt);
-
-/************** Call UMS connect service *******************************/
-
-               // initializing DIET
-
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
-
-
- // get the sessionKey
-
-                sessionKey=getLastSessionKey(getppid());
-
-               if(false==sessionKey.empty()){
-
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-							 
-               updateMachine(sessionKey,upMachine);
+  try{
 
 
-               }
+    /**************  Parse to retrieve option values  ********************/
+
+    opt->parse_cli(ac,av);
+
+    opt->parse_env(env_name_mapper());
+
+    opt->notify();
+
+    /********  Process **************************/
 
 
+    if(opt->count("machineDescription")){//Fix me
+
+      cout << "Enter the Machine Description:\n ";
 
 
+      getline(cin, machineDescription);
 
-	}// End of try bloc
+      upMachine.setMachineDescription(machineDescription);
 
-				catch(po::required_option& e){// a required parameter is missing
+    }
 
-					usage(*opt," machineId ","required parameter is missing");
-				}
 
-				catch(VishnuException& e){// catch all Vishnu runtime error
+    checkVishnuConfig(*opt);
 
-					      errorUsage(av[0], e.getMsg(),EXECERROR);
+    /************** Call UMS update service *******************************/
 
-								return e.getMsgI() ;
-				}
+    // initializing DIET
 
-				catch(std::exception& e){
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
 
-					errorUsage(av[0],e.what());
 
-					return 1;
+    // get the sessionKey
+
+    sessionKey=getLastSessionKey(getppid());
+
+    if(false==sessionKey.empty()){
+
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
+
+      updateMachine(sessionKey,upMachine);
+
+
+    }
+
+
+  }// End of try bloc
+
+  catch(po::required_option& e){// a required parameter is missing
+
+    usage(*opt," machineId ","required parameter is missing");
+  }
+
+  catch(VishnuException& e){// catch all Vishnu runtime error
+
+    errorUsage(av[0], e.getMsg(),EXECERROR);
+
+    return e.getMsgI() ;
+  }
+
+  catch(std::exception& e){
+
+    errorUsage(av[0],e.what());
+
+    return 1;
   }
 
   return 0;

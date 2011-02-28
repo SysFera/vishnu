@@ -1,13 +1,13 @@
-#ifndef ADDUSER_HH
-#define ADDUSER_HH
+#ifndef DELETELOCALACCOUNT_HH
+#define DELETELOCALACCOUNT_HH
 
 /**
- * \file addUser.hh
- * This file defines convenients functions for the VISHNU add user  process
+ * \file delete_localAccount.hpp
+ * This file defines convenients functions for the VISHNU delete local account  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -19,7 +19,6 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
-#include "ConnectOptions.hpp"
 
 
 /*
@@ -31,7 +30,8 @@
  * the variable is ignored.
  */
 
-const unsigned int AVUPARAM=5;
+const unsigned int DLAPARAM=2;// the number of required parameters for the updateLocalAccount command
+
 
 struct env_name_mapper{
 
@@ -43,7 +43,6 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
-
 
 		return result;
 	}

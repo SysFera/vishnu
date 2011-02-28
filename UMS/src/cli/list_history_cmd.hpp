@@ -1,13 +1,13 @@
-#ifndef UPDATEUSER_HH
-#define UPDATEUSER_HH
+#ifndef LISTHISTORYCMD_HH
+#define LISTHISTORYCMD_HH
 
 /**
- * \file updateUser.hh
- * This file defines convenients functions for the VISHNU update user process
+ * \file list_history_cmd.hpp
+ * This file defines convenients functions for the VISHNU list history command  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -19,7 +19,6 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
-#include "ConnectOptions.hpp"
 
 
 /*
@@ -30,6 +29,7 @@
  * is called to obtain the option name. If it returns empty string
  * the variable is ignored.
  */
+
 
 
 struct env_name_mapper{
