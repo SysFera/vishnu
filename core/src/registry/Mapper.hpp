@@ -84,7 +84,7 @@ public :
    * \return The CPP command
    */
   virtual string
-  decodeCPP (const string& msg) {return "";}
+  decode(const string& msg) {return "";}
 
 protected:
   /**
