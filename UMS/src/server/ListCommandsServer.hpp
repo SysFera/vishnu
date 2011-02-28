@@ -1,9 +1,9 @@
 /**
  * \file ListCommandsServer.hpp
  * \brief This file contains the VISHNU QueryServer class.
- * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ * \author Daouda Traore (daouda.traore@sysfera.com) and
  *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date February 2011 
+ * \date February 2011
  */
 #ifndef _LIST_COMMANDS_SERVER
 #define _LIST_COMMANDS_SERVER
@@ -19,8 +19,8 @@
 #include "ListCommandsServer.hpp"
 
 /**
- * \class ListCommandsServer 
- * \brief ListCommandsServer class implementation 
+ * \class ListCommandsServer
+ * \brief ListCommandsServer class implementation
  */
 class ListCommandsServer: public QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>
 {
@@ -40,7 +40,7 @@ public:
   /**
    * \fn ListCommandsServer(const UMS_Data::ListSessionOptions_ptr params,
    *                        const SessionServer& session)
-   * \param params The object which encapsulates the information of ListCommandsServer options 
+   * \param params The object which encapsulates the information of ListCommandsServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
@@ -51,7 +51,7 @@ public:
   }
 
   /**
-   * \brief Function to treat the ListCommandsServer options 
+   * \brief Function to treat the ListCommandsServer options
    * \fn void processOptions(UserServer userServer,
    *                         const UMS_Data::ListCmdOptions_ptr& options
    *                         std::string& sqlRequest)
@@ -60,7 +60,7 @@ public:
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListCmdOptions_ptr& options, std::string& sqlRequest) 
+  void processOptions(UserServer userServer, const UMS_Data::ListCmdOptions_ptr& options, std::string& sqlRequest)
   {
     boost::posix_time::ptime pt;
     size_t userIdSize = options->getUserId().size();
@@ -72,7 +72,7 @@ public:
     }
 
     if(userIdSize!=0) {
-       //To check if the user id is correct 
+       //To check if the user id is correct
       checkUserId(options->getUserId());
 
       addOptionRequest("userid", options->getUserId(), sqlRequest);
@@ -83,7 +83,7 @@ public:
     }
 
     if(options->getSessionId().size()!=0) {
-      //To check if the session id is correct 
+      //To check if the session id is correct
       checkSessionId(options->getSessionId());
 
       addOptionRequest("vsessionid", options->getSessionId(), sqlRequest);
@@ -105,7 +105,7 @@ public:
   }
 
   /**
-   * \brief Function to list commands information 
+   * \brief Function to list commands information
    * \fn UMS_Data::ListCommands* list()
    * \return The pointer to the UMS_Data::ListCommands containing commands information
    * \return raises an exception on error
@@ -117,61 +117,57 @@ public:
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
 
-    sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from\
-                         vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and\
-                         vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";
+    sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from "
+                         " vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and "
+                         " vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";
 
 
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListCommands();
 
-    try {
-      //Creation of the object user
-      UserServer userServer = UserServer(msessionServer);
-      userServer.init();
-      //if the user exists
-      if (userServer.exist()) {
 
-        processOptions(userServer, mparameters, sqlListOfCommands);
+    //Creation of the object user
+    UserServer userServer = UserServer(msessionServer);
+    userServer.init();
+    //if the user exists
+    if (userServer.exist()) {
 
-        //To get the list of commands from the database
-        ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
-        if (ListOfCommands->getNbTuples() != 0){
-          for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
-            results.clear();
-            results = ListOfCommands->get(i);
-            ii = results.begin();
+      processOptions(userServer, mparameters, sqlListOfCommands);
 
-            UMS_Data::Command_ptr command = ecoreFactory->createCommand();
-            command->setCommandId(*ii);
-            command->setSessionId(*(++ii));
-            command->setMachineId(*(++ii));
-            command->setCmdDescription("TODO"/**(++ii)*/);++ii;
-            command->setCmdStartTime(convertToTimeType(*(++ii)));
-            command->setCmdEndTime(convertToTimeType(*(++ii)));
-            
-            mlistObject->getCommands().push_back(command);
-         }
-      }
+      //To get the list of commands from the database
+      ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
+      if (ListOfCommands->getNbTuples() != 0){
+        for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
+          results.clear();
+          results = ListOfCommands->get(i);
+          ii = results.begin();
 
-    }  else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-        throw e;
-      }
-   }
-   catch (VishnuException& e) {
-        throw;
-   }
+          UMS_Data::Command_ptr command = ecoreFactory->createCommand();
+          command->setCommandId(*ii);
+          command->setSessionId(*(++ii));
+          command->setMachineId(*(++ii));
+          command->setCmdDescription("TODO"/**(++ii)*/);++ii;
+          command->setCmdStartTime(convertToTimeType(*(++ii)));
+          command->setCmdEndTime(convertToTimeType(*(++ii)));
 
-    return mlistObject;
+          mlistObject->getCommands().push_back(command);
+        }
+    }
+
+  }
+  else {
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      throw e;
+  }
+  return mlistObject;
   }
 
   /**
-   * \brief Function to get the name of the ListCommandsServer command line 
-   * \fn std::string getCommandName() 
-   * \return The the name of the ListCommandsServer command line 
+   * \brief Function to get the name of the ListCommandsServer command line
+   * \fn std::string getCommandName()
+   * \return The the name of the ListCommandsServer command line
    */
-  std::string getCommandName() 
+  std::string getCommandName()
   {
     return mcommandName;
   }
@@ -180,7 +176,7 @@ public:
    * \fn ~ListCommandsServer()
    * \brief Destructor, raises an exception on error
    */
-  ~ListCommandsServer() 
+  ~ListCommandsServer()
   {
   }
 
@@ -192,7 +188,7 @@ public:
 
 
   /**
-  * \brief The name of the ListCommandsServer command line 
+  * \brief The name of the ListCommandsServer command line
   */
   std::string mcommandName;
 };

@@ -1,9 +1,9 @@
 /**
  * \file ListUsersServer.hpp
  * \brief This file contains the VISHNU QueryServer class.
- * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ * \author Daouda Traore (daouda.traore@sysfera.com) and
  *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date February 2011 
+ * \date February 2011
  */
 #ifndef _QUERY_SERVER_H_
 #define _QUERY_SERVER_H_
@@ -30,7 +30,7 @@ ListUsersServer::ListUsersServer(const SessionServer session)
 /**
  * \fn ListUsersServer(const std::string& option
  *                     const SessionServer& session)
- * \param option The ListUsersServer option 
+ * \param option The ListUsersServer option
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
@@ -43,12 +43,12 @@ moption(option), msessionServer(session)
 }
 
 /**
- * \brief Function to treat the ListUsersServer options 
+ * \brief Function to treat the ListUsersServer options
  * \fn void processOptions(UserServer userServer,
  *                         const std::string& options
  *                         std::string& sqlRequest)
  * \param userServer the object which encapsulates user information
- * \param optionsListUsersServer option 
+ * \param optionsListUsersServer option
  * \param sqlRequest the sql data base request
  * \return raises an exception on error
  */
@@ -68,11 +68,10 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
       throw e ;
     }
   }
-
 }
 
 /**
- * \brief Function to list machines information 
+ * \brief Function to list machines information
  * \fn UMS_Data::ListUsers* list()
  * \return The pointer to the UMS_Data::ListUsers containing users information
  * \return raises an exception on error
@@ -80,51 +79,46 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
 ListUsers* ListUsersServer::list()
 {
   DatabaseResult *ListofUsers;
-  std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
-                              where not userid='"+ ROOTUSERNAME +"'";
+  std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
+                              "where not userid='"+ ROOTUSERNAME +"'";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
   mlistUsers = ecoreFactory->createListUsers();
 
-  try {
-    //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
-    userServer.init();
-    //if the user exists
-    if (userServer.exist()) {
-        
-      processOptions(userServer, moption, sqlListofUsers);
-      //To get the list of users from the database
-      ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
+  //if the user exists
+  if (userServer.exist()) {
 
-      if (ListofUsers->getNbTuples() != 0){
-        for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
-          results.clear();
-          results = ListofUsers->get(i);
-          ii = results.begin();
-          UMS_Data::User_ptr user = ecoreFactory->createUser();
-          user->setUserId(*ii);
-          user->setPassword(*(++ii));
-          user->setFirstname(*(++ii));
-          user->setLastname(*(++ii));
-          user->setPrivilege(convertToInt(*(++ii)));
-          user->setEmail(*(++ii));
-          user->setStatus(convertToInt(*(++ii)));
+    processOptions(userServer, moption, sqlListofUsers);
+    //To get the list of users from the database
+    ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
-          mlistUsers->getUsers().push_back(user);
-         }
-      }
-   } else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-        throw e;
-      }
-  } 
-  catch (VishnuException& e) {
-      throw;
+    if (ListofUsers->getNbTuples() != 0){
+      for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
+        results.clear();
+        results = ListofUsers->get(i);
+        ii = results.begin();
+        UMS_Data::User_ptr user = ecoreFactory->createUser();
+        user->setUserId(*ii);
+        user->setPassword(*(++ii));
+        user->setFirstname(*(++ii));
+        user->setLastname(*(++ii));
+        user->setPrivilege(convertToInt(*(++ii)));
+        user->setEmail(*(++ii));
+        user->setStatus(convertToInt(*(++ii)));
+
+        mlistUsers->getUsers().push_back(user);
+        }
+    }
   }
-
+  else {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+    throw e;
+  }
   return mlistUsers;
 }
 
@@ -132,7 +126,7 @@ ListUsers* ListUsersServer::list()
  * \fn ~ListUsersServer()
  * \brief Destructor, raises an exception on error
  */
-ListUsersServer::~ListUsersServer() 
+ListUsersServer::~ListUsersServer()
 {
 }
 

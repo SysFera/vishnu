@@ -44,15 +44,15 @@ ConfigurationServer::save() {
   DatabaseResult *ListofMachines;
   DatabaseResult *ListofLocalAccount;
 
-  std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users \
-  where not userid='"+utilServer::ROOTUSERNAME+"'";
+  std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
+  "where not userid='"+utilServer::ROOTUSERNAME+"'";
 
-  std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description \
-  where machine.nummachineid = description.machine_nummachineid";
+  std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description "
+  "where machine.nummachineid = description.machine_nummachineid";
 
-  std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home \
-  from account, machine, users where account.machine_nummachineid=machine.nummachineid and \
-  account.users_numuserid=users.numuserid";
+  std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home "
+  "from account, machine, users where account.machine_nummachineid=machine.nummachineid and "
+  "account.users_numuserid=users.numuserid";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -65,7 +65,7 @@ ConfigurationServer::save() {
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
   //if the user exists
-  if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+  if (userServer.exist()) {
     //if the user is an admin
     if (userServer.isAdmin()) {
       //To get the list of users from the database
@@ -168,8 +168,8 @@ int ConfigurationServer::restore() {
     //if the user exists
     if (userServer.exist()) {
 
-      mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';\
-      DELETE FROM machine; DELETE FROM account;");
+      mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';"
+      "DELETE FROM machine; DELETE FROM account;");
 
       //To get all users
       for(int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
@@ -244,14 +244,14 @@ ConfigurationServer::getData() {
 std::string
 ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
 
-  std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,\
-  privilege, email, passwordstate, status) values ";
+  std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
+ " privilege, email, passwordstate, status) values ";
 
-  return (sqlInsert + "(" + Vishnuid::mvishnuid+", \
-  '"+user->getUserId()+"','"+user->getPassword()+"','"
+  return (sqlInsert + "(" + Vishnuid::mvishnuid+", "
+  "'"+user->getUserId()+"','"+user->getPassword()+"','"
   + user->getFirstname()+"','"+user->getLastname()+"',"+
-  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', \
-  0, "+convertToString(user->getStatus())+");");
+  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
+  "0, "+convertToString(user->getStatus())+");");
 }
 
 /**
@@ -263,9 +263,9 @@ std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
 
-  sqlInsert.append("("+Vishnuid::mvishnuid+",'"+machine->getName()+"\
-  ','"+ machine->getSite()+"','"+machine->getMachineId()+"',\
-  "+convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
+  sqlInsert.append("("+Vishnuid::mvishnuid+",'"+machine->getName()+"'"
+  ",'"+ machine->getSite()+"','"+machine->getMachineId()+"',"
+  +convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
 
   return sqlInsert;
 }
@@ -281,10 +281,10 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
   UMS_Data::Machine* machinetmp = new UMS_Data::Machine();
   MachineServer machineServer = MachineServer(machinetmp);
 
-  return ("insert into description (machine_nummachineid, lang, \
-  description) values \
-  ("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+",\
-  '"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
+  return ("insert into description (machine_nummachineid, lang, "
+  "description) values "
+  "("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+","
+  "'"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
 
   delete machinetmp;
 }
