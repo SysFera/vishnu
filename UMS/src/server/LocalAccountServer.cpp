@@ -29,8 +29,8 @@ LocalAccountServer::add() {
 
   std::string numMachine;
   std::string numUser;
-  std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, \
-  aclogin, sshpathkey, home) values ";
+  std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, "
+  "aclogin, sshpathkey, home) values ";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -276,10 +276,13 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
 */
 bool
 LocalAccountServer::exist(std::string idmachine, std::string iduser) {
-  if (idmachine.size()>0 && iduser.size()>0){
+
+  if ((idmachine.size() > 0) && (iduser.size() > 0)) {
     return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
   }
-  return false;
+  else {
+    return false;
+  }
 }
 
 /**

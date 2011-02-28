@@ -152,8 +152,8 @@ public:
           command->setMachineId(*(++ii));
 
           description = mapper->decode(*(++ii));
-          std::cout << "DESCRIPTION" << description << std::endl;
-          command->setCmdDescription("description");
+          std::cout << "DESCRIPTION  " << description << std::endl;
+          command->setCmdDescription(description);
           command->setCmdStartTime(convertToTimeType(*(++ii)));
           command->setCmdEndTime(convertToTimeType(*(++ii)));
 
@@ -192,7 +192,6 @@ public:
    /////////////////////////////////
   // Attributes
   /////////////////////////////////
-
 
   /**
   * \brief The name of the ListCommandsServer command line

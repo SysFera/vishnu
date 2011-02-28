@@ -1144,6 +1144,7 @@ solveGenerique(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     listSerialized =  _ser.serialize(list);
 
+    std::cout << "object serialized" << listSerialized << std:: endl;
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
