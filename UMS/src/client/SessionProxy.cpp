@@ -64,7 +64,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::string sshKey4;
   std::string optionsToString;
   char* sessionInString;
-  char* sessionKey;
+  //char* sessionKey;
   char* errorInfo;
   size_t length;
   char* key;
@@ -191,18 +191,10 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-     if(connect) {
-        if(diet_string_get(diet_parameter(profile,5), &sessionKey, NULL)){
-           msg += " by receiving sessionKey value";
-           errMsg(msg);
-           sendErrorMsg(msg);
-       }
-     } else {
-         if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
-           msg += " by receiving sessionInString value";
-           errMsg(msg);
-           sendErrorMsg(msg);
-        }
+     if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
+         msg += " by receiving sessionInString value";
+         errMsg(msg);
+         sendErrorMsg(msg);
      }
      if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
          msg += " to receiving errorInfo message";
@@ -218,19 +210,16 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   /*To check the receiving message error*/
   checkErrorMsg(errorInfo);
   
-  if(connect) {
-    msession.setSessionKey(sessionKey);
-  } else {
-    // CREATE DATA MODEL
-    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  // CREATE DATA MODEL
+  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 
-    //Parse the model
-    ecorecpp::parser::parser parser;
-    //To set the muser
-    UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
-    msession = *session_ptr;
-  }
+  //Parse the model
+  ecorecpp::parser::parser parser;
+  //To set the muser
+  UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
+  msession = *session_ptr;
+  
   if(key!=NULL) {
     delete [] key;
   }
