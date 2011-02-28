@@ -31,6 +31,7 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  cout << "code value " << VISHNU_CLOSE << endl;
   mname = na;
   mmap.insert (pair<int, string>(VISHNU_CONNECT           	, "vishnu_connect"));
   mmap.insert (pair<int, string>(VISHNU_RECONNECT 	  	, "vishnu_reconnect"));
@@ -98,6 +99,7 @@ UMSMapper::code(const string& cmd, unsigned int code){
   string key;
   int keycode;
   // If existing code -> add to the existing entry
+  cout << "code value3 " << code << endl;
   if(code){
     it = mcmd.find(code);
     if (it==mcmd.end()){
@@ -152,6 +154,8 @@ UMSMapper::decode (const string& msg){
   string      func;
   int         funcCode;
 
+  cout << "Decoding : " << msg << endl;
+
   // Getting separator position
   findSeparator(msg, separatorPos);
   
@@ -162,8 +166,12 @@ UMSMapper::decode (const string& msg){
     func = msg;
   }
 
+  cout << " Function gotten : " << func << endl;
+
   // Convert code to int
   funcCode = convertToInt(func);
+
+  cout << " Function gotten (int) : " << funcCode << endl;
 
   switch(funcCode){
   case VISHNU_CONNECT           	    :
@@ -256,14 +264,14 @@ UMSMapper::findSeparator(const string& s, vector<int>& vec){
 // %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
 UMSMapper::decodeClose(vector<int> separator, const string& msg){ 
-  return (mcmd.find(VISHNU_CLOSE))->second;
+  return (mmap.find(VISHNU_CLOSE))->second;
 }
 
 string
 UMSMapper::decodeAddUser(vector<int> separator, const string& msg){ 
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_ADD_VISHNU_USER))->second;
+  res += (mmap.find(VISHNU_ADD_VISHNU_USER))->second;
   res += getU(u);
   u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
   res += getU(u);
@@ -274,7 +282,7 @@ string
 UMSMapper::decodeUpUser(vector<int> separator, const string& msg){ 
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_UPDATE_VISHNU_USER))->second;
+  res += (mmap.find(VISHNU_UPDATE_VISHNU_USER))->second;
   res += getU(u);
   u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
   res += getU(u);
@@ -285,7 +293,7 @@ string
 UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_DELETE_VISHNU_USER))->second;
+  res += (mmap.find(VISHNU_DELETE_VISHNU_USER))->second;
   u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
   res += getU(u);
   return res;
@@ -295,7 +303,7 @@ string
 UMSMapper::decodeChangePwd(vector<int> separator, const string& msg){ 
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_DELETE_VISHNU_USER))->second;
+  res += (mmap.find(VISHNU_DELETE_VISHNU_USER))->second;
   u    = msg.substr(separator.at(0), separator.at(1));
   res += getU(u);
   res+= " ";
@@ -307,7 +315,7 @@ UMSMapper::decodeChangePwd(vector<int> separator, const string& msg){
 string
 UMSMapper::decodeResetPwd(vector<int> separator, const string& msg){
   string res = string("");
-  res += (mcmd.find(VISHNU_RESET_PASSWORD))->second;
+  res += (mmap.find(VISHNU_RESET_PASSWORD))->second;
   res += msg.substr(separator.at(0), msg.size()-separator.at(0));
   return res;
 }
@@ -316,7 +324,7 @@ string
 UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_ADD_LOCAL_ACCOUNT))->second;
+  res += (mmap.find(VISHNU_ADD_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -338,7 +346,7 @@ string
 UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_UPDATE_LOCAL_ACCOUNT))->second;
+  res += (mmap.find(VISHNU_UPDATE_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -370,7 +378,7 @@ string
 UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){  
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
+  res += (mmap.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
   u    = msg.substr(separator.at(0), separator.at(1));
   res += getU(u);
   res+= " ";
@@ -382,13 +390,13 @@ UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
 // %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
 UMSMapper::decodeSaveConf(vector<int> separator, const string& msg){
-  return (mcmd.find(VISHNU_SAVE_CONFIGURATION))->second;
+  return (mmap.find(VISHNU_SAVE_CONFIGURATION))->second;
 }
 
 string
 UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){ 
   string res = string("");
-  res += (mcmd.find(VISHNU_RESTORE_CONFIGURATION))->second;
+  res += (mmap.find(VISHNU_RESTORE_CONFIGURATION))->second;
   res += msg.substr(separator.at(0), msg.size()-separator.at(0));
   return res;
 }
@@ -397,7 +405,7 @@ string
 UMSMapper::decodeAddM(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_ADD_MACHINE))->second;
+  res += (mmap.find(VISHNU_ADD_MACHINE))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -417,7 +425,7 @@ string
 UMSMapper::decodeUpM(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_UPDATE_MACHINE))->second;
+  res += (mmap.find(VISHNU_UPDATE_MACHINE))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -459,7 +467,7 @@ string
 UMSMapper::decodeDelM(vector<int> separator, const string& msg){
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_DELETE_MACHINE))->second;
+  res += (mmap.find(VISHNU_DELETE_MACHINE))->second;
   u    = msg.substr(separator.at(0), msg.size()-separator.at(0));
   res += getU(u);
   return res;
@@ -469,7 +477,7 @@ string
 UMSMapper::decodeListAcc(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_LIST_LOCAL_ACCOUNT))->second;
+  res += (mmap.find(VISHNU_LIST_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -494,7 +502,7 @@ string
 UMSMapper::decodeListM(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_LIST_MACHINE))->second;
+  res += (mmap.find(VISHNU_LIST_MACHINE))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -519,7 +527,7 @@ string
 UMSMapper::decodeListH(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_LIST_HISTORY_CMD))->second;
+  res += (mmap.find(VISHNU_LIST_HISTORY_CMD))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -554,7 +562,7 @@ string
 UMSMapper::decodeListOp(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_LIST_OPTIONS))->second;
+  res += (mmap.find(VISHNU_LIST_OPTIONS))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -579,7 +587,7 @@ string
 UMSMapper::decodeListUser(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_LIST_USERS))->second;
+  res += (mmap.find(VISHNU_LIST_USERS))->second;
   res += msg.substr(separator.at(0), msg.size()-separator.at(0));
   return res;
 }
@@ -588,7 +596,7 @@ string
 UMSMapper::decodeListSession(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
-  res += (mcmd.find(VISHNU_LIST_SESSIONS))->second;
+  res += (mmap.find(VISHNU_LIST_SESSIONS))->second;
   a    = msg.substr(separator.at(0), msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
@@ -640,7 +648,7 @@ string
 UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){ 
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
+  res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
   u    = msg.substr(separator.at(0), separator.at(1));
   res += getU(u);
   res+= " ";
@@ -653,7 +661,7 @@ string
 UMSMapper::decodeConfOp(vector<int> separator, const string& msg){ 
   string res = string("");
   string u;
-  res += (mcmd.find(VISHNU_CONFIGURE_OPTION))->second;
+  res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
   u    = msg.substr(separator.at(0), separator.at(1));
   res += getU(u);
   res+= " ";
