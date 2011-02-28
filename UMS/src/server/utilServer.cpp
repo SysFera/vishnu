@@ -233,7 +233,7 @@ utilServer::getAttrVishnu(std::string attrname, std::string vishnuid) {
   Database *databaseVishnu;
   DatabaseResult *result;
 
-  std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);//+mvishnuid);
+  std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
   std::cout <<"SQL COMMAND:"<<sqlCommand;
 
   try {
