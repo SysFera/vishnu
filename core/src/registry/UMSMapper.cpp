@@ -526,6 +526,7 @@ string
 UMSMapper::decodeListH(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
+  long date;
   res += (mmap.find(VISHNU_LIST_HISTORY_CMD))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
@@ -544,13 +545,13 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
     res+=" -i ";
     res+=a;
   }
-  a = ac->getStartDateOption();
-  if (a.compare("")){
+  date = ac->getStartDateOption();
+  if (date>0){
     res+=" -s ";
     res+=a;
   }
-  a = ac->getEndDateOption();
-  if (a.compare("")){
+  date = ac->getEndDateOption();
+  if (date>0){
     res+=" -e ";
     res+=a;
   }
@@ -595,6 +596,7 @@ string
 UMSMapper::decodeListSession(vector<int> separator, const string& msg){ 
   string res = string("");
   string a;
+  long date;
   res += (mmap.find(VISHNU_LIST_SESSIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
@@ -630,13 +632,13 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
     res+=" -i ";
     res+=a;
   }
-  a = ac->getStartDateOption();
-  if (a.compare("")){
+  date = ac->getStartDateOption();
+  if (date>0){
     res+=" -s ";
     res+=a;
   }
-  a = ac->getEndDateOption();
-  if (a.compare("")){
+  date = ac->getEndDateOption();
+  if (date>0){
     res+=" -e ";
     res+=a;
   }
