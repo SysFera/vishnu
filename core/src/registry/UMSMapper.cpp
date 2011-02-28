@@ -270,9 +270,7 @@ UMSMapper::decodeAddUser(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_ADD_VISHNU_USER))->second;
-//  res += getU(u);
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  cout << " User : ->" << u << "<- " << endl;
   res += getU(u);
   return res;
 }
@@ -282,7 +280,6 @@ UMSMapper::decodeUpUser(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_UPDATE_VISHNU_USER))->second;
-//  res += getU(u);
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   res += getU(u);
   return res;
@@ -293,8 +290,10 @@ UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_VISHNU_USER))->second;
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += getU(u);
+  if (separator.size()>0){
+    res += " ";
+    res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  }
   return res;
 }
 
@@ -316,6 +315,7 @@ string
 UMSMapper::decodeResetPwd(vector<int> separator, const string& msg){
   string res = string("");
   res += (mmap.find(VISHNU_RESET_PASSWORD))->second;
+  res += " ";
   res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   return res;
 }
@@ -379,7 +379,8 @@ UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-3);
+  res += " ";
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
@@ -397,6 +398,7 @@ string
 UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){
   string res = string("");
   res += (mmap.find(VISHNU_RESTORE_CONFIGURATION))->second;
+  res += " ";
   res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   return res;
 }
@@ -469,6 +471,7 @@ UMSMapper::decodeDelM(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_DELETE_MACHINE))->second;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += " ";
   res += u;
   return res;
 }
@@ -589,6 +592,7 @@ UMSMapper::decodeListUser(vector<int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_LIST_USERS))->second;
+  res += " ";
   res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   return res;
 }
@@ -652,6 +656,7 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res += " ";
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
@@ -665,6 +670,7 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res += " ";
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
@@ -681,19 +687,16 @@ UMSMapper::getU(string serial){
   User_ptr user = parser.load(std::string(serial))->as< User >();
 
   tmp = user->getFirstname();
-  cout << " val : ->" << tmp << "<- " << endl;
   if(tmp.compare("")!=0){
     res+=" ";
     res += user->getFirstname();
   }
   tmp = user->getLastname();
-  cout << " val : ->" << tmp << "<- " << endl;
   if(tmp.compare("")!=0){
     res+=" ";
     res += user->getLastname();
   }
 
-  cout << " val : ->" << tmp << "<- " << endl;
   if(user->getPrivilege()>0){
     res+=" ";
     res += convertToString(user->getPrivilege());
@@ -702,7 +705,6 @@ UMSMapper::getU(string serial){
     res += " 0";
   }
   tmp = user->getEmail();
-  cout << " val : ->" << tmp << "<- " << endl;
   if(tmp.compare("")!=0){
     res+=" ";
     res += user->getEmail();
