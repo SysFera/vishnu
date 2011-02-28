@@ -2,7 +2,6 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <algorithm>
 #include <string>
-#include <cstring>
 #include <cstdlib>
 #include <iomanip>
 #include<stdexcept>
@@ -95,6 +94,10 @@ void setFill(int size, ostream& os) {
 std::ostream& operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
 
   boost::posix_time::ptime pt;
+  std::string undefined = "Undefined";
+  std::string  dateLastConnectStr;
+  std::string  dateCreateStr;
+  std::string  dateCloseStr;
 
   std::string  sessionId = session->getSessionId();
 
@@ -104,16 +107,28 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::Session_ptr& session)
   std::string  userId = session->getUserId();
 
   long dateLastConnect = session->getDateLastConnect();
-  pt =  boost::posix_time::from_time_t(dateLastConnect);
-  std::string  dateLastConnectStr = boost::posix_time::to_simple_string(pt);
+  if(dateLastConnect <= 0) {
+    dateLastConnectStr = undefined;
+  } else {
+    pt =  boost::posix_time::from_time_t(dateLastConnect);
+    dateLastConnectStr = boost::posix_time::to_simple_string(pt);
+  } 
 
   long  dateCreate = session->getDateCreation();
-  pt =  boost::posix_time::from_time_t(dateCreate);
-  std::string  dateCreateStr = boost::posix_time::to_simple_string(pt);
+  if(dateCreate <= 0) {
+    dateCreateStr = undefined;
+  } else {
+    pt =  boost::posix_time::from_time_t(dateCreate);
+    dateCreateStr = boost::posix_time::to_simple_string(pt);
+  }
 
   long  dateClose = session->getDateClosure();
-  pt =  boost::posix_time::from_time_t(dateClose);
-  std::string  dateCloseStr = boost::posix_time::to_simple_string(pt);
+  if(dateClose <= 0) {
+    dateCloseStr = undefined;
+  } else {
+    pt =  boost::posix_time::from_time_t(dateClose);
+    dateCloseStr = boost::posix_time::to_simple_string(pt);
+  }
 
   int  status = session->getStatus();
   std::string statusStr = (status?"ACTIVE":"INACTIVE");
@@ -140,18 +155,19 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::Session_ptr& session)
 std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
   boost::posix_time::ptime pt;
-  size_t maxSessionIdSize = 20;
-  size_t maxUserIdSize = 20;
-  size_t maxDateLastConnectSize = 20;
-  size_t maxDateCreateSize = 20;
-  size_t maxDateCloseSize = 20;
-  size_t maxTimeOutSize = 7;
+  size_t maxSessionIdSize = std::string("SessionId").size(); 
+  size_t maxUserIdSize = std::string("UserId").size();
+  size_t maxDateLastConnectSize = std::string("DateLastConnect").size();
+  size_t maxDateCreateSize = std::string("DateCreation").size();
+  size_t maxDateCloseSize = std::string("DateClosure").size();
+  size_t maxTimeOutSize = std::string("TimeOut").size();
 
+  std::string blank = "  ----  ";
   std::string sessionId;
   std::string userId;
-  std::string dateLastConnectStr;
-  std::string dateCreateStr;
-  std::string dateCloseStr;
+  std::string dateLastConnectStr = blank;
+  std::string dateCreateStr = blank;
+  std::string dateCloseStr = blank;
   long timeOut;
   long dateLastConnect;
   long dateCreate;
@@ -168,21 +184,26 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
      maxUserIdSize = max(maxUserIdSize, userId.size());
 
      dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
-     pt =  boost::posix_time::from_time_t(dateLastConnect);
-     dateLastConnectStr = boost::posix_time::to_simple_string(pt);
+     if(dateLastConnect > 0) {
+       pt =  boost::posix_time::from_time_t(dateLastConnect);
+       dateLastConnectStr = boost::posix_time::to_simple_string(pt);
+     } 
      maxDateLastConnectSize = max(maxDateLastConnectSize, dateLastConnectStr.size());
-
+     
      dateCreate = (listSession.getSessions().get(i))->getDateCreation();
-     pt =  boost::posix_time::from_time_t(dateCreate);
-     dateCreateStr = boost::posix_time::to_simple_string(pt);
+     if(dateCreate > 0) {
+       pt =  boost::posix_time::from_time_t(dateCreate);
+       dateCreateStr = boost::posix_time::to_simple_string(pt);
+     }
      maxDateCreateSize = max(maxDateCreateSize, dateCreateStr.size());
 
-
      dateClose = (listSession.getSessions().get(i))->getDateClosure();
-     pt =  boost::posix_time::from_time_t(dateClose);
-     dateCloseStr = boost::posix_time::to_simple_string(pt);
+     if(dateClose > 0) {
+       pt =  boost::posix_time::from_time_t(dateClose);
+       dateCloseStr = boost::posix_time::to_simple_string(pt);
+     }
      maxDateCloseSize = max(maxDateCloseSize, dateCloseStr.size());
-
+     
      timeOut = (listSession.getSessions().get(i))->getTimeout();
      ostringstream os_timeOut;
      os_timeOut << timeOut;
@@ -208,17 +229,30 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) 
 
     userId = (listSession.getSessions().get(i))->getUserId();
 
+    
     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
-    pt =  boost::posix_time::from_time_t(dateLastConnect);
-    dateLastConnectStr = boost::posix_time::to_simple_string(pt);
+    if(dateLastConnect <= 0) {
+      dateLastConnectStr = blank; 
+    } else {
+      pt =  boost::posix_time::from_time_t(dateLastConnect);
+      dateLastConnectStr = boost::posix_time::to_simple_string(pt);
+    }
 
-    dateCreate = (listSession.getSessions().get(i))->getDateCreation();
-    pt =  boost::posix_time::from_time_t(dateCreate);
-    dateCreateStr = boost::posix_time::to_simple_string(pt);
+    if(dateCreate <= 0) {
+      dateCreateStr = blank;
+    } else {
+      dateCreate = (listSession.getSessions().get(i))->getDateCreation();
+      pt =  boost::posix_time::from_time_t(dateCreate);
+      dateCreateStr = boost::posix_time::to_simple_string(pt);
+    }
 
-    dateClose = (listSession.getSessions().get(i))->getDateClosure();
-    pt =  boost::posix_time::from_time_t(dateClose);
-    dateCloseStr = boost::posix_time::to_simple_string(pt);
+    if(dateClose <= 0) {
+      dateCloseStr = blank;
+    } else {
+      dateClose = (listSession.getSessions().get(i))->getDateClosure();
+      pt =  boost::posix_time::from_time_t(dateClose);
+      dateCloseStr = boost::posix_time::to_simple_string(pt);
+    }
 
     status = (listSession.getSessions().get(i))->getStatus();
 
@@ -264,9 +298,9 @@ ostream& operator<<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
 
 ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
 
-  size_t maxUserSize = 20;
-  size_t maxMachineSize = 20;
-  size_t maxAcLoginSize = 20;
+  size_t maxUserSize = std::string("UserId").size();
+  size_t maxMachineSize = std::string("MachineId").size();
+  size_t maxAcLoginSize = std::string("AcLogin").size();
   std::string userId;
   std::string machineId;
   std::string acLogin;
@@ -328,9 +362,9 @@ ostream& operator<<(ostream& os, const UMS_Data::Machine_ptr& machine) {
 
 std::ostream& operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 
-  size_t maxNameSize = 20;
-  size_t maxMachineIdSize = 20;
-  size_t maxSiteSize = 20;
+  size_t maxNameSize = std::string("Name").size();
+  size_t maxMachineIdSize = std::string("machineId").size();
+  size_t maxSiteSize = std::string("Site").size();
   std::string name;
   std::string machineId;
   std::string site;
@@ -384,14 +418,21 @@ std::ostream& operator<<(std::ostream& os, const UMS_Data::Command_ptr& command)
    std::string descr = command->getCmdDescription();
 
    boost::posix_time::ptime pt;
+   std::string undefined = "Undefined";
+   std::string startTimeStr = undefined;
+   std::string endTimeStr = undefined;
 
    long startTime = command->getCmdStartTime();
-   pt =  boost::posix_time::from_time_t(startTime);
-   std::string  startTimeStr = boost::posix_time::to_simple_string(pt);
+   if(startTime > 0) {
+     pt =  boost::posix_time::from_time_t(startTime);
+     startTimeStr = boost::posix_time::to_simple_string(pt);
+   }
 
    long endTime = command->getCmdEndTime();
-   pt =  boost::posix_time::from_time_t(endTime);
-   std::string  endTimeStr = boost::posix_time::to_simple_string(pt);
+   if(endTime > 0) {
+     pt =  boost::posix_time::from_time_t(endTime);
+     endTimeStr = boost::posix_time::to_simple_string(pt);
+   }
 
    os << "============ Command for " << commandId << "===========" << std::endl;
    os << setw(25) << right << "CommandId: " << commandId << endl;
@@ -411,13 +452,14 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
    std::string machineId;
    long startTime;
    long endTime;
-   std::string startTimeStr;
-   std::string endTimeStr;
-   size_t maxCommandIdSize = 20;
-   size_t maxSessionIdSize = 20;
-   size_t maxMachineIdSize = 20;
-   size_t maxStartTimeSize = 20;
-   size_t maxEndTimeSize = 20;
+   std::string blank =  "  ----  ";
+   std::string startTimeStr = blank ;
+   std::string endTimeStr = blank;
+   size_t maxCommandIdSize = std::string("CommandId").size();
+   size_t maxSessionIdSize = std::string("SessionId").size();
+   size_t maxMachineIdSize = std::string("MachineId").size();
+   size_t maxStartTimeSize = std::string("Start Time").size();
+   size_t maxEndTimeSize = std::string("End Time").size();
    boost::posix_time::ptime pt;
 
 
@@ -434,14 +476,18 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      maxMachineIdSize = max(maxMachineIdSize, machineId.size());
 
      startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
-     pt =  boost::posix_time::from_time_t(startTime);
-     startTimeStr = boost::posix_time::to_simple_string(pt);
-     maxStartTimeSize = (maxStartTimeSize, startTimeStr.size());
-
+     if(startTime > 0) { 
+       pt =  boost::posix_time::from_time_t(startTime);
+       startTimeStr = boost::posix_time::to_simple_string(pt);
+     }
+     maxStartTimeSize = max(maxStartTimeSize, startTimeStr.size());
+     
      endTime = (lsCommand.getCommands().get(i))->getCmdEndTime();
-     pt =  boost::posix_time::from_time_t(endTime);
-     endTimeStr = boost::posix_time::to_simple_string(pt);
-     maxEndTimeSize = (maxEndTimeSize, endTimeStr.size());
+     if(endTime > 0) {
+       pt =  boost::posix_time::from_time_t(endTime);
+       endTimeStr = boost::posix_time::to_simple_string(pt);
+     }
+     maxEndTimeSize = max(maxEndTimeSize, endTimeStr.size());
 
   }
 
@@ -462,12 +508,20 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      machineId = (lsCommand.getCommands().get(i))->getMachineId();
 
      startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
-     pt =  boost::posix_time::from_time_t(startTime);
-     startTimeStr = boost::posix_time::to_simple_string(pt);
+     if(startTime > 0) {
+       pt =  boost::posix_time::from_time_t(startTime);
+       startTimeStr = boost::posix_time::to_simple_string(pt);
+     } else {
+       startTimeStr = blank;
+     }
 
      endTime = (lsCommand.getCommands().get(i))->getCmdEndTime();
-     pt =  boost::posix_time::from_time_t(endTime);
-     endTimeStr = boost::posix_time::to_simple_string(pt);
+     if(endTime > 0) {
+       pt =  boost::posix_time::from_time_t(endTime);
+       endTimeStr = boost::posix_time::to_simple_string(pt);
+     } else {
+       endTimeStr = blank;
+     }
 
      os << setw(maxCommandIdSize+2) << left << commandId;
      os << setw(maxSessionIdSize+2) << left << sessionId;
@@ -496,8 +550,8 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOption
 
   std::string name;
   std::string value;
-  size_t maxNameSize = 20;
-  size_t maxValueSize = 20;
+  size_t maxNameSize = std::string("Name").size();
+  size_t maxValueSize = std::string("Value").size();
 
   for(int i = 0; i < lsOptions.getOptionValues().size(); i++) {
 
@@ -558,9 +612,9 @@ std::ostream& operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
   int privilege;
   int status;
   std::string userId;
-  size_t maxFirstnameSize = 20;
-  size_t maxLastnameSize = 20;
-  size_t maxUserIdSize = 20;
+  size_t maxFirstnameSize = std::string("Firstname").size();
+  size_t maxLastnameSize = std::string("Lastname").size();
+  size_t maxUserIdSize = std::string("UserId").size();
 
   for(int i = 0; i < lsUsers.getUsers().size(); i++) {
 

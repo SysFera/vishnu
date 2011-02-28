@@ -1,14 +1,13 @@
 /**
  * \file QueryProxy.hpp
  * \brief This file contains the VISHNU QueryProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _QUERY_PROXY_H_
 #define _QUERY_PROXY_H_
 
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 
 #include "UMSVishnuException.hpp"
@@ -41,7 +40,7 @@ public:
   /**
    * \fn QueryProxy(const QueryParameters& params,
    *                const SessionProxy& session,
-                    const std::string& serviceName)
+   *                const std::string& serviceName)
    * \param params The object which encapsulates the information of queryProxy options 
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param serviceName The name of the service to call
@@ -178,7 +177,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
    ecorecpp::parser::parser parser;
-   mlistObject = parser.load(listObjectInString)->as< ListObject >();
+   mlistObject = parser.load(std::string(listObjectInString))->as< ListObject >();
 
  return mlistObject;
 }
