@@ -48,37 +48,29 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   std::string numSubstituteUserId;
   std::string numUserIdToconnect;
 
-  try {
-    //if the user exist
-    if (user.exist()) {
-
-      //if a user to substitute is defined
-      if (connectOpt->getSubstituteUserId().size() != 0) {
-        std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;
-        // if the user is admin
-        if (user.isAdmin()) {
-
-          numSubstituteUserId = user.getAttribut("where \
-          userid='"+connectOpt->getSubstituteUserId()+"'");
-
-          //If the user to substitute exist
-          if (user.existuserId(connectOpt->getSubstituteUserId())) {
-          //if (numSubstituteUserId.size() != 0) {
-
-            //if (user.getAttribut("where userid='"+user.getData().getUserId()+"'")) {
-              numUserIdToconnect = numSubstituteUserId;
-            //}
-          } //End If the user to substitute exist
-          else {
-            UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
-            throw e;
-          }
-        } // END if the user is admin
+  //if the user exist
+  if (user.exist()) {
+    //if a user to substitute is defined
+    if (connectOpt->getSubstituteUserId().size() != 0) {
+      std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;
+      // if the user is admin
+      if (user.isAdmin()) {
+        numSubstituteUserId = user.getAttribut("where \
+        userid='"+connectOpt->getSubstituteUserId()+"'");
+        //If the user to substitute exist
+        if (user.existuserId(connectOpt->getSubstituteUserId())) {
+            numUserIdToconnect = numSubstituteUserId;
+        } //End If the user to substitute exist
         else {
-          UMSVishnuException e(ERRCODE_NO_ADMIN);
+          UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
           throw e;
         }
-    } //End if connectOpt->getSubstituteUserId().size() != 0
+      } // END if the user is admin
+      else {
+        UMSVishnuException e(ERRCODE_NO_ADMIN);
+        throw e;
+      }
+    } //End if a user to substitute is defined
 
     //if there is not a numSubstituteUserId
     if (numUserIdToconnect.size() == 0) {
@@ -98,15 +90,10 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
     host.recordMachineClient();
     recordSessionServer(host.getId(), numUserIdToconnect);
 
-    } // END if the user exist
-    else {
-      UMSVishnuException e(ERRCODE_UNKNOWN_USER);
-      throw e;
-    }
-
-  } //END try
-  catch (VishnuException& e) {
-    throw;
+  } // END if the user exist
+  else {
+    UMSVishnuException e(ERRCODE_UNKNOWN_USER);
+    throw e;
   }
   return 0;
 }//END: connectSession(UserServer, MachineClientServer, ConnectOptions*)
@@ -127,45 +114,40 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
 
   msession.setSessionId(sessionId);
 
-  try {
-    //If the user exists
-    if (user.exist()) {
-      state = getState(true);
-      // -1 is an error code of getState when nohting has found
-      if (state != -1) {
-        //if the session is active
-        if (state == 1) {
-          //if user is an admin
-          if (user.isAdmin()) {
-            existSessionKey = getSessionkey("", "", true);
-          } //END if user is an admin
-          else {
-            existSessionKey = getSessionkey(host.getId(), user.getAttribut("where userid='"+user.getData().getUserId()+"'\
-                                          and pwd='"+user.getData().getPassword()+"'"));
-          }
-          //if there is no session key with the previous parameters
-          if (existSessionKey == -1) {
-            UMSVishnuException e(ERRCODE_SESSIONKEY_NOT_FOUND);
-            throw e;
-          }
-        }//if the session is active
+  //If the user exists
+  if (user.exist()) {
+    state = getState(true);
+    // -1 is an error code of getState when nohting has found
+    if (state != -1) {
+      //if the session is active
+      if (state == 1) {
+        //if user is an admin
+        if (user.isAdmin()) {
+          existSessionKey = getSessionkey("", "", true);
+        } //END if user is an admin
         else {
-          UMSVishnuException e(ERRCODE_SESSIONKEY_EXPIRED);
+          existSessionKey = getSessionkey(host.getId(), user.getAttribut("where userid='"+user.getData().getUserId()+"'\
+                                        and pwd='"+user.getData().getPassword()+"'"));
+        }
+        //if there is no session key with the previous parameters
+        if (existSessionKey == -1) {
+          UMSVishnuException e(ERRCODE_SESSIONKEY_NOT_FOUND);
           throw e;
         }
-      }//END if state != -1
+      }//if the session is active
       else {
-        UMSVishnuException e(ERRCODE_UNKNOWN_SESSION_ID);
+        UMSVishnuException e(ERRCODE_SESSIONKEY_EXPIRED);
         throw e;
       }
-    } //END IF user.exist
+    }//END if state != -1
     else {
-      UMSVishnuException e(ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e(ERRCODE_UNKNOWN_SESSION_ID);
       throw e;
     }
-  }//END Try
-  catch (VishnuException& e) {
-    throw;
+  } //END IF user.exist
+  else {
+    UMSVishnuException e(ERRCODE_UNKNOWN_USER);
+    throw e;
   }
   return 0;
 }//END: reconnect(UserServer, MachineClientServer, string sessionId)
@@ -179,37 +161,33 @@ int SessionServer::close() {
   std::string sqlCommand = "UPDATE vsession SET state=0 WHERE sessionkey='";
   int state;
 
-  try {
-    UserServer user = UserServer(SessionServer(msession.getSessionKey()));
-    CommandServer commanderServer = CommandServer(SessionServer(msession.getSessionKey()));
-    //The init function initializes login and password using the sessionKey
-    user.init();
-      //If The user exist
-    if (user.exist()) {
-      state = getState();
-      //if the session is not already closed
-      if (state != 0) {
-        //if no running commands
-       if (!commanderServer.isRunning()) {
-          sqlCommand.append(msession.getSessionKey()+"';");
-          sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP\
-          WHERE sessionkey='"+msession.getSessionKey()+"';");
-          mdatabaseVishnu->process(sqlCommand.c_str());
-        }
-        else {
-          UMSVishnuException e (ERRCODE_COMMAND_RUNNING);
-          throw e;
-        }
-      } //if the session is not already closed
+
+  UserServer user = UserServer(SessionServer(msession.getSessionKey()));
+  CommandServer commanderServer = CommandServer(SessionServer(msession.getSessionKey()));
+  //The init function initializes login and password using the sessionKey
+  user.init();
+    //If The user exist
+  if (user.exist()) {
+    state = getState();
+    //if the session is not already closed
+    if (state != 0) {
+      //if no running commands
+      if (!commanderServer.isRunning()) {
+        sqlCommand.append(msession.getSessionKey()+"';");
+        sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP\
+        WHERE sessionkey='"+msession.getSessionKey()+"';");
+        mdatabaseVishnu->process(sqlCommand.c_str());
+      }
       else {
-        UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
+        UMSVishnuException e (ERRCODE_COMMAND_RUNNING);
         throw e;
       }
-    } //END If The user exist
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+    } //if the session is not already closed
+    else {
+      UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
+      throw e;
+    }
+  } //END If The user exist
   return 0;
 }//END: close()
 
@@ -243,13 +221,9 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
-  try {
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    return result->getFirstElement();
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  return result->getFirstElement();
+
 }
 
 /**
@@ -263,12 +237,7 @@ SessionServer::saveConnection() {
   std::string sqlCommand = "UPDATE vsession SET lastconnect=CURRENT_TIMESTAMP\
   WHERE sessionkey='"+msession.getSessionKey()+"'";
 
-  try {
-    mdatabaseVishnu->process(sqlCommand.c_str());
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  mdatabaseVishnu->process(sqlCommand.c_str());
   return 0;
 }
 
@@ -285,13 +254,8 @@ SessionServer::getSessionToclosebyTimeout() {
   EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 \
   and closepolicy=1");
 
-  try {
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    return result;
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  return result;
 
 }
 
@@ -375,12 +339,8 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
   sqlInsert.append(values);
   std::cout << "SQL COMMAND:"<< sqlInsert << std::endl;
 
-  try {
-    mdatabaseVishnu->process(sqlInsert.c_str());
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  mdatabaseVishnu->process(sqlInsert.c_str());
+  return 0;
 }
 /**
 * \brief Function to check the session on database
@@ -391,17 +351,13 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
 bool
 SessionServer::exist(bool flagSessionId) {
 
-  try {
-    if (flagSessionId) {
-      return (getState(true) != -1);
-    }
-    else {
-      return (getState() != -1);
-    }
+  if (flagSessionId) {
+    return (getState(true) != -1);
   }
-  catch (VishnuException& e) {
-    throw;
+  else {
+    return (getState() != -1);
   }
+
 }
 
 
@@ -416,26 +372,20 @@ SessionServer::getState(bool flagSessionId) {
 
   std::string sessionState;
 
-  try {
-    if (flagSessionId) {
-      sessionState = getAttribut("where vsessionid='"+msession.getSessionId()+"'","state");
-    }
-    else {
-      sessionState = getAttribut("where sessionkey='"+msession.getSessionKey()+"'","state");
-    }
 
-    if (sessionState.size() != 0) {
+  if (flagSessionId) {
+    sessionState = getAttribut("where vsessionid='"+msession.getSessionId()+"'","state");
+  }
+  else {
+    sessionState = getAttribut("where sessionkey='"+msession.getSessionKey()+"'","state");
+  }
+
+  if (sessionState.size() != 0) {
     return convertToInt(sessionState);
-    }
-    else {
-      return -1;
-    }
-
   }
-  catch (VishnuException& e) {
-    throw;
+  else {
+    return -1;
   }
-
 
 }
 /**
@@ -449,8 +399,9 @@ SessionServer::getState(bool flagSessionId) {
 int
 SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin) {
 
-  try {
     std::string key = "";
+    std::string closePolicyStr = "";
+
     //if the user is not an admin, the machine and the userid are checked
     if (!flagAdmin) {
       key = getAttribut("where vsessionid='"+msession.getSessionId()+"' \
@@ -463,15 +414,14 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
 
     if (key.size() != 0) {
       msession.setSessionKey(key);
+      //To get the close policy associated to the session
+      closePolicyStr =  getAttribut("where vsessionid='"+msession.getSessionId()+"'", "closepolicy");
+      msession.setClosePolicy(convertToInt(closePolicyStr));
       return 0;
     }
     else {
       return -1;
     }
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
 }
 
 

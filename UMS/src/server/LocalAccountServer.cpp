@@ -32,65 +32,58 @@ LocalAccountServer::add() {
   std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, \
   aclogin, sshpathkey, home) values ";
 
-  try {
-    //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
-    userServer.init();
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
 
-    //Creation of the object machine
-    UMS_Data::Machine *machine = new UMS_Data::Machine();
-    machine->setMachineId(mlocalAccount->getMachineId());
-    MachineServer machineServer = MachineServer(machine);
+  //Creation of the object machine
+  UMS_Data::Machine *machine = new UMS_Data::Machine();
+  machine->setMachineId(mlocalAccount->getMachineId());
+  MachineServer machineServer = MachineServer(machine);
 
-    //if the user exists
-    if (userServer.exist()) {
-      //if the session key is for the owner of the local account or the user is an admin
-      if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
-        userServer.isAdmin()){
-        //if the machine exists and it is not locked
-        if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
-          and status=1").size() != 0) {
-          //To get the database number id of the machine
-          numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
-          //To get the database number id of the user
-          numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
+  //if the user exists
+  if (userServer.exist()) {
+    //if the session key is for the owner of the local account or the user is an admin
+    if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
+      userServer.isAdmin()){
+      //if the machine exists and it is not locked
+      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
+        and status=1").size() != 0) {
+        //To get the database number id of the machine
+        numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
+        //To get the database number id of the user
+        numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
 
-          //if the local account does not exist
-          if (!exist(numMachine, numUser)) {
+        //if the local account does not exist
+        if (!exist(numMachine, numUser)) {
 
-            //The sql code to insert the localAccount on the database
-            mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', \
-            '"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
+          //The sql code to insert the localAccount on the database
+          mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', \
+          '"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
 
-            msshpublickey = machineServer.getAttribut("where \
-            machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
+          msshpublickey = machineServer.getAttribut("where \
+          machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
 
-          }//END if the local account does not exist
-          else {
-            UMSVishnuException e (ERRCODE_LOCAL_ACCOUNT_EXIST);
-            throw e;
-          }
-        } //End if the machine exists and it is not locked
+        }//END if the local account does not exist
         else {
-          UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
+          UMSVishnuException e (ERRCODE_LOCAL_ACCOUNT_EXIST);
           throw e;
         }
-      }//End if the session key is for the owner of the local account or the user is an admin
+      } //End if the machine exists and it is not locked
       else {
-        UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
+        UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
         throw e;
       }
-    }//End if the user exists
+    }//End if the session key is for the owner of the local account or the user is an admin
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
       throw e;
     }
-    //delete machine;
+  }//End if the user exists
+  else {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+    throw e;
   }
-  catch (VishnuException& e) {
-    throw;
-  }
-
   return 0;
 }
 
@@ -105,81 +98,74 @@ LocalAccountServer::update() {
   std::string numUser;
   std::string sqlCommand = "";
 
-  try {
-    //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
-    userServer.init();
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
 
-    //Creation of the object machine
-    UMS_Data::Machine *machine = new UMS_Data::Machine();
-    machine->setMachineId(mlocalAccount->getMachineId());
-    MachineServer machineServer = MachineServer(machine);
+  //Creation of the object machine
+  UMS_Data::Machine *machine = new UMS_Data::Machine();
+  machine->setMachineId(mlocalAccount->getMachineId());
+  MachineServer machineServer = MachineServer(machine);
 
-    //if the user exists
-    if (userServer.exist()) {
-      //if the session key is for the owner of the local account or the user is an admin
-      if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
-        userServer.isAdmin()){
+  //if the user exists
+  if (userServer.exist()) {
+    //if the session key is for the owner of the local account or the user is an admin
+    if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
+      userServer.isAdmin()){
 
-        //if the machine exists and it is not locked
-        if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
-          and status=1").size() != 0) {
+      //if the machine exists and it is not locked
+      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
+        and status=1").size() != 0) {
 
-          //To get the database number id of the machine
-          numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
-          //To get the database number id of the user
-          numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
+        //To get the database number id of the machine
+        numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
+        //To get the database number id of the user
+        numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
 
-          //if the local account exists
-          if (exist(numMachine, numUser)) {
+        //if the local account exists
+        if (exist(numMachine, numUser)) {
 
-            //if a new acLogin has been defined
-            if (mlocalAccount->getAcLogin().size() != 0) {
-            sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'\
-            where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
-            }
-
-            //if a new sshpathkey has been defined
-            if (mlocalAccount->getSshKeyPath().size() != 0) {
-            sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'\
-            where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
-            }
-
-            //if a new home directory has been defined
-            if (mlocalAccount->getHomeDirectory().size() != 0) {
-            sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'\
-            where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
-            }
-
-            std::cout <<"SQL COMMAND:"<<sqlCommand;
-            mdatabaseVishnu->process(sqlCommand.c_str());
-
-          }//END if the local account exists
-          else {
-            UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
-            throw e;
+          //if a new acLogin has been defined
+          if (mlocalAccount->getAcLogin().size() != 0) {
+          sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'\
+          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
-        } //End if the machine exists and it is not locked
+
+          //if a new sshpathkey has been defined
+          if (mlocalAccount->getSshKeyPath().size() != 0) {
+          sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'\
+          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          }
+
+          //if a new home directory has been defined
+          if (mlocalAccount->getHomeDirectory().size() != 0) {
+          sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'\
+          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          }
+
+          std::cout <<"SQL COMMAND:"<<sqlCommand;
+          mdatabaseVishnu->process(sqlCommand.c_str());
+
+        }//END if the local account exists
         else {
-          UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
+          UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
           throw e;
         }
-      }//if the session key is for the owner of the local account or the user is an admin
+      } //End if the machine exists and it is not locked
       else {
-        UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
+        UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
         throw e;
       }
-    }//End if the user exists
+    }//if the session key is for the owner of the local account or the user is an admin
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
       throw e;
     }
-    //delete machine;
+  }//End if the user exists
+  else {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+    throw e;
   }
-  catch (VishnuException& e) {
-    throw;
-}
-
   return 0;
 }
 
@@ -194,63 +180,58 @@ LocalAccountServer::deleteLocalAccount() {
   std::string numMachine;
   std::string numUser;
 
-  try {
-    //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
-    userServer.init();
 
-    //Creation of the object machine
-    UMS_Data::Machine *machine = new UMS_Data::Machine();
-    machine->setMachineId(mlocalAccount->getMachineId());
-    MachineServer machineServer = MachineServer(machine);
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
 
-    //if the user exists
-    if (userServer.exist()) {
-      //if the session key is for the owner of the local account or the user is an admin
-      if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
-        userServer.isAdmin()){
+  //Creation of the object machine
+  UMS_Data::Machine *machine = new UMS_Data::Machine();
+  machine->setMachineId(mlocalAccount->getMachineId());
+  MachineServer machineServer = MachineServer(machine);
 
-        //if the machine exists and it is not locked
-        if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
-          and status=1").size() != 0) {
+  //if the user exists
+  if (userServer.exist()) {
+    //if the session key is for the owner of the local account or the user is an admin
+    if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
+      userServer.isAdmin()){
 
-          //To get the database number id of the machine
-          numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
-          //To get the database number id of the user
-          numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
+      //if the machine exists and it is not locked
+      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
+        and status=1").size() != 0) {
 
-          //if the local account exists
-          if (exist(numMachine, numUser)) {
+        //To get the database number id of the machine
+        numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
+        //To get the database number id of the user
+        numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
 
-            //To remove the local account from the database
-            mdatabaseVishnu->process("DELETE FROM account \
-            where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
+        //if the local account exists
+        if (exist(numMachine, numUser)) {
 
-          }//END if the local account exists
-          else {
-            UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
-            throw e;
-          }
-        } //END if the machine exists and it is not locked
+          //To remove the local account from the database
+          mdatabaseVishnu->process("DELETE FROM account \
+          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
+
+        }//END if the local account exists
         else {
-          UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
+          UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
           throw e;
         }
-      }//END if the session key is for the owner of the local account or the user is an admin
+      } //END if the machine exists and it is not locked
       else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
         throw e;
       }
-    }//End if the user exists
+    }//END if the session key is for the owner of the local account or the user is an admin
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
       throw e;
     }
+  }//End if the user exists
+  else {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+    throw e;
   }
-  catch (VishnuException& e) {
-    throw;
-}
-
   return 0;
 }
 /**
@@ -284,14 +265,8 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM account "+condition);
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
-  try {
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    return result->getFirstElement();
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
-
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  return result->getFirstElement();
 }
 
 /**
@@ -301,14 +276,7 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
 */
 bool
 LocalAccountServer::exist(std::string idmachine, std::string iduser) {
-
-  try {
-    return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
-
+  return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
 }
 
 /**

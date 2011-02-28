@@ -111,7 +111,7 @@ solveSessionReconnect(diet_profile_t* pb) {
       ::ecorecpp::serializer::serializer _ser(name);
       UMS_Data::Session session = sessionServer.getData();
       std::string sessionSerializedUpdate = _ser.serialize(const_cast<UMS_Data::Session_ptr>(&session));
-      
+
       //OUT Parameters
       diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
@@ -208,7 +208,7 @@ solveUserCreate(diet_profile_t* pb) {
 
     //To save the last connection on the database
     sessionServer.saveConnection();
-    
+
     //MAPPER CREATION
     mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_user");
@@ -1207,10 +1207,10 @@ solveListUsers(diet_profile_t* pb) {
   try {
 
     UMS_Data::ListUsers_ptr listUsers  = queryUsers.list();
-  
+
     //To save the last connection on the database
     sessionServer.saveConnection();
- 
+
     //MAPPER CREATION
     mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_list_users");
@@ -1221,7 +1221,7 @@ solveListUsers(diet_profile_t* pb) {
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
     commandServer.record(UMS);
-    
+
     const char* name = "listUsers";
     ::ecorecpp::serializer::serializer _ser(name);
     listUsersSerialized =  _ser.serialize(listUsers);
@@ -1298,7 +1298,7 @@ solveListHistoryCmd(diet_profile_t* pb) {
 */
 int
 solveListSessions(diet_profile_t* pb) {
- 
+
   return solveGenerique<UMS_Data::ListSessionOptions, UMS_Data::ListSessions, ListSessionsServer>(pb);
 }
 

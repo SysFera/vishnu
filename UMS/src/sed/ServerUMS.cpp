@@ -5,8 +5,6 @@
 * \date 31/01/2001
 */
 
-#include <stdio.h>
-#include <string.h>
 #include "ServerUMS.hpp"
 #include "UMSMapper.hpp"
 #include "MapperRegistry.hpp"
