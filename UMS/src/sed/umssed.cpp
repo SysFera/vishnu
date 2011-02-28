@@ -74,9 +74,8 @@ int main(int argc, char* argv[], char* envp[]) {
     monitor.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
     monitor.run();
   } else {
-    /* Error*/
     std::cerr << "There was a problem to initialize the server" << std::endl;
-    exit(0);
+    exit(1);
   }
   return res;
 }

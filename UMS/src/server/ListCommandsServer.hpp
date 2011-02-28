@@ -16,7 +16,8 @@
 
 #include "SessionServer.hpp"
 #include "ListCmdOptions.hpp"
-#include "ListCommandsServer.hpp"
+#include "UMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 /**
  * \class ListCommandsServer
@@ -116,6 +117,10 @@ public:
     std::string sqlListOfCommands;
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
+    std::string description;
+
+    //MAPPER CREATION
+    Mapper* mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
 
     sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from "
                          " vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and "
@@ -124,7 +129,6 @@ public:
 
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListCommands();
-
 
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
@@ -146,7 +150,10 @@ public:
           command->setCommandId(*ii);
           command->setSessionId(*(++ii));
           command->setMachineId(*(++ii));
-          command->setCmdDescription("TODO"/**(++ii)*/);++ii;
+
+          description = mapper->decode(*(++ii));
+          std::cout << "DESCRIPTION" << description << std::endl;
+          command->setCmdDescription("description");
           command->setCmdStartTime(convertToTimeType(*(++ii)));
           command->setCmdEndTime(convertToTimeType(*(++ii)));
 
