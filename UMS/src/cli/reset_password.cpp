@@ -1,4 +1,4 @@
-#include "reset_password.hpp"
+#include "common.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
 #include "utils.hpp"

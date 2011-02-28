@@ -1,4 +1,4 @@
-#include "list_sessions.hpp"
+#include "common.hpp"
 #include "utils.hpp"
 #include "listHistoryCmdUtils.hpp"
 #include<boost/bind.hpp>

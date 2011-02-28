@@ -276,7 +276,10 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
 */
 bool
 LocalAccountServer::exist(std::string idmachine, std::string iduser) {
-  return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
+  if (idmachine.size()>0 && iduser.size()>0){
+    return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
+  }
+  return false;
 }
 
 /**
