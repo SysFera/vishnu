@@ -49,7 +49,7 @@
           <date>17/02/2011</date>
           <authorinitials>SysFera</authorinitials>
           <revdescription>
-            <para>Renamed UMS::AddVishnuUser, Modified UMS::resetPassword, UMS::reconnect, UMS::addMachine, UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para>
+            <para>Renamed UMS::AddVishnuUser, Modified the signature of UMS::connect, UMS::reconnect, UMS::resetPassword, UMS::addMachine, UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para>
           </revdescription>
         </revision>
       </revhistory>

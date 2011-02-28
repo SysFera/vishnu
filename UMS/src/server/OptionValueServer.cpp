@@ -66,27 +66,27 @@ OptionValueServer::configureOption(bool defaultOptions) {
         } //END if the default table is used
         else {
           //To get the database number of the userid
-          numuserid = userServer.getAttribut("where\
-          userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
+          numuserid = userServer.getAttribut("where"
+          " userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
 
           //To get the database number of the default option
-          numoptionid = getAttribut("where \
-          description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
+          numoptionid = getAttribut("where "
+          "description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
 
           //To check if this option is already defined for the user
-          optionu_numoptionid = getAttribut("where \
-          users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
+          optionu_numoptionid = getAttribut("where "
+          "users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
 
           //if the option has not already defined for the user
           if (optionu_numoptionid.size() == 0) {
-            sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values\
-            ("+numuserid+",'"+
+            sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values "
+            " ("+numuserid+",'"+
             getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true)
             +"','"+moptionValue->getValue()+"')";
           } //End if the option has not already defined for the user
           else {
-            sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" \
-            where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
+            sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" "
+            "where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
           }
           std::cout <<"SQL COMMAND:"<<sqlCommand;
           mdatabaseVishnu->process(sqlCommand.c_str());

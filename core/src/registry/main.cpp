@@ -43,6 +43,14 @@ int main(int argc, char** argv){
       s = mapper.finalize(j)         ;
       cout << "Res coded :" << s << endl;
       cout << "Res decoded :" <<  mapper.decode(s) << endl;
+
+      cout << "code value2pwd " << VISHNU_CHANGE_PASSWORD << endl;
+      j = mapper.code("vishnu_change_password")  ;
+      mapper.code("toto", j)  ;
+      mapper.code("titi", j)  ;
+      s = mapper.finalize(j)         ;
+      cout << "Res codedpwd :" << s << endl;
+      cout << "Res decodedpwd :" <<  mapper.decode(s) << endl;
     }catch (SystemException *e){
       cout << "msg : " << e->what() << endl;
     }

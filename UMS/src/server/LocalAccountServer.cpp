@@ -47,8 +47,8 @@ LocalAccountServer::add() {
     if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
       userServer.isAdmin()){
       //if the machine exists and it is not locked
-      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
-        and status=1").size() != 0) {
+      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
+        " and status=1").size() != 0) {
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
         //To get the database number id of the user
@@ -58,11 +58,11 @@ LocalAccountServer::add() {
         if (!exist(numMachine, numUser)) {
 
           //The sql code to insert the localAccount on the database
-          mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', \
-          '"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
+          mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', "
+          "'"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
 
-          msshpublickey = machineServer.getAttribut("where \
-          machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
+          msshpublickey = machineServer.getAttribut("where "
+          "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
 
         }//END if the local account does not exist
         else {
@@ -114,8 +114,8 @@ LocalAccountServer::update() {
       userServer.isAdmin()){
 
       //if the machine exists and it is not locked
-      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
-        and status=1").size() != 0) {
+      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
+        " and status=1").size() != 0) {
 
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
@@ -127,20 +127,20 @@ LocalAccountServer::update() {
 
           //if a new acLogin has been defined
           if (mlocalAccount->getAcLogin().size() != 0) {
-          sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'\
-          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'"
+          " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
           //if a new sshpathkey has been defined
           if (mlocalAccount->getSshKeyPath().size() != 0) {
-          sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'\
-          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'"
+          " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
           //if a new home directory has been defined
           if (mlocalAccount->getHomeDirectory().size() != 0) {
-          sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'\
-          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'"
+          " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
           std::cout <<"SQL COMMAND:"<<sqlCommand;
@@ -197,8 +197,8 @@ LocalAccountServer::deleteLocalAccount() {
       userServer.isAdmin()){
 
       //if the machine exists and it is not locked
-      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'\
-        and status=1").size() != 0) {
+      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
+        " and status=1").size() != 0) {
 
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
@@ -209,8 +209,8 @@ LocalAccountServer::deleteLocalAccount() {
         if (exist(numMachine, numUser)) {
 
           //To remove the local account from the database
-          mdatabaseVishnu->process("DELETE FROM account \
-          where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
+          mdatabaseVishnu->process("DELETE FROM account "
+          "where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
 
         }//END if the local account exists
         else {

@@ -119,36 +119,36 @@ MachineServer::update() {
 
         //if a new machine name has been defined
         if (mmachine->getName().size() != 0) {
-        sqlCommand.append("UPDATE machine SET name='"+mmachine->getName()+"'\
-        where machineId='"+mmachine->getMachineId()+"';");
+          sqlCommand.append("UPDATE machine SET name='"+mmachine->getName()+"'\
+          where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //if a new site has been defined
         if (mmachine->getSite().size() != 0) {
-        sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
-        where machineId='"+mmachine->getMachineId()+"';");
+          sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
+          where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //Set the status of the machine
-        sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+"\
-        where machineId='"+mmachine->getMachineId()+"';");
+        sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
+        " where machineId='"+mmachine->getMachineId()+"';");
 
         //if a new ssh public key has been defined
         if (mmachine->getSshPublicKey().size() != 0) {
-        sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'\
-        where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'"
+          " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
         //if a new language has been defined
         if (mmachine->getLanguage().size() != 0) {
-        sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'\
-        where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'"
+          " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
         //if a new machine description has been defined
         if (mmachine->getMachineDescription().size() != 0) {
-        sqlCommand.append("UPDATE description SET description='"+mmachine->getMachineDescription()+"'\
-        where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          sqlCommand.append("UPDATE description SET description='"+mmachine->getMachineDescription()+"'"
+          " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
         std::cout <<"SQL COMMAND:"<<sqlCommand;
@@ -189,7 +189,7 @@ MachineServer::deleteMachine() {
     if (userServer.isAdmin()) {
       //if the machine to update exists
       if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
-      mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
+        mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
       } //End if the machine to update exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);

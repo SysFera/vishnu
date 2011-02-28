@@ -83,8 +83,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   string                  desc = "calcul"   ;
   string                  lang = "fr"       ;
   // Option value
-  string                  oval = "CHOC"     ;
-  string                  ona  = "NUTE"     ;
+  string                  oval = "42"     ;
+  string                  ona  = "VISHNU_TIMEOUT"     ;
   OptionValue             opva ;//= ecoreFactory->createOptionValue();
   ListOptOptions          lioo ;//= ecoreFactory->createListOptOptions();
   ListOptionsValues_ptr   liov = ecoreFactory->createListOptionsValues();
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ListCmdOptions          lico ;//= ecoreFactory->createListCmdOptions();
   // Configuration
   Configuration           conf ;//= ecoreFactory->createConfiguration();
-  string                  cpath = "/tmp/confile";
+  string                  cpath = "~/.vishnu/toto.cfg";
 
   // Setting value
   cop.setClosePolicy(sct);
@@ -646,7 +646,7 @@ BOOST_AUTO_TEST_CASE( my_test )
 
   // Test configure option
   opva.setOptionName(ona);
-  opva.setValue("GLACE");
+  opva.setValue("546");
   BOOST_REQUIRE(restore        (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing normal configure option U1.3.1-B" );
   BOOST_CHECK  (connect        (uid, pwd , key, cop )==0);
