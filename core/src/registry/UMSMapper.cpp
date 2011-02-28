@@ -147,7 +147,7 @@ UMSMapper::finalize(int key){
 }
 
 string
-UMSMapper::decodeCPP (const string& msg){
+UMSMapper::decode (const string& msg){
   vector<int> separatorPos;
   string      func;
   int         funcCode;

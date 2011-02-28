@@ -1,14 +1,13 @@
 /**
  * \file SessionProxy.hpp
  * \brief This file contains the VISHNU SessionProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _SESSION_PROXY_H_
 #define _SESSION_PROXY_H_
 
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 
 //EMF
@@ -18,13 +17,11 @@
 
 #include "DIET_client.h"
 
-//class SessionProxy;
-class UserProxy;
-
 #include "UserProxy.hpp"
 #include "Session.hpp"
 #include "ConnectOptions.hpp"
 
+class UserProxy;
 const int HOST_NAME_MAX_SIZE = 256;
 
 /**

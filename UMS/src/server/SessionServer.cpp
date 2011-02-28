@@ -241,7 +241,7 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
   DatabaseResult* result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
-  std::cout <<"SQL COMMAND:"<<sqlCommand;
+  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   try {
     result = mdatabaseVishnu->getResult(sqlCommand.c_str());
@@ -270,6 +270,29 @@ SessionServer::saveConnection() {
     throw;
   }
   return 0;
+}
+
+/**
+* \brief Function to get the list of sessions with close on timeout mode to close
+* \fn DatabaseResult* getSessionToclosebyTimeout()
+* \return the list of results
+*/
+DatabaseResult*
+SessionServer::getSessionToclosebyTimeout() {
+  DatabaseResult* result;
+
+  std::string sqlCommand("SELECT sessionkey from vsession where \
+  EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 \
+  and closepolicy=1");
+
+  try {
+    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+    return result;
+  }
+  catch (VishnuException& e) {
+    throw;
+  }
+
 }
 
 

@@ -1,21 +1,19 @@
 /**
  * \file UserProxy.hpp
  * \brief This file contains the VISHNU UserProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _USER_PROXY_H_
 #define _USER_PROXY_H_
 
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
-#include <assert.h>
 
-//class UserProxy;
-class SessionProxy;
 #include "SessionProxy.hpp"
 #include "User.hpp"
+
+class SessionProxy;
 
 /**
  * \class UserProxy 

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <fstream>
 #include "ServerUMS.hpp"
+#include "MonitorUMS.hpp"
 
 using namespace utilServer;
 
@@ -51,18 +52,31 @@ int main(int argc, char* argv[], char* envp[]) {
   dbUsername = argv[5];
   dbPassword = argv[6];
 
-  // Initialize the UMS Server (Opens a connection to the database)
-  ServerUMS server;
-  res = server.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
+  pid_t pid;
+  pid = fork();
 
-  // Initialize the DIET SeD
-  if (!res) {
-    diet_print_service_table();
-    res = diet_SeD(argv[1], argc, argv);
-  } else {
-    std::cerr << "There was a problem during services initialization" << std::endl;
-    exit(1);
+  if (pid > 0) {
+    // Initialize the UMS Server (Opens a connection to the database)
+    ServerUMS server;
+    res = server.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
+    // Initialize the DIET SeD
+    if (!res) {
+      diet_print_service_table();
+      res = diet_SeD(argv[1], argc, argv);
+    } else {
+      std::cerr << "There was a problem during services initialization" << std::endl;
+      exit(1);
+    }
   }
-
+  else if (pid == 0) {
+    // Initialize the UMS Monitor (Opens a connection to the database)
+    MonitorUMS monitor;
+    monitor.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
+    monitor.run();
+  } else {
+    /* Error*/
+    std::cerr << "There was a problem to initialize the server" << std::endl;
+    exit(0);
+  }
   return res;
 }
