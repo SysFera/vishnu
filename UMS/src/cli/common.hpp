@@ -1,9 +1,10 @@
-#ifndef LISTOPTIONS_HH
-#define LISTOPTIONS_HH
+#ifndef COMMON_HPP
+#define COMMON_HPP
 
 /**
- * \file list_options.hpp
- * This file defines convenients functions for the VISHNU list options  process
+ * \file common.hpp
+ * This file defines convenients include file for the all VISHNU command line
+ * interface 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -12,13 +13,12 @@
 #include <iostream>
 #include <iterator>
 #include <fstream>
-#include <cstdlib>
-
 
 //EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
+//#include "ConnectOptions.hpp"
 
 
 /*
@@ -29,7 +29,6 @@
  * is called to obtain the option name. If it returns empty string
  * the variable is ignored.
  */
-
 
 
 struct env_name_mapper{
