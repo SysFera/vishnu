@@ -19,6 +19,18 @@ VishnuException::VishnuException(int msg, std::string msgComp){
   mtype = VishnuException::NONE;
 }
 
+const char*
+VishnuException::what() const throw()
+{
+  mfullMsg = "VISHNU Error " + vishnu::convertToString(getMsgI());
+  mfullMsg += " : ";
+  mfullMsg += getMsg();
+  mfullMsg += " [";
+  mfullMsg += mmsgc;
+  mfullMsg += " ]";
+  return mfullMsg.c_str();
+}
+
 void
 VishnuException::appendMsgComp(std::string s){
   mmsgc += s;
@@ -32,19 +44,17 @@ VishnuException::getMsgI() const{
 /**
 * \brief Function to get the string associated to SystemException
 * \fn    buildExceptionString()
-* \return int value of the corresponding string
+* \return a serialized format of the exception
 */
 std::string
-VishnuException::buildExceptionString() {
+VishnuException::buildExceptionString() const {
   std::string errorInfo;
 
   //To get the error code associated to the exception follows by #
   errorInfo =  vishnu::convertToString(getMsgI())+"#";
 
-  //To get exception information
-  errorInfo.append(getMsg());
-  errorInfo.append(" ");
-  errorInfo.append(what());
+  //To get exception complementary message
+  errorInfo.append(mmsgc);
 
   return errorInfo;
 }

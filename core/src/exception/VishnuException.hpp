@@ -46,7 +46,10 @@ protected :
    *  \brief An exception code refereing to a generic message. -1 means no generic error message.
    */
   int           mval;
-
+  /**
+   * \brief The full exception message
+   */
+  mutable std::string   mfullMsg;
 
 public :
 
@@ -90,7 +93,7 @@ public :
    * \return Returns a complement to the generic error message
    */
   virtual const char*
-  what() const throw(){return mmsgc.c_str();}
+  what() const throw();
   /**
    * \brief To get the generic message
    * \fn virtual std::string getMsg()
@@ -144,7 +147,7 @@ public :
   * \return the exception as a string
   */
   std::string
-  buildExceptionString();
+  buildExceptionString() const;
 };
 
 #endif // VISHNUEXCEPTION
