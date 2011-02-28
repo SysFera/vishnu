@@ -1,7 +1,7 @@
 #include "daemon_cleaner.hpp"
 #include "sessionUtils.hpp"
 #include "api_ums.hpp"
-
+#include <fstream>
 
 bfs::path home_dir;
 bfs::path session_dir;
@@ -54,10 +54,11 @@ void deleter()
           SessionContainer allSessions=getAllSessions(current_path.string());// get all sessions stored in file
 
           if (false==allSessions.empty()){ // is there a session?
+            
+            BOOST_FOREACH (SessionEntry session, allSessions){
 
-            BOOST_FOREACH (const SessionEntry& session, allSessions){
 
-              if(2==session.getClosePolicy()) {//that session is open by disconnect mode
+              if(session.getClosePolicy()==2) {//that session is open by disconnect mode
 
                 close (session.getSessionKey()); // and need to be closed
 

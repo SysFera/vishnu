@@ -37,8 +37,8 @@ int main (int ac, char* av[]){
 
   /*********** Out parameters *********************/
 
-  std::string sessionKey;
 
+  UMS_Data::Session session;
 
   /**************** Describe options *************/
 
@@ -79,6 +79,7 @@ int main (int ac, char* av[]){
 
     /************** Call UMS connect service *******************************/
 
+    cleaner();// lauch the daemon cleaner if it is not already running
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
@@ -87,12 +88,11 @@ int main (int ac, char* av[]){
     }
 
 
-    connect(userId,password, sessionKey, connectOpt);// call the api extern connect service to get a session key
+    connect(userId,password, session, connectOpt);// call the api extern connect service to get a session key
 
-    storeLastSessionKey(sessionKey,connectOpt.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
+    storeLastSessionKey(session.getSessionKey(),session.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
 
 
-    cleaner();// lauch the daemon cleaner if it is not already running
 
   }// End of try bloc
 
