@@ -10,6 +10,10 @@
 
 static const int FNBERR = 5;
 
+/**
+ * \class FMSVishnuException
+ * \brief Specialisation of the user exception for the FMS module
+ */
 class FMSVishnuException: public UserException{
 private :
 protected:

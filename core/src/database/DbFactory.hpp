@@ -1,5 +1,5 @@
 /**
- * \file DbFactory.hh
+ * \file DbFactory.hpp
  * \brief This file defines the database factory
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10
