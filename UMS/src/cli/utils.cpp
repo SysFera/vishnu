@@ -72,7 +72,7 @@ return res;
 
 
 
-std::string takePassword(const string& prompt, const string & salt){
+std::string takePassword(const string& prompt){
 
    string password=getpass(prompt.c_str());
 

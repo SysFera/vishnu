@@ -73,7 +73,7 @@ int main (int ac, char* av[]){
     }
 
 
-//    reconnect(userId, password, sessionId, session);
+    reconnect(userId, password, sessionId, session);
    
 
     // store the session information
