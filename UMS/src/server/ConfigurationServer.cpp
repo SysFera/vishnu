@@ -60,95 +60,91 @@ ConfigurationServer::save() {
   mconfiguration= ecoreFactory->createConfiguration();
 
 
-  try {
-    //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
-    userServer.init();
-    //if the user exists
-    if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
-      //if the user is an admin
-      if (userServer.isAdmin()) {
-        //To get the list of users from the database
-        ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
-        if (ListofUsers->getNbTuples() != 0){
-          for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
-            results.clear();
-            results = ListofUsers->get(i);
-            ii = results.begin();
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
+  //if the user exists
+  if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+    //if the user is an admin
+    if (userServer.isAdmin()) {
+      //To get the list of users from the database
+      ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
 
-            UMS_Data::User_ptr user = ecoreFactory->createUser();
-            user->setUserId(*ii);
-            user->setPassword(*(++ii));
-            user->setFirstname(*(++ii));
-            user->setLastname(*(++ii));
-            user->setPrivilege(convertToInt(*(++ii)));
-            user->setEmail(*(++ii));
-            user->setStatus(convertToInt(*(++ii)));
-            mconfiguration->getListConfUsers().push_back(user);
-          }
+      if (ListofUsers->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofUsers->get(i);
+          ii = results.begin();
+
+          UMS_Data::User_ptr user = ecoreFactory->createUser();
+          user->setUserId(*ii);
+          user->setPassword(*(++ii));
+          user->setFirstname(*(++ii));
+          user->setLastname(*(++ii));
+          user->setPrivilege(convertToInt(*(++ii)));
+          user->setEmail(*(++ii));
+          user->setStatus(convertToInt(*(++ii)));
+          mconfiguration->getListConfUsers().push_back(user);
         }
-
-        //To get the list of machines from the database
-        ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
-
-        if (ListofMachines->getNbTuples() != 0){
-          for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
-            results.clear();
-            results = ListofMachines->get(i);
-            ii = results.begin();
-
-            UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-            machine->setMachineId(*ii);
-            std::cout << machine->getMachineId() << std::endl;
-            machine->setName(*(++ii));
-            std::cout << machine->getName() << std::endl;
-            machine->setSite(*(++ii));
-            std::cout << machine->getSite() << std::endl;
-            machine->setStatus(convertToInt(*(++ii)));
-            std::cout << machine->getStatus() << std::endl;
-            machine->setSshPublicKey(*(++ii));
-            std::cout << machine->getSshPublicKey() << std::endl;
-            machine->setLanguage(*(++ii));
-            std::cout << machine->getLanguage() << std::endl;
-            machine->setMachineDescription(*(++ii));
-            std::cout << machine->getMachineDescription() << std::endl;
-            mconfiguration->getListConfMachines().push_back(machine);
-          }
-        }
-
-
-        //To get the list of local accounts from the database
-        ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
-
-        if (ListofLocalAccount->getNbTuples() != 0){
-          for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
-            results.clear();
-            results = ListofLocalAccount->get(i);
-            ii = results.begin();
-
-            UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
-            localAccount->setMachineId(*ii);
-            localAccount->setUserId(*(++ii));
-            localAccount->setAcLogin(*(++ii));
-            localAccount->setSshKeyPath(*(++ii));
-            localAccount->setHomeDirectory(*(++ii));
-            mconfiguration->getListConfLocalAccounts().push_back(localAccount);
-          }
-        }
-      } //End if the user is an admin
-      else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
       }
-    }//End //if the user exists
+
+      //To get the list of machines from the database
+      ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+
+      if (ListofMachines->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofMachines->get(i);
+          ii = results.begin();
+
+          UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+          machine->setMachineId(*ii);
+          std::cout << machine->getMachineId() << std::endl;
+          machine->setName(*(++ii));
+          std::cout << machine->getName() << std::endl;
+          machine->setSite(*(++ii));
+          std::cout << machine->getSite() << std::endl;
+          machine->setStatus(convertToInt(*(++ii)));
+          std::cout << machine->getStatus() << std::endl;
+          machine->setSshPublicKey(*(++ii));
+          std::cout << machine->getSshPublicKey() << std::endl;
+          machine->setLanguage(*(++ii));
+          std::cout << machine->getLanguage() << std::endl;
+          machine->setMachineDescription(*(++ii));
+          std::cout << machine->getMachineDescription() << std::endl;
+          mconfiguration->getListConfMachines().push_back(machine);
+        }
+      }
+
+
+      //To get the list of local accounts from the database
+      ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+
+      if (ListofLocalAccount->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofLocalAccount->get(i);
+          ii = results.begin();
+
+          UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
+          localAccount->setMachineId(*ii);
+          localAccount->setUserId(*(++ii));
+          localAccount->setAcLogin(*(++ii));
+          localAccount->setSshKeyPath(*(++ii));
+          localAccount->setHomeDirectory(*(++ii));
+          mconfiguration->getListConfLocalAccounts().push_back(localAccount);
+        }
+      }
+    } //End if the user is an admin
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
       throw e;
     }
-  }
-  catch (VishnuException& e) {
-    throw;
+  }//End //if the user exists
+  else {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+    throw e;
   }
   return 0;
 }
@@ -163,66 +159,62 @@ int ConfigurationServer::restore() {
   std::string sqlCodeDescMachine = "";
   std::string sqlcodeLocalAccount = "";
 
-  try {
-    //Creation of the object user
-    UserServer userServer = UserServer(msessionServer);
-    userServer.init();
-    //if the userid is the super vishnu admin userid
-    if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
-      //if the user exists
-      if (userServer.exist()) {
 
-        mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';\
-        DELETE FROM machine; DELETE FROM account;");
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
+  //if the userid is the super vishnu admin userid
+  if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+    //if the user exists
+    if (userServer.exist()) {
 
-        //To get all users
-        for(int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
-          UMS_Data::User_ptr user = mconfiguration->getListConfUsers().get(i);
-          //userServer.add(user);
-          sqlcode.append(userToSql(user));
-        }
+      mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';\
+      DELETE FROM machine; DELETE FROM account;");
 
-        //To get all machines
-        for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
-          UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
-          sqlcode.append(machineToSql(machine));
-        }
-
-        std::cout << "SQL COMMAND:" << sqlcode << std::endl;
-
-        //To insert machines and users
-        mdatabaseVishnu->process(sqlcode.c_str());
-
-        //To get machines description
-        for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
-          UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
-          sqlCodeDescMachine.append(machineDescToSql(machine));
-        }
-
-        std::cout << "SQL COMMAND:" << sqlCodeDescMachine << std::endl;
-
-        //To insert machines description
-        mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
-
-        //To insert localAccount
-        for(int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
-          UMS_Data::LocalAccount_ptr localAccount = mconfiguration->getListConfLocalAccounts().get(i);
-          LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
-          localAccountServer.add();
-        }
-      } //End if the user exists
-      else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-        throw e;
+      //To get all users
+      for(int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
+        UMS_Data::User_ptr user = mconfiguration->getListConfUsers().get(i);
+        //userServer.add(user);
+        sqlcode.append(userToSql(user));
       }
-    }//End if the userid is the super vishnu admin userid
+
+      //To get all machines
+      for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
+        UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
+        sqlcode.append(machineToSql(machine));
+      }
+
+      std::cout << "SQL COMMAND:" << sqlcode << std::endl;
+
+      //To insert machines and users
+      mdatabaseVishnu->process(sqlcode.c_str());
+
+      //To get machines description
+      for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
+        UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
+        sqlCodeDescMachine.append(machineDescToSql(machine));
+      }
+
+      std::cout << "SQL COMMAND:" << sqlCodeDescMachine << std::endl;
+
+      //To insert machines description
+      mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
+
+      //To insert localAccount
+      for(int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
+        UMS_Data::LocalAccount_ptr localAccount = mconfiguration->getListConfLocalAccounts().get(i);
+        LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
+        localAccountServer.add();
+      }
+    } //End if the user exists
     else {
-      UMSVishnuException e (ERRCODE_ROOT_USER_ONLY);
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
       throw e;
     }
-  }
-  catch (VishnuException& e) {
-    throw;
+  }//End if the userid is the super vishnu admin userid
+  else {
+    UMSVishnuException e (ERRCODE_ROOT_USER_ONLY);
+    throw e;
   }
   return 0;
 }
@@ -289,16 +281,10 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
   UMS_Data::Machine* machinetmp = new UMS_Data::Machine();
   MachineServer machineServer = MachineServer(machinetmp);
 
-  try {
-    return ("insert into description (machine_nummachineid, lang, \
-    description) values \
-    ("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+",\
-    '"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
-
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  return ("insert into description (machine_nummachineid, lang, \
+  description) values \
+  ("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+",\
+  '"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
 
   delete machinetmp;
 }

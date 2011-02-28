@@ -33,12 +33,8 @@ int MachineClientServer::recordMachineClient() {
     sqlCmd.append(mhostname+"')");
     std::cout <<"SQL COMMAND:"<<sqlCmd;
 
-    try {
-      mdatabaseVishnu->process(sqlCmd.c_str());
-    }
-    catch (VishnuException& e) {
-      throw;
-    }
+    mdatabaseVishnu->process(sqlCmd.c_str());
+
   } //End if the machine is not on the database
   else {
     std::cout << "This client machine is already registered" << std::endl;
@@ -62,13 +58,10 @@ MachineClientServer::getId() {
   sqlCommand.append(mhostname+"'");
 
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
-  try {
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    return result->getFirstElement();
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  return result->getFirstElement();
+
 }
 /**
 * \brief Function to get the ssh key of the client machine
@@ -100,11 +93,6 @@ MachineClientServer::~MachineClientServer() {
 * \return true if the machine exists on the database else false
 */
 bool MachineClientServer::exist(){
-  try {
-    return (getId().size() != 0);
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
+  return (getId().size() != 0);
 }
 

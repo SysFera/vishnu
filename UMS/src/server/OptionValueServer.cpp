@@ -42,83 +42,77 @@ OptionValueServer::configureOption(bool defaultOptions) {
   std::string optionu_numoptionid;
   std::string numuserid;
 
-  try {
-    UserServer userServer = UserServer(SessionServer(msessionServer->getData().getSessionKey()));
-    userServer.init();
-    //if the user exists
-    if (userServer.exist()) {
-      //if the option exists
-      if (getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true).size() != 0) {
-        //if the value of this option is correct
-        if (isCorrectValue()) {
-          //if the default table is used
-          if (defaultOptions) {
-            //if the user is an admin
-            if (userServer.isAdmin()){
-              sqlCommand = "UPDATE optionu set defaultvalue="+moptionValue->getValue()+"\
-              where description='"+moptionValue->getOptionName()+"'";
-              std::cout <<"SQL COMMAND:"<<sqlCommand;
-              mdatabaseVishnu->process(sqlCommand.c_str());
-            } //END if the user is an admin
-            else {
-              UMSVishnuException e (ERRCODE_NO_ADMIN);
-              throw e;
-            }
-          } //END if the default table is used
-          else {
-            //To get the database number of the userid
-            numuserid = userServer.getAttribut("where\
-            userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
-
-            //To get the database number of the default option
-            numoptionid = getAttribut("where \
-            description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
-
-            //To check if this option is already defined for the user
-            optionu_numoptionid = getAttribut("where \
-            users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
-
-            //if the option has not already defined for the user
-            if (optionu_numoptionid.size() == 0) {
-              sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values\
-              ("+numuserid+",'"+
-              getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true)
-              +"','"+moptionValue->getValue()+"')";
-            } //End if the option has not already defined for the user
-            else {
-              sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" \
-              where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
-            }
+  UserServer userServer = UserServer(SessionServer(msessionServer->getData().getSessionKey()));
+  userServer.init();
+  //if the user exists
+  if (userServer.exist()) {
+    //if the option exists
+    if (getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true).size() != 0) {
+      //if the value of this option is correct
+      if (isCorrectValue()) {
+        //if the default table is used
+        if (defaultOptions) {
+          //if the user is an admin
+          if (userServer.isAdmin()){
+            sqlCommand = "UPDATE optionu set defaultvalue="+moptionValue->getValue()+"\
+            where description='"+moptionValue->getOptionName()+"'";
             std::cout <<"SQL COMMAND:"<<sqlCommand;
             mdatabaseVishnu->process(sqlCommand.c_str());
-          }
-        } //END if the value of this option is correct
-        else {
-          //if the option is VISHNU_CLOSE_POLICY
-          if (moptionValue->getOptionName().compare(CLOSEPOLICY_OPT) == 0) {
-            UMSVishnuException e (ERRCODE_UNKNOWN_CLOSURE_MODE);
-            throw e;
-          }
+          } //END if the user is an admin
           else {
-            UMSVishnuException e (ERRCODE_INCORRECT_TIMEOUT);
+            UMSVishnuException e (ERRCODE_NO_ADMIN);
             throw e;
           }
+        } //END if the default table is used
+        else {
+          //To get the database number of the userid
+          numuserid = userServer.getAttribut("where\
+          userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
+
+          //To get the database number of the default option
+          numoptionid = getAttribut("where \
+          description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
+
+          //To check if this option is already defined for the user
+          optionu_numoptionid = getAttribut("where \
+          users_numuserid="+numuserid+" and optionu_numoptionid="+numoptionid);
+
+          //if the option has not already defined for the user
+          if (optionu_numoptionid.size() == 0) {
+            sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values\
+            ("+numuserid+",'"+
+            getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true)
+            +"','"+moptionValue->getValue()+"')";
+          } //End if the option has not already defined for the user
+          else {
+            sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" \
+            where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
+          }
+          std::cout <<"SQL COMMAND:"<<sqlCommand;
+          mdatabaseVishnu->process(sqlCommand.c_str());
         }
-      } //END if the option exists
+      } //END if the value of this option is correct
       else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_OPTION);
-        throw e;
+        //if the option is VISHNU_CLOSE_POLICY
+        if (moptionValue->getOptionName().compare(CLOSEPOLICY_OPT) == 0) {
+          UMSVishnuException e (ERRCODE_UNKNOWN_CLOSURE_MODE);
+          throw e;
+        }
+        else {
+          UMSVishnuException e (ERRCODE_INCORRECT_TIMEOUT);
+          throw e;
+        }
       }
-    }//END if the user exists
+    } //END if the option exists
     else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      UMSVishnuException e (ERRCODE_UNKNOWN_OPTION);
       throw e;
     }
+  }//END if the user exists
+  else {
+    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+    throw e;
   }
-  catch (VishnuException& e) {
-    throw;
-  }
-
   return 0;
 }
 /**
@@ -151,7 +145,6 @@ std::string
 OptionValueServer::getAttribut(std::string condition, std::string attrname, bool defaultOptions) {
 
   DatabaseResult* result;
-  std::vector<std::string>::iterator ii;
   std::string sqlCommand;
 
   if (defaultOptions) {
@@ -162,14 +155,9 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
   }
 
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  return result->getFirstElement();
 
-  try {
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    return result->getFirstElement();
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
 }
 /**
 * \brief Function to get closure information from the database vishnu
@@ -181,22 +169,18 @@ int
 OptionValueServer::getClosureInfo(std::string numuserId, std::string nameInfo) {
 
   std::string userCloseInfo;
-  try {
-    //To get the closure information of the user identified by the numuserId
-    userCloseInfo = getAttribut ("where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
-    getAttribut("where description='"+nameInfo+"'", "numoptionid", true));
-    //If the closure information is not defined for the user
-    if (userCloseInfo.size() == 0) {
-      //To get the closure information from the table with the default options values
-      userCloseInfo = getAttribut("where description='"+nameInfo+"'", "defaultvalue", true);
-      return convertToInt(userCloseInfo);
-    } //END If the closure information is not defined for the user
-    else {
-      return convertToInt(userCloseInfo);
-    }
-  }
-  catch (VishnuException& e) {
-  throw;
+
+  //To get the closure information of the user identified by the numuserId
+  userCloseInfo = getAttribut ("where users_numuserid='"+numuserId+"' and optionu_numoptionid="+
+  getAttribut("where description='"+nameInfo+"'", "numoptionid", true));
+  //If the closure information is not defined for the user
+  if (userCloseInfo.size() == 0) {
+    //To get the closure information from the table with the default options values
+    userCloseInfo = getAttribut("where description='"+nameInfo+"'", "defaultvalue", true);
+    return convertToInt(userCloseInfo);
+  } //END If the closure information is not defined for the user
+  else {
+    return convertToInt(userCloseInfo);
   }
 }
 
@@ -220,6 +204,5 @@ int value = convertToInt(moptionValue->getValue());
   if (moptionValue->getOptionName().compare(TIMEOUT_OPT) == 0) {
       return (value > 0) ;
   }
-
   return iscorrect;
 }

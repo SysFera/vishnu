@@ -7,7 +7,6 @@
 
 #include "CommandServer.hpp"
 
-
 /**
 * \brief Constructor
 * \fn CommandServer(SessionServer session)
@@ -55,19 +54,13 @@ CommandServer::record(CmdType cmdType,
   std::string sqlCmd = std::string("insert into command (vsession_numsessionid, starttime,\
   endtime, description, ctype) values (");
 
-  try {
+  sqlCmd.append(msessionServer.getAttribut("WHERE \
+  sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
-    sqlCmd.append(msessionServer.getAttribut("WHERE \
-    sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
+  sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+")");
+  std::cout << "SQL COMMAND:" << sqlCmd;
 
-    sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+")");
-    std::cout << "SQL COMMAND:" << sqlCmd;
-    mdatabaseVishnu->process(sqlCmd.c_str());
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
-
+  mdatabaseVishnu->process(sqlCmd.c_str());
   return 0;
 }
 
@@ -87,14 +80,8 @@ CommandServer::isRunning() {
 
   std::cout << "SQL COMMAND:" << sqlCommand;
 
-  try {
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    return (result->getNbTuples() != 0);
-  }
-  catch (VishnuException& e) {
-    throw;
-  }
-
+  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  return (result->getNbTuples() != 0);
 }
 
 /**
