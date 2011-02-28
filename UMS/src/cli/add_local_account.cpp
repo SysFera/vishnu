@@ -1,4 +1,4 @@
-#include "add_local_account.hpp"
+#include "common.hpp"
 #include "utils.hpp"
 #include "localAccountUtils.hpp"
 #include "sessionUtils.hpp"
