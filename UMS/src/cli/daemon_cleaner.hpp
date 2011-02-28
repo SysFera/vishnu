@@ -39,6 +39,6 @@ namespace bi = boost::interprocess;
 namespace btt = boost::this_thread;
 namespace bpt = boost::posix_time;
 bool pid_exists(const std::string& pid);
-void deleter();
-void cleaner();
+void deleter(char* dietConfig,int ac,char* av[]);
+void cleaner(char* dietConfig,int ac,char* av[]);
 #endif

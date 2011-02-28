@@ -37,10 +37,10 @@ void Configuration::setConfigFile(const string& configFile) {
 // standard Options constructor. Get a string (command name)
 
 Options:: Options(const std::string& pgName )   : generic_options("Generic Options"),
-  config_options("Configuration"),
-  env_options("Environment variables"),
-  hidden_options("Hidden Options"),
-  conf(new Configuration(pgName)){
+                                                  config_options("Configuration"),
+                                                  env_options("Environment variables"),
+                                                  hidden_options("Hidden Options"),
+                                                  conf(new Configuration(pgName)){
 
 
     generic_options.add_options()
@@ -52,10 +52,10 @@ Options:: Options(const std::string& pgName )   : generic_options("Generic Optio
 
 /* Standard Options constructor. Get a pointer on a config object*/
 Options::Options(boost::shared_ptr<Configuration> otherConf):conf(otherConf),
-  generic_options("Generic Options"),
-  config_options("Configuration"),
-  env_options("Environment variables"),
-  hidden_options("Hidden Options"){
+                                                             generic_options("Generic Options"),
+                                                             config_options("Configuration"),
+                                                             env_options("Environment variables"),
+                                                             hidden_options("Hidden Options"){
 
     generic_options.add_options()
       ("help,h", "produce help message")
@@ -80,31 +80,32 @@ void Options::setGroup (const po::options_description& tmp_options,
   switch(group){
 
     case GENERIC:
-      {
-        generic_options.add(tmp_options);
-        break;
-      }
+
+      generic_options.add(tmp_options);
+      break;
+
     case CONFIG:
-      {
-        config_options.add(tmp_options);
-        break;
-      }
+
+      config_options.add(tmp_options);
+      break;
+
     case ENV:
-      {
-        env_options.add(tmp_options);
-        break;
-      }
+
+      env_options.add(tmp_options);
+      break;
+
     case HIDDEN:
-      {
-        hidden_options.add(tmp_options);
-        break;
-      }
+
+      hidden_options.add(tmp_options);
+      break;
+
     default:
-      {
-        cout << "unknown option group " << endl;
-      }
+
+      cout << "unknown option group " << endl;
+
   }
 }
+
 
 
 
