@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
-* \file ListCommands.hpp
-* \brief Represents the class to list the commands
-* \author Generated file
-* \date 31/01/2011
-*/
+ * \file ListCommands.hpp
+ * \brief Represents the class to list the commands
+ * \author Generated file
+ * \date 31/01/2011
+ */
 
 #ifndef UMS_DATA_LISTCOMMANDS_HPP
 #define UMS_DATA_LISTCOMMANDS_HPP
