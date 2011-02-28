@@ -60,6 +60,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
         //If the user to substitute exist
         if (user.existuserId(connectOpt->getSubstituteUserId())) {
             numUserIdToconnect = numSubstituteUserId;
+            msession.setUserId(connectOpt->getSubstituteUserId());
         } //End If the user to substitute exist
         else {
           UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
@@ -76,6 +77,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
     if (numUserIdToconnect.size() == 0) {
         numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
         " and pwd='"+user.getData().getPassword()+"'");
+        msession.setUserId(user.getData().getUserId());
     } //END if There is not a numSubstituteUserId
 
     generateSessionKey(user.getData().getUserId());
