@@ -1,18 +1,24 @@
-#ifndef RECONNECT_HH
-#define RECONNECT_HH
+#ifndef LISTLOCALACCOUNT_HH
+#define LISTLOCALACCOUNT_HH
 
 /**
- * \file reconnect.hh
- * This file declares convenient include files for the VISHNU reconnexion process
+ * \file list_local_accounts.hpp
+ * This file defines convenients functions for the VISHNU list local account  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
+#include <cstdlib>
 
+
+//EMF
+#include <ecore.hpp> // Ecore metamodel
+#include <ecorecpp.hpp> // EMF4CPP utils
+#include "UMS_Data.hpp"
 
 
 /*
@@ -24,26 +30,23 @@
  * the variable is ignored.
  */
 
-const unsigned int RCPARAM=2;
+
 
 struct env_name_mapper{
 
-        std::string operator ()(std::string name){
+	std::string operator ()(std::string name){
 
-                std::string result= "";
+		std::string result= "";
 
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
                 }
-                
-              return result;
-        }
+
+
+		return result;
+	}
 };
-
-
-
-
 
 
 

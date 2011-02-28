@@ -1,13 +1,13 @@
-#ifndef CONFIGUREDEFAULTOPTION_HH
-#define CONFIGUREDEFAULTOPTION_HH
+#ifndef ADDMACHINE_HPP
+#define ADDMACHINE_HPP
 
 /**
- * \file configureDefaultOption.hh
- * This file defines convenients functions for the VISHNU configure default option process
+ * \file add_machine.hpp
+ * This file defines convenients functions for the VISHNU add machine  process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
@@ -30,8 +30,6 @@
  * the variable is ignored.
  */
 
-const unsigned int CDOPARAM=2;// the number of required parameters for the updateLocalAccount command
-
 
 struct env_name_mapper{
 
@@ -43,6 +41,7 @@ struct env_name_mapper{
 
                         result="dietConfig";
                 }
+
 
 		return result;
 	}

@@ -1,3 +1,10 @@
+/**
+ * \file ListUsersServer.hpp
+ * \brief This file contains the VISHNU QueryServer class.
+ * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+ * \date February 2011 
+ */
 #ifndef _QUERY_SERVER_H_
 #define _QUERY_SERVER_H_
 
@@ -8,7 +15,11 @@
 
 #include "ListUsersServer.hpp"
 
-//Constructors
+/**
+ * \fn ListUsersServer(const SessionServer session)
+ * \param session The object which encapsulates the session information (ex: identifier of the session)
+ * \brief Constructor, raises an exception on error
+ */
 ListUsersServer::ListUsersServer(const SessionServer session)
 {
    mlistUsers = NULL;
@@ -16,7 +27,14 @@ ListUsersServer::ListUsersServer(const SessionServer session)
    mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
-ListUsersServer::ListUsersServer(std::string option, const SessionServer& session):
+/**
+ * \fn ListUsersServer(const std::string& option
+ *                     const SessionServer& session)
+ * \param option The ListUsersServer option 
+ * \param session The object which encapsulates the session information (ex: identifier of the session)
+ * \brief Constructor, raises an exception on error
+ */
+ListUsersServer::ListUsersServer(const std::string& option, const SessionServer& session):
 moption(option), msessionServer(session)
 {
    mlistUsers = NULL;
@@ -24,9 +42,19 @@ moption(option), msessionServer(session)
    mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
+/**
+ * \brief Function to treat the ListUsersServer options 
+ * \fn void processOptions(UserServer userServer,
+ *                         const std::string& options
+ *                         std::string& sqlRequest)
+ * \param userServer the object which encapsulates user information
+ * \param optionsListUsersServer option 
+ * \param sqlRequest the sql data base request
+ * \return raises an exception on error
+ */
 void ListUsersServer::processOptions(UserServer userServer, const std::string& options, std::string& sqlRequest)
 {
-  if(!userServer.isAdmin()&&(options.size()!=0)) {
+  if(!userServer.isAdmin()) {
     UMSVishnuException e (ERRCODE_NO_ADMIN);
     throw e;
   }
@@ -43,7 +71,12 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
 
 }
 
-//To list sessions
+/**
+ * \brief Function to list machines information 
+ * \fn UMS_Data::ListUsers* list()
+ * \return The pointer to the UMS_Data::ListUsers containing users information
+ * \return raises an exception on error
+ */
 ListUsers* ListUsersServer::list()
 {
   DatabaseResult *ListofUsers;
@@ -95,8 +128,12 @@ ListUsers* ListUsersServer::list()
   return mlistUsers;
 }
 
-  //Destructor
-ListUsersServer::~ListUsersServer() {
+/**
+ * \fn ~ListUsersServer()
+ * \brief Destructor, raises an exception on error
+ */
+ListUsersServer::~ListUsersServer() 
+{
 }
 
 #endif

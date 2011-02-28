@@ -1,7 +1,7 @@
 
 
-#include "listUsers.hh"
-#include "utils.hh"
+#include "list_users.hpp"
+#include "utils.hpp"
 #include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
@@ -11,111 +11,110 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
+  string dietConfig;
 
-		std::string userIdOption;
+  std::string userIdOption;
 
-		std::string sessionKey;
+  std::string sessionKey;
 
-		/********** EMF data ************/
+  /********** EMF data ************/
 
-		UMS_Data::ListUsers lsUsers;
+  UMS_Data::ListUsers lsUsers;
 
-/**************** Describe options *************/
+  /**************** Describe options *************/
 
-		Options opt(av[0] );
+  Options opt(av[0] );
 
-        opt.add("dietConfig,c",
-						            "The diet config file",
-												ENV,
-												dietConfig);
+  opt.add("dietConfig,c",
+          "The diet config file",
+          ENV,
+          dietConfig);
 
-				opt.add("userIdOption,i",
-										 "An option for listing all default option values\n"
-										 "defined by VISHNU administrator",
-										 CONFIG,
-										 userIdOption);
-
-
-	try {
-
-/**************  Parse to retrieve option values  ********************/
-
-		opt.parse_cli(ac,av);
-
-		bool isEmpty=opt.empty();//if no value was given in the command line
-
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+  opt.add("userIdOption,i",
+          "An option for listing all default option values\n"
+          "defined by VISHNU administrator",
+          CONFIG,
+          userIdOption);
 
 
-/********  Process **************************/
+  try {
 
-		checkVishnuConfig(opt);
+    /**************  Parse to retrieve option values  ********************/
 
-		if ( opt.count("help")){
+    opt.parse_cli(ac,av);
 
-			helpUsage(opt," [options]");
+    bool isEmpty=opt.empty();//if no value was given in the command line
 
-			return 0;
-		}
+    opt.parse_env(env_name_mapper());
 
-/************** Call UMS connect service *******************************/
-
-               // initializing DIET
-
-							  if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
+    opt.notify();
 
 
+    /********  Process **************************/
 
-	 // get the sessionKey
+    checkVishnuConfig(opt);
 
-                sessionKey=getLastSessionKey(getppid());
+    if ( opt.count("help")){
 
-               if(false==sessionKey.empty()){
+      helpUsage(opt," [options]");
 
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-    
-               listUsers(sessionKey,lsUsers, userIdOption);
+      return 0;
+    }
+
+    /************** Call UMS connect service *******************************/
+
+    // initializing DIET
+
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
 
 
-               }
-						 
-    
-							// Display the list
-      if(isEmpty) {
-         cout << lsUsers << endl;
+    // get the sessionKey
+
+    sessionKey=getLastSessionKey(getppid());
+
+    if(false==sessionKey.empty()){
+
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
+
+      listUsers(sessionKey,lsUsers, userIdOption);
+
+
+    }
+
+
+    // Display the list
+    if(isEmpty) {
+      cout << lsUsers << endl;
+    }
+    else {
+      for(int i = 0; i < lsUsers.getUsers().size(); i++) {
+        cout << lsUsers.getUsers().get(i) << endl;
       }
-      else {
-         for(int i = 0; i < lsUsers.getUsers().size(); i++) {
-           cout << lsUsers.getUsers().get(i) << endl;
-         }
-      }
+    }
 
-	}// End of try bloc
+  }// End of try bloc
 
-	catch(VishnuException& e){// catch all Vishnu runtime error
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
-		errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-		return e.getMsgI() ;
+    return e.getMsgI() ;
 
-	}
+  }
 
-	catch(std::exception& e){
+  catch(std::exception& e){
 
-		errorUsage(av[0], e.what());
+    errorUsage(av[0], e.what());
 
-		return 1;
-	}
+    return 1;
+  }
 
-	return 0;
+  return 0;
 
 }// end of main
 

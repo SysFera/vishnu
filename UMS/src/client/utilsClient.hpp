@@ -1,17 +1,15 @@
 /**
  * \file utilsClient.hpp
  * \brief This file contains client utils functions for VISHNU client Proxy classes 
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef  _utilsClient_H_  
 #define  _utilsClient_H_
 
 #include <string>
 #include <iostream>
-#include <cstring>
-#include <iostream>
 #include <sstream>
-//#include <algorithm>
 
 #include "UMSVishnuException.hpp"
 
@@ -31,8 +29,8 @@ inline void errMsg(const std::string& msg) {
  * \fn inline void printSuccessMessage(char* errorInfo) 
  * \param errorInfo to check 
  */
-inline void printSuccessMessage(char* errorInfo) {
-  if(strlen(errorInfo)==0) std::cout << "The service was performed successfull" << std::endl;
+inline void printSuccessMessage(const std::string& errorInfo) {
+  if(errorInfo.size()==0) std::cout << "The service was performed successfully" << std::endl;
 }
 
 /**

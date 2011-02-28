@@ -1,5 +1,5 @@
 /**
- * \file DatabaseResult.hh
+ * \file DatabaseResult.hpp
  * \brief This file presents the Database results class.
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi.sysfera.com)
  * \date 15/12/10 
