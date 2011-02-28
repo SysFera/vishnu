@@ -1,14 +1,13 @@
 /**
  * \file OptionValueProxy.hpp
  * \brief This file contains the VISHNU OptionValueProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _OPTION_VALUE_PROXY_H_
 #define _OPTION_VALUE_PROXY_H_
 
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 
 #include "SessionProxy.hpp"

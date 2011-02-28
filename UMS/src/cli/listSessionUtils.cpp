@@ -1,4 +1,4 @@
-#include "Options.hh"
+#include "Options.hpp"
 
 #include "connectUtils.hpp"
 #include "listMachineUtils.hpp"
@@ -6,23 +6,23 @@
 using namespace std;
 
 boost::shared_ptr<Options> makeListSessionOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
-                                                    StringcallBackType& fMachineId, StringcallBackType& fSessionId,
+                                                  StringcallBackType& fMachineId, StringcallBackType& fSessionId,
                                                   StatuscallBackType& fStatus,ClosePolicycallBackType& fClosePolicy,
                                                   IntcallBackType& fSessionInactivityDelay,
-                                                   LongcallBackType& fStartDateOption, LongcallBackType& fEndDateOption){
+                                                  LongcallBackType& fStartDateOption, LongcallBackType& fEndDateOption){
 
 
-	boost::shared_ptr<Options> opt(new Options(pgName));
-
-
-
+  boost::shared_ptr<Options> opt(new Options(pgName));
 
 
 
 
 
 
-		return opt;
+
+
+
+  return opt;
 
 
 

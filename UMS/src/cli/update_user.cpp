@@ -1,7 +1,7 @@
 
 
-#include "updateUser.hh"
-#include "utils.hh"
+#include "update_user.hpp"
+#include "utils.hpp"
 #include "userUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
@@ -14,63 +14,63 @@ int main (int ac, char* av[]){
 
 
 
-		/******* Parsed value containers ****************/
+  /******* Parsed value containers ****************/
 
-		string dietConfig;
+  string dietConfig;
 
-		string sessionKey;
+  string sessionKey;
 
-		/********** EMF data ************/
+  /********** EMF data ************/
 
-	UMS_Data::User upUser;
+  UMS_Data::User upUser;
 
-/******** Callback functions ******************/
+  /******** Callback functions ******************/
 
 
-	boost::function1<void,string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(upUser),_1));
-	boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(upUser),_1));
-	boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(upUser),_1));
-	boost::function1<void,string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(upUser),_1));
-	boost::function1<void,string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(upUser),_1));
+  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(upUser),_1));
+  boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(upUser),_1));
+  boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(upUser),_1));
+  boost::function1<void,string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(upUser),_1));
+  boost::function1<void,string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(upUser),_1));
 
-/**************** Describe options *************/
+  /**************** Describe options *************/
 
-	boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
+  boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
 
 
 
   opt->add("userId,u",
-                "represents the VISHNU user identifier",
-            HIDDEN,
-            fUserId,
-            1);
+           "represents the VISHNU user identifier",
+           HIDDEN,
+           fUserId,
+           1);
 
 
-					opt->setPosition("userId",-1);
+  opt->setPosition("userId",-1);
 
 
-					try {
-/**************  Parse to retrieve option values  ********************/
+  try {
+    /**************  Parse to retrieve option values  ********************/
 
-						opt->parse_cli(ac,av);
-
-
-						opt->parse_env(env_name_mapper());
+    opt->parse_cli(ac,av);
 
 
-						opt->notify();
-
-/********  Process **************************/
-
-						if (opt->count("userId")){
+    opt->parse_env(env_name_mapper());
 
 
-							cout <<"The user identifier is " << upUser.getUserId() << endl;
+    opt->notify();
+
+    /********  Process **************************/
+
+    if (opt->count("userId")){
+
+
+      cout <<"The user identifier is " << upUser.getUserId() << endl;
 
     }
 
 
-						if(opt->count("privilege")){
+    if(opt->count("privilege")){
 
       cout <<"the privilege is : " << upUser.getPrivilege() << endl;
 
@@ -95,53 +95,52 @@ int main (int ac, char* av[]){
     }
 
 
-		checkVishnuConfig(*opt);
+    checkVishnuConfig(*opt);
 
     if (opt->count("sessionKey")){
 
       cout <<"The session key is " << sessionKey << endl;
 
-}
+    }
+
+
+    /************** Call UMS connect service *******************************/
+
+    // initializing DIET
+
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+      cerr << "DIET initialization failed !" << endl;
+      return 1;
+    }
 
 
 
-/************** Call UMS connect service *******************************/
+    // get the session key
 
-               // initializing DIET
+    sessionKey=getLastSessionKey(getppid());
 
-                if (diet_initialize(dietConfig.c_str(), ac, av)) {
-                    cerr << "DIET initialization failed !" << endl;
-               return 1;
-              }
-              
+    if(false==sessionKey.empty()){
 
-
-// get the session key
-
-sessionKey=getLastSessionKey(getppid());
-
-if(false==sessionKey.empty()){
- 
- cout << "the current session key is " << sessionKey <<endl; 
-               updateUser(sessionKey,upUser);
-}
+      cout << "the current session key is " << sessionKey <<endl; 
+      updateUser(sessionKey,upUser);
+    }
 
   }// End of try bloc
 
-catch(po::required_option& e){// a required parameter is missing
+  catch(po::required_option& e){// a required parameter is missing
 
 
-  usage(*opt," userId ","required parameter is missing");
+    usage(*opt," userId ","required parameter is missing");
   }
 
-catch(VishnuException& e){// catch all Vishnu runtime error
+  catch(VishnuException& e){// catch all Vishnu runtime error
 
 
-	errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-	return e.getMsgI() ;
+    return e.getMsgI() ;
 
-}
+  }
 
   catch(std::exception& e){
 

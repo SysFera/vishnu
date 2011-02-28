@@ -1,7 +1,7 @@
-#include "resetPassword.hh"
+#include "reset_password.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
-#include "utils.hh"
+#include "utils.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -9,105 +9,100 @@ using namespace std;
 int main (int ac, char* av[]){
 
 
-	string userId;
+  string userId;
 
-	string sessionKey;
+  string sessionKey;
 
-	string dietConfig;
-
-
-/**************** Describe options *************/
-	boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
-
-	      opt->setPosition("userId",-1);
+  string dietConfig;
 
 
+  /**************** Describe options *************/
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
 
-	try {
-
-/**************  Parse to retrieve option values  ********************/
-
-		opt->parse_cli(ac,av);
-
-		opt->parse_env(env_name_mapper());
-
-		opt->notify();
-
-/********  Process **************************/
-
-		if (opt->count("userId")){
-
-			cout <<"The user identifier is " << userId << endl;
-
-		}
+  opt->setPosition("userId",-1);
 
 
 
-		checkVishnuConfig(*opt);
+  try {
 
-		if(opt->count("sessionKey")){
+    /**************  Parse to retrieve option values  ********************/
 
-			cout << "The session Key is: " << sessionKey <<endl;
+    opt->parse_cli(ac,av);
 
-		}
+    opt->parse_env(env_name_mapper());
+
+    opt->notify();
+
+    /********  Process **************************/
+
+    if (opt->count("userId")){
+
+      cout <<"The user identifier is " << userId << endl;
+
+    }
 
 
-/************** Call UMS connect service *******************************/
+
+    checkVishnuConfig(*opt);
 
 
-               // initializing DIET
-              if (diet_initialize(dietConfig.c_str(), ac, av)) {
 
-				  cerr << "DIET initialization failed !" << endl;
+    /************** Call UMS connect service *******************************/
 
-				  return 1;
-              }
+
+    // initializing DIET
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+
+      cerr << "DIET initialization failed !" << endl;
+
+      return 1;
+    }
 
 
     // get the sessionKey
 
-                sessionKey=getLastSessionKey(getppid());
+    sessionKey=getLastSessionKey(getppid());
 
-               if(false==sessionKey.empty()){
+    if(false==sessionKey.empty()){
 
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-                std::string tmpPassword;
-                resetPassword(sessionKey,userId, tmpPassword);
-                cout <<"tmpPassword=" << tmpPassword << std::endl;
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
+      std::string tmpPassword;
+      resetPassword(sessionKey,userId, tmpPassword);
+      cout <<"tmpPassword=" << tmpPassword << std::endl;
 
-               }
-          
-
-
-	}// End of try bloc
+    }
 
 
 
-	catch(po::required_option& e){// a required parameter is missing
+  }// End of try bloc
 
 
-		usage(*opt,"[options] userId ","required parameter is missing");
 
-	}
+  catch(po::required_option& e){// a required parameter is missing
+
+
+    usage(*opt,"[options] userId ","required parameter is missing");
+
+  }
   catch(VishnuException& e){// catch all Vishnu runtime error
 
-		errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], e.getMsg(),EXECERROR);
 
-		return e.getMsgI() ;
+    return e.getMsgI() ;
 
-	}
-
-
-	catch(std::exception& e){
+  }
 
 
-		errorUsage(av[0], e.what());
+  catch(std::exception& e){
 
-		return 1;
 
-	}
+    errorUsage(av[0], e.what());
 
-	  return 0;
+    return 1;
+
+  }
+
+  return 0;
 
 }// end of main
 

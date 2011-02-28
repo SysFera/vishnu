@@ -1,6 +1,6 @@
-#include "saveConfiguration.hh"
+#include "save_configuration.hpp"
 
-#include "utils.hh"
+#include "utils.hpp"
 #include "sessionUtils.hpp"
 
 namespace po = boost::program_options;
@@ -9,109 +9,109 @@ using namespace std;
 
 int main (int ac, char* av[]){
 
-	string sessionKey;
+  string sessionKey;
 
-	string dietConfig;
+  string dietConfig;
 
-		/********** EMF Data ****************************/
-
-
-  		UMS_Data::Configuration configuration;
+  /********** EMF Data ****************************/
 
 
-/**************** Describe options *************/
+  UMS_Data::Configuration configuration;
 
 
-		Options opt(av[0] );
+  /**************** Describe options *************/
 
 
-        opt.add("dietConfig,c",
-				        "The diet config file",
-						ENV,
-						dietConfig);
-
-	try {
-/**************  Parse to retrieve option values  ********************/
-
-		opt.parse_cli(ac,av);
-
-		opt.parse_env(env_name_mapper());
-
-		opt.notify();
+  Options opt(av[0] );
 
 
-/********  Process **************************/
+  opt.add("dietConfig,c",
+          "The diet config file",
+          ENV,
+          dietConfig);
+
+  try {
+    /**************  Parse to retrieve option values  ********************/
+
+    opt.parse_cli(ac,av);
+
+    opt.parse_env(env_name_mapper());
+
+    opt.notify();
 
 
-		checkVishnuConfig(opt);
-
-		if(opt.count("help")){
-
-			helpUsage(opt,"[options]");
-
-			 return 0;
-		 }
+    /********  Process **************************/
 
 
-/************** Call UMS connect service *******************************/
+    checkVishnuConfig(opt);
+
+    if(opt.count("help")){
+
+      helpUsage(opt,"[options]");
+
+      return 0;
+    }
 
 
-               // initializing DIET
-              if (diet_initialize(dietConfig.c_str(), ac, av)) {
-
-				  cerr << "DIET initialization failed !" << endl;
-
-				  return 1;
-              }
-
-    
- // get the sessionKey
-
-                sessionKey=getLastSessionKey(getppid());
-
-               if(false==sessionKey.empty()){
-
-               cout <<"the current sessionkey is: " << sessionKey <<endl;
-    
-                saveConfiguration(sessionKey,configuration);
+    /************** Call UMS connect service *******************************/
 
 
-               }
+    // initializing DIET
+    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
-             //A enlever apres, c'est juste pour les tests
-      for(int i = 0; i < configuration.getListConfUsers().size(); i++) {
-        UMS_Data::User_ptr user = configuration.getListConfUsers()[i];
-        cout << user;
-      }
-      //To set the machine list
-      for(int i = 0; i < configuration.getListConfMachines().size(); i++) {
-        UMS_Data::Machine_ptr machine = configuration.getListConfMachines().get(i);
-        cout << machine;
-     }
-     //To set the LocalAccounts list
-     for(int i = 0; i < configuration.getListConfLocalAccounts().size(); i++) {
-       UMS_Data::LocalAccount_ptr localAccount = configuration.getListConfLocalAccounts().get(i);
-       cout << localAccount;
-     }
+      cerr << "DIET initialization failed !" << endl;
+
+      return 1;
+    }
 
 
+    // get the sessionKey
 
-	}// End of try bloc
+    sessionKey=getLastSessionKey(getppid());
 
-	catch(VishnuException& e){// catch all Vishnu runtime error
+    if(false==sessionKey.empty()){
 
-		errorUsage(av[0], e.getMsg(),EXECERROR);
+      cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-		return e.getMsgI() ;
+      saveConfiguration(sessionKey,configuration);
 
-	}
 
-	catch(std::exception& e){
-		errorUsage(av[0],e.what());
-		return 1;
-	}
+    }
 
-	return 0;
+    //A enlever apres, c'est juste pour les tests
+    for(int i = 0; i < configuration.getListConfUsers().size(); i++) {
+      UMS_Data::User_ptr user = configuration.getListConfUsers()[i];
+      cout << user;
+    }
+    //To set the machine list
+    for(int i = 0; i < configuration.getListConfMachines().size(); i++) {
+      UMS_Data::Machine_ptr machine = configuration.getListConfMachines().get(i);
+      cout << machine;
+    }
+    //To set the LocalAccounts list
+    for(int i = 0; i < configuration.getListConfLocalAccounts().size(); i++) {
+      UMS_Data::LocalAccount_ptr localAccount = configuration.getListConfLocalAccounts().get(i);
+      cout << localAccount;
+    }
+
+
+
+  }// End of try bloc
+
+  catch(VishnuException& e){// catch all Vishnu runtime error
+
+    errorUsage(av[0], e.getMsg(),EXECERROR);
+
+    return e.getMsgI() ;
+
+  }
+
+  catch(std::exception& e){
+    errorUsage(av[0],e.what());
+    return 1;
+  }
+
+  return 0;
 
 }// end of main
 

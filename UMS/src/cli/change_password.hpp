@@ -1,24 +1,18 @@
-#ifndef CONFIGUREOPTION_HH
-#define CONFIGUREOPTION_HH
+#ifndef CHANGEPASSWORD_HH
+#define CHANGEPASSWORD_HH
 
 /**
- * \file configureOption.hh
- * This file defines convenients functions for the VISHNU configure option process
+ * \file change_password.hpp
+ * This file declares convenient include files for the VISHNU change password process
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hh"
+#include "Options.hpp"
 #include "api_ums.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
-#include <cstdlib>
 
-
-//EMF
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
-#include "UMS_Data.hpp"
 
 
 /*
@@ -30,23 +24,26 @@
  * the variable is ignored.
  */
 
-const unsigned int COPARAM=2;// the number of required parameters for the updateLocalAccount command
-
 
 struct env_name_mapper{
 
-	std::string operator ()(std::string name){
+        std::string operator ()(std::string name){
 
-		std::string result= "";
+                std::string result= "";
 
                 if (name=="VISHNU_CONFIG_FILE") {
 
                         result="dietConfig";
                 }
 
-		return result;
-	}
+
+                return result;
+        }
 };
+
+
+
+
 
 
 

@@ -1,15 +1,9 @@
 /**
  * \file configurationProxy.cpp
  * \brief This file contains the VISHNU configurationProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date February 2011
  */
-#include <string>
-#include <vector>
-#include <list>
-#include <iostream>
-#include <fstream>
-
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 

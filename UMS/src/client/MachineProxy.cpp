@@ -1,13 +1,9 @@
 /**
  * \file MachineProxy.cpp
  * \brief This file contains the VISHNU MachineProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
-#include <string>
-#include <vector>
-#include <list>
-#include <iostream>
-
 #include "UMSVishnuException.hpp"
 #include "MachineProxy.hpp"
 #include "utilsClient.hpp"
@@ -69,7 +65,7 @@ int MachineProxy::add()
           errMsg(msg);
           sendErrorMsg(msg);
        }
-       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
          msg += " by receiving errorInfo message";
          errMsg(msg);
          sendErrorMsg(msg);
