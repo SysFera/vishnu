@@ -41,6 +41,10 @@ static const int ERRCODE_INCORRECT_TIMEOUT = 43;
 
 static const int ERRCODE_ROOT_USER_ONLY = 44;
 
+/**
+ * \class UMSVishnuException
+ * \brief Specialisation of the user exception for the UMS module
+ */
 class UMSVishnuException: public UserException{
 
 public:

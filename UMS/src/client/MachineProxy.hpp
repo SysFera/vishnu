@@ -1,14 +1,13 @@
 /**
  * \file MachineProxy.hpp
  * \brief This file contains the VISHNU MachineProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _MACHINE_PROXY_H_
 #define _MACHINE_PROXY_H_
 
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 
 #include "SessionProxy.hpp"

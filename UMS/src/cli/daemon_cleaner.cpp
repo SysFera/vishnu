@@ -8,6 +8,10 @@ bfs::path session_dir;
 bfs::path vishnu_dir;
 bfs::path daemon_file;
 bfs::path proc_dir("/proc");
+<<<<<<< HEAD
+=======
+const char *lockname = "vishnu3";
+>>>>>>> 3dc789a34e819c422df91152128d28aa4c999731
 
 bool pid_exists(const std::string& pid)
 {
@@ -51,6 +55,7 @@ void deleter()
 
           // close all sessions opened by disconnect mode before deleting file
 
+<<<<<<< HEAD
           SessionContainer allSessions=getAllSessions(current_path.string());// get all sessions stored in file
 
           if (false==allSessions.empty()){ // is there a session?
@@ -64,6 +69,12 @@ void deleter()
               }
 
             }// end of looping over the file
+=======
+          BOOST_FOREACH (const SessionEntry& session, allSessions){
+           std::cout << "closePolicy: "<< session.getClosePolicy() << std::endl;
+ 
+            if(2==session.getClosePolicy()) {// session open with CLOSE_ON_DISCONNECT mode
+>>>>>>> 3dc789a34e819c422df91152128d28aa4c999731
 
           }
 

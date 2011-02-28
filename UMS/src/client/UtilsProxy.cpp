@@ -1,11 +1,10 @@
 /**
  * \file UtilsProxy.cpp
  * \brief This file contains the VISHNU UtilsProxy class.
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 #include <fstream>
 
@@ -16,10 +15,10 @@
 /**
  * \fn UtilsProxy(char* cfg,
  *                int argc,
-                  char** argv) 
- * \param cfg The SYSFERA-DS configuration file 
+                  char** argv)
+ * \param cfg The SYSFERA-DS configuration file
  * \param argc The number of arguments of the program
- * \briefargv The list of arguments 
+ * \briefargv The list of arguments
  */
 UtilsProxy::UtilsProxy()
 {
@@ -31,10 +30,10 @@ UtilsProxy::UtilsProxy()
 /**
  * \fn UtilsProxy(char* cfg,
  *                int argc,
-                  char** argv) 
- * \param cfg The SYSFERA-DS configuration file 
+                  char** argv)
+ * \param cfg The SYSFERA-DS configuration file
  * \param argc The number of arguments of the program
- * \briefargv The list of arguments 
+ * \briefargv The list of arguments
  */
 UtilsProxy::UtilsProxy(char* cfg, int argc, char** argv):
 mcfg(cfg), margc(argc), margv(argv)
@@ -50,12 +49,12 @@ mfilePath(filePath)
 }
 
 /**
- * \brief Function to initialize the SYSFERA-DS configuration 
- * \fn  int initilialize()
- * \return 0 if success else -1 if error
+ * \brief Function to initialize the SYSFERA-DS configuration
+ * \fn  int initialize()
+ * \return 0 if success else 1 if error
  */
-int 
-UtilsProxy::initilialize() {
+int
+UtilsProxy::initialize() {
   if (diet_initialize(mcfg, margc, margv)) {
      return 1;
    }
@@ -63,7 +62,7 @@ UtilsProxy::initilialize() {
 }
 
 /**
- * \brief Function to finalize 
+ * \brief Function to finalize
  * \fn  void finalize()
  * \return raises an exception on error
  */
@@ -72,11 +71,11 @@ UtilsProxy::finalize() {
  diet_finalize();
 }
 /**
- * \brief Function to initialize the database 
+ * \brief Function to initialize the database
  * \fn  int restore()
  * \return an error code
  */
-int 
+int
 UtilsProxy::restore() {
 
   int READSIZE = 1000;
@@ -108,8 +107,8 @@ UtilsProxy::restore() {
 /**
  * \fn ~UtilsProxy()
  * \brief Destructor, raises an exception on error
- */ 
+ */
 UtilsProxy::~UtilsProxy()
 {
 }
- 
+

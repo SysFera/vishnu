@@ -1,7 +1,8 @@
 /**
  * \file utilsClient.hpp
  * \brief This file contains client utils functions for VISHNU client Proxy classes 
- * \authors Daouda Traore (daouda.traore@sysfera.com)
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #include "utilsClient.hpp"
 
@@ -24,18 +25,22 @@ void sendErrorMsg(const std::string& msg) {
 void checkErrorMsg(const std::string& msg) {
 
   if(msg.size() > 0 ) {
-    char* codeInString = strtok(strdup(msg.c_str()), "#");
-  if(codeInString!=NULL) {
-    std::istringstream isCode(codeInString);
-    int ret;
-    isCode >> ret;
-    char* message = strtok(NULL, codeInString);
-    if(message!=NULL) {
-      std::cout << "ERROR:" << message << std::endl;
-      UMSVishnuException e(ret, message);
-      throw e;
+    size_t pos = msg.find('#');
+    if(pos!=std::string::npos) {
+       std::string codeInString = msg.substr(0,pos);
+       if(codeInString.size()!=0) {
+         std::istringstream isCode(codeInString);
+         int ret;
+         isCode >> ret;
+         std::string message = msg.substr(pos+1);
+         std::cout << "Code message:" << ret << std::endl;
+         std::cout << "ERROR:" << message << std::endl;
+         throw UMSVishnuException(ret, message);
       }
+    } else {
+          throw UMSVishnuException(1, msg);
     }
- }
+  }
+
 }
 

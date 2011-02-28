@@ -8,6 +8,10 @@
 
 #include "UserException.hpp"
 
+/**
+ * \class IMSVishnuException
+ * \brief Specialisation of the user exception for the IMS module
+ */
 class IMSVishnuException: public UserException{
 private :
 protected:
