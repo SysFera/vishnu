@@ -1,4 +1,4 @@
-#include "restore_configuration.hpp"
+#include "common.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"
 namespace po = boost::program_options;

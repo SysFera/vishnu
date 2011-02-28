@@ -1,4 +1,4 @@
-#include "add_user.hpp"
+#include "common.hpp"
 #include "utils.hpp"
 #include "userUtils.hpp"
 #include "sessionUtils.hpp"
@@ -111,7 +111,7 @@ int main (int ac, char* av[]){
   catch(po::required_option& e){// a required parameter is missing
 
 
-    usage(*opt," privilege firstname lastname email ","required parameter is missing");
+    usage(*opt," firstname lastname privilege email ","required parameter is missing");
 
   }
 
