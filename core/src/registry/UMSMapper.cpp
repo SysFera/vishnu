@@ -378,7 +378,7 @@ UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-1);
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
@@ -648,7 +648,7 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-1);
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
@@ -661,7 +661,7 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-1);
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
