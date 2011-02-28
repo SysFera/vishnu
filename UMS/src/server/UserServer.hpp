@@ -24,7 +24,6 @@
 #include "utilServer.hpp"
 
 using namespace utilServer;
-using namespace vishnu;
 
 class SessionServer;
 

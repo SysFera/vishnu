@@ -1,5 +1,5 @@
 /**
-  * \file configurationProxy.hpp
+  * \file ConfigurationProxy.hpp
   * \brief This file contains the VISHNU configurationProxy class.
   * \author Daouda Traore (daouda.traore@sysfera.com)
   * \date February 2011

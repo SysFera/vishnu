@@ -116,6 +116,14 @@ public:
   */
   int
   saveConnection();
+  /**
+  * \brief Function to get the list of sessions with close on timeout mode to close
+  * \fn DatabaseResult* getSessionToclosebyTimeout()
+  * \return the list of results
+  */
+  DatabaseResult*
+  getSessionToclosebyTimeout();
+
   private:
   /////////////////////////////////
   // Attributes

@@ -15,6 +15,7 @@
 MonitorUMS::MonitorUMS(int interval) {
 std::cout << "INTERVAL:" << interval << endl;;
 minterval = interval;
+mdatabaseVishnu = NULL;
 }
 
 /**
@@ -25,6 +26,16 @@ minterval = interval;
 MonitorUMS::~MonitorUMS() {
 }
 
+/**
+* \brief To initialize the UMS monitor with individual parameters instead of configuration file
+* \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
+* \param vishnuId The password of the root user vishnu_user for the connection with the database
+* \param dbType   The type of the database (POSTGREDB|ORACLEDB)
+* \param dbHost   The host of the database server
+* \param dbUsername The name of the database user on the server
+* \param dbPassword The password of the database user on the server
+* \return raises an execption
+*/
 void
 MonitorUMS::init(int vishnuId,
                 int dbType,
@@ -77,20 +88,13 @@ MonitorUMS::init(int vishnuId,
 int
 MonitorUMS::run() {
 
-  //DatabaseResult *result;
   std::vector<std::string>::iterator ii;
   std::vector<std::string> tmp;
+  SessionServer closer;
 
-  std::string sqlClosure;
-  std::string sqlCommand("SELECT sessionkey from vsession where \
-  EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1");
-
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
-
-
-  try {
-    while (true) {
-      DatabaseResult *result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  while (true) {
+    try {
+      DatabaseResult *result = closer.getSessionToclosebyTimeout();
 
       if (result->getNbTuples() != 0) {
          for (size_t i = 0; i < result->getNbTuples(); ++i) {
@@ -99,27 +103,29 @@ MonitorUMS::run() {
 
           ii=tmp.begin();
           SessionServer sessionServer (*ii);
-          CommandServer commandServer (sessionServer);
+          std::cout << " UMS MONITOR:" << std::endl;
+          std::cout <<"Session to close:" << sessionServer.getData().getSessionKey()<< std::endl ;
 
-          if (!commandServer.isRunning()) {
-            sqlClosure.append("UPDATE vsession SET state=0 WHERE sessionkey='");
-            sqlClosure.append(sessionServer.getData().getSessionKey());
-            sqlClosure.append("';");
+          try {
+            //closure of the session
+            sessionServer.close();
           }
-          std::cout << std::endl;
-        }
+          catch (VishnuException& e) {
+            std::cout << " UMS MONITOR:" << std::endl;
+            std::cout <<"There is a problem to close:" << sessionServer.getData().getSessionKey();
+            std::cout << std::endl;
 
-        mdatabaseVishnu->process(sqlClosure.c_str());
-        sqlClosure = "";
-      }
-      else {
-        std::cout << "No sessions to close" << std::endl ;
+            string errorInfo =  e.buildExceptionString();
+            std::cout << "Exception: " << errorInfo << std::endl;
+          }
+        }
       }
       sleep(minterval);
-    }
-  } catch (VishnuException& e) {
+
+    } catch (VishnuException& e) {
       string errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
+      std::cout << "Exception: " << errorInfo << std::endl;
+    }
   }
   return 0;
 }

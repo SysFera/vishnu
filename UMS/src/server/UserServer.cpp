@@ -56,7 +56,7 @@ UserServer::add(UMS_Data::User*& user) {
 
   std::string idUserGenerated;
   std::string passwordCrypted;
-  std::string salt;
+  //std::string salt;
   int userCpt;
 
 
@@ -67,7 +67,8 @@ UserServer::add(UMS_Data::User*& user) {
         //Generation of password
         pwd = generatePassword(user->getLastname(), user->getFirstname());
         user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
-        std::cout << "password to sent by mail to the user:" << user->getPassword() << std::endl;
+
+        std::cout << "========== Password generated:" << user->getPassword()<< "============" << std::endl;
 
         //To get the user counter
         userCpt = convertToInt(getAttrVishnu("usercpt", Vishnuid::mvishnuid));
@@ -79,15 +80,14 @@ UserServer::add(UMS_Data::User*& user) {
                                                       USER,
                                                       user->getLastname());
 
-        utilServer::incrementCpt("usercpt", userCpt);
+        incrementCpt("usercpt", userCpt);
 
         std::cout << "idgenerated" << idUserGenerated << std::endl;
 
         user->setUserId(idUserGenerated);
 
         //To get the password encrypted
-        salt = "$6$"+user->getUserId()+"$";
-        passwordCrypted = std::string(crypt(user->getPassword().c_str(), salt.c_str())+salt.length());
+        passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
         //If the user to add exists
         if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
@@ -301,7 +301,6 @@ UserServer::resetPassword(UMS_Data::User& user) {
   std::string sqlResetPwd;
   std::string sqlUpdatePwdState;
   std::string passwordCrypted;
-  std::string salt;
   std::string pwd;
 
   try {
@@ -314,11 +313,10 @@ UserServer::resetPassword(UMS_Data::User& user) {
           //generation of a new password
           pwd = generatePassword(user.getUserId(), user.getUserId());
           user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
-          std::cout << "password to sent by mail to the user:" << user.getPassword() << std::endl;
+          std::cout << "========== Password reset:" << user.getPassword()<< "============" << std::endl;
 
-          //Encryption of the password
-          salt = "$6$"+user.getUserId()+"$";
-          passwordCrypted = std::string(crypt(user.getPassword().c_str(), salt.c_str())+salt.length());
+          //to get the password encryptes
+          passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
 
           //The sql code to reset the password
           sqlResetPwd = "UPDATE users SET pwd='"+passwordCrypted+"'where \

@@ -92,7 +92,7 @@ close(const string&  sessionKey)
                                throw(UserException)
 {
 
- return SessionProxy(sessionKey).close();;
+ return SessionProxy(sessionKey).close();
 
 }
 
