@@ -1,4 +1,4 @@
-#include "list_history_cmd.hpp"
+#include "common.hpp"
 #include "listHistoryCmdUtils.hpp"
 #include "sessionUtils.hpp"
 #include "utils.hpp"

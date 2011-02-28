@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "UMSVishnuException.hpp"
+#include "SystemException.hpp"
 #include "UtilsProxy.hpp"
 #include "utilsClient.hpp"
 
@@ -55,10 +56,16 @@ mfilePath(filePath)
  */
 int
 UtilsProxy::initialize() {
-  if (diet_initialize(mcfg, margc, margv)) {
-     return 1;
-   }
- return 0;
+  int res = 0;
+  try {
+    res = diet_initialize(mcfg, margc, margv);
+  } catch (...) {
+    throw SystemException(ERRCODE_DIET, "Internal DIET Exception");
+  }
+  if (res != 0) {
+    throw SystemException(ERRCODE_DIET, "DIET Initialization failure");
+  }
+  return res;
 }
 
 /**

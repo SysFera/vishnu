@@ -1,4 +1,4 @@
-#include "save_configuration.hpp"
+#include "common.hpp"
 
 #include "utils.hpp"
 #include "sessionUtils.hpp"
