@@ -14,12 +14,12 @@
 #include "DIET_client.h"
 
 /**
- * \class UtilsProxy 
- * \brief UtilsProxy class implementation 
+ * \class UtilsProxy
+ * \brief UtilsProxy class implementation
  */
 class UtilsProxy
 {
- 
+
 public:
 
   /**
@@ -30,38 +30,38 @@ public:
   /**
    * \fn UtilsProxy(char* cfg,
    *                int argc,
-                    char** argv) 
-   * \param cfg The SYSFERA-DS configuration file 
+                    char** argv)
+   * \param cfg The SYSFERA-DS configuration file
    * \param argc The number of arguments of the program
-   * \briefargv The list of arguments 
+   * \briefargv The list of arguments
    */
   UtilsProxy(char* cfg, int argc, char** argv);
-  
+
   /**
    * \fn UtilsProxy(const std::string filePath, char* cfg, int argc, char** argv)
    */
   UtilsProxy(const std::string& filePath);
- 
+
   /**
-   * \brief Function to initialize the SYSFERA-DS configuration 
-   * \fn  int initilialize()
-   * \return 0 if success else -1 if error
+   * \brief Function to initialize the SYSFERA-DS configuration
+   * \fn  int initialize()
+   * \return 0 if success else 1 if error
    */
   int
-  initilialize();
+  initialize();
   /**
-   * \brief Function to finalize 
+   * \brief Function to finalize
    * \fn  void finalize()
    * \return raises an exception on error
    */
-  void 
+  void
   finalize();
    /**
-   * \brief Function to initialize the database 
+   * \brief Function to initialize the database
    * \fn int restore()
    * \return an error code
    */
-  int 
+  int
   restore();
 
   ~UtilsProxy();

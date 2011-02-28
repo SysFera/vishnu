@@ -21,10 +21,12 @@ public:
   ListSessionsServer(const SessionServer session):
     QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(session)
   {
+   mcommandName = "vishnu_list_sessions";
   }
   ListSessionsServer(UMS_Data::ListSessionOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(params, session)
   {
+    mcommandName = "vishnu_list_sessions";
   }
 
   //To process options
@@ -144,11 +146,19 @@ public:
       return mlistObject;
   }
 
+  std::string getCommandName()
+  {
+    return mcommandName;
+  }
+
   //Destructor
   ~ListSessionsServer() 
   {
   }
+ 
+  private:
 
+  std::string mcommandName;
 };
 
 #endif
