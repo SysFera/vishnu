@@ -9,32 +9,33 @@
 
 #include "DIET_client.h"
 
-/**
- * \class UtilsProxy
- * \brief UtilsProxy class implementation
- */
+
 class UtilsProxy
 {
 
 public:
-
+  
   /**
-   * \fn UtilsProxy()
+   * \fn  UtilsProxy() 
+   * \brief Constructor, default constructor
    */
   UtilsProxy();
 
   /**
    * \fn UtilsProxy(char* cfg,
    *                int argc,
-                    char** argv)
+   *                char** argv)
    * \param cfg The SYSFERA-DS configuration file
    * \param argc The number of arguments of the program
-   * \briefargv The list of arguments
+   * \param argv The list of arguments
+   * \brief Constructor
    */
   UtilsProxy(char* cfg, int argc, char** argv);
 
   /**
-   * \fn UtilsProxy(const std::string filePath, char* cfg, int argc, char** argv)
+   * \fn UtilsProxy(const std::string& filePath)
+   * \param filePath The file used by the restore function 
+   * \brief Constructor
    */
   UtilsProxy(const std::string& filePath);
 
@@ -64,9 +65,25 @@ public:
 
 private:
 
+   /////////////////////////////////
+  // Attributes
+  /////////////////////////////////
+
+ /**
+  * \brief The name of the Sysfera-DS configuration file 
+  */
  char* mcfg;
+ /**
+  * \brief The number of arguments used Sysfera-DS  
+  */
  int margc;
+ /**
+  * \brief The list of arguments used Sysfera-DS  
+  */
  char** margv;
+ /**
+  * \brief The file used by the restore function  
+  */
  std::string mfilePath;
 
 };
