@@ -602,6 +602,7 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   string res = string("");
   string a;
   long date;
+  int delay;
   res += (mmap.find(VISHNU_LIST_SESSIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
@@ -612,8 +613,11 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   res+=" -p ";
   res += convertToString(ac->getSessionClosePolicy());
   a = ac->getMachineId();
-  res+=" -d ";
-  res += ac->getSessionInactivityDelay();
+  delay = ac->getSessionInactivityDelay();
+  if (delay>0){
+    res+=" -d ";
+    res += convertToString(delay);
+  }
   a = ac->getMachineId();
   if (a.compare("")){
     res+=" -m ";
@@ -654,13 +658,33 @@ string
 UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   string res = string("");
   string u;
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  ecorecpp::parser::parser parser;
+  OptionValue_ptr opt = parser.load(std::string(u))->as< OptionValue >();
+
+ 
   res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += " ";
-  res += u;
-  res+= " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  res += u;
+
+  u = opt->getOptionName();
+  if (u.compare("")!=0){
+    res += " ";
+    res += u;
+  }
+  u = opt->getValue();
+  if (u.compare("")!=0){
+    res += " ";
+    res += u;
+  }
+
+
+//  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+//  res += " ";
+//  res += u;
+//  res+= " ";
+//  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+//  res += u;
+
+
   return res;
 }
 
@@ -669,12 +693,28 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += " ";
-  res += u;
-  res+= " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  res += u;
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  OptionValue_ptr opt = parser.load(std::string(u))->as< OptionValue >();
+
+
+  u = opt->getOptionName();
+  if (u.compare("")!=0){
+    res += " ";
+    res += u;
+  }
+  u = opt->getValue();
+  if (u.compare("")!=0){
+    res += " ";
+    res += u;
+  }
+
+//  res += " ";
+//  res += u;
+//  res+= " ";
+//  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+//  res += u;
   return res;
 }
 

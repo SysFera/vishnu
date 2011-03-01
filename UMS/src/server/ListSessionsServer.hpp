@@ -125,14 +125,14 @@ public:
      if(startDate!=-1) {
        pt =  boost::posix_time::from_time_t(startDate);
        std::string startDateStr =  boost::posix_time::to_simple_string(pt);
-       addOptionRequest("creation", startDateStr, sqlRequest);
+       addTimeRequest("creation", startDateStr, sqlRequest, ">=");
      }
 
      long endDate = options->getEndDateOption();
      if(endDate!=-1) {
        pt =  boost::posix_time::from_time_t(endDate);
        std::string endDateStr =  boost::posix_time::to_simple_string(pt);
-       addIntegerOptionRequest("closure", endDateStr, sqlRequest);
+       addTimeRequest("closure", endDateStr, sqlRequest, "<=");
      }
 
   }

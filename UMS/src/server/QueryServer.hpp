@@ -95,6 +95,22 @@ public:
   }
 
   /**
+   * \brief Function to add sql resquest "and condition" which contain an integer value to a given request 
+   * \fn void addOptionRequest(const std::string& name, T& value, std::string& request) 
+   * \param name The column name of the data base table 
+   * \param value The integer value to search in the given column 
+   */
+  template <class T>
+  void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
+    std::ostringstream osValue;
+    osValue << value;
+    request.append(" and "+name+ " "+comp+" ");
+    request.append("'"+osValue.str()+"'");
+    std::cout << "**********************request = " << request << std::endl;
+    //request.append("'"+osValue.str()+"'");
+  }
+
+  /**
    * \brief Function to add sql resquest "where condition" to a given request 
    * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request) 
    * \param name The column name of the data base table 

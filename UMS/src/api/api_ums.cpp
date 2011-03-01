@@ -115,8 +115,11 @@ addUser(const string& sessionKey, UMS_Data::User& newUser) throw(UserException)
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
   int res = userProxy.add(newUser);
+  std::cout << "**************************************" << std::endl;
+  std::cout << "The Id of this user is: " << newUser.getUserId() << std::endl;
+  std::cout << "The Password of this user is: " << newUser.getPassword() << std::endl;
+  std::cout << "**************************************" << std::endl;
 
-  std::cout << "*****User Password:" << newUser.getPassword() << "*********" << std::endl;
  return res;
 }
 
@@ -217,7 +220,9 @@ resetPassword(const std::string& sessionKey,
 
   int res = userProxy.resetPassword(user);
   tmpPassword = (userProxy.getData()).getPassword();
-  cout << "************************tmpPassword=" << tmpPassword << "************" << std::endl;
+  std::cout << "**************************************" << std::endl;
+  std::cout << "The temporary password of this user is: " << tmpPassword << std::endl;
+  std::cout << "**************************************" << std::endl;
  return res;
 }
 
@@ -244,6 +249,11 @@ addMachine(const std::string& sessionKey,
   MachineProxy machineProxy(newMachine, sessionProxy);
   int res = machineProxy.add();
   newMachine = machineProxy.getData();
+
+  std::cout << "**************************************" << std::endl;
+  std::cout << "The Id of this machine is: " << newMachine.getMachineId() << std::endl;
+  std::cout << "**************************************" << std::endl;
+
 
  return res;
 }
@@ -382,7 +392,7 @@ saveConfiguration(const std::string& sessionKey,
                                                 throw(UserException)
 {
 
-   std::string filePath = std::string(getenv("HOME"))+"/.vishnu/toto.cfg";
+   std::string filePath = std::string(getenv("HOME"))+"/.vishnu/test.cfg";
    SessionProxy sessionProxy(sessionKey);
    ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
