@@ -106,8 +106,6 @@ public:
     osValue << value;
     request.append(" and "+name+ " "+comp+" ");
     request.append("'"+osValue.str()+"'");
-    std::cout << "**********************request = " << request << std::endl;
-    //request.append("'"+osValue.str()+"'");
   }
 
   /**
@@ -149,7 +147,6 @@ public:
       boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
       time_duration::sec_type time = (pt - epoch).total_seconds();
      
-      std::cout << "**********TimeValue=" << time_t(time) << "********************" << std::endl;
     return time_t(time);
 
   }

@@ -154,7 +154,6 @@ MachineServer::update() {
           " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
-        std::cout <<"SQL COMMAND:"<<sqlCommand;
         mdatabaseVishnu->process(sqlCommand.c_str());
 
       } //End if the machine to update exists
@@ -241,7 +240,6 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
   DatabaseResult* result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();
 

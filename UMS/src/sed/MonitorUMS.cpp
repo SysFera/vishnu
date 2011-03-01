@@ -13,7 +13,6 @@
 * \param interval The interval to check the database
 */
 MonitorUMS::MonitorUMS(int interval) {
-std::cout << "INTERVAL:" << interval << endl;;
 minterval = interval;
 mdatabaseVishnu = NULL;
 }
@@ -55,7 +54,6 @@ MonitorUMS::init(int vishnuId,
   DatabaseResult *result;
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
 
   try {
@@ -72,8 +70,6 @@ MonitorUMS::init(int vishnuId,
     }
 
   } catch (VishnuException& e) {
-        std::cout << "Error: " << e.getMsg() << std::endl;
-        std::cout << e.what() << std::endl;
         exit(0);
   }
 
@@ -102,20 +98,14 @@ MonitorUMS::run() {
 
           ii=tmp.begin();
           SessionServer sessionServer (*ii);
-          std::cout << " UMS MONITOR:" << std::endl;
-          std::cout <<"Session to close:" << sessionServer.getData().getSessionKey()<< std::endl ;
 
           try {
             //closure of the session
             sessionServer.close();
           }
           catch (VishnuException& e) {
-            std::cout << " UMS MONITOR:" << std::endl;
-            std::cout <<"There is a problem to close:" << sessionServer.getData().getSessionKey();
-            std::cout << std::endl;
 
             string errorInfo =  e.buildExceptionString();
-            std::cout << "Exception: " << errorInfo << std::endl;
           }
         }
       }
@@ -123,7 +113,6 @@ MonitorUMS::run() {
 
     } catch (VishnuException& e) {
       string errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo << std::endl;
     }
   }
   return 0;

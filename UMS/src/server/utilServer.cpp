@@ -231,7 +231,6 @@ utilServer::getAttrVishnu(std::string attrname, std::string vishnuid) {
   DatabaseResult *result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
-  std::cout << "SQL COMMAND:"<< sqlCommand;
 
   databaseVishnu = factory.getDatabaseInstance();
   result = databaseVishnu->getResult(sqlCommand.c_str());
@@ -254,7 +253,6 @@ utilServer::incrementCpt(std::string cptName, int cpt) {
   cpt = cpt+1;
 
   std::string sqlCommand("UPDATE vishnu set "+cptName+"="+vishnu::convertToString(cpt));
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   databaseVishnu = factory.getDatabaseInstance();
   databaseVishnu->process(sqlCommand.c_str());

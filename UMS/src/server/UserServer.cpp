@@ -67,8 +67,6 @@ UserServer::add(UMS_Data::User*& user) {
       pwd = generatePassword(user->getLastname(), user->getFirstname());
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
-      std::cout << "========== Password generated:" << user->getPassword()<< "============" << std::endl;
-
       vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
 
       //To get the user counter
@@ -82,8 +80,6 @@ UserServer::add(UMS_Data::User*& user) {
                                                     user->getLastname());
 
       incrementCpt("usercpt", userCpt);
-
-      std::cout << "idgenerated" << idUserGenerated << std::endl;
 
       user->setUserId(idUserGenerated);
 
@@ -178,7 +174,6 @@ UserServer::update(UMS_Data::User *user) {
           " where userid='"+user->getUserId()+"';");
         }
 
-        std::cout <<"SQL COMMAND:"<<sqlCommand;
         mdatabaseVishnu->process(sqlCommand.c_str());
 
       } // End if the user whose information will be updated exists
@@ -301,7 +296,6 @@ UserServer::resetPassword(UMS_Data::User& user) {
         //generation of a new password
         pwd = generatePassword(user.getUserId(), user.getUserId());
         user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
-        std::cout << "========== Password reset:" << user.getPassword()<< "============" << std::endl;
 
         //to get the password encryptes
         passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
@@ -469,7 +463,6 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
 
   DatabaseResult* result;
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();
 

@@ -56,7 +56,6 @@ OptionValueServer::configureOption(bool defaultOptions) {
           if (userServer.isAdmin()){
             sqlCommand = "UPDATE optionu set defaultvalue="+moptionValue->getValue()+"\
             where description='"+moptionValue->getOptionName()+"'";
-            std::cout <<"SQL COMMAND:"<<sqlCommand;
             mdatabaseVishnu->process(sqlCommand.c_str());
           } //END if the user is an admin
           else {
@@ -88,7 +87,6 @@ OptionValueServer::configureOption(bool defaultOptions) {
             sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" "
             "where optionu_numoptionid="+numoptionid+" and users_numuserid="+numuserid;
           }
-          std::cout <<"SQL COMMAND:"<<sqlCommand;
           mdatabaseVishnu->process(sqlCommand.c_str());
         }
       } //END if the value of this option is correct
@@ -154,7 +152,6 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
     sqlCommand = "SELECT "+attrname+" FROM optionvalue "+condition;
   }
 
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();
 

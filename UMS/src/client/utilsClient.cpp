@@ -33,8 +33,6 @@ void checkErrorMsg(const std::string& msg) {
          int ret;
          isCode >> ret;
          std::string message = msg.substr(pos+1);
-         std::cout << "Code message:" << ret << std::endl;
-         std::cout << "ERROR:" << message << std::endl;
          throw UMSVishnuException(ret, message);
       }
     } else {

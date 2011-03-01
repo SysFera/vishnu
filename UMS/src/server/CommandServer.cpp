@@ -28,7 +28,6 @@ CommandServer::CommandServer(std::string cmd, SessionServer session):
 mcommand(cmd), msessionServer(session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
-  std::cout << "mcommand: " << mcommand << std::endl;
 }
 
 /**
@@ -58,7 +57,6 @@ CommandServer::record(CmdType cmdType,
   "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
   sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+")");
-  std::cout << "SQL COMMAND:" << sqlCmd;
 
   mdatabaseVishnu->process(sqlCmd.c_str());
   return 0;
@@ -78,7 +76,6 @@ CommandServer::isRunning() {
   sqlCommand.append(msessionServer.getAttribut("WHERE "
   "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
-  std::cout << "SQL COMMAND:" << sqlCommand;
 
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return (result->getNbTuples() != 0);
