@@ -544,3 +544,23 @@ int UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, 
   }
 }
 
+/**
+* \brief Function to get the email content
+* \param user     the user who will receives the email
+* \param flagAdduser a flag which means that it is uses on adduser function
+* \return the email content
+*/
+std::string
+getMailContent(const UMS_Data::User& user, bool flagAdduser = false) {
+  std::string content;
+
+  if (flagAdduser) {
+    content = "Dear "+user.getFirstname()+" "+user.getLastname() + "This is respectively your"
+    "userId and your password generated :" + user.getUserId() + ", "+user.getPassword()+".";
+  }
+  else {
+    content = "Dear "+user.getFirstname()+" "+user.getLastname() + "This is your"
+    "new password :"+user.getPassword()+".";
+  }
+  return content;
+}
