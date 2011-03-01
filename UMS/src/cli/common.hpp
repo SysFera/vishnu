@@ -18,7 +18,6 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "UMS_Data.hpp"
-//#include "ConnectOptions.hpp"
 
 
 /*

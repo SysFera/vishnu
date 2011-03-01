@@ -22,6 +22,10 @@ int main (int ac, char* av[]){
 
   std::string sessionKey;
 
+  std::string sshPublicKeyFile;
+
+  std::string sshPublicKeyPath;
+
 
   /********** EMF data ************/
 
@@ -34,15 +38,13 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
 
-  boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(newMachine),_1));
-
   boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
 
 
   opt->add("sshPublicKeyFile,k",
            "The the path to the SSH public key used by VISHNU to access local user accounts",
            HIDDEN,
-           fSshPublicKeyFile,
+           sshPublicKeyPath,
            1);
 
   opt->setPosition("sshPublicKeyFile",1);
@@ -58,11 +60,24 @@ int main (int ac, char* av[]){
     opt->notify();
 
 
-
     /********  Process **************************/
 
 
     checkVishnuConfig(*opt);
+
+    // read the public key file from the public key path
+
+    {
+      std::ifstream ifs (sshPublicKeyPath.c_str(),std::ifstream::in);
+      if (ifs.is_open()){
+        ifs >>sshPublicKeyFile;
+        newMachine.setSshPublicKey(sshPublicKeyFile);
+      }
+      else{
+        std::cerr << "can not open the ssh public key file\n";
+      }
+    }
+
 
     cout << "Enter the Machine Description:\n ";
 

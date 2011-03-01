@@ -90,7 +90,9 @@ int main (int ac, char* av[]){
 
     connect(userId,password, session, connectOpt);// call the api extern connect service to get a session key
 
-    storeLastSessionKey(session.getSessionKey(),session.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
+    vishnuFinalize();
+
+    storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
 
 
 
@@ -104,8 +106,13 @@ int main (int ac, char* av[]){
   catch(VishnuException& e){// catch all Vishnu runtime error
 
     // handle the temporary password
-    errorUsage(av[0], e.getMsg(),EXECERROR);
+    if(ERRCODE_TEMPORARY_PASSWORD==e.getMsgI()){
+      errorUsage(av[0],"Your password is temporary, use vishnu_change_password command to change it",EXECERROR);
+    }
 
+    else{
+      errorUsage(av[0], e.getMsg(),EXECERROR);
+    }
     return e.getMsgI() ;
 
   }
