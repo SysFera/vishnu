@@ -31,7 +31,7 @@ public:
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
-  explicit ListUsersServer(const SessionServer session);
+  explicit ListUsersServer(const SessionServer& session);
   /**
    * \fn ListUsersServer(const std::string& option
    *                     const SessionServer& session)

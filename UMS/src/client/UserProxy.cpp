@@ -22,7 +22,7 @@ UserProxy::UserProxy(const  std::string& userId, const std::string& password)
 }
 
 /**
- * \fn explicit explicit UserProxy(SessionProxy session) 
+ * \fn explicit UserProxy(SessionProxy session) 
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */

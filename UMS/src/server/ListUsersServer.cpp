@@ -20,7 +20,8 @@
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
-ListUsersServer::ListUsersServer(const SessionServer session)
+ListUsersServer::ListUsersServer(const SessionServer& session):
+msessionServer(session)
 {
    mlistUsers = NULL;
    DbFactory factory;

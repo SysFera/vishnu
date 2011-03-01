@@ -15,6 +15,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${SED_SOURCE_DIR}
 )
 
 

@@ -6,6 +6,7 @@
 */
 
 #include "UserServer.hpp"
+#include "ServerUMS.hpp"
 
 /**
 * \brief Constructor
@@ -506,4 +507,60 @@ UserServer::generatePassword(std::string value1, std::string value2) {
   std::string clef = value2+convertToString(utilServer::generate_numbers());
 
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
+}
+/**
+* \brief Function to send an email to a user
+* \param user     the user to whom send the email
+* \param content  the body of the email
+* \param subject  the subject of the email
+*/
+int UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject)
+{
+  std::string address = user.getEmail();
+  if (address.empty()) {
+    throw UserException(ERRCODE_INVALID_MAIL_ADRESS, "Empty email address");
+  }
+  std::string sendmailScriptPath = ServerUMS::getInstance()->getSendmailScriptPath();
+  if (sendmailScriptPath.empty()) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid server configuration");
+  }
+  // create file containing the body of the mail
+  std::string contentFileName = "/tmp/";
+  contentFileName.append("vishnu_email_");
+  contentFileName.append(generatePassword(user.getFirstname(), user.getLastname()));
+  try {
+    std::ofstream of;
+    of.open(contentFileName.c_str(), std::ios_base::out);
+    of << content;
+    of.close();
+  } catch (...) {
+    throw SystemException(ERRCODE_SYSTEM, "Could not create temporary file for email body");
+  }
+
+  std::string command = sendmailScriptPath + " --to " + address + " -s " + "\""
+                        + subject + "\"" + " -f " + contentFileName;
+  if (!system(command.c_str())) {
+    throw SystemException(ERRCODE_SYSTEM, "Could not send email");
+  }
+}
+
+/**
+* \brief Function to get the email content
+* \param user     the user who will receives the email
+* \param flagAdduser a flag which means that it is uses on adduser function
+* \return the email content
+*/
+std::string
+getMailContent(const UMS_Data::User& user, bool flagAdduser = false) {
+  std::string content;
+
+  if (flagAdduser) {
+    content = "Dear "+user.getFirstname()+" "+user.getLastname() + "This is respectively your"
+    "userId and your password generated :" + user.getUserId() + ", "+user.getPassword()+".";
+  }
+  else {
+    content = "Dear "+user.getFirstname()+" "+user.getLastname() + "This is your"
+    "new password :"+user.getPassword()+".";
+  }
+  return content;
 }

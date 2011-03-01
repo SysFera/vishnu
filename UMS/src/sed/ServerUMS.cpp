@@ -8,34 +8,46 @@
 #include "ServerUMS.hpp"
 #include "UMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "internalApi.hpp"
+
+ServerUMS* ServerUMS::minstance = NULL;
 
 /**
-* \brief To get the path of the configuration file used by the UMS server
-* \fn std::string getCfg()
+ * \brief To get the unique instance of the server
+ */
+ServerUMS*
+ServerUMS::getInstance() {
+  if (minstance == NULL) {
+    minstance = new ServerUMS();
+  }
+  return minstance;
+}
+
+/**
+* \brief To get the path to the sendmail script
+* \fn std::string getSendmailScriptPath()
 * \return the path of the configuration file
 */
 std::string
-ServerUMS::getCfg() {
-  return mvishnucfg;
+ServerUMS::getSendmailScriptPath() {
+  return msendmailScriptPath;
 }
 /**
-* \brief Constructor, raises an exception on error
-* \fn ServerUMS(std::string cfg)
-* \param cfg The vishnu configuration filepath
+* \brief Constructor (private)
+* \fn ServerUMS()
 */
-ServerUMS::ServerUMS(std::string cfg) {
-  mvishnucfg = cfg;
-  mprofile = NULL;
+ServerUMS::ServerUMS() : mprofile(NULL) {
 }
 
 /**
-* \brief To initialize the UMS server
+* \brief To initialize the UMS server with individual parameters
 * \fn int init(std::string vishnuid)
 * \param vishnuId The id of the vishnu configuration registered in the database
 * \param dbType   The type of the database (POSTGREDB|ORACLEDB)
 * \param dbHost   The host of the database server
 * \param dbUsername The name of the database user on the server
 * \param dbPassword The password of the database user on the server
+* \param sendmailScriptPath The path to the script for sending emails
 * \return an error code (0 if success and 1 if an error occurs)
 */
 int
@@ -43,7 +55,10 @@ ServerUMS::init(int vishnuId,
                 int dbType,
                 std::string dbHost,
                 std::string dbUsername,
-                std::string dbPassword) {
+                std::string dbPassword,
+                std::string sendmailScriptPath) {
+
+  msendmailScriptPath = sendmailScriptPath;
 
   DbFactory factory;
 
