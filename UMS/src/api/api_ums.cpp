@@ -7,6 +7,8 @@
 
 #include "api_ums.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 
 using namespace std;
 
@@ -401,11 +403,19 @@ saveConfiguration(const std::string& sessionKey,
    nowToString.append("-"+to_simple_string(now.time_of_day()));
 
    //To construct the file to save 
+   boost::filesystem::path home_dir = getenv("HOME");
+   boost::filesystem::path  config_dir = home_dir;
+   config_dir /= ".vishnu";
+   config_dir /= "configurationSaved";
+
+   if(!boost::filesystem::exists(config_dir)){
+     boost::filesystem::create_directories(config_dir);
+   }
+
    std::string filePath;
-   filePath.append(std::string(getenv("HOME"))+"/.vishnu/");
+   filePath.append(config_dir.string()+"/");
    filePath.append(sessionKey.substr(0,8));
    filePath.append("-"+nowToString);
-   
 
    SessionProxy sessionProxy(sessionKey);
    ConfigurationProxy configurationProxy(filePath, sessionProxy);
