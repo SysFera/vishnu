@@ -151,9 +151,7 @@ public:
           command->setCommandId(convertCmdType(static_cast<CmdType>(convertToInt(*ii))));
           command->setSessionId(*(++ii));
           command->setMachineId(*(++ii));
-
           description = mapper->decode(*(++ii));
-          std::cout << "DESCRIPTION  " << description << std::endl;
           command->setCmdDescription(description);
           command->setCmdStartTime(convertToTimeType(*(++ii)));
           command->setCmdEndTime(convertToTimeType(*(++ii)));
