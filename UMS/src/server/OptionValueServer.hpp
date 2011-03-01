@@ -19,8 +19,9 @@
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
-#include "utilServer.hpp"
-using namespace utilServer;
+#include "utilVishnu.hpp"
+
+using namespace vishnu;
 
 class SessionServer;
 
