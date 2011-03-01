@@ -73,33 +73,40 @@ Options::getConfiguration()const{
 
 }
 
-void Options::setGroup (const po::options_description& tmp_options,
-    const Group_type& group){
+/**
+ * \brief a private function used to set option group
+ * \param tmp_options: the set of options to group
+ * \param group      : the group to set
+ */
+
+void
+Options::setGroup (const po::options_description& tmp_options,
+                   const Group_type& group){
 
 
   switch(group){
 
-    case GENERIC:
+    case GENERIC:// for options always allowed 
 
       generic_options.add(tmp_options);
       break;
 
-    case CONFIG:
+    case CONFIG: // for options use to configure the command
 
       config_options.add(tmp_options);
       break;
 
-    case ENV:
+    case ENV: // for global options 
 
       env_options.add(tmp_options);
       break;
 
-    case HIDDEN:
+    case HIDDEN: // for command parameters
 
       hidden_options.add(tmp_options);
       break;
 
-    default:
+    default:// for unknown option group
 
       cout << "unknown option group " << endl;
 
@@ -109,11 +116,16 @@ void Options::setGroup (const po::options_description& tmp_options,
 
 
 
-
+ /**
+       * \brief function allowing to add a new non-typed option
+       * \param name: the name of the option
+       * \param desc: brief description of the option
+       * \param group: a group which option belongs to
+       */
 
 void
 Options::add(const std::string& name,
-    const std::string& desc, const Group_type& group ){
+             const std::string& desc, const Group_type& group ){
 
 
   po::options_description tmp_options;
@@ -126,14 +138,27 @@ Options::add(const std::string& name,
 
 
 
-// set the position of the option
 
-void Options::setPosition(const std::string& name, int pos ){
+/**
+ * \brief To set position of options
+ * \param name: the name of the option
+ * \param pos :  the required position
+ */
+
+void
+Options::setPosition(const std::string& name, int pos ){
   this->position.add(name.c_str(),pos);
 }
 
-/* Parse the command line. */
-void Options::parse_cli(int ac, char* av[]) {
+/**
+ * \brief To parse command line
+ * \param ac: The number of parameters of the command 
+ * \param av: the names of all paramters
+ */
+
+
+void 
+Options::parse_cli(int ac, char* av[]) {
 
   po::options_description cmdline_options;
 
@@ -147,8 +172,12 @@ void Options::parse_cli(int ac, char* av[]) {
       .run(), vm);
 }
 
-// Parse the configuration file
-void Options::parse_cfile() {
+/**
+ * \brief To parse the configuration file
+ */
+
+void
+Options::parse_cfile() {
 
   po::options_description cfile_options;
 
@@ -162,9 +191,15 @@ void Options::parse_cfile() {
 
 }
 
-// Parse environement variable
+/**
+ * \brief To parse environement variable
+ * \param name_mapper: a functor providing a simple name from the conventional
+ * name of the environment variable 
+ * Ex: for VISHNU_CONFIG_FILE, it returns dietConfig
+ */
 
-void Options::parse_env(const func1& name_mapper) {
+void
+Options::parse_env(const func1& name_mapper) {
 
   store(parse_environment(env_options,name_mapper), vm);
 }
@@ -172,26 +207,40 @@ void Options::parse_env(const func1& name_mapper) {
 
 
 
-// Notify user-defined functions
+/**
+ * \brief To notify all  user-defined functionsi (callbacks)
+ */
 
-void Options::notify (){
+void
+Options::notify (){
 
   po::notify(vm);
 
 }
 
-// check if key exists in the map
-//
-int Options::count(const std::string& key)const{
+/**
+ * \brief To check if an option is provided after parsing the command
+ * line
+ * \param key: the name of the option
+ */
+
+int 
+Options::count(const std::string& key)const{
 
   return (vm.count(key));
 }
 
 
-//  print visible options
+/**
+ * \brief to print the set of options allowed by a command
+ * \param os: Where options wiil be printed.
+ * \param opt: the options to print.
+ * \return the stream where the options are printed.
+ */
 
 
-std::ostream & operator<< (std::ostream & os, const Options & opt){
+std::ostream&
+operator<< (std::ostream & os, const Options & opt){
 
 
   po::options_description visible("Allowed options");
@@ -205,6 +254,8 @@ std::ostream & operator<< (std::ostream & os, const Options & opt){
   return os;
 }
 
-// The destructor
+/**
+ * \brief  The default destructor
+ */
 
 Options::~Options(){}

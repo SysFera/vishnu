@@ -8,7 +8,7 @@ bfs::path session_dir;
 bfs::path vishnu_dir;
 bfs::path daemon_file;
 bfs::path proc_dir("/proc");
-
+using namespace std;
 bool pid_exists(const std::string& pid)
 {
   extern bfs::path proc_dir;
@@ -35,6 +35,12 @@ void deleter(char* dietConfig,int ac,char* av[])
       std::cout << "cleaning process: already running" << std::endl;
       exit(EXIT_SUCCESS);
     }
+    else{
+
+      std::cout << "locking successfull\n";
+    }
+
+
 
     while(true) {
 
@@ -62,16 +68,16 @@ void deleter(char* dietConfig,int ac,char* av[])
 
 
                 if (vishnuInitialize(dietConfig, ac, av)) {
-     
-                  syslog(LOG_ERR,"DIET initialization failed !");
-     
-                  exit (EXIT_FAILURE);
-   
-                }
 
+                  syslog(LOG_ERR,"DIET initialization failed !");
+
+                  exit (EXIT_FAILURE);
+
+                }
 
                 close (session.getSessionKey()); // and need to be closed
 
+                vishnuFinalize();
               }
 
             }// end of looping over the file

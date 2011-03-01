@@ -92,7 +92,6 @@ UtilsProxy::restore() {
   //profile = diet_profile_alloc("restore", 0, 0, 0);
   std::ifstream file(mfilePath.c_str(), std::ios::in);
   if(!file) {
-    std::cerr << "Failed to open sql script file" << std::endl;
     return -1;
   }
   // While all has not been read
@@ -103,11 +102,9 @@ UtilsProxy::restore() {
 	break;
     }
     profile = diet_profile_alloc("restore", 0, 0, 0);
-    std::cout << "Query sent :" << tmp << std::endl;
     //IN Parameters
     diet_string_set(diet_parameter(profile,0), tmp, DIET_VOLATILE);
     if(!diet_call(profile)){
-      std::cerr << "Failed to restore database " << std::endl;
     }
   }
   return 0;
