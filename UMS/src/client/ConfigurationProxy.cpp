@@ -171,7 +171,9 @@ int ConfigurationProxy::restore(bool fromFile)
    /*To check the receiving message error*/
    checkErrorMsg(errorInfo);
   
-   if(fromFile && (configurationInString!=NULL)) delete [] configurationInString;
+   if(fromFile && (configurationInString!=NULL)) {
+     delete [] configurationInString;
+   }
 
   return 0;
 }
