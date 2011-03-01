@@ -58,6 +58,8 @@ ServerUMS::init(int vishnuId,
                 std::string dbPassword,
                 std::string sendmailScriptPath) {
 
+  msendmailScriptPath = sendmailScriptPath;
+
   DbFactory factory;
 
   //To get database instance
