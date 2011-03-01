@@ -14,10 +14,8 @@ MapperRegistry::~MapperRegistry(){
 MapperRegistry*
 MapperRegistry::getInstance(){
   if (!mreg){
-    std::cout << "mapper create" << std::endl;
     mreg = new MapperRegistry();
   }
-  std::cout << "existing mapper " << std::endl;
   return mreg;
 }
 
@@ -31,7 +29,6 @@ MapperRegistry::addMapper(string s, Mapper* mapper){
     throw(me);
   }
   if (!contains(s)){
-//    std::cout << "adding : "<< mapper << std::endl;
     mmapper.insert( pair<string, Mapper*>(s, mapper));
   }
   display();
@@ -54,12 +51,9 @@ MapperRegistry::getMapper(const string& s) {
   map<string, Mapper*>::const_iterator it;
   for (it = mmapper.begin() ; it != mmapper.end() ; it++){
     if (s.compare(it->first)==0){
-      std::cout << "mapper found " << std::endl;
-//      *mapper = it->second;
       return it->second;
     }
   }
-  std::cout << "mapper not found " << std::endl;
   me = SystemException(ERRCODE_SYSTEM, "Mapper not found");
   me.setType(VishnuException::INTERNAL);
   me.setMsg(6);
@@ -83,7 +77,5 @@ MapperRegistry::contains(string s){
 void MapperRegistry::display(){
   map<string, Mapper*>::const_iterator it;
   for (it = mmapper.begin() ; it != mmapper.end() ; it++){
-//    cout << "key = " << it->first << " and val = " << it->second << endl;
   }
-  cout << "<------------------------------------------------->"<<endl;
 }
