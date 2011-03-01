@@ -98,6 +98,10 @@ UserServer::add(UMS_Data::User*& user) {
         convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
         "0, "+convertToString(user->getStatus())+")");
 
+        //Send email
+        std::string emailBody = getMailContent(*user, true);
+        sendMailToUser(*user, emailBody, "Vishnu message: user created");
+
       }// END If the user to add exists
       else {
         UMSVishnuException e (ERRCODE_USERID_EXISTING);
@@ -310,6 +314,9 @@ UserServer::resetPassword(UMS_Data::User& user) {
         sqlResetPwd.append(sqlUpdatePwdState);
         //Execution of the sql code on the database
         mdatabaseVishnu->process( sqlResetPwd.c_str());
+        //Send email
+        std::string emailBody = getMailContent(user, false);
+        sendMailToUser(user, emailBody, "Vishnu message: password reset");
       } // End if the user whose password will be reset exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
@@ -514,7 +521,8 @@ UserServer::generatePassword(std::string value1, std::string value2) {
 * \param content  the body of the email
 * \param subject  the subject of the email
 */
-int UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject)
+int
+UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject)
 {
   std::string address = user.getEmail();
   if (address.empty()) {
@@ -536,12 +544,10 @@ int UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, 
   } catch (...) {
     throw SystemException(ERRCODE_SYSTEM, "Could not create temporary file for email body");
   }
-
+  // call the script in the background
   std::string command = sendmailScriptPath + " --to " + address + " -s " + "\""
-                        + subject + "\"" + " -f " + contentFileName;
-  if (!system(command.c_str())) {
-    throw SystemException(ERRCODE_SYSTEM, "Could not send email");
-  }
+                        + subject + "\"" + " -f " + contentFileName + " 1>/dev/null 2>/dev/null &";
+  system(command.c_str());
 }
 
 /**
@@ -551,7 +557,7 @@ int UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, 
 * \return the email content
 */
 std::string
-getMailContent(const UMS_Data::User& user, bool flagAdduser = false) {
+UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
   std::string content;
 
   if (flagAdduser) {
