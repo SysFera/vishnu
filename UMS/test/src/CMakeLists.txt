@@ -1,5 +1,6 @@
 include_directories(
-${UTILVISHNU_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
+  
 )
 
 file( TO_NATIVE_PATH ${TEST_CONFIG_UMS} TESTCONF )
