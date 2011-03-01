@@ -21,8 +21,6 @@ LINK_DIRECTORIES(
 
 ADD_EXECUTABLE(mainReg
   main.cpp
-  Mapper_impl.cpp
-  Mapper_impl2.cpp
   )
 
 ADD_LIBRARY(register-vishnu
