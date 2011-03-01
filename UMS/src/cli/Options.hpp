@@ -1,6 +1,3 @@
-#ifndef OPTIONS_HPP
-#define OPTIONS_HPP
-
 
 /**
  * \file Option.hpp
@@ -8,11 +5,18 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
+
+#ifndef OPTIONS_HPP
+#define OPTIONS_HPP
+
+//C++ standard library 
+#include <typeinfo>
+#include <iostream>
+
+// Boost Headers
 #include <boost/program_options.hpp>
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
-#include <typeinfo>
-#include <iostream>
 
 namespace po = boost::program_options;
 class Options;
@@ -36,26 +40,31 @@ class Configuration {
      * \brief Constructor by variable
      * \param pgName: The program name
      */
-    explicit Configuration(const std::string& pgName);
+    
+    explicit 
+    Configuration(const std::string& pgName);
 
     /**
      * \brief get the program name
      * \return the program name as std::string
      */
-    const std::string& getPgName() const;
+    const std::string&
+    getPgName() const;
 
     /**
      * \brief Get the configuration file
      * \return the configuration file as std::string
      */
-    const std::string& getConfigFile() const;
+    const std::string&
+    getConfigFile() const;
 
 
     /**
      * \brief Set a new configuration file
      * \param configFile: the new configuration file to set
      */
-    void setConfigFile(const std::string& configFile);
+    void 
+    setConfigFile(const std::string& configFile);
 };
 
 /**
@@ -90,7 +99,14 @@ class Configuration {
 			mutable po::variables_map vm;/*!<  map storing all parsed options  */
 			po::positional_options_description position; /*!< option position in a command line  */
 
-			void setGroup (const po::options_description&, const Group_type&);/*!< to set the option group    */
+      /**
+       * \brief a private function used to set option group
+       * \param tmp_options: the set of options to group
+       * \param group      : the group to set
+       */
+
+			void
+      setGroup (const po::options_description& tmp_options, const Group_type& group);
 
 		public:
 
@@ -98,7 +114,8 @@ class Configuration {
 			 * \brief Constructor by variable taking a string in parameter
 			 * \param the name of the command which uses the option
 			 */
-			explicit Options(const std::string& );
+			explicit
+      Options(const std::string& );
 
 
 
@@ -106,36 +123,45 @@ class Configuration {
 			 * \brief Constructor by variable taking a command configuration in parameter
 			 * \param
 			 */
-			explicit Options(boost::shared_ptr<Configuration> );
+			explicit
+      Options(boost::shared_ptr<Configuration> );
 
 
 			/**
 			 * \brief function allowing to get the configuration
 			 * \return the configuration
 			 */
-			boost::shared_ptr<Configuration> getConfiguration()const;
+			boost::shared_ptr<Configuration>
+      getConfiguration()const;
 
 
 
-			/**
-			 * \brief function allowing to add a new non-typed option
-			 */
-			  void add(const std::string&,const std::string&, const Group_type &);
+      /**
+       * \brief function allowing to add a new non-typed option
+       * \param name: the name of the option
+       * \param desc: brief description of the option
+       * \param group: a group which option belongs to
+       */
+			  void 
+        add(const std::string& name,const std::string& desc, const Group_type & group);
 
 			/**
 			 *
-			 * \brief function offering a way to add a typed option
+			 * \brief function provinding a way to add a typed option
 			 * \param name: the name of the option
 			 * \param desc: brief description of the option
 			 * \param group: a group which option belongs to
-			 * \param value: the value of the option
+			 * \param value: the value of the option when option is provided in
+       * command line
+       * \param required: for required option
 			 */
 
 			template<class T>
-				void add(const std::string& name,
-                           const std::string& desc,
+			void add(const std::string& name,
+               const std::string& desc,
 						   const Group_type& group,
-						   T& value,int required=0){
+						   T& value,
+               int required=0){
 
 					po::options_description tmp_options;
 
@@ -157,8 +183,8 @@ class Configuration {
 				}
 
 			template<typename T>
-				void add(const std::string& name,
-                           const std::string& desc,
+			void add(const std::string& name,
+               const std::string& desc,
 						   const Group_type& group,
 							 boost::function1<void, T>& userFunc,
 							 int required=0 ){
@@ -180,17 +206,23 @@ class Configuration {
 					setGroup(tmp_options,group);
 
 				}
-			/**
+			
+      /**
 			 * \brief To set position of options
+       * \param name: the name of the option
+       * \param pos :  the required position
 			 */
 
-			 void setPosition(const std::string &, int);
+			 void
+       setPosition(const std::string& name, int pos);
 
 			/**
 			 * \brief To parse command line
+       * \param ac: The number of parameters of the command 
+       * \param av: the names of all paramters
 			 */
 
-		   void parse_cli(int, char*[]);
+		   void parse_cli(int ac, char* av[]);
 
 			/**
 			 * \brief To parse config file
@@ -198,47 +230,63 @@ class Configuration {
 
 			void parse_cfile();
 
-			 /**
-			  * \brief To parse environement variable
-			  */
+      /**
+       * \brief To parse environement variable
+       * \param name_mapper: a functor providing a simple name from the conventional
+       * name of the environment variable 
+       * Ex: for VISHNU_CONFIG_FILE, it returns dietConfig
+       */
 
-			 void parse_env (const func1 &);
-
-			 /**
-			  * \brief To notify all  user-defined functions
-			  */
-
-			 void notify ();
+			 void
+       parse_env (const func1 & name_mapper);
 
 			 /**
-			  * \brief To check the existence of options
+			  * \brief To notify all  user-defined functions (callback)
 			  */
 
-			 int count (const std::string&)const;
+			 void
+       notify ();
+
+			 /**
+			  * \brief To check if an option is provided after parsing the command
+        * line
+        * \param key: the name of the option
+			  */
+
+			 int count (const std::string& key)const;
 
 			 /**
 			  * \brief To check if a value is stored
 			  */
 
-			 bool empty ()const{return vm.empty();}
+			 bool
+       empty ()const{return vm.empty();}
 
 			 /**
 			  * \brief To get the value of options
+        * \param key: the name of the option
+        * \return The value of the option
 			  */
 
 			 template<class T>
-				 const T & get(const std::string key)const{
+			 const T &
+       get(const std::string key)const{
 					 return(vm[key.c_str()].template as<T>());
 				 }
 
 			 /**
-			  * \brief to print options
+			  * \brief to print the set of options allowed by a command
+        * \param os: Where options wiil be printed.
+        * \param opt: the options to print.
+        * \return the stream where the options are printed.
 			  */
 
-			 friend std::ostream& operator<<(std::ostream &,const Options & );
+			 friend
+       std::ostream&
+       operator<<(std::ostream &,const Options & );
 
 			 /**
-			  * \brief Default destructor
+			  * \brief The default destructor
 			  */
 
 			 virtual ~Options();
@@ -248,6 +296,7 @@ class Configuration {
  * \brief A helper function to simplify the display of vector
  * \param os: an ostream to write data in
  * \param v: a vector to print
+ * \return the ostream in which the data is written
  */
 
 template<class T>
