@@ -52,10 +52,9 @@ MonitorUMS::init(int vishnuId,
                                                 dbPassword,
                                                 DATABASENAME);
 
-  Vishnuid::mvishnuid = convertToString(vishnuId);
   DatabaseResult *result;
 
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+Vishnuid::mvishnuid);
+  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
   std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
 
