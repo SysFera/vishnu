@@ -210,10 +210,9 @@ IF( OMNIORB4_IDL_COMPILER )
     STRING( REGEX MATCH "#define[\t ]+PACKAGE_VERSION[\t ]+\"([0-9]+.[0-9]+.[0-9]+)\"" OMNIORB_ACCONFIG_H "${OMNIORB_ACCONFIG_H}" )
     STRING( REGEX REPLACE ".*\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" OMNIORB4_VERSION "${OMNIORB_ACCONFIG_H}" )
 
-    # TODO: when really switching to CMake 2.6, we should use VERSION_LESS instead of LESS
-    IF( "${OMNIORB4_VERSION}" LESS "${OMNIORB4_MINIMUM_VERSION}" )
+    IF( "${OMNIORB4_VERSION}" VERSION_LESS "${OMNIORB4_MINIMUM_VERSION}" )
       MESSAGE( "WARNING: your version of omniORB is older than the minimum required one (${OMNIORB4_MINIMUM_VERSION}), using DIET with this version may result in undetermined behaviors." )
-    ENDIF( "${OMNIORB4_VERSION}" LESS "${OMNIORB4_MINIMUM_VERSION}" )
+    ENDIF( "${OMNIORB4_VERSION}" VERSION_LESS "${OMNIORB4_MINIMUM_VERSION}" )
 
 
   ELSE( EXISTS ${OMNIORB4_INCLUDE_DIR}/omniORB4/acconfig.h )
