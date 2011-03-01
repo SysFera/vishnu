@@ -14,7 +14,7 @@
 #include "utilsClient.hpp"
 
 /**
- * \fn  UtilsProxy() 
+ * \fn  UtilsProxy()
  * \brief Constructor, default constructor
  */
 UtilsProxy::UtilsProxy()
@@ -54,7 +54,7 @@ mfilePath(filePath)
 /**
  * \brief Function to initialize the SYSFERA-DS configuration
  * \fn  int initialize()
- * \return 0 if success else raises an exception if error
+ * \return 0 or GRPC code if success else raises an exception if error
  */
 int
 UtilsProxy::initialize() {
@@ -64,7 +64,7 @@ UtilsProxy::initialize() {
   } catch (...) {
     throw SystemException(ERRCODE_DIET, "Internal DIET Exception");
   }
-  if (res != 0) {
+  if (res == -1) {
     throw SystemException(ERRCODE_DIET, "DIET Initialization failure");
   }
   return res;
