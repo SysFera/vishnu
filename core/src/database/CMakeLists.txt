@@ -55,12 +55,6 @@ ADD_LIBRARY(database-vishnu
 
 TARGET_LINK_LIBRARIES(database-vishnu  ${DB_LIBS})
 
-# EXECS
-
-ADD_EXECUTABLE(mainDB
-  main.cpp
- )
-
 # Compiler avec oracle :
 # - Recuperer dans le depot svn les libs et les includes du dossier :
 # /home/keo/SVN/SYSFERA/startup/projets/1026-EDF/tech
@@ -73,7 +67,5 @@ ADD_EXECUTABLE(mainDB
 # Compiler
 # Le test effectif n'a pas ete realisé car pas de base oracle ici
 
-
-TARGET_LINK_LIBRARIES(mainDB ${POSTGRESQL_LIB} ${ORACLE_LIBS} database-vishnu exception-vishnu)
 
 install( TARGETS database-vishnu DESTINATION lib )

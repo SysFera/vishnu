@@ -51,6 +51,14 @@ public :
   static ServerUMS*  getInstance();
 
   /**
+  * \brief To get the vishnuId
+  * \fn int getVishnuId()
+  * \return the path of the configuration file
+  */
+  int
+  getVishnuId();
+
+  /**
   * \brief To get the path to the sendmail script
   * \fn std::string getSendmailScriptPath()
   * \return the path of the configuration file
@@ -97,6 +105,10 @@ private :
   * \brief The path to the sendmail script
   */
   std::string msendmailScriptPath;
+  /**
+  * \brief The vishnu id
+  */
+  int mvishnuId;
   /**
   * \brief Structure representing a profile description
   */

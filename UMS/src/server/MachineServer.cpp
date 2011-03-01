@@ -6,6 +6,7 @@
 */
 
 #include "MachineServer.hpp"
+#include "ServerUMS.hpp"
 
 /**
 * \brief Constructor
@@ -42,6 +43,7 @@ MachineServer::add() {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   std::string idMachineGenerated;
   int machineCpt;
+  std::string vishnuId;
 
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -51,11 +53,12 @@ MachineServer::add() {
     //if the user is an admin
     if (userServer.isAdmin()) {
 
+      vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
 
-      machineCpt = convertToInt(getAttrVishnu("machinecpt", Vishnuid::mvishnuid));
+      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuId));
       //Generation of userid
       idMachineGenerated =
-      getGeneratedName(getAttrVishnu("formatidmachine", Vishnuid::mvishnuid).c_str(),
+      getGeneratedName(getAttrVishnu("formatidmachine", vishnuId).c_str(),
                                                 machineCpt,
                                                 MACHINE,
                                                 mmachine->getName());
@@ -66,7 +69,7 @@ MachineServer::add() {
       //if the machineId does not exist
       if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 
-        mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"'\
+        mdatabaseVishnu->process(sqlInsert + "("+vishnuId+",'"+mmachine->getName()+"'\
         ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
         '"+mmachine->getSshPublicKey()+"')");
 
