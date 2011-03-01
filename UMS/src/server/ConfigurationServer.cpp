@@ -8,6 +8,7 @@
 #include "ConfigurationServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
+#include "ServerUMS.hpp"
 
 /**
  * \brief Constructor
@@ -247,7 +248,9 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
  " privilege, email, passwordstate, status) values ";
 
-  return (sqlInsert + "(" + Vishnuid::mvishnuid+", "
+  std::string vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
+
+  return (sqlInsert + "(" + vishnuId +", "
   "'"+user->getUserId()+"','"+user->getPassword()+"','"
   + user->getFirstname()+"','"+user->getLastname()+"',"+
   convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
@@ -263,7 +266,9 @@ std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
 
-  sqlInsert.append("("+Vishnuid::mvishnuid+",'"+machine->getName()+"'"
+  std::string vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
+
+  sqlInsert.append("("+vishnuId+",'"+machine->getName()+"'"
   ",'"+ machine->getSite()+"','"+machine->getMachineId()+"',"
   +convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
 
