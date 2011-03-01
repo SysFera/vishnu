@@ -7,9 +7,9 @@ ADD_LIBRARY(exception-vishnu
  SystemException.cpp
  UserException.cpp
  UMSVishnuException.cpp
- TMSVishnuException.cpp
- IMSVishnuException.cpp
- FMSVishnuException.cpp
+#  TMSVishnuException.cpp
+#  IMSVishnuException.cpp
+#  FMSVishnuException.cpp
  InternalVishnuException.cpp
 )
 
@@ -22,9 +22,9 @@ INSTALL( FILES
     UserException.hpp
     SystemException.hpp
     UMSVishnuException.hpp
-    TMSVishnuException.hpp
-    FMSVishnuException.hpp
-    IMSVishnuException.hpp
+#     TMSVishnuException.hpp
+#     FMSVishnuException.hpp
+#     IMSVishnuException.hpp
 
     DESTINATION
     include
