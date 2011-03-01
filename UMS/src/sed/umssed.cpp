@@ -9,7 +9,7 @@ using namespace utilServer;
 
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s <diet_config.cfg> vishnuid [ora|pg] db_host db_username db_password\n"+ std::string(cmd);
+  std::cout << "Usage: %s <diet_config.cfg> vishnuid [ora|pg] db_host db_username db_password sendmail_script_path\n"+ std::string(cmd);
   return 1;
 }
 
@@ -22,8 +22,9 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string dbHost;
   std::string dbUsername;
   std::string dbPassword;
+  std::string sendmailScriptPath;
 
-  if (argc < 7) {
+  if (argc < 8) {
     return usage(argv[0]);
   }
 
@@ -51,14 +52,15 @@ int main(int argc, char* argv[], char* envp[]) {
   dbHost = argv[4];
   dbUsername = argv[5];
   dbPassword = argv[6];
+  sendmailScriptPath = argv[7];
 
   pid_t pid;
   pid = fork();
 
   if (pid > 0) {
     // Initialize the UMS Server (Opens a connection to the database)
-    ServerUMS server;
-    res = server.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
+    ServerUMS* server = ServerUMS::getInstance();
+    res = server->init(vishnuid, dbType, dbHost, dbUsername, dbPassword, sendmailScriptPath);
     // Initialize the DIET SeD
     if (!res) {
       diet_print_service_table();

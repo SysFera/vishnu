@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES(
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ADD_LIBRARY(ums-api-client
@@ -22,6 +23,7 @@ TARGET_LINK_LIBRARIES(ums-api-client
   ${DIET_CLIENT_LIBRARIES}
   ${EMF4CPP_LIB}
   ${EMF4CPP_CPP_LIB}
+  ${Boost_LIBRARIES}
   emf4cpp-UMS_Data
   exception-vishnu
   ums-client-proxy
