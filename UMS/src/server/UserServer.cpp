@@ -6,6 +6,7 @@
 */
 
 #include "UserServer.hpp"
+#include "ServerUMS.hpp"
 
 /**
 * \brief Constructor
@@ -507,3 +508,26 @@ UserServer::generatePassword(std::string value1, std::string value2) {
 
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
 }
+/**
+* \brief Function to send an email to a user
+* \param user     the user to whom send the email
+* \param content  the body of the email
+* \param subject  the subject of the email
+*/
+int UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject)
+{
+  std::string address = user.getEmail();
+  if (address.empty()) {
+    throw UserException(ERRCODE_INVALID_MAIL_ADRESS, "Empty email address");
+  }
+  std::string sendmailScriptPath = ServerUMS::getInstance()->getSendmailScriptPath();
+  if (sendmailScriptPath.empty()) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid server configuration");
+  }
+  // TODO create file before sending
+  std::string command = sendmailScriptPath + " --to " + address + " -s " + "\"" + subject + "\"";
+  if (!system(command.c_str())) {
+    throw SystemException(ERRCODE_SYSTEM, "Could not send email");
+  }
+}
+
