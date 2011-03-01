@@ -1,5 +1,3 @@
-#SET( CMAKE_INSTALL_PREFIX ../../.. )
-
 INCLUDE_DIRECTORIES(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
  ${UTILVISHNU_SOURCE_DIR}
@@ -16,12 +14,8 @@ INCLUDE_DIRECTORIES(
 )
 
 LINK_DIRECTORIES(
-#  ../../../lib
 )
 
-ADD_EXECUTABLE(mainReg
-  main.cpp
-  )
 
 ADD_LIBRARY(register-vishnu
   MapperRegistry.cpp
@@ -32,15 +26,5 @@ ADD_LIBRARY(register-vishnu
   TMSMapper.cpp
   )
 
-TARGET_LINK_LIBRARIES(mainReg 
-  register-vishnu
-  exception-vishnu
-  utils-vishnu 
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
-  emf4cpp-UMS_Data
-)
 
 install( TARGETS register-vishnu DESTINATION lib )
