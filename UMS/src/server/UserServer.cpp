@@ -59,6 +59,8 @@ UserServer::add(UMS_Data::User*& user) {
   std::string passwordCrypted;
   int userCpt;
   std::string vishnuId;
+  std::string formatiduser;
+
 
   if (exist()) {
     if (isAdmin()) {
@@ -72,37 +74,53 @@ UserServer::add(UMS_Data::User*& user) {
       //To get the user counter
       userCpt = convertToInt(getAttrVishnu("usercpt", vishnuId));
 
-      //Generation of userid
-      idUserGenerated =
-      getGeneratedName(getAttrVishnu("formatiduser", vishnuId).c_str(),
-                                                    userCpt,
-                                                    USER,
-                                                    user->getLastname());
+      //To get the formatiduser
+      formatiduser = getAttrVishnu("formatiduser", vishnuId).c_str();
 
-      incrementCpt("usercpt", userCpt);
+      //if the formatiduser is defined
+      if (formatiduser.size() != 0) {
+        //Generation of userid
+        idUserGenerated =
+        getGeneratedName(formatiduser.c_str(),
+                          userCpt,
+                          USER,
+                          user->getLastname());
 
-      user->setUserId(idUserGenerated);
+        //if the userId is generated
+        if (idUserGenerated.size() != 0) {
 
-      //To get the password encrypted
-      passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
+          incrementCpt("usercpt", userCpt);
+          user->setUserId(idUserGenerated);
+          //To get the password encrypted
+          passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
-      //If the user to add exists
-      if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
+          //If the user to add exists
+          if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
 
-        //To insert user on the database
-        mdatabaseVishnu->process(sqlInsert + "(" + vishnuId+", "
-        "'"+user->getUserId()+"','"+passwordCrypted+"','"
-        + user->getFirstname()+"','"+user->getLastname()+"',"+
-        convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-        "0, "+convertToString(user->getStatus())+")");
+            //To insert user on the database
+            mdatabaseVishnu->process(sqlInsert + "(" + vishnuId+", "
+            "'"+user->getUserId()+"','"+passwordCrypted+"','"
+            + user->getFirstname()+"','"+user->getLastname()+"',"+
+            convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
+            "0, "+convertToString(user->getStatus())+")");
 
-        //Send email
-        std::string emailBody = getMailContent(*user, true);
-        sendMailToUser(*user, emailBody, "Vishnu message: user created");
+            //Send email
+            std::string emailBody = getMailContent(*user, true);
+            sendMailToUser(*user, emailBody, "Vishnu message: user created");
 
-      }// END If the user to add exists
+          }// END If the user to add exists
+          else {
+            UMSVishnuException e (ERRCODE_USERID_EXISTING);
+            throw e;
+          }
+        }//END if the userId is generated
+        else {
+          SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatiduser");
+          throw e;
+        }
+      }//END if the formatiduser is defined
       else {
-        UMSVishnuException e (ERRCODE_USERID_EXISTING);
+        SystemException e (ERRCODE_SYSTEM, "The formatiduser is not defined");
         throw e;
       }
     } //END if the user is an admin
@@ -204,7 +222,7 @@ int
 UserServer::deleteUser(UMS_Data::User user) {
 
   //If the user to delete is not the super VISHNU admin
-  if (user.getUserId().compare(utilServer::ROOTUSERNAME) != 0) {
+  if (user.getUserId().compare(ROOTUSERNAME) != 0) {
     //If the user exists
     if (exist()) {
       if (isAdmin()) {
@@ -505,8 +523,8 @@ UserServer::existuserId(std::string userId) {
 std::string
 UserServer::generatePassword(std::string value1, std::string value2) {
 
-  std::string salt = "$1$"+value1 + convertToString(utilServer::generate_numbers())+value2+"$";
-  std::string clef = value2+convertToString(utilServer::generate_numbers());
+  std::string salt = "$1$"+value1 + convertToString(generate_numbers())+value2+"$";
+  std::string clef = value2+convertToString(generate_numbers());
 
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
 }

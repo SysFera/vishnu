@@ -88,7 +88,7 @@ ServerUMS::init(int vishnuId,
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
-    UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), utilServer::UMSMAPPERNAME);
+    UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
     mapper->registerMapper();
 
     /* Checking of vishnuid on the database */
