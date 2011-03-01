@@ -183,5 +183,14 @@ private:
   std::string
   generatePassword(std::string value1, std::string value2);
 
+  /**
+   * \brief Function to send an email to the user
+   * \param user     the user to whom send the email
+   * \param content the body of the email
+   * \param subject the subject of the email
+   */
+  int
+  sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject);
+
 };
 #endif
