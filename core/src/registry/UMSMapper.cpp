@@ -610,8 +610,10 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   ListSessionOptions_ptr ac = parser.load(std::string(a))->as< ListSessionOptions >();
   res+=" -t ";
   res += convertToString(ac->getStatus());
-  res+=" -p ";
-  res += convertToString(ac->getSessionClosePolicy());
+  if(ac->getSessionClosePolicy() > 0) {
+    res+=" -p ";
+    res += convertToString(ac->getSessionClosePolicy());
+  }
   a = ac->getMachineId();
   delay = ac->getSessionInactivityDelay();
   if (delay>0){
