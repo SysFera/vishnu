@@ -27,15 +27,6 @@ using namespace boost::posix_time;
 using namespace boost::gregorian;
 
 /**
-* \class Vishnuid
-* \brief The Vishnuid class encapsulates the global vishnu id
-*/
-class Vishnuid {
-  public:
-    static std::string mvishnuid;
-};
-
-/**
 * \enum IdType
 * \brief The type of id generated
 */

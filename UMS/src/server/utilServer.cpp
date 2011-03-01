@@ -7,8 +7,6 @@
 
 #include "utilServer.hpp"
 
-std::string Vishnuid::mvishnuid = "";
-
 /**
 * \brief Function to get a random number
 * \fn    int generate_numbers()
@@ -22,7 +20,6 @@ utilServer::generate_numbers() {
   boost::uniform_int<> dist(1, 100000);
   boost::variate_generator<boost::mt19937&, boost::uniform_int<> > die(gen, dist);
   return die();
-
 }
 
 /**
@@ -263,3 +260,4 @@ utilServer::incrementCpt(std::string cptName, int cpt) {
   databaseVishnu->process(sqlCommand.c_str());
 
 }
+
