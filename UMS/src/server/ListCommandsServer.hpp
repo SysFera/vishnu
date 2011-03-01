@@ -18,6 +18,7 @@
 #include "ListCmdOptions.hpp"
 #include "UMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "CommandServer.hpp"
 
 /**
  * \class ListCommandsServer
@@ -147,7 +148,7 @@ public:
           ii = results.begin();
 
           UMS_Data::Command_ptr command = ecoreFactory->createCommand();
-          command->setCommandId(*ii);
+          command->setCommandId(convertCmdType(static_cast<CmdType>(convertToInt(*ii))));
           command->setSessionId(*(++ii));
           command->setMachineId(*(++ii));
 
@@ -177,6 +178,27 @@ public:
   std::string getCommandName()
   {
     return mcommandName;
+  }
+
+  std::string convertCmdType(CmdType type) {
+
+    std::string cmd;
+    switch(type) {
+      case UMS : 
+         cmd = "UMS";
+         break;
+      case TMS :
+         cmd = "TMS";
+         break;
+      case FMS :
+         cmd = "FMS";
+         break;
+      case IMS :
+         cmd = "IMS";
+         break;
+    }
+
+    return cmd;
   }
 
   /**
