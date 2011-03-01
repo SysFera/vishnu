@@ -199,6 +199,6 @@ private:
    * \return the email content
    */
   std::string
-  getMailContent(const UMS_Data::User& user, bool flagAdduser = false);
+  getMailContent(const UMS_Data::User& user, bool flagAdduser);
 };
 #endif

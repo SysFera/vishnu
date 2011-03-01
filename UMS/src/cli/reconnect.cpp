@@ -2,7 +2,7 @@
 #include "utils.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
-
+#include "daemon_cleaner.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -63,8 +63,10 @@ int main (int ac, char* av[]){
 
     /************** Call UMS reconnect service *******************************/
 
+    //cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
     
     // initializing DIET
+   
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
 
     cerr << "DIET initialization failed !" << endl;
@@ -78,7 +80,7 @@ int main (int ac, char* av[]){
 
     // store the session information
 
-    storeLastSessionKey(session.getSessionKey(),session.getClosePolicy(),getppid());
+    storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
 
 
   }// End of try bloc

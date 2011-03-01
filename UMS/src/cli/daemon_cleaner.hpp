@@ -9,11 +9,11 @@
  */
 
 /* Posix headers */
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <signal.h>
+#include <cstdio>
+#include <cstring>
+#include <csignal>
 #include <syslog.h>
 #include <sys/stat.h>
 #include <sys/types.h>
