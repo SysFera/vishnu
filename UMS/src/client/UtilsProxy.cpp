@@ -14,12 +14,8 @@
 #include "utilsClient.hpp"
 
 /**
- * \fn UtilsProxy(char* cfg,
- *                int argc,
-                  char** argv)
- * \param cfg The SYSFERA-DS configuration file
- * \param argc The number of arguments of the program
- * \briefargv The list of arguments
+ * \fn  UtilsProxy() 
+ * \brief Constructor, default constructor
  */
 UtilsProxy::UtilsProxy()
 {
@@ -34,25 +30,31 @@ UtilsProxy::UtilsProxy()
                   char** argv)
  * \param cfg The SYSFERA-DS configuration file
  * \param argc The number of arguments of the program
- * \briefargv The list of arguments
+ * \param argv The list of arguments
+ * \brief Constructor
  */
 UtilsProxy::UtilsProxy(char* cfg, int argc, char** argv):
 mcfg(cfg), margc(argc), margv(argv)
 {
 }
 
+/**
+ * \fn UtilsProxy(const std::string& filePath)
+ * \param filePath The SYSFERA-DS configuration file
+ * \brief Constructor
+ */
 UtilsProxy::UtilsProxy(const std::string& filePath):
 mfilePath(filePath)
 {
-  mcfg  = NULL;
-  margc = NULL;
+  mcfg = NULL;
+  margc = 0;
   margv = NULL;
 }
 
 /**
  * \brief Function to initialize the SYSFERA-DS configuration
  * \fn  int initialize()
- * \return 0 if success else 1 if error
+ * \return 0 if success else raises an exception if error
  */
 int
 UtilsProxy::initialize() {

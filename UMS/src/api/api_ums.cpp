@@ -6,6 +6,7 @@
  */
 
 #include "api_ums.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 using namespace std;
 
@@ -392,7 +393,19 @@ saveConfiguration(const std::string& sessionKey,
                                                 throw(UserException)
 {
 
-   std::string filePath = std::string(getenv("HOME"))+"/.vishnu/test.cfg";
+   //the current time
+   boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+
+   //To get the current time as a string
+   std::string nowToString = to_simple_string(now.date());
+   nowToString.append("-"+to_simple_string(now.time_of_day()));
+
+   //To construct the file to save 
+   std::string filePath;
+   filePath.append(std::string(getenv("HOME"))+"/.vishnu/");
+   filePath.append(sessionKey.substr(0,8)+nowToString);
+   
+
    SessionProxy sessionProxy(sessionKey);
    ConfigurationProxy configurationProxy(filePath, sessionProxy);
 

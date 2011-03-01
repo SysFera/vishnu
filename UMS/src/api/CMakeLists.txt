@@ -22,6 +22,7 @@ TARGET_LINK_LIBRARIES(ums-api-client
   ${DIET_CLIENT_LIBRARIES}
   ${EMF4CPP_LIB}
   ${EMF4CPP_CPP_LIB}
+  ${Boost_LIBRARIES}
   emf4cpp-UMS_Data
   exception-vishnu
   ums-client-proxy
