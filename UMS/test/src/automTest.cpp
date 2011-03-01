@@ -200,7 +200,6 @@ BOOST_AUTO_TEST_CASE( my_test )
    if (li->getSessions().size() &&
        (li->getSessions())[0]){
      rec = li->getSessions()[0]->getSessionId();
-     std::cout << "session_id : "<< rec << std::endl;
      BOOST_CHECK(reconnect  (uid, pwd, rec, sess)==0);
      BOOST_CHECK(listSessions(sess.getSessionKey(), *li , opt     )==0);
    }else{
@@ -378,7 +377,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
   BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
-  cout << "new mdp : " << np << endl;
   BOOST_CHECK    (changePassword(uid, np, pwd       )==0);  
   BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
 
@@ -825,7 +823,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   if (li->getSessions().size() &&
       (li->getSessions())[0]){
     rec = li->getSessions()[0]->getSessionId();
-    std::cout << "session_id : "<< rec << std::endl;
     BOOST_CHECK(reconnect  (uid, pwd, rec, sess)==0);
   }
   else{

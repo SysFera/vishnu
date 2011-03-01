@@ -101,8 +101,6 @@ ServerUMS::init(int vishnuId,
     }
 
   } catch (VishnuException& e) {
-        std::cout << "Error: " << e.getMsg()<<std::endl;
-        std::cout << e.what() <<std::endl;
         exit(0);
   }
 

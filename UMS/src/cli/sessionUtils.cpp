@@ -284,9 +284,6 @@ storeLastSession(const std::string& sessionKey ,int closePolicy,int ppid){
 
   std::string sessionFile=getSessionLocation(ppid);
 
-
-  std:: cout << "sessionFile: " << sessionFile<< std::endl;
-
   SessionEntry session(sessionKey,closePolicy);
 
   storeLastSession(session,sessionFile.c_str());

@@ -31,13 +31,11 @@ int MachineClientServer::recordMachineClient() {
     std::string sqlCmd = std::string("insert into clmachine (sshkey, name) values ('");
     sqlCmd.append(mmachineSSHKey+"','");
     sqlCmd.append(mhostname+"')");
-    std::cout <<"SQL COMMAND:"<<sqlCmd;
 
     mdatabaseVishnu->process(sqlCmd.c_str());
 
   } //End if the machine is not on the database
   else {
-    std::cout << "This client machine is already registered" << std::endl;
   }
   return 0;
 }
@@ -56,8 +54,6 @@ MachineClientServer::getId() {
   std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
   sqlCommand.append(mmachineSSHKey+ "' and name='");
   sqlCommand.append(mhostname+"'");
-
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();

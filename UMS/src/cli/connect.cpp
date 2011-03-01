@@ -67,8 +67,6 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-    std::cout <<"closePolicy= "<< connectOpt.getClosePolicy() <<std::endl;
-
     checkVishnuConfig(*opt);
 
     //Fix me

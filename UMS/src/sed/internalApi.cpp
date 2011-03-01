@@ -27,13 +27,9 @@ solveSessionConnect(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  std::cout<<"userID:"<<userId<<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
-  std::cout<<"password:"<<password<<std::endl;
   diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
-  std::cout<<"clientKey:"<<clientKey<<std::endl;
   diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
-  std::cout<<"clientHostname:"<<clientHostname<<std::endl;
   diet_string_get(diet_parameter(pb,4), &options, NULL);
 
   UserServer userServer = UserServer(std::string(userId), std::string(password));
@@ -50,7 +46,6 @@ solveSessionConnect(diet_profile_t* pb) {
 
   try {
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
-    std::cout<<"sessionKey:"<<sessionServer.getData().getSessionKey()<<std::endl;
     //To serialize the user object
     const char* name = "solveConnect";
     ::ecorecpp::serializer::serializer _ser(name);
@@ -63,7 +58,6 @@ solveSessionConnect(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameters
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -90,15 +84,10 @@ solveSessionReconnect(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  std::cout<<"userID:"<<userId<<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
-  std::cout<<"password:"<<password<<std::endl;
   diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
-  std::cout<<"clientKey:"<<clientKey<<std::endl;
   diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
-  std::cout<<"clientHostname:"<<clientHostname<<std::endl;
   diet_string_get(diet_parameter(pb,4), &sessionId, NULL);
-  std::cout<<"sessionId:"<<sessionId<<std::endl;
 
   UserServer userServer = UserServer(std::string(userId), std::string(password));
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
@@ -107,7 +96,6 @@ solveSessionReconnect(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(""));
 
   sessionServer.getData().setSessionId(std::string(sessionId));
-  std::cout<<"sessionId dans SessionServer:"<<sessionServer.getData().getSessionId()<<std::endl;
 
   try {
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
@@ -123,7 +111,6 @@ solveSessionReconnect(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -165,7 +152,6 @@ solveSessionClose(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT parameter
       diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
 }
@@ -191,9 +177,7 @@ solveUserCreate(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
-  std::cout<<"User:"<< userSerialized <<std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -233,7 +217,6 @@ solveUserCreate(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -260,9 +243,7 @@ solveUserUpdate(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
-  std::cout<<"User:"<< userSerialized <<std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -298,7 +279,6 @@ solveUserUpdate(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -323,9 +303,7 @@ solveUserDelete(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userId, NULL);
-  std::cout<<"User:"<< userId <<std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -356,7 +334,6 @@ solveUserDelete(diet_profile_t* pb) {
   } catch (VishnuException& e) {
     //OUT parameter
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
@@ -378,11 +355,8 @@ solveUserPasswordChange(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  std::cout<<"sessionKey:"<< userId <<std::endl;
   diet_string_get(diet_parameter(pb,1), &password, NULL);
-  std::cout<<"oldPassword:"<< password <<std::endl;
   diet_string_get(diet_parameter(pb,2), &newPassword, NULL);
-  std::cout<<"newPassword:"<< newPassword <<std::endl;
 
   UserServer userServer = UserServer(std::string(userId), std::string(password));
 
@@ -394,7 +368,6 @@ solveUserPasswordChange(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -419,9 +392,7 @@ solveUserPasswordReset(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userId, NULL);
-  std::cout<<"User:"<< userId <<std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -452,7 +423,6 @@ solveUserPasswordReset(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -478,9 +448,7 @@ solveMachineCreate(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
-  std::cout<<"Machine:"<< machineSerialized <<std::endl;
 
   //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
@@ -519,7 +487,6 @@ solveMachineCreate(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -546,9 +513,7 @@ solveMachineUpdate(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
-  std::cout<<"Machine:"<< machineSerialized <<std::endl;
 
   //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
@@ -581,7 +546,6 @@ solveMachineUpdate(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -608,9 +572,7 @@ solveMachineDelete(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  std::cout<<"Machine:"<< machineId <<std::endl;
 
   UMS_Data::Machine* machine = new UMS_Data::Machine();
   machine->setMachineId(machineId);
@@ -638,7 +600,6 @@ solveMachineDelete(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -667,9 +628,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
-  std::cout<<"Local Account:"<< laccountSerialized <<std::endl;
 
   //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
@@ -684,7 +643,6 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
   try {
     localAccountServer.add();
-    std::cout << "Public ssh key" << localAccountServer.getPublicKey() << std::endl;
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -706,7 +664,6 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
 
       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -734,9 +691,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
-  std::cout<<"Local Account Dans update:"<< laccountSerialized <<std::endl;
 
   //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
@@ -770,7 +725,6 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -799,11 +753,8 @@ solveLocalAccountDelete(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &userId, NULL);
-  std::cout<<"userId:"<< userId <<std::endl;
   diet_string_get(diet_parameter(pb,2), &machineId, NULL);
-  std::cout<<"machineId:"<< machineId <<std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UMS_Data::LocalAccount *localAccount = new UMS_Data::LocalAccount();
@@ -833,7 +784,6 @@ solveLocalAccountDelete(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -862,7 +812,6 @@ solveConfigurationSave(diet_profile_t* pb) {
 
   //IN Parameter
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
@@ -891,7 +840,6 @@ solveConfigurationSave(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
 
       //OUT Parameters
       diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
@@ -920,9 +868,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &configurationSerialized, NULL);
-  std::cout<<"configuration:"<< configurationSerialized <<std::endl;
 
   //CREATE DATA MODEL
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
@@ -955,7 +901,6 @@ solveConfigurationRestore(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -982,9 +927,7 @@ solveOptionValueSet(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
-  std::cout<<"options:"<< optionValueSerialized <<std::endl;
 
   // CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -1016,7 +959,6 @@ solveOptionValueSet(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -1041,9 +983,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout<<"sessionKey:"<< sessionKey <<std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
-  std::cout<<"options:"<< optionValueSerialized <<std::endl;
 
   //CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -1075,7 +1015,6 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -1103,14 +1042,10 @@ solveGenerique(diet_profile_t* pb) {
   std::string cmd;
 
 
-  std::cout << "=================Solve Generique =================" << std::endl;
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout << "=========sessionKey=" << sessionKey << "=============" << std::endl;
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
-  std::cout << "=========optionValueSerialized=" << std::endl;
-  std::cout << optionValueSerialized  << std::endl;
 
   // CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -1150,14 +1085,11 @@ solveGenerique(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
 
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
-  std::cout << " done" << std::endl;
 
 return 0;
 
@@ -1181,14 +1113,10 @@ solveListUsers(diet_profile_t* pb) {
   Mapper* mapper;
   std::string cmd;
 
-  std::cout << "=================Solve userList =================" << std::endl;
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  std::cout << "=========sessionKey=" << sessionKey << "=============" << std::endl;
   diet_string_get(diet_parameter(pb,1), &option, NULL);
-  std::cout << "=========option=" << std::endl;
-  std::cout << option  << std::endl;
 
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
   ListUsersServer queryUsers(std::string(option), sessionServer);
@@ -1220,14 +1148,10 @@ solveListUsers(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      std::cout << "Exception: " << errorInfo <<std::endl;
       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
-  std::cout << " done" << std::endl;
-
   return 0;
 
 }
@@ -1307,12 +1231,10 @@ solveRestore(diet_profile_t* pb) {
   DbFactory factory;
   try {
   Database* db = factory.getDatabaseInstance();
-  std::cout << "processing : " << sqlcode << std::endl;
   db->process(sqlcode);
   }
   catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
-    std::cout << "Exception: " << errorInfo <<std::endl;
   }
 return 0;
 }

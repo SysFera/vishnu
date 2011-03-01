@@ -101,19 +101,12 @@ ConfigurationServer::save() {
 
           UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
           machine->setMachineId(*ii);
-          std::cout << machine->getMachineId() << std::endl;
           machine->setName(*(++ii));
-          std::cout << machine->getName() << std::endl;
           machine->setSite(*(++ii));
-          std::cout << machine->getSite() << std::endl;
           machine->setStatus(convertToInt(*(++ii)));
-          std::cout << machine->getStatus() << std::endl;
           machine->setSshPublicKey(*(++ii));
-          std::cout << machine->getSshPublicKey() << std::endl;
           machine->setLanguage(*(++ii));
-          std::cout << machine->getLanguage() << std::endl;
           machine->setMachineDescription(*(++ii));
-          std::cout << machine->getMachineDescription() << std::endl;
           mconfiguration->getListConfMachines().push_back(machine);
         }
       }
@@ -185,8 +178,6 @@ int ConfigurationServer::restore() {
         sqlcode.append(machineToSql(machine));
       }
 
-      std::cout << "SQL COMMAND:" << sqlcode << std::endl;
-
       //To insert machines and users
       mdatabaseVishnu->process(sqlcode.c_str());
 
@@ -195,8 +186,6 @@ int ConfigurationServer::restore() {
         UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
         sqlCodeDescMachine.append(machineDescToSql(machine));
       }
-
-      std::cout << "SQL COMMAND:" << sqlCodeDescMachine << std::endl;
 
       //To insert machines description
       mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
