@@ -403,7 +403,8 @@ saveConfiguration(const std::string& sessionKey,
    //To construct the file to save 
    std::string filePath;
    filePath.append(std::string(getenv("HOME"))+"/.vishnu/");
-   filePath.append(sessionKey.substr(0,8)+nowToString);
+   filePath.append(sessionKey.substr(0,8));
+   filePath.append("-"+nowToString);
    
 
    SessionProxy sessionProxy(sessionKey);
