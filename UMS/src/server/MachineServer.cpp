@@ -6,6 +6,7 @@
 */
 
 #include "MachineServer.hpp"
+#include "ServerUMS.hpp"
 
 /**
 * \brief Constructor
@@ -42,6 +43,8 @@ MachineServer::add() {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   std::string idMachineGenerated;
   int machineCpt;
+  std::string vishnuId;
+  std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -51,34 +54,52 @@ MachineServer::add() {
     //if the user is an admin
     if (userServer.isAdmin()) {
 
+      vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
 
-      machineCpt = convertToInt(getAttrVishnu("machinecpt", Vishnuid::mvishnuid));
-      //Generation of userid
-      idMachineGenerated =
-      getGeneratedName(getAttrVishnu("formatidmachine", Vishnuid::mvishnuid).c_str(),
-                                                machineCpt,
-                                                MACHINE,
-                                                mmachine->getName());
+      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuId));
 
-      incrementCpt("machinecpt", machineCpt);
-      mmachine->setMachineId(idMachineGenerated);
+      //To get the formatidmachine
+      formatidmachine = getAttrVishnu("formatidmachine", vishnuId);
+      //if the formatidmachine is defined
+      if (formatidmachine.size() != 0) {
+        //Generation of userid
+        idMachineGenerated =
+        getGeneratedName(formatidmachine.c_str(),
+                          machineCpt,
+                          MACHINE,
+                          mmachine->getName());
 
-      //if the machineId does not exist
-      if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
+        //if the machine id is generated
+        if (idMachineGenerated.size() != 0) {
+          incrementCpt("machinecpt", machineCpt);
+          mmachine->setMachineId(idMachineGenerated);
 
-        mdatabaseVishnu->process(sqlInsert + "("+Vishnuid::mvishnuid+",'"+mmachine->getName()+"'\
-        ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
-        '"+mmachine->getSshPublicKey()+"')");
+          //if the machineId does not exist
+          if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 
-        //To insert the description of the machine
-        mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
-        description) values \
-        ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",\
-        '"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
+            mdatabaseVishnu->process(sqlInsert + "("+vishnuId+",'"+mmachine->getName()+"'\
+            ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
+            '"+mmachine->getSshPublicKey()+"')");
 
-      } //if the machineId does not exist
+            //To insert the description of the machine
+            mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
+            description) values \
+            ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",\
+            '"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
+
+          } //if the machineId does not exist
+          else {
+            UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
+            throw e;
+          }
+        }//if the machine id is generated
+        else {
+          SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatidmachine");
+          throw e;
+        }
+      }//END if the formatidmachine is defined
       else {
-        UMSVishnuException e (ERRCODE_MACHINE_EXISTING);
+        SystemException e (ERRCODE_SYSTEM, "The formatidmachine is not defined");
         throw e;
       }
     } //End if the user is an admin
@@ -151,7 +172,6 @@ MachineServer::update() {
           " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
-        std::cout <<"SQL COMMAND:"<<sqlCommand;
         mdatabaseVishnu->process(sqlCommand.c_str());
 
       } //End if the machine to update exists
@@ -238,7 +258,6 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
   DatabaseResult* result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();
 

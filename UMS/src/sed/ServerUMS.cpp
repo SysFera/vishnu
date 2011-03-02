@@ -24,6 +24,16 @@ ServerUMS::getInstance() {
 }
 
 /**
+* \brief To get the vishnuId
+* \fn int getVishnuId()
+* \return the path of the configuration file
+*/
+int
+ServerUMS::getVishnuId() {
+  return mvishnuId;
+}
+
+/**
 * \brief To get the path to the sendmail script
 * \fn std::string getSendmailScriptPath()
 * \return the path of the configuration file
@@ -68,18 +78,17 @@ ServerUMS::init(int vishnuId,
                                                           dbUsername,
                                                           dbPassword,
                                                           DATABASENAME);
-  Vishnuid::mvishnuid = convertToString(vishnuId);
+  mvishnuId = vishnuId;
   DatabaseResult *result;
 
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+Vishnuid::mvishnuid);
-  std::cout <<"SQL COMMAND:"<<sqlCommand<<std::endl;
+  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
 
   try {
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
-    UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), utilServer::UMSMAPPERNAME);
+    UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
     mapper->registerMapper();
 
     /* Checking of vishnuid on the database */
@@ -92,8 +101,6 @@ ServerUMS::init(int vishnuId,
     }
 
   } catch (VishnuException& e) {
-        std::cout << "Error: " << e.getMsg()<<std::endl;
-        std::cout << e.what() <<std::endl;
         exit(0);
   }
 

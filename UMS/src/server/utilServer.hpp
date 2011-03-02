@@ -27,15 +27,6 @@ using namespace boost::posix_time;
 using namespace boost::gregorian;
 
 /**
-* \class Vishnuid
-* \brief The Vishnuid class encapsulates the global vishnu id
-*/
-class Vishnuid {
-  public:
-    static std::string mvishnuid;
-};
-
-/**
 * \enum IdType
 * \brief The type of id generated
 */
@@ -52,8 +43,17 @@ typedef enum IdType{
 */
 class Format_t{
 public :
+  /**
+   * \brief The start position in the format
+   */
   int start;
+  /**
+   * \brief The end position in the format
+   */
   int end;
+  /**
+   * \brief The value of the variable
+   */
   std::string value;
 };
 
@@ -183,7 +183,7 @@ namespace utilServer {
 
   /**
   * \brief Function to get information from the table vishnu
-  * \fn    string getAttrVishnu(string attrname, string vishnuid)
+  * \fn stdstring getAttrVishnu(std::string attrname, std::string vishnuid)
   * \param attrname the name of the attribut
   * \param vishnuid the id of the vishnu configuration
   * \return the corresponding attribut

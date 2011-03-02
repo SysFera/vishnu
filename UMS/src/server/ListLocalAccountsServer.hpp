@@ -53,7 +53,7 @@ public:
   /**
    * \brief Function to treat the ListLocalAccountsServer options
    * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListLocalAccOptions_ptr& options
+   *                         const UMS_Data::ListLocalAccOptions_ptr& options,
    *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListLocalAccountsServer options

@@ -204,7 +204,7 @@ solveListMachines(diet_profile_t* pb);
 
 /**
 * \brief Function to solve the service solveListLocalAccount
-* \fn int solveListLocalAccount(diet_profile_t*& pb)
+* \fn int solveListLocalAccount(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
@@ -228,7 +228,7 @@ int
 solveListHistoryCmd(diet_profile_t* pb);
 /**
 * \brief Function to solve the service solveListLocalAccount
-* \fn int solveListSessions(diet_profile_t*& pb)
+* \fn int solveListSessions(diet_profile_t* pb)
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */

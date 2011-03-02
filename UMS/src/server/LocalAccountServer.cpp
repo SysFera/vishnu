@@ -143,7 +143,6 @@ LocalAccountServer::update() {
           " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
-          std::cout <<"SQL COMMAND:"<<sqlCommand;
           mdatabaseVishnu->process(sqlCommand.c_str());
 
         }//END if the local account exists
@@ -263,7 +262,6 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
   std::vector<std::string>::iterator ii;
 
   std::string sqlCommand("SELECT "+attrname+" FROM account "+condition);
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
 
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();

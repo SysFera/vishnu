@@ -15,7 +15,7 @@
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
-#include "utilServer.hpp"
+#include "utilVishnu.hpp"
 
 /**
 * \class MachineClientServer
@@ -46,14 +46,14 @@ public:
   getId();
   /**
   * \brief Function to get the ssh key of the client machine
-  * \fn std::string getSSHKey()
+  * \fn std::string getSSHKey() const
   * \return raises an exception on error
   */
   std::string
   getSSHKey() const;
   /**
   * \brief Function to get the hostname of the client machine
-  * \fn std::string getHost()
+  * \fn std::string getHost() const
   * \return raises an exception on error
   */
   std::string

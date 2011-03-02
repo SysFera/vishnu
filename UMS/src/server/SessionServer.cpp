@@ -52,7 +52,6 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   if (user.exist()) {
     //if a user to substitute is defined
     if (connectOpt->getSubstituteUserId().size() != 0) {
-      std::cout << "USer to substitute:" << connectOpt->getSubstituteUserId() << std::endl;
       // if the user is admin
       if (user.isAdmin()) {
         numSubstituteUserId = user.getAttribut("where "
@@ -82,9 +81,6 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 
     generateSessionKey(user.getData().getUserId());
     generateSessionId(user.getData().getUserId());
-
-    std::cout <<" After generation SessionKey:" << msession.getSessionKey()<< std::endl;
-    std::cout <<" After generation SessionId:" << msession.getSessionId()<< std::endl;
 
     //To solve the connection mode
     solveConnectionMode(connectOpt, numUserIdToconnect);
@@ -221,8 +217,6 @@ SessionServer::getAttribut(std::string condition, std::string attrname) {
   DatabaseResult* result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vsession "+condition);
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
-
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();
 
@@ -286,7 +280,7 @@ SessionServer::generateSessionKey(std::string salt) {
   sessionKey = std::string(crypt(to_simple_string(now).c_str(), globalSalt.c_str()));
 
   //To put a randomize number at the end to complicate the string encrypted
-  sessionKey.append(convertToString(utilServer::generate_numbers()));
+  sessionKey.append(convertToString(generate_numbers()));
   msession.setSessionKey(sessionKey.substr(globalSalt.size()));
 
   return 0;
@@ -311,7 +305,7 @@ SessionServer::generateSessionId(std::string userId) {
 
   //To construct the session key
   sessionId.append(userId+"-");
-  sessionId.append(nowToString+":"+convertToString(utilServer::generate_numbers()));
+  sessionId.append(nowToString+":"+convertToString(generate_numbers()));
 
   msession.setSessionId(sessionId);
 
@@ -339,7 +333,6 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
   values.append(convertToString(msession.getTimeout())+")");
 
   sqlInsert.append(values);
-  std::cout << "SQL COMMAND:"<< sqlInsert << std::endl;
 
   mdatabaseVishnu->process(sqlInsert.c_str());
   return 0;
@@ -412,8 +405,6 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
     else {
       key = getAttribut("where vsessionid='"+msession.getSessionId()+"'");
     }
-    std::cout <<"getSessionkey function:"<< key << std::endl;
-
     if (key.size() != 0) {
       msession.setSessionKey(key);
       //To get the close policy associated to the session

@@ -128,8 +128,6 @@ void commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const C
 
   if(false==sessionKey.empty()){
 
-    std::cout <<"the current sessionkey is: " << sessionKey <<std::endl;
-
     conf_func(sessionKey,optionValue);
 
 

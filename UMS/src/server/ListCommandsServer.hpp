@@ -40,7 +40,7 @@ public:
     mcommandName ="vishnu_list_history_cmd";
   }
   /**
-   * \fn ListCommandsServer(const UMS_Data::ListSessionOptions_ptr params,
+   * \fn ListCommandsServer(UMS_Data::ListCmdOptions_ptr params,
    *                        const SessionServer& session)
    * \param params The object which encapsulates the information of ListCommandsServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
@@ -55,7 +55,7 @@ public:
   /**
    * \brief Function to treat the ListCommandsServer options
    * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListCmdOptions_ptr& options
+   *                         const UMS_Data::ListCmdOptions_ptr& options,
    *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListCommandsServer options values
@@ -121,7 +121,7 @@ public:
     std::string description;
 
     //MAPPER CREATION
-    Mapper* mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    Mapper* mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
 
     sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from "
                          " vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and "
@@ -178,11 +178,17 @@ public:
     return mcommandName;
   }
 
+  /**
+   * \brief To convert the command type in string
+   * \fn std::string convertCmdType(CmdType type)
+   * \param type The type to convert
+   * \return The corresponding string
+   */
   std::string convertCmdType(CmdType type) {
 
     std::string cmd;
     switch(type) {
-      case UMS : 
+      case UMS :
          cmd = "UMS";
          break;
       case TMS :
@@ -195,7 +201,6 @@ public:
          cmd = "IMS";
          break;
     }
-
     return cmd;
   }
 

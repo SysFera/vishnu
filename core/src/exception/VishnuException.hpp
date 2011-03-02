@@ -12,16 +12,41 @@
 #include <map>
 #include "utilVishnu.hpp"
 
+/**
+ * \brief This class represents the root of all the exception of the system
+ * \class VishnuException
+ */
 class VishnuException :
   public std::exception {
 public:
 
+  /**
+   * \brief The type of exception
+   */
 typedef enum ExceptionType{
+  /**
+   * \brief UMS exception
+   */
   UMS  	    = 0 ,
+  /**
+   * \brief TMS exception
+   */
   TMS  	    = 1 ,
+  /**
+   * \brief FMS exception
+   */
   FMS  	    = 2 ,
+  /**
+   * \brief IMS exception
+   */
   IMS  	    = 3 ,
+  /**
+   * \brief internal exception
+   */
   INTERNAL  = 4 ,
+  /**
+   * \brief not an exception
+   */
   NONE      = 5
 } ExceptionType;
 
@@ -59,43 +84,43 @@ public :
   VishnuException();
   /**
    * \brief Copy constructor
-   * \fn VishnuException(VishnuException e)
+   * \fn VishnuException(const VishnuException& e)
    */
   VishnuException(const VishnuException& e);
   /**
    * \brief Constructor
-   * \fn VishnuException(int msg, string msgComp = "")
+   * \fn VishnuException(int msg, std::string msgComp = "")
    */
   VishnuException(int msg, std::string msgComp = "");
   /**
    * \brief Default destructor
-   * \fn ~VishnuException()
+   * \fn ~VishnuException() throw()
    */
   virtual ~VishnuException() throw(){};
   /**
    * \brief To get the type of the exception in integer
-   * \fn ExceptionType getTypeI()
+   * \fn ExceptionType getTypeI() const
    * \return Returns the type of the exception
    */
   ExceptionType
   getTypeI() const {return mtype;}
   /**
    * \brief Function to get the exception type in string
-   * \fn virtual std::string getTypeS()
+   * \fn virtual std::string getTypeS() const
    * \return Returns the type of the exception
    */
   virtual std::string
   getTypeS() const {return "";};
   /**
    * \brief To get a complement to the message
-   * \fn virtual const char* what()const
+   * \fn virtual const char* what()const throw()
    * \return Returns a complement to the generic error message
    */
   virtual const char*
   what() const throw();
   /**
    * \brief To get the generic message
-   * \fn virtual std::string getMsg()
+   * \fn virtual std::string getMsg() const
    * \return Returns the message
    */
   virtual std::string
@@ -123,26 +148,26 @@ public :
   setMsg(int val){mval = val;}
   /**
    * \brief Function to append a complement to the detailled message
-   * \fn void appendMsgComp(string s)
+   * \fn void appendMsgComp(std::string s)
    * \param s The message to append
    */
   void
   appendMsgComp(std::string s);
   /**
    * \brief To get the mval as an int
-   * \fn int getMsgI()
+   * \fn int getMsgI() const
    */
   int
   getMsgI() const;
   /**
    * \brief Function to initialize all the generic messages
-   * \fn virtual void initMsg()
+   * \fn virtual void initMsg() = 0
    */
   virtual void
   initMsg() = 0;
   /**
   * \brief Function to get the string associated to the exception
-  * \fn    std::string buildExceptionString()
+  * \fn    std::string buildExceptionString() const
   * \return the exception as a string
   */
   std::string

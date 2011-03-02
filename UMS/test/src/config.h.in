@@ -5,6 +5,14 @@
 
 #define TESTCONF "@TEST_CONFIG_UMS@"
 #define TESTF "@TEST_SQL@"
+#define UMSSEDCONF "@UMSSEDCONF@"
+
+//#define OMNINAMES_LOGDIR "@OMNILOG@"
+//#define OMNIORB_CONFIG "@OMNICONF@"
+//#define ORB_INIT_REF "@ORBINI@"
+//#define OMNINAMES_ENDPOINT "@OMNIEND@"
+//#define AGENT_CONFIG UMSSEDCONF
+//#define BIN_DIR "@UMSTESTBIN@"
 
 
 #endif /* _CONFIG_H_IN_ */

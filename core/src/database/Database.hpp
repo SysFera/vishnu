@@ -21,7 +21,7 @@ class Database{
 public :
   /**
    * \brief Function to process the request in the database
-   * \fn    virtual int createDatabase() = 0
+   * \fn    virtual int process(std::string request) = 0
    * \param request The request to process
    * \return raises an exception on error
    */
@@ -59,7 +59,7 @@ public :
   setDatabase(std::string db) = 0;
   /**
   * \brief To get the result of a select request
-  * \fn DatabaseResult* getResult()
+  * \fn DatabaseResult* getResult(std::string request)
   * \param request The request to process
   * \return An object which encapsulates the database results
   */

@@ -22,7 +22,17 @@ using namespace std;
  */
 class FMSMapper : Mapper{
 public :
+  /**
+   * \brief Constructor
+   * \fn FMSMapper(MapperRegistry* reg, string name)
+   * \param reg Registry to register
+   * \param name Name to use to register
+   */
   FMSMapper(MapperRegistry* reg, string name);
+  /**
+   * \brief Default constructor
+   * \fn FMSMapper()
+   */
   FMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
@@ -42,7 +52,9 @@ public :
 
   /**
    * \brief To get the command corresponding to a key
-   * \fn virtual int getCommand()
+   * \fn virtual int getCommand(const int& key,string& command)
+   * \param key The key to use
+   * \param command OUT, the command corresponding to the key
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -50,7 +62,9 @@ public :
 
   /**
    * \brief To get the key corresponding to a command
-   * \fn virtual int getKey()
+   * \fn virtual int getKey(const string& command, int& key)
+   * \param command The 'key' to use
+   * \param key OUT, the key corresponding to the command
    * \return 0 on success, an error code otherwise
    */
   virtual int
