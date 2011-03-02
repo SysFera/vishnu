@@ -328,6 +328,9 @@ UserServer::resetPassword(UMS_Data::User& user) {
         sqlResetPwd.append(sqlUpdatePwdState);
         //Execution of the sql code on the database
         mdatabaseVishnu->process( sqlResetPwd.c_str());
+        //to get the email adress of the user
+        std::string email = getAttribut("where userid='"+user.getUserId()+"'", "email");
+        user.setEmail(email);
         //Send email
         std::string emailBody = getMailContent(user, false);
         sendMailToUser(user, emailBody, "Vishnu message: password reset");
@@ -583,12 +586,12 @@ UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
     content.append(newline.str());
     content.append("userId:"+ user.getUserId()+",");
     content.append(newline.str());
-    content.append("password:"+user.getPassword()+".");
+    content.append("password:"+user.getPassword());
   }
   else {
-    content.append("Dear "+user.getFirstname()+" "+user.getLastname()+",");
+    content.append("Dear "+user.getUserId()+",");
     content.append(newline.str());
-    content.append("This is your new password :"+user.getPassword()+".");
+    content.append("This is your new password: "+user.getPassword());
   }
   return content;
 }
