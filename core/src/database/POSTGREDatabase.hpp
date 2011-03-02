@@ -88,7 +88,6 @@ private :
 
   /**
    * \brief An element of the pool
-   * \struct pool_t
    */
   typedef struct pool_t{
     /**
@@ -107,7 +106,7 @@ private :
 
   /**
    * \brief To get a valid connexion
-   * \fn PGconn* getConnexion(int& id)
+   * \fn PGconn* getConnexion(int& pos)
    * \param pos The position of the connexion gotten in the pool
    * \return A valid and free connexion
    */
