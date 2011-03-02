@@ -75,7 +75,6 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
       std::string tmpPassword;
       resetPassword(sessionKey,userId, tmpPassword);
-      cout << "The tmp password is " << tmpPassword << endl;
     }
 
 
