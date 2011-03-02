@@ -263,9 +263,6 @@ int
 UserServer::changePassword(std::string newPassword) {
   std::string sqlChangePwd;
   std::string sqlUpdatePwdState;
-  std::string passwordCrypted;
-  std::string salt;
-
 
   //If the user exist (the flagForChangePwd is set to true to avoid the password state checking)
   if (exist(true)) {
