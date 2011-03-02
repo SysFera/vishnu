@@ -39,7 +39,7 @@ using namespace boost::gregorian;
 
 /**
 * \class SessionServer
-* \brief Implementation of the UserServer class
+* \brief UserServer class implementation
 */
 class SessionServer {
 public:
