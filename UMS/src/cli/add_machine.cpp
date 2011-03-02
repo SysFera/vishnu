@@ -75,9 +75,23 @@ int main (int ac, char* av[]){
     {
       std::ifstream ifs (sshPublicKeyPath.c_str(),std::ifstream::in);
       if (ifs.is_open()){
-        ifs >>sshPublicKeyFile;
-        newMachine.setSshPublicKey(sshPublicKeyFile);
+        // get length of file:
+        ifs.seekg (0, ios::end);
+        size_t length = ifs.tellg();
+        ifs.seekg (0, ios::beg);
+
+        // allocate memory:
+        char* buffer = new char [length];
+
+        // read data as a block:
+        ifs.read (buffer,length);
         ifs.close();
+
+        sshPublicKeyFile = std::string(buffer);
+
+        delete[] buffer;
+
+        newMachine.setSshPublicKey(sshPublicKeyFile);
       }
       else{
         std::cerr << "can not open the ssh public key file\n";
