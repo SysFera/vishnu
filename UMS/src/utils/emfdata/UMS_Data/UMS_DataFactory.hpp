@@ -61,7 +61,7 @@ namespace UMS_Data
         virtual ListSessions_ptr createListSessions();
 	/**
 	 * \brief To get a list session option object pointer
-	 * \fn virtual ListSessionOptions_ptr ListSessionOptions()
+	 * \fn virtual ListSessionOptions_ptr createListSessionOptions()
 	 */
         virtual ListSessionOptions_ptr createListSessionOptions();
 	/**
@@ -153,7 +153,7 @@ namespace UMS_Data
 	 *             ::ecore::EDataType_ptr _eDataType,
          *             ::ecore::EString const& _literalValue)
 	 * \param _eDataType Datatype
-	 * \param _literalString string
+	 * \param _literalValue string
 	 * \return The created object
 	 */
         virtual ::ecore::EJavaObject createFromString(

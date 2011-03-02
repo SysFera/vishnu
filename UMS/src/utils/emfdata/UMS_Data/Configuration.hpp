@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class Configuration
+     * \brief Implementation of the Configuration class
+     */
     class Configuration: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for Configuration
+         */
         Configuration();
-
+        /**
+         * \brief The destructor for Configuration
+         */
         virtual ~Configuration();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

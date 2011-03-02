@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListLocalAccounts
+     * \brief Implementation of the ListLocalAccounts class
+     */
     class ListLocalAccounts: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListLocalAccounts
+         */
         ListLocalAccounts();
-
+        /**
+         * \brief The destructor for ListLocalAccounts
+         */
         virtual ~ListLocalAccounts();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

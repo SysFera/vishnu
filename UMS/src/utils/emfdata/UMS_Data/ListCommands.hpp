@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListCommands
+     * \brief Implementation of the ListCommands class
+     */
     class ListCommands: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListCommands
+         */
         ListCommands();
-
+        /**
+         * \brief The destructor for ListCommands
+         */
         virtual ~ListCommands();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

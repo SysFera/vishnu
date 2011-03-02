@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListOptionsValues
+     * \brief Implementation of the ListOptionsValues class
+     */
     class ListOptionsValues: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListOptionsValues
+         */
         ListOptionsValues();
-
+        /**
+         * \brief The destructor for ListOptionsValues
+         */
         virtual ~ListOptionsValues();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

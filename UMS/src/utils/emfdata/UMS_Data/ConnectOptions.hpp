@@ -42,14 +42,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ConnectOptions
+     * \brief Implementation of the ConnectOptions class
+     */
     class ConnectOptions: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ConnectOptions
+         */
         ConnectOptions();
-
+        /**
+         * \brief The destructor for ConnectOptions
+         */
         virtual ~ConnectOptions();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

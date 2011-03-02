@@ -43,14 +43,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListCmdOptions
+     * \brief Implementation of the ListCmdOptions class
+     */
     class ListCmdOptions: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListCmdOptions
+         */
         ListCmdOptions();
-
+        /**
+         * \brief The destructor for ListCmdOptions
+         */
         virtual ~ListCmdOptions();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
