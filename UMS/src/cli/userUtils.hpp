@@ -40,7 +40,7 @@ boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
  * \param pgName : The name of the command
  * \param dietConfig: Represents the VISHNU config file
  * \param fPrivilege: The privilege option callback
- * \param ffirstname: The user first name option callback
+ * \param fFirstname: The user first name option callback
  * \param fLastName: The user last name option callback
  * \param fEmail: The user email option callback
  * \param type: Indicates if it is an add or an update command, 0 means update, and 1 means add
