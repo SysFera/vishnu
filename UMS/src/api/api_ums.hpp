@@ -1,4 +1,19 @@
 /**
+ * \mainpage UMS
+ *
+ * <center><b>UMS is the module that deals with the authentication of the users and the machines in the VISHNU infrastructure</b></center>
+ *
+ * \image html logoSysFera.jpg
+ *
+ * \authors CAPOCHICHI Eugene 
+ * \authors CISSE      Ibrahima 
+ * \authors COULOMB    Kevin 
+ * \authors ISNARD     Benjamin 
+ * \authors TRAORE     Daouda
+ *
+ */
+
+/**
  * \file api_ums.hpp
  * \brief This file contains the VISHNU api functions.
  * \author Daouda Traore (daouda.traore@sysfera.com) and Ibrahima Cisse (ibrahima.cisse@sysfera.com)
