@@ -26,11 +26,11 @@ using namespace boost::gregorian;
 * \enum IdType
 * \brief The type of id generated
 */
-typedef enum IdType{
-  MACHINE = 0,
-  USER = 1,
-  JOB = 2,
-  FILETRANSFERT = 3
+typedef enum{
+  MACHINE = 0,/*!< For the machines*/
+  USER = 1, /*!< For The users */
+  JOB = 2, /*!< For the jobs */
+  FILETRANSFERT = 3  /*!< For the file tranfers*/
 } IdType;
 
 /**
@@ -39,8 +39,18 @@ typedef enum IdType{
 */
 class Format_t{
 public :
+  /**
+   * \brief The start position of the variable
+   */
   int start;
+  /**
+   * \brief The end position of the variable
+   */
   int end;
+  
+  /**
+   * \brief The value of the variable
+   */
   std::string value;
 };
 
@@ -199,7 +209,7 @@ namespace vishnu {
 
   /**
   * \brief Function to get information from the table vishnu
-  * \fn    string getAttrVishnu(string attrname, string vishnuid)
+  * \fn    std::string getAttrVishnu(std::string attrname, std::string vishnuid)
   * \param attrname the name of the attribut
   * \param vishnuid the id of the vishnu configuration
   * \return the corresponding attribut
