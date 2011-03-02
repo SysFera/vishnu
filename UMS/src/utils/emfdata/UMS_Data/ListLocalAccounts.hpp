@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListLocalAccounts.hpp
+ * \brief The ListLocalAccounts class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTLOCALACCOUNTS_HPP
 #define UMS_DATA_LISTLOCALACCOUNTS_HPP
 
@@ -49,6 +56,10 @@ namespace UMS_Data
         // Attributes
 
         // References
+        /**
+         * \brief To get the list of LocalAccounts
+         * \return A reference to a list of LocalAccounts
+         **/
         ::ecorecpp::mapping::EList< ::UMS_Data::LocalAccount >& getAccounts();
 
         /*PROTECTED REGION ID(ListLocalAccounts) START*/

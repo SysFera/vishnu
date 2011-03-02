@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListCmdOptions.hpp
+ * \brief The ListCmdOptions class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTCMDOPTIONS_HPP
 #define UMS_DATA_LISTCMDOPTIONS_HPP
 
@@ -50,19 +57,59 @@ namespace UMS_Data
 
 
         // Attributes
+        /**
+         * \brief To get the adminListOption
+         * \return The adminListOption attribute value
+         **/
         ::ecore::EBoolean isAdminListOption() const;
+        /**
+         * \brief To set the adminListOption
+         * \param _adminListOption The adminListOption value
+         **/
         void setAdminListOption(::ecore::EBoolean _adminListOption);
 
+        /**
+         * \brief To get the userId
+         * \return The userId attribute value
+         **/
         ::ecore::EString const& getUserId() const;
+        /**
+         * \brief To set the userId
+         * \param _userId The userId value
+         **/
         void setUserId(::ecore::EString const& _userId);
 
+        /**
+         * \brief To get the sessionId
+         * \return The sessionId attribute value
+         **/
         ::ecore::EString const& getSessionId() const;
+        /**
+         * \brief To set the sessionId
+         * \param _sessionId The sessionId value
+         **/
         void setSessionId(::ecore::EString const& _sessionId);
 
+        /**
+         * \brief To get the startDateOption
+         * \return The startDateOption attribute value
+         **/
         ::ecore::ELong getStartDateOption() const;
+        /**
+         * \brief To set the startDateOption
+         * \param _startDateOption The startDateOption value
+         **/
         void setStartDateOption(::ecore::ELong _startDateOption);
 
+        /**
+         * \brief To get the endDateOption
+         * \return The endDateOption attribute value
+         **/
         ::ecore::ELong getEndDateOption() const;
+        /**
+         * \brief To set the endDateOption
+         * \param _endDateOption The endDateOption value
+         **/
         void setEndDateOption(::ecore::ELong _endDateOption);
 
         // References

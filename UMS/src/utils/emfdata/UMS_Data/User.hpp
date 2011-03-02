@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file User.hpp
+ * \brief The User class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_USER_HPP
 #define UMS_DATA_USER_HPP
 
@@ -49,25 +56,81 @@ namespace UMS_Data
 
 
         // Attributes
+        /**
+         * \brief To get the userId
+         * \return The userId attribute value
+         **/
         ::ecore::EString const& getUserId() const;
+        /**
+         * \brief To set the userId
+         * \param _userId The userId value
+         **/
         void setUserId(::ecore::EString const& _userId);
 
+        /**
+         * \brief To get the password
+         * \return The password attribute value
+         **/
         ::ecore::EString const& getPassword() const;
+        /**
+         * \brief To set the password
+         * \param _password The password value
+         **/
         void setPassword(::ecore::EString const& _password);
 
+        /**
+         * \brief To get the firstname
+         * \return The firstname attribute value
+         **/
         ::ecore::EString const& getFirstname() const;
+        /**
+         * \brief To set the firstname
+         * \param _firstname The firstname value
+         **/
         void setFirstname(::ecore::EString const& _firstname);
 
+        /**
+         * \brief To get the lastname
+         * \return The lastname attribute value
+         **/
         ::ecore::EString const& getLastname() const;
+        /**
+         * \brief To set the lastname
+         * \param _lastname The lastname value
+         **/
         void setLastname(::ecore::EString const& _lastname);
 
+        /**
+         * \brief To get the privilege
+         * \return The privilege attribute value
+         **/
         ::UMS_Data::PrivilegeType getPrivilege() const;
+        /**
+         * \brief To set the privilege
+         * \param _privilege The privilege value
+         **/
         void setPrivilege(::UMS_Data::PrivilegeType _privilege);
 
+        /**
+         * \brief To get the email
+         * \return The email attribute value
+         **/
         ::ecore::EString const& getEmail() const;
+        /**
+         * \brief To set the email
+         * \param _email The email value
+         **/
         void setEmail(::ecore::EString const& _email);
 
+        /**
+         * \brief To get the status
+         * \return The status attribute value
+         **/
         ::UMS_Data::StatusType getStatus() const;
+        /**
+         * \brief To set the status
+         * \param _status The status value
+         **/
         void setStatus(::UMS_Data::StatusType _status);
 
         // References

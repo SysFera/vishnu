@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListMachines.hpp
+ * \brief The ListMachines class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTMACHINES_HPP
 #define UMS_DATA_LISTMACHINES_HPP
 
@@ -49,6 +56,10 @@ namespace UMS_Data
         // Attributes
 
         // References
+        /**
+         * \brief To get the list of Machines
+         * \return A reference to a list of Machines
+         **/
         ::ecorecpp::mapping::EList< ::UMS_Data::Machine >& getMachines();
 
         /*PROTECTED REGION ID(ListMachines) START*/
