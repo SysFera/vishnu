@@ -65,7 +65,7 @@ public :
                  unsigned int port = 0);
 
   /**
-   * \fn ~POSTGREDatabase()
+   * \fn ~OracleDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~OracleDatabase();
@@ -97,7 +97,7 @@ public :
 
   /**
   * \brief To get the result of a select request
-  * \fn DatabaseResult* getResult()
+  * \fn DatabaseResult* getResult(std::string request)
   * \param request The request to process
   * \return An object which encapsulates the database results
   */

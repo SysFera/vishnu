@@ -5,5 +5,8 @@
  */
 #include <errno.h>
 
+/**
+ * \brief Debug macro that can be used to display an error message on a line in a file
+ */
 #define ERRMSG(msg) fprintf(stderr, "Error line %d in file %s with message :\n %s \n", __LINE__, __FILE__, msg);
 

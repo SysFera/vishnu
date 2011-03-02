@@ -53,7 +53,7 @@ public:
   int restoreFromFile();
   /**
    * \brief Function to restore the configuration of VISHNU from an object (Data) 
-   * \fn  int restoreFromFile()
+   * \fn  int restoreFromData()
    * \return raises an exception on error
    */
   int restoreFromData();

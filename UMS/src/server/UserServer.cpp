@@ -57,8 +57,10 @@ UserServer::add(UMS_Data::User*& user) {
 
   std::string idUserGenerated;
   std::string passwordCrypted;
-  //std::string salt;
   int userCpt;
+  std::string vishnuId;
+  std::string formatiduser;
+
 
   if (exist()) {
     if (isAdmin()) {
@@ -67,44 +69,58 @@ UserServer::add(UMS_Data::User*& user) {
       pwd = generatePassword(user->getLastname(), user->getFirstname());
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
-      std::cout << "========== Password generated:" << user->getPassword()<< "============" << std::endl;
+      vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
 
       //To get the user counter
-      userCpt = convertToInt(getAttrVishnu("usercpt", Vishnuid::mvishnuid));
+      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuId));
 
-      //Generation of userid
-      idUserGenerated =
-      getGeneratedName(getAttrVishnu("formatiduser", Vishnuid::mvishnuid).c_str(),
-                                                    userCpt,
-                                                    USER,
-                                                    user->getLastname());
+      //To get the formatiduser
+      formatiduser = getAttrVishnu("formatiduser", vishnuId).c_str();
 
-      incrementCpt("usercpt", userCpt);
+      //if the formatiduser is defined
+      if (formatiduser.size() != 0) {
+        //Generation of userid
+        idUserGenerated =
+        getGeneratedName(formatiduser.c_str(),
+                          userCpt,
+                          USER,
+                          user->getLastname());
 
-      std::cout << "idgenerated" << idUserGenerated << std::endl;
+        //if the userId is generated
+        if (idUserGenerated.size() != 0) {
 
-      user->setUserId(idUserGenerated);
+          incrementCpt("usercpt", userCpt);
+          user->setUserId(idUserGenerated);
+          //To get the password encrypted
+          passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
-      //To get the password encrypted
-      passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
+          //If the user to add exists
+          if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
 
-      //If the user to add exists
-      if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
+            //To insert user on the database
+            mdatabaseVishnu->process(sqlInsert + "(" + vishnuId+", "
+            "'"+user->getUserId()+"','"+passwordCrypted+"','"
+            + user->getFirstname()+"','"+user->getLastname()+"',"+
+            convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
+            "0, "+convertToString(user->getStatus())+")");
 
-        //To insert user on the database
-        mdatabaseVishnu->process(sqlInsert + "(" + Vishnuid::mvishnuid+", "
-        "'"+user->getUserId()+"','"+passwordCrypted+"','"
-        + user->getFirstname()+"','"+user->getLastname()+"',"+
-        convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-        "0, "+convertToString(user->getStatus())+")");
+            //Send email
+            std::string emailBody = getMailContent(*user, true);
+            sendMailToUser(*user, emailBody, "Vishnu message: user created");
 
-        //Send email
-        std::string emailBody = getMailContent(*user, true);
-        sendMailToUser(*user, emailBody, "Vishnu message: user created");
-
-      }// END If the user to add exists
+          }// END If the user to add exists
+          else {
+            UMSVishnuException e (ERRCODE_USERID_EXISTING);
+            throw e;
+          }
+        }//END if the userId is generated
+        else {
+          SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatiduser");
+          throw e;
+        }
+      }//END if the formatiduser is defined
       else {
-        UMSVishnuException e (ERRCODE_USERID_EXISTING);
+        SystemException e (ERRCODE_SYSTEM, "The formatiduser is not defined");
         throw e;
       }
     } //END if the user is an admin
@@ -176,7 +192,6 @@ UserServer::update(UMS_Data::User *user) {
           " where userid='"+user->getUserId()+"';");
         }
 
-        std::cout <<"SQL COMMAND:"<<sqlCommand;
         mdatabaseVishnu->process(sqlCommand.c_str());
 
       } // End if the user whose information will be updated exists
@@ -207,7 +222,7 @@ int
 UserServer::deleteUser(UMS_Data::User user) {
 
   //If the user to delete is not the super VISHNU admin
-  if (user.getUserId().compare(utilServer::ROOTUSERNAME) != 0) {
+  if (user.getUserId().compare(ROOTUSERNAME) != 0) {
     //If the user exists
     if (exist()) {
       if (isAdmin()) {
@@ -299,7 +314,6 @@ UserServer::resetPassword(UMS_Data::User& user) {
         //generation of a new password
         pwd = generatePassword(user.getUserId(), user.getUserId());
         user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
-        std::cout << "========== Password reset:" << user.getPassword()<< "============" << std::endl;
 
         //to get the password encryptes
         passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
@@ -467,7 +481,6 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
 
   DatabaseResult* result;
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
-  std::cout << "SQL COMMAND:" << sqlCommand << std::endl;
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result->getFirstElement();
 
@@ -510,8 +523,8 @@ UserServer::existuserId(std::string userId) {
 std::string
 UserServer::generatePassword(std::string value1, std::string value2) {
 
-  std::string salt = "$1$"+value1 + convertToString(utilServer::generate_numbers())+value2+"$";
-  std::string clef = value2+convertToString(utilServer::generate_numbers());
+  std::string salt = "$1$"+value1 + convertToString(generate_numbers())+value2+"$";
+  std::string clef = value2+convertToString(generate_numbers());
 
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
 }
@@ -559,14 +572,23 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
 std::string
 UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
   std::string content;
+  std::stringstream newline;
+  newline << std::endl;
+
 
   if (flagAdduser) {
-    content = "Dear "+user.getFirstname()+" "+user.getLastname() + "This is respectively your"
-    "userId and your password generated :" + user.getUserId() + ", "+user.getPassword()+".";
+    content.append("Dear "+user.getFirstname()+" "+user.getLastname()+ ",");
+    content.append(newline.str());
+    content.append("This is respectively your userId and your password generated by vishnu:");
+    content.append(newline.str());
+    content.append("userId:"+ user.getUserId()+",");
+    content.append(newline.str());
+    content.append("password:"+user.getPassword()+".");
   }
   else {
-    content = "Dear "+user.getFirstname()+" "+user.getLastname() + "This is your"
-    "new password :"+user.getPassword()+".";
+    content.append("Dear "+user.getFirstname()+" "+user.getLastname()+",");
+    content.append(newline.str());
+    content.append("This is your new password :"+user.getPassword()+".");
   }
   return content;
 }

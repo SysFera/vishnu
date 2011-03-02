@@ -22,6 +22,9 @@
 #include "ConnectOptions.hpp"
 
 class UserProxy;
+/**
+ * \brief Constant that defines the max size of the hostname
+ */
 const int HOST_NAME_MAX_SIZE = 256;
 
 /**
@@ -83,7 +86,7 @@ public:
   std::string getSessionKey() const;
   /**
    * \brief Function get machine information 
-   * \fn  UMS_Data::Session getData()
+   * \fn  UMS_Data::Session getData() const
    * \return Session object encapsulates the information of the session 
    * \return raises an exception on error
    */

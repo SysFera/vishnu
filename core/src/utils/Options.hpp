@@ -1,6 +1,6 @@
 
 /**
- * \file Option.hpp
+ * \file Options.hpp
  * \brief This file defines a class to handle command line options.
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -97,19 +97,19 @@ class Configuration {
 
 			/**
 			 * \brief Constructor by variable taking a string in parameter
-			 * \param the name of the command which uses the option
+			 * \param name the name of the command which uses the option
 			 */
 			explicit
-      Options(const std::string& );
+      Options(const std::string& name);
 
 
 
 			/**
 			 * \brief Constructor by variable taking a command configuration in parameter
-			 * \param
+			 * \param c The configuration
 			 */
 			explicit
-      Options(boost::shared_ptr<Configuration> );
+      Options(boost::shared_ptr<Configuration> c);
 
 
 			/**
@@ -268,7 +268,7 @@ class Configuration {
 
 			 friend
        std::ostream&
-       operator<<(std::ostream &,const Options & );
+       operator<<(std::ostream &os,const Options & opt);
 
 			 /**
 			  * \brief The default destructor
@@ -301,7 +301,6 @@ class Configuration {
  * \param v: a vector to print
  * \return the ostream in which the data is written
  */
-
 template<class T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v){
 	    std::copy(v.begin(), v.end(), std::ostream_iterator<T>(os, " "));

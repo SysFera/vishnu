@@ -53,7 +53,7 @@ public:
   /**
    * \brief Function to treat the ListOptionsValuesServer options
    * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListOptOptions_ptr& options
+   *                         const UMS_Data::ListOptOptions_ptr& options,
    *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListOptionsValuesServer options values

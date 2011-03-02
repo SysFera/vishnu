@@ -88,6 +88,7 @@ private:
   /**
   * \brief Function to get the sql code of users from a VISHNU configuration
   * \fn std::string userToSql(UMS_Data::User_ptr user)
+  * \param user The user object
   * \return the sql code containing the sql code of users
   */
   std::string
@@ -95,6 +96,7 @@ private:
   /**
   * \brief Function to get the sql code of machines from a VISHNU configuration
   * \fn std::string machineToSql(UMS_Data::Machine_ptr machine)
+  * \param machine The machine object
   * \return the sql code containing the sql code of machines
   */
   std::string
@@ -102,6 +104,7 @@ private:
   /**
   * \brief Function to get the sql code of machines description from a VISHNU configuration
   * \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)
+  * \param machine The machine object
   * \return the sql code containing the sql code of machines description
   */
   std::string

@@ -8,6 +8,7 @@
 #include "ConfigurationServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
+#include "ServerUMS.hpp"
 
 /**
  * \brief Constructor
@@ -45,7 +46,7 @@ ConfigurationServer::save() {
   DatabaseResult *ListofLocalAccount;
 
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-  "where not userid='"+utilServer::ROOTUSERNAME+"'";
+  "where not userid='"+ROOTUSERNAME+"'";
 
   std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description "
   "where machine.nummachineid = description.machine_nummachineid";
@@ -100,19 +101,12 @@ ConfigurationServer::save() {
 
           UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
           machine->setMachineId(*ii);
-          std::cout << machine->getMachineId() << std::endl;
           machine->setName(*(++ii));
-          std::cout << machine->getName() << std::endl;
           machine->setSite(*(++ii));
-          std::cout << machine->getSite() << std::endl;
           machine->setStatus(convertToInt(*(++ii)));
-          std::cout << machine->getStatus() << std::endl;
           machine->setSshPublicKey(*(++ii));
-          std::cout << machine->getSshPublicKey() << std::endl;
           machine->setLanguage(*(++ii));
-          std::cout << machine->getLanguage() << std::endl;
           machine->setMachineDescription(*(++ii));
-          std::cout << machine->getMachineDescription() << std::endl;
           mconfiguration->getListConfMachines().push_back(machine);
         }
       }
@@ -164,11 +158,11 @@ int ConfigurationServer::restore() {
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
   //if the userid is the super vishnu admin userid
-  if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+  if (userServer.getData().getUserId().compare(ROOTUSERNAME) == 0) {
     //if the user exists
     if (userServer.exist()) {
 
-      mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';"
+      mdatabaseVishnu->process("DELETE FROM users where not userid='"+ROOTUSERNAME+"';"
       "DELETE FROM machine; DELETE FROM account;");
 
       //To get all users
@@ -184,8 +178,6 @@ int ConfigurationServer::restore() {
         sqlcode.append(machineToSql(machine));
       }
 
-      std::cout << "SQL COMMAND:" << sqlcode << std::endl;
-
       //To insert machines and users
       mdatabaseVishnu->process(sqlcode.c_str());
 
@@ -194,8 +186,6 @@ int ConfigurationServer::restore() {
         UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
         sqlCodeDescMachine.append(machineDescToSql(machine));
       }
-
-      std::cout << "SQL COMMAND:" << sqlCodeDescMachine << std::endl;
 
       //To insert machines description
       mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
@@ -247,7 +237,9 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
  " privilege, email, passwordstate, status) values ";
 
-  return (sqlInsert + "(" + Vishnuid::mvishnuid+", "
+  std::string vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
+
+  return (sqlInsert + "(" + vishnuId +", "
   "'"+user->getUserId()+"','"+user->getPassword()+"','"
   + user->getFirstname()+"','"+user->getLastname()+"',"+
   convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
@@ -263,7 +255,9 @@ std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
 
-  sqlInsert.append("("+Vishnuid::mvishnuid+",'"+machine->getName()+"'"
+  std::string vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
+
+  sqlInsert.append("("+vishnuId+",'"+machine->getName()+"'"
   ",'"+ machine->getSite()+"','"+machine->getMachineId()+"',"
   +convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
 

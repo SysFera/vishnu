@@ -136,7 +136,6 @@ UMSMapper::finalize(int key){
   pthread_mutex_lock(&mutex);
   it = mcmd.find(key);
   if (it==mcmd.end()){
-    cout << "key not found " << key << endl;
     throw new SystemException(ERRCODE_SYSTEM, "Unknown key to finalize");
   }
   res = it->second;

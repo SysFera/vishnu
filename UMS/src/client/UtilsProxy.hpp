@@ -9,7 +9,10 @@
 
 #include "DIET_client.h"
 
-
+/**
+ * \brief The class with the utilitaries function (not in the cli api)
+ * \class UtilsProxy
+ */
 class UtilsProxy
 {
 
