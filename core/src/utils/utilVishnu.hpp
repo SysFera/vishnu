@@ -17,8 +17,6 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
 
-static const int PASSWORD_MAX_SIZE = 8;
-
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 
@@ -58,7 +56,7 @@ namespace vishnu {
   static const std::string ROOTUSERNAME = "root";
   static const std::string DATABASENAME = "vishnu";
   static const std::string UMSMAPPERNAME = "UMS";
-
+  static const int PASSWORD_MAX_SIZE = 8;
   /**
   * \brief Generic function to convert an object to string
   * \fn    std::string convertToString(T val);
@@ -93,11 +91,11 @@ namespace vishnu {
 
   /**
   * \brief Function to get a random number
-  * \fn    int generate_numbers()
+  * \fn    int generateNumbers()
   * \return the number generated
   */
   int
-  generate_numbers();
+  generateNumbers();
 
   /**
    * \brief Return true if the string starts with 'MONTH'
@@ -216,13 +214,12 @@ namespace vishnu {
   */
   void
   incrementCpt(std::string cptName, int cpt);
- 
+
   /**
    * \brief To retrieve the password
    * \param prompt: The message inviting the user to enter his/her password
    * \return The password entered.
    */
-
   std::string
   takePassword(const std::string& prompt);
 

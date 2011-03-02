@@ -20,7 +20,7 @@
 
 /**
 * \class LocalAccountServer
-* \brief Implementation of the LocalAccountServer class
+* \brief LocalAccountServer class implementation
 */
 class LocalAccountServer {
 public:
@@ -33,24 +33,24 @@ public:
   LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU localAccount
-  * \fn int add() 
+  * \fn int add()
   * \return raises an exception on error
   */
   int
   add();
   /**
   * \brief Function to update a VISHNU localAccount
-  * \fn int update() 
+  * \fn int update()
   * \return raises an exception on error
   */
-  int 
+  int
   update();
   /**
 * \brief Function to delete a VISHNU localAccount
-* \fn int deleteLocalAccount() 
+* \fn int deleteLocalAccount()
 * \return raises an exception on error
 */
-  int 
+  int
   deleteLocalAccount();
   /**
   * \fn ~LocalAccountServer
@@ -62,7 +62,7 @@ public:
   * \fn UMS_Data::LocalAccount getData()
   * \return  The LocalAccount data structure
   */
-  UMS_Data::LocalAccount* 
+  UMS_Data::LocalAccount*
   getData();
   /**
   * \brief Function to get localAccount information from the database vishnu
@@ -71,7 +71,7 @@ public:
   * \param attrname the name of the attribut to get
   * \return the value of the attribut or empty string if no results
   */
-  std::string 
+  std::string
   getAttribut(std::string condition, std::string attrname = "numaccountid");
   /**
   * \brief Function to check localAccount on database
@@ -80,7 +80,7 @@ public:
   * \param iduser The id of the user
   * \return true if the localAccount exists else false
   */
-  bool 
+  bool
   exist(std::string idmachine, std::string iduser);
   /**
   * \brief Function to get the content of the public ssh generated
@@ -89,7 +89,7 @@ public:
   */
   std::string
   getPublicKey();
-  
+
 private:
   /////////////////////////////////
   // Attributes
@@ -110,7 +110,7 @@ private:
   * \brief The content of the ssh public key generated
   */
   std::string msshpublickey;
-  
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
@@ -118,7 +118,7 @@ private:
   * \brief Function to generate a private/public ssh key
   * \fn std::string generateKey()
   */
-  std::string 
+  std::string
   generateKey();
 };
 #endif
