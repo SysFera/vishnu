@@ -65,8 +65,17 @@ class Configuration {
     setConfigFile(const std::string& configFile);
   
   private:
-    std::string pgName;/*!< Program name     */
-    std::string configFile;/*!< configuration file   */
+    /**
+     * \brief  Program name 
+     */
+
+    std::string pgName;
+
+    /**
+     * \brief configuration file 
+     */
+
+    std::string configFile;
 };
 
 /**
@@ -166,6 +175,16 @@ class Configuration {
 					setGroup(tmp_options,group);
 
 				}
+      /**
+       *
+       * \brief Function providing another way to add a typed option
+       * \param name: the name of the option
+       * \param desc: brief description of the option
+       * \param group: a group which option belongs to
+       * \param userFunc: The user defined function (callback)
+       * command line
+       * \param required: for required option
+       */
 
 			template<typename T>
 			void add(const std::string& name,
@@ -235,7 +254,8 @@ class Configuration {
 			 /**
 			  * \brief To check if an option is provided after parsing the command
         * line
-        * \param key: the name of the option
+        * \param key: The name of the option
+        * \return The number odf occurrences of the options (0 or 1)
 			  */
 
 			 int count (const std::string& key)const;
@@ -277,13 +297,44 @@ class Configuration {
 			 virtual ~Options();
 		
     private:
-       boost::shared_ptr<Configuration> conf;/*!< store a command configuration*/
-       po::options_description generic_options;/*!< Generic option description*/
-       po::options_description config_options;/*!< Configuration option description */
-       po::options_description hidden_options ;/*!<Hidden option description*/
-       po::options_description env_options; /*!< environment variable option description*/
-       mutable po::variables_map vm;/*!<  map storing all parsed options  */
-       po::positional_options_description position; /*!< option position in a command line  */
+       /**
+        * \brief  store a command configuration
+        */
+       boost::shared_ptr<Configuration> conf; 
+
+       /**
+        * \brief  Generic option description
+        */
+
+       po::options_description generic_options; 
+
+       /**
+        * \brief Configuration option description
+        */
+
+       po::options_description config_options; 
+
+       /**
+        * \brief Hidden option description
+        */
+
+       po::options_description hidden_options ; 
+
+       /**
+        * \brief environment variable option description
+        */
+       po::options_description env_options;
+
+       /**
+        * \brief map storing all parsed options
+        */
+       mutable po::variables_map vm; 
+
+       /**
+        * \brief option position in a command line
+        */
+
+       po::positional_options_description position; 
 
        /**
         * \brief a private function used to set option group
@@ -292,10 +343,10 @@ class Configuration {
         */
 
        void
-         setGroup (const po::options_description& tmp_options, const Group_type& group);
+       setGroup (const po::options_description& tmp_options, const Group_type& group);
   };
 
-/*
+/**
  * \brief A helper function to simplify the display of vector
  * \param os: an ostream to write data in
  * \param v: a vector to print

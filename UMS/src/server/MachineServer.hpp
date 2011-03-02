@@ -25,7 +25,7 @@ using namespace vishnu;
 
 /**
 * \class MachineServer
-* \brief Implementation of the MachineServer class
+* \brief MachineServer class implementation
 */
 class MachineServer {
 

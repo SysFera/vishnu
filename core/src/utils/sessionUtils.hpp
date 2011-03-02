@@ -76,7 +76,7 @@ class SessionEntry{
   private:
 
     /**
-     * a class to give access to sessionEntry class
+     * \brief A class to give access to sessionEntry class
      */
     friend class boost::serialization::access;
 
@@ -90,9 +90,18 @@ class SessionEntry{
       void 
       serialize(Archive& ar, const unsigned int version);
 
-    int closePolicy;/*!< The session close type: 0 means undefined, 1 means closed automatically, and 2 means closed manually */
+    /**
+     * \brief The session close type: 0 means undefined, 1 means closed
+     * automatically, and 2 means closed manually
+     */
+    int closePolicy;
 
-    std::string sessionKey;/*!< The key of session which is unique and is used to  identify the session   */
+    /**
+     * \brief The key of session which is unique and is used to  identify the
+     * session 
+     */
+
+    std::string sessionKey;
 };
 
 /**
