@@ -64,7 +64,6 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::string sshKey4;
   std::string optionsToString;
   char* sessionInString;
-  //char* sessionKey;
   char* errorInfo;
   size_t length;
   char* key;

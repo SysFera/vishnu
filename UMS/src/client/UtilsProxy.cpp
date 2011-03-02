@@ -89,7 +89,6 @@ UtilsProxy::restore() {
 
   int READSIZE = 1000;
   diet_profile_t* profile = NULL;
-  //profile = diet_profile_alloc("restore", 0, 0, 0);
   std::ifstream file(mfilePath.c_str(), std::ios::in);
   if(!file) {
     return -1;

@@ -46,7 +46,7 @@ ConfigurationServer::save() {
   DatabaseResult *ListofLocalAccount;
 
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-  "where not userid='"+utilServer::ROOTUSERNAME+"'";
+  "where not userid='"+ROOTUSERNAME+"'";
 
   std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description "
   "where machine.nummachineid = description.machine_nummachineid";
@@ -158,11 +158,11 @@ int ConfigurationServer::restore() {
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
   //if the userid is the super vishnu admin userid
-  if (userServer.getData().getUserId().compare(utilServer::ROOTUSERNAME) == 0) {
+  if (userServer.getData().getUserId().compare(ROOTUSERNAME) == 0) {
     //if the user exists
     if (userServer.exist()) {
 
-      mdatabaseVishnu->process("DELETE FROM users where not userid='"+utilServer::ROOTUSERNAME+"';"
+      mdatabaseVishnu->process("DELETE FROM users where not userid='"+ROOTUSERNAME+"';"
       "DELETE FROM machine; DELETE FROM account;");
 
       //To get all users

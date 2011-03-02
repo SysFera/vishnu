@@ -6,7 +6,9 @@
 */
 
 #include "internalApi.hpp"
-#include "utilServer.hpp"
+#include "utilVishnu.hpp"
+
+using namespace vishnu;
 
 /**
 * \brief Function to solve the service sessionConnect
@@ -140,7 +142,7 @@ solveSessionClose(diet_profile_t* pb) {
     sessionServer.close();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_close");
     cmd = mapper->finalize(mapperkey);
 
@@ -198,7 +200,7 @@ solveUserCreate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_user");
     mapper->code(std::string(userSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -265,7 +267,7 @@ solveUserUpdate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_user");
     mapper->code(std::string(userSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -319,7 +321,7 @@ solveUserDelete(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_user");
     mapper->code(std::string(userId), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -408,7 +410,7 @@ solveUserPasswordReset(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_reset_password");
     mapper->code(std::string(userId), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -468,7 +470,7 @@ solveMachineCreate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_machine");
     mapper->code(std::string(machineSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -532,7 +534,7 @@ solveMachineUpdate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_machine");
     mapper->code(std::string(machineSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -586,7 +588,7 @@ solveMachineDelete(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_machine");
     mapper->code(std::string(machineId), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -648,7 +650,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_local_account");
     mapper->code(std::string(laccountSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -711,7 +713,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_local_account");
     mapper->code(std::string(laccountSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -769,7 +771,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_local_account");
     mapper->code(std::string(userId), mapperkey);
     mapper->code(std::string(machineId), mapperkey);
@@ -826,7 +828,7 @@ solveConfigurationSave(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_save_configuration");
     cmd = mapper->finalize(mapperkey);
 
@@ -888,7 +890,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_restore_configuration");
     mapper->code(std::string(configurationSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -946,7 +948,7 @@ solveOptionValueSet(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_option");
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1002,7 +1004,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_default_option");
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1066,7 +1068,7 @@ solveGenerique(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1129,7 +1131,7 @@ solveListUsers(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_list_users");
     mapper->code(std::string(option), mapperkey);
     cmd = mapper->finalize(mapperkey);

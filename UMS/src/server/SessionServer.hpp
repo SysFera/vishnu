@@ -18,19 +18,21 @@
 #include <exception>
 #include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
+#include "SystemException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include "UserServer.hpp"
 #include "MachineClientServer.hpp"
 #include "OptionValueServer.hpp"
-#include "utilServer.hpp"
+#include "utilVishnu.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
 
+
 class UserServer;
 
-using namespace utilServer;
+using namespace vishnu;
 using namespace UMS_Data;
 using namespace boost::posix_time;
 using namespace boost::gregorian;

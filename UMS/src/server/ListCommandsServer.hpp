@@ -121,7 +121,7 @@ public:
     std::string description;
 
     //MAPPER CREATION
-    Mapper* mapper = MapperRegistry::getInstance()->getMapper(utilServer::UMSMAPPERNAME);
+    Mapper* mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
 
     sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from "
                          " vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and "
@@ -188,7 +188,7 @@ public:
 
     std::string cmd;
     switch(type) {
-      case UMS : 
+      case UMS :
          cmd = "UMS";
          break;
       case TMS :
@@ -201,7 +201,6 @@ public:
          cmd = "IMS";
          break;
     }
-
     return cmd;
   }
 

@@ -20,7 +20,6 @@ include_directories(
 
 
 add_library(ums-server
-   utilServer.cpp
    SessionServer.cpp
    UserServer.cpp
    MachineClientServer.cpp

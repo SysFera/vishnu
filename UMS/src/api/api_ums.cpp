@@ -411,24 +411,25 @@ saveConfiguration(const std::string& sessionKey,
    if(!res) {
      UMS_Data::Configuration *configData = configurationProxy.getData();
 
-     UMS_Data::User_ptr user;
-
-     //To set the user list
-     for(int i = 0; i < configData->getListConfUsers().size(); i++) {
-       user = configData->getListConfUsers().get(i);
-       config.getListConfUsers().push_back(user);
-     }
-     //To set the machine list
-     UMS_Data::Machine_ptr machine;
-     for(int i = 0; i < configData->getListConfMachines().size(); i++) {
-       machine = configData->getListConfMachines().get(i);
-       config.getListConfMachines().push_back(machine);
-     }
-     //To set the LocalAccounts list
-     UMS_Data::LocalAccount_ptr localAccount;
-     for(int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
-       localAccount = configData->getListConfLocalAccounts().get(i);
-       config.getListConfLocalAccounts().push_back(localAccount);
+     if(configData!=NULL) {
+       UMS_Data::User_ptr user;
+       //To set the user list
+       for(int i = 0; i < configData->getListConfUsers().size(); i++) {
+         user = configData->getListConfUsers().get(i);
+         config.getListConfUsers().push_back(user);
+       }
+       //To set the machine list
+       UMS_Data::Machine_ptr machine;
+       for(int i = 0; i < configData->getListConfMachines().size(); i++) {
+         machine = configData->getListConfMachines().get(i);
+         config.getListConfMachines().push_back(machine);
+       }
+       //To set the LocalAccounts list
+       UMS_Data::LocalAccount_ptr localAccount;
+       for(int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
+         localAccount = configData->getListConfLocalAccounts().get(i);
+         config.getListConfLocalAccounts().push_back(localAccount);
+       }
      }
   }
 
@@ -534,9 +535,6 @@ listSessions(const std::string& sessionKey,
       listSession.getSessions().push_back(session);
     }
   }
-  else {
-    return 1;
-  }
 
  return 0;
 }
@@ -571,9 +569,6 @@ listLocalAccount(const std::string& sessionKey,
       listLocalAcc.getAccounts().push_back(account);
     }
   }
-  else {
-   return 1;
-  }
 
   return 0;
 }
@@ -602,16 +597,12 @@ listMachine(const std::string& sessionKey,
   UMS_Data::ListMachines* listMachine_ptr = query.list();
 
   if(listMachine_ptr!=NULL) {
-  UMS_Data::Machine_ptr machine;
-  for(int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
-    machine = listMachine_ptr->getMachines().get(i);
-    listMachine.getMachines().push_back(machine);
+    UMS_Data::Machine_ptr machine;
+    for(int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
+      machine = listMachine_ptr->getMachines().get(i);
+      listMachine.getMachines().push_back(machine);
+    }
   }
-  }
-  else {
-    return 1;
-  }
-
   return 0;
 }
 
@@ -644,9 +635,6 @@ listHistoryCmd(const std::string& sessionKey,
       command = listCommands_ptr->getCommands().get(i);
       listCommands.getCommands().push_back(command);
     }
-  }
-  else {
-    return 1;
   }
 
   return 0;
@@ -681,9 +669,6 @@ listOptions(const std::string& sessionKey,
       listOptValues.getOptionValues().push_back(optionValue);
     }
   }
-  else {
-    return 1;
-  }
 
   return 0;
 }
@@ -716,9 +701,6 @@ listUsers(const std::string& sessionKey,
       user = listUsers_ptr->getUsers().get(i);
       listUsers.getUsers().push_back(user);
     }
-  }
-  else {
-    return 1;
   }
 
  return 0;

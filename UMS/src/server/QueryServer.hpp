@@ -147,7 +147,9 @@ public:
    */
   long convertToTimeType(std::string date) {
     
-    if(date.size()==0) return 0;
+      if(date.size()==0) {
+        return 0;
+      }
          
       boost::posix_time::ptime pt(time_from_string(date));
       boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
