@@ -29,7 +29,7 @@ class SessionServer;
 
 /**
 * \class UserServer
-* \brief Implementation of the UserServer class
+* \brief UserServer class implementation
 */
 class UserServer {
 public:

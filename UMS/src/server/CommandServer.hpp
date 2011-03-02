@@ -26,7 +26,7 @@ typedef enum CmdType{
 
 /**
 * \class CommandServer
-* \brief Implementation of the CommandServer class
+* \brief CommandServer class implementation
 */
 class CommandServer {
 public:
