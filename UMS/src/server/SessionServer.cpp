@@ -106,7 +106,6 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 int
 SessionServer::reconnect(UserServer user, MachineClientServer host, std::string sessionId) {
 
-  std::string key;
   int existSessionKey = 0;
   int state;
 
@@ -453,6 +452,9 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
     case 2:
       msession.setClosePolicy(2);
     break;
+
+    default:
+      throw SystemException(ERRCODE_SYSTEM, "Invalid close policy value in SessionServer::solveConnectionMode");
   }
   return 0;
 }
