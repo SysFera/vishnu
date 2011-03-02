@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file LocalAccount.hpp
+ * \brief The LocalAccount class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LOCALACCOUNT_HPP
 #define UMS_DATA_LOCALACCOUNT_HPP
 
@@ -49,19 +56,59 @@ namespace UMS_Data
 
 
         // Attributes
+        /**
+         * \brief To get the userId
+         * \return The userId attribute value
+         **/
         ::ecore::EString const& getUserId() const;
+        /**
+         * \brief To set the userId
+         * \param _userId The userId value
+         **/
         void setUserId(::ecore::EString const& _userId);
 
+        /**
+         * \brief To get the machineId
+         * \return The machineId attribute value
+         **/
         ::ecore::EString const& getMachineId() const;
+        /**
+         * \brief To set the machineId
+         * \param _machineId The machineId value
+         **/
         void setMachineId(::ecore::EString const& _machineId);
 
+        /**
+         * \brief To get the acLogin
+         * \return The acLogin attribute value
+         **/
         ::ecore::EString const& getAcLogin() const;
+        /**
+         * \brief To set the acLogin
+         * \param _acLogin The acLogin value
+         **/
         void setAcLogin(::ecore::EString const& _acLogin);
 
+        /**
+         * \brief To get the sshKeyPath
+         * \return The sshKeyPath attribute value
+         **/
         ::ecore::EString const& getSshKeyPath() const;
+        /**
+         * \brief To set the sshKeyPath
+         * \param _sshKeyPath The sshKeyPath value
+         **/
         void setSshKeyPath(::ecore::EString const& _sshKeyPath);
 
+        /**
+         * \brief To get the homeDirectory
+         * \return The homeDirectory attribute value
+         **/
         ::ecore::EString const& getHomeDirectory() const;
+        /**
+         * \brief To set the homeDirectory
+         * \param _homeDirectory The homeDirectory value
+         **/
         void setHomeDirectory(::ecore::EString const& _homeDirectory);
 
         // References

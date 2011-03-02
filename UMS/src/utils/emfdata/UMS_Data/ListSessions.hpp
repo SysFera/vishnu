@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListSessions.hpp
+ * \brief The ListSessions class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTSESSIONS_HPP
 #define UMS_DATA_LISTSESSIONS_HPP
 
@@ -49,6 +56,10 @@ namespace UMS_Data
         // Attributes
 
         // References
+        /**
+         * \brief To get the list of Sessions
+         * \return A reference to a list of Sessions
+         **/
         ::ecorecpp::mapping::EList< ::UMS_Data::Session >& getSessions();
 
         /*PROTECTED REGION ID(ListSessions) START*/

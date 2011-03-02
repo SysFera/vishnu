@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListUsers.hpp
+ * \brief The ListUsers class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTUSERS_HPP
 #define UMS_DATA_LISTUSERS_HPP
 
@@ -49,6 +56,10 @@ namespace UMS_Data
         // Attributes
 
         // References
+        /**
+         * \brief To get the list of Users
+         * \return A reference to a list of Users
+         **/
         ::ecorecpp::mapping::EList< ::UMS_Data::User >& getUsers();
 
         /*PROTECTED REGION ID(ListUsers) START*/
