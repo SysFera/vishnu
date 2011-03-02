@@ -38,11 +38,11 @@ typedef enum{
 class Format_t{
 public :
   /**
-   * \brief The start position of the variable
+   * \brief The  position of the first character of the variable
    */
   int start;
   /**
-   * \brief The end position of the variable
+   * \brief The position of the last character of the variable
    */
   int end;
   
