@@ -77,7 +77,7 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
       addUser(sessionKey,newUser);
-      
+    
       cout <<"The user identifier is " << newUser.getUserId() << endl;
 
     }
