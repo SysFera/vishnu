@@ -5,7 +5,7 @@
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
 
-using namespace utilServer;
+using namespace vishnu;
 
 int
 usage(char* cmd) {

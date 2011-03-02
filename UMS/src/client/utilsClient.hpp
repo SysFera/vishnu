@@ -30,7 +30,9 @@ inline void errMsg(const std::string& msg) {
  * \param errorInfo to check 
  */
 inline void printSuccessMessage(const std::string& errorInfo) {
-  if(errorInfo.size()==0) std::cout << "The service was performed successfully" << std::endl;
+  if(errorInfo.size()==0) {
+    std::cout << "The service was performed successfully" << std::endl;
+  }
 }
 
 /**

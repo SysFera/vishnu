@@ -15,7 +15,7 @@
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
-#include "utilServer.hpp"
+#include "utilVishnu.hpp"
 
 /**
 * \class MachineClientServer

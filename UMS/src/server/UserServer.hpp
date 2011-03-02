@@ -21,9 +21,9 @@
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
 #include "SessionServer.hpp"
-#include "utilServer.hpp"
+#include "utilVishnu.hpp"
 
-using namespace utilServer;
+using namespace vishnu;
 
 class SessionServer;
 
