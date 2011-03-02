@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListSessions
+     * \brief Implementation of the ListSessions class
+     */
     class ListSessions: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListSessions
+         */
         ListSessions();
-
+        /**
+         * \brief The destructor for ListSessions
+         */
         virtual ~ListSessions();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

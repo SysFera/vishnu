@@ -43,14 +43,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class Session
+     * \brief Implementation of the Session class
+     */
     class Session: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for Session
+         */
         Session();
-
+        /**
+         * \brief The destructor for Session
+         */
         virtual ~Session();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

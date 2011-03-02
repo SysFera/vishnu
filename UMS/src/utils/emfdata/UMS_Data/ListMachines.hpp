@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListMachines
+     * \brief Implementation of the ListMachines class
+     */
     class ListMachines: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListMachines
+         */
         ListMachines();
-
+        /**
+         * \brief The destructor for ListMachines
+         */
         virtual ~ListMachines();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
