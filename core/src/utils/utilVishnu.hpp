@@ -199,7 +199,7 @@ namespace vishnu {
 
   /**
   * \brief Function to get information from the table vishnu
-  * \fn    string getAttrVishnu(string attrname, string vishnuid)
+  * \fn  std::string getAttrVishnu(string attrname, string vishnuid)
   * \param attrname the name of the attribut
   * \param vishnuid the id of the vishnu configuration
   * \return the corresponding attribut
@@ -209,7 +209,7 @@ namespace vishnu {
 
   /**
   * \brief Function to increment a counter of the table vishnu
-  * \fn    incrementCpt(std::string cptName, int cpt)
+  * \fn int  incrementCpt(std::string cptName, int cpt)
   * \param cptName the name of the counter to increment
   * \param cpt     the current value of the counter
   * \return raises an exception

@@ -92,7 +92,7 @@ private:
   */
   SessionProxy msessionProxy;
   /**
-   * The VISHNU ssh public Key
+   * \brief The VISHNU ssh public Key
    */
   std::string  msshPublicKey;
 };
