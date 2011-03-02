@@ -62,7 +62,7 @@ public:
   add(UMS_Data::User*& user);
   /**
   * \brief Function to update user information
-  * \fn int update(UMS_Data::User*& user)
+  * \fn int update(UMS_Data::User* user)
   * \param user The user data structure
   * \return raises an exception on error
   */
@@ -86,7 +86,7 @@ public:
   changePassword(std::string newPassword);
   /**
   * \brief Function to change VISHNU user password
-  * \fn int resetPassword(UMS_Data::User user)
+  * \fn int resetPassword(UMS_Data::User& user)
   * \param user The user data structure
   * \return raises an exception on error
   */

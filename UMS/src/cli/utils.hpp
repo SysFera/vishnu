@@ -43,7 +43,7 @@ errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& er
  * \brief Helper function to display information (error or usage) about a specific command 
  * \param opt   :describes all options allowed by the command
  * \param mess: The help usage message to display 
- * \param eWhat   : The error message to display
+ * \param ewhat   : The error message to display
  * \return 0 if an help is required or 1 if an error must me displayed
  */
 
@@ -78,7 +78,7 @@ takePassword(const std::string& prompt);
 /**
  * \brief Display a '-' caracter 
  * \param size: The number of '-' to diplay
- * \The output stream in which the display will be done.
+ * \param os The output stream in which the display will be done.
  */
 
 void 

@@ -147,7 +147,7 @@ public:
   generateSessionKey(std::string salt);
   /**
   * \brief Function to generate the session identifier
-  * \fn    generateSessionId(string userId)
+  * \fn int generateSessionId(std::string userId)
   * \param userId the userId of the owner of the session
   * \return record the the session id on the session data structure
   */
@@ -155,7 +155,7 @@ public:
   generateSessionId(std::string userId);
   /**
   * \brief Function to record the session on the database
-  * \fn    recordSessionServer(string idmachine, string iduser)
+  * \fn int recordSessionServer(std::string idmachine, std::string iduser)
   * \param idmachine the database number id of the client machine
   * \param iduser the database number id of the owner of the session
   * \return record the the session id on the session data structure
@@ -180,7 +180,7 @@ public:
   getState(bool flagSessionId = false);
   /**
   * \brief Function to check the session on database
-  * \fn int getSessionkey(string idmachine, string iduser, bool flagAdmin)
+  * \fn int getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin = false)
   * \param idmachine the database number id of the client machine
   * \param iduser the database number id of the owner of the session
   * \param flagAdmin A flag for an admin to get the session key from another user
@@ -190,7 +190,7 @@ public:
   getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin = false);
   /**
   * \brief Function to solve the session connection parameters
-  * \fn solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, UserServer user)
+  * \fn int solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::string numuserId)
   * \param connectOpt the connection parameters
   * \param numuserId the database number id of the user to connect
   * \return the connection parameters are registered on the session data structure

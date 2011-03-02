@@ -20,29 +20,25 @@ public :
   /**
    * \brief Function to print the database results
    * \fn    print()
-   * \param request The request to process
-   * \return 0 on success, an error code otherwise
    */
   void 
   print();
   /**
    * \brief Function to print the attributes names
-   * \fn    print()
-   * \param request The request to process
-   * \return 0 on success, an error code otherwise
+   * \fn    printAttributesNames()
    */
   void 
   printAttributesNames();
   /**
    * \brief To get the number of tuples 
-   * \fn size_t getNbTuples() 
+   * \fn size_t getNbTuples() const
    * \return 0 on success, an error code otherwise
    */
   size_t 
   getNbTuples() const;
   /**
    * \brief To get the number of fields 
-   * \fn getNbFields() 
+   * \fn size_t getNbFields() const
    * \return 0 on success, an error code otherwise
    */
   size_t 
@@ -50,7 +46,7 @@ public :
   
   /**
    * \brief To get a specific results using its position
-   * \fn get(int position); 
+   * \fn std::vector<std::string> get(size_t position) const 
    * \param position The position of the request
    * \return the tuple associated to the postion
    */
@@ -58,20 +54,21 @@ public :
   get(size_t position) const;
   /**
    * \brief To get the number of fields 
-   * \fn get(); 
+   * \fn std::vector<std::vector<std::string> > getResults() const
+ 
    * \return all results
    */
   std::vector<std::vector<std::string> >
   getResults() const;
   /**
    * \brief To get the first attribut value of the first element 
-   * \fn std::string getFirstElement(); 
+   * \fn std::string getFirstElement() const
    * \return the first attribut value of the first element
    */
    std::string
    getFirstElement() const;
   /**
-   * \fn DatabaseResult()
+   * \fn DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes)
    * \brief Constructor, raises an exception on error
    */
   DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes);
@@ -106,7 +103,7 @@ private :
   
   /**
    * \brief To set the number of tuples 
-   * \fn setNbTuples(size_t nbtuples)
+   * \fn void setNbTuples(size_t nbtuples)
    * \param nbtuples The number of tuples
    * \return 0 on success, an error code otherwise
    */
@@ -114,9 +111,8 @@ private :
   setNbTuples(size_t nbtuples);
   /**
    * \brief To set the number of fields 
-   * \fn setNbFields(size_t nbfields)
-   * \param nbtuples The number of fields
-   * \return 0 on success, an error code otherwise
+   * \fn void setNbFields(size_t nbfields)
+   * \param nbfields The number of fields
    */
   void 
   setNbFields(size_t nbfields);

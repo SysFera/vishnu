@@ -18,7 +18,7 @@ namespace vishnu {
 
   /**
   * \brief Generic function to convert an object to string
-  * \fn    std::string convertToString(const T& val);
+  * \fn    std::string convertToString(T val);
   * \param T is a generic data to be transformed to string
   * \return the string version of T
   */
@@ -31,12 +31,19 @@ namespace vishnu {
 
   /**
   * \brief Function to convert a string to int
-  * \fn    std::string convertToString(const T& val)
-  * \param  val a value to convert to string
+  * \fn    int convertToInt(std::string val)
+  * \param  val a value to convert to int
   * \return int value of the corresponding string
   */
   int convertToInt(std::string val);
 
+  /**
+   * \brief To crypt a password
+   * \fn std::string cryptPassword(const std::string& salt, const std::string password)
+   * \param salt The salt to use to crypt
+   * \param password The password to crypt
+   * \return The crypted password
+   */
   std::string cryptPassword(const std::string& salt, const std::string password) ;
 }
 

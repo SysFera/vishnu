@@ -10,6 +10,10 @@
 
 static const int INNBERR = 5;
 
+/**
+ * \brief This class represents the exception that are internal
+ * \class InternalVishnuException
+ */
 class InternalVishnuException: public SystemException{
 private :
 protected:
@@ -21,22 +25,22 @@ public:
   InternalVishnuException();
   /**
    * \brief Copy constructor
-   * \fn UMSVishnuException()
+   * \fn InternalVishnuException(InternalVishnuException& e)
    */
   InternalVishnuException(InternalVishnuException& e);
   /**
    * \brief Constructor
-   * \fn UMSVishnuException()
+   * \fn InternalVishnuException(int msg, std::string msgComp)
    */
   InternalVishnuException(int msg, std::string msgComp);
   /**
    * \brief Default constructor
-   * \fn ~InternalVishnuException()
+   * \fn ~InternalVishnuException() throw()
    */
   ~InternalVishnuException() throw(){};
   /**
    * \brief Function to get the generic message in the Internal part depending on the inherited mval integer
-   * \fn getMsg
+   * \fn std::string getMsg()
    * \return Returns the corresponding generic message
    */
   std::string getMsg();

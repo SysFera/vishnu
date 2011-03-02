@@ -55,12 +55,15 @@ public:
   UMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn UMSVishnuException()
+   * \fn UMSVishnuException(const UMSVishnuException& e)
+   * \param e The copied exception
    */
   UMSVishnuException(const UMSVishnuException& e);
   /**
    * \brief Constructor
-   * \fn UMSVishnuException()
+   * \fn UMSVishnuException(int msg, std::string msgComp = "")
+   * \param msg The message to use to build
+   * \param msgComp Th complementary message used to build the exception
    */
   UMSVishnuException(int msg, std::string msgComp = "");
   /**

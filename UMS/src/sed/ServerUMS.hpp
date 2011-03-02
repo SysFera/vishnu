@@ -9,6 +9,9 @@
 #define _SERVERUMS_H_
 
 #include <string>
+/**
+ * \brief Number of service in UMS
+ */
 #define NB_SRV 25
 #include "DIET_server.h"
 
@@ -68,7 +71,7 @@ public :
 
    /**
    * \brief To initialize the UMS server
-   * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
+   * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword, std::string sendmailScriptPath)
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
    * \param dbType   The type of the database (POSTGREDB|ORACLEDB)
    * \param dbHost   The host of the database server

@@ -26,7 +26,7 @@ inline void errMsg(const std::string& msg) {
 
 /**
  * \brief Function to print success message 
- * \fn inline void printSuccessMessage(char* errorInfo) 
+ * \fn inline void printSuccessMessage(const std::string& errorInfo) 
  * \param errorInfo to check 
  */
 inline void printSuccessMessage(const std::string& errorInfo) {

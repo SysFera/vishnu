@@ -16,6 +16,11 @@ static const int ERRCODE_SYSTEM = 4;
 static const int ERRCODE_INVCOMP = 5;
 static const int ERRCODE_INVMAPPER = 6;
 
+
+/**
+ * \brief This class represents the exception that are due to the system
+ * \class SystemException
+ */
 class SystemException : public VishnuException {
 
 public:
@@ -27,12 +32,12 @@ public:
   SystemException();
   /**
    * \brief Copy constructor
-   * \fn SystemException(SystemException e)
+   * \fn SystemException(const SystemException& e)
    */
   SystemException(const SystemException& e);
   /**
    * \brief Constructor
-   * \fn SystemException(int msg, string msgComp = "")
+   * \fn SystemException(int msg, std::string msgComp = "")
    */
   SystemException(int msg, std::string msgComp = "");
   /**
@@ -42,14 +47,14 @@ public:
   virtual ~SystemException() throw(){};
   /**
    * \brief To get the generic message
-   * \fn std::string getMsg()
+   * \fn std::string getMsg() const
    * \return Returns the message
    */
   std::string
   getMsg() const;
   /**
    * \brief Function to get the exception type in string
-   * \fn virtual std::string getTypeS()
+   * \fn std::string getTypeS() const
    * \return Returns the type of the exception
    */
   std::string
