@@ -53,15 +53,17 @@ pid_exists(const std::string& pid);
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
-void deleter(char* dietConfig,int ac,char* av[]);
+void 
+deleter(char* dietConfig,int ac,char* av[]);
 
 /**
- *Creates a child process and call the deleter() function
+ * \brief Creates a child process and call the deleter() function
  * \param dietConfig: The VISHNU configuration file
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
 
-void cleaner(char* dietConfig,int ac,char* av[]);
+void 
+cleaner(char* dietConfig,int ac,char* av[]);
 
 #endif

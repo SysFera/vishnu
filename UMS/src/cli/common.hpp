@@ -20,7 +20,7 @@
 #include "UMS_Data.hpp"
 
 
-/*
+/**
  * \struct env_name_mapper
  * \brief a environment variable name mapper
  *
@@ -31,6 +31,14 @@
 
 
 struct env_name_mapper{
+
+/**
+ * Mapper operator for environnement variable
+ * \param name The environment variable name
+ * \return The name used in the program
+ */
+
+
 
 	std::string operator ()(std::string name){
 
