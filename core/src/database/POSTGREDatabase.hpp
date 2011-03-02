@@ -10,6 +10,7 @@
 
 #include "Database.hpp"
 #include "libpq-fe.h"
+#include <pthread.h>
 
 /**
  * \class POSTGREDatabase
@@ -26,14 +27,6 @@ public :
   int
   process(std::string request);
 
-  /**
-   * \brief To start a transaction with the database
-   * \fn int startTransaction(std::string request)
-   * \param request The series of requests to process
-   * \return raises an exception on error
-   */
-  int
-  startTransaction(std::string request);
 
   /**
   * \brief To make a connection to the database
@@ -69,22 +62,6 @@ public :
   ~POSTGREDatabase();
 
   /**
-   * \brief To commit a postgresql transaction
-   * \fn int commit()
-   * \return raises an exception on error
-   */
-  int
-  commit ();
-
-  /**
-   * \brief To cancel a transaction
-   * \fn int rollback()
-   * \return raises an exception on error
-   */
-  int
-  rollback();
-
-  /**
    * \brief To set the db to use
    * \fn int setDatabase(std::string db)
    * \param db The name of the database to use
@@ -104,15 +81,58 @@ public :
 
 
 private :
+  /**
+   * \brief Size of the pool
+   */
+  static const int POOLSIZE = 20;
+
+  /**
+   * \brief An element of the pool
+   * \struct pool_t
+   */
+  typedef struct pool_t{
+    /**
+     * \brief If the connexion is used
+     */
+    bool mused;
+    /**
+     * \brief The connexion
+     */
+    PGconn* mconn;
+    /**
+     * \brief The associated mutex
+     */
+    pthread_mutex_t mmutex;
+  }pool_t;
+
+  /**
+   * \brief To get a valid connexion
+   * \fn PGconn* getConnexion(int& id)
+   * \param pos The position of the connexion gotten in the pool
+   * \return A valid and free connexion
+   */
+  PGconn* getConnexion(int& pos);
+
+  /**
+   * \brief To release a connexion
+   * \fn void releaseConnexion(int pos)
+   * \param pos The position of the connexion to release
+   */
+  void releaseConnexion(int pos);
 
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
 
   /**
-  * \brief A PostgreSQL structure
-  */
-  PGconn* mconn;
+   * The pool of connection
+   */
+  pool_t mpool[POOLSIZE];
+
+//  /**
+//  * \brief A PostgreSQL structure
+//  */
+//  PGconn* mconn;
   /**
    * \brief The host of the base
    */
