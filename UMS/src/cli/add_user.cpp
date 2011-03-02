@@ -78,7 +78,6 @@ int main (int ac, char* av[]){
 
       addUser(sessionKey,newUser);
     
-      cout << "The tmp password is " << newUser.getPassword() << endl;       
       cout <<"The user identifier is " << newUser.getUserId() << endl;
 
     }
