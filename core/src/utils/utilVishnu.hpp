@@ -216,5 +216,16 @@ namespace vishnu {
   */
   void
   incrementCpt(std::string cptName, int cpt);
+ 
+  /**
+   * \brief To retrieve the password
+   * \param prompt: The message inviting the user to enter his/her password
+   * \return The password entered.
+   */
+
+  std::string
+  takePassword(const std::string& prompt);
+
+
 }
 #endif // _UTILVISHNU_H_

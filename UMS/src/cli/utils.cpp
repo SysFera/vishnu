@@ -112,24 +112,6 @@ if (opt.count("dietConfig")==0){
 
 
 /**
- * \brief To retrieve the password
- * \param prompt: The message inviting the user to enter his/her password
- * \return The password entered.
- */
-
-
-
-std::string
-takePassword(const string& prompt){
-
-   string password=getpass(prompt.c_str());
-
-
-  return password;
-
-}
-
-/**
  * \brief Display a '-' caracter 
  * \param size: The number of '-' to diplay
  * \The output stream in which the display will be done.

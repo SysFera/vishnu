@@ -2,9 +2,20 @@
 #include "sessionUtils.hpp"
 #include "api_ums.hpp"
 #include <fstream>
-
+/**
+ * \brief The home directory
+ */
 bfs::path home_dir;
+
+/**
+ * \brief The session storage  directory
+ */
 bfs::path session_dir;
+
+/**
+ * The VISHNU
+ */
+
 bfs::path vishnu_dir;
 bfs::path daemon_file;
 bfs::path proc_dir("/proc");

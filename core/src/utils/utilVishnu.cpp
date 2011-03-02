@@ -283,4 +283,21 @@ vishnu::incrementCpt(std::string cptName, int cpt) {
 
 }
 
+/**
+ * \brief To retrieve the password
+ * \param prompt: The message inviting the user to enter his/her password
+ * \return The password entered.
+ */
+
+
+
+std::string
+vishnu::takePassword(const std::string& prompt){
+
+  std::string password=getpass(prompt.c_str());
+
+
+  return password;
+
+}
 
