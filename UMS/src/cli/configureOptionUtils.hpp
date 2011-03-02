@@ -45,8 +45,8 @@ boost::function2<int,const std::string&,const UMS_Data::OptionValue&> ConfigureC
  */
 
 void
-makeConfigureOptions(boost::shared_ptr<Options>,std::string&,
-		                      StringcallBackType&,StringcallBackType&
+makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig,
+		                      StringcallBackType& fOptionName,StringcallBackType& fValue
                          );
 /**
  * \brief A common function betwenn the VISHNU configure option command
@@ -58,7 +58,7 @@ makeConfigureOptions(boost::shared_ptr<Options>,std::string&,
  * ConfigureDefaultOption
  */
 void
-commonConfigure(boost::shared_ptr<Options>, int , char*[] , const ConfigureCallBackType&);
+commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[] , const ConfigureCallBackType& conf_func);
 
 
 

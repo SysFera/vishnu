@@ -17,8 +17,6 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
 
-static const int PASSWORD_MAX_SIZE = 8;
-
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 
@@ -26,11 +24,11 @@ using namespace boost::gregorian;
 * \enum IdType
 * \brief The type of id generated
 */
-typedef enum IdType{
-  MACHINE = 0,
-  USER = 1,
-  JOB = 2,
-  FILETRANSFERT = 3
+typedef enum{
+  MACHINE = 0,/*!< For the machines*/
+  USER = 1, /*!< For The users */
+  JOB = 2, /*!< For the jobs */
+  FILETRANSFERT = 3  /*!< For the file tranfers*/
 } IdType;
 
 /**
@@ -39,8 +37,18 @@ typedef enum IdType{
 */
 class Format_t{
 public :
+  /**
+   * \brief The start position of the variable
+   */
   int start;
+  /**
+   * \brief The end position of the variable
+   */
   int end;
+  
+  /**
+   * \brief The value of the variable
+   */
   std::string value;
 };
 
@@ -58,7 +66,7 @@ namespace vishnu {
   static const std::string ROOTUSERNAME = "root";
   static const std::string DATABASENAME = "vishnu";
   static const std::string UMSMAPPERNAME = "UMS";
-
+  static const int PASSWORD_MAX_SIZE = 8;
   /**
   * \brief Generic function to convert an object to string
   * \fn    std::string convertToString(T val);
@@ -93,11 +101,11 @@ namespace vishnu {
 
   /**
   * \brief Function to get a random number
-  * \fn    int generate_numbers()
+  * \fn    int generateNumbers()
   * \return the number generated
   */
   int
-  generate_numbers();
+  generateNumbers();
 
   /**
    * \brief Return true if the string starts with 'MONTH'
@@ -199,7 +207,6 @@ namespace vishnu {
 
   /**
   * \brief Function to get information from the table vishnu
-  * \fn    string getAttrVishnu(string attrname, string vishnuid)
   * \param attrname the name of the attribut
   * \param vishnuid the id of the vishnu configuration
   * \return the corresponding attribut
@@ -209,12 +216,22 @@ namespace vishnu {
 
   /**
   * \brief Function to increment a counter of the table vishnu
-  * \fn    incrementCpt(std::string cptName, int cpt)
+  * \fn int  incrementCpt(std::string cptName, int cpt)
   * \param cptName the name of the counter to increment
   * \param cpt     the current value of the counter
   * \return raises an exception
   */
   void
   incrementCpt(std::string cptName, int cpt);
+
+  /**
+   * \brief To retrieve the password
+   * \param prompt: The message inviting the user to enter his/her password
+   * \return The password entered.
+   */
+  std::string
+  takePassword(const std::string& prompt);
+
+
 }
 #endif // _UTILVISHNU_H_

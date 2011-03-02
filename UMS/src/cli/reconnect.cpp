@@ -11,6 +11,7 @@
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"
 #include "daemon_cleaner.hpp"
+#include "utilVishnu.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -64,7 +65,7 @@ int main (int ac, char* av[]){
 
 
     //Fix me
-    password=takePassword("Password: ");
+    password=vishnu::takePassword("Password: ");
 
     cout << "The user password is " << password << endl;
 
