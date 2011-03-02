@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListUsers.hpp
+ * \brief The ListUsers class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTUSERS_HPP
 #define UMS_DATA_LISTUSERS_HPP
 
@@ -33,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListUsers
+     * \brief Implementation of the ListUsers class
+     */
     class ListUsers: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListUsers
+         */
         ListUsers();
-
+        /**
+         * \brief The destructor for ListUsers
+         */
         virtual ~ListUsers();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
@@ -49,6 +68,10 @@ namespace UMS_Data
         // Attributes
 
         // References
+        /**
+         * \brief To get the list of Users
+         * \return A reference to a list of Users
+         **/
         ::ecorecpp::mapping::EList< ::UMS_Data::User >& getUsers();
 
         /*PROTECTED REGION ID(ListUsers) START*/

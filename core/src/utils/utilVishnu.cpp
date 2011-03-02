@@ -108,20 +108,21 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
   unsigned int i;
   *size = 0;
 
-  char day[4];
-  char month[4];
-  char year[4];
-
   char buf[500];
   memset (buf, 0, 500);
 
   //the current time
   ptime now = microsec_clock::local_time();
+  boost::gregorian::date::ymd_type ymd = now.date().year_month_day();
 
-  struct tm tmtime = to_tm(now);
-  strftime (year, 3, "%y", &tmtime);
-  strftime (month, 3, "%m", &tmtime);
-  strftime (day, 3, "%d", &tmtime);
+  std::string monthStr = ymd.month.as_long_string();
+  std::ostringstream osY, osM, osD;
+  osY << ymd.year;
+  std::string year = osY.str();
+  osM << ymd.month;
+  std::string month = osM.str();
+  osD << ymd.day;
+  std::string day = osD.str();
 
   // Loop parsing for the variables, setting their position and their value
   for (i=0;i<strlen (format);i++){
@@ -129,17 +130,17 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
       if (isDay (format+i+1)){
         array[*size].start = i;
         array[*size].end = i+3;
-        array[*size].value.append (std::string (day));
+        array[*size].value = day;
         (*size) ++;
             }else if (isMonth (format+i+1)){
-        array[*size].value = std::string (month);
+        array[*size].value = month;
         array[*size].start = i;
         array[*size].end = i+5;
         (*size) ++;
             }else if (isYear (format+i+1)){
         array[*size].start = i;
         array[*size].end = i+4;
-        array[*size].value = std::string (year);
+        array[*size].value = year;
         (*size) ++;
             }else if (isCpt (format+i+1)){
         char tmp[10];
