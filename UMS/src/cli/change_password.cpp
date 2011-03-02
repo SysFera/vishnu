@@ -74,14 +74,7 @@ int main (int ac, char* av[]){
 
     oldPassword=vishnu::takePassword("old password: ");
 
-    cout << "old password is " << oldPassword <<endl;
-
     newPassword=vishnu::takePassword("new password: ");
-
-    cout << "The new password is "<< newPassword <<endl;
-
-
-
 
     /************** Call UMS connect service *******************************/
 
@@ -96,20 +89,7 @@ int main (int ac, char* av[]){
 
 
 
-    // get the sessionKey
-
-    sessionKey=getLastSessionKey(getppid());
-
-    if(false==sessionKey.empty()){
-
-      cout <<"the current sessionkey is: " << sessionKey <<endl;
-
-      changePassword(userId,oldPassword, newPassword);
-
-
-    }
-
-
+   changePassword(userId,oldPassword, newPassword);
 
 
   }// End of try bloc
