@@ -56,6 +56,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   Session                 sess2 ;
   string 	     	  pwdu = "toto"  ;
   string 	     	  uidu = "user_1";
+
+  string                  root = "root";
+  string                  pwdr = "vishnu_user";
   // connect as
   string const&      	  subs = "user_1";
   // user
@@ -110,6 +113,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   ///////////
   // TESTS //
   ///////////
+  BOOST_REQUIRE(restore    (sqlScript+"/cleanall.sql")==0);
+
   BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
 
 
@@ -776,18 +781,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK_THROW  (listOptions(sess.getSessionKey(), *liov, lioo     ), VishnuException);
   BOOST_CHECK  (close      (sess.getSessionKey()                 )==0);
 
-//  // Test initialize
-//  BOOST_REQUIRE(restore         (sqlScript+"/clean_session.sql" )==0);
-//  BOOST_MESSAGE(" Testing normal initialize" );
-//  BOOST_CHECK  (connect         (uid, pwd , sess , cop)==0);
-//  BOOST_CHECK  (vishnuInitialize((char*)path.c_str(), 0, NULL)==0);
-//  BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
-//
-//  // Test initialize bad conf
-//  BOOST_REQUIRE(restore         (sqlScript+"/clean_session.sql"   )==0);
-//  BOOST_MESSAGE(" Testing initialize bad conf file" );
-//  BOOST_CHECK  (vishnuInitialize((char *)"bad", 0, NULL        )==0);
-
 
   // Test Save configuration
   BOOST_MESSAGE(" Testing save conf"    );
@@ -800,19 +793,21 @@ BOOST_AUTO_TEST_CASE( my_test )
 //  // Test restore configuration
 //  BOOST_MESSAGE(" Testing restore conf"    );
 //  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
-//  BOOST_CHECK	 (connect      	      (uid, pwd  , key  , cop)==0);
-//  BOOST_CHECK	 (saveConfiguration   (key, conf             )==0);
-//  BOOST_CHECK	 (restoreConfiguration(key, cpath            )==0);
-//  BOOST_CHECK	 (close               (key                   )==0);
+//  BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
+//  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
+//  BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), cpath            )==0);
+//  BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);  
+//  BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);  
+//  BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
 //
 //  // Test restore configuration bad path
 //  BOOST_MESSAGE(" Testing restore conf"    );
 //  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
-//  BOOST_CHECK	 (connect      	      (uid, pwd  , key  , cop)==0);
-//  BOOST_CHECK	 (saveConfiguration   (key, conf             )==0);
+//  BOOST_CHECK	 (connect      	      (root, pwdr , sess  , cop)==0);
+//  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
 //  //  conf->setFilePath("bad");
-//  BOOST_CHECK_THROW	 (restoreConfiguration(key, "toto"            ), VishnuException);
-//  BOOST_CHECK	 (close               (key                   )==0);
+//  BOOST_CHECK_THROW	 (restoreConfiguration(sess.getSessionKey(), "toto"            ), VishnuException);
+//  BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
 
   // History, make all commands once and test list them
   BOOST_MESSAGE(" Testing history cmd"    );
@@ -862,6 +857,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (listHistoryCmd        (sess.getSessionKey(), *lic, lico     )==0);
     
   BOOST_CHECK_THROW	 (listHistoryCmd        ("bad", *lic, lico     ), VishnuException);
+
+  BOOST_REQUIRE(restore    (sqlScript+"/cleanall.sql")==0);
 
 }
 

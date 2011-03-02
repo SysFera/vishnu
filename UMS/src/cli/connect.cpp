@@ -80,7 +80,6 @@ int main (int ac, char* av[]){
     password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
 
 
-
     /************** Call UMS connect service *******************************/
 
     cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
