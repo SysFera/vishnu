@@ -199,7 +199,7 @@ namespace vishnu {
 
   /**
   * \brief Function to get information from the table vishnu
-  * \fn  std::string getAttrVishnu(string attrname, string vishnuid)
+  * \fn  std::string getAttrVishnu(std::string attrname, std::string vishnuid)
   * \param attrname the name of the attribut
   * \param vishnuid the id of the vishnu configuration
   * \return the corresponding attribut
