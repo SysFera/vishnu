@@ -428,7 +428,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore	  (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect	  (uid, pwd , sess, cop)==0);
   lacc.setSshKeyPath("/usr/bin");
-  BOOST_CHECK(addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);    
+  //  BOOST_CHECK(addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);    
   BOOST_CHECK(updateLocalAccount(sess.getSessionKey(), lacc	      )==0);
   BOOST_CHECK(close             (sess.getSessionKey()      	      )==0);
   lacc.setSshKeyPath(ssh);
@@ -437,7 +437,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
+  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
   lacc.setMachineId("bad");
   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);  
@@ -447,7 +447,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
+  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
   lacc.setUserId("bad");
   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);  
@@ -462,7 +462,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   lacc.setAcLogin     (accL);
   lacc.setSshKeyPath   (ssh);
   lacc.setHomeDirectory(home);
-  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2    )==0);
+  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2    )==0);
   BOOST_CHECK	 (deleteLocalAccount(sess.getSessionKey(), uid , mid     )==0);
   BOOST_CHECK	 (close             (sess.getSessionKey()                )==0);  
 
@@ -478,7 +478,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing delete local account bad machine"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql"  )==0);
   BOOST_CHECK  (connect           (uid, pwd , sess  , cop)==0);
-  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
+  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
   BOOST_CHECK_THROW	 (deleteLocalAccount(sess.getSessionKey(), uid , "bad"     ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()                  )==0);  
 
@@ -790,16 +790,16 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (close            (sess.getSessionKey()                )==0);
 
 
-//  // Test restore configuration
-//  BOOST_MESSAGE(" Testing restore conf"    );
-//  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
-//  BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
-//  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
-//  BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), cpath            )==0);
-//  BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);  
-//  BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);  
-//  BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
-//
+  // Test restore configuration
+  BOOST_MESSAGE(" Testing restore conf"    );
+  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
+  BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
+  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
+  BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), cpath            )==0);
+  BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);  
+  BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);  
+  BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
+
 //  // Test restore configuration bad path
 //  BOOST_MESSAGE(" Testing restore conf"    );
 //  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
