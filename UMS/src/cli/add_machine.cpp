@@ -1,3 +1,8 @@
+/**
+ * \file add_machine.cpp
+ * This file defines the VISHNU add machine command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 #include "common.hpp"
 #include "utils.hpp"
@@ -72,9 +77,11 @@ int main (int ac, char* av[]){
       if (ifs.is_open()){
         ifs >>sshPublicKeyFile;
         newMachine.setSshPublicKey(sshPublicKeyFile);
+        ifs.close();
       }
       else{
         std::cerr << "can not open the ssh public key file\n";
+        return 1;
       }
     }
 
@@ -85,7 +92,7 @@ int main (int ac, char* av[]){
 
     newMachine.setMachineDescription(machineDescription);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS add machine service *******************************/
 
     // initializing DIET
 
@@ -105,10 +112,9 @@ int main (int ac, char* av[]){
 
       addMachine(sessionKey,newMachine);
 
+      cout << "The machine identifier is " << newMachine.getMachineId() << endl;
 
     }
-
-
 
 
 

@@ -1,3 +1,10 @@
+/**
+ * \file list_histoty_cmd.cpp
+ * This file defines the VISHNU list history command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "listHistoryCmdUtils.hpp"
 #include "sessionUtils.hpp"

@@ -1,3 +1,11 @@
+
+/**
+ * \file delete_user.cpp
+ * This file defines the VISHNU delete_user command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "connectUtils.hpp"

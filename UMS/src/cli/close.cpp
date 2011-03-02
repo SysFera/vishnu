@@ -1,3 +1,11 @@
+/**
+ * \file close.cpp
+ * This file defines the VISHNU close command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"

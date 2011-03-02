@@ -1,3 +1,10 @@
+/**
+ * \file restore_configuration.cpp
+ * This file defines the VISHNU restore configuration command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"

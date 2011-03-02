@@ -27,9 +27,7 @@ class Options;
  */
 
 class Configuration {
-  private:
-    std::string pgName;/*!< Program name     */
-    std::string configFile;/*!< configuration file   */
+  
   public:
     /**
      * \brief Default constructor
@@ -65,6 +63,10 @@ class Configuration {
      */
     void 
     setConfigFile(const std::string& configFile);
+  
+  private:
+    std::string pgName;/*!< Program name     */
+    std::string configFile;/*!< configuration file   */
 };
 
 /**
@@ -90,23 +92,6 @@ class Configuration {
 	 * \brief Used to process the users command line parameters
 	 */
 	class Options {
-		private:
-			boost::shared_ptr<Configuration> conf;/*!< store a command configuration*/
-			po::options_description generic_options;/*!< Generic option description*/
-			po::options_description config_options;/*!< Configuration option description */
-			po::options_description hidden_options ;/*!<Hidden option description*/
-			po::options_description env_options; /*!< environment variable option description*/
-			mutable po::variables_map vm;/*!<  map storing all parsed options  */
-			po::positional_options_description position; /*!< option position in a command line  */
-
-      /**
-       * \brief a private function used to set option group
-       * \param tmp_options: the set of options to group
-       * \param group      : the group to set
-       */
-
-			void
-      setGroup (const po::options_description& tmp_options, const Group_type& group);
 
 		public:
 
@@ -290,7 +275,25 @@ class Configuration {
 			  */
 
 			 virtual ~Options();
-	};
+		
+    private:
+       boost::shared_ptr<Configuration> conf;/*!< store a command configuration*/
+       po::options_description generic_options;/*!< Generic option description*/
+       po::options_description config_options;/*!< Configuration option description */
+       po::options_description hidden_options ;/*!<Hidden option description*/
+       po::options_description env_options; /*!< environment variable option description*/
+       mutable po::variables_map vm;/*!<  map storing all parsed options  */
+       po::positional_options_description position; /*!< option position in a command line  */
+
+       /**
+        * \brief a private function used to set option group
+        * \param tmp_options: the set of options to group
+        * \param group      : the group to set
+        */
+
+       void
+         setGroup (const po::options_description& tmp_options, const Group_type& group);
+  };
 
 /*
  * \brief A helper function to simplify the display of vector

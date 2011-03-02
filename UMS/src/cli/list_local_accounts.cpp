@@ -1,3 +1,8 @@
+/**
+ * \file list_local_accounts.cpp
+ * This file defines the VISHNU list local account command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 #include "common.hpp"
 #include "utils.hpp"

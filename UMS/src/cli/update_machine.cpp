@@ -1,3 +1,10 @@
+/**
+ * \file update_machine.cpp
+ * This file defines the VISHNU update machine command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "machineUtils.hpp"

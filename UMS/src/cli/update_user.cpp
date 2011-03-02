@@ -1,3 +1,8 @@
+/**
+ * \file update_user.cpp
+ * This file defines the VISHNU update user command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 #include "common.hpp"
 #include "utils.hpp"

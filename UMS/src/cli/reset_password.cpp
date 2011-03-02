@@ -1,3 +1,10 @@
+/**
+ * \file reset_password.cpp
+ * This file defines the VISHNU reset password command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "connectUtils.hpp"
 #include "sessionUtils.hpp"

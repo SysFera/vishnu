@@ -1,3 +1,8 @@
+/**
+ * \file list_users.cpp
+ * This file defines the VISHNU list user command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 
 #include "common.hpp"

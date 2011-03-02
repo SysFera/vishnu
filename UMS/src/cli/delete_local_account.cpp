@@ -1,3 +1,8 @@
+/**
+ * \file delete_local_account.cpp
+ * This file defines the VISHNU delete local account command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 #include "common.hpp"
 #include "utils.hpp"

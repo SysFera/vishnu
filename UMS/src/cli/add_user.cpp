@@ -1,3 +1,10 @@
+/**
+ * \file add_user.cpp
+ * This file defines the VISHNU add user command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "userUtils.hpp"
@@ -25,7 +32,6 @@ int main (int ac, char* av[]){
 
   /******** Callback functions ******************/
 
-  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(newUser),_1));
   boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(newUser),_1));
   boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(newUser),_1));
   boost::function1<void,string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(newUser),_1));
@@ -48,43 +54,12 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-    if (opt->count("userId")){
-
-      cout <<"The user identifier is " << newUser.getUserId() << endl;
-
-    }
-
-    if(opt->count("privilege")){
-
-      cout <<"the privilege is : " << newUser.getPrivilege() << endl;
-
-    }
-
-    if(opt->count("firstname")){
-
-      cout << "The firstname is " << newUser.getFirstname() << endl;
-
-    }
-
-
-    if (opt->count("lastname")){
-
-      cout <<"The lastname is " << newUser.getLastname() << endl;
-
-    }
-
-    if (opt->count("email")){
-
-      cout <<"The email is " <<newUser.getEmail() << endl;
-
-    }
-
 
     checkVishnuConfig(*opt);
 
 
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS add user service *******************************/
 
     // initializing DIET
 
@@ -102,6 +77,8 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
       addUser(sessionKey,newUser);
+      
+      cout <<"The user identifier is " << newUser.getUserId() << endl;
 
     }
 
