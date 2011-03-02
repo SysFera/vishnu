@@ -82,6 +82,7 @@ public:
   * \fn int getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
   * \param numuserId The database number id of the user who wants to get closure information
   * \param nameInfo the name of the closure information
+  * \return The error or success code
   */
   int
   getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
