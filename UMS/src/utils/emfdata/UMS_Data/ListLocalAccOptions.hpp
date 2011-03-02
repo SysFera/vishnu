@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListLocalAccOptions.hpp
+ * \brief The ListLocalAccOptions class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_LISTLOCALACCOPTIONS_HPP
 #define UMS_DATA_LISTLOCALACCOPTIONS_HPP
 
@@ -36,27 +43,63 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListLocalAccOptions
+     * \brief Implementation of the ListLocalAccOptions class
+     */
     class ListLocalAccOptions: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListLocalAccOptions
+         */
         ListLocalAccOptions();
-
+        /**
+         * \brief The destructor for ListLocalAccOptions
+         */
         virtual ~ListLocalAccOptions();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the adminListOption
+         * \return The adminListOption attribute value
+         **/
         ::ecore::EBoolean isAdminListOption() const;
+        /**
+         * \brief To set the adminListOption
+         * \param _adminListOption The adminListOption value
+         **/
         void setAdminListOption(::ecore::EBoolean _adminListOption);
 
+        /**
+         * \brief To get the userId
+         * \return The userId attribute value
+         **/
         ::ecore::EString const& getUserId() const;
+        /**
+         * \brief To set the userId
+         * \param _userId The userId value
+         **/
         void setUserId(::ecore::EString const& _userId);
 
+        /**
+         * \brief To get the machineId
+         * \return The machineId attribute value
+         **/
         ::ecore::EString const& getMachineId() const;
+        /**
+         * \brief To set the machineId
+         * \param _machineId The machineId value
+         **/
         void setMachineId(::ecore::EString const& _machineId);
 
         // References

@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file ListOptionsValues.hpp
- * \brief Represents the class to list the values of the options
+ * \brief The ListOptionsValues class
  * \author Generated file
- * \date 31/01/2011
+ * \date 20/02/2011
  */
 
 #ifndef UMS_DATA_LISTOPTIONSVALUES_HPP
@@ -41,28 +42,24 @@ namespace UMS_Data
 
     /**
      * \class ListOptionsValues
-     * \brief A list of the options with their values
+     * \brief Implementation of the ListOptionsValues class
      */
     class ListOptionsValues: public virtual ::ecore::EObject
 
     {
     public:
-	/**
-	 * \brief Default constructor
-	 * \fn ListOptionsValues()
-	 */
+        /**
+         * \brief The default constructor for ListOptionsValues
+         */
         ListOptionsValues();
-
-	/**
-	 * \brief Destructor
-	 * \fn ~ListOptionsValues()
-	 */
+        /**
+         * \brief The destructor for ListOptionsValues
+         */
         virtual ~ListOptionsValues();
 
-	/**
-	 * \brief To initialize the list
-	 * \fn void _initialize()
-	 */
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
@@ -71,11 +68,10 @@ namespace UMS_Data
         // Attributes
 
         // References
-	/**
-	 * \brief Getter to get the list of option values
-	 * \fn ::ecorecpp::mapping::EList< ::UMS_Data::OptionValue >& getOptionValues()
-	 * \return The list of option values
-	 */
+        /**
+         * \brief To get the list of OptionValues
+         * \return A reference to a list of OptionValues
+         **/
         ::ecorecpp::mapping::EList< ::UMS_Data::OptionValue >
                 & getOptionValues();
 
@@ -85,43 +81,12 @@ namespace UMS_Data
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-	/**
-	 * \brief Getter to get a feature of the class
-	 * \fn virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-	 *                                       ::ecore::EBoolean _resolve)
-	 * \param _featureID The id of the attribute
-	 * \param _resolve 
-	 * \return The attribute corresponding to the id
-	 */
         virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
                 ::ecore::EBoolean _resolve);
-	/**
-	 * \brief To set a feature value
-	 * \fn virtual void eSet(::ecore::EInt _featureID,
-	 *                       ::ecore::EJavaObject const& _newValue)
-	 * \param _featureID The id of the feature
-	 * \param _newValue The new value of the feature
-	 */
         virtual void eSet(::ecore::EInt _featureID,
                 ::ecore::EJavaObject const& _newValue);
-	/**
-	 * \brief To know if a feature is set
-	 * \fn virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID)
-	 * \param _featureID The id of the feature
-	 * \return If the feature is set
-	 */
         virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-	/**
-	 * \brief To unset a feature
-	 * \fn virtual void eUnset(::ecore::EInt _featureID)
-	 * \param _featureID The id of the feature
-	 */
         virtual void eUnset(::ecore::EInt _featureID);
-	/**
-	 * \brief To get tje class
-	 * \fn virtual ::ecore::EClass_ptr _eClass()
-	 * \return A point to the class
-	 */
         virtual ::ecore::EClass_ptr _eClass();
 
         /*PROTECTED REGION ID(ListOptionsValuesImpl) START*/
@@ -135,9 +100,6 @@ namespace UMS_Data
 
         // References
 
-	/**
-	 * \brief List of Option values
-	 */
         ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
                 ::UMS_Data::OptionValue > > m_optionValues;
 

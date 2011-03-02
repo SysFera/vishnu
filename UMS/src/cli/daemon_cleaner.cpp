@@ -13,15 +13,36 @@ bfs::path home_dir;
 bfs::path session_dir;
 
 /**
- * The VISHNU
+ * \brief The VISHNU output files directories
  */
 
 bfs::path vishnu_dir;
+
+/**
+ * \brief The daemon locked file
+ */
+
 bfs::path daemon_file;
+/**
+ * \brief The processus information directory
+ */
+
 bfs::path proc_dir("/proc");
+
+
+
 using namespace std;
-bool pid_exists(const std::string& pid)
-{
+
+/**
+ * \brief Check if the pid exists
+ * \fn bool pid_exists(const std::string& pid)
+ * \param pid The given pid
+ * \return True if the pid exists
+ */
+
+
+bool
+pid_exists(const std::string& pid){
   extern bfs::path proc_dir;
   bfs::path token(proc_dir);
   token /= pid;
@@ -29,9 +50,16 @@ bool pid_exists(const std::string& pid)
 }
 
 
+/**
+ * \brief Deletes the file corresponding to the terminal closed
+ * \param dietConfig: The VISHNU configuration file
+ * \param ac: The number of command parameters
+ * \param av: The names of parameters
+ */
 
-void deleter(char* dietConfig,int ac,char* av[])
-{
+
+void 
+deleter(char* dietConfig,int ac,char* av[]){
 
   extern bfs::path daemon_file;
   extern bfs::path session_dir;
@@ -103,11 +131,17 @@ void deleter(char* dietConfig,int ac,char* av[])
 }
 
 
+/**
+ *\brief Creates a child process and call the deleter() function
+ * \param dietConfig: The VISHNU configuration file
+ * \param ac: The number of command parameters
+ * \param av: The names of parameters
+ */
 
 
 
-void cleaner(char* dietConfig,int ac,char* av[])
-{
+void 
+cleaner(char* dietConfig,int ac,char* av[]){
   // declare all global variables
   extern bfs::path home_dir;
   extern bfs::path session_dir;
