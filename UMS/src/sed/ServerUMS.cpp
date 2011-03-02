@@ -97,11 +97,11 @@ ServerUMS::init(int vishnuId,
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
-
     }
 
   } catch (VishnuException& e) {
-        exit(0);
+      std::cout << e.buildExceptionString() << std::endl;
+      exit(0);
   }
 
   // initialization of the service table
