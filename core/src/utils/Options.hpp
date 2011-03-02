@@ -295,7 +295,7 @@ class Configuration {
          setGroup (const po::options_description& tmp_options, const Group_type& group);
   };
 
-/*
+/**
  * \brief A helper function to simplify the display of vector
  * \param os: an ostream to write data in
  * \param v: a vector to print

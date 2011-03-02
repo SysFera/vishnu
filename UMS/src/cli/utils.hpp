@@ -59,14 +59,6 @@ usage (const Options& opt,const std::string& mess,const std::string& ewhat);
 void 
 checkVishnuConfig(const Options& opt);
 
-/**
- * \brief To retrieve the password
- * \param prompt: The message inviting the user to enter his/her password
- * \return The password entered.
- */
-
-std::string 
-takePassword(const std::string& prompt);
 
 /*
  * \brief Helper function to display a session

@@ -8,6 +8,7 @@
 #include "common.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 namespace po = boost::program_options;
 
 using namespace std;
@@ -71,11 +72,11 @@ int main (int ac, char* av[]){
 
 
 
-    oldPassword=takePassword("old password: ");
+    oldPassword=vishnu::takePassword("old password: ");
 
     cout << "old password is " << oldPassword <<endl;
 
-    newPassword=takePassword("new password: ");
+    newPassword=vishnu::takePassword("new password: ");
 
     cout << "The new password is "<< newPassword <<endl;
 

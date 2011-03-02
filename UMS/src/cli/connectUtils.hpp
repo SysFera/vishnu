@@ -23,13 +23,13 @@ class Options;
 
 /**
  * \brief To build options for the VISHNU authentication (connect, reconnect)command
- * \param opt: Describes all allowed options for the VISHNU authentication
  * command
  * \param pgName: Represents the name of the command
  * \param userId : A callback for user identifier
  * \param req    : for required parameters, 0 optional paramter whereas 1 means
  * mandatory parameter
  * \param dietConfig      : Represents the VISHNU config file
+ * \return The description of all options allowed by the command
  */
 
 

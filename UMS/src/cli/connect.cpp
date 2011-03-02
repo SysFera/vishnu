@@ -10,6 +10,7 @@
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 #include "daemon_cleaner.hpp"
+#include "utilVishnu.hpp"
 
 namespace po = boost::program_options;
 
@@ -76,7 +77,7 @@ int main (int ac, char* av[]){
 
     //Fix me
 
-    password= takePassword("Password: ");// uses getpass which is obsolete.
+    password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
 
 
 

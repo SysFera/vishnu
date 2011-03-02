@@ -44,7 +44,24 @@ namespace bpt = boost::posix_time;
  * \param pid The given pid
  * \return True if the pid exists
  */
-bool pid_exists(const std::string& pid);
+bool 
+pid_exists(const std::string& pid);
+
+/**
+ * \brief Deletes the file corresponding to the terminal closed
+ * \param dietConfig: The VISHNU configuration file
+ * \param ac: The number of command parameters
+ * \param av: The names of parameters
+ */
 void deleter(char* dietConfig,int ac,char* av[]);
+
+/**
+ *Creates a child process and call the deleter() function
+ * \param dietConfig: The VISHNU configuration file
+ * \param ac: The number of command parameters
+ * \param av: The names of parameters
+ */
+
 void cleaner(char* dietConfig,int ac,char* av[]);
+
 #endif
