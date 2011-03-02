@@ -77,8 +77,8 @@ int main (int ac, char* av[]){
 
     //Fix me
 
-    password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
-
+    //password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
+     password = "vishnu_user"; 
 
 
     /************** Call UMS connect service *******************************/
