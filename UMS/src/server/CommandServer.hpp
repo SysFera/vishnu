@@ -17,11 +17,11 @@
 * \enum CmdType
 * \brief The type of the command
 */
-typedef enum CmdType{
-  UMS = 0,
-  TMS = 1,
-  FMS = 2,
-  IMS = 3
+typedef enum {
+  UMS = 0,/*!< For UMS command type */
+  TMS = 1,/*!< For TMS command type */
+  FMS = 2,/*!< For FMS command type */
+  IMS = 3/*!< For IMS command type */
 } CmdType;
 
 /**
