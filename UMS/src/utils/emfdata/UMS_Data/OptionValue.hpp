@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file OptionValue.hpp
- * \brief Represents the class of the option value
+ * \brief The OptionValue class
  * \author Generated file
- * \date 31/01/2011
+ * \date 20/02/2011
  */
 
 #ifndef UMS_DATA_OPTIONVALUE_HPP
@@ -43,58 +44,50 @@ namespace UMS_Data
 
     /**
      * \class OptionValue
-     * \brief Values of the options
+     * \brief Implementation of the OptionValue class
      */
     class OptionValue: public virtual ::ecore::EObject
 
     {
     public:
-	/**
-	 * \brief Default constructor
-	 * \fn OptionValue()
-	 */
+        /**
+         * \brief The default constructor for OptionValue
+         */
         OptionValue();
-
-	/**
-	 * \brief Destructor
-	 * \fn ~optionValue()
-	 */
+        /**
+         * \brief The destructor for OptionValue
+         */
         virtual ~OptionValue();
 
-	/**
-	 * \brief To initialize the list
-	 * \fn void _initialize()
-	 */
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
-	/**
-	 * \brief To get the name of the option
-	 * \fn ::ecore::EString const& getOptionName() const
-	 * \return The name of the option
-	 */
+        /**
+         * \brief To get the optionName
+         * \return The optionName attribute value
+         **/
         ::ecore::EString const& getOptionName() const;
-	/**
-	 * \brief To set the name of the option
-	 * \fn void setOptionName(::ecore::EString const& _optionName)
-	 * \param _userId The name of the option
-	 */
+        /**
+         * \brief To set the optionName
+         * \param _optionName The optionName value
+         **/
         void setOptionName(::ecore::EString const& _optionName);
 
-	/**
-	 * \brief To get the value of the option
-	 * \fn ::ecore::EString const& getValue() const
-	 * \return The value of the option
-	 */
+        /**
+         * \brief To get the value
+         * \return The value attribute value
+         **/
         ::ecore::EString const& getValue() const;
-	/**
-	 * \brief To set the value of the option
-	 * \fn void setValue(::ecore::EString const& _value)
-	 * \param _value The value of the option
-	 */
+        /**
+         * \brief To set the value
+         * \param _value The value value
+         **/
         void setValue(::ecore::EString const& _value);
 
         // References
@@ -106,43 +99,12 @@ namespace UMS_Data
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-	/**
-	 * \brief Getter to get a feature of the class
-	 * \fn virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-	 *                                       ::ecore::EBoolean _resolve)
-	 * \param _featureID The id of the attribute
-	 * \param _resolve 
-	 * \return The attribute corresponding to the id
-	 */
         virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
                 ::ecore::EBoolean _resolve);
-	/**
-	 * \brief To set a feature value
-	 * \fn virtual void eSet(::ecore::EInt _featureID,
-	 *                       ::ecore::EJavaObject const& _newValue)
-	 * \param _featureID The id of the feature
-	 * \param _newValue The new value of the feature
-	 */
         virtual void eSet(::ecore::EInt _featureID,
                 ::ecore::EJavaObject const& _newValue);
-	/**
-	 * \brief To know if a feature is set
-	 * \fn virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID)
-	 * \param _featureID The id of the feature
-	 * \return If the feature is set
-	 */
         virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-	/**
-	 * \brief To unset a feature
-	 * \fn virtual void eUnset(::ecore::EInt _featureID)
-	 * \param _featureID The id of the feature
-	 */
         virtual void eUnset(::ecore::EInt _featureID);
-	/**
-	 * \brief To get tje class
-	 * \fn virtual ::ecore::EClass_ptr _eClass()
-	 * \return A point to the class
-	 */
         virtual ::ecore::EClass_ptr _eClass();
 
         /*PROTECTED REGION ID(OptionValueImpl) START*/
@@ -153,14 +115,8 @@ namespace UMS_Data
     protected:
         // Attributes
 
-	/**
-	 * \brief Name of the option
-	 */
         ::ecore::EString m_optionName;
 
-	/**
-	 * \brief Value of the option
-	 */
         ::ecore::EString m_value;
 
         // References

@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file Command.hpp
+ * \brief The Command class
+ * \author Generated file
+ * \date 20/02/2011
+ */
+
 #ifndef UMS_DATA_COMMAND_HPP
 #define UMS_DATA_COMMAND_HPP
 
@@ -36,36 +43,96 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class Command
+     * \brief Implementation of the Command class
+     */
     class Command: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for Command
+         */
         Command();
-
+        /**
+         * \brief The destructor for Command
+         */
         virtual ~Command();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the commandId
+         * \return The commandId attribute value
+         **/
         ::ecore::EString const& getCommandId() const;
+        /**
+         * \brief To set the commandId
+         * \param _commandId The commandId value
+         **/
         void setCommandId(::ecore::EString const& _commandId);
 
+        /**
+         * \brief To get the sessionId
+         * \return The sessionId attribute value
+         **/
         ::ecore::EString const& getSessionId() const;
+        /**
+         * \brief To set the sessionId
+         * \param _sessionId The sessionId value
+         **/
         void setSessionId(::ecore::EString const& _sessionId);
 
+        /**
+         * \brief To get the machineId
+         * \return The machineId attribute value
+         **/
         ::ecore::EString const& getMachineId() const;
+        /**
+         * \brief To set the machineId
+         * \param _machineId The machineId value
+         **/
         void setMachineId(::ecore::EString const& _machineId);
 
+        /**
+         * \brief To get the cmdDescription
+         * \return The cmdDescription attribute value
+         **/
         ::ecore::EString const& getCmdDescription() const;
+        /**
+         * \brief To set the cmdDescription
+         * \param _cmdDescription The cmdDescription value
+         **/
         void setCmdDescription(::ecore::EString const& _cmdDescription);
 
+        /**
+         * \brief To get the cmdStartTime
+         * \return The cmdStartTime attribute value
+         **/
         ::ecore::ELong getCmdStartTime() const;
+        /**
+         * \brief To set the cmdStartTime
+         * \param _cmdStartTime The cmdStartTime value
+         **/
         void setCmdStartTime(::ecore::ELong _cmdStartTime);
 
+        /**
+         * \brief To get the cmdEndTime
+         * \return The cmdEndTime attribute value
+         **/
         ::ecore::ELong getCmdEndTime() const;
+        /**
+         * \brief To set the cmdEndTime
+         * \param _cmdEndTime The cmdEndTime value
+         **/
         void setCmdEndTime(::ecore::ELong _cmdEndTime);
 
         // References
