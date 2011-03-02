@@ -1,3 +1,11 @@
+/**
+ * \file reconnect.cpp
+ * This file defines the VISHNU reconnect command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "connectUtils.hpp"
@@ -63,8 +71,8 @@ int main (int ac, char* av[]){
 
     /************** Call UMS reconnect service *******************************/
 
-    //cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
-    
+    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
+
     // initializing DIET
    
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {

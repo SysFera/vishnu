@@ -1,3 +1,10 @@
+/**
+ * \file change_password.cpp
+ * This file defines the VISHNU change password command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"

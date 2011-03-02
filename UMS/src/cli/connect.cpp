@@ -1,3 +1,8 @@
+/**
+ * \file connect.cpp
+ * This file defines the VISHNU connect command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 #include "common.hpp"
 #include "utils.hpp"

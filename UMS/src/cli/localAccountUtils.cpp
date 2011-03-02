@@ -1,12 +1,36 @@
+/**
+ * \file localAccountUtils.cpp
+ * \brief This file defines useful functions and types for the VISHNU local account commands
+ *  command
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
+
 #include "Options.hpp"
 
 #include "connectUtils.hpp"
 #include "localAccountUtils.hpp"
 #include<iostream>
 using namespace std;
-boost::shared_ptr<Options> makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
-                                                   StringcallBackType & fMachineId, StringcallBackType& fAcLogin,
-                                                   StringcallBackType& fSshKeyPath, StringcallBackType & fHomeDirectory, int type){
+/**
+ * \brief To build options for the VISHNU local account commands
+ * \param pgName : The name of the command
+ * \param fUserId: The user identifier option callback
+ * \param dietConfig: Represents the VISHNU config file
+ * \param fMachineId: The machine identifier option callback 
+ * \param fAcLogin: The user login option callback
+ * \param fSshKeyPath: The user ssh key path option callback
+ * \param fHomeDirectory: The user home directory option callback
+ * \param type: Indicates if it is an add or an update command, 0 means update, and 1 means add
+ * \return The description of all options allowed by the command
+ */
+
+boost::shared_ptr<Options>
+makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
+                        std::string & dietConfig, StringcallBackType & fMachineId,
+                        StringcallBackType& fAcLogin, StringcallBackType& fSshKeyPath,
+                        StringcallBackType & fHomeDirectory, int type){
 
   boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId,1,dietConfig);
 

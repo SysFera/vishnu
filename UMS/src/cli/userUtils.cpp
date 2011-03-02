@@ -1,3 +1,11 @@
+/**
+ * \file userUtils.cpp
+ * \brief This file defines useful functions and types for the VISHNU user commands 
+ *  command
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "Options.hpp"
 
 #include "connectUtils.hpp"
@@ -5,9 +13,23 @@
 #include<iostream>
 using namespace std;
 
-boost::shared_ptr<Options> makeUserOptions(std::string pgName,std::string & dietConfig,
-                                           privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
-                                           StringcallBackType& fLastname, StringcallBackType& fEmail, int type){
+/**
+ * \brief To build options for the VISHNU user commands
+ * \param pgName : The name of the command
+ * \param dietConfig: Represents the VISHNU config file
+ * \param fPrivilege: The privilege option callback
+ * \param ffirstname: The user first name option callback
+ * \param fLastName: The user last name option callback
+ * \param fEmail: The user email option callback
+ * \param type: Indicates if it is an add or an update command, 0 means update, and 1 means add
+ * \return The description of all options allowed by the command
+ */
+
+
+boost::shared_ptr<Options>
+makeUserOptions(std::string pgName,std::string & dietConfig,
+                privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
+                StringcallBackType& fLastname, StringcallBackType& fEmail, int type){
 
 
   boost::shared_ptr<Options> opt(new Options(pgName));

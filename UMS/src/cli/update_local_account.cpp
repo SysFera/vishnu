@@ -1,3 +1,8 @@
+/**
+ * \file update_local_account.cpp
+ * This file defines the VISHNU update local account command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 
 #include "common.hpp"

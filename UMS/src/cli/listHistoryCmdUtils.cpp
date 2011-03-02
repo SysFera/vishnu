@@ -1,11 +1,33 @@
+/**
+ * \file listHistoryCmdUtils.cpp
+ * \brief This file defines useful functions and types for the VISHNU list history
+ *  command
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
+
 #include "Options.hpp"
 
 #include "listHistoryCmdUtils.hpp"
 #include<iostream>
 using namespace std;
-boost::shared_ptr<Options> makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
-                                                     StringcallBackType& fSessionId,
-                                                     LongcallBackType& fStartDateOption, LongcallBackType& fEndDateOption){
+
+/**
+ * \brief To build options for the VISHNU list history command
+ * \param pgName : The name of the command
+ * \param fUserId: The user identifier option callback
+ * \param dietConfig: Represents the VISHNU config file
+ * \param fSessionId : The callback for the session identifier
+ * \param fStartDateOption: The callback for the command start date option
+ * \param fEndDateOption: The callback for the command end date option
+ * \return The description of all options allowed by the command
+ */
+boost::shared_ptr<Options> 
+makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
+                          StringcallBackType& fSessionId,
+                          LongcallBackType& fStartDateOption,
+                          LongcallBackType& fEndDateOption){
 
 
   boost::shared_ptr<Options> opt(new Options(pgName));

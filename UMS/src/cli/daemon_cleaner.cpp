@@ -32,14 +32,8 @@ void deleter(char* dietConfig,int ac,char* av[])
     bi::scoped_lock<bi::file_lock> lock(f_lock,bi::try_to_lock_type());
 
     if (false == lock.owns()) {
-      std::cout << "cleaning process: already running" << std::endl;
       exit(EXIT_SUCCESS);
     }
-    else{
-
-      std::cout << "locking successfull\n";
-    }
-
 
 
     while(true) {

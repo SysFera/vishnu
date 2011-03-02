@@ -1,3 +1,10 @@
+/**
+ * \file list_machines.cpp
+ * This file defines the VISHNU list machine command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "listMachineUtils.hpp"

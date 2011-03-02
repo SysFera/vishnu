@@ -1,3 +1,9 @@
+/**
+ * \file list_options.cpp
+ * This file defines the VISHNU list options command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"

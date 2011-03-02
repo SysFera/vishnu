@@ -1,3 +1,10 @@
+/**
+ * \file list_sessions.cpp
+ * This file defines the VISHNU list sessions command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "listHistoryCmdUtils.hpp"

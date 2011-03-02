@@ -1,3 +1,11 @@
+/**
+ * \file add_local_account.cpp
+ * This file defines the VISHNU add local account command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
+
 #include "common.hpp"
 #include "utils.hpp"
 #include "localAccountUtils.hpp"

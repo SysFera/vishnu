@@ -1,3 +1,12 @@
+/**
+ * \file save_configuration.cpp
+ * This file defines the VISHNU save configuration command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
+
+
+
+
 #include "common.hpp"
 
 #include "utils.hpp"

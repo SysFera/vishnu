@@ -1,3 +1,8 @@
+/**
+ * \file delete_machine.cpp
+ * This file defines the VISHNU delete_machine command 
+ * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
+ */
 
 
 #include "common.hpp"
