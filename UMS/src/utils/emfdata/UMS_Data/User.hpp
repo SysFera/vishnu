@@ -42,14 +42,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class User
+     * \brief Implementation of the User class
+     */
     class User: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for User
+         */
         User();
-
+        /**
+         * \brief The destructor for User
+         */
         virtual ~User();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
