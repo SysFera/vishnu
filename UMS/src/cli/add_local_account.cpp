@@ -11,6 +11,7 @@
 #include "localAccountUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 namespace po = boost::program_options;
 
 using namespace std;
@@ -88,9 +89,28 @@ int main (int ac, char* av[]){
 
       addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
 
+       //To construct the file to save
+      boost::filesystem::path home_dir = getenv("HOME");
+      boost::filesystem::path  config_dir = home_dir;
+      config_dir /= ".vishnu";
+      config_dir /= "localAccountPublicKey";
+    
+
+      if(!boost::filesystem::exists(config_dir)){
+        boost::filesystem::create_directories(config_dir);
+      }
+     
+      std::string publicKeyName;
+      publicKeyName.append(config_dir.string()+"/");
+      publicKeyName.append(newAcLogin.getUserId());
+      publicKeyName.append("-"+newAcLogin.getMachineId());
+      
+      ofstream os(publicKeyName.c_str());
+      os << sshPublicKey;
+      
+      std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
 
     }
-
 
 
   }// End of try bloc
