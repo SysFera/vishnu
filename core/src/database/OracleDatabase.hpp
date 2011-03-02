@@ -71,22 +71,6 @@ public :
   ~OracleDatabase();
 
   /**
-   * \brief To commit a postgresql transaction
-   * \fn int commit()
-   * \return raises an exception on error
-   */
-  int
-  commit ();
-
-  /**
-   * \brief To cancel a transaction
-   * \fn int rollback()
-   * \return raises an exception on error
-   */
-  int
-  rollback();
-
-  /**
    * \brief To set the db to use
    * \fn int setDatabase(std::string db)
    * \param db The name of the database to use
