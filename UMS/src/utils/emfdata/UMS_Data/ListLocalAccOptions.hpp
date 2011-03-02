@@ -43,14 +43,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListLocalAccOptions
+     * \brief Implementation of the ListLocalAccOptions class
+     */
     class ListLocalAccOptions: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListLocalAccOptions
+         */
         ListLocalAccOptions();
-
+        /**
+         * \brief The destructor for ListLocalAccOptions
+         */
         virtual ~ListLocalAccOptions();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

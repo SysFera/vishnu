@@ -43,14 +43,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class Command
+     * \brief Implementation of the Command class
+     */
     class Command: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for Command
+         */
         Command();
-
+        /**
+         * \brief The destructor for Command
+         */
         virtual ~Command();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

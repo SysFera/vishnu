@@ -42,14 +42,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class Machine
+     * \brief Implementation of the Machine class
+     */
     class Machine: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for Machine
+         */
         Machine();
-
+        /**
+         * \brief The destructor for Machine
+         */
         virtual ~Machine();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

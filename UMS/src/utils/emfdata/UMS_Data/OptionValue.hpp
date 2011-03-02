@@ -42,14 +42,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class OptionValue
+     * \brief Implementation of the OptionValue class
+     */
     class OptionValue: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for OptionValue
+         */
         OptionValue();
-
+        /**
+         * \brief The destructor for OptionValue
+         */
         virtual ~OptionValue();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations

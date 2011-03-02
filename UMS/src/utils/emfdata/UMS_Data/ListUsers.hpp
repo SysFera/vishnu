@@ -40,14 +40,26 @@
 namespace UMS_Data
 {
 
+    /**
+     * \class ListUsers
+     * \brief Implementation of the ListUsers class
+     */
     class ListUsers: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListUsers
+         */
         ListUsers();
-
+        /**
+         * \brief The destructor for ListUsers
+         */
         virtual ~ListUsers();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
