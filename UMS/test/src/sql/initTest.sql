@@ -11,6 +11,10 @@ INSERT INTO machine("vishnu_vishnuid", "name", "site", "machineid", "status")val
 INSERT INTO machine("vishnu_vishnuid", "name", "site", "machineid", "status")values(1, 'tiger2', 'paris', 'machine_42', '1');
 UPDATE "machine" SET "nummachineid"=1 where "machineid"='machine_1';
 UPDATE "machine" SET "nummachineid"=2 where "machineid"='machine_42';
+INSERT INTO description("machine_nummachineid", "lang", "description") values(1, 'ang', 'nutella');
+UPDATE "description" SET "numdescriptionid"=1 where "description"='nutella';
+INSERT INTO description("machine_nummachineid", "lang", "description") values(2, 'ang', 'chocolate');
+UPDATE "description" SET "numdescriptionid"=2 where "description"='chocolate';
 INSERT INTO account("machine_nummachineid", "users_numuserid", "aclogin", "sshpathkey", "home") values(1, 1, 'admin_1', 'key', 'home');
 INSERT INTO account("machine_nummachineid", "users_numuserid", "aclogin", "sshpathkey", "home") values(1, 2, 'admin_1', 'key', 'home');
 INSERT INTO account("machine_nummachineid", "users_numuserid", "aclogin", "sshpathkey", "home") values(2, 2, 'admin_1', 'key', 'home');

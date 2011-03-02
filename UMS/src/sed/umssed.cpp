@@ -6,13 +6,43 @@
 #include "MonitorUMS.hpp"
 
 using namespace vishnu;
+/**
+ * \mainpage UMS
+ *
+ * <center><b>UMS is the module that deals with the authentication of the users and the machines in the VISHNU infrastructure</b></center>
+ *
+ * \image html logoSysFera.jpg
+ *
+ * \authors CAPOCHICHI Eugene 
+ * \authors CISSE      Ibrahima 
+ * \authors COULOMB    Kevin 
+ * \authors ISNARD     Benjamin 
+ * \authors TRAORE     Daouda
+ *
+ * \file umssed.cpp
+ * \brief The main function offering the set of services
+ */
 
+/**
+ * \brief To show how to use the sed
+ * \fn int usage(char* cmd)
+ * \param cmd The name of the program
+ * \return Always 1
+ */
 int
 usage(char* cmd) {
   std::cout << "Usage: %s <diet_config.cfg> vishnuid [ora|pg] db_host db_username db_password sendmail_script_path\n"+ std::string(cmd);
   return 1;
 }
 
+/**
+ * \brief The main function
+ * \fn int main(int argc, char* argv[], char* envp[])
+ * \param argc Number of parameter
+ * \param argv List of argument
+ * \param envp Array of environment variables
+ * \return The result of the diet sed call
+ */
 int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
