@@ -125,6 +125,8 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
   std::string day = osD.str();
 
   // Loop parsing for the variables, setting their position and their value
+  /* >RELAX<MISRA_6_3_1> avoid using too many brackets */
+  /* >RELAX<MISRA_6_4_1> avoid using too many brackets */
   for (i=0;i<strlen (format);i++){
     if (format[i]=='$'){
       if (isDay (format+i+1)){
@@ -132,56 +134,58 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
         array[*size].end = i+3;
         array[*size].value = day;
         (*size) ++;
-            }else if (isMonth (format+i+1)){
+      }else if (isMonth (format+i+1)){
         array[*size].value = month;
         array[*size].start = i;
         array[*size].end = i+5;
         (*size) ++;
-            }else if (isYear (format+i+1)){
+      }else if (isYear (format+i+1)){
         array[*size].start = i;
         array[*size].end = i+4;
         array[*size].value = year;
         (*size) ++;
-            }else if (isCpt (format+i+1)){
+      }else if (isCpt (format+i+1)){
         char tmp[10];
         sprintf (tmp, "%d", cpt);
         array[*size].value = std::string (tmp);
         array[*size].start = i;
         array[*size].end = i+3;
         (*size) ++;
-            }else if (isSite (format+i+1)){
+      }else if (isSite (format+i+1)){
         array[*size].value = site;
         array[*size].start = i;
         array[*size].end = i+4;
         (*size) ++;
-            }else if (isMaName (format+i+1)){
+      }else if (isMaName (format+i+1)){
         array[*size].value = name;
         array[*size].start = i;
         array[*size].end = i+6;
         (*size) ++;
-            }else if (isUName (format+i+1)){
+      }else if (isUName (format+i+1)){
         array[*size].value = name;
         array[*size].start = i;
         array[*size].end = i+5;
         (*size) ++;
-      } else if (isType (format+i+1)) {
-                switch (type){
-                  case 0 :
-                    array[*size].value = "M";
-                    break;
-                  case 1 :
-                    array[*size].value = "U";
-                    break;
-                  case 2 :
-                    array[*size].value = "J";
-                    break;
-                  case 3 :
-                    array[*size].value = "F";
-                    break;
-                }
-                array[*size].start = i;
-                array[*size].end = i+4;
-                (*size) ++;
+      }else if (isType (format+i+1)) {
+        switch (type){
+          case 0 :
+            array[*size].value = "M";
+            break;
+          case 1 :
+            array[*size].value = "U";
+            break;
+          case 2 :
+            array[*size].value = "J";
+            break;
+          case 3 :
+            array[*size].value = "F";
+            break;
+          default :
+            break;
+        }
+        array[*size].start = i;
+        array[*size].end = i+4;
+        (*size) ++;
       }
       else {
         return -1;
