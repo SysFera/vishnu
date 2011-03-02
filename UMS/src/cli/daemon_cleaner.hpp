@@ -38,6 +38,12 @@ namespace bfs = boost::filesystem;
 namespace bi = boost::interprocess;
 namespace btt = boost::this_thread;
 namespace bpt = boost::posix_time;
+/**
+ * \brief Check if the pid exists
+ * \fn bool pid_exists(const std::string& pid)
+ * \param pid The given pid
+ * \return True if the pid exists
+ */
 bool pid_exists(const std::string& pid);
 void deleter(char* dietConfig,int ac,char* av[]);
 void cleaner(char* dietConfig,int ac,char* av[]);

@@ -26,7 +26,7 @@ class LocalAccountServer {
 public:
   /**
   * \brief Constructor
-  * \fn LocalAccountServer(LocalAccount account, SessionServer session)
+  * \fn LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session)
   * \param account The LocalAccount data structure
   * \param session The object which encapsulates session data
   */
@@ -75,7 +75,9 @@ public:
   getAttribut(std::string condition, std::string attrname = "numaccountid");
   /**
   * \brief Function to check localAccount on database
-  * \fn bool exist()
+  * \fn bool exist(std::string idmachine, std::string iduser)
+  * \param idmachine The id of the machine
+  * \param iduser The id of the user
   * \return true if the localAccount exists else false
   */
   bool 
@@ -114,7 +116,7 @@ private:
   /////////////////////////////////
   /**
   * \brief Function to generate a private/public ssh key
-  * \fn generateKey(std::string userId)
+  * \fn std::string generateKey()
   */
   std::string 
   generateKey();

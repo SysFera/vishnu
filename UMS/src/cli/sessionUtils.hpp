@@ -30,11 +30,12 @@ class SessionEntry{
   public:
     /**
      * \brief A default constructor
-     * \param closePolicy: the close session type with default value equal to 0
+     * \fn explicit SessionEntry(int closePolicy_=0)
+     * \param closePolicy_: the close session type with default value equal to 0
      */
 
-    explicit
-      SessionEntry(int closePolicy_=0);
+  explicit
+  SessionEntry(int closePolicy_=0);
 
     /**
      * \brief Another constructor taking parameters
@@ -63,10 +64,10 @@ class SessionEntry{
 
     /**
      * \brief A helper to display a session parameters
-     * \param os: A stream where the session parameters will be printed
-   * \param session:The session to print
-   * \return The stream where the session parameters have been printed
-   */
+     * \param os : A stream where the session parameters will be printed
+     * \param session : The session to print
+     * \return The stream where the session parameters have been printed
+     */
 
     friend
       std::ostream& 
@@ -120,7 +121,7 @@ saveIntoFile(SessionContainer& allSessions, const char* file);
 
 template <class T>
 void
-getFromFile(SessionContainer& , const char*);
+getFromFile(SessionContainer& allSessions, const char* file);
 
 /**
  * \brief helper function which which wrappes getFromFile function 

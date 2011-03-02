@@ -156,7 +156,9 @@ public :
 
   /**
    * \brief To get the command corresponding to a key
-   * \fn virtual int getCommand()
+   * \fn virtual int getCommand(const int& key,string& command)
+   * \param key The key to use
+   * \param command OUT, the command corresponding to the key
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -164,7 +166,9 @@ public :
 
   /**
    * \brief To get the key corresponding to a command
-   * \fn virtual int getKey()
+   * \fn virtual int getKey(const string& command, int& key)
+   * \param command The 'key' to use
+   * \param key OUT, the key corresponding to the command
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -183,7 +187,7 @@ public :
   /**
    * \brief To end a command, delete it from the map and get its value
    * \fn virtual string finalize(int key);
-   * \param The entry in the map to get an remove
+   * \param key The entry in the map to get an remove
    * \return The coded value of the command
    */
   virtual string
@@ -426,7 +430,7 @@ private:
    * \brief To find all the separator in the string s and fill the vector with their position in the string
    * \fn void findSeparator(const string& s, vector<int>& vec)
    * \param s The string to find the separator
-   * \param separator A vector containing the position of the separator in the string s (OUT)
+   * \param vec A vector containing the position of the separator in the string s (OUT)
    * \return The cli like close command
    */
   void

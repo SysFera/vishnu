@@ -26,7 +26,7 @@ class QueryServer
 public:
 
    /**
-   * \fn QueryServer(const SessionServer session)
+   * \fn QueryServer(const SessionServer& session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
@@ -39,7 +39,7 @@ public:
   }
 
   /**
-   * \fn QueryServer(const QueryParameters* params,
+   * \fn QueryServer(QueryParameters* params,
    *                 const SessionServer& session)
    * \param params The object which encapsulates the information of query options 
    * \param session The object which encapsulates the session information (ex: identifier of the session)
@@ -74,6 +74,7 @@ public:
    * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request) 
    * \param name The column name of the data base table 
    * \param value The value to search in the given column 
+   * \param request The request
    */ 
   void addOptionRequest(const std::string& name, const std::string& value, std::string& request) {
     request.append(" and "+name+"=");
@@ -82,9 +83,10 @@ public:
 
   /**
    * \brief Function to add sql resquest "and condition" which contain an integer value to a given request 
-   * \fn void addOptionRequest(const std::string& name, T& value, std::string& request) 
+   * \fn void addIntegerOptionRequest(const std::string& name, T& value, std::string& request)
    * \param name The column name of the data base table 
    * \param value The integer value to search in the given column 
+   * \param request the request
    */
   template <class T>
   void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
@@ -96,9 +98,11 @@ public:
 
   /**
    * \brief Function to add sql resquest "and condition" which contain an integer value to a given request 
-   * \fn void addOptionRequest(const std::string& name, T& value, std::string& request) 
+   * \fn void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp)
    * \param name The column name of the data base table 
    * \param value The integer value to search in the given column 
+   * \param request the request
+   * \param comp The where statement
    */
   template <class T>
   void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
@@ -110,9 +114,10 @@ public:
 
   /**
    * \brief Function to add sql resquest "where condition" to a given request 
-   * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request) 
+   * \fn void addCondition(const std::string& name, const std::string& value, std::string& request) 
    * \param name The column name of the data base table 
    * \param value The value to search in the given column 
+   * \param request The request
    */
   void addCondition(const std::string& name, const std::string& value, std::string& request) {
     request.append(" where "+name+"=");
@@ -121,9 +126,10 @@ public:
 
   /**
    * \brief Function to add sql resquest "where condition" which contain an integer value to a given request 
-   * \fn void addOptionRequest(const std::string& name, T& value, std::string& request) 
+   * \fn void addIntegerCondition(const std::string& name, T& value, std::string& request)
    * \param name The column name of the data base table 
    * \param value The integer value to search in the given column 
+   * \param request the request
    */
   template <class T>
   void addIntegerCondition(const std::string& name, T& value, std::string& request) {
@@ -167,9 +173,8 @@ public:
 
   /**
    * \brief Function to check if a given machine identifier exists 
-   * \fn void checkUserId(std::string machineId) 
+   * \fn void checkMachineId(std::string machineId) 
    * \param machineId the machine identifier 
-   * \return raises an exception on error
    */
   void checkMachineId(std::string machineId) {
     std::string sqlMachineRequest = "SELECT machineid from machine where machineid='"+machineId+"'";
@@ -181,9 +186,8 @@ public:
 
   /**
    * \brief Function to check if a given machine client identifier exists 
-   * \fn void checkUserId(std::string clmachineId) 
+   * \fn void checkClientMachineName(std::string clmachineId) 
    * \param clmachineId the machine client identifier 
-   * \return raises an exception on error
    */
   void checkClientMachineName(std::string clmachineId) {
     std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
@@ -196,7 +200,7 @@ public:
   /**
    * \brief Function to check if a given option name exists 
    * \fn void checkOptionName(std::string name) 
-   * \param the name of the option 
+   * \param name The name of the option 
    * \return raises an exception on error
    */
   void checkOptionName(std::string name) {
@@ -209,9 +213,8 @@ public:
 
   /**
    * \brief Function to check if a given session identifier exists 
-   * \fn void checkUserId(std::string sessionId) 
+   * \fn void checkSessionId(std::string sessionId) 
    * \param sessionId the session identifier 
-   * \return raises an exception on error
    */ 
   void checkSessionId(std::string sessionId) {
     std::string sqlSessionRequest = "SELECT vsessionid from vsession where vsessionid='"+sessionId+"'";
@@ -225,7 +228,6 @@ public:
    * \brief Function to check a status value 
    * \fn void void checkStatus(const int& status) 
    * \param status The status to check
-   * \return raises an exception on error
    */
   void checkStatus(const int& status) {
      if((status < 0) || (status > 1)) {
@@ -237,7 +239,6 @@ public:
    * \brief Function to check a close policy value 
    * \fn void checkClosePolicy(const int& closePolicy) 
    * \param closePolicy The closePolicy value to check
-   * \return raises an exception on error
    */
   void checkClosePolicy(const int& closePolicy) {
       if((closePolicy < 0) || (closePolicy > 2)) {

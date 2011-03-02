@@ -68,8 +68,13 @@ public:
   ~QueryProxy();
 
 private:
-
+  /**
+   * \brief Define a pointer type for more facilities
+   */
   typedef ListObject* ListObject_ptr;
+  /**
+   * \brief Define a pointer type for more facilities
+   */
   typedef QueryParameters* QueryParameters_ptr;
   
   /////////////////////////////////
@@ -97,7 +102,7 @@ private:
 };
 
 /**
- * \fn QueryProxy(const QueryParameters& params,
+ * \fn QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params,
  *                const SessionProxy& session,
                   const std::string& serviceName)
  * \param params The object which encapsulates the information of queryProxy options 
@@ -115,7 +120,7 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
 
 /**
  * \brief Function to list QueryProxy information 
- * \fn  ListObject* list()
+ * \fn  ListObject* QueryProxy<QueryParameters, ListObject>::list()
  * \return The pointer to the ListOject containing list information
  * \return raises an exception on error
  */
@@ -184,7 +189,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 
 /**
  * \brief Function to list QueryProxy information where QueryParameters type is string 
- * \fn  ListObject* listWithParamsString()
+ * \fn  ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
  * \return The pointer to the ListOject containing list information
  * \return raises an exception on error
  */
@@ -246,7 +251,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
 }
 
 /**
- * \fn ~QueryProxy()
+ * \fn QueryProxy<QueryParameters, ListObject>::~QueryProxy()
  * \brief Destructor, raises an exception on error
  */
 template <class QueryParameters, class ListObject>

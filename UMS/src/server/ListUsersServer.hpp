@@ -27,13 +27,13 @@ class ListUsersServer
 public:
   
   /**
-   * \fn ListUsersServer(const SessionServer session)
+   * \fn ListUsersServer(const SessionServer& session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
   explicit ListUsersServer(const SessionServer& session);
   /**
-   * \fn ListUsersServer(const std::string& option
+   * \fn ListUsersServer(const std::string& option,
    *                     const SessionServer& session)
    * \param option The ListUsersServer option 
    * \param session The object which encapsulates the session information (ex: identifier of the session)
@@ -44,10 +44,10 @@ public:
   /**
    * \brief Function to treat the ListUsersServer options 
    * \fn void processOptions(UserServer userServer,
-   *                         const td::string& options
+   *                         const std::string& options,
    *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
-   * \param optionsListUsersServer option 
+   * \param options option 
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */

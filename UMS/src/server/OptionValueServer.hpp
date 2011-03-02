@@ -41,14 +41,14 @@ public:
   OptionValueServer();
   /**
   * \brief Constructor
-  * \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
-  * \param sessionServer The object to manipulate session
+  * \fn OptionValueServer(UMS_Data::OptionValue*& optionvalue, SessionServer session)
   * \param optionvalue the option data structure
+  * \param session The object to manipulate session
   */
   OptionValueServer(UMS_Data::OptionValue*& optionvalue, SessionServer session);
   /**
   * \brief Function to configure options on the database
-  * \fn    int configureOption()
+  * \fn    int configureOption(bool defaultOptions = false)
   * \param defaultOptions the flag to get data from defauts options table
   * \return  raises an exception on error
   */
@@ -68,7 +68,7 @@ public:
   getData();
   /**
   * \brief Function to get option information from the database vishnu
-  * \fn getAttribut(std::string condition, std::string attrname, defaultOptions);
+  * \fn std::string getAttribut(std::string condition, std::string attrname="value", bool defaultOptions=false);
   * \param condition The condition of the select request
   * \param attrname the name of the attribut to get
   * \param defaultOptions the flag to get data from defauts options table
@@ -78,7 +78,7 @@ public:
   getAttribut(std::string condition, std::string attrname="value", bool defaultOptions=false);
   /**
   * \brief Function to get closure information from the database vishnu
-  * \fn getAttribut(std::string condition, std::string attrname, defaultOptions);
+  * \fn int getClosureInfo(std::string numuserId, std::string nameInfo = "VISHNU_CLOSE_POLICY");
   * \param numuserId The database number id of the user who wants to get closure information
   * \param nameInfo the name of the closure information
   */

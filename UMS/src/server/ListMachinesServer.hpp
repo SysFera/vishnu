@@ -39,7 +39,7 @@ public:
     mcommandName = "vishnu_list_machine";
   }
   /**
-   * \fn ListMachinesServer(const UMS_Data::ListSessionOptions_ptr params,
+   * \fn ListMachinesServer(UMS_Data::ListMachineOptions_ptr params,
    *                        const SessionServer& session)
    * \param params The object which encapsulates the information of ListMachinesServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
@@ -54,7 +54,7 @@ public:
   /**
    * \brief Function to treat the ListMachinesServer options
    * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListMachineOptions_ptr& options
+   *                         const UMS_Data::ListMachineOptions_ptr& options,
    *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListMachinesServer options values

@@ -42,14 +42,22 @@ public :
   ~DbFactory();
   /**
    * \brief Function to create a database. The database created depends on the type parameter
-   * \fn   Database* create(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0)
+   * \fn   Database* getDatabaseInstance(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0)
    * \param type The type of database to create
+   * \param host Host of the database
+   * \param user User to connect to the database
+   * \param pwd Password of the user
+   * \param db The database
+   * \param port The port to connect
    * \return A database or a nil pointer
    */
   Database*
   getDatabaseInstance(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0);
 
 private :
+  /**
+   * \brief The unique instance of the database
+   */
   static Database* mdb;
 };
 

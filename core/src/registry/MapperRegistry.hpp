@@ -33,10 +33,9 @@ public :
   addMapper(string s, Mapper* m);
   /**
    * \brief To get a mapper
-   * \fn int getMapper(const string& name, Mapper& mapper)
+   * \fn Mapper* getMapper(const string& name)
    * \param name Name of the mapper needed (IN)
-   * \param mapper The mapper (OUT)
-   * \return 0 on success, an error code otherwise
+   * \return The mapper
    */
   Mapper*
   getMapper(const string& name);
@@ -55,7 +54,7 @@ public :
   ~MapperRegistry();
   /**
    * \brief To get a mapper registry
-   * \fn getInstance()
+   * \fn static MapperRegistry* getInstance()
    */
   static MapperRegistry*
   getInstance();
@@ -87,6 +86,10 @@ private :
    */
   map<string, Mapper*> mmapper;
   // DEBUG
+  /**
+   * \brief Debug function
+   * \fn void display()
+   */
   void display();
 };
 

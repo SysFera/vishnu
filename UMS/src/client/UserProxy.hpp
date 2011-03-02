@@ -27,7 +27,7 @@ public:
  /**
   * \fn  UserProxy(const std::string& userId, const std::string& password) 
   * \param userId the user identifier
-  * \password the user password 
+  * \param password the user password 
   * \brief Constructor, raises an exception on error
   */	
   UserProxy(const std::string& userId, const std::string& password);
@@ -66,7 +66,7 @@ public:
   int deleteUser(const UMS_Data::User& user);
   /**
    * \brief Function to change user password 
-   * \fn  int changePassword(const std::string& password, const std::string& newPassword) 
+   * \fn  int changePassword(const std::string& oldPassword, const std::string& newPassword) 
    * \param oldPassword the old password of the user
    * \param newPassword the new password of the user 
    * \return raises an exception on error
@@ -81,14 +81,14 @@ public:
   int resetPassword(UMS_Data::User& user);
   /**
    * \brief Function get user information 
-   * \fn  UMS_Data::User getData()
+   * \fn  UMS_Data::User getData() const
    * \return User object encapsulates the information of the user 
    * \return raises an exception on error
    */
   UMS_Data::User getData() const;
   /**
    * \brief Function get SessionProxy object which contains the VISHNU session identifier 
-   * \fn SessionProxy getSessionProxy() 
+   * \fn SessionProxy getSessionProxy() const
    * \return a SessionProy object which contains the VISHNU session information 
    * \return raises an exception on error
    */

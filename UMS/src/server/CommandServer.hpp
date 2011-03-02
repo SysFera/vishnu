@@ -52,7 +52,7 @@ public:
   getCommand();
   /**
   * \brief Function to record the command on the database
-  * \fn int record(string cmdType, string startTime, string endTime)
+  * \fn int record(CmdType cmdType, std::string startTime = "CURRENT_TIMESTAMP", std::string endTime = "CURRENT_TIMESTAMP")
   * \param cmdType The type of the command (UMS, TMS, FMS, IMS)
   * \param startTime The start time of command
   * \param endTime The end time of command

@@ -50,7 +50,7 @@ public:
   int deleteLocalAccount();
   /**
    * \brief Function get SessionProxy object which contains the VISHNU session identifier 
-   * \fn SessionProxy getSessionProxy() 
+   * \fn SessionProxy getSessionProxy() const
    * \return a SessionProy object which contains the VISHNU session information 
    * \return raises an exception on error
    */
@@ -72,7 +72,7 @@ private:
 
   /**
    * \brief Function to combine add() and update() into one function 
-   * \fn  int _addLocalAccountInformation(bool isNewMachine=true); 
+   * \fn  int _addLocalAccountInformation(bool isNewLocalAccount=true); 
    * \param isNewLocalAccount to select the call of add or update function 
    * \return raises an exception on error
    */
