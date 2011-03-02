@@ -19,7 +19,7 @@
 
 /**
 * \class ConfigurationServer
-* \brief Implementation of the ConfigurationServer class
+* \brief ConfigurationServer class implementation
 */
 class ConfigurationServer {
 

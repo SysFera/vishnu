@@ -280,7 +280,7 @@ SessionServer::generateSessionKey(std::string salt) {
   sessionKey = std::string(crypt(to_simple_string(now).c_str(), globalSalt.c_str()));
 
   //To put a randomize number at the end to complicate the string encrypted
-  sessionKey.append(convertToString(generate_numbers()));
+  sessionKey.append(convertToString(generateNumbers()));
   msession.setSessionKey(sessionKey.substr(globalSalt.size()));
 
   return 0;
@@ -305,7 +305,7 @@ SessionServer::generateSessionId(std::string userId) {
 
   //To construct the session key
   sessionId.append(userId+"-");
-  sessionId.append(nowToString+":"+convertToString(generate_numbers()));
+  sessionId.append(nowToString+":"+convertToString(generateNumbers()));
 
   msession.setSessionId(sessionId);
 

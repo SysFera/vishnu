@@ -523,8 +523,8 @@ UserServer::existuserId(std::string userId) {
 std::string
 UserServer::generatePassword(std::string value1, std::string value2) {
 
-  std::string salt = "$1$"+value1 + convertToString(generate_numbers())+value2+"$";
-  std::string clef = value2+convertToString(generate_numbers());
+  std::string salt = "$1$"+value1 + convertToString(generateNumbers())+value2+"$";
+  std::string clef = value2+convertToString(generateNumbers());
 
   return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
 }

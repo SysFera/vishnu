@@ -30,7 +30,7 @@ static const std::string TIMEOUT_OPT = "VISHNU_TIMEOUT";
 
 /**
 * \class OptionValueServer
-* \brief Implementation of the OptionValueServer class
+* \brief OptionValueServer class implementation
 */
 class OptionValueServer {
 
