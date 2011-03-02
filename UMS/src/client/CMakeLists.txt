@@ -10,7 +10,8 @@ include_directories(
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-)
+  ${Boost_INCLUDE_DIRS}
+  )
 
 add_library(ums-client-proxy
    SessionProxy.cpp
