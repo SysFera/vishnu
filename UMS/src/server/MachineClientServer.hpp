@@ -19,7 +19,7 @@
 
 /**
 * \class MachineClientServer
-* \brief Implementation of the MachineClientServer class
+* \brief MachineClientServer class implementation
 */
 class MachineClientServer {
 public:
