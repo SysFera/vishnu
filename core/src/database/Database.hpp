@@ -28,27 +28,12 @@ public :
   virtual int 
   process(std::string request) = 0;
   /**
-   * \brief To start a transaction with the database
-   * \fn int startTransaction(std::string request)
-   * \param request The series of requests to process
-   * \return raises an exception on error
-   */
-  virtual int 
-  startTransaction(std::string request) = 0;
-  /**
   * \brief To make a connection to the database
   * \fn int connect()
   * \return raises an exception on error
   */
   virtual int 
   connect() = 0;
-  /**
-   * \brief To commit a transaction
-   * \fn virtual int commit() = 0
-   * \return raises an exception on error
-   */
-  virtual int
-  commit () = 0;
   /**
    * \brief To set the name of the database to use
    * \fn virtual int setDatabase(std::string db) = 0
@@ -65,13 +50,6 @@ public :
   */
   virtual DatabaseResult*
   getResult(std::string request) = 0;
-  /**
-  * \brief To cancel a transaction
-  * \fn int rollback()
-  * \return raises an exception on error
-  */
-  virtual int
-  rollback() = 0;
   
 protected :
   /**

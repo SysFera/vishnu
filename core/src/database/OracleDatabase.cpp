@@ -102,48 +102,6 @@ OracleDatabase::disconnect(){
   return SUCCESS;
 }
 
-/**
- * \brief To commit a To commit a postgresql transaction transaction
- * \fn int commit()
- * \return raises an exception on error
- */
-int
-OracleDatabase::commit(){
-  string errorMsg;
-  if (mcon){
-    try{
-      mcon->commit();
-    }catch(oracle::occi::SQLException &e){
-      errorMsg.append("An exception was raised during commit \n");
-      throw SystemException(ERRCODE_DBERR, errorMsg);
-    }
-  } else {
-    throw SystemException(ERRCODE_DBCONN, "Database is not connected");
-  }
-  return SUCCESS;
-}
-
-
-/**
- * \brief To cancel a transaction
- * \fn int rollback()
- * \return raises an exception on error
- */
-int
-OracleDatabase::rollback(){
-  string errorMsg;
-  if (mcon){
-    try {
-    mcon->rollback();
-    }catch(oracle::occi::SQLException &e){
-      errorMsg.append("An exception was raised during the rollback \n");
-      throw SystemException(ERRCODE_DBERR, errorMsg);
-    }
-  } else {
-    throw SystemException(ERRCODE_DBCONN, "Database is not connected");
-  }
-  return SUCCESS;
-}
 
 /**
  * \brief To set the name of the database to use
