@@ -10,6 +10,7 @@
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
  * \fn void sendErrorMsg(const std::string& msg) 
  * \param msg to spread 
+ * \return raises an exception on error
  */
 void sendErrorMsg(const std::string& msg) {
   std::string msgWithHead = "Error: "+msg;
@@ -20,7 +21,8 @@ void sendErrorMsg(const std::string& msg) {
 /**
  * \brief Function to split the receiving message into error code and message error 
  * \fn void checkErrorMsg(const std::string& msg) 
- * \param msg to split 
+ * \param msg to split
+ * \return raises an exception on error 
  */
 void checkErrorMsg(const std::string& msg) {
 
@@ -42,6 +44,13 @@ void checkErrorMsg(const std::string& msg) {
 
 }
 
+/**
+ * \brief Function to check if a text is empty 
+ * \param text The text to check
+ * \param comMsg The complementary message to print
+ * \param execpetionType The type of exception to raise
+ * \return raises an exception on error 
+ */
 void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType) {
 
    if(text.size()==0) {
@@ -49,3 +58,16 @@ void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, con
    }
 
 } 
+
+/**
+ * \brief Function to check if an email is valid  
+ * \param mail The email to check
+ * \return raises an exception on error 
+ */
+void checkEmail(const std::string& mail) {
+
+  if(mail.find("@")==std::string::npos) {
+    throw UMSVishnuException(ERRCODE_INVALID_MAIL_ADRESS);
+  }
+  
+}

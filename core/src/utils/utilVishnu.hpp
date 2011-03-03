@@ -60,7 +60,10 @@ public :
 * \return the string encrypted
 */
 char* crypt(const char* clef, const char* salt);
-
+/**
+ * \namespace vishnu
+ * \brief This naspace contains utils functions of the vishnu system
+ */
 namespace vishnu {
 
   static const std::string ROOTUSERNAME = "root";
