@@ -101,7 +101,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   ListCmdOptions          lico ;//= ecoreFactory->createListCmdOptions();
   // Configuration
   Configuration           conf ;//= ecoreFactory->createConfiguration();
-  string                  cpath = "/home/keo/.vishnu/toto.cfg";
 
   string np;
 
@@ -782,8 +781,6 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close      (sess.getSessionKey()                 )==0);
 
 
-  cout << " B4 save" << endl;
-  sleep(4);
 
   // Test Save configuration
   BOOST_MESSAGE(" Testing save conf"    );
@@ -792,18 +789,14 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (saveConfiguration(sess.getSessionKey(), conf          )==0);
   BOOST_CHECK	 (close            (sess.getSessionKey()                )==0);
 
-  cout << " after save" << endl;
-  sleep(5);
   // Test restore configuration
   BOOST_MESSAGE(" Testing restore conf"    );
   BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
   BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
-  BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), cpath            )==0);
+  BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), conf.getFilePath()            )==0);
   BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);  
   BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);  
   BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
-  cout << " after " << endl;
-  sleep(5);
 
   // Test restore configuration bad path
   BOOST_MESSAGE(" Testing restore conf"    );
