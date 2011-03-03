@@ -112,6 +112,13 @@ addUser(const string& sessionKey, UMS_Data::User& newUser) throw(UserException)
   if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
   }
+  if((newUser.getStatus() < 0) || (newUser.getStatus() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
+  }
+ 
+  checkIfTextIsEmpty(newUser.getFirstname(), "user firstname is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newUser.getLastname(), "user lastname is empty", ERRCODE_INVALID_PARAM);
+  //checkEmail(getEmail(), ERRCODE_INVALID_PARAM);
 
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
