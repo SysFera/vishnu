@@ -54,6 +54,11 @@ int main (int ac, char* av[]){
 
   opt->setPosition("sshPublicKeyFile",1);
 
+  opt->add("machineDescription,d",
+           "The description of the machine",
+           CONFIG,
+           machineDescription
+           );
 
   try{
     /**************  Parse to retrieve option values  ********************/
@@ -98,13 +103,16 @@ int main (int ac, char* av[]){
         return 1;
       }
     }
+    
+    if(0==opt->count("machineDescription")){
 
+      cout << "Enter the Machine Description:\n ";
 
-    cout << "Enter the Machine Description:\n ";
-
-    getline(cin, machineDescription);
+      getline(cin, machineDescription);
+    }
 
     newMachine.setMachineDescription(machineDescription);
+
 
     /************** Call UMS add machine service *******************************/
 
