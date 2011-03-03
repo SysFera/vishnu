@@ -49,7 +49,6 @@ std::string
 MachineClientServer::getId() {
 
   DatabaseResult* result;
-  std::vector<std::string>::iterator ii;
 
   std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
   sqlCommand.append(mmachineSSHKey+ "' and name='");
