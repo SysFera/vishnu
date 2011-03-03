@@ -49,5 +49,6 @@ void sendErrorMsg(const std::string& msg);
  */
 void checkErrorMsg(const std::string& msg);
 
+void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType);
 
 #endif

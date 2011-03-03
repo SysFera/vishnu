@@ -42,3 +42,10 @@ void checkErrorMsg(const std::string& msg) {
 
 }
 
+void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType) {
+
+   if(text.size()==0) {
+      throw UMSVishnuException(execpetionType, compMsg);
+   }
+
+} 
