@@ -151,8 +151,6 @@ ConfigurationServer::save() {
 int ConfigurationServer::restore() {
   std::string sqlcode = "";
   std::string sqlCodeDescMachine = "";
-  std::string sqlcodeLocalAccount = "";
-
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
