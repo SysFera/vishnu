@@ -169,8 +169,9 @@ OracleDatabase::getResult(string request) {
             case OCCI_SQLT_CHR:
               cout << "Getting String : colId=" << colId << endl;
               colValue = mres->getString(colId);
-              if (colValue.empty())
+              if (colValue.empty()){
                 cout << "WARNING: EMPTY STRING!" << endl;
+              }
               break;
             default:
               errorMsg.append("Unknown column type (column: ");

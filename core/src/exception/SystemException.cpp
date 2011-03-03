@@ -9,26 +9,30 @@ SystemException::SystemException(int msg, std::string msgComp):VishnuException(m
 
 std::string
 SystemException::getTypeS() const{
+ 
+  std::string errorTypeStr;
+
   switch (mtype){
   case 0 :
-    return std::string("UMS");
+    errorTypeStr="UMS";
     break;
   case 1 :
-    return std::string("TMS");
+   errorTypeStr= "TMS";
     break;
   case 2 :
-    return std::string("FMS");
+   errorTypeStr= "FMS";
     break;
   case 3 :
-    return std::string("IMS");
+   errorTypeStr= "IMS";
     break;
   case 4 :
-    return std::string("NONE");
+   errorTypeStr= "NONE";
     break;
   default :
+   errorTypeStr= "->not found<-";
     break;
   }
-  return std::string("->not found<-");
+  return errorTypeStr;
 }
 
 void 
