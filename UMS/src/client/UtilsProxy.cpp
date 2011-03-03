@@ -20,7 +20,7 @@
 UtilsProxy::UtilsProxy()
 {
   mcfg  = NULL;
-  margc = NULL;
+  margc = 0;
   margv = NULL;
 }
 
