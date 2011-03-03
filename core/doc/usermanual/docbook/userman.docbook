@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cissé</surname>
+      </personname>
+    </author>
+    <title> VISHNU User Manual for Command Line Interface</title>
+          
+    <revhistory>
+	<revision>
+	  <revnumber>1</revnumber>
+	  <date>25/02/2011</date>
+	  <authorinitials>SysFera</authorinitials>
+	  <revdescription>
+	      
+	    <para> The first version of the VISHNU user manual concerning only the UMS package.</para></revdescription>
+	</revision>
+      </revhistory>
+    
+  </info>
+  
+  <chapter>
+    <title>Introduction</title>
+   <section>
+     <title>Presentation</title>
+     This documents is a quick start guide of VISHNU software for users. The main objective of this document is to describe 
+     the installation procedure of VISHNU software and the way to use it. This presentation is divided into four parts:
+     
+     <itemizedlist>
+        <listitem>
+          <para> Installation procedure </para>
+        </listitem>
+        <listitem>
+          <para> Software purpose </para>
+        </listitem>
+        <listitem>
+	  <para> Sofware usage description </para> 
+        </listitem>
+	<listitem>
+          <para> Advanced functions </para>
+        </listitem>
+      </itemizedlist>
+   </section>
+   
+   <section>
+     <title> Installation procedure </title>
+     Detail the installation process, including computer requirements. Provide requirements before the main installation procedure so 
+     users can prepare their computer.
+     Include even the most basic steps for computer beginners. 
+     These steps may include "double-clicking the installation file" or "insert the CD into the CD-ROM drive."
+     Typical installation steps involve explaining installation options, such as a typical installation versus an advanced installation.
+   </section>
+   
+   <section>
+     <title> Software purpose </title>
+     Provide a detailed description of the software's purpose. Include what a user needs the software for and how they can benefit. 
+     For instance, if the software deals with accounting, explain common accounting tasks that the software makes easier.
+   </section>
+   
+   <section>
+     <title> Sofware usage description </title>
+     Explain how to use VISHNU. How to make a connection with VISHNU system. Describe here a session, session key session id etc
+   </section>
+   
+   <section>
+     <title> Advanced functions </title>
+   </section>
+   
+ </chapter>
+
+  
+  
+</book>
