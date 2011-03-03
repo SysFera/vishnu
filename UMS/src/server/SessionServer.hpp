@@ -62,7 +62,7 @@ public:
   SessionServer(const UMS_Data::Session& session);
   /**
   * \brief Function to connect the session
-  * \fn int connectSession(UserServer, MachineClientServer, ConnectOptions* )
+  * \fn int connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions* connectOpt)
   * \param user The object which manipulates user information
   * \param host The object which manipulates client machine information
   * \param connectOpt The options data structure for connection
