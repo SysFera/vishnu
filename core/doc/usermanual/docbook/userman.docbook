@@ -52,7 +52,7 @@
    <section>
      <title>Presentation</title>
      This documents is a quick start guide of VISHNU software for users. The main objective of this document is to describe 
-     the installation procedure of VISHNU software and the way to use it. This presentation is divided into four parts:
+     the installation procedure of VISHNU software and the way to use it. This presentation is divided into five parts:
      
      <itemizedlist>
         <listitem>
@@ -67,6 +67,11 @@
 	<listitem>
           <para> Advanced functions </para>
         </listitem>
+	
+	<listitem>
+          <para> Troubleshooting </para>
+        </listitem>
+	
       </itemizedlist>
    </section>
    
@@ -94,6 +99,12 @@
      <title> Advanced functions </title>
    </section>
    
+   <section>
+     <title> Troubleshooting functions </title>
+      Provide troubleshooting tips. Explain the meanings of any errors the user might encounter, 
+      how to solve the issue, and how to prevent it in the future. This is also the place to include contact and help desk information.
+  </section>
+ 
  </chapter>
 
   
