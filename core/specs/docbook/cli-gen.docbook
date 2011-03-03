@@ -1005,7 +1005,8 @@
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_add_machine</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>site</replaceable></arg><arg
-              choice="plain"><replaceable>language</replaceable></arg><arg choice="plain"><replaceable>sshPublicKeyFile</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>language</replaceable></arg><arg choice="plain"><replaceable>sshPublicKeyFile</replaceable></arg><arg
+              choice="plain"><replaceable>machineDescription</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1044,13 +1045,6 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>machineDescription</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>represents the description of the machine, it is an interactive parameter</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
@@ -1062,6 +1056,13 @@
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>contains the path to the SSH public key used by VISHNU to access local user accounts</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>machineDescription</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the description of the machine</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -1080,7 +1081,8 @@
         <cmdsynopsis><command>vishnu_update_machine</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
-              choice="opt"><option>-d</option></arg><arg choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>machineDescription</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
               choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
               choice="opt"><option>-k <replaceable>sshPublicKeyFile</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
@@ -1132,7 +1134,7 @@
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>represents the description of the machine, it is an interactive parameter</para></entry>
+                <entry><para>represents the description of the machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
