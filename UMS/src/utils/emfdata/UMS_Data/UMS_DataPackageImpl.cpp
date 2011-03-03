@@ -419,6 +419,11 @@ UMS_DataPackage::UMS_DataPackage()
     m_ConfigurationEClass->setClassifierID(CONFIGURATION);
     m_ConfigurationEClass->setEPackage(this);
     getEClassifiers().push_back(m_ConfigurationEClass);
+    m_Configuration__filePath = new ::ecore::EAttribute();
+    m_Configuration__filePath->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH);
+    m_ConfigurationEClass->getEStructuralFeatures().push_back(
+            m_Configuration__filePath);
     m_Configuration__listConfUsers = new ::ecore::EReference();
     m_Configuration__listConfUsers->setFeatureID(
             ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFUSERS);
@@ -1434,6 +1439,20 @@ UMS_DataPackage::UMS_DataPackage()
     m_ConfigurationEClass->setName("Configuration");
     m_ConfigurationEClass->setAbstract(false);
     m_ConfigurationEClass->setInterface(false);
+    m_Configuration__filePath->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Configuration__filePath->setName("filePath");
+    m_Configuration__filePath->setDefaultValueLiteral("");
+    m_Configuration__filePath->setLowerBound(0);
+    m_Configuration__filePath->setUpperBound(1);
+    m_Configuration__filePath->setTransient(false);
+    m_Configuration__filePath->setVolatile(false);
+    m_Configuration__filePath->setChangeable(true);
+    m_Configuration__filePath->setUnsettable(false);
+    m_Configuration__filePath->setID(false);
+    m_Configuration__filePath->setUnique(true);
+    m_Configuration__filePath->setDerived(false);
+    m_Configuration__filePath->setOrdered(true);
     m_Configuration__listConfUsers->setEType(m_UserEClass);
     m_Configuration__listConfUsers->setName("listConfUsers");
     m_Configuration__listConfUsers->setDefaultValueLiteral("");
@@ -2005,6 +2024,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EReference_ptr UMS_DataPackage::getConfiguration__listConfLocalAccounts()
 {
     return m_Configuration__listConfLocalAccounts;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getConfiguration__filePath()
+{
+    return m_Configuration__filePath;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getOptionValue__optionName()
 {
