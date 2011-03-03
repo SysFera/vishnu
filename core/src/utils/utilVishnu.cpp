@@ -300,3 +300,33 @@ vishnu::takePassword(const std::string& prompt){
 
 }
 
+/**
+ * \brief Simple function to convert time 
+ * from string format (YYYY-MM-DD H:M:S) to
+ * long integer format in seconds
+ * \param ts: the time in string format
+ * \return the time in long integer format in seconds
+ */
+std::time_t 
+vishnu::string_to_time_t(const std::string& ts){
+
+
+  namespace bps= boost::posix_time;
+  namespace bg=boost::gregorian;
+
+  bps::ptime t(bps::time_from_string(ts));
+
+  bps::ptime epoch(bg::date(1970,1,1));
+
+
+  bps::time_duration::sec_type x = (t - epoch).total_seconds();
+
+  return std::time_t(x);
+
+
+}
+
+
+
+
+

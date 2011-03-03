@@ -16,78 +16,78 @@
 class UtilsProxy
 {
 
-public:
-  
-  /**
-   * \fn  UtilsProxy() 
-   * \brief Constructor, default constructor
-   */
-  UtilsProxy();
+  public:
 
-  /**
-   * \fn UtilsProxy(char* cfg,
-   *                int argc,
-   *                char** argv)
-   * \param cfg The SYSFERA-DS configuration file
-   * \param argc The number of arguments of the program
-   * \param argv The list of arguments
-   * \brief Constructor
-   */
-  UtilsProxy(char* cfg, int argc, char** argv);
+    /**
+     * \fn  UtilsProxy() 
+     * \brief Constructor, default constructor
+     */
+    UtilsProxy();
 
-  /**
-   * \fn UtilsProxy(const std::string& filePath)
-   * \param filePath The file used by the restore function 
-   * \brief Constructor
-   */
-  UtilsProxy(const std::string& filePath);
+    /**
+     * \fn UtilsProxy(char* cfg,
+     *                int argc,
+     *                char** argv)
+     * \param cfg The SYSFERA-DS configuration file
+     * \param argc The number of arguments of the program
+     * \param argv The list of arguments
+     * \brief Constructor
+     */
+    UtilsProxy(char* cfg, int argc, char** argv);
 
-  /**
-   * \brief Function to initialize the SYSFERA-DS configuration
-   * \fn  int initialize()
-   * \return 0 if success else 1 if error
-   */
-  int
-  initialize();
-  /**
-   * \brief Function to finalize
-   * \fn  void finalize()
-   * \return raises an exception on error
-   */
-  void
-  finalize();
-   /**
-   * \brief Function to initialize the database
-   * \fn int restore()
-   * \return an error code
-   */
-  int
-  restore();
+    /**
+     * \fn UtilsProxy(const std::string& filePath)
+     * \param filePath The file used by the restore function 
+     * \brief Constructor
+     */
+    UtilsProxy(const std::string& filePath);
 
-  ~UtilsProxy();
+    /**
+     * \brief Function to initialize the SYSFERA-DS configuration
+     * \fn  int initialize()
+     * \return 0 if success else 1 if error
+     */
+    int
+      initialize();
+    /**
+     * \brief Function to finalize
+     * \fn  void finalize()
+     * \return raises an exception on error
+     */
+    void
+      finalize();
+    /**
+     * \brief Function to initialize the database
+     * \fn int restore()
+     * \return an error code
+     */
+    int
+      restore();
 
-private:
+    ~UtilsProxy();
 
-   /////////////////////////////////
-  // Attributes
-  /////////////////////////////////
+  private:
 
- /**
-  * \brief The name of the Sysfera-DS configuration file 
-  */
- char* mcfg;
- /**
-  * \brief The number of arguments used Sysfera-DS  
-  */
- int margc;
- /**
-  * \brief The list of arguments used Sysfera-DS  
-  */
- char** margv;
- /**
-  * \brief The file used by the restore function  
-  */
- std::string mfilePath;
+    /////////////////////////////////
+    // Attributes
+    /////////////////////////////////
+
+    /**
+     * \brief The name of the Sysfera-DS configuration file 
+     */
+    char* mcfg;
+    /**
+     * \brief The number of arguments used Sysfera-DS  
+     */
+    int margc;
+    /**
+     * \brief The list of arguments used Sysfera-DS  
+     */
+    char** margv;
+    /**
+     * \brief The file used by the restore function  
+     */
+    std::string mfilePath;
 
 };
 #endif

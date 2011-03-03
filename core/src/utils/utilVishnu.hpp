@@ -235,6 +235,15 @@ namespace vishnu {
   std::string
   takePassword(const std::string& prompt);
 
+  /**
+   * \brief Simple function to convert time 
+   * from string format (YYYY-MM-DD H:M:S) to
+   * long integer format in seconds
+   * \param ts: the time in string format
+   * \return the time in long integer format in seconds
+   */
+  std::time_t
+  string_to_time_t(const std::string& ts);
 
 }
 #endif // _UTILVISHNU_H_

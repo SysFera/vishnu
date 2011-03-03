@@ -27,7 +27,7 @@ UserProxy::UserProxy(const  std::string& userId, const std::string& password)
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(SessionProxy session):
- msessionProxy(&session)
+  msessionProxy(&session)
 {
 }
 
@@ -37,7 +37,7 @@ UserProxy::UserProxy(SessionProxy session):
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(const UMS_Data::User& user):
- muser(user)
+  muser(user)
 {
   msessionProxy = NULL;
 }
@@ -50,70 +50,70 @@ UserProxy::UserProxy(const UMS_Data::User& user):
  */
 int UserProxy::add(UMS_Data::User& user)
 {
-   diet_profile_t* profile = NULL;
-   std::string sessionKey;
-   char* userToString;
-   char* errorInfo;
-   char* userInString;
-   std::string msg = "call of function diet_string_set is rejected ";  
+  diet_profile_t* profile = NULL;
+  std::string sessionKey;
+  char* userToString;
+  char* errorInfo;
+  char* userInString;
+  std::string msg = "call of function diet_string_set is rejected ";  
 
-   profile = diet_profile_alloc("userCreate", 1, 1, 3);
-   sessionKey = msessionProxy->getSessionKey();
+  profile = diet_profile_alloc("userCreate", 1, 1, 3);
+  sessionKey = msessionProxy->getSessionKey();
 
-   const char* name = "add";
-   ::ecorecpp::serializer::serializer _ser(name);
-   //To serialize the user object in to userToString 
-   userToString =  strdup(_ser.serialize(const_cast<UMS_Data::User_ptr>(&user)).c_str());
-   //IN Parameters
-   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-     msg += "with sessionKey parameter "+sessionKey;
-     errMsg(msg);
-     sendErrorMsg(msg); 
-   }
-   if(diet_string_set(diet_parameter(profile,1), userToString, DIET_VOLATILE)) {
-     msg += "with userToString parameter "+std::string(userToString);
-     errMsg(msg);
-     sendErrorMsg(msg); 
-   }
-   
-   //OUT Parameters
-   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  const char* name = "add";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the user object in to userToString 
+  userToString =  strdup(_ser.serialize(const_cast<UMS_Data::User_ptr>(&user)).c_str());
+  //IN Parameters
+  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+sessionKey;
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
+  if(diet_string_set(diet_parameter(profile,1), userToString, DIET_VOLATILE)) {
+    msg += "with userToString parameter "+std::string(userToString);
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
 
-   if(!diet_call(profile)) {
-       if(diet_string_get(diet_parameter(profile,2), &userInString, NULL)){
-          msg += " by receiving User serialized  message";
-          errMsg(msg);
-          sendErrorMsg(msg);
-       }
-       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-          msg += " by receiving errorInfo message";
-          errMsg(msg);
-          sendErrorMsg(msg); 
-       }
-       //Print successfull message if erroInfo is empty
-       printSuccessMessage(errorInfo);
-   }  
-   else {
-      sendErrorMsg(" the function diet_call is rejected");
-   }
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
-    /*To check the receiving message error*/ 
-    checkErrorMsg(errorInfo);
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &userInString, NULL)){
+      msg += " by receiving User serialized  message";
+      errMsg(msg);
+      sendErrorMsg(msg);
+    }
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+      msg += " by receiving errorInfo message";
+      errMsg(msg);
+      sendErrorMsg(msg); 
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  }  
+  else {
+    sendErrorMsg(" the function diet_call is rejected");
+  }
 
-    // CREATE DATA MODEL
-    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  /*To check the receiving message error*/ 
+  checkErrorMsg(errorInfo);
 
-    //Parse the model
-    ecorecpp::parser::parser parser;
-    //To set the muser
-    UMS_Data::User_ptr user_ptr = parser.load(std::string(userInString))->as< UMS_Data::User >();
- 
-    user = *user_ptr;
-    muser = user;
- 
-   return 0;
+  // CREATE DATA MODEL
+  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+  //Parse the model
+  ecorecpp::parser::parser parser;
+  //To set the muser
+  UMS_Data::User_ptr user_ptr = parser.load(std::string(userInString))->as< UMS_Data::User >();
+
+  user = *user_ptr;
+  muser = user;
+
+  return 0;
 }
 
 /**
@@ -124,53 +124,53 @@ int UserProxy::add(UMS_Data::User& user)
  */ 
 int UserProxy::update(const UMS_Data::User& user)
 {
-   diet_profile_t* profile = NULL;
-   std::string sessionKey;
-   std::string userToString;
-   char* errorInfo;
-   std::string msg = "call of function diet_string_set is rejected ";
+  diet_profile_t* profile = NULL;
+  std::string sessionKey;
+  std::string userToString;
+  char* errorInfo;
+  std::string msg = "call of function diet_string_set is rejected ";
 
-   profile = diet_profile_alloc("userUpdate", 1, 1, 2);
-   
-   sessionKey = msessionProxy->getSessionKey();
+  profile = diet_profile_alloc("userUpdate", 1, 1, 2);
 
-   const char* name = "addUserInformation";
-   ::ecorecpp::serializer::serializer _ser(name);
-   //To serialize the user object in to userToString 
-   userToString =  _ser.serialize(const_cast<UMS_Data::User_ptr>(&user));
+  sessionKey = msessionProxy->getSessionKey();
 
-   //IN Parameters
-   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-     msg += "with sessionKey parameter "+sessionKey;
-     errMsg(msg);
-     sendErrorMsg(msg);
-   }
-   if(diet_string_set(diet_parameter(profile,1), strdup(userToString.c_str()), DIET_VOLATILE)) {
-     msg += "with userToString parameter "+userToString;
-     errMsg(msg);
-     sendErrorMsg(msg);
-   }
+  const char* name = "addUserInformation";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the user object in to userToString 
+  userToString =  _ser.serialize(const_cast<UMS_Data::User_ptr>(&user));
 
-   //OUT Parameters
-   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  //IN Parameters
+  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+sessionKey;
+    errMsg(msg);
+    sendErrorMsg(msg);
+  }
+  if(diet_string_set(diet_parameter(profile,1), strdup(userToString.c_str()), DIET_VOLATILE)) {
+    msg += "with userToString parameter "+userToString;
+    errMsg(msg);
+    sendErrorMsg(msg);
+  }
 
-   if(!diet_call(profile)) {
-       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-          msg += " by receiving errorInfo message";
-          errMsg(msg);
-          sendErrorMsg(msg);
-       }
-       //Print successfull message if erroInfo is empty
-       printSuccessMessage(errorInfo);
-   }
-   else {
-      sendErrorMsg(" the function diet_call is rejected");
-   }
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
-   /*To check the receiving message error*/
-    checkErrorMsg(errorInfo);
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+      msg += " by receiving errorInfo message";
+      errMsg(msg);
+      sendErrorMsg(msg);
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  }
+  else {
+    sendErrorMsg(" the function diet_call is rejected");
+  }
 
-   return 0;
+  /*To check the receiving message error*/
+  checkErrorMsg(errorInfo);
+
+  return 0;
 }
 
 /**
@@ -182,46 +182,46 @@ int UserProxy::update(const UMS_Data::User& user)
 int UserProxy::deleteUser(const UMS_Data::User& user)
 {
 
-   diet_profile_t* profile = NULL;
-   std::string sessionKey;
-   std::string userId;
-   char* errorInfo;
-   std::string msg = "call of function diet_string_set is rejected ";
+  diet_profile_t* profile = NULL;
+  std::string sessionKey;
+  std::string userId;
+  char* errorInfo;
+  std::string msg = "call of function diet_string_set is rejected ";
 
-   profile = diet_profile_alloc("userDelete", 1, 1, 2);
-   sessionKey = msessionProxy->getSessionKey();
-   userId = user.getUserId();
+  profile = diet_profile_alloc("userDelete", 1, 1, 2);
+  sessionKey = msessionProxy->getSessionKey();
+  userId = user.getUserId();
 
-   //IN Parameters
-   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-     msg += "with sessionKey parameter "+sessionKey;
-     errMsg(msg);
-     sendErrorMsg(msg);   
-   }
-   if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
-     msg += "with userId parameter "+userId;
-     errMsg(msg);
-     sendErrorMsg(msg); 
-   }
+  //IN Parameters
+  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+sessionKey;
+    errMsg(msg);
+    sendErrorMsg(msg);   
+  }
+  if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
+    msg += "with userId parameter "+userId;
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
 
-   //OUT Parameters
-   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
-   if(!diet_call(profile)) {
-      if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-         msg += " by receiving errorInfo message";
-         errMsg(msg);
-         sendErrorMsg(msg);
-      }
-      //Print successfull message if erroInfo is empty
-      printSuccessMessage(errorInfo);
-   }
-   else {
-      sendErrorMsg(" the function diet_call is rejected");
-   }
-     /*To check the receiving message error*/
-     checkErrorMsg(errorInfo);
-   
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+      msg += " by receiving errorInfo message";
+      errMsg(msg);
+      sendErrorMsg(msg);
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  }
+  else {
+    sendErrorMsg(" the function diet_call is rejected");
+  }
+  /*To check the receiving message error*/
+  checkErrorMsg(errorInfo);
+
   return 0;
 }
 
@@ -235,48 +235,48 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
 int UserProxy::changePassword(const std::string& password, const std::string& newPassword)
 {
 
-   diet_profile_t* profile = NULL;
-   char* errorInfo;
-   std::string msg = "call of function diet_string_set is rejected ";
+  diet_profile_t* profile = NULL;
+  char* errorInfo;
+  std::string msg = "call of function diet_string_set is rejected ";
 
-   profile = diet_profile_alloc("userPasswordChange", 2, 2, 3);
+  profile = diet_profile_alloc("userPasswordChange", 2, 2, 3);
 
-   //IN Parameters  
-   if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
-      msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
+  //IN Parameters  
+  if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
+
+  if(diet_string_set(diet_parameter(profile,1), strdup(password.c_str()), DIET_VOLATILE)) {
+    msg += "with password parameter "+password;
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
+
+  if(diet_string_set(diet_parameter(profile,2), strdup(newPassword.c_str()), DIET_VOLATILE)) {
+    msg += "with newPassword parameter "+newPassword;
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
+
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+      msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg); 
-   }
-
-   if(diet_string_set(diet_parameter(profile,1), strdup(password.c_str()), DIET_VOLATILE)) {
-     msg += "with password parameter "+password;
-     errMsg(msg);
-     sendErrorMsg(msg); 
-   }
-
-   if(diet_string_set(diet_parameter(profile,2), strdup(newPassword.c_str()), DIET_VOLATILE)) {
-     msg += "with newPassword parameter "+newPassword;
-     errMsg(msg);
-     sendErrorMsg(msg); 
-   }
-
-   //OUT Parameters
-   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-   if(!diet_call(profile)) {
-       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-          msg += " by receiving errorInfo message";
-          errMsg(msg);
-          sendErrorMsg(msg);   
-       }
-       //Print successfull message if erroInfo is empty
-       printSuccessMessage(errorInfo);
-   }
-   else {
-      sendErrorMsg(" the function diet_call is rejected"); 
-   }
-     /*To check the receiving message error*/   
-     checkErrorMsg(errorInfo);
+      sendErrorMsg(msg);   
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  }
+  else {
+    sendErrorMsg(" the function diet_call is rejected"); 
+  }
+  /*To check the receiving message error*/   
+  checkErrorMsg(errorInfo);
 
   return 0;
 }
@@ -290,53 +290,53 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
 int UserProxy::resetPassword(UMS_Data::User& user)
 {
 
-   diet_profile_t* profile = NULL;
-   char* tmpPassword;
-   char* errorInfo;
-   std::string msg = "call of function diet_string_set is rejected ";
+  diet_profile_t* profile = NULL;
+  char* tmpPassword;
+  char* errorInfo;
+  std::string msg = "call of function diet_string_set is rejected ";
 
-   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
+  profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
 
-   //IN Parameters  
-   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
-      msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
+  //IN Parameters  
+  if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
+    errMsg(msg);
+    sendErrorMsg(msg); 
+  }
+
+  if(diet_string_set(diet_parameter(profile,1), strdup((user.getUserId()).c_str()), DIET_VOLATILE)) {
+    msg += "with userId parameter "+user.getUserId();
+    errMsg(msg);
+    sendErrorMsg(msg);
+  }
+
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &tmpPassword, NULL)){
+      msg += " by receiving tmpPassWord message";
       errMsg(msg);
-      sendErrorMsg(msg); 
-   }
-
-   if(diet_string_set(diet_parameter(profile,1), strdup((user.getUserId()).c_str()), DIET_VOLATILE)) {
-      msg += "with userId parameter "+user.getUserId();
+      sendErrorMsg(msg);     
+    }
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+      msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);
-   }
+      sendErrorMsg(msg);     
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  }
+  else {
+    sendErrorMsg(" the function diet_call is rejected"); 
+  }
+  /*To check the receiving message error*/
+  checkErrorMsg(errorInfo);
 
-   //OUT Parameters
-   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-   if(!diet_call(profile)) {
-       if(diet_string_get(diet_parameter(profile,2), &tmpPassword, NULL)){
-          msg += " by receiving tmpPassWord message";
-          errMsg(msg);
-          sendErrorMsg(msg);     
-       }
-       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-          msg += " by receiving errorInfo message";
-          errMsg(msg);
-          sendErrorMsg(msg);     
-       }
-       //Print successfull message if erroInfo is empty
-       printSuccessMessage(errorInfo);
-   }
-   else {
-      sendErrorMsg(" the function diet_call is rejected"); 
-   }
-    /*To check the receiving message error*/
-    checkErrorMsg(errorInfo);
-
-    /*To set the temporary password*/
-    muser.setUserId(user.getUserId());
-    muser.setPassword(std::string(tmpPassword));
+  /*To set the temporary password*/
+  muser.setUserId(user.getUserId());
+  muser.setPassword(std::string(tmpPassword));
 
   return 0;
 }
