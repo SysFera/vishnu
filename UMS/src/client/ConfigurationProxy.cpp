@@ -96,7 +96,7 @@ int ConfigurationProxy::save()
   std::ofstream ofile(mfilePath.c_str());
   ofile << configurationInString;
   ofile.close();
-   
+  mconfiguration->setFilePath(mfilePath);
   return 0;
 }
 

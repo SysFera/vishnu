@@ -58,6 +58,8 @@ int main (int ac, char* av[]){
   opt->add("substituteUserId,s","The substitute user identifier",CONFIG,fSubstituteUserId);
 
   opt->add("closePolicy,p","for closing session automatically",CONFIG,fClosePolicy );
+  
+  opt->add("password,w","To give the password ",CONFIG,password );
 
   try{
 
@@ -77,8 +79,11 @@ int main (int ac, char* av[]){
 
     //Fix me
 
-    password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
+    if(0==opt->count("password")){
 
+    password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
+    
+    }
 
     /************** Call UMS connect service *******************************/
 

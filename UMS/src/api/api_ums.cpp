@@ -425,10 +425,8 @@ saveConfiguration(const std::string& sessionKey,
    ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
    int res = configurationProxy.save();
-
    if(!res) {
      UMS_Data::Configuration *configData = configurationProxy.getData();
-
      if(configData!=NULL) {
        UMS_Data::User_ptr user;
        //To set the user list
@@ -448,7 +446,9 @@ saveConfiguration(const std::string& sessionKey,
          localAccount = configData->getListConfLocalAccounts().get(i);
          config.getListConfLocalAccounts().push_back(localAccount);
        }
-     }
+       config.setFilePath(configData->getFilePath());
+       
+       }
   }
 
   return res;

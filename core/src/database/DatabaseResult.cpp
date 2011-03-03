@@ -71,7 +71,9 @@ DatabaseResult::printAttributesNames() {
 * \return 0 on success, an error code otherwise
 */
 void
-DatabaseResult::setNbTuples(size_t nbtuples) {}
+DatabaseResult::setNbTuples(size_t nbtuples) {
+  tuples=nbtuples;
+}
 /**
 * \brief To set the number of fields
 * \fn setNbFields(size_t nbfields)
@@ -79,7 +81,9 @@ DatabaseResult::setNbTuples(size_t nbtuples) {}
 * \return 0 on success, an error code otherwise
 */
 void
-DatabaseResult::setNbFields(size_t nbfields) {}
+DatabaseResult::setNbFields(size_t nbfields) {
+  fields=nbfields;
+}
   /**
    * \brief To get the number of tuples
    * \fn size_t getNbTuples()
@@ -87,7 +91,7 @@ DatabaseResult::setNbFields(size_t nbfields) {}
    */
 size_t
 DatabaseResult::getNbTuples() const{
-  results.size();
+return results.size();
 }
 /**
 * \brief To get the number of fields
