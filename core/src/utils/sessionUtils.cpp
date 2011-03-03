@@ -229,7 +229,7 @@ removeLastSession(const std::string & terminal){
 
       file.close();
     }
-    std::cerr << "all sessions in this terminal have been closed\n"; 
+    throw std::runtime_error( "all sessions in this terminal have been closed"); 
   }
 
 }
