@@ -299,7 +299,7 @@
          <para>Catégorie 2 : regroupe les fonctionnalités permettant la gestion des utilisateurs qui sont : addVishnuUser, updateUser, deleteUser, listUsers, changePassword et resetPassword.</para>
       </listitem>
       <listitem>
-         <para>Catégorie 3 : regroupe les fonctionnalités permettant la gestion des configurations qui sont : addLocalAccount, updateLocalAccount, deleteLocalAccount, ListLocalAccount saveConfiguration, restoreConfiguration,  configureDefaultOption et listOptions.</para>
+         <para>Catégorie 3 : regroupe les fonctionnalités permettant la gestion des configurations qui sont : addLocalAccount, updateLocalAccount, deleteLocalAccount, ListLocalAccount, saveConfiguration, restoreConfiguration,  configureDefaultOption et listOptions.</para>
       </listitem>
       <listitem>
          <para>Catégorie 4 :  regroupe les fonctionnalités permettant la gestion des machines qui sont : addMachine, updateMachine, deleteMachine et listMachines.</para>
@@ -333,7 +333,7 @@
          </row>
          <row>
             <entry>
-               <para>U1-B1</para>
+               <para>U1.1-B1:connect </para>
             </entry>
             <entry>
                <orderedlist>
@@ -365,7 +365,7 @@
          </row>
          <row>
             <entry>
-               <para>U1-E1U1-E2</para>
+               <para>U1.1-E1:connect U1.1-E2:connect </para>
             </entry>
             <entry>
                <orderedlist>
@@ -403,8 +403,8 @@
          </row>
          <row>
             <entry>
-               <para>U1.1-B1</para>
-               <para>U1.1-B2</para>
+               <para>U1-B1:close </para>
+               <para>U1-B2:close </para>
             </entry>
             <entry>
                <orderedlist>
@@ -420,22 +420,22 @@
                      <para>Vérifier qu'il n'y a aucune session ouverte sur la machine de test. Sinon désactiver la session ouverte.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer le programme connect avec comme paramètres le login et le mot de passe de l'utilisateur. </para>
+                     <para>Lancer le programme connect avec comme paramètres le login et le mot de passe de l'utilisateur et l'option choisie. </para>
                   </listitem>
                   <listitem>
                      <para>Un certificat de session est créé et envoyé à l'utilisateur.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  la commande listSessions avec la valeur du certificat retourné. Si le certificat est valide, l'exécution de listSessions réussit.</para>
+                     <para>Lancer  la commande listSessions avec la valeur du certificat retourné. Si le certificat est valide, l'exécution de listSessions réussit (Cici permet de vérifier que la session a été correctement ouverte).</para>
                   </listitem>
                </orderedlist>
                <para>Pour le cas B1 :</para>
                <orderedlist>
                   <listitem>
-                     <para>Fermer le poste sur lequel le programme connect a été lancé.</para>
+                     <para>Fermer le poste  ou le terminal sur lequel le programme connect a été lancé.</para>
                   </listitem>
                   <listitem>
-                     <para>Démarrer le poste client et vérifier l'exécution d'un programme échoue (ex : listSessions) .</para>
+                     <para>Démarrer le poste client ou le terminal et vérifier que l'exécution d'un programme échoue (ex : listSessions) .</para>
                   </listitem>
                </orderedlist>
                <para>Pour le cas B2 : </para>
@@ -462,23 +462,14 @@
          </row>
          <row>
             <entry>
-               <para>U1.1-E1</para>
-               <para>U1.1-E2</para>
-               <para>U1.1-E3</para>
-               <para>U1.1-E4</para>
-               <para>U1.1-E5</para>
+               <para>U1.1-E1:connect  </para>
+               <para>U1-E1:close</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres non valides</para>
                   </listitem>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
-               </orderedlist>
-               <orderedlist>
-                  <listitem/>
                </orderedlist>
                <orderedlist>
                   <listitem/>
@@ -496,6 +487,9 @@
                   <listitem>
                      <para>Lancer une commande (listSessions) et vérifier que son exécution échoue.</para>
                   </listitem>
+                  <listitem>
+                     <para>Lancer la commande close et vérifier que son exécution échoue.</para>
+                  </listitem>
                </orderedlist>
             </entry>
             <entry>
@@ -509,7 +503,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.5-B</para>
+               <para>U1.5-B:reconnect </para>
                <para/>
             </entry>
             <entry>
@@ -540,7 +534,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.5-E</para>
+               <para>U1.5-E:reconnect </para>
             </entry>
             <entry>
                <orderedlist>
@@ -570,7 +564,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.5-B</para>
+               <para>U1.3.5-B:listSessions</para>
                <para/>
                <para/>
             </entry>
@@ -580,7 +574,7 @@
                      <para>Cas de test : connexion en tant qu'utilisateur VISHNU</para>
                   </listitem>
                   <listitem>
-                     <para>Ouvrir plusieurs sessions en lançant les commandes connect et close l'une après l'autre.</para>
+                     <para>Ouvrir plusieurs sessions en lançant les commandes connect l'une après l'autre.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer  la commande  listSessions sans paramètre.</para>
@@ -589,7 +583,7 @@
                      <para>Inspecter la base de données pour vérifier que le nombre de sessions retournées par la commande listSessions est égal au nombre de sessions dans la base de données, que  chaque identifiant est bien enregistré dans la base de données.</para>
                   </listitem>
                   <listitem>
-                     <para>Désactiver la session courante en utilisant la commande close.</para>
+                     <para>Désactiver les sessions ouvertes en utilisant plusieurs fois la commande close </para>
                      <para/>
                   </listitem>
                </orderedlist>
@@ -603,17 +597,16 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.5-E</para>
+               <para>U1.3.5-E:listSessions</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres non valides</para>
                      <para>Cas 1 : le certificat de session est incorrect </para>
-                     <para>Cas 2 : le login de l'utilisateur n'est pas correct</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer le programme reconnect </para>
+                     <para>Lancer le programme listSessions</para>
                   </listitem>
                   <listitem>
                      <para>Son exécution échoue</para>
@@ -629,7 +622,7 @@
          </row>
          <row>
             <entry>
-               <para>UA5.1-B</para>
+               <para>UA5.1-B:listSessions</para>
             </entry>
             <entry>
                <orderedlist>
@@ -637,16 +630,16 @@
                      <para>Cas de test : connexion en tant qu'administrateur de VISHNU</para>
                   </listitem>
                   <listitem>
-                     <para>Ouvrir plusieurs sessions en lançant les programmes connect et close l'une après l'autre.</para>
+                     <para>Ouvrir plusieurs sessions en lançant les programmes connect  l'une après l'autre.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  le programme  listSessions sans paramètre.</para>
+                     <para>Lancer  le programme  listSessions avec comme paramètre un identifiant de session ouverte.</para>
                   </listitem>
                   <listitem>
-                     <para>Inspecter la base de données pour vérifier que le nombre de sessions retournées par la commande listSessions est égal au nombre de sessions dans la base de données, que  chaque identifiant est bien enregistré dans la base de données.</para>
+                     <para>Vérifier que les informations obtenues correspondent aux informations sur l'identifiant de session qui a été donné en paramètre (par exemple que le certificat obtenu correspond au certificat de l'identifiant de session donné en paramètre).</para>
                   </listitem>
                   <listitem>
-                     <para>Désactiver la session courante en utilisant le programme close.</para>
+                     <para>Désactiver les sessions ouvertes en utilisant plusieurs fois la commande close.</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -659,18 +652,17 @@
          </row>
          <row>
             <entry>
-               <para>UA5.1-E</para>
+               <para>UA5.1-E:listSessions</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres non valides</para>
                      <para>Cas 1 : le certificat de session est incorrect </para>
-                     <para>Cas 2 : le login de l'utilisateur n'est pas correct</para>
-                     <para/>
+                     <para>Cas 2 : l'identifiant de session donné en paramètre est incorrect.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  le programme listSessions</para>
+                     <para>Lancer  le programme listSessions avec les cas 1 et 2</para>
                   </listitem>
                   <listitem>
                      <para>Son exécution échoue</para>
@@ -686,7 +678,7 @@
          </row>
          <row>
             <entry>
-               <para>UA5.2-B</para>
+               <para>UA5.2-B:listSessions</para>
             </entry>
             <entry>
                <orderedlist>
@@ -694,16 +686,19 @@
                      <para>Cas de test : connexion en tant qu'administrateur de VISHNU</para>
                   </listitem>
                   <listitem>
-                     <para>Ouvrir plusieurs sessions en lançant les programmes connect et close l'une après l'autre.</para>
+                     <para>Ouvrir plusieurs sessions en lançant les programmes connect l'une après l'autre.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  le programme  listSessions sans paramètre.</para>
+                     <para>Ouvrir plusieurs sessions avec l'identifiant d'un utilisateur déjà ajouté.</para>
                   </listitem>
                   <listitem>
-                     <para>Inspecter la base de données pour vérifier que le nombre de sessions retournées par la commande listSessions est égal au nombre de sessions dans la base de données, que  chaque identifiant est bien enregistré dans la base de données.</para>
+                     <para>Lancer  le programme  listSessions avec l'identifiant de cet utilisanteur  (étape 3). </para>
                   </listitem>
                   <listitem>
-                     <para>Désactiver la session courante en utilisant le programme close.</para>
+                     <para>Vérifier que la liste des sessions obtenues correspond aux sessions ouvertes par cet utilisateur (étape 3). </para>
+                  </listitem>
+                  <listitem>
+                     <para>Désactiver les sessions ouvertes en utilisant plusieurs fois la commande close.</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -716,17 +711,17 @@
          </row>
          <row>
             <entry>
-               <para>UA5.2-E</para>
+               <para>UA5.2-E:listSessions</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres non valides</para>
                      <para>Cas 1 : le certificat de session est incorrect </para>
-                     <para>Cas 2 : le login de l'utilisateur n'est pas correct</para>
+                     <para>Cas 2 : l'identifiant de l'utilisaetur donné en paramètre est incorrect.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  le programme listSessions</para>
+                     <para>Lancer  le programme listSessions avec les cas 1 et 2</para>
                   </listitem>
                   <listitem>
                      <para>Son exécution échoue</para>
@@ -742,7 +737,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.2-B</para>
+               <para>U1.2-B:close</para>
             </entry>
             <entry>
                <orderedlist>
@@ -767,8 +762,8 @@
          </row>
          <row>
             <entry>
-               <para>U1.2-E1</para>
-               <para>U1.2-E2     </para>
+               <para>U1.2-E1:close </para>
+               <para>U1.2-E2:close </para>
             </entry>
             <entry>
                <orderedlist>
@@ -776,10 +771,9 @@
                      <para>Cas de test : paramètres non valides</para>
                      <para> Cas E1 : le certificat de session n'est valide</para>
                      <para> Cas E2 : la session est déjà fermée.</para>
-                     <para> Cas E3 : le certificat est incompatible avec le login de l'utilisateur</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer  le programme listSessions</para>
+                     <para>Lancer  le programme close</para>
                   </listitem>
                   <listitem>
                      <para>Son exécution échoue</para>
@@ -795,7 +789,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.4-B</para>
+               <para>U1.3.4-B:listHistory</para>
             </entry>
             <entry>
                <orderedlist>
@@ -822,7 +816,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.4-B</para>
+               <para>U1.3.4-E:listHistory</para>
             </entry>
             <entry>
                <orderedlist>
@@ -866,7 +860,7 @@
          </row>
          <row>
             <entry>
-               <para>U4-B</para>
+               <para>UA1-B:addUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -880,7 +874,7 @@
                      <para>Lancer la commande listUsers et vérifier que l'utilisateur n'est pas déjà enregistré dans la base.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande avec l'identifiant qui sera affecté au futur utilisateur.</para>
+                     <para>Lancer la commande avec les prénom, le nom, l'adresse e-mail et le privilège qui sera affecté au futur utilisateur.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande listUser pour vérifier l'ajout de l'utilisateur.</para>
@@ -900,11 +894,9 @@
          </row>
          <row>
             <entry>
-               <para>U4-E1</para>
-               <para>U4-E2</para>
-               <para>U4-E3</para>
-               <para>U4-E4</para>
-               <para>U4-E5</para>
+               <para>UA1.1-E1:addUser</para>
+               <para>UA1.1-E2:addUser</para>
+               <para>UA1.1-E3:addUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -913,19 +905,17 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer le programme addVishnuUser avec les paramètres correspondant à chaque cas.</para>
+                     <para>Lancer le programme addUser avec les paramètres correspondant à chaque cas.</para>
                      <para/>
                   </listitem>
                   <listitem>
                      <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
                   </listitem>
                   <listitem>
-                     <para>Pour les cas : E1, E2, E3 </para>
-                  </listitem>
-                  <listitem>
-                     <para>Pour le cas : E4</para>
+                     <para>Lancer la commande listUsers et vérifier que l'utilisateur  dont l'administrateur  voulait ajouter n'est pas dans la liste.</para>
                   </listitem>
                </orderedlist>
+               <para/>
             </entry>
             <entry>
                <para>- Un message d'erreur correspond au cas d'erreur est affiché </para>
@@ -936,7 +926,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.1-B</para>
+               <para>UA4.1-B:updateUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -950,10 +940,10 @@
                      <para>Lancer la commande listUsers pour vérifier la présence de l'utilisateur dans la base de données.</para>
                   </listitem>
                   <listitem>
-                     <para> Lancer la commande avec le nouvel identifiant à donner à l'utilisateur.</para>
+                     <para> Lancer la commande avec les nformations à mettre à jour sur  l'utilisateur.</para>
                   </listitem>
                   <listitem>
-                     <para>L'identifiant de l'utilisateur est changé</para>
+                     <para>Les informations à mettre à jour de l'utilisateur ont changé</para>
                   </listitem>
                   <listitem>
                      <para>Désactiver la session courante à l'aide de la commande close.</para>
@@ -969,9 +959,9 @@
          </row>
          <row>
             <entry>
-               <para>U4.1-E1</para>
-               <para>U4.1-E2</para>
-               <para>U4.1-E3</para>
+               <para>UA4.1-E1:updateUser</para>
+               <para>UA4.1-E2:updateUser</para>
+               <para>UA4.1-E3:updateUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -988,7 +978,7 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande listUsers et vérifier que l'utilisateur n'est pas dans la liste.</para>
+                     <para>Lancer la commande listUsers et vérifier que l'utilisateur à ajouter n'est pas dans la liste.</para>
                      <para/>
                   </listitem>
                </orderedlist>
@@ -1002,7 +992,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.2-B</para>
+               <para>UA4.2-B:deleteUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1033,8 +1023,8 @@
          </row>
          <row>
             <entry>
-               <para>U4.2-E1</para>
-               <para>U4.2-E2</para>
+               <para>UA4.2-E1:deleteUser</para>
+               <para>UA4.2-E2:deleteUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1061,7 +1051,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.3-B</para>
+               <para>U4.3-B:listUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1069,13 +1059,13 @@
                      <para>Cas de test : paramètres valides et l'utilisateur est un administrateur du système VISHNU.</para>
                   </listitem>
                   <listitem>
-                     <para>Ouvrir une session e sur la machine à l'aide de la commande connect.</para>
+                     <para>Ouvrir une session sur la machine à l'aide de la commande connect.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande listUsers, récupérer le nombre d'utilisateurs déjà enregistrés dans la base. Enregistrer cette liste dans un fichier.</para>
                   </listitem>
                   <listitem>
-                     <para>Créer plusieurs utilisateurs à l'aide de la commande addVishnuUser. Ajouter la liste de ces nouveaux utilisateurs dans la liste du fichier.</para>
+                     <para>Créer plusieurs utilisateurs à l'aide de la commande addUser. Ajouter la liste de ces nouveaux utilisateurs dans la liste du fichier.</para>
                   </listitem>
                   <listitem>
                      <para>Exécuter la commande listUsers et vérifier que la taille de la liste enregistrée dans le fichier est égale à celle trouvée par listUsers, le contenu des listes est le même.</para>
@@ -1087,7 +1077,7 @@
                      <para>Créer (addVishnuUser) plusieurs utilisateurs avec toutes les informations nécessaires sur chaque utilisateur. Enregistrer chaque utilisateur avec ces informations dans un fichier.</para>
                   </listitem>
                   <listitem>
-                     <para>Exécuter la commande listUsers avec l'option -i et l'identifiant d'un utilisateur choisi aléatoirement dans la liste du fichier sauvegardé. Vérifier que les informations obtenues sont les mêmes que celles de l'utilisateur dans le fichier.</para>
+                     <para>Exécuter la commande listUsers avec l'option  l'identifiant d'un utilisateur choisi aléatoirement dans la liste du fichier sauvegardé. Vérifier que les informations obtenues sont les mêmes que celles de l'utilisateur dans le fichier.</para>
                   </listitem>
                   <listitem>
                      <para>Désactiver la session courante à l'aide de la commande close.</para>
@@ -1104,8 +1094,8 @@
          </row>
          <row>
             <entry>
-               <para>U4.3-E1</para>
-               <para>U4.3-E2</para>
+               <para>U4.3-E1:listUser</para>
+               <para>U4.3-E2:listUser</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1114,7 +1104,7 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer le programme deleteUser avec les paramètres correspondant à chaque cas.</para>
+                     <para>Lancer le programme listUser avec les paramètres correspondant à chaque cas.</para>
                      <para/>
                   </listitem>
                   <listitem>
@@ -1132,7 +1122,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.3-B</para>
+               <para>U1.3.3-B:changePassword</para>
             </entry>
             <entry>
                <para/>
@@ -1141,13 +1131,19 @@
                      <para>Cas de test : paramètres valides et l'utilisateur est un administrateur du système VISHNU.</para>
                   </listitem>
                   <listitem>
+                     <para>Ouvrir une session à l'aide de la commande connect.</para>
+                  </listitem>
+                  <listitem>
                      <para>Lancer la commande listUsers pour vérifier la présence de l'utilisateur dans la base de données.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Fermer la session ouverte à l'aide de la commande close.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande changePassword avec l'identifiant de l'utilisateur , son ancien mot de passe et son nouveau mot de passe.</para>
                   </listitem>
                   <listitem>
-                     <para>Vérifier que l'utilisateur peut lancer une commande (par exemple connect) avec son login et son nouveau mot de passe. </para>
+                     <para>Vérifier que le changement a été bien effectuer en lançant la commande connect  avec l'identifiant de l'utilisateur  et son nouveau mot de passe. </para>
                      <para/>
                   </listitem>
                </orderedlist>
@@ -1161,7 +1157,8 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.3-E</para>
+               <para>U1.3.3-E2:changePassword</para>
+               <para>U1.3.3-E2:changePassword</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1170,7 +1167,7 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer le programme ChangeUser avec les paramètres correspondant à chaque cas.</para>
+                     <para>Lancer le programme changePassword avec les paramètres correspondant à chaque cas.</para>
                      <para/>
                   </listitem>
                   <listitem>
@@ -1188,7 +1185,7 @@
          </row>
          <row>
             <entry>
-               <para>UA2-B</para>
+               <para>UA2-B:resetPassword</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1199,7 +1196,8 @@
                      <para>Ouvrir une session  sur la machine à l'aide de la commande connect.</para>
                   </listitem>
                   <listitem>
-                     <para>Exécuter les étapes  1 à 2 de l'Id changePassword en remplaçant la commande changePassword par resetPassword.</para>
+                     <para>Lancer le programme resetPassword avec les paramètres correspondant à chaque cas.</para>
+                     <para/>
                   </listitem>
                   <listitem>
                      <para>Le mot de passe de l'utilisateur est réinitialisé.</para>
@@ -1221,8 +1219,8 @@
          </row>
          <row>
             <entry>
-               <para>UA2-E1</para>
-               <para>UA2-E2</para>
+               <para>UA2-E1:resetPassword</para>
+               <para>UA2-E2:resetPassword</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1231,7 +1229,7 @@
                      <para/>
                   </listitem>
                   <listitem>
-                     <para>Lancer le programme deleteUser avec les paramètres correspondant à chaque cas.</para>
+                     <para>Lancer le programme resetPassword avec les paramètres correspondant à chaque cas.</para>
                      <para/>
                   </listitem>
                   <listitem>
@@ -1268,7 +1266,7 @@
          </row>
          <row>
             <entry>
-               <para>U4-B</para>
+               <para>U4-B:addLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1279,7 +1277,7 @@
                      <para>Lancer la commande ListLocalAccount et enregistrer les configurations déjà ajoutées. </para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande avec le login, le chemin vers la clé et le chemin vers le répertoire personnel de l'utilisateur et l'identifiant de la machine à laquelle la configuration sera rattachée. </para>
+                     <para>Lancer la commande avec l'identifiant de l'utilisateur, le chemin vers la clé, le chemin vers le répertoire personnel de l'utilisateur et l'identifiant de la machine à laquelle la configuration sera rattachée. </para>
                   </listitem>
                   <listitem>
                      <para>Vérifier qu'une nouvelle configuration a été ajoutée à l'aide de la commande ListLocalAccount  et la liste enregistrée précédemment à l'étape 2.</para>
@@ -1295,8 +1293,8 @@
          </row>
          <row>
             <entry>
-               <para>U4-E1</para>
-               <para>U4-E2</para>
+               <para>U4-E1:addLocalAccount</para>
+               <para>U4-E2:addLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1322,7 +1320,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.1-B</para>
+               <para>U4.1-B:updateLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1346,7 +1344,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.1-E</para>
+               <para>U4.1-E:updateLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1372,7 +1370,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.2-B</para>
+               <para>U4.2-B:deleteLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1396,7 +1394,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.2-E</para>
+               <para>U4.2-E:deleteLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1422,7 +1420,7 @@
          </row>
          <row>
             <entry>
-               <para>UA3-B</para>
+               <para>UA3-B:saveConfig</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1430,16 +1428,13 @@
                      <para>Cas de test : paramètres valides et l'utilisateur est un administrateur du système VISHNU.</para>
                   </listitem>
                   <listitem>
-                     <para>Créer un fichier vide.</para>
-                  </listitem>
-                  <listitem>
                      <para>Lancer la commande de sauvegarde.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande listLocalAccount.</para>
+                     <para>Lancer la commande saveConfiguration.</para>
                   </listitem>
                   <listitem>
-                     <para>Vérifier que le fichier contient l'ensemble des configuration.</para>
+                     <para>Vérifier que le fichier de sauvegarde dans le dossier .vishnu/configurationSaved  (qui se trouve dans le repertoire personnel de l'utilisateur) contient l'ensemble des configurations.</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -1452,7 +1447,7 @@
          </row>
          <row>
             <entry>
-               <para>UA3-E</para>
+               <para>UA3-E:saveConfig</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1478,7 +1473,7 @@
          </row>
          <row>
             <entry>
-               <para>UA4-B</para>
+               <para>UA4-B:restoreConfig</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1486,13 +1481,10 @@
                      <para>Cas de test : paramètres valides et l'utilisateur est un administrateur du système VISHNU.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande listLocalAccount pour vérifier le status des configurations enregistrées.</para>
-                  </listitem>
-                  <listitem>
                      <para>Lancer  restoreConfiguration avec le fichier contenant la sauvegarde.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande listLocalAccount pour vérifier que les configurations ont été restaurées.</para>
+                     <para>Lancer les commandes, listUsers, listMachines et listLocalAccount pour vérifier que les configurations ont été restaurées.</para>
                   </listitem>
                </orderedlist>
             </entry>
@@ -1505,7 +1497,7 @@
          </row>
          <row>
             <entry>
-               <para>UA4-E</para>
+               <para>UA4-E:restoreConfig</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1531,7 +1523,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.3-B</para>
+               <para>U4.3-B:listLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1556,7 +1548,7 @@
          </row>
          <row>
             <entry>
-               <para>U4.3-E</para>
+               <para>U4.3-E:listLocalAccount</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1582,7 +1574,7 @@
          </row>
          <row>
             <entry>
-               <para>UA7-B</para>
+               <para>UA7-B:configureDefaultOption</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1616,8 +1608,8 @@
          </row>
          <row>
             <entry>
-               <para>UA7-E1</para>
-               <para>UA7-E2</para>
+               <para>UA7-E1:configureDefaultOption</para>
+               <para>UA7-E2:configureDefaultOption</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1643,7 +1635,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.2-B</para>
+               <para>U1.3.2-B:listOptions</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1667,7 +1659,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.2-E</para>
+               <para>U1.3.2-E:listOptions</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1693,7 +1685,7 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.1-B</para>
+               <para>U1.3.1-B:configureOption</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1720,8 +1712,8 @@
          </row>
          <row>
             <entry>
-               <para>U1.3.1-E1</para>
-               <para>U1.3.1-E2</para>
+               <para>U1.3.1-E1:configureOption</para>
+               <para>U1.3.1-E2:configureOption</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1746,6 +1738,8 @@
             </entry>
          </row></tbody></tgroup>
    </informaltable>
+   <para/>
+   <para/>
    <para/></sect3><sect3><title>  Tests de catégorie 4 </title>
    <para/>
    <para>   </para>
@@ -1766,7 +1760,7 @@
          </row>
          <row>
             <entry>
-               <para>UA6.1-B</para>
+               <para>UA6.1-B:addMachine</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1793,14 +1787,14 @@
          </row>
          <row>
             <entry>
-               <para>UA6.1-E</para>
+               <para>UA6.1-E:addMachine</para>
             </entry>
             <entry>
                <para/>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres invalides</para>
-                     <para>-Cas E1 : le nom de la machine existe déjà</para>
+                     <para>-Cas E1 : aucune session n'est ouverte</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande addMachine</para>
@@ -1820,7 +1814,7 @@
          </row>
          <row>
             <entry>
-               <para>UA6.4-B</para>
+               <para>UA6.4-B:updateMachine</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1828,7 +1822,7 @@
                      <para>Cas de test : paramètres valides et l'utilisateur est un administrateur du système VISHNU.</para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande listMachines avec l'option -m pour avoir toutes les informations sur une machine.</para>
+                     <para>Lancer la commande listMachines permettant d'avoir  toutes les informations sur une machine.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande avec le nom de la machine et l'information à mettre jour.</para>
@@ -1847,13 +1841,13 @@
          </row>
          <row>
             <entry>
-               <para>UA6.4-E</para>
+               <para>UA6.4-E:updateMachine</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres invalides</para>
-                     <para>-Cas E1 : le nom de la machine existe déjà</para>
+                     <para>-Cas E1 : aucune session n'est ouverte</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande updateMachine</para>
@@ -1872,7 +1866,7 @@
          </row>
          <row>
             <entry>
-               <para>UA6.2-B</para>
+               <para>UA6.2-B:deleteMachine</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1880,7 +1874,7 @@
                      <para>Cas de test : paramètres valides et l'utilisateur est un administrateur du système VISHNU. </para>
                   </listitem>
                   <listitem>
-                     <para>Lancer la commande listMachines avec l'option -t pour  vérifier si la machine est présente.</para>
+                     <para>Lancer la commande listMachines avec l'option permettant de  vérifier si la machine est présente.</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande avec l'identifiant de la machine</para>
@@ -1899,13 +1893,13 @@
          </row>
          <row>
             <entry>
-               <para>UA6.2-E</para>
+               <para>UA6.2-E:deleteMachine</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres invalides</para>
-                     <para>-Cas E1 : le nom de la machine existe déjà</para>
+                     <para>-Cas E1 : l'identifiant de la machine n'existe pas</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande deleteMachine</para>
@@ -1924,7 +1918,7 @@
          </row>
          <row>
             <entry>
-               <para>UA6.3-B</para>
+               <para>UA6.3-B:listMachine</para>
             </entry>
             <entry>
                <orderedlist>
@@ -1948,13 +1942,13 @@
          </row>
          <row>
             <entry>
-               <para>UA6.3-E</para>
+               <para>UA6.3-E:listMachine</para>
             </entry>
             <entry>
                <orderedlist>
                   <listitem>
                      <para>Cas de test : paramètres invalides</para>
-                     <para>-Cas E1 : le nom de la machine existe déjà</para>
+                     <para>-Cas E1 : aucune session n'est ouverte</para>
                   </listitem>
                   <listitem>
                      <para>Lancer la commande listMachines</para>
@@ -1974,7 +1968,7 @@
    </informaltable>
    <para/></sect3></sect2><sect2><title> Tests de stress        </title><sect3><title> Présentation</title>
    <para>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et à récupérer pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</para></sect3><sect3><title> Environnement des tests</title>
-   <para>TODO préciser qu'on utilise l'environnement avec PostgreSQL</para></sect3><sect3><title> Identifiants de tests</title>
+   <para>Nous utiliserons l'environnement de test 2 dans un environnement isolé (réseau et systèmes non partagés).</para></sect3><sect3><title> Identifiants de tests</title>
    <para>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</para></sect3><sect3><title> Liste des tests</title>
    <para/>
    <informaltable frame="all">
@@ -2439,7 +2433,7 @@
                <para>www.sysfera.com</para>
             </entry>
             <entry>
-               <para>22|22</para>
+               <para>20|22</para>
             </entry>
          </row></tbody></tgroup>
    </informaltable>

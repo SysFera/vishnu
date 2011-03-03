@@ -88,9 +88,9 @@ int main (int ac, char* av[]){
 
       cout <<"the session with sessionkey: " << sessionKey << "  is closed"<<endl;
 
-      removeLastSession(sessionFile);
-
       close(sessionKey);
+
+      removeLastSession(sessionFile);
     }
 
 
