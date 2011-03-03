@@ -452,6 +452,11 @@
         <details key="content" value="is the list of LocalAccount objects"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="the full path to the file that contains the saved configuration"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OptionValue" instanceTypeName="OptionValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionName" lowerBound="1"
