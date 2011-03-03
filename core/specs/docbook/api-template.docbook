@@ -41,15 +41,16 @@
           <revdescription>
             <para>Removed UMS::AddUserOptions, UMS::AddMachineOptions and UMS::UpdateUserOptions classes and UMS::SessionStateType.</para>
             <para>Added function UMS::reconnect, UMS::StatusType.</para>
-            <para>Modified UMS::restoreConfiguration and UMS::Configuration class</para>
+            <para>Modified UMS::restoreConfiguration class</para>
           </revdescription>
         </revision>
         <revision>
           <revnumber>3</revnumber>
-          <date>17/02/2011</date>
+          <date>03/03/2011</date>
           <authorinitials>SysFera</authorinitials>
           <revdescription>
             <para>Renamed UMS::AddVishnuUser, Modified the signature of UMS::connect, UMS::reconnect, UMS::resetPassword, UMS::addMachine, UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para>
+            <para>Updated error codes.</para>
           </revdescription>
         </revision>
       </revhistory>
