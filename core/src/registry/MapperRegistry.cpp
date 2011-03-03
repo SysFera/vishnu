@@ -58,7 +58,6 @@ MapperRegistry::getMapper(const string& s) {
   me.setType(VishnuException::INTERNAL);
   me.setMsg(6);
   me.setMsgComp("Error invalid mapper");
-  display();
   throw(me);
   return 0;
 }

@@ -149,6 +149,7 @@ UMSMapper::decode (const string& msg){
   vector<int> separatorPos;
   string      func;
   int         funcCode;
+  string res;
 
   // Getting separator position
   findSeparator(msg, separatorPos);
@@ -169,84 +170,82 @@ UMSMapper::decode (const string& msg){
   case VISHNU_RECONNECT 	  	:
     break;
   case VISHNU_CLOSE 	          	:
-    return decodeClose(separatorPos, msg);
+    res = decodeClose(separatorPos, msg);
     break;
   case VISHNU_ADD_VISHNU_USER   	:
-    return decodeAddUser(separatorPos, msg);
+    res = decodeAddUser(separatorPos, msg);
     break;
   case VISHNU_UPDATE_VISHNU_USER	:
-    return decodeUpUser(separatorPos, msg);
+    res = decodeUpUser(separatorPos, msg);
     break;
   case VISHNU_DELETE_VISHNU_USER	:
-    return decodeDelUser(separatorPos, msg);
+    res = decodeDelUser(separatorPos, msg);
     break;
   case VISHNU_CHANGE_PASSWORD   	:
-    return decodeChangePwd(separatorPos, msg);
+    res = decodeChangePwd(separatorPos, msg);
     break;
   case VISHNU_RESET_PASSWORD    	:
-    return decodeResetPwd(separatorPos, msg);
+    res = decodeResetPwd(separatorPos, msg);
     break;
   case VISHNU_ADD_LOCAL_ACCOUNT 	:
-    return decodeAddAcc(separatorPos, msg);
+    res = decodeAddAcc(separatorPos, msg);
     break;
   case VISHNU_UPDATE_LOCAL_ACCOUNT    :
-    return decodeUpAcc(separatorPos, msg);
+    res = decodeUpAcc(separatorPos, msg);
     break;
   case VISHNU_DELETE_LOCAL_ACCOUNT    :
-    return decodeDelAcc(separatorPos, msg);
+    res = decodeDelAcc(separatorPos, msg);
     break;
   case VISHNU_SAVE_CONFIGURATION      :
-    return decodeSaveConf(separatorPos, msg);
+    res = decodeSaveConf(separatorPos, msg);
     break;
   case VISHNU_RESTORE_CONFIGURATION   :
-    return decodeRestoreConf(separatorPos, msg);
+    res = decodeRestoreConf(separatorPos, msg);
     break;
   case VISHNU_ADD_MACHINE 	       :
-    return decodeAddM(separatorPos, msg);
+    res = decodeAddM(separatorPos, msg);
     break;
   case VISHNU_UPDATE_MACHINE 	   	:
-    return decodeUpM(separatorPos, msg);
+    res = decodeUpM(separatorPos, msg);
     break;
   case VISHNU_DELETE_MACHINE 	   	:
-    return decodeDelM(separatorPos, msg);
+    res = decodeDelM(separatorPos, msg);
     break;
   case VISHNU_LIST_LOCAL_ACCOUNT      :
-    return decodeListAcc(separatorPos, msg);
+    res = decodeListAcc(separatorPos, msg);
     break;
   case VISHNU_LIST_MACHINE 	       :
-    return decodeListM(separatorPos, msg);
+    res = decodeListM(separatorPos, msg);
     break;
   case VISHNU_LIST_HISTORY_CMD        :
-    return decodeListH(separatorPos, msg);
+    res = decodeListH(separatorPos, msg);
     break;
   case VISHNU_LIST_OPTIONS 	       :
-    return decodeListOp(separatorPos, msg);
+    res = decodeListOp(separatorPos, msg);
     break;
   case VISHNU_LIST_USERS 	        :
-    return decodeListUser(separatorPos, msg);
+    res = decodeListUser(separatorPos, msg);
     break;
   case VISHNU_LIST_SESSIONS 	        :
-    return decodeListSession(separatorPos, msg);
+    res = decodeListSession(separatorPos, msg);
     break;
   case VISHNU_CONFIGURE_DEFAULT_OPTION:
-    return decodeConfDefaultOp(separatorPos, msg);
+    res = decodeConfDefaultOp(separatorPos, msg);
     break;
   case VISHNU_CONFIGURE_OPTION	:
-    return decodeConfOp(separatorPos, msg);
+    res = decodeConfOp(separatorPos, msg);
     break;
   default :
+    res = "";
     break;
  }
-
-  // TODO
-  return "";
+  return res;
 }
 
 
 void
 UMSMapper::findSeparator(const string& s, vector<int>& vec){
   int cpt = 0;
-  int i;
   do{
     cpt=s.find_first_of("#", cpt);
     if (cpt ==string::npos){
@@ -287,7 +286,6 @@ UMSMapper::decodeUpUser(vector<int> separator, const string& msg){
 string
 UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
   string res = string("");
-  string u;
   res += (mmap.find(VISHNU_DELETE_VISHNU_USER))->second;
   if (separator.size()>0){
     res += " ";
@@ -462,6 +460,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
     res+=" -k ";
     res+=a;
   }
+  return res;
 }
 
 string
@@ -589,7 +588,6 @@ UMSMapper::decodeListOp(vector<int> separator, const string& msg){
 string
 UMSMapper::decodeListUser(vector<int> separator, const string& msg){
   string res = string("");
-  string a;
   res += (mmap.find(VISHNU_LIST_USERS))->second;
   res += " ";
   res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
