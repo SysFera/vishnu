@@ -93,8 +93,7 @@ close(const string&  sessionKey)
                                throw(UserException)
 {
 
- return SessionProxy(sessionKey).close();
-
+  return SessionProxy(sessionKey).close();
 }
 
 /**
@@ -116,9 +115,9 @@ addUser(const string& sessionKey, UMS_Data::User& newUser) throw(UserException)
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
  
-  checkIfTextIsEmpty(newUser.getFirstname(), "user firstname is empty", ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newUser.getLastname(), "user lastname is empty", ERRCODE_INVALID_PARAM);
-  //checkEmail(getEmail(), ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newUser.getFirstname(), "The user firstname is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newUser.getLastname(), "The user lastname is empty", ERRCODE_INVALID_PARAM);
+  checkEmail(newUser.getEmail());
 
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
@@ -165,7 +164,6 @@ deleteUser(const string& sessionKey,
                                throw(UserException)
 {
 
-
   UMS_Data::User user;
   user.setUserId(userId);
   SessionProxy sessionProxy(sessionKey);
@@ -190,6 +188,8 @@ changePassword(const std::string& userId,
                const std::string& passwordNew)
                                              throw(UserException)
 {
+ 
+  checkIfTextIsEmpty(passwordNew, "The new password is empty", ERRCODE_INVALID_PARAM);
 
   UMS_Data::User user;
   user.setUserId(userId);
@@ -245,6 +245,12 @@ addMachine(const std::string& sessionKey,
   if((newMachine.getStatus() < 0) || (newMachine.getStatus() > 1)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
   }
+
+  checkIfTextIsEmpty(newMachine.getName(), "The machine name is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getSite(), "The machine site is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getLanguage(), "The machine language is empty", ERRCODE_INVALID_PARAM); 
+  checkIfTextIsEmpty(newMachine.getSshPublicKey(), "The machine sshPublicKeyFile is empty", ERRCODE_INVALID_PARAM); 
+  checkIfTextIsEmpty(newMachine.getMachineDescription(), "The machine description is empty", ERRCODE_INVALID_PARAM);
 
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(newMachine, sessionProxy);
@@ -317,9 +323,16 @@ addLocalAccount(const std::string& sessionKey,
                                          throw(UserException)
 {
 
+  checkIfTextIsEmpty(newLocalAccount.getUserId(), "The local account userId is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getMachineId(), "The local account machineId is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getAcLogin(), "The local account acLogin is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getSshKeyPath(), "The local sshPublicKeyPath is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getHomeDirectory(), "The local account home directory is empty", ERRCODE_INVALID_PARAM);
+
   SessionProxy sessionProxy(sessionKey);
   LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
-  int res = localAccountProxy.add();
+
+  int  res = localAccountProxy.add();
   sshPublicKey = localAccountProxy.getSshPublicKey();
 
   return res;
@@ -474,6 +487,10 @@ configureOption(const std::string& sessionKey,
                 const UMS_Data::OptionValue& optionValue)
                                                         throw(UserException)
 {
+
+  checkIfTextIsEmpty(optionValue.getOptionName(), "The name of the option is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(optionValue.getValue(), "The value of the option is empty", ERRCODE_INVALID_PARAM);
+
   SessionProxy sessionProxy(sessionKey);
   OptionValueProxy optionValueProxy(optionValue, sessionProxy);
 
@@ -493,6 +510,8 @@ configureDefaultOption(const std::string& sessionKey,
                        const UMS_Data::OptionValue& optionValue)
                                                                throw(UserException)
 {
+  checkIfTextIsEmpty(optionValue.getOptionName(), "The name of the option is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(optionValue.getValue(), "The value of the option is empty", ERRCODE_INVALID_PARAM);
 
   SessionProxy sessionProxy(sessionKey);
   OptionValueProxy optionValueProxy(optionValue, sessionProxy);

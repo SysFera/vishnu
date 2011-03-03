@@ -8,7 +8,7 @@
 #include <iostream>
 #include "DbFactory.hpp"
 #include "POSTGREDatabase.hpp"
-#include "OracleDatabase.hpp"
+//#include "OracleDatabase.hpp"
 
 Database* DbFactory::mdb = NULL;
 
@@ -25,9 +25,9 @@ DbFactory::getDatabaseInstance(int type, std::string host, std::string user, std
     return mdb;
   }
   switch (type){
-    case ORACLEDB:
+  /*  case ORACLEDB:
       mdb = new OracleDatabase(host, user, pwd, db, port);
-      break;
+      break;*/
     case POSTGREDB :
       mdb = new POSTGREDatabase(host, user, pwd, db, port);
       break;

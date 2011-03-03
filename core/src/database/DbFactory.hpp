@@ -11,10 +11,6 @@
 #include "Database.hpp"
 
 /**
- * \brief Constant used for creating mysql databases
- */
-static const int MYSQLDB   = 1;
-/**
  * \brief Constant used for creating postgre/sql databases
  */
 static const int POSTGREDB = 2;
