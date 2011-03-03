@@ -58,15 +58,16 @@
             
             
             
-          <para>Removed UMS::AddUserOptions, UMS::AddMachineOptions and UMS::UpdateUserOptions classes and UMS::SessionStateType.</para><para>Added function UMS::reconnect, UMS::StatusType.</para><para>Modified UMS::restoreConfiguration and UMS::Configuration class</para></revdescription>
+          <para>Removed UMS::AddUserOptions, UMS::AddMachineOptions and UMS::UpdateUserOptions classes and UMS::SessionStateType.</para><para>Added function UMS::reconnect, UMS::StatusType.</para><para>Modified UMS::restoreConfiguration class</para></revdescription>
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>17/02/2011</date>
+        <date>03/03/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
             
-          <para>Renamed UMS::AddVishnuUser, Modified the signature of UMS::connect, UMS::reconnect, UMS::resetPassword, UMS::addMachine, UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para></revdescription>
+            
+          <para>Renamed UMS::AddVishnuUser, Modified the signature of UMS::connect, UMS::reconnect, UMS::resetPassword, UMS::addMachine, UMS::addLocalAccount, UMS::saveConfiguration and IMS::exportCommands</para><para>Updated error codes.</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -431,40 +432,24 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NOT_AUTHENTICATED</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USER</para></entry>
                 <entry><para>Unknown user</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_CLOSURE_MODE</para></entry>
-                <entry><para>The name of the closure mode is unknown</para></entry>
+                <entry><para>ERRCODE_INCORRECT_TIMEOUT</para></entry>
+                <entry><para>The value of the timeout is incorrect</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_TIMEOUT</para></entry>
-                <entry><para>The value of the timeout is incorrect (negative or higher than the TIMEOUT treshold)</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
-                <entry><para>The size of the password is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -552,44 +537,28 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NOT_AUTHENTICATED</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USER</para></entry>
                 <entry><para>Unknown user</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
-                <entry><para>The size of the password is incorrect</para></entry>
+                <entry><para>ERRCODE_UNUSABLE_MACHINE</para></entry>
+                <entry><para>The machine does not exist or it is locked</para></entry>
               </row>
               <row>
-                <entry><para>SESSION_INCOMPATIBILITY</para></entry>
-                <entry><para>This session identifier is incompatible with the authenticated user</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_SESSION_ID</para></entry>
                 <entry><para>The session Id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_MACHINE_FOR_SESSION</para></entry>
-                <entry><para>This session has been opened with another machine</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -663,44 +632,32 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
-                <entry><para>The size of the password is incorrect</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>USERID_EXISTING</para></entry>
+                <entry><para>ERRCODE_USERID_EXISTING</para></entry>
                 <entry><para>The userId already exists in the database</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_MAIL_ADRESS</para></entry>
+                <entry><para>ERRCODE_INVALID_MAIL_ADRESS</para></entry>
                 <entry><para>The mail adress is invalid</para></entry>
               </row>
               <row>
-                <entry><para>USERID_REQUIRED</para></entry>
-                <entry><para>The userId must to be defined</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_MACHINE_LOCKED</para></entry>
+                <entry><para>The machine is locked</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -774,36 +731,32 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>INVALID_MAIL_ADRESS</para></entry>
+                <entry><para>ERRCODE_INVALID_MAIL_ADRESS</para></entry>
                 <entry><para>The mail adress is invalid</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
               <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_USER_ALREADY_LOCKED</para></entry>
+                <entry><para>Trying to lock a user account that is already locked</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -877,32 +830,24 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -969,24 +914,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>COMMAND_RUNNING</para></entry>
-                <entry><para>Command(s) is/are running</para></entry>
+                <entry><para>ERRCODE_COMMAND_RUNNING</para></entry>
+                <entry><para>Commands are running</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1067,24 +1004,12 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NOT_AUTHENTICATED</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USER</para></entry>
                 <entry><para>Unknown user</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
-                <entry><para>The size of the password is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1165,36 +1090,24 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_USERID_SIZE</para></entry>
-                <entry><para>The size of the userId is incorrect</para></entry>
+                <entry><para>ERRCODE_USER_LOCKED</para></entry>
+                <entry><para>The user is locked</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
-                <entry><para>The size of the password is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1275,40 +1188,28 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>LOCAL_ACCOUNT_EXIST</para></entry>
-                <entry><para>The local account already exists for the given user on the given machine</para></entry>
+                <entry><para>ERRCODE_LOCAL_ACCOUNT_EXIST</para></entry>
+                <entry><para>The local account already exists</para></entry>
               </row>
               <row>
-                <entry><para>USERID_REQUIRED</para></entry>
-                <entry><para>The userId must to be defined</para></entry>
+                <entry><para>ERRCODE_MACHINE_LOCKED</para></entry>
+                <entry><para>The machine is locked</para></entry>
               </row>
               <row>
-                <entry><para>MACHINEID_REQUIRED</para></entry>
-                <entry><para>The machineId must to be defined</para></entry>
-              </row>
-              <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machineId is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1378,32 +1279,24 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machineId is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_LOCAL_ACCOUNT</para></entry>
-                <entry><para>The local configuration for the given user on the given machine is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1484,24 +1377,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_LOCAL_ACCOUNT</para></entry>
-                <entry><para>The local configuration for the given user on the given machine is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1575,20 +1460,12 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>SAVE_CONFIG_ERROR</para></entry>
+                <entry><para>ERRCODE_SAVE_CONFIG_ERROR</para></entry>
                 <entry><para>A problem occurs during the configuration saving </para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1662,20 +1539,12 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>RESTORE_CONFIG_ERROR</para></entry>
+                <entry><para>ERRCODE_RESTORE_CONFIG_ERROR</para></entry>
                 <entry><para>A problem occurs during the configuration restoring</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1749,32 +1618,24 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>MACHINE_EXISTING</para></entry>
+                <entry><para>ERRCODE_MACHINE_EXISTING</para></entry>
                 <entry><para>The machineId already exists in the database</para></entry>
               </row>
               <row>
-                <entry><para>MACHINEID_REQUIRED</para></entry>
-                <entry><para>The machineId must to be defined</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_CLOSURE_MODE</para></entry>
+                <entry><para>The closure policy is unknown</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1848,32 +1709,24 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>MACHINEID_REQUIRED</para></entry>
-                <entry><para>The machineId must to be defined</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_CLOSURE_MODE</para></entry>
+                <entry><para>The closure policy is unknown</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machineId is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1947,28 +1800,20 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machineId is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2049,28 +1894,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_DATE_OPTION</para></entry>
-                <entry><para>The date option is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2151,28 +1984,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_DATE_OPTION</para></entry>
-                <entry><para>The date option is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2253,28 +2074,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_DATE_OPTION</para></entry>
-                <entry><para>The date option is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2355,36 +2164,24 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_OPTION</para></entry>
-                <entry><para>the name of the option is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_OPTION</para></entry>
+                <entry><para>The name of the user option is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_DATE_OPTION</para></entry>
-                <entry><para>The date option is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2461,32 +2258,20 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_DATE_OPTION</para></entry>
-                <entry><para>The date option is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2567,32 +2352,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_USERID</para></entry>
                 <entry><para>The userId is unknown</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_SESSION_OPTION</para></entry>
-                <entry><para>The name of the session option is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>INCORRECT_DATE_OPTION</para></entry>
-                <entry><para>The date option is incorrect</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2666,28 +2435,20 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
                 <entry><para>The user is not an administrator</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_OPTION</para></entry>
-                <entry><para>the name of the option is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_OPTION</para></entry>
+                <entry><para>The name of the user option is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2761,24 +2522,16 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>UNKNOWN_OPTION</para></entry>
-                <entry><para>the name of the option is unknown</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_OPTION</para></entry>
+                <entry><para>The name of the user option is unknown</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
-              <row>
-                <entry><para>UMS_SERVER_NOT_AVAILABLE</para></entry>
-                <entry><para>The  server UMS is not available</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2845,8 +2598,8 @@
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>INCORRECT_CFG_PATH</para></entry>
-                <entry><para>The configuration file path is incorrect</para></entry>
+                <entry><para>ERRCODE_TEMPORARY_PASSWORD</para></entry>
+                <entry><para>The password is a temporary password</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2880,10 +2633,6 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU_FINALIZE_ERROR</para></entry>
-                <entry><para>An error occurs during vishnuFinalize</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2977,6 +2726,11 @@
               <entry><para>listConfLocalAccounts</para></entry>
               <entry><para>List of <link linkend="LocalAccount">LocalAccount</link></para></entry>
               <entry><para>is the list of LocalAccount objects</para></entry>
+            </row>
+            <row>
+              <entry><para>filePath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>the full path to the file that contains the saved configuration</para></entry>
             </row>
           </tbody>
         </tgroup>
