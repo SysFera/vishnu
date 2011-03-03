@@ -40,7 +40,7 @@ SessionProxy::SessionProxy(const UMS_Data::Session& session):msession(session)
 SessionProxy::SessionProxy()
 {
 }
- 
+
 /**
  * \brief Function to combine connect() and reconnect() into one function 
  * \fn  _connect(const UserProxy& user, 
@@ -81,58 +81,58 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::ifstream ifile2(sshKey2.c_str());
   std::ifstream ifile3(sshKey3.c_str());
   std::ifstream ifile4(sshKey4.c_str());
-    
+
   bool checkFile1 = ifile1.is_open();
   bool checkFile2 = ifile2.is_open();
   bool checkFile3 = ifile3.is_open(); 
   bool checkFile4 = ifile4.is_open(); 
   //To check if at least on file can be oponed     
   if(!checkFile1 && !checkFile2 && !checkFile3 && !checkFile4) {
-       throw UMSVishnuException(1, "can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
-                                "You must copy the file of your sshKey in one of three free files:\n"
-                                +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
-                                +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
-                                +"$HOME/.vishnu/ssh_host_dsa_key.pub, or\n"
-                                +"$HOME/.vishnu/ssh_host_rsa_key.pub");
+    throw UMSVishnuException(1, "can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
+        "You must copy the file of your sshKey in one of three free files:\n"
+        +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
+        +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
+        +"$HOME/.vishnu/ssh_host_dsa_key.pub, or\n"
+        +"$HOME/.vishnu/ssh_host_rsa_key.pub");
   } 
-    
+
   //To get the content of the first opened file and close the others files opened
   if(checkFile1) {
-     ifile1.close();
-     ifile.open(sshKey1.c_str());
-     if(checkFile2) {
-        ifile2.close();
-     }
-     if(checkFile3) {
-        ifile3.close();
-     }
-     if(checkFile4) {
-       ifile4.close();
-     }
-  } else if(checkFile2) {
-         ifile2.close();
-         ifile.open(sshKey2.c_str());
-         if(checkFile3) {
-           ifile3.close();
-         }
-         if(checkFile4) {
-           ifile4.close();
-         }
-  } else if(checkFile3) {
+    ifile1.close();
+    ifile.open(sshKey1.c_str());
+    if(checkFile2) {
+      ifile2.close();
+    }
+    if(checkFile3) {
       ifile3.close();
-      ifile.open(sshKey3.c_str());
-      if(checkFile4) {
-         ifile4.close();
-      }
-  } else {
+    }
+    if(checkFile4) {
       ifile4.close();
-      ifile.open(sshKey4.c_str());
+    }
+  } else if(checkFile2) {
+    ifile2.close();
+    ifile.open(sshKey2.c_str());
+    if(checkFile3) {
+      ifile3.close();
+    }
+    if(checkFile4) {
+      ifile4.close();
+    }
+  } else if(checkFile3) {
+    ifile3.close();
+    ifile.open(sshKey3.c_str());
+    if(checkFile4) {
+      ifile4.close();
+    }
+  } else {
+    ifile4.close();
+    ifile.open(sshKey4.c_str());
   }
 
   ifile.seekg(0, std::ios::end);
-    length = ifile.tellg();
+  length = ifile.tellg();
   ifile.seekg(0, std::ios::beg);
- 
+
   key = new char[length];
   ifile.read(key, length);
   ifile.close();
@@ -150,7 +150,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   } else {
     profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);
   }
-    
+
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((user.getData().getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+user.getData().getUserId();
@@ -158,25 +158,25 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
     sendErrorMsg(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup((user.getData().getPassword()).c_str()), DIET_VOLATILE)) {
-     msg += "with password parameter";
-     errMsg(msg);
-     sendErrorMsg(msg);
+    msg += "with password parameter";
+    errMsg(msg);
+    sendErrorMsg(msg);
   }
   if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
-     msg += "with sshKey parameter sshKey path";
-     errMsg(msg);
-     sendErrorMsg(msg);
+    msg += "with sshKey parameter sshKey path";
+    errMsg(msg);
+    sendErrorMsg(msg);
   } 
   if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
-     msg += "with hostname parameter "+std::string(hostname);
-     errMsg(msg);
-     sendErrorMsg(msg);
+    msg += "with hostname parameter "+std::string(hostname);
+    errMsg(msg);
+    sendErrorMsg(msg);
   }  
   if(connect) {
     if(diet_string_set(diet_parameter(profile,4), strdup(optionsToString.c_str()), DIET_VOLATILE)){
-     msg += "with optionsToString parameter ";
-     errMsg(msg);
-     sendErrorMsg(msg);
+      msg += "with optionsToString parameter ";
+      errMsg(msg);
+      sendErrorMsg(msg);
     } 
   } else {
     if(diet_string_set(diet_parameter(profile,4), strdup((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
@@ -190,25 +190,25 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-     if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
-         msg += " by receiving sessionInString value";
-         errMsg(msg);
-         sendErrorMsg(msg);
-     }
-     if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
-         msg += " to receiving errorInfo message";
-         errMsg(msg);
-         sendErrorMsg(msg);
-      }
-      //Print successfull message if erroInfo is empty
-      printSuccessMessage(errorInfo);
-   } else {
-       sendErrorMsg(" the function diet_call is rejected");
+    if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
+      msg += " by receiving sessionInString value";
+      errMsg(msg);
+      sendErrorMsg(msg);
+    }
+    if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
+      msg += " to receiving errorInfo message";
+      errMsg(msg);
+      sendErrorMsg(msg);
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  } else {
+    sendErrorMsg(" the function diet_call is rejected");
   }
 
   /*To check the receiving message error*/
   checkErrorMsg(errorInfo);
-  
+
   // CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
   ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
@@ -218,7 +218,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   //To set the muser
   UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
   msession = *session_ptr;
-  
+
   if(key!=NULL) {
     delete [] key;
   }
@@ -267,30 +267,30 @@ int SessionProxy::close()
   diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1); 
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-     msg += "with sessionKey parameter "+sessionKey;
-     errMsg(msg);
-     sendErrorMsg(msg);
-   }
+    msg += "with sessionKey parameter "+sessionKey;
+    errMsg(msg);
+    sendErrorMsg(msg);
+  }
 
-   //OUT Parameters
-   diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
 
-   if(!diet_call(profile)) {
-      if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
-         msg += " by receiving errorInfo message";
-         errMsg(msg);
-         sendErrorMsg(msg);
-      }
-      //Print successfull message if erroInfo is empty
-      printSuccessMessage(errorInfo);
-   } else {  
-      sendErrorMsg(" the function diet_call is rejected"); 
-   }
-   
-     /*To check the receiving message error*/
-     checkErrorMsg(errorInfo);
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
+      msg += " by receiving errorInfo message";
+      errMsg(msg);
+      sendErrorMsg(msg);
+    }
+    //Print successfull message if erroInfo is empty
+    printSuccessMessage(errorInfo);
+  } else {  
+    sendErrorMsg(" the function diet_call is rejected"); 
+  }
 
- return 0;
+  /*To check the receiving message error*/
+  checkErrorMsg(errorInfo);
+
+  return 0;
 }
 
 /**

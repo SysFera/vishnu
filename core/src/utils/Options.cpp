@@ -43,9 +43,8 @@ Options:: Options(const std::string& pgName )   : generic_options("Generic Optio
                                                   conf(new Configuration(pgName)){
 
 
-    generic_options.add_options()
-      ("help,h", "produce help message")
-      ;
+  generic_options.add_options()
+   ("help,h", "produce help message");
 
 
   }
@@ -57,9 +56,9 @@ Options::Options(boost::shared_ptr<Configuration> otherConf):conf(otherConf),
                                                              env_options("Environment variables"),
                                                              hidden_options("Hidden Options"){
 
-    generic_options.add_options()
-      ("help,h", "produce help message")
-      ;
+  generic_options.add_options()
+   ("help,h", "produce help message");
+      
 
 
   }
@@ -114,14 +113,12 @@ Options::setGroup (const po::options_description& tmp_options,
 }
 
 
-
-
- /**
-       * \brief function allowing to add a new non-typed option
-       * \param name: the name of the option
-       * \param desc: brief description of the option
-       * \param group: a group which option belongs to
-       */
+/**
+ * \brief function allowing to add a new non-typed option
+ * \param name: the name of the option
+ * \param desc: brief description of the option
+ * \param group: a group which option belongs to
+ */
 
 void
 Options::add(const std::string& name,
@@ -163,13 +160,13 @@ Options::parse_cli(int ac, char* av[]) {
   po::options_description cmdline_options;
 
   cmdline_options.add(generic_options)
-    .add(config_options)
-    .add(env_options)
-    .add(hidden_options);
+                 .add(config_options)
+                 .add(env_options)
+                 .add(hidden_options);
 
   store(po::command_line_parser(ac, av)
-      .options(cmdline_options).positional(position)
-      .run(), vm);
+        .options(cmdline_options).positional(position)
+        .run(), vm);
 }
 
 /**
@@ -182,8 +179,8 @@ Options::parse_cfile() {
   po::options_description cfile_options;
 
   cfile_options.add(config_options)
-    .add(hidden_options)
-    .add(env_options);
+               .add(hidden_options)
+               .add(env_options);
 
   ifstream ifs(conf->getConfigFile().c_str());
 
@@ -246,8 +243,8 @@ operator<< (std::ostream & os, const Options & opt){
   po::options_description visible("Allowed options");
 
   visible.add(opt.generic_options)
-    .add(opt.config_options)
-    .add(opt.env_options);
+         .add(opt.config_options)
+         .add(opt.env_options);
 
   os << visible << endl;
 

@@ -29,16 +29,16 @@ void checkErrorMsg(const std::string& msg) {
   if(msg.size() > 0 ) {
     size_t pos = msg.find('#');
     if(pos!=std::string::npos) {
-       std::string codeInString = msg.substr(0,pos);
-       if(codeInString.size()!=0) {
-         std::istringstream isCode(codeInString);
-         int ret;
-         isCode >> ret;
-         std::string message = msg.substr(pos+1);
-         throw UMSVishnuException(ret, message);
+      std::string codeInString = msg.substr(0,pos);
+      if(codeInString.size()!=0) {
+        std::istringstream isCode(codeInString);
+        int ret;
+        isCode >> ret;
+        std::string message = msg.substr(pos+1);
+        throw UMSVishnuException(ret, message);
       }
     } else {
-          throw UMSVishnuException(1, msg);
+      throw UMSVishnuException(1, msg);
     }
   }
 
@@ -53,9 +53,9 @@ void checkErrorMsg(const std::string& msg) {
  */
 void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType) {
 
-   if(text.size()==0) {
-      throw UMSVishnuException(execpetionType, compMsg);
-   }
+  if(text.size()==0) {
+    throw UMSVishnuException(execpetionType, compMsg);
+  }
 
 } 
 
@@ -69,5 +69,5 @@ void checkEmail(const std::string& mail) {
   if(mail.find("@")==std::string::npos) {
     throw UMSVishnuException(ERRCODE_INVALID_MAIL_ADRESS);
   }
-  
+
 }
