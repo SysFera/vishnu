@@ -1,6 +1,6 @@
 /**
  * \file list_options.cpp
- * This file defines the VISHNU list options command 
+ * This file defines the VISHNU list options command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -19,10 +19,6 @@ int main (int ac, char* av[]){
   /******* Parsed value containers ****************/
 
   string dietConfig;
-
-  std::string userId;
-
-  std::string optionName;
 
   std::string sessionKey;
 

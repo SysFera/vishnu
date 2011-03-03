@@ -259,7 +259,6 @@ LocalAccountServer::getData() {
 std::string
 LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
   DatabaseResult* result;
-  std::vector<std::string>::iterator ii;
 
   std::string sqlCommand("SELECT "+attrname+" FROM account "+condition);
 
