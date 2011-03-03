@@ -93,8 +93,9 @@ int main (int ac, char* av[]){
   }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
+    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]"; 
 
-    errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], msg, EXECERROR);
 
     return e.getMsgI() ;
   }
