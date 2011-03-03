@@ -32,7 +32,7 @@ public:
   ConfigurationServer(SessionServer session);
   /**
   * \brief Constructor
-  * \fn ConfigurationServer(Configuration*& configuration, SessionServer session);
+  * \fn ConfigurationServer(UMS_Data::Configuration*& configuration, SessionServer session);
   * \param configuration The Configuration data structure
   * \param session The object which encapsulates session data
   */
