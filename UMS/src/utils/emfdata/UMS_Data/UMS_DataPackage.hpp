@@ -483,91 +483,96 @@ namespace UMS_Data
 	 */
         static const int CONFIGURATION__LISTCONFLOCALACCOUNTS = 64;
 
+  /**
+   * \brief Constant for configuration file path
+   */
+        static const int CONFIGURATION__FILEPATH = 65;
+
 	/**
 	 * \brief Constant for option value option name
 	 */
-        static const int OPTIONVALUE__OPTIONNAME = 65;
+        static const int OPTIONVALUE__OPTIONNAME = 66;
 
 	/**
 	 * \brief Constant for option value value
 	 */
-        static const int OPTIONVALUE__VALUE = 66;
+        static const int OPTIONVALUE__VALUE = 67;
 
 	/**
 	 * \brief Constant for list option values option values
 	 */
-        static const int LISTOPTIONSVALUES__OPTIONVALUES = 67;
+        static const int LISTOPTIONSVALUES__OPTIONVALUES = 68;
 
 	/**
 	 * \brief Constant for list options list all defined value
 	 */
-        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 68;
+        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 69;
 
 	/**
 	 * \brief Constant for list opt options user id
 	 */
-        static const int LISTOPTOPTIONS__USERID = 69;
+        static const int LISTOPTOPTIONS__USERID = 70;
 
 	/**
 	 * \brief Constant for list option options option name
 	 */
-        static const int LISTOPTOPTIONS__OPTIONNAME = 70;
+        static const int LISTOPTOPTIONS__OPTIONNAME = 71;
 
-        // IDs for classifiers for class Command 
-
-
-        // IDs for classifiers for class Configuration 
+        // IDs for classifiers for class Command
 
 
-        // IDs for classifiers for class ConnectOptions 
+        // IDs for classifiers for class Configuration
 
 
-        // IDs for classifiers for class ListCmdOptions 
+        // IDs for classifiers for class ConnectOptions
 
 
-        // IDs for classifiers for class ListCommands 
+        // IDs for classifiers for class ListCmdOptions
 
 
-        // IDs for classifiers for class ListLocalAccOptions 
+        // IDs for classifiers for class ListCommands
 
 
-        // IDs for classifiers for class ListLocalAccounts 
+        // IDs for classifiers for class ListLocalAccOptions
 
 
-        // IDs for classifiers for class ListMachineOptions 
+        // IDs for classifiers for class ListLocalAccounts
 
 
-        // IDs for classifiers for class ListMachines 
+        // IDs for classifiers for class ListMachineOptions
 
 
-        // IDs for classifiers for class ListOptionsValues 
+        // IDs for classifiers for class ListMachines
 
 
-        // IDs for classifiers for class ListOptOptions 
+        // IDs for classifiers for class ListOptionsValues
 
 
-        // IDs for classifiers for class ListSessionOptions 
+        // IDs for classifiers for class ListOptOptions
 
 
-        // IDs for classifiers for class ListSessions 
+        // IDs for classifiers for class ListSessionOptions
 
 
-        // IDs for classifiers for class ListUsers 
+        // IDs for classifiers for class ListSessions
 
 
-        // IDs for classifiers for class LocalAccount 
+        // IDs for classifiers for class ListUsers
 
 
-        // IDs for classifiers for class Machine 
+        // IDs for classifiers for class LocalAccount
 
 
-        // IDs for classifiers for class OptionValue 
+        // IDs for classifiers for class Machine
 
 
-        // IDs for classifiers for class Session 
+        // IDs for classifiers for class OptionValue
 
 
-        // IDs for classifiers for class User 
+        // IDs for classifiers for class Session
+
+
+        // IDs for classifiers for class User
 
 
         // EClassifiers methods
@@ -1189,6 +1194,13 @@ namespace UMS_Data
         virtual ::ecore::EReference_ptr
                 getConfiguration__listConfLocalAccounts();
 
+  /**
+   * \brief To get an attribute of a class
+   * \fn ::ecore::EAttribute_ptr getConfiguration__filePath()
+   * \return To get an attribute of a class
+   */
+        virtual ::ecore::EAttribute_ptr getConfiguration__filePath();
+
 	/**
 	 * \brief To get an attribute of a class
 	 * \fn ::ecore::EAttribute_ptr getOptionValue__optionName()
@@ -1240,7 +1252,7 @@ namespace UMS_Data
 
         UMS_DataPackage();
 
-        // EClass instances 
+        // EClass instances
 
 	/**
 	 * \brief The connect option class
@@ -1337,7 +1349,7 @@ namespace UMS_Data
 	 */
         ::ecore::EClass_ptr m_ListOptOptionsEClass;
 
-        // EEnuminstances 
+        // EEnuminstances
 
 	/**
 	 * \brief The session close type enum
@@ -1354,7 +1366,7 @@ namespace UMS_Data
 	 */
         ::ecore::EEnum_ptr m_StatusTypeEEnum;
 
-        // EDataType instances 
+        // EDataType instances
 
 
         // EStructuralFeatures instances
@@ -1683,7 +1695,10 @@ namespace UMS_Data
 	 * \brief The configuration list configuration local account attribute
 	 */
         ::ecore::EReference_ptr m_Configuration__listConfLocalAccounts;
-
+  /**
+   * \brief The configuration file path attribute
+   */
+        ::ecore::EAttribute_ptr m_Configuration__filePath;
 	/**
 	 * \brief The option value option name attribute
 	 */
