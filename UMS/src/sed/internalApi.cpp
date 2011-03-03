@@ -621,7 +621,6 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   char *sessionKey = NULL;
   char *laccountSerialized = NULL;
   std::string empty("");
-  std::string publicKey;
   std::string errorInfo;
   int mapperkey;
   Mapper* mapper;
@@ -747,7 +746,6 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   char *userId = NULL;
   char *machineId = NULL;
   std::string empty("");
-  std::string publicKey;
   std::string errorInfo;
   int mapperkey;
   Mapper* mapper;

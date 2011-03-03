@@ -1,6 +1,6 @@
 /**
  * \file update_local_account.cpp
- * This file defines the VISHNU update local account command 
+ * This file defines the VISHNU update local account command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -22,8 +22,6 @@ int main (int ac, char* av[]){
   /******* Parsed value containers ****************/
 
   string dietConfig;
-
-  std::string sshKeyPath;
 
   std::string sessionKey;
 

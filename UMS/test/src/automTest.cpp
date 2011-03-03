@@ -782,6 +782,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close      (sess.getSessionKey()                 )==0);
 
 
+  cout << " B4 save" << endl;
+  sleep(4);
+
   // Test Save configuration
   BOOST_MESSAGE(" Testing save conf"    );
   BOOST_REQUIRE(restore      	   (sqlScript+"/clean_session.sql")==0);
@@ -789,25 +792,27 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (saveConfiguration(sess.getSessionKey(), conf          )==0);
   BOOST_CHECK	 (close            (sess.getSessionKey()                )==0);
 
-
+  cout << " after save" << endl;
+  sleep(5);
   // Test restore configuration
   BOOST_MESSAGE(" Testing restore conf"    );
   BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
   BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
-  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
   BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), cpath            )==0);
   BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);  
   BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);  
   BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
+  cout << " after " << endl;
+  sleep(5);
 
-//  // Test restore configuration bad path
-//  BOOST_MESSAGE(" Testing restore conf"    );
-//  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
-//  BOOST_CHECK	 (connect      	      (root, pwdr , sess  , cop)==0);
-//  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
-//  //  conf->setFilePath("bad");
-//  BOOST_CHECK_THROW	 (restoreConfiguration(sess.getSessionKey(), "toto"            ), VishnuException);
-//  BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
+  // Test restore configuration bad path
+  BOOST_MESSAGE(" Testing restore conf"    );
+  BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
+  BOOST_CHECK	 (connect      	      (root, pwdr , sess  , cop)==0);
+  BOOST_CHECK	 (saveConfiguration   (sess.getSessionKey(), conf             )==0);
+  //  conf->setFilePath("bad");
+  BOOST_CHECK_THROW	 (restoreConfiguration(sess.getSessionKey(), "toto"            ), VishnuException);
+  BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
 
   // History, make all commands once and test list them
   BOOST_MESSAGE(" Testing history cmd"    );
@@ -825,8 +830,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   }
   BOOST_CHECK	 (listUsers             (sess.getSessionKey(), *liu , ""       )==0);
   liom.setMachineId(mid);
+  liom.setListAllmachine(true);
   BOOST_CHECK	 (listMachine           (sess.getSessionKey(), *lim , liom     )==0);
-  lioa.setMachineId(mid);
+  lioa.setMachineId("");
   BOOST_CHECK	 (listLocalAccount      (sess.getSessionKey(), *lia , lioa     )==0);
   lioo = ListOptOptions();
   BOOST_CHECK	 (listOptions           (sess.getSessionKey(), *liov, lioo     )==0);

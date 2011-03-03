@@ -94,6 +94,12 @@ void Configuration::_initialize()
         _any = m_listConfLocalAccounts->asEListOf< ::ecore::EObject > ();
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_filePath);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -131,6 +137,12 @@ void Configuration::eSet(::ecore::EInt _featureID,
         ::UMS_Data::Configuration::getListConfLocalAccounts().insert_all(*_t0);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_filePath);
+    }
+        return;
 
     }
     throw "Error";
@@ -146,6 +158,9 @@ void Configuration::eSet(::ecore::EInt _featureID,
         return m_listConfMachines && m_listConfMachines->size();
     case ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFLOCALACCOUNTS:
         return m_listConfLocalAccounts && m_listConfLocalAccounts->size();
+    case ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_filePath);
 
     }
     throw "Error";
