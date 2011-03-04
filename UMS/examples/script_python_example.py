@@ -1,3 +1,9 @@
+#
+# Small python example of how to use the API for the UMS module
+# Date 04/03/2011
+# Author : B. Isnard, K. Coulomb
+#
+
 
 ### UMS examples
 
