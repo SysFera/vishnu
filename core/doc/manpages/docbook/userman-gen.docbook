@@ -56,8 +56,10 @@ same conditions as regards security.</para>
     <releaseinfo>1.0</releaseinfo>
   </info>
   <reference>
+    <title>Commands reference</title>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_connect</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -91,7 +93,7 @@ completed and until the session is either manually or automatically closed.</par
             <term><option>-p <replaceable>closePolicy</replaceable></option></term>
             <listitem>
               <para>is an option for closing session automatically.
-Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
+The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_TIMEOUT), 2 (CLOSE_ON_DISCONNECT).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -120,17 +122,49 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Unknown user&quot; [20]</term>
+            <listitem>
+              <para></para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is locked&quot; [23]</term>
+            <listitem>
+              <para></para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_reconnect</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -164,17 +198,53 @@ commands in that session) by setting the session close policy (at connection tim
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Unknown user&quot; [20]</term>
+            <listitem>
+              <para></para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is locked&quot; [23]</term>
+            <listitem>
+              <para></para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session Id is unknown&quot; [30]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine does not exist or it is locked&quot; [36]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_close</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -207,17 +277,37 @@ the session (e.g. job submission or file transfers). After the session is closed
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Commands are running&quot; [31]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_change_password</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -230,6 +320,7 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command allows a user to change her/his password. It can be done when the password is temporary:  at the first connection on VISHNU, after the reset of password by an admin or after the configuration restoring. However, she/he can also change it voluntarily.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -248,17 +339,37 @@ the session (e.g. job submission or file transfers). After the session is closed
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Unknown user&quot; [20]</term>
+            <listitem>
+              <para></para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is locked&quot; [23]</term>
+            <listitem>
+              <para></para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_add_local_account</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -295,17 +406,49 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine is locked&quot; [34]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account already exists&quot; [37]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_update_local_account</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -321,6 +464,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>The local user configuration can be updated by the user. She/ he can update information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -357,17 +501,41 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_delete_local_account</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -380,6 +548,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted all information about it are deleted from VISHNU.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -398,17 +567,37 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_list_local_account</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -422,6 +611,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command allows a user to list her/his local configurations with option for listing local configurations on a specific machine or an admin to list the local configuration of a specific user or all local configurations.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -458,17 +648,37 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_list_machine</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -482,6 +692,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command displays by default the machines in which the user has a local configuration. Several options can be used to specify the information to list.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -518,17 +729,37 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_list_history_cmd</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -544,6 +775,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command displays the lists of commands done by the users. Several options can be used to specify the information to be list.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -592,17 +824,37 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_list_options</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -616,6 +868,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command displays the options configured by the user.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -652,17 +905,45 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_list_sessions</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -682,6 +963,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command allows a user to display her/his sessions. Several options can be used to specify the options to be listed.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -696,14 +978,14 @@ homeDirectory path must be provided.</para>
             <term><option>-t <replaceable>status</replaceable></option></term>
             <listitem>
               <para>specifies the status of the sessions which will be listed.
-Predefined values are: INACTIVE, ACTIVE.</para>
+The value must be an integer. Predefined values are: 0 (INACTIVE), 1 (ACTIVE).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-p <replaceable>sessionClosePolicy</replaceable></option></term>
             <listitem>
               <para>specifies the closure mode of the sessions which will be listed (CLOSE_ON_TIMEOUT or CLOSE_ON_DISCONNECT).
-Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
+The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_TIMEOUT), 2 (CLOSE_ON_DISCONNECT).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -756,17 +1038,37 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The userId is unknown&quot; [21]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
     <refentry>
       <refmeta>
+        <refentrytitle>vishnu_configure_option</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
@@ -779,6 +1081,7 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
+        <para>This command allows a user to configure her/his options.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -797,13 +1100,32 @@ Predefined values are: UNDEFINED, CLOSE_ON_TIMEOUT, CLOSE_ON_DISCONNECT.</para>
           <varlistentry>
             <term><envar>VISHNU_CONFIG_FILE</envar></term>
             <listitem>
-              <para>The value of this environment variable is path to the configuration file of VISHNU.</para>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="diagnostics">
         <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
   </reference>
