@@ -1,69 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
-    <info>
-      <title>VISHNU - Users Management System, le guide de l'administrateur</title>
-      <author>
-        <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
-      </author>
-      <author>
-        <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
-      </author>
-      <revhistory>
-        <revision>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
+  <info>
+    <title>VISHNU - Users Management System, le guide de l'administrateur</title>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    <revhistory>
+      <revision>
         <revnumber>0</revnumber>
         <date>03/03/2011</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
           <para>Guide présentant l'administration du système VISHNU au moyen du module Users Management System (UMS)</para>
         </revdescription>
-        </revision>
-      </revhistory>
-    </info>
+      </revision>
+    </revhistory>
+  </info>
   <chapter>
     <title>Présentation du document</title>
     <section>
       <title>Objectifs du document</title>
-      <para>Ce document présente l'administration de la plate-forme VISHNU au moyen du module UMS. Le but de ce module est
-	d'organiser la gestion des utilisateurs et machines.</para>  
+      <para>Ce document présente l'administration de la plateforme VISHNU au moyen du module UMS. Le but de ce module est
+	d'organiser la gestion des utilisateurs et machines.
+      </para>  
     </section>
     
-     <section> <!--Document structure -->
+    <section> <!--Document structure -->
       <title>Document structure</title>
       
       <para>Ce document est divisé en TODO parties :
       </para>
       <para>
 	<itemizedlist>
-        <listitem>
-          <para>Glossaire</para>
-        </listitem>  
-	<listitem>
-          <para>L'installation</para>
-        </listitem>
-        <listitem>
-          <para>L'administration</para>
-        </listitem>
-	<listitem>
-          <para>Data types description</para>
-        </listitem>
+          <listitem>
+            <para>Glossaire</para>
+          </listitem>  
+	  <listitem>
+            <para>L'installation</para>
+          </listitem>
+          <listitem>
+            <para>L'administration</para>
+          </listitem>
 	</itemizedlist>
-	</para> 
-	
-	 </section> <!--Document structure -->
+      </para> 
+      
+    </section> <!--Document structure -->
   </chapter>
-   
+  
   <chapter>
     <title>Glossaire</title> <!--Glossaire -->  
-      <section>
+    <section>
+      <title>Le glossaire</title>
+      <para>
 	<itemizedlist>
 	  <listitem>
 	    <para>Composant : Cela représente une bibliothèque ou un exécutable fournissant une interface à d'autres composants
@@ -89,11 +90,9 @@
 	  <listitem>
 	    <para>SQL : Language de requêtes sur les bases de données</para>
 	  </listitem>
-	  <listitem>
-	    <para></para>
-	  </listitem>
 	</itemizedlist>
-      </section>
+      </para>
+    </section>
   </chapter><!-- end glossaire -->
   <chapter>
     <title>Installation (à partir des sources)</title>
@@ -154,7 +153,7 @@
 		<para> 'traceLevel = 1' : Le niveau de verbosité du master agent, cette valeur peut être entre 1 et 10 compris. </para>
 	      </listitem>
 	      <listitem>
-		<para> 'agentType = 1' : DIET_MASTER_AGENT, le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
 	      </listitem>
 	      <listitem>
 		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
@@ -209,26 +208,26 @@
       </itemizedlist>
     </section>
     <section>
-      <title>Vérifier que la plate-forme tourne</title>
+      <title>Vérifier que la plateforme tourne</title>
       <itemizedlist>
 	<listitem>
 	  <para>
-	    Une fois que la plate-forme a été installée, se mettre sur un poste client avec VISHNU d'installé
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	  Exporter la variable d'environnement VISHNU_CONFIG_FILE sur un répertoire contenant un script de configuration client
+	    Exporter la variable d'environnement VISHNU_CONFIG_FILE sur un répertoire contenant un script de configuration client
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	  Lancer la commande dans le shell 'vishnu_connect root', ou root représente un nom d'utilisateur initial dans la base de données
+	    Lancer la commande dans le shell 'vishnu_connect root', ou root représente un nom d'utilisateur initial dans la base de données
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	  Tapper le mot de passe 'vishnu_user', correspondant à l'utilisateur 'root'
+	    Tapper le mot de passe 'vishnu_user', correspondant à l'utilisateur 'root'
 	  </para>
 	</listitem>
 	<listitem>
@@ -272,7 +271,7 @@
     </section>
     <section>
       <title>Gestion des machines</title>
-      <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandé à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
+      <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
       <para>
 	La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
       </para>
@@ -284,7 +283,7 @@
       </para>
     </section>
     <section>
-      <title>Gestion de la plate-forme</title>
+      <title>Gestion de la plateforme</title>
       <para>
 	L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres. 
       </para>
@@ -325,5 +324,5 @@
     </section>
   </chapter><!-- Administration -->
   
-  </book>
-  
+</book>
+
