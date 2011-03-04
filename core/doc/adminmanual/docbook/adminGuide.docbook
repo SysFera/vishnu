@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+    <info>
+      <title>VISHNU - Users Management System, le guide de l'administrateur</title>
+      <author>
+        <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+      </author>
+      <revhistory>
+        <revision>
+        <revnumber>0</revnumber>
+        <date>03/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Guide présentant l'administration du système VISHNU au moyen du module Users Management System (UMS)</para>
+        </revdescription>
+        </revision>
+      </revhistory>
+    </info>
+  <chapter>
+    <title>Présentation du document</title>
+    <section>
+      <title>Objectifs du document</title>
+      <para>Ce document présente l'administration de la plate-forme VISHNU au moyen du module UMS. Le but de ce module est
+	d'organiser la gestion des utilisateurs et machines.</para>  
+    </section>
+    
+     <section> <!--Document structure -->
+      <title>Document structure</title>
+      
+      <para>Ce document est divisé en TODO parties :
+      </para>
+      <para>
+	<itemizedlist>
+        <listitem>
+          <para>Glossaire</para>
+        </listitem>  
+	<listitem>
+          <para>L'installation</para>
+        </listitem>
+        <listitem>
+          <para>L'administration</para>
+        </listitem>
+	<listitem>
+          <para>Data types description</para>
+        </listitem>
+	</itemizedlist>
+	</para> 
+	
+	 </section> <!--Document structure -->
+  </chapter>
+   
+  <chapter>
+    <title>Glossaire</title> <!--Glossaire -->  
+      <section>
+	<itemizedlist>
+	  <listitem>
+	    <para>Composant : Cela représente une bibliothèque ou un exécutable fournissant une interface à d'autres composants
+	      ou à l'utilisateur.</para>
+	  </listitem>
+	  <listitem>
+	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. 
+	      Une seule instance est nécessaire pour faire tourner VISHNU.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Client hôte : Cela désigne l'ensemble des composants permettant de soumettre une requête au service UMS.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Client UMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD UMS</para>
+	  </listitem>
+	  <listitem>
+	    <para>DB : Base de données centralisée utilisée pour sauvegarder toutes les données manipulées
+	      par le module UMS. Cette base de données sera considérée comme étant de type POSTGREL dans ce document.</para>
+	  </listitem>
+	  <listitem>
+	    <para> MA : Le 'Master Agent', élément de DIET servant à faire le lien entre le client et le service désiré.</para>
+	  </listitem>
+	  <listitem>
+	    <para>SQL : Language de requêtes sur les bases de données</para>
+	  </listitem>
+	  <listitem>
+	    <para></para>
+	  </listitem>
+	</itemizedlist>
+      </section>
+  </chapter><!-- end glossaire -->
+  <chapter>
+    <title>Installation (à partir des sources)</title>
+    <section>
+      <title>Prérequis</title>
+      <itemizedlist>
+	<listitem>
+	  <para>GCC version 4.4.3 minimum</para>
+	</listitem>
+	<listitem>
+	  <para>CMAKE version 2.6 minimum</para>
+	</listitem>
+	<listitem>
+	  <para>BOOST version 1.45 minimum</para>
+	</listitem>
+	<listitem>
+	  <para>OMNIORB version 4.1.4</para>
+	</listitem>
+	<listitem>
+	  <para>PGSQL-API (api POSTGREL) version 8.0 minimum</para>
+	</listitem>
+	<listitem>
+	  <para>libcrypt</para>
+	</listitem>
+	<listitem>
+	  <para>SWIG 1.3 (SWIG 2 n'est pas compatible)</para>
+	</listitem>
+	<listitem>
+	  <para>SSH</para>
+	</listitem>
+	<listitem>
+	  <para>Sysfera-DS (DIET uniquement pour l'instant, version 2.7 minimum)</para>
+	</listitem>
+	<listitem>
+	  <para>JAVA version 1.6 et Python</para>
+	</listitem>
+      </itemizedlist>
+    </section><!-- end prerequis -->
+    <section>
+      <title> Compilation des sources </title>
+      <para>Se rendre dans le dossier VISHNU. Faire un répertoire build (mkdir build). Se rendre dans le répertoire (cd build).
+	TODO
+      </para>
+    </section>
+    <section>
+      <title>Lancement </title>
+      <itemizedlist>
+	<listitem>
+	  <para> Avoir une base de données POSTGREL accessible et initialisée (tables crées et premières données crées). Des scripts SQL seront fournis pour cela. Avoir la base POSTGREL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base)</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le service de nommage CORBA : 'omniNames -start' pour la première fois, sinon 'omniNames' suffit.</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Le fichier de configuration peut contenir les 3 lignes suivantes :
+	    <itemizedlist>
+	      <listitem>
+		<para> 'traceLevel = 1' : Le niveau de verbosité du master agent, cette valeur peut être entre 1 et 10 compris. </para>
+	      </listitem>
+	      <listitem>
+		<para> 'agentType = 1' : DIET_MASTER_AGENT, le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Lancer le SeD UMS. Un exemple de commande de lancement est : './umssed ~/myClient_server/mathOp/SeD.cfg 1 pg localhost vishnu_user vishnu_user ~/Bureau/sendmail.py'
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  '~/myClient_server/mathOp/SeD.cfg' : le chemin jusqu'au fichier de configuration du SeD. Ce fichier peut par exemple contenir les 2 lignes suivantes :
+		  <itemizedlist>
+		    <listitem>
+		      <para>'traceLevel = 10' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 1 et 10 compris.</para>
+		    </listitem>
+		    <listitem>
+		      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name'.</para>
+		    </listitem>
+		  </itemizedlist>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para> '1' : L'id de VISHNU à utiliser dans la base de donnée, une seule sera utilisée.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'pg' : Pour utiliser une base postgrel. Actuellement la base oracle n'est pas utilisable.</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  'localhost' : La base de données à utiliser.
+		</para>
+	      </listitem>
+	      <listitem>
+		<para> 'vishnu_user' (le premier) : Le nom d'utilisateur pour se connecter à la base de données.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'vishnu_user' (le second) : Le mot de passe pour se connecter à la base de données.</para>
+	      </listitem>
+	      <listitem>
+		<para> '~/Bureau/sendmail.py' : Le script à utiliser pour envoyer les mails. Il sera fourni avec le module UMS.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Le module UMS de VISHNU est prêt à être utilisé, pour ce faire un client doit se connecter et soumettre les requêtes VISHNU.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Vérifier que la plate-forme tourne</title>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Une fois que la plate-forme a été installée, se mettre sur un poste client avec VISHNU d'installé
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	  Exporter la variable d'environnement VISHNU_CONFIG_FILE sur un répertoire contenant un script de configuration client
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	  Lancer la commande dans le shell 'vishnu_connect root', ou root représente un nom d'utilisateur initial dans la base de données
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	  Tapper le mot de passe 'vishnu_user', correspondant à l'utilisateur 'root'
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Sur le client, un affichage doit signaler que le service a réussi. Dans le terminal ou le SeD UMS a été lancé et dans le terminal ou le MA tourne, selon le niveau de verbosité, plus ou moins d'informations, concernant le service effectué, doivent apparaitre.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Fermer la session avec 'vishnu_close'. Aucune erreur ne doit être remontée lors de ces tests.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </section>
+  </chapter><!-- end installation -->
+  <chapter>
+    <title>Administration</title>
+    <section>
+      <title>Présentation</title>
+      <para>
+	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaure si besoin est. Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera les commandes depuis l'API shell, mais cela reste valable depuis toutes les API offertes par VISHNU et possédant la partie administration.
+      </para>
+    </section>
+    <section>
+      <title>Gestion des utilisateurs</title>
+      <para>
+	L'ajout d'un utilisateur se fait à l'aide de la commande 'vishnu_add_user'. Elle prend en paramètre le prénom de l'utilisateur, son nom de famille, les droits qui lui sont associés dans VISHNU (administrateur ou simple utilisateur) et son adresse de couriel. Tout ces paramètres sont obligatoires. Un privilège à 1 signifie administrateur, un privilège à 0 signifie un utilisateur. L'identifiant de l'utilisateur est généré et renvoyé.
+      </para>
+      <para>
+	La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, status, couriel). Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
+      </para>
+      <para>
+	La suppression d'un utilisateur correspond en fait au blocage d'un utilisateur. Il n'est pas réellement supprimé de la base de donnée mais son compte est bloqué et personne ne peut plus se connecter sur ce compte. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user' avec en paramètre l'identifiant de l'utilisateur (cet identifiant étant automatiquement généré lors de la création d'un utilisateur).
+      </para>
+      <para>
+	La liste des utilisateurs ne peut être faite que par un administrateur. Cela se fait avec la commande 'vishnu_list_user'. Cette commande peut prendre en paramètre l'identifiant d'un utilisateur pour n'avoir les informations que concernant cet utilisateur.
+      </para>
+      <para>
+	Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de VISHNU. Pour ce faire, il doit appeller la commande 'vishnu_reset_password uid' ou uid représente l'identifiant de l'utilisateur dont l'administrateur veut réinitialiser le mot de passe. Le nouveau mot de passe est temporaire et renvoyé par la commande. Lors de la prochaine connexion, l'utilisateur devra changer son mot de passe avec 'vishnu_change_password'.
+      </para>
+    </section>
+    <section>
+      <title>Gestion des machines</title>
+      <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandé à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
+      <para>
+	La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+      </para>
+      <para>
+	La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela ne correspond pas à une suppression de la base de donnée mais à un blocage, qui fait que la machine n'est plus visible ou accessible par VISHNU.
+      </para>
+      <para>
+	Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
+      </para>
+    </section>
+    <section>
+      <title>Gestion de la plate-forme</title>
+      <para>
+	L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres. 
+      </para>
+      <para>
+	L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. Attention, lorsque la restoration de la base est faite, tout les mots de passe des comptes sont considérés comme temporaire et il faut les changer avant de pouvoir réutiliser VISHNU.
+      </para>
+      <para>
+	Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
+      </para>
+    </section>
+    <section>
+      <title>Options admins dans les commandes utilisateurs</title>
+      <itemizedlist>
+	<listitem>
+	  <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_history_cmd', l'administrateur peut lister toutes les commandes de tout les utilisateurs ou les commandes d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_local_accounts', l'administrateur peut lister toutes les comptes de tout les utilisateurs ou les comptes d'un utilisateur particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_options', l'administrateur peut lister les toutes les options de tout les utilisateurs ou les options d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les session de tout les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </section>
+  </chapter><!-- Administration -->
+  
+  </book>
+  
