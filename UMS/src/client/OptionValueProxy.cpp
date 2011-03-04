@@ -51,12 +51,12 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(optionValueToString.c_str()), DIET_VOLATILE)) {
     msg += "with optionValueToString parameter "+optionValueToString;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -66,17 +66,15 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
 
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
