@@ -23,6 +23,7 @@ add_library(ums-client-proxy STATIC
    utilsClient.cpp
    UtilsProxy.cpp
 )
+SET_TARGET_PROPERTIES(ums-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
 
 target_link_libraries(ums-client-proxy
   ${DIET_CLIENT_LIBRARIES}
