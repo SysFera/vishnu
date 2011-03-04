@@ -1,7 +1,5 @@
 
 link_directories(${Boost_LIBRARY_DIRS}
-                  ${EMF4CPP_LIB}
-                  ${EMF4CPP_CPP_LIB}
                   ${CLI_SOURCE_DIR}
                 )
 include_directories(${Boost_INCLUDE_DIRS}
@@ -61,7 +59,7 @@ macro(genCli NAME )
                         ${VISHNU_EXCEPTION_LIB}
                         utils-cli
                         utils-vishnu
-                        ums-api-client
+                        vishnu-ums-api
 			                	crypt
                         -pthread
                         )
@@ -79,6 +77,6 @@ genCli(${cli})
 
 endforeach(cli)
 
-install( TARGETS utils-cli DESTINATION lib )
+# install( TARGETS utils-cli DESTINATION lib )
 
 

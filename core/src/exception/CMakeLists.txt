@@ -3,7 +3,7 @@ INCLUDE_DIRECTORIES(
   ${Boost_INCLUDE_DIRS}
 )
 
-ADD_LIBRARY(exception-vishnu
+ADD_LIBRARY(exception-vishnu STATIC
  VishnuException.cpp
  SystemException.cpp
  UserException.cpp
@@ -15,7 +15,7 @@ ADD_LIBRARY(exception-vishnu
 )
 
 
-INSTALL( TARGETS exception-vishnu DESTINATION lib )
+# INSTALL( TARGETS exception-vishnu DESTINATION lib )
 
 
 INSTALL( FILES

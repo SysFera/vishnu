@@ -15,14 +15,12 @@ INCLUDE_DIRECTORIES(
   ${Boost_INCLUDE_DIRS}
 )
 
-ADD_LIBRARY(ums-api-client
+ADD_LIBRARY(vishnu-ums-api SHARED
    api_ums.cpp
 )
 
-TARGET_LINK_LIBRARIES(ums-api-client
+TARGET_LINK_LIBRARIES(vishnu-ums-api
   ${DIET_CLIENT_LIBRARIES}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
   ${Boost_LIBRARIES}
   emf4cpp-UMS_Data
   exception-vishnu
@@ -64,15 +62,15 @@ SET(CMAKE_SWIG_FLAGS "-w362,389")
 ## PYTHON MODULE
 #The module name must match the %module declaration in the interface file
 SWIG_ADD_MODULE(VISHNU_UMS python api_ums.i api_ums.cpp)
-SWIG_LINK_LIBRARIES(VISHNU_UMS ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-client exception-vishnu)
+SWIG_LINK_LIBRARIES(VISHNU_UMS ${PYTHON_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api exception-vishnu)
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_UMS_REAL_NAME} DESTINATION lib )
 
 ## JAVA MODULE
 SET(CMAKE_SWIG_FLAGS "-w503" "-package" "com.sysfera.vishnu.api.ums.internal")
 SWIG_ADD_MODULE(VISHNU_UMS java api_ums.i api_ums.cpp)
-SWIG_LINK_LIBRARIES(VISHNU_UMS ${JAVA_LIBRARIES} ${DIET_CLIENT_LIB} ums-api-client exception-vishnu)
+SWIG_LINK_LIBRARIES(VISHNU_UMS ${JAVA_LIBRARIES} ${DIET_CLIENT_LIB} vishnu-ums-api exception-vishnu)
 INSTALL( TARGETS ${SWIG_MODULE_VISHNU_UMS_REAL_NAME} DESTINATION lib )
 
-INSTALL( TARGETS ums-api-client DESTINATION lib )
+INSTALL( TARGETS vishnu-ums-api DESTINATION lib )
 INSTALL( DIRECTORY ${CMAKE_SWIG_OUTDIR} DESTINATION lib)
 INSTALL( FILES api_ums.hpp DESTINATION include)

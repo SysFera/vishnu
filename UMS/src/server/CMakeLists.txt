@@ -19,7 +19,7 @@ include_directories(
 )
 
 
-add_library(ums-server
+add_library(ums-server STATIC
    SessionServer.cpp
    UserServer.cpp
    MachineClientServer.cpp
@@ -34,10 +34,6 @@ add_library(ums-server
 target_link_libraries(ums-server
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
   ${Boost_LIBRARIES}
   ${LIBCRYPT_LIB}
   emf4cpp-UMS_Data
@@ -47,4 +43,4 @@ target_link_libraries(ums-server
   utils-vishnu
 )
 
-install( TARGETS ums-server DESTINATION lib )
+# install( TARGETS ums-server DESTINATION lib )
