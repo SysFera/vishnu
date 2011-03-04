@@ -53,16 +53,16 @@ else (ORACLE_FOUND)
   set(ORACLE_DIR "" cache path "ORACLE installation path")
 endif(ORACLE_FOUND)
 
-find_package(EMF4CPP)
-if (EMF4CPP_FOUND)
-else (EMF4CPP_FOUND)
-  message("EM4CPP installation was not found. Define the EMF4CPP_DIR variable to continue.")
-  message("     - You can define a EMF4CPP_DIR environment variable")
-  message("     - You can pass it as argument to cmake:")
-  message("       $ cmake <source root directory> -DEMF4CPP_DIR:PATH=/path/to/EMF4CPP")
-  message("     - You can use the ccmake GUI")
-  set(EMF4CPP_DIR "" cache path "EMF4CPP installation path")
-endif(EMF4CPP_FOUND)
+# find_package(EMF4CPP)
+# if (EMF4CPP_FOUND)
+# else (EMF4CPP_FOUND)
+#   message("EM4CPP installation was not found. Define the EMF4CPP_DIR variable to continue.")
+#   message("     - You can define a EMF4CPP_DIR environment variable")
+#   message("     - You can pass it as argument to cmake:")
+#   message("       $ cmake <source root directory> -DEMF4CPP_DIR:PATH=/path/to/EMF4CPP")
+#   message("     - You can use the ccmake GUI")
+#   set(EMF4CPP_DIR "" cache path "EMF4CPP installation path")
+# endif(EMF4CPP_FOUND)
 
 find_package(
         Boost
@@ -71,6 +71,7 @@ find_package(
 )
 add_definitions( "-DBOOST_FILESYSTEM_VERSION=3" )
 
+set(EMF4CPP_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/deps/emf4cpp)
 set(EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata)
 set(UMS_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
 set(VISHNU_EXCEPTION_INCLUDE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/exception)
@@ -96,6 +97,7 @@ set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
 set (TEST_SQL "${UMS_TEST_DIR}")
 
 add_subdirectory(core/src)
+add_subdirectory(core/deps/emf4cpp)
 add_subdirectory(UMS/src)
 # macros used to setup test environment
 include(UMSTestingMacros)

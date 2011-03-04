@@ -13,7 +13,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   )
 
-add_library(ums-client-proxy
+add_library(ums-client-proxy STATIC
    SessionProxy.cpp
    UserProxy.cpp
    MachineProxy.cpp
@@ -26,11 +26,9 @@ add_library(ums-client-proxy
 
 target_link_libraries(ums-client-proxy
   ${DIET_CLIENT_LIBRARIES}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
   emf4cpp-UMS_Data
   exception-vishnu
   crypt
 )
-
-install( TARGETS ums-client-proxy DESTINATION lib )
+#
+# install( TARGETS ums-client-proxy DESTINATION lib )
