@@ -1,8 +1,5 @@
-link_directories(${Boost_LIBRARY_DIRS})
-include_directories(${Boost_INCLUDE_DIRS})
-
-
-
+LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 INCLUDE_DIRECTORIES(
 ${DATA_BASE_INCLUDE_DIR}
@@ -10,21 +7,20 @@ ${POSTGRESQL_INCLUDE_DIR}
 ${VISHNU_EXCEPTION_INCLUDE_DIR}
 )
 
-link_directories(
+LINK_DIRECTORIES(
 ${DATA_BASE_INCLUDE_DIR}
 )
 
-ADD_LIBRARY(utils-vishnu
+ADD_LIBRARY(utils-vishnu STATIC
   utilVishnu
   Options
   sessionUtils
   )
+SET_TARGET_PROPERTIES(utils-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
 
-target_link_libraries(
-utils-vishnu
-crypt
-database-vishnu
-exception-vishnu
+TARGET_LINK_LIBRARIES(
+  utils-vishnu
+  crypt
+  database-vishnu
+  exception-vishnu
 )
-
-install( TARGETS utils-vishnu DESTINATION lib )

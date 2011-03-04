@@ -87,11 +87,18 @@ int ConfigurationProxy::save()
   //To set the mconfiguration 
   mconfiguration = parser.load(configurationInString)->as< UMS_Data::Configuration >(); 
 
+  mconfiguration->setFilePath(mfilePath);
+
+  //To serialize the mconfiguration 
+  const char* name = "saveConfiguration";
+  ::ecorecpp::serializer::serializer _ser(name);
+  std::string configurationToSave =  _ser.serialize(mconfiguration);
+
   //To save the configuration in the file
   std::ofstream ofile(mfilePath.c_str());
-  ofile << configurationInString;
+  ofile << configurationToSave;
   ofile.close();
-  mconfiguration->setFilePath(mfilePath);
+  
   return 0;
 }
 

@@ -1,0 +1,2054 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <book xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <info>
+      <title>Projet VISHNU - D1.0</title>
+      <subtitle>Spécifications générales</subtitle>
+      <author>
+	    <personname>
+                <firstname>Benjamin</firstname>
+                <surname>Isnard</surname>
+            </personname>
+      </author>
+      <revhistory>
+        <revision>
+          <revnumber>01</revnumber>
+          <date>02/12/2010</date>
+          <authorinitials>B.Isnard</authorinitials>
+          <revdescription>
+            <para>Livraison partielle pour validation du format</para>
+          </revdescription>
+        </revision>
+      </revhistory>
+    </info>
+    <!-- GENERATED PART -->
+    <chapter>
+      <title>
+Cas d'utilisation
+      </title>
+      <section>
+	<title>@@@Titre manquant</title>
+        <section>
+          <title>
+U1 - Session with manual closure          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1 - Session with manual closure
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User opens a new session and closes it manually
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- the user is authentificated
+- VISHNU is installed and running on the client system
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the session state is closed
+- a session log has been created
+- all user requests submitted within the session are complete
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. include::U1.1 Open session
+2. System is ready to process user commands
+3. include::U1.2 Close session (before the maximum inactivity delay if option CLOSE_POLICY is equal to CLOSE_ON_TIMEOUT)
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+2a. U1.3 Execute user command
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+1a. include::U1.1 exceptions
+3a. if session cannot be closed due to running command, user must wait until all commands are completed before trying step 3 again
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Extensions
+                  </entry>
+                  <entry>
+U1.4 - Execute synchronous user request
+U1.6 - Reconnect to session
+U1.5 - Execute asynchronous user request
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.1 - Open session          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.1 - Open session
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User opens a session
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+ - User is connected on a client host on which vishnu is installed and that can be connected to the vishnu infrastructure
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- a session is active
+- the user's environment contains a session certificate
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. User provides login and password to the &quot;connect&quot; command
+2. System validates login and password (User is authentificated)
+3. System creates the session and activates it
+4. System provides the session certificate to the user
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+2a. If the password is a temporary password (after reset by the Admin) the System asks the User to enter a new password, then ask for a confirmation, and registers the new password if both steps are ok. If non-interactive request then this is an exception (a change password request is required).
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+2a. user login is unknown
+2a1. system returns an error message
+2b. user password is invalid
+2b1. system returns an error message
+2b2. if nb of login failures &lt; max nb, the system increments the login failures counter for the user
+2b3. if nb of login failures = max nb, the system sets the user account as blocked
+2c. user account is blocked
+2c1. the system returns an error message
+2d. vishnu infrastructure is unreachable or unavailable
+2d1. the system returns an error message
+2e. user password is temporary and request is non-interactive: the System returns an error message
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.2 - Close session          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.2 - Close session
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User closes the session manually
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- the User is connected on the client system
+- the User has an open session on the client system
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the session is closed
+- a session log has been created
+- all user requests submitted during the session are complete
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. the system checks that there are no running commands within the session
+2. the system closes the session
+3. the system informs the user that the session was closed
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+1a. If there are running commands within the session, the system informs the user that the session can not be closed
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.4 - Execute synchronous user request          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.4 - Execute synchronous user request
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User submits a synchronous request to the system
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- a session (for the current user and client host) is active
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the request is completed
+- a request log is created
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. User sends the request to the system
+2. System returns the results to the user
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+Invalid session (bad session certificate or unavailable session)
+Invalid request
+Permission denied (admin request issued by normal user)
+Ressource not available
+VISHNU system crashed
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Extension of
+                  </entry>
+                  <entry>
+U1 - Session with manual closure
+U3 - Session with automatic closure on disconnect
+U2 - Session with automatic closure on timeout
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.4.1 - Configure Option          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.4.1 - Configure Option
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+The user wants to modify the value of an option attached to his/her VISHNU account
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. User sends a request for modifying the value of an option to the system
+2. System registers the new value for the option
+3. System returns an acknowledgment to the user
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+2a. Invalid option name
+2b. Invalid option value
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.4.2 - Display sessions log          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.4.2 - Display sessions log
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+The user displays its sessions (active or closed)
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+- User sends a request to list all his/her sessions (active and/or closed)
+- System returns all (or only active, or only closed) sessions of the user with the following information for each session: id, date of opening, client host name, closure policy (timeout or disconnect), time before automatic closure (if applicable)
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.4.3 - Change password          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.4.3 - Change password
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+The user wants to change his/her password
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the password is changed
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+- User sends a request containing a new password
+- System registers the new user's password
+- System returns an acknowledgment to the User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.4.4 - Display Session command history          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.4.4 - Display Session command history
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+the user displays all the commands sent during one session
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1 - User sends a request containing the session ID
+2 - System returns the list of all commands issued by the user during the session which ID corresponds to the provided session ID. Each command has exactly the same format and parameters as the original submission and can be resubmitted as-is to the System.
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+2a - Invalid session ID (unknown / belonging to another user, if the current user is not an Admin)
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.5 - Execute asynchronous user request          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.5 - Execute asynchronous user request
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User submits an asynchronous request to the system
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- a session (for the current user and client host) is active
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the request is completed
+- a request log is created
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. the user sends the request to the system
+2. the system returns an acknowledgment to the user
+3. the system runs the request in the background
+4. when the request is completed the system updates the status of the request
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+Invalid session (bad session certificate or session unavailable)
+Invalid request
+Permission denied
+Ressource not available
+VISHNU system crashed
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Extension of
+                  </entry>
+                  <entry>
+U1 - Session with manual closure
+U2 - Session with automatic closure on timeout
+U3 - Session with automatic closure on disconnect
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U1.6 - Reconnect to session          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U1.6 - Reconnect to session
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User wants to use a session that he/she disconnected from previously without closing it
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- User is connected on a client host in which VISHNU is installed and that can be connected to the VISHNU infrastructure
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- a session is active
+- the user's environment contains a session certificate
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. User provides its login and password to the system
+2. System validates the User's login and password
+3. System returns the list of active sessions for the current user and client host (each session is assigned a short identifier), and also provides a choice for creating a new session
+4. User chooses one active session by providing its identifier or chooses to create a new session
+5. System provides the chosen session certificate to the user
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+1a. If User is already within an active session then go to step 3 directly. The current session will be automatically closed according to the UC U2 or U3 depending on the close policy for that session.
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+cf U1.1 (Open session)
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Extension of
+                  </entry>
+                  <entry>
+U1 - Session with manual closure
+U2 - Session with automatic closure on timeout
+U3 - Session with automatic closure on disconnect
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U2 - Session with automatic closure on timeout          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U2 - Session with automatic closure on timeout
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User opens a new session that is closed by the system after the inactivity delay has expired
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- VISHNU is installed and running on the client system
+- the client system can be connected to VISHNU
+- the option SESSION_CLOSE_POLICY is CLOSE_ON_TIMEOUT (either user option is defined or this is the default policy) 
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- a session log has been created
+- the session state is closed
+- all user requests submitted during the session are complete
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. U1.1 Open session
+2. System is ready to process user commands
+3. After inactivity delay has expired: U1.3 Close session auto
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+2a. U1.4 Execute user command
+2b. If the user disconnects from the client terminal or the client system crashes or is shutdown, the session remains open and all asynchronous commands that were not completed are kept running
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+see U1 
+
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Extensions
+                  </entry>
+                  <entry>
+U1.6 - Reconnect to session
+U1.5 - Execute asynchronous user request
+U1.4 - Execute synchronous user request
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U2.1 - Close session auto          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U2.1 - Close session auto
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+Session is closed by the system
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- User is connected on the client system
+- User has an open session on the client system
+either the inactivity timeout for the session has expired or the user disconnected from its shell session 
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the session is closed
+- the session close event is stored in the system's log
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. the system checks if the user has got no running commands (file transfers or tasks)
+2. the system registers session closure
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+1a. if the user has got some running commands, the system does not close the session and reset the inactivity timeout. After this delay is expired, back to step 1.
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+U3 - Session with automatic closure on disconnect          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+U3 - Session with automatic closure on disconnect
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+User opens a new session that will be closed by the system after the user disconnects from the client terminal
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+User
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- VISHNU is installed and running on the client system
+- the client system can be connected to VISHNU
+- the option SESSION_CLOSE_POLICY is CLOSE_ON_DISCONNECT (either user option is defined or this is the default policy) 
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- a session log has been created
+- the session state is closed
+- all user requests submitted during the session are complete
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. U1.1 Open session
+2. System is ready to process user commands
+3. The user disconnects from the terminal (either by typing an exit command, by closing the window, or by remote disconnection)
+4. U1.3 Close session auto
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+2a. U1.4 Execute synchronous user request
+2b. U1.5 Execute asynchronous user request
+3a. if the client system crashes or is shutdown, go to step 4
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+see U1 
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Extensions
+                  </entry>
+                  <entry>
+U1.4 - Execute synchronous user request
+U1.6 - Reconnect to session
+U1.5 - Execute asynchronous user request
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+UA1 - Create new user account          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+UA1 - Create new user account
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+This administrator creates a new user account in the system (database)
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+Admin
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- The user account is created and in active state
+- The account's password must be changed at the first connection
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. Admin provides the new user's last name, first name, email address and specifies wether the user has standard or admin rights
+2. System creates the new user account and initializes the password with a random-generated string (temporary password)
+3. System sends an email to the user containing the temporary password
+4. System returns an acknowledgment to the Admin
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+2a. Login already used by another active user
+3a. Invalid email address
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+UA2 - Reset user password          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+UA2 - Reset user password
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+The administrator resets a user password
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+Admin
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- the password of the user is temporary and must be changed at the first connection by the user
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. Admin provides a user's login
+2. System resets the user's password using a random-generated string
+3. System sends an email to the user containing the new temporary password
+4. System returns an acknowledgment to the Admin
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+1a. Invalid login (unknown or inactive)
+3a. Invalid email address
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+UA3 - Create new local user account          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+UA3 - Create new local user account
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+Admin creates a new local user account for a given user on a given machine
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+Admin
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- user has an account on VISHNU
+- user has no local user account defined for the machine
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- local user account registered
+- email sent to the user with a message containing a SSH public key
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+1. Admin provides local user account information for a given machine: user login (unix), home directory
+2. System generates a ssh private/public key pair
+3. System sends an email to the user containing the public key and asking the user to add this key to the authorized_keys on the machine
+4. User updates his/her authorized_keys file on the machine by adding the public key
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+3a. Invalid email address
+
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+UA4 - Save configuration          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+UA4 - Save configuration
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+The administrator saves the configuration of the system
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+ All users are disconnected form VISHNU
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- The configuration is saved on a file
+- a log information is created
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+- The administrator checks that there no user connected to VISHNU
+- The administrator saves the configuration
+- a configuration file is created
+- a log information is created
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+- VISHNU system crashed
+- File creation problems
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+UA5 - Restore configuration          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+UA5 - Restore configuration
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+The administrator restore the configuration
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+- All users are disconnected from VISHNU
+- The configuration file is available	
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+- The database is restored
+- a log information is created
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+- The administrator checks that there no user connected to VISHNU
+- The administrator load the configuration file
+- The database is restored
+- a log information is created
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+- VISHNU system crashed
+- problem for loading configuration file
+- the configuration file is corrupted
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        <section>
+          <title>
+UA6 - Restart service UMS          </title>
+          <informaltable>
+            <tgroup cols="2">
+              <tbody>
+                <row>
+                  <entry>
+Title
+                  </entry>
+                  <entry>
+UA6 - Restart service UMS
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Summary
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Actors
+                  </entry>
+                  <entry>
+
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Precondition
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Postcondition
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Base sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Branch sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+Exception sequence
+                  </entry>
+                  <entry>
+null
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+      </section>
+      <section>
+        <title>
+Exigences
+        </title>
+        <informaltable>
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>
+ID
+                </entry>
+                <entry>
+Name
+                </entry>
+                <entry>
+Text
+                </entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>
+1
+                </entry>
+                <entry>
+Fonctions tous utilisateurs
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.1
+                </entry>
+                <entry>
+Types d'utilisateurs
+                </entry>
+                <entry>
+Les utilisateurs de l&#x2019;intergiciel r&#xe9;parti VISHNU seront de deux types : utilisateurs ou administrateurs. Les administrateurs\\ sont des utilisateurs avec des droits suppl&#xe9;mentaires.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.2
+                </entry>
+                <entry>
+Authentification
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.2.1
+                </entry>
+                <entry>
+Caract&#xe9;ristique d'une authentification (Paco)
+                </entry>
+                <entry>
+Une authentification se fait &#xe0; l'aide d'un login et d'un mot de passe qui doivent &#xea;tre au pr&#xe9;alable enregistr&#xe9;s dans la base de donn&#xe9;es du syst&#xe8;me pour v&#xe9;rification. Les tentatives d'authentification seront limit&#xe9;s &#xe0; MAX_AUTHEN qui sera fix&#xe9; &#xe0; 3 par d&#xe9;faut. Apr&#xe8;s  MAX_AUTHEN tentatives vaines pour le m&#xea;me login le compte sera bloqu&#xe9; et seul un administrateur pourra le d&#xe9;bloquer.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.2.2
+                </entry>
+                <entry>
+Authentification unique
+                </entry>
+                <entry>
+Une fois authentifi&#xe9; dans l&#x2019;intergiciel, l&#x2019;utilisateur n&#x2019;aura plus &#xe0; s&#x2019;authentifier pour utiliser les services de l&#x2019;intergiciel avec son propre compte.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.3
+                </entry>
+                <entry>
+Types de sessions
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.3.1
+                </entry>
+                <entry>
+Session shell Unix
+                </entry>
+                <entry>
+L'utilisateur peut se connecter depuis un shell Unix sur une machine cliente sur laquelle est install&#xe9;e l'intergiciel. Une fois la session ouverte, l'utilisateur peut utiliser les commandes VISHNU ou n'importe quelle autre commande shell sans avoir &#xe0; fournir son login/mot de passe. Il ne peut pas ouvrir une deuxi&#xe8;me session VISHNU &#xe0; l'int&#xe9;rieur de la premi&#xe8;re. Il peut par contre ouvrir une autre session VISHNU depuis un autre terminal sur la m&#xea;me machine.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.3.2
+                </entry>
+                <entry>
+Session shell Python
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.3.3
+                </entry>
+                <entry>
+Session ouverte par une des API WS/C/C++
+                </entry>
+                <entry>
+L'appel au service d'authentification via une des API permet de s'authentifier avec un compte quelconque (&#xe9;ventuellement diff&#xe9;rent du compte de l'utilisateur qui ex&#xe9;cute le programme).
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.4
+                </entry>
+                <entry>
+Fermeture de session
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.4.1
+                </entry>
+                <entry>
+Fermeture manuelle de session
+                </entry>
+                <entry>
+L'utilisateur peut fermer manuellement la session dans laquelle il se trouve. Avant la fermeture, le syst&#xe8;me v&#xe9;rifie la pr&#xe9;sence de commandes en cours d'ex&#xe9;cution dans la session. Si il existe une ou plusieurs commandes en cours d'ex&#xe9;cution le syst&#xe8;me rend impossible la fermeture de session sinon la session est ferm&#xe9;e.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.4.2
+                </entry>
+                <entry>
+Choix de l'option de fermeture de session
+                </entry>
+                <entry>
+L'utilisateur peut choisir entre deux options de fermeture automatique de session: soit l'option de fermeture &#xe0; la d&#xe9;connexion du terminal, soit l'option de fermeture apr&#xe8;s expiration du d&#xe9;lai d'inactivit&#xe9; (p&#xe9;riode sans aucun appel aux services de l'intergiciel). Le choix est enregistr&#xe9; dans la configuration permanente de l'utilisateur et peut &#xe9;galement &#xea;tre modifi&#xe9; pour une session donn&#xe9;e. Le choix de fermeture &#xe0; la d&#xe9;connexion du terminal n'est possible que dans le cas d'une session de type &quot;shell unix&quot;. Dans les deux cas, la pr&#xe9;sence de commandes en cours d'ex&#xe9;cution rend impossible la fermeture de session. Par contre, pour l'option de fermeture apr&#xe8;s expiration du d&#xe9;lai d'inactivit&#xe9;, il y a une r&#xe9;initialisation du d&#xe9;lai d'inactivit&#xe9; lorsqu'il y a des commandes en cours d'ex&#xe9;cution.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.4.3
+                </entry>
+                <entry>
+V&#xe9;rification des commandes en cours avant fermeture de session
+                </entry>
+                <entry>
+Le syst&#xe8;me v&#xe9;rifie que toutes les commandes lanc&#xe9;es pendant la session sont termin&#xe9;es avant de fermer la session. Dans le cas o&#xf9; l'utilisateur s'est d&#xe9;connect&#xe9; de son terminal et que la session doit &#xea;tre ferm&#xe9;e automatiquement, la session ne sera pas ferm&#xe9;e avant la fin de l'ex&#xe9;cution de toutes les commandes en cours, et elle sera ferm&#xe9;e apr&#xe8;s expiration du d&#xe9;lai d'inactivit&#xe9;.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.5
+                </entry>
+                <entry>
+Affichage des sessions
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.5.1
+                </entry>
+                <entry>
+Affichage des sessions actives
+                </entry>
+                <entry>
+Le syst&#xe8;me fournit &#xe0; la demande de l'utilisateur la liste de toutes ses sessions actives sur la machine cliente.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.5.2
+                </entry>
+                <entry>
+Affichage de l'historique des sessions (Paco)
+                </entry>
+                <entry>
+Le syst&#xe8;me fournit &#xe0; la demande de l'utilisateur la listes de toutes ses sessions (actives et termin&#xe9;es). Le nombre de sessions affich&#xe9;es est limit&#xe9; &#xe0; un nombre fix&#xe9; par d&#xe9;faut par l'administrateur mais cette limite peut &#xea;tre modifi&#xe9;e par l'utilisateur au moment de la requ&#xea;te.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.6
+                </entry>
+                <entry>
+Reconnection &#xe0; une session
+                </entry>
+                <entry>
+Un utilisateur peut se connecter &#xe0; une session d&#xe9;j&#xe0; ouverte sur la m&#xea;me machine cliente en fournissant un identifiant unique de session ainsi que son login et mot de passe. S'il se trouve d&#xe9;j&#xe0; dans une session ouverte, le syst&#xe8;me lui propose de fermer cette session ou bien de la conserver ouverte avec une d&#xe9;connexion automatique au bout du temps maximum d'inactivit&#xe9;.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.7
+                </entry>
+                <entry>
+Bloquage du compte
+                </entry>
+                <entry>
+Si un utilisateur tente un certain nombre de fois fix&#xe9; par l'administrateur de s'authentifier sans succ&#xe8;s (mot de passe non reconnu) le syst&#xe8;me bloquera le compte de l'utilisateur c'est-&#xe0;-dire que l'utilisateur ne pourra plus ouvrir de nouvelle session ni se reconnecter &#xe0; des sessions existantes. Par contre les sessions existantes resteront actives. Seul un administrateur pourra d&#xe9;bloquer le compte.
+                </entry>
+              </row>
+              <row>
+                <entry>
+1.8
+                </entry>
+                <entry>
+Changement de mot de passe
+                </entry>
+                <entry>
+Un utilisateur peut modifier son mot de passe lorsqu'il a d&#xe9;j&#xe0; ouvert une session. Le nouveau mot de passe est actif imm&#xe9;diatement cad que toute nouvelle authentification se fera avec le nouveau mot de passe.
+                </entry>
+              </row>
+              <row>
+                <entry>
+2
+                </entry>
+                <entry>
+Fonctions administrateurs
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.1
+                </entry>
+                <entry>
+Administration des comptes
+                </entry>
+                <entry>
+Cr&#xe9;er, consulter, modifier ou supprimer les comptes des utilisateurs ou des administrateurs de l&#x2019;intergiciel. Les fonctions de cr&#xe9;ation et de modification de comptes prendront en param&#xe8;tre l&#x2019;information n&#xe9;cessaire \\&#xe0; clarifier. Les donn&#xe9;es priv&#xe9;es (cle SSH priv&#xe9;e ou mot de passe) ne seront pas visible en clair par l'administrateur.
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.2
+                </entry>
+                <entry>
+Configuration globale
+                </entry>
+                <entry>
+Gestion de l'ensemble de la configuration de tous les utilisateurs (comptes globaux, comptes locaux, options)
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.2.1
+                </entry>
+                <entry>
+Consultation et modification de la configuration UMS
+                </entry>
+                <entry>
+Un administrateur peut consulter et modifier l'ensemble de le configuration des utilisateurs.
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.2.2
+                </entry>
+                <entry>
+Prise en compte des modifications
+                </entry>
+                <entry>
+La prise en compte des modifications de la configuration est imm&#xe9;diate sans red&#xe9;marrage de l'intergiciel
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.2.3
+                </entry>
+                <entry>
+Sauvegarde et restauration de le configuration
+                </entry>
+                <entry>
+L'ensemble de la configuration des utilisateurs peut &#xea;tre sauvegard&#xe9;e dans un fichier et restaur&#xe9;e. La nouvelle configuration vient remplacer la configuration existante. La restauration a lieu sans red&#xe9;marrage de l'intergiciel.
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.2.4
+                </entry>
+                <entry>
+Configuration de l'option par d&#xe9;faut de fin de session
+                </entry>
+                <entry>
+Un administrateur peut d&#xe9;finir quelle est l'option par d&#xe9;faut pour la fermeture automatique d'une session utilisateur: soit terminaison en cas de d&#xe9;connexion de l'utilisateur du client, soit terminaison apr&#xe8;s expiration du d&#xe9;lai d'inactivit&#xe9;
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.2.5
+                </entry>
+                <entry>
+Configuration du d&#xe9;lai max. d'inactivit&#xe9;
+                </entry>
+                <entry>
+Un administrateur peut d&#xe9;finir la valeur maximum du d&#xe9;lai d'inactivit&#xe9; pris en compte pour la d&#xe9;connexion automatique.
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.3
+                </entry>
+                <entry>
+Utilisation d'un compte tiers
+                </entry>
+                <entry>
+Un administrateur de l&#x2019;intergiciel pourra ouvrir une session VISHNU avec le compte d&#x2019;un utilisateur n&#x2019;&#xe9;tant pas administrateur lui-m&#xea;me.
+                </entry>
+              </row>
+              <row>
+                <entry>
+2.4
+                </entry>
+                <entry>
+D&#xe9;bloquage d'un compte
+                </entry>
+                <entry>
+Un administrateur pourra r&#xe9;activer le compte de tout utilisateur s'il est bloqu&#xe9;.
+                </entry>
+              </row>
+              <row>
+                <entry>
+3
+                </entry>
+                <entry>
+Gestion des erreurs
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+4
+                </entry>
+                <entry>
+Exigences g&#xe9;n&#xe9;rales
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.1
+                </entry>
+                <entry>
+Nombre d'utilisateurs
+                </entry>
+                <entry>
+Le syst&#xe8;me pourra g&#xe9;rer au moins 1000 utilisateurs
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.2
+                </entry>
+                <entry>
+Nombre de sessions ouvertes (-->actives???)
+                </entry>
+                <entry>
+Le syst&#xe8;me pourra g&#xe9;rer au moins 100 sessions simultan&#xe9;es
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.3
+                </entry>
+                <entry>
+Login utilisateur
+                </entry>
+                <entry>
+Le login de l'utilisateur est une cha&#xee;ne de caract&#xe8;res de taille min. 1 et de taille max. 100. Il ne contient pas de caract&#xe8;res d'espacement.
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.4
+                </entry>
+                <entry>
+Mot de passe
+                </entry>
+                <entry>
+
+
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.4.1
+                </entry>
+                <entry>
+Caract&#xe9;ristiques du mot de passe
+                </entry>
+                <entry>
+Le mot de passe de l'utilisateur est une cha&#xee;ne de caract&#xe8;res de taille min. 8 et de taille max. 100. Il ne contient pas de caract&#xe8;res d'espacement.
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.4.2
+                </entry>
+                <entry>
+Cryptage du mot de passe
+                </entry>
+                <entry>
+Le mot de passe sera transf&#xe9;r&#xe9; entre machines et stock&#xe9; sous forme crypt&#xe9;e avec un algorithme s&#xfb;r (ex: SHA-2)
+                </entry>
+              </row>
+              <row>
+                <entry>
+4.5
+                </entry>
+                <entry>
+Historique des commandes
+                </entry>
+                <entry>
+
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </chapter>
+  </book>

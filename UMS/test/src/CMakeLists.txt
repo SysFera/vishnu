@@ -30,15 +30,11 @@ add_executable(stresser
 target_link_libraries( stresser
   ${DIET_CLIENT_LIB}
   ${DIET_SERVER_LIB}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
-  ${EMF4CPP_LIB}
-  ${EMF4CPP_CPP_LIB}
   ${LIBPQ_LIB}
   ${CLI_SOURCE_DIR}
   ${Boost_LIBRARIES}
   emf4cpp-UMS_Data
   database-vishnu
   exception-vishnu
-  ums-api-client
+  vishnu-ums-api
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
