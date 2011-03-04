@@ -11,6 +11,7 @@
 #include "utils.hpp"
 #include <boost/bind.hpp>
 
+using namespace vishnu;
 
 /**
  * \brief To build options for the VISHNU configure option command
