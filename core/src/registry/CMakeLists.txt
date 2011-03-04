@@ -13,11 +13,7 @@ INCLUDE_DIRECTORIES(
   ${UTILVISHNU_SOURCE_DIR}
 )
 
-LINK_DIRECTORIES(
-)
-
-
-ADD_LIBRARY(register-vishnu
+ADD_LIBRARY(register-vishnu STATIC
   MapperRegistry.cpp
   Mapper.cpp
   UMSMapper.cpp
@@ -25,6 +21,4 @@ ADD_LIBRARY(register-vishnu
   IMSMapper.cpp
   TMSMapper.cpp
   )
-
-
-install( TARGETS register-vishnu DESTINATION lib )
+SET_TARGET_PROPERTIES(register-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")

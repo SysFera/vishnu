@@ -66,7 +66,7 @@ set(UMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptionsImpl.cpp
    )
-   
+
 set(UMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data_forward.hpp
@@ -96,7 +96,7 @@ set(UMS_Data_HEADERS
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data.hpp DESTINATION include/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data_forward.hpp DESTINATION include/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/UMS_DataFactory.hpp DESTINATION include/emf4cpp/UMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/UMS_DataPackage.hpp DESTINATION include/emf4cpp/UMS_Data)   
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/UMS_DataPackage.hpp DESTINATION include/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ConnectOptions.hpp DESTINATION include/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/Session.hpp DESTINATION include/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListSessions.hpp DESTINATION include/emf4cpp/UMS_Data)
@@ -116,11 +116,12 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/Configuration.hpp DESTINATION
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/OptionValue.hpp DESTINATION include/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptionsValues.hpp DESTINATION include/emf4cpp/UMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptions.hpp DESTINATION include/emf4cpp/UMS_Data)
-   
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} /opt/emf4cpp-0.0.2/bin/../include/emf4cpp /opt/emf4cpp-0.0.2/bin/../include/emf4cpp)
 
-add_library(emf4cpp-UMS_Data SHARED ${UMS_Data_HEADERS} ${UMS_Data_SOURCES})
+add_library(emf4cpp-UMS_Data STATIC ${UMS_Data_HEADERS} ${UMS_Data_SOURCES})
+set_target_properties(emf4cpp-UMS_Data PROPERTIES COMPILE_FLAGS "-fPIC")
+target_link_libraries(emf4cpp-UMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-UMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
-install(TARGETS emf4cpp-UMS_Data DESTINATION lib)
 
