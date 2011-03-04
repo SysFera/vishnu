@@ -23,8 +23,6 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
-  std::string machineDescription;
-
   std::string sessionKey;
 
   std::string sshPublicKeyFile;
@@ -42,23 +40,10 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(newMachine),_1));
   boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
+  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(newMachine),_1));
 
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription,1);
 
-
-  opt->add("sshPublicKeyFile,k",
-           "The the path to the SSH public key used by VISHNU to access local user accounts",
-           HIDDEN,
-           sshPublicKeyPath,
-           1);
-
-  opt->setPosition("sshPublicKeyFile",1);
-
-  opt->add("machineDescription,d",
-           "The description of the machine",
-           CONFIG,
-           machineDescription
-           );
 
   try{
     /**************  Parse to retrieve option values  ********************/
@@ -104,15 +89,7 @@ int main (int ac, char* av[]){
       }
     }
     
-    if(0==opt->count("machineDescription")){
-
-      cout << "Enter the Machine Description:\n ";
-
-      getline(cin, machineDescription);
-    }
-
-    newMachine.setMachineDescription(machineDescription);
-
+ std::cout <<"Machine description: " << newMachine.getMachineDescription() << std::endl;
 
     /************** Call UMS add machine service *******************************/
 
@@ -145,7 +122,7 @@ int main (int ac, char* av[]){
 
   catch(po::required_option& e){// a required parameter is missing
 
-    usage(*opt," name site language sshPublicKeyFile ","required parameter is missing");
+    usage(*opt," name site language sshPublicKeyFile machineDescription ","required parameter is missing");
 
   }
 
