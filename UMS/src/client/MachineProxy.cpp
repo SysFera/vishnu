@@ -47,12 +47,12 @@ int MachineProxy::add()
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -63,22 +63,20 @@ int MachineProxy::add()
     if(diet_string_get(diet_parameter(profile,2), &machineInString, NULL)){
       msg += " by receiving Machine serialized  message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
 
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   // CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -119,12 +117,12 @@ int MachineProxy::update()
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -134,17 +132,15 @@ int MachineProxy::update()
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
 
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
@@ -170,12 +166,12 @@ int MachineProxy::deleteMachine()
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -185,17 +181,15 @@ int MachineProxy::deleteMachine()
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg); 
+      raiseDietMsgException(msg); 
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected"); 
+    raiseDietMsgException(" the function diet_call is rejected"); 
   }
 
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }

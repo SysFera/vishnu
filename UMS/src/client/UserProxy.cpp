@@ -68,12 +68,12 @@ int UserProxy::add(UMS_Data::User& user)
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
   if(diet_string_set(diet_parameter(profile,1), userToString, DIET_VOLATILE)) {
     msg += "with userToString parameter "+std::string(userToString);
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
 
   //OUT Parameters
@@ -84,22 +84,20 @@ int UserProxy::add(UMS_Data::User& user)
     if(diet_string_get(diet_parameter(profile,2), &userInString, NULL)){
       msg += " by receiving User serialized  message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg); 
+      raiseDietMsgException(msg); 
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }  
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
 
-  /*To check the receiving message error*/ 
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/ 
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   // CREATE DATA MODEL
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -143,12 +141,12 @@ int UserProxy::update(const UMS_Data::User& user)
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(userToString.c_str()), DIET_VOLATILE)) {
     msg += "with userToString parameter "+userToString;
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -158,17 +156,15 @@ int UserProxy::update(const UMS_Data::User& user)
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
 
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
@@ -196,12 +192,12 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     errMsg(msg);
-    sendErrorMsg(msg);   
+    raiseDietMsgException(msg);   
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+userId;
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
 
   //OUT Parameters
@@ -211,16 +207,14 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);
+      raiseDietMsgException(msg);
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
@@ -245,19 +239,19 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
 
   if(diet_string_set(diet_parameter(profile,1), strdup(password.c_str()), DIET_VOLATILE)) {
     msg += "with password parameter "+password;
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
 
   if(diet_string_set(diet_parameter(profile,2), strdup(newPassword.c_str()), DIET_VOLATILE)) {
     msg += "with newPassword parameter "+newPassword;
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
 
   //OUT Parameters
@@ -267,16 +261,14 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);   
+      raiseDietMsgException(msg);   
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected"); 
+    raiseDietMsgException(" the function diet_call is rejected"); 
   }
-  /*To check the receiving message error*/   
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/   
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
@@ -301,13 +293,13 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     errMsg(msg);
-    sendErrorMsg(msg); 
+    raiseDietMsgException(msg); 
   }
 
   if(diet_string_set(diet_parameter(profile,1), strdup((user.getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+user.getUserId();
     errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -318,21 +310,19 @@ int UserProxy::resetPassword(UMS_Data::User& user)
     if(diet_string_get(diet_parameter(profile,2), &tmpPassword, NULL)){
       msg += " by receiving tmpPassWord message";
       errMsg(msg);
-      sendErrorMsg(msg);     
+      raiseDietMsgException(msg);     
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
       errMsg(msg);
-      sendErrorMsg(msg);     
+      raiseDietMsgException(msg);     
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected"); 
+    raiseDietMsgException(" the function diet_call is rejected"); 
   }
-  /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   /*To set the temporary password*/
   muser.setUserId(user.getUserId());
