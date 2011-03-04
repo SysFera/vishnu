@@ -162,11 +162,15 @@ same conditions as regards security.</para>
       <para>
 	After user registration by an administrator, the first step is the connection to VISHNU. The connection parameters are very important as it defined
 	the way to close the session automatically on timeout or on disconnect (from the terminal). When these parameters are set, the users can used all VISHNU commands
-	within the session created.
+	within the session created. All VISHNU commands are detailled on the next Chapter.
       </para>
     </section>
     <section>
       <title> Troubleshooting functions </title>
+      <para>Vishnu_connect : There is no session, 
+     temporary password.
+     vishnu_list_machine.  
+   </para>
     </section>
   </chapter>
   <reference>
