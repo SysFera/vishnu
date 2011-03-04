@@ -50,7 +50,7 @@ LINK_DIRECTORIES(
 
 # DATABASE LIBRARY
 
-ADD_LIBRARY(database-vishnu
+ADD_LIBRARY(database-vishnu STATIC
   ${DB_SRC}
 )
 
@@ -69,4 +69,4 @@ TARGET_LINK_LIBRARIES(database-vishnu  ${DB_LIBS})
 # Le test effectif n'a pas ete realisé car pas de base oracle ici
 
 
-install( TARGETS database-vishnu DESTINATION lib )
+# install( TARGETS database-vishnu DESTINATION lib )

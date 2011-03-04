@@ -14,7 +14,7 @@ link_directories(
 ${DATA_BASE_INCLUDE_DIR}
 )
 
-ADD_LIBRARY(utils-vishnu
+ADD_LIBRARY(utils-vishnu STATIC
   utilVishnu
   Options
   sessionUtils
@@ -27,4 +27,4 @@ database-vishnu
 exception-vishnu
 )
 
-install( TARGETS utils-vishnu DESTINATION lib )
+# install( TARGETS utils-vishnu DESTINATION lib )
