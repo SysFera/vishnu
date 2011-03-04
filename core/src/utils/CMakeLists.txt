@@ -16,6 +16,7 @@ ADD_LIBRARY(utils-vishnu STATIC
   Options
   sessionUtils
   )
+SET_TARGET_PROPERTIES(utils-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
 
 TARGET_LINK_LIBRARIES(
   utils-vishnu
