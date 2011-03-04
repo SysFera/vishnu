@@ -241,7 +241,7 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
   "'"+user->getUserId()+"','"+user->getPassword()+"','"
   + user->getFirstname()+"','"+user->getLastname()+"',"+
   convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-  "0, "+convertToString(user->getStatus())+");");
+  "1, "+convertToString(user->getStatus())+");");
 }
 
 /**

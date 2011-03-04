@@ -144,13 +144,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
     msg += "with queryParmetersToString parameter "+queryParmetersToString;
-    errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -159,24 +157,20 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += " by receiving listObjectInString message";
-      errMsg(msg);
-      sendErrorMsg(msg);
+      msg += "by receiving listObjectInString message";
+      raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
-      sendErrorMsg(msg); 
+      msg += "by receiving errorInfo message";
+      raiseDietMsgException(msg); 
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected"); 
+    raiseDietMsgException(" the function diet_call is rejected"); 
   }
 
   /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);   
+  raiseExceptionIfNotEmptyMsg(errorInfo);   
 
   //CREATE the ListOject
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
@@ -206,13 +200,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy.getSessionKey()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy.getSessionKey();
-    errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
     msg += "with mparameters parameter "+mparameters;
-    errMsg(msg);
-    sendErrorMsg(msg);
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -221,24 +213,20 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += " by receiving listObjectInString message";
-      errMsg(msg);
-      sendErrorMsg(msg);
+      msg += "by receiving listObjectInString message";
+      raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
-      sendErrorMsg(msg);
+      msg += "by receiving errorInfo message";
+      raiseDietMsgException(msg);
     }
-    //Print successfull message if erroInfo is empty
-    printSuccessMessage(errorInfo);
   }
   else {
-    sendErrorMsg(" the function diet_call is rejected");
+    raiseDietMsgException(" the function diet_call is rejected");
   }
 
   /*To check the receiving message error*/
-  checkErrorMsg(errorInfo);
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   //CREATE the ListOject
   UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();

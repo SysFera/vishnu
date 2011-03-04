@@ -5,26 +5,26 @@
  * \date February 2011
  */
 #include "utilsClient.hpp"
+#include "SystemException.hpp"
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
- * \fn void sendErrorMsg(const std::string& msg) 
+ * \fn void raiseDietMsgException(const std::string& msg) 
  * \param msg to spread 
  * \return raises an exception on error
  */
-void sendErrorMsg(const std::string& msg) {
-  std::string msgWithHead = "Error: "+msg;
-  UMSVishnuException e(1, msgWithHead);
+void raiseDietMsgException(const std::string& msg) {
+  UMSVishnuException e(ERRCODE_DIET, msg);
   throw e;
 }
 
 /**
  * \brief Function to split the receiving message into error code and message error 
- * \fn void checkErrorMsg(const std::string& msg) 
+ * \fn void raiseExceptionIfNotEmptyMsg(const std::string& msg) 
  * \param msg to split
  * \return raises an exception on error 
  */
-void checkErrorMsg(const std::string& msg) {
+void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
 
   if(msg.size() > 0 ) {
     size_t pos = msg.find('#');
