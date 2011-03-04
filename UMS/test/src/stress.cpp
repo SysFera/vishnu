@@ -5,6 +5,7 @@
 
 using namespace std;
 using namespace UMS_Data;
+using namespace vishnu;
 
 void stress(){
   int i;
