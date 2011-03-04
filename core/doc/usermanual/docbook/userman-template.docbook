@@ -8,16 +8,15 @@
       <productname>VISHNU</productname>
       <releaseinfo>1.0</releaseinfo>
       <date>February 2011</date>
+      
       <author>
-        <personname>
-          <firstname></firstname>
-          <surname>SysFera SAS</surname>
-        </personname>
-        <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
-        <address>
-          <email>info@sysfera.com</email>
-        </address>
+        <personname><firstname>Benjamin</firstname><surname>ISNARD</surname></personname>
       </author>
+      
+      <author>
+        <personname><firstname>Eugène </firstname><surname> PAMBA CAPO-CHICHI </surname></personname>
+      </author>
+      
       
       <title> VISHNU User Manual</title>
           
@@ -88,7 +87,7 @@ same conditions as regards security.</para>
           <para>Chapter 1 presents the document structure.</para>
         </listitem>
          <listitem>
-          <para>Chapter 2 describes the VISHNU software.</para>
+          <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
         </listitem>
 	<listitem>
           <para>Chapter 3 contains the VISHNU user commands.</para>
@@ -126,22 +125,7 @@ same conditions as regards security.</para>
 	</listitem>
       </itemizedlist>
     </para>
-   
-     <para> This Chapter is divided into three parts: </para>
-      <para>
-	<itemizedlist>
-	  <listitem>
-	    <para> Installation procedure </para>
-	  </listitem>   
-	  <listitem>
-	    <para> Sofware usage description </para> 
-	  </listitem>
-	  <listitem>
-	    <para> Troubleshooting </para>
-	  </listitem>
-	</itemizedlist>
-    </para>
-      
+    
    <section>
      <title> Installation procedure </title>
      
@@ -177,8 +161,8 @@ same conditions as regards security.</para>
       
       <para>
 	After user registration by an administrator, the first step is the connection to VISHNU. The connection parameters are very important as it defined
-	the way to close the session automatically on timeout or on disconnect (from the terminal). When these parameters are set, the users can used all VISHNU commands
-	within the session created. All VISHNU commands are detailled on the next Chapter.
+	the way to close the session automatically on timeout or on disconnect (from the terminal) to avoid endless session. When the previous parameters are set, the users can used all VISHNU commands
+	within the session created. Session can be also closed manually using the VISHNU close command. All VISHNU commands are detailled on the next Chapter.
       </para>
    
     </section>
