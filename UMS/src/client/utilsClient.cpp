@@ -5,6 +5,7 @@
  * \date February 2011
  */
 #include "utilsClient.hpp"
+#include "SystemException.hpp"
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
@@ -13,8 +14,7 @@
  * \return raises an exception on error
  */
 void raiseDietMsgException(const std::string& msg) {
-  std::string msgWithHead = "Error: "+msg;
-  UMSVishnuException e(1, msgWithHead);
+  UMSVishnuException e(ERRCODE_DIET, msg);
   throw e;
 }
 

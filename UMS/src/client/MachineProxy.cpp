@@ -46,12 +46,10 @@ int MachineProxy::add()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg); 
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -61,18 +59,16 @@ int MachineProxy::add()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &machineInString, NULL)){
-      msg += " by receiving Machine serialized  message";
-      errMsg(msg);
+      msg += "by receiving Machine serialized  message";
       raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -116,12 +112,10 @@ int MachineProxy::update()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -130,13 +124,12 @@ int MachineProxy::update()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -165,12 +158,10 @@ int MachineProxy::deleteMachine()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg); 
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -179,13 +170,12 @@ int MachineProxy::deleteMachine()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg); 
     }
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected"); 
+    raiseDietMsgException("DIET call failure"); 
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
