@@ -68,7 +68,7 @@ set(ecore_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypeParameter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypeParameterImpl.cpp
    )
-   
+
 set(ecore_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/ecore.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ecore_forward.hpp
@@ -96,35 +96,35 @@ set(ecore_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypeParameter.hpp
    )
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore.hpp DESTINATION include/emf4cpp/)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore_forward.hpp DESTINATION include/emf4cpp/)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EcoreFactory.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EcorePackage.hpp DESTINATION include/emf4cpp/ecore)   
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EAttribute.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EAnnotation.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EClass.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EClassifier.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EDataType.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EEnum.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EEnumLiteral.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EFactory.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EModelElement.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ENamedElement.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EObject.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EOperation.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EPackage.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EParameter.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EReference.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EStructuralFeature.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypedElement.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EStringToStringMapEntry.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EGenericType.hpp DESTINATION include/emf4cpp/ecore)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypeParameter.hpp DESTINATION include/emf4cpp/ecore)
-   
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore.hpp DESTINATION include/emf4cpp/)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore_forward.hpp DESTINATION include/emf4cpp/)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EcoreFactory.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EcorePackage.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EAttribute.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EAnnotation.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EClass.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EClassifier.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EDataType.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EEnum.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EEnumLiteral.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EFactory.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EModelElement.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ENamedElement.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EObject.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EOperation.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EPackage.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EParameter.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EReference.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EStructuralFeature.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypedElement.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EStringToStringMapEntry.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EGenericType.hpp DESTINATION include/emf4cpp/ecore)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypeParameter.hpp DESTINATION include/emf4cpp/ecore)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} . .)
 
 add_library(emf4cpp-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
-set_target_properties(emf4cpp-ecore PROPERTIES VERSION 0.0.1 SOVERSION 1)
+# set_target_properties(emf4cpp-ecore PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
-install(TARGETS emf4cpp-ecore DESTINATION lib)
+# install(TARGETS emf4cpp-ecore DESTINATION lib)
 

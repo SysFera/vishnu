@@ -1,12 +1,10 @@
 
 link_directories(${Boost_LIBRARY_DIRS}
-                  ${EMF4CPP_LIB}
-                  ${EMF4CPP_CPP_LIB}
                   ${CLI_SOURCE_DIR}
                 )
 include_directories(${Boost_INCLUDE_DIRS}
                     ${DIET_INCLUDE_DIR}
-										${EMF_DATA_DIR}
+                    ${EMF_DATA_DIR}
                     ${UMS_DATA_DIR}
                     ${EMF4CPP_INCLUDE_DIR}
                     ${API_SOURCE_DIR}
@@ -14,18 +12,18 @@ include_directories(${Boost_INCLUDE_DIRS}
                     ${VISHNU_EXCEPTION_INCLUDE_DIR}
                     ${CLI_SOURCE_DIR}
                     ${UTILVISHNU_SOURCE_DIR}
-                   )
+                  )
 
 add_library(utils-cli
-           utils
-           daemon_cleaner
-           configureOptionUtils
-           localAccountUtils
-           userUtils
-           machineUtils
-           listMachineUtils
-           listHistoryCmdUtils
-           )
+          utils
+          daemon_cleaner
+          configureOptionUtils
+          localAccountUtils
+          userUtils
+          machineUtils
+          listMachineUtils
+          listHistoryCmdUtils
+          )
 #declare all command lines provided
 
 set(ALLCLI connect reconnect close
@@ -45,29 +43,29 @@ set (CMDPREFIX vishnu_)
 
 macro(genCli NAME )
 
-	set(source_files ${NAME}
-			)
+  set(source_files ${NAME}
+      )
 
   set(CMDNAME ${CMDPREFIX}${NAME})
 
-	#Configuration de l'executable
-	add_executable (${CMDNAME}
-                	${source_files}
-                	)
+  #Configuration de l'executable
+  add_executable (${CMDNAME}
+                  ${source_files}
+                  )
 
-	#Configuration de l'edition de liens
+  #Configuration de l'edition de liens
   target_link_libraries(${CMDNAME}
-                      	${Boost_LIBRARIES}
+                        ${Boost_LIBRARIES}
                         ${VISHNU_EXCEPTION_LIB}
                         utils-cli
                         utils-vishnu
-                        ums-api-client
-			                	crypt
+                        vishnu-ums-api
+                        crypt
                         -pthread
                         )
   install_targets(/bin/
                   ${CMDNAME}
-                 )
+                )
 
 endmacro(genCli)
 
@@ -78,7 +76,5 @@ foreach(cli ${ALLCLI})
 genCli(${cli})
 
 endforeach(cli)
-
-install( TARGETS utils-cli DESTINATION lib )
 
 

@@ -53,17 +53,13 @@ macro( ums_test NAME )
     target_link_libraries( ${NAME}
       ${DIET_CLIENT_LIB}
       ${DIET_SERVER_LIB}
-      ${EMF4CPP_LIB}
-      ${EMF4CPP_CPP_LIB}
-      ${EMF4CPP_LIB}
-      ${EMF4CPP_CPP_LIB}
       ${LIBPQ_LIB}
       ${CLI_SOURCE_DIR}
       ${Boost_LIBRARIES}
       emf4cpp-UMS_Data
       database-vishnu
       exception-vishnu
-      ums-api-client
+      vishnu-ums-api
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
