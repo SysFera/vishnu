@@ -6,7 +6,8 @@
 using namespace std;
 
 boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & dietConfig,
-                                              StringcallBackType & fSite, StringcallBackType& fLanguage,int type){
+                                              StringcallBackType & fSite, StringcallBackType& fLanguage,
+                                              std::string& sshPublicKeyPath, StringcallBackType& fMachineDescription,int type){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -55,6 +56,29 @@ boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackT
   if (type){
     opt->setPosition("language",1);
   }
+
+  opt->add("sshPublicKeyFile,k",
+           "The the path to the SSH public key used by VISHNU to access local user accounts",
+           group,
+           sshPublicKeyPath,
+           type);
+
+  if(type){
+
+    opt->setPosition("sshPublicKeyFile",1);
+  }
+
+  opt->add("machineDescription,d",
+           "The description of the machine",
+           group,
+          fMachineDescription,
+          type);
+
+  if(type){
+    opt->setPosition("machineDescription",1);
+  }
+
+
 
 
   return opt;

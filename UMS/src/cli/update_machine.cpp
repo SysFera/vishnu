@@ -22,7 +22,9 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
-  std::string machineDescription;
+  std::string sshPublicKeyPath;
+
+  std::string sshPublicKeyFile;
 
   std::string sessionKey;
 
@@ -43,12 +45,12 @@ int main (int ac, char* av[]){
 
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
 
-  boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(upMachine),_1));
+  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(upMachine),_1));
 
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
 
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription);
 
 
   opt->add("machineId",
@@ -59,20 +61,11 @@ int main (int ac, char* av[]){
 
   opt->setPosition("machineId",-1);
 
-  opt->add("machineDescription,d",
+  opt->add("status,t",
            "The status of the machine",
            CONFIG,
            fStatus);
 
-  opt->add("status,t",
-           "The description of the machine",
-           CONFIG,
-           fStatus);
-
-  opt->add("sshPublicKeyFile,k",
-           "The the path to the SSH public key used by VISHNU to access local user accounts",
-           CONFIG,
-           fSshPublicKeyFile);
 
   try{
 
@@ -88,19 +81,39 @@ int main (int ac, char* av[]){
     /********  Process **************************/
 
 
-    if(opt->count("machineDescription")){//Fix me
+    checkVishnuConfig(*opt);
+    
+    if(opt->count("sshPublicKeyFile")){
 
-      cout << "Enter the Machine Description:\n ";
+      std::ifstream ifs (sshPublicKeyPath.c_str(),std::ifstream::in);
+      if (ifs.is_open()){
+        // get length of file:
+        ifs.seekg (0, ios::end);
+        size_t length = ifs.tellg();
+        ifs.seekg (0, ios::beg);
 
+        // allocate memory:
+        char* buffer = new char [length];
 
-      getline(cin, machineDescription);
+        // read data as a block:
+        ifs.read (buffer,length);
+        ifs.close();
 
-      upMachine.setMachineDescription(machineDescription);
+        sshPublicKeyFile = std::string(buffer);
+
+        delete[] buffer;
+
+        upMachine.setSshPublicKey(sshPublicKeyFile);
+      }
+      else{
+        std::cerr << "can not open the ssh public key file\n";
+        return 1;
+      }
+
 
     }
 
 
-    checkVishnuConfig(*opt);
 
     /************** Call UMS update service *******************************/
 
