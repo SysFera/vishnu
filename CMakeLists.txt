@@ -53,17 +53,6 @@ else (ORACLE_FOUND)
   set(ORACLE_DIR "" cache path "ORACLE installation path")
 endif(ORACLE_FOUND)
 
-# find_package(EMF4CPP)
-# if (EMF4CPP_FOUND)
-# else (EMF4CPP_FOUND)
-#   message("EM4CPP installation was not found. Define the EMF4CPP_DIR variable to continue.")
-#   message("     - You can define a EMF4CPP_DIR environment variable")
-#   message("     - You can pass it as argument to cmake:")
-#   message("       $ cmake <source root directory> -DEMF4CPP_DIR:PATH=/path/to/EMF4CPP")
-#   message("     - You can use the ccmake GUI")
-#   set(EMF4CPP_DIR "" cache path "EMF4CPP installation path")
-# endif(EMF4CPP_FOUND)
-
 find_package(
         Boost
 	1.45

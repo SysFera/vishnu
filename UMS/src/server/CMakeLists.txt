@@ -42,5 +42,3 @@ target_link_libraries(ums-server
   register-vishnu
   utils-vishnu
 )
-
-# install( TARGETS ums-server DESTINATION lib )

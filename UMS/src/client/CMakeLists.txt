@@ -30,5 +30,3 @@ target_link_libraries(ums-client-proxy
   exception-vishnu
   crypt
 )
-#
-# install( TARGETS ums-client-proxy DESTINATION lib )

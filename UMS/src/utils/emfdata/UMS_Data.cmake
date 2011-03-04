@@ -123,5 +123,4 @@ add_library(emf4cpp-UMS_Data STATIC ${UMS_Data_HEADERS} ${UMS_Data_SOURCES})
 target_link_libraries(emf4cpp-UMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-UMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
-# install(TARGETS emf4cpp-UMS_Data DESTINATION lib)
 
