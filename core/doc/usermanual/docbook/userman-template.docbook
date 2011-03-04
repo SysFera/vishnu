@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type="text/xsl"
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
+
+<book label="UMS.apim#MAN(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+   <info>
+      <title>User Manual</title>
+      <productname>VISHNU</productname>
+      <releaseinfo>1.0</releaseinfo>
+      <date>February 2011</date>
+      <author>
+        <personname>
+          <firstname></firstname>
+          <surname>SysFera SAS</surname>
+        </personname>
+        <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
+        <address>
+          <email>info@sysfera.com</email>
+        </address>
+      </author>
+      
+      <title> VISHNU User Manual</title>
+          
+      <revhistory>
+	  <revision>
+	    <revnumber>1</revnumber>
+	    <date>25/02/2011</date>
+	    <authorinitials>SysFera</authorinitials>
+	    <revdescription>
+		
+	      <para> The first version of the VISHNU user manual which concerns only the UMS package.</para></revdescription>
+	  </revision>
+	</revhistory>
+      
+      <copyright>
+              <year>2011</year>
+              <holder>SysFera SAS</holder>
+      </copyright>
+      <legalnotice>
+              <para>These manual pages are provided under the following conditions:</para>
+              <para>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</para>
+              <orderedlist>
+                      <listitem>
+                              <para>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</para>
+                      </listitem>
+                      <listitem>
+                              <para>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para>
+                      </listitem>
+              </orderedlist>
+<para>This software is governed by the CECILL licence under French law and
+abiding by the rules of distribution of free software.  You can  use, 
+modify and/ or redistribute the software under the terms of the CeCILL
+license as circulated by CEA, CNRS and INRIA at the following URL
+&quot;http://www.cecill.info&quot;.</para>
+<para>As a counterpart to the access to the source code and  rights to copy,
+modify and redistribute granted by the license, users are provided only
+with a limited warranty  and the software's author,  the holder of the
+economic rights,  and the successive licensors  have only  limited
+liability.</para>
+<para>In this respect, the user's attention is drawn to the risks associated
+with loading,  using,  modifying and/or developing or reproducing the
+software by the user in light of its specific status of free software,
+that may mean  that it is complicated to manipulate,  and  that  also
+therefore means  that it is reserved for developers  and  experienced
+professionals having in-depth computer knowledge. Users are therefore
+encouraged to load and test the software's suitability as regards their
+requirements in conditions enabling the security of their systems and/or 
+data to be ensured and,  more generally, to use and operate it in the 
+same conditions as regards security.</para>
+       </legalnotice>
+  </info>
+  
+  
+  <chapter>
+    <title> Document presentation</title>
+    <section>
+     <title>Document objectives</title>
+     <para>
+     This documents is a quick start guide of VISHNU software for users. The main objective of this document is to describe 
+     the VISHNU installation procedure and the way to use it.
+     </para>
+   </section>
+   
+   <section>
+      <title>Document structure</title>
+	<itemizedlist>
+	  <listitem>
+          <para>Chapter 1 presents the document structure.</para>
+        </listitem>
+         <listitem>
+          <para>Chapter 2 describes the VISHNU software.</para>
+        </listitem>
+	<listitem>
+          <para>Chapter 3 contains the VISHNU user commands.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    
+    <section>
+      <title>References</title>
+      <para><itemizedlist>
+        <listitem>
+          <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
+        </listitem>
+      </itemizedlist></para>
+    </section>
+  </chapter>
+  
+  <!-- PART 1 : VISHNU Presentation -->
+  <chapter>
+    <title>VISHNU Software</title>
+    <para>
+     The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high computing platform by providing the following services:
+     <itemizedlist>
+	<listitem>
+	  <para>User management services (UMS): authentication and session management.</para>
+	</listitem>
+	<listitem>
+	  <para>Information management services (IMS): monitoring and control services.</para>
+	</listitem>
+	<listitem>
+	  <para>Tasks management services (TMS): submission of tasks (jobs) on computing resources.</para>
+	</listitem>
+	<listitem>
+	  <para>File management services (FMS): display and transfer of files between storage resources.</para>
+	</listitem>
+      </itemizedlist>
+    </para>
+   
+     <para> This Chapter is divided into three parts: </para>
+      <para>
+	<itemizedlist>
+	  <listitem>
+	    <para> Installation procedure </para>
+	  </listitem>   
+	  <listitem>
+	    <para> Sofware usage description </para> 
+	  </listitem>
+	  <listitem>
+	    <para> Troubleshooting </para>
+	  </listitem>
+	</itemizedlist>
+    </para>
+      
+   <section>
+     <title> Installation procedure </title>
+     
+     <para> 
+       This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
+       which must be installed before.
+      </para>
+  
+     <para> Installation requirements:</para>
+     <itemizedlist>
+       <listitem>
+	    <para> Cmake V2.6 </para>
+      </listitem>
+      <listitem>
+	    <para> OmniORB </para>
+      </listitem>
+      <listitem>
+	<para> SysFera-DS software available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink></para>
+      </listitem>
+      <listitem>
+	    <para> Boost V1.45 (program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random) </para>
+	  </listitem>
+    </itemizedlist>
+   </section>
+   
+   <section>
+     <title> Sofware usage description </title>
+      <para>
+	All VISHNU users needs to be authenticate by the user management services before using VISHNU. In this way, all users must be added by 
+	a VISHNU administrator. The new VISHNU user receives userId and password by email. The password is temporary and must be changed at the first 
+	connection.
+      </para>
+      
+      <para>
+	After user registration by an administrator, the first step is the connection to VISHNU. The connection parameters are very important as it defined
+	the way to close the session automatically on timeout or on disconnect (from the terminal). When these parameters are set, the users can used all VISHNU commands
+	within the session created.
+      </para>
+   
+    </section>
+    
+   <section>
+     <title> Troubleshooting functions </title>
+     Vishnu_connect : There is no session, 
+     temporary password.
+     vishnu_list_machine.  
+     
+      Provide troubleshooting tips. Explain the meanings of any errors the user might encounter, 
+      how to solve the issue, and how to prevent it in the future. This is also the place to include contact and help desk information.
+  </section>
+ </chapter>
+ <!-- PART 1 : VISHNU Presentation -->
+  
+</book>
