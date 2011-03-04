@@ -54,7 +54,6 @@ int ConfigurationProxy::save()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -64,18 +63,16 @@ int ConfigurationProxy::save()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,1), &configurationInString, NULL)){
-      msg += " by receiving configurationInString message";
-      errMsg(msg);
+      msg += "by receiving configurationInString message";
       raiseDietMsgException(msg);      
     }
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -142,12 +139,10 @@ int ConfigurationProxy::restore(bool fromFile)
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg); 
   }
   if(diet_string_set(diet_parameter(profile,1), configurationInString, DIET_VOLATILE)) {
     msg += "with configurationInString parameter "+std::string(configurationInString);
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   //OUT Parameters
@@ -155,13 +150,12 @@ int ConfigurationProxy::restore(bool fromFile)
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg); 
     }
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

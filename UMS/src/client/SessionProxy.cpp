@@ -154,34 +154,28 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((user.getData().getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+user.getData().getUserId();
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup((user.getData().getPassword()).c_str()), DIET_VOLATILE)) {
     msg += "with password parameter";
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
     msg += "with sshKey parameter sshKey path";
-    errMsg(msg);
     raiseDietMsgException(msg);
   } 
   if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
     msg += "with hostname parameter "+std::string(hostname);
-    errMsg(msg);
     raiseDietMsgException(msg);
   }  
   if(connect) {
     if(diet_string_set(diet_parameter(profile,4), strdup(optionsToString.c_str()), DIET_VOLATILE)){
       msg += "with optionsToString parameter ";
-      errMsg(msg);
       raiseDietMsgException(msg);
     } 
   } else {
     if(diet_string_set(diet_parameter(profile,4), strdup((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
       msg += "with sessionId parameter "+msession.getSessionId();
-      errMsg(msg);
       raiseDietMsgException(msg);
     }
   }
@@ -191,17 +185,15 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
-      msg += " by receiving sessionInString value";
-      errMsg(msg);
+      msg += "by receiving sessionInString value";
       raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
-      msg += " to receiving errorInfo message";
-      errMsg(msg);
+      msg += "to receiving errorInfo message";
       raiseDietMsgException(msg);
     }
   } else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -266,7 +258,6 @@ int SessionProxy::close()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -275,12 +266,11 @@ int SessionProxy::close()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
   } else {  
-    raiseDietMsgException(" the function diet_call is rejected"); 
+    raiseDietMsgException("DIET call failure"); 
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

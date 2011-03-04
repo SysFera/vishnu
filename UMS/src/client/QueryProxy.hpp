@@ -144,12 +144,10 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
     msg += "with queryParmetersToString parameter "+queryParmetersToString;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -159,13 +157,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += " by receiving listObjectInString message";
-      errMsg(msg);
+      msg += "by receiving listObjectInString message";
       raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg); 
     }
   }
@@ -204,12 +200,10 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy.getSessionKey()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy.getSessionKey();
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
     msg += "with mparameters parameter "+mparameters;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -219,13 +213,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += " by receiving listObjectInString message";
-      errMsg(msg);
+      msg += "by receiving listObjectInString message";
       raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
   }

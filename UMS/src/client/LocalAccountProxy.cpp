@@ -53,12 +53,10 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(localAccountToString.c_str()), DIET_VOLATILE)) {
     msg += "with localAccountToString parameter "+localAccountToString;
-    errMsg(msg);
     raiseDietMsgException(msg); 
   }
 
@@ -71,27 +69,24 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   if(!diet_call(profile)) {
     if(isNewLocalAccount) {
       if(diet_string_get(diet_parameter(profile,2), &sshPublicKey, NULL)){
-        msg += " by receiving sshPluciKey content";
-        errMsg(msg);
+        msg += "by receiving sshPluciKey content";
         raiseDietMsgException(msg);
       }
       if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-        msg += " by receiving errorInfo message";
-        errMsg(msg);
+        msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
     }
     else {
       if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        msg += " by receiving errorInfo message";
-        errMsg(msg);
+        msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
     }
     msshPublicKey = sshPublicKey;
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -142,17 +137,14 @@ int LocalAccountProxy::deleteLocalAccount()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+userId;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,2), strdup(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
-    errMsg(msg);
     raiseDietMsgException(msg);
   }
 
@@ -161,13 +153,12 @@ int LocalAccountProxy::deleteLocalAccount()
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += " by receiving errorInfo message";
-      errMsg(msg);
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg); 
     }
   }
   else {
-    raiseDietMsgException(" the function diet_call is rejected");
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

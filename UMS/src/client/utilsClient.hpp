@@ -19,7 +19,7 @@
  * \param msg to print 
  */
 inline void errMsg(const std::string& msg) {
-  std::cerr << "Error line " << __LINE__-2  << " in file " << __FILE__ << " with message: ";
+  std::cerr << "Error line " << __LINE__-1  << " in file " << __FILE__ << " with message: ";
   std::cerr << std::endl;
   std::cerr << msg << std::endl;
 }
