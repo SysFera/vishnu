@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_SUITE( test_suite )
 //BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
 using namespace std;
 using namespace UMS_Data;
-
+using namespace vishnu;
 
 
 BOOST_AUTO_TEST_CASE( my_test )

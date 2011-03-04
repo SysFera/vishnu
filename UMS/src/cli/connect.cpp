@@ -15,6 +15,7 @@
 namespace po = boost::program_options;
 
 using namespace std;
+using namespace vishnu;
 
 int main (int ac, char* av[]){
 
