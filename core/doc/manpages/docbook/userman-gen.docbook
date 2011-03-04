@@ -132,14 +132,8 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Unknown user&quot; [20]</term>
-            <listitem>
-              <para></para>
-            </listitem>
+            <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;The userId is unknown&quot; [21]</term>
@@ -147,9 +141,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
           </varlistentry>
           <varlistentry>
             <term>&quot;The user is locked&quot; [23]</term>
-            <listitem>
-              <para></para>
-            </listitem>
+            <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;The user is not an administrator&quot; [25]</term>
@@ -208,20 +200,12 @@ commands in that session) by setting the session close policy (at connection tim
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;Unknown user&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
-            <listitem>
-              <para></para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;The user is locked&quot; [23]</term>
-            <listitem>
-              <para></para>
-            </listitem>
+            <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;The session key is unrecognized&quot; [28]</term>
@@ -287,7 +271,7 @@ the session (e.g. job submission or file transfers). After the session is closed
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -349,20 +333,12 @@ the session (e.g. job submission or file transfers). After the session is closed
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;Unknown user&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
-            <listitem>
-              <para></para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;The user is locked&quot; [23]</term>
-            <listitem>
-              <para></para>
-            </listitem>
+            <listitem/>
           </varlistentry>
         </variablelist>
       </refsect1>
@@ -416,7 +392,7 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -511,6 +487,10 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The userId is unknown&quot; [21]</term>
             <listitem/>
           </varlistentry>
@@ -577,7 +557,7 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -658,7 +638,7 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -739,7 +719,7 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -834,7 +814,7 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -915,7 +895,7 @@ homeDirectory path must be provided.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1048,7 +1028,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1110,7 +1090,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The service was performed  successfully&quot; [0]</term>
+            <term>&quot;There is no open session in this terminal&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
