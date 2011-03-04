@@ -32,6 +32,7 @@ bfs::path proc_dir("/proc");
 
 
 using namespace std;
+using namespace vishnu;
 
 /**
  * \brief Check if the pid exists
