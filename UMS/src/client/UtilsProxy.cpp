@@ -20,21 +20,21 @@
 UtilsProxy::UtilsProxy()
 {
   mcfg  = NULL;
-  margc = NULL;
+  margc = 0;
   margv = NULL;
 }
 
 /**
  * \fn UtilsProxy(char* cfg,
  *                int argc,
-                  char** argv)
+ char** argv)
  * \param cfg The SYSFERA-DS configuration file
  * \param argc The number of arguments of the program
  * \param argv The list of arguments
  * \brief Constructor
  */
 UtilsProxy::UtilsProxy(char* cfg, int argc, char** argv):
-mcfg(cfg), margc(argc), margv(argv)
+  mcfg(cfg), margc(argc), margv(argv)
 {
 }
 
@@ -44,7 +44,7 @@ mcfg(cfg), margc(argc), margv(argv)
  * \brief Constructor
  */
 UtilsProxy::UtilsProxy(const std::string& filePath):
-mfilePath(filePath)
+  mfilePath(filePath)
 {
   mcfg = NULL;
   margc = 0;
@@ -77,7 +77,7 @@ UtilsProxy::initialize() {
  */
 void
 UtilsProxy::finalize() {
- diet_finalize();
+  diet_finalize();
 }
 /**
  * \brief Function to initialize the database
@@ -98,7 +98,7 @@ UtilsProxy::restore() {
     char* tmp = new char[READSIZE];
     file.getline(tmp, READSIZE);
     if (strcmp(tmp, "")==0){
-	break;
+      break;
     }
     profile = diet_profile_alloc("restore", 0, 0, 0);
     //IN Parameters

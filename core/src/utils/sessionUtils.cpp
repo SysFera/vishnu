@@ -186,7 +186,7 @@ getLastSession(const std::string& terminal){
 
   if(allSessions.empty()){
 
-    throw std::runtime_error("There is no open session");
+    throw std::runtime_error("There is no open session in this terminal");
 
   }
 
@@ -229,7 +229,7 @@ removeLastSession(const std::string & terminal){
 
       file.close();
     }
-    std::cerr << "all sessions have been closed\n"; 
+    throw std::runtime_error( "all sessions in this terminal have been closed"); 
   }
 
 }

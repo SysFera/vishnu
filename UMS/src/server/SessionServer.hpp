@@ -199,5 +199,13 @@ public:
   */
   int
   solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::string numuserId);
+  /**
+  * \brief Function to change the closure connection mode disconnet to timeout
+  * \fn int disconnetToTimeout(UserServer user)
+  * \param user The object which manipulates user information
+  * \return the new connection parameters are registered on the session data structure
+  */
+  int
+  disconnetToTimeout(UserServer user);
 };
 #endif

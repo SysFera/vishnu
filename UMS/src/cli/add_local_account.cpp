@@ -18,10 +18,6 @@ using namespace std;
 
 int main (int ac, char* av[]){
 
-
-
-
-
   /******* Parsed value containers ****************/
 
   string dietConfig;
@@ -39,19 +35,14 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(newAcLogin),_1));
   boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
 
-
-
   /*****************Out parameters***/
 
   std::string sshPublicKey;
-
-
 
   /**************** Describe options *************/
 
   boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
                                                          fAcLogin,fSshKeyPath,fHomeDirectory,1);
-
 
   try {
     /**************  Parse to retrieve option values  ********************/
@@ -61,8 +52,6 @@ int main (int ac, char* av[]){
     opt->parse_env(env_name_mapper());
 
     opt->notify();
-
-
 
     /********  Process **************************/
 

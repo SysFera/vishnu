@@ -203,6 +203,7 @@
       <resultCodes name="ERRCODE_ROOT_USER_ONLY" description="Command authorized for VISHNU root user only" value="44" diagnostic=""/>
       <resultCodes name="ERRCODE_USER_ALREADY_LOCKED" description="Trying to lock a user account that is already locked" value="24" diagnostic=""/>
       <resultCodes name="ERRCODE_MACHINE_ALREADY_LOCKED" description="Trying to lock a machine that is already locked" value="35" diagnostic=""/>
+      <resultCodes name="CLI_ERROR_NO_SESSION" description="There is no open session in this terminal" usage="CLI_ONLY" diagnostic=""/>
     </resultCodeList>
   </modules>
   <envVariableList>
