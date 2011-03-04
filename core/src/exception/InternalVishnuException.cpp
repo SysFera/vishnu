@@ -14,7 +14,8 @@ InternalVishnuException::InternalVishnuException(){
 
 std::string
 InternalVishnuException::getMsg(){
-  if (mval>=0 && mval<INNBERR)
+  if (mval>=0 && mval<INNBERR){
     return mp[mval];
+  }
   return "Unknown Internal error code.\n";
 }

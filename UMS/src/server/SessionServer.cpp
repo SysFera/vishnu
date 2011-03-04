@@ -157,7 +157,7 @@ int SessionServer::close() {
 
   std::string sqlCommand = "UPDATE vsession SET state=0 WHERE sessionkey='";
   int state;
-
+  std::string closePolicyStr = "";
 
   UserServer user = UserServer(SessionServer(msession.getSessionKey()));
   CommandServer commanderServer = CommandServer(SessionServer(msession.getSessionKey()));
@@ -174,10 +174,18 @@ int SessionServer::close() {
         sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP"
         " WHERE sessionkey='"+msession.getSessionKey()+"';");
         mdatabaseVishnu->process(sqlCommand.c_str());
-      }
+      }//END if no running commands
       else {
-        UMSVishnuException e (ERRCODE_COMMAND_RUNNING);
-        throw e;
+        //To get the close policy associated to the session
+        closePolicyStr = getAttribut("where sessionkey='"+msession.getSessionKey()+"'", "closepolicy");
+        //If the session close policy is CLOSE_ON_DISCONNECT
+        if (convertToInt(closePolicyStr) == 2) {
+          disconnetToTimeout(user);
+        } //END If the session close policy is CLOSE_ON_DISCONNECT
+        else {
+          UMSVishnuException e (ERRCODE_COMMAND_RUNNING);
+          throw e;
+        }
       }
     } //if the session is not already closed
     else {
@@ -458,3 +466,34 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
   }
   return 0;
 }
+
+/**
+* \brief Function to change the closure connection mode disconnet to timeout
+* \fn int disconnetToTimeout(UserServer user)
+* \param user The object which manipulates user information
+* \return the new connection parameters are registered on the session data structure
+*/
+int
+SessionServer::disconnetToTimeout(UserServer user) {
+
+  OptionValueServer optionValueServer;
+  std::string numuserId;
+
+  //To change the session close policy on CLOSE_ON_TIMEOUT on the database
+  mdatabaseVishnu->process("UPDATE vsession SET closepolicy=1"
+  " WHERE sessionkey='"+msession.getSessionKey()+"';");
+
+  //To change the session close policy on CLOSE_ON_TIMEOUT on the msession object
+  msession.setClosePolicy(1);
+
+  numuserId = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
+  " and pwd='"+user.getData().getPassword()+"'");
+
+  //To get the timeout
+  msession.setTimeout(optionValueServer.getClosureInfo(numuserId, "VISHNU_TIMEOUT"));
+  mdatabaseVishnu->process("UPDATE vsession SET timeout="+convertToString(msession.getTimeout())+
+  " WHERE sessionkey='"+msession.getSessionKey()+"';");
+
+  return 0;
+}
+
