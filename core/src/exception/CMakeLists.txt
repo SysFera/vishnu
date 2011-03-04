@@ -14,10 +14,6 @@ ADD_LIBRARY(exception-vishnu STATIC
  InternalVishnuException.cpp
 )
 
-
-# INSTALL( TARGETS exception-vishnu DESTINATION lib )
-
-
 INSTALL( FILES
     VishnuException.hpp
     UserException.hpp
