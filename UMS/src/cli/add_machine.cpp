@@ -18,8 +18,6 @@ using namespace vishnu;
 int main (int ac, char* av[]){
 
 
-
-
   /******* Parsed value containers ****************/
 
   string dietConfig;
@@ -83,8 +81,10 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
       addMachine(sessionKey,newMachine);
-
+  
       cout << "The machine identifier is " << newMachine.getMachineId() << endl;
+      
+      printSuccessMessage();
 
     }
 

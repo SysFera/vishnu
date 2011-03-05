@@ -17,6 +17,8 @@ int main (int ac, char* av[]){
   try {
 
     commonConfigure(opt,  ac,  av,&configureOption);
+      
+    printSuccessMessage();
 
 
   }

@@ -107,7 +107,7 @@ private :
    */
   Statement   *mstmt;
   /**
-   * The result of a request
+   * \brief The result of a request
    */
   ResultSet   *mres;
 

@@ -94,8 +94,6 @@ int main (int ac, char* av[]){
 
     if (opt->count("adminListOption")){
 
-      cout <<"It is an admin list option " << endl;
-
       listOptions.setAdminListOption(true);
     }
 
@@ -120,9 +118,8 @@ int main (int ac, char* av[]){
       listOptions.setEndDateOption(string_to_time_t(endDateOption));
     }
 
-    
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS list sessions service *******************************/
 
 
     // initializing DIET
@@ -143,9 +140,7 @@ int main (int ac, char* av[]){
 
       listSessions(sessionKey,listSession,listOptions);
 
-
     }
-
 
 
     // Display the list
@@ -158,6 +153,7 @@ int main (int ac, char* av[]){
       }
     }
 
+    printSuccessMessage();
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error

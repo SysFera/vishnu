@@ -59,7 +59,7 @@ int main (int ac, char* av[]){
     checkVishnuConfig(*opt);
 
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS update local account service************/
 
     // initializing DIET
 
@@ -79,6 +79,7 @@ int main (int ac, char* av[]){
 
       updateLocalAccount(sessionKey,upAcLogin);
 
+      printSuccessMessage();
 
     }
 

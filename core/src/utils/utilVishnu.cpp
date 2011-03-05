@@ -17,8 +17,7 @@ namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
 /**
 * \brief Function to convert a string to int
-* \fn    std::string convertToString(const T& val);
-* \param  val a value to convert to string
+* \param  val a value to convert to int
 * \return int value of the corresponding string
 */
 int

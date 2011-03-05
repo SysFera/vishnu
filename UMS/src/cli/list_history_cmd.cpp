@@ -82,7 +82,7 @@ int main (int ac, char* av[]){
       listOptions.setEndDateOption(string_to_time_t(endDateOption));
     }
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS list history command service *******************************/
 
     // initializing DIET
 
@@ -100,7 +100,6 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
       listHistoryCmd(sessionKey,listCmd,listOptions);
-
 
     }
 

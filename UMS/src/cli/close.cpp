@@ -58,7 +58,7 @@ int main (int ac, char* av[]){
 
     checkVishnuConfig(opt);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS close service *******************************/
 
     
        if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {

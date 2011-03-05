@@ -124,7 +124,7 @@ private :
   /////////////////////////////////
 
   /**
-   * The pool of connection
+   * \brief The pool of connection
    */
   pool_t mpool[POOLSIZE];
 
@@ -132,6 +132,7 @@ private :
 //  * \brief A PostgreSQL structure
 //  */
 //  PGconn* mconn;
+  
   /**
    * \brief The host of the base
    */

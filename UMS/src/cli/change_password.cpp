@@ -56,9 +56,7 @@ int main (int ac, char* av[]){
     opt.notify();
 
 
-
     /********  Process **************************/
-
 
     if (opt.count("help")){
 
@@ -68,16 +66,13 @@ int main (int ac, char* av[]){
 
     }
 
-
     checkVishnuConfig(opt);
-
-
 
     oldPassword=vishnu::takePassword("old password: ");
 
     newPassword=vishnu::takePassword("new password: ");
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS change password service *******************************/
 
 
     // initializing DIET
@@ -90,8 +85,9 @@ int main (int ac, char* av[]){
 
 
 
-   changePassword(userId,oldPassword, newPassword);
+    changePassword(userId,oldPassword, newPassword);
 
+    printSuccessMessage();
 
   }// End of try bloc
 

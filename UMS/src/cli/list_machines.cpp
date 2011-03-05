@@ -63,15 +63,7 @@ int main (int ac, char* av[]){
 
     if (opt->count("listAllmachine")){
 
-      cout <<"We nedd to list all VISHNU machines " << endl;
-
       listOptions.setListAllmachine(true);
-    }
-
-
-    if(opt->count("sessionKey")){
-
-      cout <<"the session key is : " << sessionKey << endl;
     }
 
 
@@ -119,6 +111,7 @@ int main (int ac, char* av[]){
       }
     }
 
+      printSuccessMessage();
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error

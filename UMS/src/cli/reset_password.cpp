@@ -30,7 +30,6 @@ int main (int ac, char* av[]){
   opt->setPosition("userId",-1);
 
 
-
   try {
 
     /**************  Parse to retrieve option values  ********************/
@@ -43,19 +42,9 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-    if (opt->count("userId")){
-
-      cout <<"The user identifier is " << userId << endl;
-
-    }
-
-
-
     checkVishnuConfig(*opt);
 
-
-
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS reset Password service *******************************/
 
 
     // initializing DIET
@@ -76,6 +65,7 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
       std::string tmpPassword;
       resetPassword(sessionKey,userId, tmpPassword);
+      printSuccessMessage();
     }
 
 

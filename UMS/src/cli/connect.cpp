@@ -82,7 +82,7 @@ int main (int ac, char* av[]){
 
     if(0==opt->count("password")){
 
-    password= vishnu::takePassword("password: ");// uses getpass which is obsolete.
+    password= vishnu::takePassword("password: ");
     
     }
 

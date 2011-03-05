@@ -78,8 +78,6 @@ int main (int ac, char* av[]){
 
     if (opt.count("listAllDeftValue")){
 
-      cout <<"It is an admin list option " << endl;
-
       lsOptions.setListAllDeftValue(true);
     }
 
@@ -93,7 +91,7 @@ int main (int ac, char* av[]){
       return 0;
     }
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS list options service *******************************/
 
     // initializing DIET
 
@@ -128,8 +126,7 @@ int main (int ac, char* av[]){
       }
     }
 
-
-
+    printSuccessMessage();
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error

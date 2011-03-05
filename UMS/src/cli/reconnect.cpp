@@ -91,6 +91,8 @@ int main (int ac, char* av[]){
     // store the session information
 
     storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
+    
+    printSuccessMessage();
 
 
   }// End of try bloc
