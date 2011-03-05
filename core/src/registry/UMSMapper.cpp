@@ -393,10 +393,17 @@ UMSMapper::decodeSaveConf(vector<int> separator, const string& msg){
 
 string
 UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){
+  string a;
   string res = string("");
   res += (mmap.find(VISHNU_RESTORE_CONFIGURATION))->second;
   res += " ";
-  res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  ecorecpp::parser::parser parser;
+  Configuration_ptr ac = parser.load(std::string(a))->as< Configuration >();
+
+  res += ac->getFilePath();
+
   return res;
 }
 

@@ -24,11 +24,7 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
-  std::string machineDescription;
-
   std::string sessionKey;
-
-  std::string sshPublicKeyFile;
 
   std::string sshPublicKeyPath;
 
@@ -43,23 +39,10 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(newMachine),_1));
   boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
+  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(newMachine),_1));
 
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,1);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription,1);
 
-
-  opt->add("sshPublicKeyFile,k",
-           "The the path to the SSH public key used by VISHNU to access local user accounts",
-           HIDDEN,
-           sshPublicKeyPath,
-           1);
-
-  opt->setPosition("sshPublicKeyFile",1);
-
-  opt->add("machineDescription,d",
-           "The description of the machine",
-           CONFIG,
-           machineDescription
-           );
 
   try{
     /**************  Parse to retrieve option values  ********************/
@@ -76,43 +59,9 @@ int main (int ac, char* av[]){
 
     checkVishnuConfig(*opt);
 
-    // read the public key file from the public key path
+    // read the public key file from the public key path and set the neMachine
 
-    {
-      std::ifstream ifs (sshPublicKeyPath.c_str(),std::ifstream::in);
-      if (ifs.is_open()){
-        // get length of file:
-        ifs.seekg (0, ios::end);
-        size_t length = ifs.tellg();
-        ifs.seekg (0, ios::beg);
-
-        // allocate memory:
-        char* buffer = new char [length];
-
-        // read data as a block:
-        ifs.read (buffer,length);
-        ifs.close();
-
-        sshPublicKeyFile = std::string(buffer);
-
-        delete[] buffer;
-
-        newMachine.setSshPublicKey(sshPublicKeyFile);
-      }
-      else{
-        std::cerr << "can not open the ssh public key file\n";
-        return 1;
-      }
-    }
-    
-    if(0==opt->count("machineDescription")){
-
-      cout << "Enter the Machine Description:\n ";
-
-      getline(cin, machineDescription);
-    }
-
-    newMachine.setMachineDescription(machineDescription);
+    newMachine.setSshPublicKey(get_file_content(sshPublicKeyPath));
 
 
     /************** Call UMS add machine service *******************************/
@@ -146,7 +95,7 @@ int main (int ac, char* av[]){
 
   catch(po::required_option& e){// a required parameter is missing
 
-    usage(*opt," name site language sshPublicKeyFile ","required parameter is missing");
+    usage(*opt," name site language sshPublicKeyFile machineDescription ","required parameter is missing");
 
   }
 

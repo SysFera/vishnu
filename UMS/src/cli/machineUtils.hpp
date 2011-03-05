@@ -15,8 +15,8 @@ class Options;
 typedef  boost::function1<void,std::string> StringcallBackType;
 
 boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & dietConfig,
-                                                   StringcallBackType & fSite, StringcallBackType& fLanguage,int type=0);
-
+                                              StringcallBackType & fSite, StringcallBackType& fLanguage,
+                                              std::string& sshPublicKeyPath, StringcallBackType& fMachineDescription,int type=0);
 
 
 

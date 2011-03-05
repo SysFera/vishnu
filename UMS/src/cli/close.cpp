@@ -56,13 +56,6 @@ int main (int ac, char* av[]){
     }
 
 
-    if (opt.count("sessionKey")){
-
-      cout <<"your session key is " << sessionKey << endl;
-    }
-
-
-
     checkVishnuConfig(opt);
 
     /************** Call UMS connect service *******************************/
@@ -99,6 +92,12 @@ int main (int ac, char* av[]){
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error
+
+    if(ERRCODE_SESSIONKEY_EXPIRED==e.getMsgI()){
+    
+      std::string sessionFile=getSessionLocation(getppid());
+      removeLastSession(sessionFile);
+    }
 
     errorUsage(av[0], e.getMsg(),EXECERROR);
 

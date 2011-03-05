@@ -23,18 +23,16 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
-  std::string machineDescription;
+  std::string sshPublicKeyPath;
 
   std::string sessionKey;
-
 
   /********** EMF data ************/
 
   UMS_Data::Machine upMachine;
 
 
-
-  /**************** Describe options *************/
+  /**************** Callback functions *************/
 
   boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(upMachine),_1));
 
@@ -44,12 +42,12 @@ int main (int ac, char* av[]){
 
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
 
-  boost::function1<void,string> fSshPublicKeyFile( boost::bind(&UMS_Data::Machine::setSshPublicKey,boost::ref(upMachine),_1));
+  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(upMachine),_1));
 
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
-
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage);
+  // Describe options
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription);
 
 
   opt->add("machineId",
@@ -60,20 +58,11 @@ int main (int ac, char* av[]){
 
   opt->setPosition("machineId",-1);
 
-  opt->add("machineDescription,d",
+  opt->add("status,t",
            "The status of the machine",
            CONFIG,
            fStatus);
 
-  opt->add("status,t",
-           "The description of the machine",
-           CONFIG,
-           fStatus);
-
-  opt->add("sshPublicKeyFile,k",
-           "The the path to the SSH public key used by VISHNU to access local user accounts",
-           CONFIG,
-           fSshPublicKeyFile);
 
   try{
 
@@ -89,19 +78,17 @@ int main (int ac, char* av[]){
     /********  Process **************************/
 
 
-    if(opt->count("machineDescription")){//Fix me
+    checkVishnuConfig(*opt);
+    
+    if(opt->count("sshPublicKeyFile")){
 
-      cout << "Enter the Machine Description:\n ";
+      // read the public key file from the public key path and set the neMachine
 
+      upMachine.setSshPublicKey(get_file_content(sshPublicKeyPath));
 
-      getline(cin, machineDescription);
-
-      upMachine.setMachineDescription(machineDescription);
 
     }
 
-
-    checkVishnuConfig(*opt);
 
     /************** Call UMS update service *******************************/
 

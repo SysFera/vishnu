@@ -1,0 +1,9 @@
+# VALIDATION DOCBOOK
+java -jar jing-20081028/bin/jing.jar schemas/docbook.rng <document.docbook>
+
+Attention: si le document a été généré par EMF, il faut d'abord modifier les attributs
+de l'element 'book':
+REMPLACER: <book xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+PAR: <book xmlns="http://docbook.org/ns/docbook" version="5.0">
+
+
