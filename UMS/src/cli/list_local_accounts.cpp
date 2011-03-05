@@ -63,9 +63,7 @@ int main (int ac, char* av[]){
 
     if (opt->count("adminListOption")){
 
-      cout <<"It is an admin list option " << endl;
-
-      listOptions.setAdminListOption(true);
+        listOptions.setAdminListOption(true);
     }
 
     checkVishnuConfig(*opt);
@@ -78,7 +76,7 @@ int main (int ac, char* av[]){
     }
 
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS list loacl account service *******************************/
 
 
     // initializing DIET
@@ -99,7 +97,6 @@ int main (int ac, char* av[]){
 
       listLocalAccount(sessionKey,lsLocalAccount,listOptions);
 
-
     }
 
 
@@ -113,6 +110,7 @@ int main (int ac, char* av[]){
       }
     }
 
+    printSuccessMessage();
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error

@@ -80,6 +80,8 @@ int main (int ac, char* av[]){
       addUser(sessionKey,newUser);
     
       cout <<"The user identifier is " << newUser.getUserId() << endl;
+      
+      printSuccessMessage();
 
     }
 

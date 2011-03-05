@@ -41,9 +41,9 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg);
 /**
  * \brief Function to check if a text is empty 
  * \param text The text to check
- * \param comMsg The complementary message to print
+ * \param compMsg The complementary message to print
  * \param execpetionType The type of exception to raise
- * \return raises an exception on error 
+ * \exception raises an exception on error 
  */
 void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType);
 

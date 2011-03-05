@@ -63,7 +63,7 @@ int main (int ac, char* av[]){
     }
 
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS save configuration service *******************************/
 
 
     // initializing DIET
@@ -85,13 +85,12 @@ int main (int ac, char* av[]){
 
       saveConfiguration(sessionKey,configuration);
 
+      std::cout<< "The configuration path is : " <<configuration.getFilePath() <<std::endl; 
 
+      printSuccessMessage();
     }
 
 
-    std::cout<< "The configuration path is : " <<configuration.getFilePath() <<std::endl; 
-    
-    printSuccessMessage();
 
   }// End of try bloc
 

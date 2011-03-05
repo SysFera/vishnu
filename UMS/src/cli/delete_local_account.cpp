@@ -56,23 +56,9 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-
-    if (opt->count("userId")){
-
-      cout <<"The user identifier is " << userId << endl;
-
-    }
-
-    if(opt->count("machineId")){
-
-      cout <<"the machineId is : " << machineId << endl;
-    }
-
-
-
     checkVishnuConfig(*opt);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS delete local account service ************/
 
     // initializing DIET
 
@@ -91,6 +77,7 @@ int main (int ac, char* av[]){
 
       deleteLocalAccount(sessionKey,userId,machineId);
 
+      printSuccessMessage();
 
     }
 

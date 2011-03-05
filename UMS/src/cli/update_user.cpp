@@ -67,48 +67,9 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-    if (opt->count("userId")){
-
-
-      cout <<"The user identifier is " << upUser.getUserId() << endl;
-
-    }
-
-
-    if(opt->count("privilege")){
-
-      cout <<"the privilege is : " << upUser.getPrivilege() << endl;
-
-    }
-
-    if(opt->count("firstname")){
-
-      cout << "The firstname is " << upUser.getFirstname() << endl;
-
-    }
-
-    if (opt->count("lastname")){
-
-      cout <<"The lastname is " << upUser.getLastname() << endl;
-
-    }
-
-    if (opt->count("email")){
-
-      cout <<"The email is " <<upUser.getEmail() << endl;
-
-    }
-
 
     checkVishnuConfig(*opt);
-
-    if (opt->count("sessionKey")){
-
-      cout <<"The session key is " << sessionKey << endl;
-
-    }
-
-
+    
     /************** Call UMS connect service *******************************/
 
     // initializing DIET
@@ -119,7 +80,6 @@ int main (int ac, char* av[]){
     }
 
 
-
     // get the session key
 
     sessionKey=getLastSessionKey(getppid());
@@ -127,7 +87,10 @@ int main (int ac, char* av[]){
     if(false==sessionKey.empty()){
 
       cout << "the current session key is " << sessionKey <<endl; 
+      
       updateUser(sessionKey,upUser);
+     
+      printSuccessMessage();
     }
 
   }// End of try bloc

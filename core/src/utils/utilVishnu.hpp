@@ -54,7 +54,6 @@ public :
 
 /**
 * \brief Function to encrypt data and password
-* \fn    char* crypt(const char* clef, const char* salt);
 * \param clef is the data to be encrypted
 * \param salt This string is used to perturb the algorithm
 * \return the string encrypted
@@ -72,9 +71,8 @@ namespace vishnu {
   static const int PASSWORD_MAX_SIZE = 8;
   /**
   * \brief Generic function to convert an object to string
-  * \fn    std::string convertToString(T val);
-  * \param T is a generic data to be transformed to string
-  * \return the string version of T
+  * \param val is a generic data to be transformed to string
+  * \return the string version of val
   */
   template <class T>
   std::string convertToString(T val) {
@@ -85,7 +83,6 @@ namespace vishnu {
 
   /**
   * \brief Function to convert a string to int
-  * \fn    int convertToInt(std::string val)
   * \param  val a value to convert to int
   * \return int value of the corresponding string
   */
@@ -200,6 +197,7 @@ namespace vishnu {
    * \param type Type of the id generated
    * \param name Name of the user or machine (optionnal)
    * \param site Site of the machine (optionnal)
+   * \return the genarated ID
    */
   std::string
   getGeneratedName (const char* format,

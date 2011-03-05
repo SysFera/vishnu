@@ -61,7 +61,6 @@ checkVishnuConfig(const Options& opt);
 
 /**
  * \brief Function to print success message 
- * \fn inline void printSuccessMessage(const std::string& errorInfo) 
  */
 inline void printSuccessMessage() {
   std::cout << "The service was performed successfully" << std::endl;

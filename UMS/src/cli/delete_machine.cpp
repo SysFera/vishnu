@@ -55,16 +55,9 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-    if (opt.count("machineId")){
-
-      cout <<"The machine identifier is " << machineId << endl;
-
-    }
-
-
     checkVishnuConfig(opt);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS delete machine service *******************************/
 
     // initializing DIET
 
@@ -84,6 +77,7 @@ int main (int ac, char* av[]){
 
       deleteMachine(sessionKey,machineId);
 
+      printSuccessMessage();
     }
 
 

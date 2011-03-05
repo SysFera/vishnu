@@ -56,7 +56,7 @@ int main (int ac, char* av[]){
 
     checkVishnuConfig(opt);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS restore configuration service *******************************/
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
@@ -77,6 +77,7 @@ int main (int ac, char* av[]){
 
       restoreConfiguration(sessionKey, filePath);
 
+      printSuccessMessage();
     }
 
 

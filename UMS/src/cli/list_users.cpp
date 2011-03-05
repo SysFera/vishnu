@@ -69,7 +69,7 @@ int main (int ac, char* av[]){
       return 0;
     }
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS list users service *******************************/
 
     // initializing DIET
 
@@ -89,7 +89,6 @@ int main (int ac, char* av[]){
 
       listUsers(sessionKey,lsUsers, userIdOption);
 
-
     }
 
 
@@ -102,7 +101,7 @@ int main (int ac, char* av[]){
         cout << lsUsers.getUsers().get(i) << endl;
       }
     }
-
+    printSuccessMessage();
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error

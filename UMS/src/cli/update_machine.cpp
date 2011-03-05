@@ -90,7 +90,7 @@ int main (int ac, char* av[]){
     }
 
 
-    /************** Call UMS update service *******************************/
+    /************** Call UMS update machine service *******************************/
 
     // initializing DIET
 
@@ -109,6 +109,8 @@ int main (int ac, char* av[]){
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
       updateMachine(sessionKey,upMachine);
+      
+      printSuccessMessage();
 
 
     }

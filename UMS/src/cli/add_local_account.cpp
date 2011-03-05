@@ -59,7 +59,7 @@ int main (int ac, char* av[]){
 
     checkVishnuConfig(*opt);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS add local account service *******************************/
 
     // initializing DIET
 
@@ -77,7 +77,7 @@ int main (int ac, char* av[]){
 
       cout <<"the current sessionkey is: " << sessionKey <<endl;
 
-      addLocalAccount(sessionKey,newAcLogin,sshPublicKey);
+      addLocalAccount(sessionKey,newAcLogin,sshPublicKey);// call the UMS add local account service
 
        //To construct the file to save
       boost::filesystem::path home_dir = getenv("HOME");
@@ -99,6 +99,8 @@ int main (int ac, char* av[]){
       os << sshPublicKey;
       
       std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
+    
+      printSuccessMessage();
 
     }
 
