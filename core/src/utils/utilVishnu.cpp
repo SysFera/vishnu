@@ -9,6 +9,11 @@
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
+#include <stdexcept>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
+
+namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
 /**
 * \brief Function to convert a string to int
@@ -24,13 +29,21 @@ vishnu::convertToInt(std::string val) {
   return intValue;
 }
 
+/**
+ * \brief To crypt a password
+ * \fn std::string cryptPassword(const std::string& salt, const std::string password)
+ * \param salt The salt to use to crypt
+ * \param password The password to crypt
+ * \return The crypted password
+ */
+
 std::string
 vishnu::cryptPassword(const std::string& salt, const std::string password) {
 
   std::string saltTmp="$6$"+salt+"$";
   std::string encryptedPassword=crypt(password.c_str(),saltTmp.c_str());
 
- return encryptedPassword.substr(saltTmp.size());
+  return encryptedPassword.substr(saltTmp.size());
 }
 
 /**
@@ -310,23 +323,56 @@ vishnu::takePassword(const std::string& prompt){
 std::time_t 
 vishnu::string_to_time_t(const std::string& ts){
 
+  // two aliases for convenience
 
   namespace bps= boost::posix_time;
   namespace bg=boost::gregorian;
 
-  bps::ptime t(bps::time_from_string(ts));
+  bps::ptime t;
+
+  if (std::string::npos==ts.find(":")){
+    t=bps::ptime(bg::from_string(ts));
+
+  }
+  else{
+    t= bps::ptime (bps::time_from_string(ts));
+  }
 
   bps::ptime epoch(bg::date(1970,1,1));
 
 
   bps::time_duration::sec_type x = (t - epoch).total_seconds();
-
+  
   return std::time_t(x);
 
 
 }
 
+/**
+   * \brief Simple function to read the content of file 
+   * \param filePath: the path to the file
+   * \return The content of the file
+   */
+  std::string
+ vishnu::get_file_content(const std::string& filePath){
+
+   bfs::path file (filePath);
+
+   // Check existence of the file
 
 
+   if ((false==bfs::exists(file)) || (true==bfs::is_empty(file)) ){
+     throw std::runtime_error("can not read the file: " + filePath);
+   }
 
+   bfs::ifstream ifs (file);
+
+   // Read the whole file into string
+
+   std::stringstream ss;
+    ss << ifs.rdbuf();
+
+    return ss.str();
+
+ }
 

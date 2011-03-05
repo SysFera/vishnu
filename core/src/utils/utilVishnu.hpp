@@ -237,7 +237,7 @@ namespace vishnu {
 
   /**
    * \brief Simple function to convert time 
-   * from string format (YYYY-MM-DD H:M:S) to
+   * from string format (YYYY-MM-DD H:mm:ss) to
    * long integer format in seconds
    * \param ts: the time in string format
    * \return the time in long integer format in seconds
@@ -245,5 +245,12 @@ namespace vishnu {
   std::time_t
   string_to_time_t(const std::string& ts);
 
+  /**
+   * \brief Simple function to read the content of file 
+   * \param filePath: the path to the file
+   * \return The content of the file
+   */
+  std::string
+  get_file_content(const std::string& filePath);
 }
 #endif // _UTILVISHNU_H_

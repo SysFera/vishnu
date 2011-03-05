@@ -19,15 +19,15 @@ using namespace std;
  * \param fUserId: The user identifier option callback
  * \param dietConfig: Represents the VISHNU config file
  * \param fSessionId : The callback for the session identifier
- * \param fStartDateOption: The callback for the command start date option
- * \param fEndDateOption: The callback for the command end date option
+ * \param startDateOption: The start date option
+ * \param endDateOption: The end date option
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options> 
 makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
                           StringcallBackType& fSessionId,
-                          LongcallBackType& fStartDateOption,
-                          LongcallBackType& fEndDateOption){
+                          std::string& startDateOption,
+                          std::string& endDateOption){
 
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -54,18 +54,19 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::st
            fSessionId);
 
   opt->add("startDateOption,s",
-           "allows the user to organize the commands listed\n"
+           "allows the user to organize the list\n"
            "by providing the start date\n"
-           "(the UNIX timestamp  of the start date is used)",
+           "(in the format ""YYYY-MM-DD H:M:S "")",
            CONFIG,
-           fStartDateOption);
+           startDateOption);
 
   opt->add("endDateOption,e",
-           "allows the user to organize the commands listed\n"
-           "by providing the end date (the timestamp of the end date is used).\n"
+           "allows the user to organize the list\n"
+           "by providing the end date \n"
+           "(in the format ""YYYY-MM-DD H:M:S "")"
            "By default, the end date is the current day",
            CONFIG,
-           fEndDateOption);
+           endDateOption);
 
 
 
@@ -75,7 +76,6 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::st
 
 
 }
-
 
 
 

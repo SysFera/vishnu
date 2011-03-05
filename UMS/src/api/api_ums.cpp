@@ -381,8 +381,7 @@ vishnu::saveConfiguration(const std::string& sessionKey,
 
   std::string filePath;
   filePath.append(config_dir.string()+"/");
-  filePath.append(sessionKey.substr(0,8));
-  filePath.append("-"+nowToString);
+  filePath.append(nowToString);
 
   SessionProxy sessionProxy(sessionKey);
   ConfigurationProxy configurationProxy(filePath, sessionProxy);

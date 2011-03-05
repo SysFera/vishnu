@@ -13,6 +13,7 @@ ADD_LIBRARY(exception-vishnu STATIC
 #  FMSVishnuException.cpp
  InternalVishnuException.cpp
 )
+SET_TARGET_PROPERTIES(exception-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
 
 INSTALL( FILES
     VishnuException.hpp

@@ -23,6 +23,8 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
+  string startDateOption;
+  string endDateOption;
   std::string sessionKey;
 
   /********** EMF data ************/
@@ -30,16 +32,15 @@ int main (int ac, char* av[]){
   UMS_Data::ListCommands listCmd;
 
   UMS_Data::ListCmdOptions listOptions;
+
   /******** Callback functions ******************/
 
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListCmdOptions::setUserId,boost::ref(listOptions),_1));
   boost::function1<void,string> fSessionId( boost::bind(&UMS_Data::ListCmdOptions::setSessionId,boost::ref(listOptions),_1));
-  boost::function1<void,long> fStartDateOption( boost::bind(&UMS_Data::ListCmdOptions::setStartDateOption,boost::ref(listOptions),_1));
-  boost::function1<void,long> fEndDateOption( boost::bind(&UMS_Data::ListCmdOptions::setEndDateOption,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, fStartDateOption, fEndDateOption);
+  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
 
 
   try {
@@ -55,13 +56,9 @@ int main (int ac, char* av[]){
     opt->notify();
 
 
-
     /********  Process **************************/
 
-
     if (opt->count("adminListOption")){
-
-      cout <<"It is an admin list option " << endl;
 
       listOptions.setAdminListOption(true);
     }
@@ -72,13 +69,20 @@ int main (int ac, char* av[]){
 
       helpUsage (*opt," [options]  ");
 
-
       return 0;
     }
 
+    //convert the date in long format 
+
+    if(opt->count("startDateOption")){
+      listOptions.setStartDateOption(string_to_time_t(startDateOption));
+    }
+
+    if(opt->count("endDateOption")){
+      listOptions.setEndDateOption(string_to_time_t(endDateOption));
+    }
 
     /************** Call UMS connect service *******************************/
-
 
     // initializing DIET
 
@@ -86,7 +90,6 @@ int main (int ac, char* av[]){
       cerr << "DIET initialization failed !" << endl;
       return 1;
     }
-
 
     // get the sessionKey
 
@@ -112,6 +115,7 @@ int main (int ac, char* av[]){
       }
     }
 
+    printSuccessMessage();
   }// End of try bloc
   catch(VishnuException& e){// catch all Vishnu runtime error
 

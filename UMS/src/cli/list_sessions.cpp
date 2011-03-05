@@ -22,6 +22,10 @@ int main (int ac, char* av[]){
 
   string dietConfig;
 
+  std::string startDateOption;
+  
+  std::string endDateOption;
+
   std::string sessionKey;
 
   /********** EMF data ************/
@@ -36,10 +40,6 @@ int main (int ac, char* av[]){
 
   boost::function1<void,string> fSessionId( boost::bind(&UMS_Data::ListSessionOptions::setSessionId,boost::ref(listOptions),_1));
 
-  boost::function1<void,long> fStartDateOption( boost::bind(&UMS_Data::ListSessionOptions::setStartDateOption,boost::ref(listOptions),_1));
-
-  boost::function1<void,long> fEndDateOption( boost::bind(&UMS_Data::ListSessionOptions::setEndDateOption,boost::ref(listOptions),_1));
-
   boost::function1<void,int> fSessionInactivityDelay( boost::bind(&UMS_Data::ListSessionOptions::setSessionInactivityDelay,boost::ref(listOptions),_1));
 
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListSessionOptions::setMachineId,boost::ref(listOptions),_1));
@@ -49,7 +49,7 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, fStartDateOption, fEndDateOption);
+  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
 
 
   opt->add("status,t",
@@ -110,6 +110,17 @@ int main (int ac, char* av[]){
     }
 
 
+    //convert the date in long format 
+    
+    if(opt->count("startDateOption")){
+      listOptions.setStartDateOption(string_to_time_t(startDateOption));
+    }
+
+    if(opt->count("endDateOption")){
+      listOptions.setEndDateOption(string_to_time_t(endDateOption));
+    }
+
+    
 
     /************** Call UMS connect service *******************************/
 
