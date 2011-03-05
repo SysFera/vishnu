@@ -88,23 +88,10 @@ int main (int ac, char* av[]){
 
     }
 
-    //A enlever apres, c'est juste pour les tests
-    for(int i = 0; i < configuration.getListConfUsers().size(); i++) {
-      UMS_Data::User_ptr user = configuration.getListConfUsers()[i];
-      cout << user;
-    }
-    //To set the machine list
-    for(int i = 0; i < configuration.getListConfMachines().size(); i++) {
-      UMS_Data::Machine_ptr machine = configuration.getListConfMachines().get(i);
-      cout << machine;
-    }
-    //To set the LocalAccounts list
-    for(int i = 0; i < configuration.getListConfLocalAccounts().size(); i++) {
-      UMS_Data::LocalAccount_ptr localAccount = configuration.getListConfLocalAccounts().get(i);
-      cout << localAccount;
-    }
 
-
+    std::cout<< "The configuration path is : " <<configuration.getFilePath() <<std::endl; 
+    
+    printSuccessMessage();
 
   }// End of try bloc
 

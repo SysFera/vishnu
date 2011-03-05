@@ -25,14 +25,6 @@ inline void errMsg(const std::string& msg) {
 }
 
 /**
- * \brief Function to print success message 
- * \fn inline void printSuccessMessage(const std::string& errorInfo) 
- */
-inline void printSuccessMessage() {
-  std::cout << "The service was performed successfully" << std::endl;
-}
-
-/**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
  * \fn void raiseDietMsgException(const std::string& msg) 
  * \param msg to spread 

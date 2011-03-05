@@ -59,6 +59,14 @@ usage (const Options& opt,const std::string& mess,const std::string& ewhat);
 void 
 checkVishnuConfig(const Options& opt);
 
+/**
+ * \brief Function to print success message 
+ * \fn inline void printSuccessMessage(const std::string& errorInfo) 
+ */
+inline void printSuccessMessage() {
+  std::cout << "The service was performed successfully" << std::endl;
+}
+
 
 /**
  * \brief Display a '-' caracter 
