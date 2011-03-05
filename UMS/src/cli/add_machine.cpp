@@ -26,8 +26,6 @@ int main (int ac, char* av[]){
 
   std::string sessionKey;
 
-  std::string sshPublicKeyFile;
-
   std::string sshPublicKeyPath;
 
 
@@ -61,36 +59,10 @@ int main (int ac, char* av[]){
 
     checkVishnuConfig(*opt);
 
-    // read the public key file from the public key path
+    // read the public key file from the public key path and set the neMachine
 
-    {
-      std::ifstream ifs (sshPublicKeyPath.c_str(),std::ifstream::in);
-      if (ifs.is_open()){
-        // get length of file:
-        ifs.seekg (0, ios::end);
-        size_t length = ifs.tellg();
-        ifs.seekg (0, ios::beg);
+    newMachine.setSshPublicKey(get_file_content(sshPublicKeyPath));
 
-        // allocate memory:
-        char* buffer = new char [length];
-
-        // read data as a block:
-        ifs.read (buffer,length);
-        ifs.close();
-
-        sshPublicKeyFile = std::string(buffer);
-
-        delete[] buffer;
-
-        newMachine.setSshPublicKey(sshPublicKeyFile);
-      }
-      else{
-        std::cerr << "can not open the ssh public key file\n";
-        return 1;
-      }
-    }
-    
- std::cout <<"Machine description: " << newMachine.getMachineDescription() << std::endl;
 
     /************** Call UMS add machine service *******************************/
 

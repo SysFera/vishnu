@@ -25,18 +25,14 @@ int main (int ac, char* av[]){
 
   std::string sshPublicKeyPath;
 
-  std::string sshPublicKeyFile;
-
   std::string sessionKey;
-
 
   /********** EMF data ************/
 
   UMS_Data::Machine upMachine;
 
 
-
-  /**************** Describe options *************/
+  /**************** Callback functions *************/
 
   boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(upMachine),_1));
 
@@ -50,7 +46,7 @@ int main (int ac, char* av[]){
 
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
-
+  // Describe options
   boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription);
 
 
@@ -86,34 +82,12 @@ int main (int ac, char* av[]){
     
     if(opt->count("sshPublicKeyFile")){
 
-      std::ifstream ifs (sshPublicKeyPath.c_str(),std::ifstream::in);
-      if (ifs.is_open()){
-        // get length of file:
-        ifs.seekg (0, ios::end);
-        size_t length = ifs.tellg();
-        ifs.seekg (0, ios::beg);
+      // read the public key file from the public key path and set the neMachine
 
-        // allocate memory:
-        char* buffer = new char [length];
-
-        // read data as a block:
-        ifs.read (buffer,length);
-        ifs.close();
-
-        sshPublicKeyFile = std::string(buffer);
-
-        delete[] buffer;
-
-        upMachine.setSshPublicKey(sshPublicKeyFile);
-      }
-      else{
-        std::cerr << "can not open the ssh public key file\n";
-        return 1;
-      }
+      upMachine.setSshPublicKey(get_file_content(sshPublicKeyPath));
 
 
     }
-
 
 
     /************** Call UMS update service *******************************/

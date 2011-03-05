@@ -103,6 +103,7 @@ int main (int ac, char* av[]){
 
     storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid()); // store sessionKey into $HOME/.vishnu/sessions
 
+    printSuccessMessage();
 
 
   }// End of try bloc

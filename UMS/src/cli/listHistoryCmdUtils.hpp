@@ -46,13 +46,6 @@ boost::function1<void,UMS_Data::SessionCloseType> ClosePolicycallBackType;
 typedef
 boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
 
-/**
- * \brief A convenient function type taking a long integer parameter and
- * without return value
- */
-
-typedef 
-boost::function1<void,long> LongcallBackType;
 
 /**
  * \brief A convenient function type taking a integer  parameter and
@@ -68,8 +61,8 @@ boost::function1<void,int> IntcallBackType;
  * \param fUserId: The user identifier option callback
  * \param dietConfig: Represents the VISHNU config file
  * \param fSessionId : The callback for the session identifier
- * \param fStartDateOption: The callback for the command start date option
- * \param fEndDateOption: The callback for the command end date option
+ * \param startDateOption: The start date option
+ * \param endDateOption: The  end date option
  * \return The description of all options allowed by the command
  */
 
@@ -77,7 +70,7 @@ boost::function1<void,int> IntcallBackType;
 boost::shared_ptr<Options>
 makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,
                           std::string & dietConfig, StringcallBackType& fSessionId,
-												  LongcallBackType& fStartDateOption, LongcallBackType& fEndDateOption);
+												  std::string& startDateOption, std::string& endDateOption);
 
 
 
