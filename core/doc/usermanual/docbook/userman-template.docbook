@@ -8,15 +8,13 @@
       <productname>VISHNU</productname>
       <releaseinfo>1.0</releaseinfo>
       <date>February 2011</date>
+      
       <author>
-        <personname>
-          <firstname></firstname>
-          <surname>SysFera SAS</surname>
-        </personname>
-        <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
-        <address>
-          <email>info@sysfera.com</email>
-        </address>
+        <personname><firstname>Benjamin</firstname><surname>ISNARD</surname></personname>
+      </author>
+      
+      <author>
+        <personname><firstname>Eugène </firstname><surname> PAMBA CAPO-CHICHI </surname></personname>
       </author>
       
       <title> VISHNU User Manual</title>
@@ -88,7 +86,7 @@ same conditions as regards security.</para>
           <para>Chapter 1 presents the document structure.</para>
         </listitem>
          <listitem>
-          <para>Chapter 2 describes the VISHNU software.</para>
+          <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
         </listitem>
 	<listitem>
           <para>Chapter 3 contains the VISHNU user commands.</para>
@@ -108,9 +106,9 @@ same conditions as regards security.</para>
   
   <!-- PART 1 : VISHNU Presentation -->
   <chapter>
-    <title>VISHNU Software</title>
+    <title>Installation and usage</title>
     <para>
-     The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high computing platform by providing the following services:
+     The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
      <itemizedlist>
 	<listitem>
 	  <para>User management services (UMS): authentication and session management.</para>
@@ -126,22 +124,7 @@ same conditions as regards security.</para>
 	</listitem>
       </itemizedlist>
     </para>
-   
-     <para> This Chapter is divided into three parts: </para>
-      <para>
-	<itemizedlist>
-	  <listitem>
-	    <para> Installation procedure </para>
-	  </listitem>   
-	  <listitem>
-	    <para> Sofware usage description </para> 
-	  </listitem>
-	  <listitem>
-	    <para> Troubleshooting </para>
-	  </listitem>
-	</itemizedlist>
-    </para>
-      
+    
    <section>
      <title> Installation procedure </title>
      
@@ -169,18 +152,66 @@ same conditions as regards security.</para>
    
    <section>
      <title> Sofware usage description </title>
+    
+    <section>
+      <title> User account creation </title>
       <para>
-	All VISHNU users needs to be authenticate by the user management services before using VISHNU. In this way, all users must be added by 
-	a VISHNU administrator. The new VISHNU user receives userId and password by email. The password is temporary and must be changed at the first 
-	connection.
+	The first step to access VISHNU is to request a new account creation to a VISHNU administrator. The information required to create a new account are
+	only your full name and your email adress. You will receives automatically an email containing your userId and your password.
       </para>
+    </section>
+    
+    
+    <section>
+      <title> Connection to VISHNU </title>
+      <para>
+	The connection is possible by using the <emphasis role = "bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
+	The password receives by email is temporary and must be changed at the first connection by using the <emphasis role = "bold"> vishnu_change_password </emphasis> command.
+      </para>
+    </section>
+    
+    <section>
+      <title> Reconnection to VISHNU </title>
+      <para>
+	The reconnection is possible by using the <emphasis role = "bold">vishnu_reconnect</emphasis> command. This command allows to use an existing session
+	previously opened and not closed. It makes possible the use simultaneously of the same session in different shell terminals.
+      </para>
+    </section>
+    
+    
+    <section>
+      <title> Session management in VISHNU </title>
+      <para>
+	After successful call to <emphasis role = "bold">vishnu_connect</emphasis> command, a session is created. 
+	The session is required for calling any other commands. It avoids systematic authentification by userId and
+	password. Only the commands <emphasis role = "bold">vishnu_connect, vishnu_reconnect and vishnu_change_password</emphasis> can be used outside a session by using userid and password. 
+	The command <emphasis role = "bold">vishnu_list_history_cmd</emphasis> lists all commands launched within a session.
+      </para>
+       <para> To avoid unclosed session when the <emphasis role = "bold">vishnu_close</emphasis> command is not used, the session is closed automatically on timeout or on disconnect (from the terminal). </para>   
+	<section>
+	<title> Session closure on timeout </title>
+	<para> 
+	In this mode, the session is automatically closed after an inactivity delay specified by the system or 
+	configured by the user using the <emphasis role = "bold">vishnu_configure_option</emphasis> command. 
+	</para> 
+        </section>
       
-      <para>
-	After user registration by an administrator, the first step is the connection to VISHNU. The connection parameters are very important as it defined
-	the way to close the session automatically on timeout or on disconnect (from the terminal). When these parameters are set, the users can used all VISHNU commands
-	within the session created. All VISHNU commands are detailled on the next Chapter.
-      </para>
+	<section>
+	<title> Session closure on disconnect </title>
+	<para> 
+	In this mode, the session is automatically closed when the user closes the shell terminal.  
+        </para> 
+	</section>
+      </section>
    
+    <section>
+      <title> Local account management </title>
+      <para>
+	
+      </para>
+    </section>
+    
+    
     </section>
     
    <section>
