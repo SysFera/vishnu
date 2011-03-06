@@ -1,10 +1,10 @@
 #include "sessionUtils.hpp"
+#include "cliError.hpp"
 #include <boost/archive/archive_exception.hpp>
 #include <stdexcept>
 #include <cstdlib>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-
 namespace bfs = boost::filesystem;
 
 /**
@@ -186,7 +186,9 @@ getLastSession(const std::string& terminal){
 
   if(allSessions.empty()){
 
-    throw std::runtime_error("There is no open session in this terminal");
+    std::cerr <<"There is no open session in this terminal\n";
+
+    exit (CLI_ERROR_NO_SESSION);
 
   }
 
