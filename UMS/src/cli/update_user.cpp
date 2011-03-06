@@ -31,7 +31,6 @@ int main (int ac, char* av[]){
 
   /******** Callback functions ******************/
 
-
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(upUser),_1));
   boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(upUser),_1));
   boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(upUser),_1));
@@ -69,16 +68,18 @@ int main (int ac, char* av[]){
 
 
     checkVishnuConfig(*opt);
-    
+
     /************** Call UMS connect service *******************************/
 
     // initializing DIET
 
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-      cerr << "DIET initialization failed !" << endl;
-      return 1;
-    }
 
+      errorUsage(av[0],"DIET initialization failed !",EXECERROR);
+
+      return  CLI_ERROR_DIET ;
+
+    }
 
     // get the session key
 
@@ -87,9 +88,9 @@ int main (int ac, char* av[]){
     if(false==sessionKey.empty()){
 
       cout << "the current session key is " << sessionKey <<endl; 
-      
+
       updateUser(sessionKey,upUser);
-     
+
       printSuccessMessage();
     }
 
@@ -97,14 +98,24 @@ int main (int ac, char* av[]){
 
   catch(po::required_option& e){// a required parameter is missing
 
-
     usage(*opt," userId ","required parameter is missing");
+    
+    return CLI_ERROR_MISSING_PARAMETER;
+  }
+
+  catch(po::error& e){ // catch all other bad parameter errors
+
+    errorUsage(av[0], e.what());
+
+    return CLI_ERROR_INVALID_PARAMETER;
   }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
 
+    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
 
-    errorUsage(av[0], e.getMsg(),EXECERROR);
+    errorUsage(av[0], msg,EXECERROR);
+
 
     return e.getMsgI() ;
 
@@ -114,7 +125,7 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0],e.what());
 
-    return 1;
+    return CLI_ERROR_RUNTIME;
   }
 
   return 0;

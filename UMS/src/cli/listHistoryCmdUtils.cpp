@@ -39,41 +39,36 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::st
            dietConfig);
 
   opt->add("adminListOption,a",
-           "is an admin option for listing all commands of all users ",
+           "is an admin option to list with respect to all users ",
            CONFIG);
 
   opt->add("userId,u",
-           "an admin option for listing commands launched\n"
-           "by a specific user identified by his/her userId",
+           "an admin option to precise the list\n"
+           "with respect to a specific user identified by his/her userId",
            CONFIG,
            fUserId);
 
   opt->add("sessionId,i",
-           "lists all commands launched within a specific session",
+           "lists with respect to a specific session",
            CONFIG,
            fSessionId);
 
   opt->add("startDateOption,s",
            "allows the user to organize the list\n"
            "by providing the start date\n"
-           "(in the format ""YYYY-MM-DD H:M:S "")",
+           "(in the format ""YYYY-MM-DD H:mm:ss "")",
            CONFIG,
            startDateOption);
 
   opt->add("endDateOption,e",
            "allows the user to organize the list\n"
            "by providing the end date \n"
-           "(in the format ""YYYY-MM-DD H:M:S "")"
+           "(in the format ""YYYY-MM-DD H:mm:ss "")"
            "By default, the end date is the current day",
            CONFIG,
            endDateOption);
 
-
-
-
   return opt;
-
-
 
 }
 

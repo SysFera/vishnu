@@ -34,7 +34,7 @@ using namespace std;
 void 
 helpUsage (const Options& opt,const string& signature){
 
-cout << "\nUsage: \n \n" << opt.getConfiguration()->getPgName()<<" " << signature <<"\n\n";
+cout << "\nUsage: " << opt.getConfiguration()->getPgName()<<" " << signature <<"\n\n";
 
 cout <<opt<< endl;
 }

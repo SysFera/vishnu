@@ -10,6 +10,7 @@
 
 #include "Options.hpp"
 #include "api_ums.hpp"
+#include "cliError.hpp"
 #include <iostream>
 #include <iterator>
 #include <fstream>
@@ -53,7 +54,6 @@ struct env_name_mapper{
 		return result;
 	}
 };
-
 
 
 

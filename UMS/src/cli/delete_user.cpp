@@ -51,14 +51,6 @@ int main (int ac, char* av[]){
 
     /********  Process **************************/
 
-    if (opt->count("userId")){
-
-      cout <<"The user identifier is " << userId << endl;
-
-    }
-
-
-
     checkVishnuConfig(*opt);
 
     /************** Call UMS connect service *******************************/
@@ -66,10 +58,14 @@ int main (int ac, char* av[]){
     // initializing DIET
 
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-      cerr << "DIET initialization failed !" << endl;
-      return 1;
+    
+      errorUsage(av[0],"DIET initialization failed !",EXECERROR);
+
+      return  CLI_ERROR_DIET ;
     }
 
+    // get the sessionkey
+    //
     sessionKey=getLastSessionKey(getppid());
 
     if(false==sessionKey.empty()){
@@ -78,8 +74,9 @@ int main (int ac, char* av[]){
 
       deleteUser(sessionKey, userId);
 
-    }
+      printSuccessMessage();
 
+    }
 
 
   }// End of try bloc
@@ -87,21 +84,32 @@ int main (int ac, char* av[]){
   catch(po::required_option& e){// a required parameter is missing
 
     usage(*opt," userId","required parameter is missing");
+  
+    return CLI_ERROR_MISSING_PARAMETER;
+  }
+
+  catch(po::error& e){ // catch all other bad parameter errors
+
+    errorUsage(av[0], e.what());
+
+    return CLI_ERROR_INVALID_PARAMETER;
   }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
 
-    errorUsage(av[0], e.getMsg(),EXECERROR);
+    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+
+    errorUsage(av[0], msg,EXECERROR);
 
     return e.getMsgI() ;
 
   }
 
-  catch(std::exception& e){
+  catch(std::exception& e){// catch all std runtime error
 
     errorUsage(av[0],e.what());
 
-    return 1;
+    return CLI_ERROR_RUNTIME;
   }
 
   return 0;
