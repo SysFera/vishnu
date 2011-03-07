@@ -38,7 +38,7 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
         throw UMSVishnuException(ret, message);
       }
     } else {
-      throw UMSVishnuException(1, msg);
+      throw UMSVishnuException(-1, msg);
     }
   }
 

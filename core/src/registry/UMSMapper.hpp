@@ -445,6 +445,14 @@ private:
   string
   getU(string serial);
 
+  /**
+   *\brief To deserialize the serial string, make a user objet, and get the values in the same string
+   *\fn string getUupdate(string serial)
+   *\param serial The serialized object
+   *\return A string containing the user fields in the right order
+   */
+  string
+  getUupdate(string serial);
 };
 
 
