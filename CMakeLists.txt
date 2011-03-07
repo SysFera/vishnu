@@ -81,6 +81,9 @@ set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 set( UMS_TEST_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/test/src/sql )
 
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
+option(CLIENT_ONLY OFF "only compile the client side")
+option(ENABLE_PYTHON ON "compile the python api")
+option(ENABLE_JAVA ON "compile the java api")
 
 set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
 set (TEST_SQL "${UMS_TEST_DIR}")
