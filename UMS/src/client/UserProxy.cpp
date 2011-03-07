@@ -110,7 +110,7 @@ int UserProxy::add(UMS_Data::User& user)
     muser = user;
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -168,7 +168,7 @@ int UserProxy::update(const UMS_Data::User& user)
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -221,7 +221,7 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -277,7 +277,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -337,7 +337,7 @@ int UserProxy::resetPassword(UMS_Data::User& user)
     muser.setPassword(std::string(tmpPassword));
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
