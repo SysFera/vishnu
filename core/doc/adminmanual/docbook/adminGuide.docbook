@@ -71,7 +71,7 @@
 	      par le module UMS. Cette base de données sera considérée comme étant de type PostGreSQL dans ce document.</para>
 	  </listitem>
 	  <listitem>
-	    <para> MA : Le 'Master Agent', élément de DIET servant à faire le lien entre le client et le service désiré.</para>
+	    <para> MA : Le 'Master Agent', élément de Sysfera-DS servant à faire le lien entre le client et le service désiré.</para>
 	  </listitem>
 	  <listitem>
 	    <para>SQL : Language de requêtes sur les bases de données</para>
@@ -83,18 +83,14 @@
       <para>
 	<itemizedlist>
 	  <listitem>
-	    <para>Composant : Cela représente une bibliothèque ou un exécutable fournissant une interface à d'autres composants
-	      ou à l'utilisateur. </para>
-	  </listitem>
-	  <listitem>
-	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. 
-	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
-	  </listitem>
-	  <listitem>
 	    <para>Client UMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD UMS. </para>
 	  </listitem>
 	  <listitem>
 	    <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
+	  </listitem>
+	  <listitem>
+	    <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. 
+	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
 	  </listitem>
 	  <listitem>
 	    <para>Sysfera-DS : Middleware open source développé par Sysfera. </para>
