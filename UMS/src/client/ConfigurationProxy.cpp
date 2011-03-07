@@ -102,7 +102,7 @@ int ConfigurationProxy::save()
     ofile.close();
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
   
   return 0;
@@ -181,7 +181,7 @@ int ConfigurationProxy::restore(bool fromFile)
     }
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
