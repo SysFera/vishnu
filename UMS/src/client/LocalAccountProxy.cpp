@@ -36,61 +36,67 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  if(isNewLocalAccount) { 
-    profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
-  }
-  else {
-    profile = diet_profile_alloc("localAccountUpdate", 1, 1, 2);
-  }
+  try {
 
-  sessionKey = msessionProxy.getSessionKey();
-
-  const char* name = "addLocalAccountInformation";
-  ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the mlocalAccount object in to localAccountToString 
-  localAccountToString =  _ser.serialize(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
-
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup(localAccountToString.c_str()), DIET_VOLATILE)) {
-    msg += "with localAccountToString parameter "+localAccountToString;
-    raiseDietMsgException(msg); 
-  }
-
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  if(isNewLocalAccount) {
-    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  }
-
-  if(!diet_call(profile)) {
-    if(isNewLocalAccount) {
-      if(diet_string_get(diet_parameter(profile,2), &sshPublicKey, NULL)){
-        msg += "by receiving sshPluciKey content";
-        raiseDietMsgException(msg);
-      }
-      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-        msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
-      }
+    if(isNewLocalAccount) { 
+      profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
     }
     else {
-      if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
-      }
+      profile = diet_profile_alloc("localAccountUpdate", 1, 1, 2);
     }
-    msshPublicKey = sshPublicKey;
-  }
-  else {
-    raiseDietMsgException("DIET call failure");
-  }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+    sessionKey = msessionProxy.getSessionKey();
+
+    const char* name = "addLocalAccountInformation";
+    ::ecorecpp::serializer::serializer _ser(name);
+    //To serialize the mlocalAccount object in to localAccountToString 
+    localAccountToString =  _ser.serialize(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
+
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+      msg += "with sessionKey parameter "+sessionKey;
+      raiseDietMsgException(msg);
+    }
+    if(diet_string_set(diet_parameter(profile,1), strdup(localAccountToString.c_str()), DIET_VOLATILE)) {
+      msg += "with localAccountToString parameter "+localAccountToString;
+      raiseDietMsgException(msg); 
+    }
+
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+    if(isNewLocalAccount) {
+      diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+    }
+
+    if(!diet_call(profile)) {
+      if(isNewLocalAccount) {
+        if(diet_string_get(diet_parameter(profile,2), &sshPublicKey, NULL)){
+          msg += "by receiving sshPluciKey content";
+          raiseDietMsgException(msg);
+        }
+        if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+          msg += "by receiving errorInfo message";
+          raiseDietMsgException(msg);
+        }
+      }
+      else {
+        if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+          msg += "by receiving errorInfo message";
+          raiseDietMsgException(msg);
+        }
+      }
+      msshPublicKey = sshPublicKey;
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
+    }
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+  }
 
   return 0;
 }
@@ -129,40 +135,46 @@ int LocalAccountProxy::deleteLocalAccount()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("localAccountDelete", 2, 2, 3);
-  sessionKey = msessionProxy.getSessionKey();
-  userId = mlocalAccount.getUserId();
-  machineId = mlocalAccount.getMachineId();
+  try {
 
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
-    msg += "with userId parameter "+userId;
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,2), strdup(machineId.c_str()), DIET_VOLATILE)) {
-    msg += "with machineId parameter "+machineId;
-    raiseDietMsgException(msg);
-  }
+    profile = diet_profile_alloc("localAccountDelete", 2, 2, 3);
+    sessionKey = msessionProxy.getSessionKey();
+    userId = mlocalAccount.getUserId();
+    machineId = mlocalAccount.getMachineId();
 
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg); 
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+      msg += "with sessionKey parameter "+sessionKey;
+      raiseDietMsgException(msg);
     }
-  }
-  else {
-    raiseDietMsgException("DIET call failure");
-  }
+    if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
+      msg += "with userId parameter "+userId;
+      raiseDietMsgException(msg);
+    }
+    if(diet_string_set(diet_parameter(profile,2), strdup(machineId.c_str()), DIET_VOLATILE)) {
+      msg += "with machineId parameter "+machineId;
+      raiseDietMsgException(msg);
+    }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg); 
+      }
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
+    }
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+  }
 
   return 0;
 }

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 
 /**
