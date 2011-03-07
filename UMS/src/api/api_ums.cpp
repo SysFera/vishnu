@@ -428,6 +428,10 @@ vishnu::restoreConfiguration(const std::string& sessionKey,
                                                        throw(UserException)
 {
 
+  if(boost::filesystem::is_directory(filePath)){
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, filePath+" is not a regular file");
+  }
+
   SessionProxy sessionProxy(sessionKey);
   ConfigurationProxy configurationProxy(filePath, sessionProxy);
 

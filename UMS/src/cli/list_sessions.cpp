@@ -45,6 +45,7 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListSessionOptions::setMachineId,boost::ref(listOptions),_1));
 
   boost::function1<void,UMS_Data::SessionCloseType> fSessionClosePolicy( boost::bind(&UMS_Data::ListSessionOptions::setSessionClosePolicy,boost::ref(listOptions),_1));
+
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::ListSessionOptions::setStatus,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
@@ -125,10 +126,10 @@ int main (int ac, char* av[]){
     // initializing DIET
 
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    
-      errorUsage(av[0],"DIET initialization failed !",EXECERROR);
 
-            return  CLI_ERROR_DIET ;
+      errorUsage(av[0],dietErrorMsg,EXECERROR);
+
+      return  CLI_ERROR_DIET ;
     }
 
 
@@ -138,7 +139,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout <<"the current sessionkey is: " << sessionKey <<endl;
+      cout <<currentSessionKeyMsg << sessionKey <<endl;
 
       listSessions(sessionKey,listSession,listOptions);
 

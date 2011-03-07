@@ -8,7 +8,7 @@ VishnuException::VishnuException(){
 }
 
 VishnuException::VishnuException(const VishnuException& e){
-  mmsgc = e.what();
+  mmsgc = e.getMsgComp();
   mtype = e.getTypeI();
   mval  = e.getMsgI();
 }
