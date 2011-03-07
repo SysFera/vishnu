@@ -34,44 +34,51 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  if(defaultValue) {
-    profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
-  }
-  else {
-    profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
-  }
-  sessionKey = msessionProxy.getSessionKey();
+  try {
 
-  const char* name = "optionValueSet";
-  ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the moptionValue object in to optionValueToString 
-  optionValueToString =  _ser.serialize(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
+    if(defaultValue) {
+      profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
+    }
+    else {
+      profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
+    }
+    sessionKey = msessionProxy.getSessionKey();
 
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup(optionValueToString.c_str()), DIET_VOLATILE)) {
-    msg += "with optionValueToString parameter "+optionValueToString;
-    raiseDietMsgException(msg);
-  }
+    const char* name = "optionValueSet";
+    ::ecorecpp::serializer::serializer _ser(name);
+    //To serialize the moptionValue object in to optionValueToString 
+    optionValueToString =  _ser.serialize(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
 
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-      msg += "by receiving errorInfo message";
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+      msg += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msg);
     }
-  }
-  else {
-    raiseDietMsgException("DIET call failure");
+    if(diet_string_set(diet_parameter(profile,1), strdup(optionValueToString.c_str()), DIET_VOLATILE)) {
+      msg += "with optionValueToString parameter "+optionValueToString;
+      raiseDietMsgException(msg);
+    }
+
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
+    }
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
