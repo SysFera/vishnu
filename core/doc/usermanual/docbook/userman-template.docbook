@@ -169,6 +169,29 @@ same conditions as regards security.</para>
 	    <para> LIBCRYPT </para>
       </listitem>
     </itemizedlist>
+    
+    <para> Installation procedure:</para>
+    <para>
+     <itemizedlist>
+       <listitem>
+	    <para> Download the VISHNU install sources </para>
+      </listitem>
+      <listitem>
+	    <para> Decompress it and go to the vishnu directory </para>
+      </listitem>
+      
+      <listitem>
+	    <para> Create a build directory and run CMake as follows: </para>
+	    <para>> mkdir build </para>
+	    <para>> cd build </para>
+	    <para>> cmake .. </para>
+	    <para>> make </para>
+      </listitem>
+      
+     </itemizedlist>
+   </para>
+    
+    
    </section>
    
    <section>
