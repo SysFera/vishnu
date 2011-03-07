@@ -168,7 +168,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
       }
     }
     else {
-      raiseDietMsgException(" the function diet_call is rejected"); 
+      raiseDietMsgException("DIET call failure"); 
     }
 
     /*To check the receiving message error*/
@@ -181,7 +181,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
     mlistObject = parser.load(std::string(listObjectInString))->as< ListObject >();
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return mlistObject;
@@ -230,7 +230,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
       }
     }
     else {
-      raiseDietMsgException(" the function diet_call is rejected");
+      raiseDietMsgException("DIET call failure");
     }
 
     /*To check the receiving message error*/
@@ -243,7 +243,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
     mlistObject = parser.load(listObjectInString)->as< ListObject >();
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return mlistObject;
