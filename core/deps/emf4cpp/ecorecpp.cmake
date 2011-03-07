@@ -97,5 +97,5 @@ add_library(emf4cpp-ecorecpp SHARED ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
 # set_target_properties(emf4cpp-ecorecpp PROPERTIES VERSION 0.0.1 SOVERSION 1)
 target_link_libraries(emf4cpp-ecorecpp ) # xerces-c)
 
-# install(TARGETS emf4cpp-ecorecpp DESTINATION lib)
+install(TARGETS emf4cpp-ecorecpp DESTINATION lib)
 
