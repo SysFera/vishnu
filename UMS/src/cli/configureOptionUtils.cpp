@@ -34,7 +34,6 @@ void makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig
            dietConfig);
 
 
-
   opt->add("optionName",
            "the name of an option",
            HIDDEN,
@@ -113,8 +112,10 @@ void commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const C
   // initializing DIET
 
   if (vishnuInitialize(const_cast<char*>(const_cast<char*>(dietConfig.c_str())), ac, av)) {
-    std::cerr << "DIET initialization failed !" << std::endl;
-    exit(EXIT_FAILURE);
+   
+    errorUsage(av[0],dietErrorMsg,EXECERROR);
+    
+    exit(CLI_ERROR_DIET);
   }
 
 
