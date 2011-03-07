@@ -126,5 +126,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} . .)
 add_library(emf4cpp-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
 # set_target_properties(emf4cpp-ecore PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
-# install(TARGETS emf4cpp-ecore DESTINATION lib)
+install(TARGETS emf4cpp-ecore DESTINATION lib)
 
