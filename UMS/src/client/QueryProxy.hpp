@@ -134,49 +134,55 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
-  sessionKey = msessionProxy.getSessionKey();
+  try {
 
-  const char* name = mserviceName.c_str();
-  ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the mparameters object in to queryParmetersToString 
-  queryParmetersToString =  _ser.serialize(const_cast<QueryParameters_ptr>(&mparameters));
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
-    msg += "with queryParmetersToString parameter "+queryParmetersToString;
-    raiseDietMsgException(msg);
-  }
+    profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+    sessionKey = msessionProxy.getSessionKey();
 
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += "by receiving listObjectInString message";
+    const char* name = mserviceName.c_str();
+    ::ecorecpp::serializer::serializer _ser(name);
+    //To serialize the mparameters object in to queryParmetersToString 
+    queryParmetersToString =  _ser.serialize(const_cast<QueryParameters_ptr>(&mparameters));
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+      msg += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg); 
+    if(diet_string_set(diet_parameter(profile,1), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
+      msg += "with queryParmetersToString parameter "+queryParmetersToString;
+      raiseDietMsgException(msg);
     }
-  }
-  else {
-    raiseDietMsgException(" the function diet_call is rejected"); 
-  }
 
-  /*To check the receiving message error*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);   
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
-  //CREATE the ListOject
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-  ecorecpp::parser::parser parser;
-  mlistObject = parser.load(std::string(listObjectInString))->as< ListObject >();
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
+        msg += "by receiving listObjectInString message";
+        raiseDietMsgException(msg);
+      }
+      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg); 
+      }
+    }
+    else {
+      raiseDietMsgException(" the function diet_call is rejected"); 
+    }
+
+    /*To check the receiving message error*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);   
+
+    //CREATE the ListOject
+    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+    ecorecpp::parser::parser parser;
+    mlistObject = parser.load(std::string(listObjectInString))->as< ListObject >();
+
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+  }
 
   return mlistObject;
 }
@@ -195,44 +201,50 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+  try {
 
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy.getSessionKey()).c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+msessionProxy.getSessionKey();
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
-    msg += "with mparameters parameter "+mparameters;
-    raiseDietMsgException(msg);
-  }
+    profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
 
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += "by receiving listObjectInString message";
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy.getSessionKey()).c_str()), DIET_VOLATILE)) {
+      msg += "with sessionKey parameter "+msessionProxy.getSessionKey();
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += "by receiving errorInfo message";
+    if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
+      msg += "with mparameters parameter "+mparameters;
       raiseDietMsgException(msg);
     }
-  }
-  else {
-    raiseDietMsgException(" the function diet_call is rejected");
-  }
 
-  /*To check the receiving message error*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
-  //CREATE the ListOject
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-  ecorecpp::parser::parser parser;
-  mlistObject = parser.load(listObjectInString)->as< ListObject >();
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
+        msg += "by receiving listObjectInString message";
+        raiseDietMsgException(msg);
+      }
+      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    }
+    else {
+      raiseDietMsgException(" the function diet_call is rejected");
+    }
+
+    /*To check the receiving message error*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+    //CREATE the ListOject
+    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+    ecorecpp::parser::parser parser;
+    mlistObject = parser.load(listObjectInString)->as< ListObject >();
+
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+  }
 
   return mlistObject;
 
