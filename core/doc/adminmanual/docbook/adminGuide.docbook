@@ -163,7 +163,7 @@
 	  <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL seront fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
 	</listitem>
 	<listitem>
-	  <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit.</para>
+	  <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte est non pas 'localhost' ou '127.0.0.1'. </para>
 	</listitem>
 	<listitem>
 	  <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : 'dietAgent config.cfg'. Le fichier de configuration peut contenir les 3 lignes suivantes :
