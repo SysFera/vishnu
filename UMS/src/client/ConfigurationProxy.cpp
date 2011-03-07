@@ -121,7 +121,7 @@ int ConfigurationProxy::restore(bool fromFile)
     std::ifstream ifile(mfilePath.c_str()); 
 
     if(!ifile.is_open()) {
-      throw UMSVishnuException(1, "can't open file "+mfilePath);
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "can't open file "+mfilePath);
     }
 
     ifile.seekg(0, std::ios::end);
