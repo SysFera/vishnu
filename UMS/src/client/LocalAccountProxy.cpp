@@ -95,7 +95,7 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -173,7 +173,7 @@ int LocalAccountProxy::deleteLocalAccount()
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;

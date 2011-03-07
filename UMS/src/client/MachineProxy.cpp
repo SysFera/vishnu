@@ -88,7 +88,7 @@ int MachineProxy::add()
     mmachine = *machine_ptr;
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -144,7 +144,7 @@ int MachineProxy::update()
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -196,7 +196,7 @@ int MachineProxy::deleteMachine()
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;

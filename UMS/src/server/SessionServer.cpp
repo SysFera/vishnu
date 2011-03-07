@@ -48,19 +48,12 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   std::string numSubstituteUserId;
   std::string numUserIdToconnect;
 
-  std::string sqlCommand = "SELECT * FROM users "
-  "where userid='"+user.getData().getUserId()+"'and pwd='"+user.getData().getPassword()+"'";
-
-  DatabaseResult *result =
-  mdatabaseVishnu->getResult(sqlCommand.c_str());
-
   //if the user exist
-  if (result->getNbTuples() != 0) {
-    std::vector<std::string> lineResults = result->get(0);
+  if (user.exist()) {
     //if a user to substitute is defined
     if (connectOpt->getSubstituteUserId().size() != 0) {
       // if the user is admin
-      if (convertToInt(lineResults[6]) == 1) {
+      if (user.isAdmin()) {
         numSubstituteUserId = user.getAttribut("where "
         "userid='"+connectOpt->getSubstituteUserId()+"'");
         //If the user to substitute exist
@@ -81,7 +74,8 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 
     //if there is not a numSubstituteUserId
     if (numUserIdToconnect.size() == 0) {
-        numUserIdToconnect = lineResults[0];
+        numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
+        " and pwd='"+user.getData().getPassword()+"'");
         msession.setUserId(user.getData().getUserId());
     } //END if There is not a numSubstituteUserId
 

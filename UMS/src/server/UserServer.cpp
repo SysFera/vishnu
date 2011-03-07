@@ -414,21 +414,15 @@ UserServer::init(){
 bool UserServer::exist(bool flagForChangePwd) {
 
   bool existUser = true;
-  std::string sqlCommand = "SELECT * FROM users "
-  "where userid='"+muser.getUserId()+"'and pwd='"+muser.getPassword()+"'";
 
-  DatabaseResult *result =
-  mdatabaseVishnu->getResult(sqlCommand.c_str());
-
-  //If the user is on the database
-  if (result->getNbTuples() != 0) {
-     std::vector<std::string> lineResults = result->get(0);
+    //If the user is on the database
+  if (getAttribut("where userid='"+muser.getUserId()+"'and pwd='"+muser.getPassword()+"'").size() != 0) {
       //If the user is not locked
-      if (convertToInt(lineResults[9]) == 1 ) {
+      if (isAttributOk("status", 1)) {
         //if the flag to check the password state is set
         if (!flagForChangePwd) {
           //If the passwordstate is active
-          if (convertToInt(lineResults[8]) == 1 ) {
+          if (isAttributOk("passwordstate", 1)) {
             return existUser;
           } //END If the passwordstate is active
           else {
