@@ -136,7 +136,7 @@ int main (int ac, char* av[]){
     
       std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     
-      errorUsage(av[0], msg,EXECERROR);
+      errorUsage(av[0],msg,EXECERROR);
     }
 
     return e.getMsgI() ;
