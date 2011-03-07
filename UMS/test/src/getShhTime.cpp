@@ -25,14 +25,15 @@ void print_ssh_time(double t, std::string prog)
 int main(int argc, char* argv[]) {
 
    if(argc < 2) {
-     std::cout << "usage : " << argv[0] << "ssh_progname>" << std::endl;
+     std::cout << "usage : " << argv[0] << "<host_name> <ssh_progname>" << std::endl;
      return 1;
    }
-   char* ssh_progname = argv[1];
+   char* host_name = argv[1];
+   char* ssh_progname = argv[2];
    double t0;
    double t1;
    std::ostringstream os;
-   os << "ssh localhost "; 
+   os << "ssh " << host_name << " "; 
    os << ssh_progname;
 
    t0 = gettime();
