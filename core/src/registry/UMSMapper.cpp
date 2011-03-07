@@ -423,7 +423,7 @@ UMSMapper::decodeAddM(vector<int> separator, const string& msg){
   res+=" ";
   res += ac->getLanguage();
   res+=" ";
-  res += ac->getSshPublicKey();
+  res += "SshPublicKey";
   return res;
 }
 
