@@ -90,7 +90,7 @@ parser::~parser()
     seconds  = end.tv_sec  - start.tv_sec;
     useconds = end.tv_usec - start.tv_usec;
 
-    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+    mtime = (long)((seconds) * 1000 + useconds/1000.0) + 0.5;
 #endif
     DEBUG_MSG(cout,"--- DURATION: " << mtime);
 
