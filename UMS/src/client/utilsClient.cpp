@@ -5,7 +5,6 @@
  * \date February 2011
  */
 #include "utilsClient.hpp"
-#include "SystemException.hpp"
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
