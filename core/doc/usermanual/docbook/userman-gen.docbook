@@ -160,6 +160,24 @@ same conditions as regards security.</para>
           <para> LIBCRYPT </para>
         </listitem>
       </itemizedlist>
+      <para> Installation procedure:</para>
+      <para>
+     <itemizedlist>
+          <listitem>
+            <para> Download the VISHNU install sources </para>
+          </listitem>
+          <listitem>
+            <para> Decompress it and go to the vishnu directory </para>
+          </listitem>
+          <listitem>
+            <para> Create a build directory and run CMake as follows: </para>
+            <para>> mkdir build </para>
+            <para>> cd build </para>
+            <para>> cmake .. </para>
+            <para>> make </para>
+          </listitem>
+        </itemizedlist>
+   </para>
     </section>
     <section>
       <title> Sofware usage description </title>
@@ -380,8 +398,10 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command allows to reuse a session that has been opened previously and that has not yet
-been closed. A user can disconnect from a session without closing it (for example if there are running
-commands in that session) by setting the session close policy (at connection time) to CLOSE_ON_TIMEOUT.</para>
+been closed. You can disconnect from a session without closing it (for example if there are running
+commands in that session) by setting the session close policy (at connection time) to CLOSE_ON_TIMEOUT.
+As sessions are linked to a specific client system, you cannot reconnect to a 
+session that was opened on another client system.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -837,7 +857,10 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows a user to list her/his local configurations. Several options can be used to specify the local configurations to list.</para>
+        <para>A local configuration is used to configure the access to a given system for a
+given user through VISHNU. It is related to a system account on that system
+that is identified using its login. This command allows you to check all the
+local configurations related to your VISHNU account. </para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -915,7 +938,7 @@ homeDirectory path must be provided.</para>
       </refmeta>
       <refnamediv>
         <refname>vishnu_list_machine</refname>
-        <refpurpose>lists the machines in which  the local user configurations are defined for the given user</refpurpose>
+        <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
@@ -924,7 +947,12 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays by default the machines in which the user has a local configuration. Several options can be used to specify the machines to list.</para>
+        <para>This command is used to display the machines that you can use for VISHNU services.
+The machines you can access through VISHNU are those that are configured in 
+VISHNU by the VISHNU administrator, and that have been added to your personal
+VISHNU configuration using the vishnu_add_local_account command.
+The results contain for each machine a machine identifier that you can use as a parameter
+of other VISHNU services.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1213,7 +1241,10 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the user sessions. Several options can be used to specify the sessions to list.</para>
+        <para>This command is used to display and filter the list of all your sessions.
+For each session, a session identifier is provided which you can use to
+reconnect to a given session using the vishnu_reconnect command.
+The session status is either 0 (Inactive) or 1 (active).</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1337,7 +1368,11 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows a user to configure her/his options.</para>
+        <para>Options in VISHNU corresponds to parameters of some VISHNU commands 
+(e.g. the close policy for vishnu_connect)
+that can be preset in the user configuration stored by the VISHNU system. This
+command is used to set the value of an option for the current user (the user who
+opened the session).</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
