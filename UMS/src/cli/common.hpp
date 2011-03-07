@@ -39,8 +39,6 @@ struct env_name_mapper{
  * \return The name used in the program
  */
 
-
-
 	std::string operator ()(std::string name){
 
 		std::string result= "";
@@ -55,6 +53,8 @@ struct env_name_mapper{
 	}
 };
 
-
+const std::string dietErrorMsg="DIET initialization failed !";
+const std::string currentSessionKeyMsg="the current sessionkey is: ";
+const std::string requiredParamMsg="required parameter is missing";
 
 #endif
