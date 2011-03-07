@@ -63,9 +63,10 @@ int main (int ac, char* av[]){
     // initializing DIET
 
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-    errorUsage(av[0],"DIET initialization failed !",EXECERROR);
 
-          return  CLI_ERROR_DIET ;
+      errorUsage(av[0],dietErrorMsg,EXECERROR);
+
+      return  CLI_ERROR_DIET ;
     }
 
     //get the sessionKey
@@ -74,7 +75,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout <<"the current sessionkey is: " << sessionKey <<endl;
+      cout <<currentSessionKeyMsg << sessionKey <<endl;
 
       deleteLocalAccount(sessionKey,userId,machineId);
 
@@ -86,7 +87,7 @@ int main (int ac, char* av[]){
   
   catch(po::required_option& e){// a required parameter is missing
 
-    usage(*opt," userId machineId ","required parameter is missing");
+    usage(*opt," userId machineId ",requiredParamMsg);
 
     return CLI_ERROR_MISSING_PARAMETER;
   }
