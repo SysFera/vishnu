@@ -53,7 +53,7 @@ int main (int ac, char* av[]){
 
     checkVishnuConfig(*opt);
 
-    /************** Call UMS connect service *******************************/
+    /************** Call UMS delete user service *******************************/
 
     // initializing DIET
 
@@ -70,7 +70,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout << "the current session key is " << sessionKey <<endl;
+      cout << currentSessionKeyMsg << sessionKey <<endl;
 
       deleteUser(sessionKey, userId);
 
