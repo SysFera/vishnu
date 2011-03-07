@@ -25,7 +25,7 @@ int main (int ac, char* av[]){
 
   catch(po::required_option& e){// a required parameter is missing
 
-    usage(*opt,"[options] optionName value ","required parameter is missing");
+    usage(*opt,"[options] optionName value ",requiredParamMsg);
   }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
