@@ -87,7 +87,7 @@ int main (int ac, char* av[]){
 
     if(false==sessionKey.empty()){
 
-      cout << "the current session key is " << sessionKey <<endl; 
+      cout << currentSessionKeyMsg << sessionKey <<endl; 
 
       updateUser(sessionKey,upUser);
 
