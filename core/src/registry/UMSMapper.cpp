@@ -279,7 +279,7 @@ UMSMapper::decodeUpUser(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_UPDATE_VISHNU_USER))->second;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += getU(u);
+  res += getUupdate(u);
   return res;
 }
 
@@ -436,6 +436,9 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
 
   ecorecpp::parser::parser parser;
   Machine_ptr ac = parser.load(std::string(a))->as< Machine >();
+  
+  res+= " ";
+  res+= ac->getMachineId();
   res+=" ";
   a = ac->getName();
   if (a.compare("")){
@@ -452,7 +455,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
     res+=" -d ";
     res+=a;
   }
-  a = ac->getStatus();
+  a = convertToString(ac->getStatus());
   if (a.compare("")){
     res+=" -t ";
     res+=a;
@@ -594,10 +597,14 @@ UMSMapper::decodeListOp(vector<int> separator, const string& msg){
 
 string
 UMSMapper::decodeListUser(vector<int> separator, const string& msg){
+  string a;
   string res = string("");
   res += (mmap.find(VISHNU_LIST_USERS))->second;
-  res += " ";
-  res += msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  if(a.compare(" ")){
+    res +=" -i ";
+    res +=a;
+  }
   return res;
 }
 
@@ -759,3 +766,40 @@ UMSMapper::getU(string serial){
 
 }
 
+string
+UMSMapper::getUupdate(string serial){
+  string res = string("");
+  string tmp;
+  ecorecpp::parser::parser parser;
+  User_ptr user = parser.load(std::string(serial))->as< User >();
+
+  res+= " ";
+  res += user->getUserId();
+  
+  tmp = user->getFirstname();
+  if(tmp.compare("")!=0){
+    res +=" -f ";
+    res += user->getFirstname();
+  }
+  tmp = user->getLastname();
+  if(tmp.compare("")!=0){
+    res +=" -l ";
+    res += user->getLastname();
+  }
+
+  if(user->getPrivilege()>0){
+    res+=" -p  ";
+    res += convertToString(user->getPrivilege());
+  }
+  else{
+    res += " -p ";
+    res += " 0";
+  }
+  tmp = user->getEmail();
+  if(tmp.compare("")!=0){
+    res +=" -m ";
+    res += user->getEmail();
+  }
+  return res;
+
+}
