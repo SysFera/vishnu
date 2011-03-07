@@ -216,7 +216,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
@@ -284,7 +284,7 @@ int SessionProxy::close()
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
   return 0;
