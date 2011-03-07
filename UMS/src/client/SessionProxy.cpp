@@ -96,121 +96,127 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
         +"$HOME/.vishnu/ssh_host_rsa_key.pub");
   } 
 
-  //To get the content of the first opened file and close the others files opened
-  if(checkFile1) {
-    ifile1.close();
-    ifile.open(sshKey1.c_str());
-    if(checkFile2) {
+  try {
+    //To get the content of the first opened file and close the others files opened
+    if(checkFile1) {
+      ifile1.close();
+      ifile.open(sshKey1.c_str());
+      if(checkFile2) {
+        ifile2.close();
+      }
+      if(checkFile3) {
+        ifile3.close();
+      }
+      if(checkFile4) {
+        ifile4.close();
+      }
+    } else if(checkFile2) {
       ifile2.close();
-    }
-    if(checkFile3) {
+      ifile.open(sshKey2.c_str());
+      if(checkFile3) {
+        ifile3.close();
+      }
+      if(checkFile4) {
+        ifile4.close();
+      }
+    } else if(checkFile3) {
       ifile3.close();
-    }
-    if(checkFile4) {
+      ifile.open(sshKey3.c_str());
+      if(checkFile4) {
+        ifile4.close();
+      }
+    } else {
       ifile4.close();
+      ifile.open(sshKey4.c_str());
     }
-  } else if(checkFile2) {
-    ifile2.close();
-    ifile.open(sshKey2.c_str());
-    if(checkFile3) {
-      ifile3.close();
+
+    ifile.seekg(0, std::ios::end);
+    length = ifile.tellg();
+    ifile.seekg(0, std::ios::beg);
+
+    key = new char[length];
+    ifile.read(key, length);
+    ifile.close();
+
+    std::string salt = "$6$"+user.getData().getUserId()+"$";                 
+    encryptedKey = crypt(key, salt.c_str());
+
+    if(connect) {
+      // SERIALIZE DATA MODEL
+      const char* name = "sessionConnect";
+      ::ecorecpp::serializer::serializer _ser(name);
+      //To serialize the options object in to optionsToString 
+      optionsToString =  _ser.serialize(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
+      profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
+    } else {
+      profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);
     }
-    if(checkFile4) {
-      ifile4.close();
+
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup((user.getData().getUserId()).c_str()), DIET_VOLATILE)) {
+      msg += "with userId parameter "+user.getData().getUserId();
+      raiseDietMsgException(msg);
     }
-  } else if(checkFile3) {
-    ifile3.close();
-    ifile.open(sshKey3.c_str());
-    if(checkFile4) {
-      ifile4.close();
+    if(diet_string_set(diet_parameter(profile,1), strdup((user.getData().getPassword()).c_str()), DIET_VOLATILE)) {
+      msg += "with password parameter";
+      raiseDietMsgException(msg);
     }
-  } else {
-    ifile4.close();
-    ifile.open(sshKey4.c_str());
-  }
-
-  ifile.seekg(0, std::ios::end);
-  length = ifile.tellg();
-  ifile.seekg(0, std::ios::beg);
-
-  key = new char[length];
-  ifile.read(key, length);
-  ifile.close();
-
-  std::string salt = "$6$"+user.getData().getUserId()+"$";                 
-  encryptedKey = crypt(key, salt.c_str());
-
-  if(connect) {
-    // SERIALIZE DATA MODEL
-    const char* name = "sessionConnect";
-    ::ecorecpp::serializer::serializer _ser(name);
-    //To serialize the options object in to optionsToString 
-    optionsToString =  _ser.serialize(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
-    profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
-  } else {
-    profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);
-  }
-
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup((user.getData().getUserId()).c_str()), DIET_VOLATILE)) {
-    msg += "with userId parameter "+user.getData().getUserId();
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup((user.getData().getPassword()).c_str()), DIET_VOLATILE)) {
-    msg += "with password parameter";
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
-    msg += "with sshKey parameter sshKey path";
-    raiseDietMsgException(msg);
-  } 
-  if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
-    msg += "with hostname parameter "+std::string(hostname);
-    raiseDietMsgException(msg);
-  }  
-  if(connect) {
-    if(diet_string_set(diet_parameter(profile,4), strdup(optionsToString.c_str()), DIET_VOLATILE)){
-      msg += "with optionsToString parameter ";
+    if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
+      msg += "with sshKey parameter sshKey path";
       raiseDietMsgException(msg);
     } 
-  } else {
-    if(diet_string_set(diet_parameter(profile,4), strdup((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
-      msg += "with sessionId parameter "+msession.getSessionId();
+    if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
+      msg += "with hostname parameter "+std::string(hostname);
       raiseDietMsgException(msg);
+    }  
+    if(connect) {
+      if(diet_string_set(diet_parameter(profile,4), strdup(optionsToString.c_str()), DIET_VOLATILE)){
+        msg += "with optionsToString parameter ";
+        raiseDietMsgException(msg);
+      } 
+    } else {
+      if(diet_string_set(diet_parameter(profile,4), strdup((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
+        msg += "with sessionId parameter "+msession.getSessionId();
+        raiseDietMsgException(msg);
+      }
     }
-  }
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
 
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
-      msg += "by receiving sessionInString value";
-      raiseDietMsgException(msg);
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
+        msg += "by receiving sessionInString value";
+        raiseDietMsgException(msg);
+      }
+      if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
+        msg += "to receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    } else {
+      raiseDietMsgException("DIET call failure");
     }
-    if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
-      msg += "to receiving errorInfo message";
-      raiseDietMsgException(msg);
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+    // CREATE DATA MODEL
+    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+    //Parse the model
+    ecorecpp::parser::parser parser;
+    //To set the muser
+    UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
+    msession = *session_ptr;
+
+    if(key!=NULL) {
+      delete [] key;
     }
-  } else {
-    raiseDietMsgException("DIET call failure");
-  }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  //To set the muser
-  UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
-  msession = *session_ptr;
-
-  if(key!=NULL) {
-    delete [] key;
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
   }
 
   return 0;
@@ -254,27 +260,32 @@ int SessionProxy::close()
 
   std::string sessionKey =  msessionKey;
 
-  diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1); 
-  //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
-  }
-
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
-      msg += "by receiving errorInfo message";
+  try {
+    diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1); 
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+      msg += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msg);
     }
-  } else {  
-    raiseDietMsgException("DIET call failure"); 
-  }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    } else {  
+      raiseDietMsgException("DIET call failure"); 
+    }
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  } catch (...) {
+    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+  }
 
   return 0;
 }
