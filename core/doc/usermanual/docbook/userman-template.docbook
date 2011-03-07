@@ -142,17 +142,32 @@ same conditions as regards security.</para>
      <para> Installation requirements:</para>
      <itemizedlist>
        <listitem>
-	    <para> Cmake V2.6 </para>
+	    <para> GCC V4.4.3 </para>
+      </listitem>
+       <listitem>
+	    <para> CMAKE V2.6 </para>
       </listitem>
       <listitem>
-	    <para> OmniORB </para>
+	    <para> OMNIORB 4.1.4 </para>
       </listitem>
       <listitem>
-	<para> SysFera-DS software available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink></para>
+	<para> SYSFERA-DS V2.7 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
       </listitem>
       <listitem>
-	    <para> Boost V1.45 (program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random) </para>
-	  </listitem>
+	    <para> BOOST V1.45 </para>
+      </listitem>
+      <listitem>
+	    <para> PYTHON V2.5 </para>
+      </listitem>
+      <listitem>
+	    <para> JAVA V1.6 </para>
+      </listitem>
+      <listitem>
+	    <para> SWIG V1.3 </para>
+      </listitem>
+      <listitem>
+	    <para> LIBCRYPT </para>
+      </listitem>
     </itemizedlist>
    </section>
    
@@ -233,7 +248,7 @@ same conditions as regards security.</para>
 	  </para>   
 	  <para>  
 	    The ssh public key of the machine 
-	    named <emphasis role = "italic">"userId-machineId"</emphasis> is returned and stored on the $HOME/.vishnu directory/localAccountPublicKey and must be added by the user on the authorized key of the UNIX account.
+	    named <emphasis role = "italic">"userId-machineId"</emphasis> is returned and stored on the $HOME/.vishnu directory/localAccountPublicKey/ and must be added by the user on the authorized key of the UNIX account.
 	    In this way, VISHNU can be connected directly on this UNIX account for making tash as it was the user of the UNIX account.
 	 </para>
       </section>
@@ -252,6 +267,12 @@ same conditions as regards security.</para>
 	    A local user configuration can be removed by using the <emphasis role = "bold">vishnu_delete_local_account</emphasis> command.
 	 </para>
       </section>
+      <para>
+	It is possible to display the local user configurations with the <emphasis role = "bold">vishnu_list_local_account</emphasis> command. Other 
+	commands which are not cited above can be used to display information such as: the <emphasis role = "bold">vishnu_list_options</emphasis> command which 
+	displays all options configured by the user or the <emphasis role = "bold">vishnu_list_sessions</emphasis> command to
+	display information about sessions.
+      </para>
     </section>
     
     
