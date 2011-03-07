@@ -76,7 +76,7 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
   } catch (...) {
-    throw UMSVishnuException(ERRCODE_DIET, "Internal DIET Exception");
+    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
 
 
