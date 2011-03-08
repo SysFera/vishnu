@@ -90,6 +90,8 @@ int main (int ac, char* av[]){
 
   }// End of try bloc
 
+  // {{RELAX<CODEREDUCER> The error handling is the same in all command
+
   catch(po::required_option& e){// a required parameter is missing
 
     usage(opt,"[options] userId ",requiredParamMsg);
@@ -123,6 +125,8 @@ int main (int ac, char* av[]){
   }
 
   return 0;
+
+  // }}RELAX<CODEREDUCER>
 
 }// end of main
 
