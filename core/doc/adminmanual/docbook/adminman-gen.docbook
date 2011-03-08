@@ -35,12 +35,12 @@
     <title>VISHNU - Le guide de l'administrateur</title>
     <revhistory>
       <revision>
-        <revnumber>0</revnumber>
-        <date>03/03/2011</date>
+        <revnumber>1</revnumber>
+        <date>08/03/2011</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
           
-        <para>Guide présentant l'administration du système VISHNU au moyen du module Users Management System (UMS)</para></revdescription>
+        <para>Version initiale pour le module UMS uniquement</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -52,7 +52,7 @@
       </para>
     </section>
     <section>
-      <title>Document structure</title>
+      <title>Structure du document</title>
       <para>Ce document est divisé en quatre parties :
       </para>
       <para>
@@ -80,13 +80,27 @@
       <itemizedlist>
         <listitem>
           <para>DB : Base de données. Elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
-	      par le module UMS. Cette base de données sera considérée comme étant de type PostGreSQL dans ce document.</para>
+	      par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
         </listitem>
         <listitem>
-          <para> MA : Le 'Master Agent', élément de Sysfera-DS servant à faire le lien entre le client et le service désiré.</para>
+          <para> MA : Le 'Master Agent', élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
         </listitem>
         <listitem>
-          <para>SQL : Language de requêtes sur les bases de données</para>
+          <para>SQL : Langage de requêtes sur les bases de données</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Références</title>
+      <itemizedlist>
+        <listitem>
+          <para>[ARCH] D1.1g-VISHNU Technical Architecture : description de l'architecture de l'application VISHNU</para>
+        </listitem>
+        <listitem>
+          <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET (nom du projet OpenSource de l'application SysFera-DS</para>
+        </listitem>
+        <listitem>
+          <para>[VISHNU_USERGUIDE] VISHNU User Guide: guide de l'utilisateur VISHNU.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -105,7 +119,10 @@
 	      Une seule instance est nécessaire pour faire tourner VISHNU. </para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS : Middleware open source développé par Sysfera. </para>
+            <para>Sysfera-DS : Middleware open source développé par SysFera. </para>
+          </listitem>
+          <listitem>
+            <para>Se référer au glossaire du document [ARCH] pour des définitions additionelles.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -144,19 +161,17 @@
           <para>Sysfera-DS (DIET uniquement pour l'instant, version 2.7 minimum)</para>
         </listitem>
         <listitem>
-          <para>JAVA version 1.6 et Python</para>
+          <para>JAVA version 1.6  (Option)</para>
         </listitem>
         <listitem>
-          <para>Python au moins 2.5</para>
-        </listitem>
-        <listitem>
-          <para>Java 1.6</para>
+          <para>Python au moins 2.5 (Option)</para>
         </listitem>
       </itemizedlist>
     </section>
     <section>
       <title> Compilation des sources </title>
-      <para>Se rendre dans le dossier VISHNU. Faire un répertoire build (mkdir build). Se rendre dans le répertoire (cd build).
+      <para>Vishnu utilise CMake comme système de construction et se conforme aux 
+pratiques communèment admises.
 	Il y a quatre options principales utilisables :
 	<itemizedlist>
           <listitem>
@@ -176,30 +191,59 @@
           </listitem>
           <listitem>
             <para>
-	      CMAKE_INSTALL_PREFIX, le dossier d'installation en cas de make install
+	      CMAKE_INSTALL_PREFIX, répertoire d'installation (/usr/local par défaut sur les plateformes *nix)
 	    </para>
           </listitem>
-        </itemizedlist>
-	Lancer la compilation avec cmake et les options qui vont bien. Par exemple pour compiler le client et le 
-	serveur en ayant le python et pour installer dans /opt/vishnu :
-	cmake -DENABLE_PYTHON=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu
-	Puis faire make &amp;&amp; make install
-
-	Attention, pour bien avoir accès aux commandes de vishnu, bien mettre le dossier d'installation dans le path.
-      </para>
+        </itemizedlist></para>
+      <para>
+Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API 
+  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:</para>
+      <itemizedlist>
+        <listitem>
+          <para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
+        </listitem>
+        <listitem>
+          <para>$ mkdir build</para>
+        </listitem>
+        <listitem>
+          <para>$ cd build</para>
+        </listitem>
+        <listitem>
+          <para>2. générer le Makefile</para>
+        </listitem>
+        <listitem>
+          <para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=ON</para>
+        </listitem>
+        <listitem>
+          <para>3. lancer la compilation avec 2 jobs</para>
+        </listitem>
+        <listitem>
+          <para>$ make -j 2</para>
+        </listitem>
+        <listitem>
+          <para>4. installation (en mode super-utilisateur)</para>
+        </listitem>
+        <listitem>
+          <para># make install</para>
+        </listitem>
+      </itemizedlist>
+      <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
+  utilisateur pour avoir accès à la commande.</para>
     </section>
   </chapter>
   <chapter>
-    <title>Lancement de VISHNU</title>
+    <title>Déploiement de VISHNU</title>
     <section>
       <title>Lancement des serveurs </title>
-      <para>Pour le module UMS, le lancement devra être fait manuellement. Par la suite, le lancement pourra être fait par GoDIET, un logiciel de lancement pour Sysfera-DS depuis une machine d'administration. Pour mieux comprendre l'architecture de déploiement, se référer au document 'D1.1g-VISHNU Technical Architecture', le chapitre 4, 'Technical Architecture'.</para>
+      <para>Le module UMS peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
+      <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
+      <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
         <listitem>
-          <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL seront fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+          <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
         </listitem>
         <listitem>
-          <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte est non pas 'localhost' ou '127.0.0.1'. </para>
+          <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
         </listitem>
         <listitem>
           <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : 'dietAgent config.cfg'. Le fichier de configuration peut contenir les 3 lignes suivantes :
@@ -267,14 +311,14 @@
       <orderedlist>
         <listitem>
           <para>
-	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au guide de l'utilisateur
+	    Une fois que la plateforme a été installée, se mettre sur un poste client avec VISHNU d'installé. Se référer au document [VISHNU_USERGUIDE]
 	    pour l'installation de la partie client.
 	  </para>
         </listitem>
         <listitem>
           <para>
-	    Exporter la variable d'environnement VISHNU_CONFIG_FILE sur un script de configuration client. Se référer 
-	    au guide d'installation du client pour connaître le contenu d'un fichier client.
+	    Exporter la variable d'environnement VISHNU_CONFIG_FILE dans un script de configuration client. Se référer 
+	    au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu d'un fichier client.
 	  </para>
         </listitem>
         <listitem>
@@ -284,7 +328,7 @@
         </listitem>
         <listitem>
           <para>
-	    Tapper le mot de passe 'password', correspondant à l'utilisateur 'user'
+	    Taper le mot de passe 'password', correspondant à l'utilisateur 'user'
 	  </para>
         </listitem>
         <listitem>
@@ -305,7 +349,8 @@
     <section>
       <title>Présentation</title>
       <para>
-	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est. Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera les commandes depuis l'API shell, mais cela reste valable depuis toutes les API offertes par VISHNU et possédant la partie administration.
+	Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est. 
+        Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
       </para>
     </section>
     <section>
@@ -318,12 +363,14 @@
         </listitem>
         <listitem>
           <para>
-	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, status, couriel). Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
+	    La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel). 
+            Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
 	  </para>
+          <para>Note: le changement du statut d'un utilisateur à l'état &quot;INACTIVE&quot; correspond à un blocage de son compte.</para>
         </listitem>
         <listitem>
           <para>
-	    La suppression d'un utilisateur correspond en fait au blocage d'un utilisateur. Il n'est pas réellement supprimé de la base de donnée mais son compte est bloqué et personne ne peut plus se connecter sur ce compte. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user' avec en paramètre l'identifiant de l'utilisateur (cet identifiant étant automatiquement généré lors de la création d'un utilisateur).
+	    La suppression d'un utilisateur efface toutes les informations liées à l'utilisateur de la base de donnée. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user'.
 	  </para>
         </listitem>
         <listitem>
@@ -348,10 +395,11 @@
           <para>
 	    La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
 	  </para>
+          <para>Note: le changement du statut d'une machine à l'état &quot;INACTIVE&quot; correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
         </listitem>
         <listitem>
           <para>
-	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela ne correspond pas à une suppression de la base de donnée mais à un blocage, qui fait que la machine n'est plus visible ou accessible par VISHNU.
+	    La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention: cette commande est irréversible).
 	  </para>
         </listitem>
         <listitem>
@@ -371,7 +419,8 @@
         </listitem>
         <listitem>
           <para>
-	    L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. Attention, lorsque la restoration de la base est faite, tout les mots de passe des comptes sont considérés comme temporaire et il faut les changer avant de pouvoir réutiliser VISHNU.
+	    L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base. 
+            Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
 	  </para>
         </listitem>
         <listitem>
@@ -411,7 +460,7 @@
     </section>
   </chapter>
   <reference>
-    <title>Commands reference</title>
+    <title>Command reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>vishnu_add_user</refentrytitle>
@@ -1296,13 +1345,13 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>newUser</emphasis></term>
             <listitem>
-              <para>Object containing the new user information.</para>
+              <para>Input/Output argument. Object containing the new user information.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1364,13 +1413,13 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>user</emphasis></term>
             <listitem>
-              <para>Object containing user information.</para>
+              <para>Input argument. Object containing user information.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1432,13 +1481,13 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier of the user who will be deleted from VISHNU.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier of the user who will be deleted from VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1492,19 +1541,19 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier of the user whose password will be reset.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier of the user whose password will be reset.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>tmpPassword</emphasis></term>
             <listitem>
-              <para>The temporary password generated by VISHNU.</para>
+              <para>Output argument. The temporary password generated by VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1558,13 +1607,13 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>configuration</emphasis></term>
             <listitem>
-              <para>The configuration is an object which encapsulates the configuration description.</para>
+              <para>Output argument. The configuration is an object which encapsulates the configuration description.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1612,13 +1661,13 @@ After restoring, the vishnu database is re-initialized.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>filePath</emphasis></term>
             <listitem>
-              <para>The filePath is the path of the file used to restore VISHNU configuration.</para>
+              <para>Input argument. The filePath is the path of the file used to restore VISHNU configuration.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1664,13 +1713,13 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>newMachine</emphasis></term>
             <listitem>
-              <para>is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU.</para>
+              <para>Input/Output argument. Is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1724,13 +1773,13 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>machine</emphasis></term>
             <listitem>
-              <para>existing machine information.</para>
+              <para>Input argument. Existing machine information.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1784,13 +1833,13 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>machineId represents the identifier of the machine.</para>
+              <para>Input argument. MachineId represents the identifier of the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1840,19 +1889,19 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listuser</emphasis></term>
             <listitem>
-              <para>listuser is the list of users .</para>
+              <para>Output argument. Listuser is the list of users .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userIdOption</emphasis></term>
             <listitem>
-              <para>allows an admin to get information about a specific user identified by his/her userId.</para>
+              <para>Input argument. Allows an admin to get information about a specific user identified by his/her userId.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1907,13 +1956,13 @@ that option using the vishnu_configure_option command.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>optionValue</emphasis></term>
             <listitem>
-              <para>The optionValue is an object which encapsulates the option information.</para>
+              <para>Input argument. The optionValue is an object which encapsulates the option information.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1969,13 +2018,24 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>newUser</emphasis></term>
             <listitem>
-              <para>Object containing the new user information.</para>
+              <para>Input/Output argument. Object containing the new user information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1985,31 +2045,31 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId already exists in the database&quot; [22]</term>
+            <term>UMSVishnuException(&quot;The userId already exists in the database&quot; [22])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The mail adress is invalid&quot; [27]</term>
+            <term>UMSVishnuException(&quot;The mail adress is invalid&quot; [27])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine is locked&quot; [34]</term>
+            <term>UMSVishnuException(&quot;The machine is locked&quot; [34])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2037,13 +2097,24 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>user</emphasis></term>
             <listitem>
-              <para>Object containing user information.</para>
+              <para>Input argument. Object containing user information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2053,31 +2124,31 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Trying to lock a user account that is already locked&quot; [24]</term>
+            <term>UMSVishnuException(&quot;Trying to lock a user account that is already locked&quot; [24])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The mail adress is invalid&quot; [27]</term>
+            <term>UMSVishnuException(&quot;The mail adress is invalid&quot; [27])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2105,13 +2176,24 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier of the user who will be deleted from VISHNU.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier of the user who will be deleted from VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2121,23 +2203,23 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2165,19 +2247,30 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier of the user whose password will be reset.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier of the user whose password will be reset.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>tmpPassword</emphasis></term>
             <listitem>
-              <para>The temporary password generated by VISHNU.</para>
+              <para>Output argument. The temporary password generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2187,23 +2280,23 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2231,13 +2324,24 @@ and password are sent to the user by email.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>configuration</emphasis></term>
             <listitem>
-              <para>The configuration is an object which encapsulates the configuration description.</para>
+              <para>Output argument. The configuration is an object which encapsulates the configuration description.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2247,11 +2351,11 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;A problem occurs during the configuration saving &quot; [39]</term>
+            <term>UMSVishnuException(&quot;A problem occurs during the configuration saving &quot; [39])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2285,13 +2389,24 @@ After restoring, the vishnu database is re-initialized.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>filePath</emphasis></term>
             <listitem>
-              <para>The filePath is the path of the file used to restore VISHNU configuration.</para>
+              <para>Input argument. The filePath is the path of the file used to restore VISHNU configuration.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2301,11 +2416,11 @@ After restoring, the vishnu database is re-initialized.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;A problem occurs during the configuration restoring&quot; [40]</term>
+            <term>UMSVishnuException(&quot;A problem occurs during the configuration restoring&quot; [40])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2337,13 +2452,24 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>newMachine</emphasis></term>
             <listitem>
-              <para>is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU.</para>
+              <para>Input/Output argument. Is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2353,23 +2479,23 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machineId already exists in the database&quot; [33]</term>
+            <term>UMSVishnuException(&quot;The machineId already exists in the database&quot; [33])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The closure policy is unknown&quot; [42]</term>
+            <term>UMSVishnuException(&quot;The closure policy is unknown&quot; [42])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2397,13 +2523,24 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>machine</emphasis></term>
             <listitem>
-              <para>existing machine information.</para>
+              <para>Input argument. Existing machine information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2413,23 +2550,23 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The closure policy is unknown&quot; [42]</term>
+            <term>UMSVishnuException(&quot;The closure policy is unknown&quot; [42])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2457,13 +2594,24 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>machineId represents the identifier of the machine.</para>
+              <para>Input argument. MachineId represents the identifier of the machine.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2473,19 +2621,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2513,19 +2661,30 @@ have to add it to the authorized keys of their own account on the machine.</para
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listuser</emphasis></term>
             <listitem>
-              <para>listuser is the list of users .</para>
+              <para>Output argument. Listuser is the list of users .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userIdOption</emphasis></term>
             <listitem>
-              <para>allows an admin to get information about a specific user identified by his/her userId.</para>
+              <para>Input argument. Allows an admin to get information about a specific user identified by his/her userId.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2535,19 +2694,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2580,13 +2739,24 @@ that option using the vishnu_configure_option command.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>optionValue</emphasis></term>
             <listitem>
-              <para>The optionValue is an object which encapsulates the option information.</para>
+              <para>Input argument. The optionValue is an object which encapsulates the option information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2596,19 +2766,19 @@ that option using the vishnu_configure_option command.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
