@@ -3,7 +3,7 @@
 
 /**
  * \file common.hpp
- * This file defines convenients include file for the all VISHNU command line
+ * \brief This file defines convenients include file for the all VISHNU command line
  * interface 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
