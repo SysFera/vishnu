@@ -1,0 +1,397 @@
+\hypertarget{classQueryServer}{
+\section{QueryServer$<$ QueryParameters, ListObject $>$ Class Template Reference}
+\label{classQueryServer}\index{QueryServer@{QueryServer}}
+}
+
+
+\hyperlink{classQueryServer}{QueryServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$QueryServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classQueryServer_a52662d49ca1ee424c925bd2bb56067ae}{QueryServer} (const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hyperlink{classQueryServer_a17571a8b25426721f8b301cc05329ca1}{QueryServer} (QueryParameters $\ast$params, const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+virtual ListObject $\ast$ \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{list} ()=0
+\begin{DoxyCompactList}\small\item\em Function to list query information. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{getCommandName} ()=0
+\begin{DoxyCompactList}\small\item\em Function to get the name of the query command line. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_a908157c12cbf775d0dd7f270e0f291fe}{addOptionRequest} (const std::string \&name, const std::string \&value, std::string \&request)
+\begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}and condition\char`\"{} to a given request. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{classQueryServer_a468ed7f1ccfa3905d010ad67948ea28d}{addIntegerOptionRequest} (const std::string \&name, T \&value, std::string \&request)
+\begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}and condition\char`\"{} which contain an integer value to a given request. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{classQueryServer_a43a6aa8774b5a781bb3c5777eb557a24}{addTimeRequest} (const std::string \&name, T \&value, std::string \&request, std::string comp)
+\begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}and condition\char`\"{} which contain an integer value to a given request. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_ae560033d0f8aac38f1feaa59f37305c8}{addCondition} (const std::string \&name, const std::string \&value, std::string \&request)
+\begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}where condition\char`\"{} to a given request. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{classQueryServer_afdb77d4186ae47e469a1eb19bc8a7722}{addIntegerCondition} (const std::string \&name, T \&value, std::string \&request)
+\begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}where condition\char`\"{} which contain an integer value to a given request. \item\end{DoxyCompactList}\item 
+long \hyperlink{classQueryServer_af7d3974b4a4c06e7dc92809cb37f5027}{convertToTimeType} (std::string date)
+\begin{DoxyCompactList}\small\item\em Function to convert a given date into correspondant long value. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_a0f5faaf9f4be79361b2eb15e14480a7d}{checkUserId} (std::string userId)
+\begin{DoxyCompactList}\small\item\em Function to check if a given user identifier exists. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_a192112eecd3ec9c706c472d45f82b549}{checkMachineId} (std::string machineId)
+\begin{DoxyCompactList}\small\item\em Function to check if a given machine identifier exists. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_ab05f1d7e54ec0e7bc51772300a7fe9c2}{checkClientMachineName} (std::string clmachineId)
+\begin{DoxyCompactList}\small\item\em Function to check if a given machine client identifier exists. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_addd5852b7271e319daa09c989f23ce83}{checkOptionName} (std::string name)
+\begin{DoxyCompactList}\small\item\em Function to check if a given option name exists. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_aab30c247fe7f71f28ef30d28d78b23e2}{checkSessionId} (std::string sessionId)
+\begin{DoxyCompactList}\small\item\em Function to check if a given session identifier exists. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_a358f371f74bcb2dd3e789bd20d0cb672}{checkStatus} (const int \&status)
+\begin{DoxyCompactList}\small\item\em Function to check a status value. \item\end{DoxyCompactList}\item 
+void \hyperlink{classQueryServer_a73cc37f1e18f4e5028d8f4d68b9b148f}{checkClosePolicy} (const int \&closePolicy)
+\begin{DoxyCompactList}\small\item\em Function to check a close policy value. \item\end{DoxyCompactList}\item 
+\hypertarget{classQueryServer_ac1522f625d161ff74da960d37c1b58d1}{
+virtual \hyperlink{classQueryServer_ac1522f625d161ff74da960d37c1b58d1}{$\sim$QueryServer} ()}
+\label{classQueryServer_ac1522f625d161ff74da960d37c1b58d1}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classQueryServer_a4cf1497aa9c56864e8119645ccc42dc7}{
+QueryParameters $\ast$ \hyperlink{classQueryServer_a4cf1497aa9c56864e8119645ccc42dc7}{mparameters}}
+\label{classQueryServer_a4cf1497aa9c56864e8119645ccc42dc7}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the QueryParameters information. \item\end{DoxyCompactList}\item 
+\hypertarget{classQueryServer_aca7fcfb763b77c52c23a587f698caf50}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classQueryServer_aca7fcfb763b77c52c23a587f698caf50}{msessionServer}}
+\label{classQueryServer_aca7fcfb763b77c52c23a587f698caf50}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classSessionServer}{SessionServer} object containing the encrypted identifier of the session generated by VISHNU. \item\end{DoxyCompactList}\item 
+\hypertarget{classQueryServer_a6b31d48f2ebadfe86d71999efde3679e}{
+ListObject $\ast$ \hyperlink{classQueryServer_a6b31d48f2ebadfe86d71999efde3679e}{mlistObject}}
+\label{classQueryServer_a6b31d48f2ebadfe86d71999efde3679e}
+
+\begin{DoxyCompactList}\small\item\em The Object containing query information. \item\end{DoxyCompactList}\item 
+\hypertarget{classQueryServer_ad6deb85a0f4526edbdfd97269f2acec5}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classQueryServer_ad6deb85a0f4526edbdfd97269f2acec5}{mdatabaseVishnu}}
+\label{classQueryServer_ad6deb85a0f4526edbdfd97269f2acec5}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class QueryParameters, class ListObject$>$ class QueryServer$<$ QueryParameters, ListObject $>$}
+
+\hyperlink{classQueryServer}{QueryServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classQueryServer_a52662d49ca1ee424c925bd2bb56067ae}{
+\index{QueryServer@{QueryServer}!QueryServer@{QueryServer}}
+\index{QueryServer@{QueryServer}!QueryServer@{QueryServer}}
+\subsubsection[{QueryServer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ {\bf QueryServer}$<$ QueryParameters, ListObject $>$::{\bf QueryServer} (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, explicit\mbox{]}}}}
+\label{classQueryServer_a52662d49ca1ee424c925bd2bb56067ae}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+\hypertarget{classQueryServer_a17571a8b25426721f8b301cc05329ca1}{
+\index{QueryServer@{QueryServer}!QueryServer@{QueryServer}}
+\index{QueryServer@{QueryServer}!QueryServer@{QueryServer}}
+\subsubsection[{QueryServer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ {\bf QueryServer}$<$ QueryParameters, ListObject $>$::{\bf QueryServer} (
+\begin{DoxyParamCaption}
+\item[{QueryParameters $\ast$}]{ params, }
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a17571a8b25426721f8b301cc05329ca1}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of query options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classQueryServer_ae560033d0f8aac38f1feaa59f37305c8}{
+\index{QueryServer@{QueryServer}!addCondition@{addCondition}}
+\index{addCondition@{addCondition}!QueryServer@{QueryServer}}
+\subsubsection[{addCondition}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::addCondition (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ name, }
+\item[{const std::string \&}]{ value, }
+\item[{std::string \&}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_ae560033d0f8aac38f1feaa59f37305c8}
+
+
+Function to add sql resquest \char`\"{}where condition\char`\"{} to a given request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The column name of the data base table \item[{\em value}]The value to search in the given column \item[{\em request}]The request \end{DoxyParams}
+\hypertarget{classQueryServer_afdb77d4186ae47e469a1eb19bc8a7722}{
+\index{QueryServer@{QueryServer}!addIntegerCondition@{addIntegerCondition}}
+\index{addIntegerCondition@{addIntegerCondition}!QueryServer@{QueryServer}}
+\subsubsection[{addIntegerCondition}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ template$<$class T $>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::addIntegerCondition (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ name, }
+\item[{T \&}]{ value, }
+\item[{std::string \&}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_afdb77d4186ae47e469a1eb19bc8a7722}
+
+
+Function to add sql resquest \char`\"{}where condition\char`\"{} which contain an integer value to a given request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The column name of the data base table \item[{\em value}]The integer value to search in the given column \item[{\em request}]the request \end{DoxyParams}
+\hypertarget{classQueryServer_a468ed7f1ccfa3905d010ad67948ea28d}{
+\index{QueryServer@{QueryServer}!addIntegerOptionRequest@{addIntegerOptionRequest}}
+\index{addIntegerOptionRequest@{addIntegerOptionRequest}!QueryServer@{QueryServer}}
+\subsubsection[{addIntegerOptionRequest}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ template$<$class T $>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::addIntegerOptionRequest (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ name, }
+\item[{T \&}]{ value, }
+\item[{std::string \&}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a468ed7f1ccfa3905d010ad67948ea28d}
+
+
+Function to add sql resquest \char`\"{}and condition\char`\"{} which contain an integer value to a given request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The column name of the data base table \item[{\em value}]The integer value to search in the given column \item[{\em request}]the request \end{DoxyParams}
+\hypertarget{classQueryServer_a908157c12cbf775d0dd7f270e0f291fe}{
+\index{QueryServer@{QueryServer}!addOptionRequest@{addOptionRequest}}
+\index{addOptionRequest@{addOptionRequest}!QueryServer@{QueryServer}}
+\subsubsection[{addOptionRequest}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::addOptionRequest (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ name, }
+\item[{const std::string \&}]{ value, }
+\item[{std::string \&}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a908157c12cbf775d0dd7f270e0f291fe}
+
+
+Function to add sql resquest \char`\"{}and condition\char`\"{} to a given request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The column name of the data base table \item[{\em value}]The value to search in the given column \item[{\em request}]The request \end{DoxyParams}
+\hypertarget{classQueryServer_a43a6aa8774b5a781bb3c5777eb557a24}{
+\index{QueryServer@{QueryServer}!addTimeRequest@{addTimeRequest}}
+\index{addTimeRequest@{addTimeRequest}!QueryServer@{QueryServer}}
+\subsubsection[{addTimeRequest}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ template$<$class T $>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::addTimeRequest (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ name, }
+\item[{T \&}]{ value, }
+\item[{std::string \&}]{ request, }
+\item[{std::string}]{ comp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a43a6aa8774b5a781bb3c5777eb557a24}
+
+
+Function to add sql resquest \char`\"{}and condition\char`\"{} which contain an integer value to a given request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The column name of the data base table \item[{\em value}]The integer value to search in the given column \item[{\em request}]the request \item[{\em comp}]The where statement \end{DoxyParams}
+\hypertarget{classQueryServer_ab05f1d7e54ec0e7bc51772300a7fe9c2}{
+\index{QueryServer@{QueryServer}!checkClientMachineName@{checkClientMachineName}}
+\index{checkClientMachineName@{checkClientMachineName}!QueryServer@{QueryServer}}
+\subsubsection[{checkClientMachineName}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkClientMachineName (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ clmachineId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_ab05f1d7e54ec0e7bc51772300a7fe9c2}
+
+
+Function to check if a given machine client identifier exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em clmachineId}]the machine client identifier \end{DoxyParams}
+\hypertarget{classQueryServer_a73cc37f1e18f4e5028d8f4d68b9b148f}{
+\index{QueryServer@{QueryServer}!checkClosePolicy@{checkClosePolicy}}
+\index{checkClosePolicy@{checkClosePolicy}!QueryServer@{QueryServer}}
+\subsubsection[{checkClosePolicy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkClosePolicy (
+\begin{DoxyParamCaption}
+\item[{const int \&}]{ closePolicy}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a73cc37f1e18f4e5028d8f4d68b9b148f}
+
+
+Function to check a close policy value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em closePolicy}]The closePolicy value to check \end{DoxyParams}
+\hypertarget{classQueryServer_a192112eecd3ec9c706c472d45f82b549}{
+\index{QueryServer@{QueryServer}!checkMachineId@{checkMachineId}}
+\index{checkMachineId@{checkMachineId}!QueryServer@{QueryServer}}
+\subsubsection[{checkMachineId}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkMachineId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ machineId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a192112eecd3ec9c706c472d45f82b549}
+
+
+Function to check if a given machine identifier exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em machineId}]the machine identifier \end{DoxyParams}
+\hypertarget{classQueryServer_addd5852b7271e319daa09c989f23ce83}{
+\index{QueryServer@{QueryServer}!checkOptionName@{checkOptionName}}
+\index{checkOptionName@{checkOptionName}!QueryServer@{QueryServer}}
+\subsubsection[{checkOptionName}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkOptionName (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_addd5852b7271e319daa09c989f23ce83}
+
+
+Function to check if a given option name exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The name of the option \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classQueryServer_aab30c247fe7f71f28ef30d28d78b23e2}{
+\index{QueryServer@{QueryServer}!checkSessionId@{checkSessionId}}
+\index{checkSessionId@{checkSessionId}!QueryServer@{QueryServer}}
+\subsubsection[{checkSessionId}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkSessionId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ sessionId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_aab30c247fe7f71f28ef30d28d78b23e2}
+
+
+Function to check if a given session identifier exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionId}]the session identifier \end{DoxyParams}
+\hypertarget{classQueryServer_a358f371f74bcb2dd3e789bd20d0cb672}{
+\index{QueryServer@{QueryServer}!checkStatus@{checkStatus}}
+\index{checkStatus@{checkStatus}!QueryServer@{QueryServer}}
+\subsubsection[{checkStatus}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkStatus (
+\begin{DoxyParamCaption}
+\item[{const int \&}]{ status}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a358f371f74bcb2dd3e789bd20d0cb672}
+
+
+Function to check a status value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em status}]The status to check \end{DoxyParams}
+\hypertarget{classQueryServer_a0f5faaf9f4be79361b2eb15e14480a7d}{
+\index{QueryServer@{QueryServer}!checkUserId@{checkUserId}}
+\index{checkUserId@{checkUserId}!QueryServer@{QueryServer}}
+\subsubsection[{checkUserId}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkUserId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ userId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_a0f5faaf9f4be79361b2eb15e14480a7d}
+
+
+Function to check if a given user identifier exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]the user identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classQueryServer_af7d3974b4a4c06e7dc92809cb37f5027}{
+\index{QueryServer@{QueryServer}!convertToTimeType@{convertToTimeType}}
+\index{convertToTimeType@{convertToTimeType}!QueryServer@{QueryServer}}
+\subsubsection[{convertToTimeType}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ long {\bf QueryServer}$<$ QueryParameters, ListObject $>$::convertToTimeType (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ date}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_af7d3974b4a4c06e7dc92809cb37f5027}
+
+
+Function to convert a given date into correspondant long value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em date}]The date to convert \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The converted value 
+\end{DoxyReturn}
+\hypertarget{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{
+\index{QueryServer@{QueryServer}!getCommandName@{getCommandName}}
+\index{getCommandName@{getCommandName}!QueryServer@{QueryServer}}
+\subsubsection[{getCommandName}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ std::string {\bf QueryServer}$<$ QueryParameters, ListObject $>$::getCommandName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}
+
+
+Function to get the name of the query command line. 
+
+\begin{DoxyReturn}{Returns}
+The the name of the query command line 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_acc12358ea99501ac83097ed65570b3c0}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a8ddf0e769f4a7582bf818e599a2a8f6e}{ListOptionsValuesServer}, and \hyperlink{classListSessionsServer_addba2aae3573750b1dc32220ec88dc94}{ListSessionsServer}.
+
+\hypertarget{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{
+\index{QueryServer@{QueryServer}!list@{list}}
+\index{list@{list}!QueryServer@{QueryServer}}
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ ListObject $\ast$ {\bf QueryServer}$<$ QueryParameters, ListObject $>$::list (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}
+
+
+Function to list query information. 
+
+\begin{DoxyReturn}{Returns}
+The pointer to the ListOject containing list information 
+
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_aab1471d2b577b25471f12652b6e78b31}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a193d667fd5fa247300cebd4af85785d6}{ListOptionsValuesServer}, and \hyperlink{classListSessionsServer_a2ce41ba3a29999d9ef1799c990d29b29}{ListSessionsServer}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{QueryServer_8hpp}{QueryServer.hpp}\end{DoxyCompactItemize}
