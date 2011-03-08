@@ -53,7 +53,7 @@
     </section>
     <section>
       <title>Structure du document</title>
-      <para>Ce document est divisé en quatre parties :
+      <para>Ce document contient les parties suivantes:
       </para>
       <para>
 	<itemizedlist>
@@ -67,7 +67,16 @@
             <para>Déploiement</para>
           </listitem>
           <listitem>
-            <para>L'administration</para>
+            <para>Administration</para>
+          </listitem>
+          <listitem>
+            <para>Référence des commandes (en anglais)</para>
+          </listitem>
+          <listitem>
+            <para>Référence de l'API C++ (en anglais)</para>
+          </listitem>
+          <listitem>
+            <para>Référence de l'API Python (en anglais)</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -129,7 +138,7 @@
     </section>
   </chapter>
   <chapter>
-    <title>Installation (à partir des sources)</title>
+    <title>Installation à partir des sources</title>
     <section>
       <title>Prérequis</title>
       <itemizedlist>
