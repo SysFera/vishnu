@@ -103,6 +103,9 @@ int main (int ac, char* av[]){
     return CLI_ERROR_MISSING_PARAMETER;
   }
 
+
+  // {{RELAX<CODEREDUCER> The error handling is the same in all command
+
   catch(po::error& e){ // catch all other bad parameter errors
 
     errorUsage(av[0], e.what());
@@ -127,6 +130,8 @@ int main (int ac, char* av[]){
   }
 
   return 0;
+
+  // }}RELAX<CODEREDUCER>
 
 }// end of main
 

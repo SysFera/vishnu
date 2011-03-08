@@ -68,8 +68,6 @@ int main (int ac, char* av[]){
     //Fix me
     password=vishnu::takePassword("Password: ");
 
-    cout << "The user password is " << password << endl;
-
 
     /************** Call UMS reconnect service *******************************/
 
@@ -105,6 +103,8 @@ int main (int ac, char* av[]){
     return CLI_ERROR_MISSING_PARAMETER;
   }
 
+  // {{RELAX<CODEREDUCER> The error handling is the same in all command
+
   catch(po::error& e){ // catch all other bad parameter errors
 
     errorUsage(av[0], e.what());
@@ -124,13 +124,15 @@ int main (int ac, char* av[]){
   }
 
   catch(std::exception& e){//// catch all other command line runtime error
-   
+
     errorUsage(av[0], e.what()) ;
-   
+
     return CLI_ERROR_RUNTIME;
   }
 
   return 0;
+
+  // }}RELAX<CODEREDUCER>
 
 }// end of main
 
