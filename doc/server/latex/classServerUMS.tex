@@ -1,0 +1,136 @@
+\hypertarget{classServerUMS}{
+\section{ServerUMS Class Reference}
+\label{classServerUMS}\index{ServerUMS@{ServerUMS}}
+}
+
+
+This class describes the UMS server.  
+
+
+
+
+{\ttfamily \#include $<$ServerUMS.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classServerUMS_a6c582b60ba1b73edef1ea5ebb920ff40}{getVishnuId} ()
+\begin{DoxyCompactList}\small\item\em To get the vishnuId. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classServerUMS_aa82fd34438d581fb1a3915db6d8a9bb9}{getSendmailScriptPath} ()
+\begin{DoxyCompactList}\small\item\em To get the path to the sendmail script. \item\end{DoxyCompactList}\item 
+int \hyperlink{classServerUMS_ae3bce55074cf688f585d6a46a9aabe23}{init} (int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword, std::string sendmailScriptPath)
+\begin{DoxyCompactList}\small\item\em To initialize the UMS server. \item\end{DoxyCompactList}\item 
+\hypertarget{classServerUMS_a9d94c92a660ecfda2930894dd4b772bf}{
+\hyperlink{classServerUMS_a9d94c92a660ecfda2930894dd4b772bf}{$\sim$ServerUMS} ()}
+\label{classServerUMS_a9d94c92a660ecfda2930894dd4b772bf}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classServerUMS_a5a676fee45bb5f856a6160c61948c5e6}{
+static \hyperlink{classServerUMS}{ServerUMS} $\ast$ \hyperlink{classServerUMS_a5a676fee45bb5f856a6160c61948c5e6}{getInstance} ()}
+\label{classServerUMS_a5a676fee45bb5f856a6160c61948c5e6}
+
+\begin{DoxyCompactList}\small\item\em To get the unique instance of the server. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classServerUMS_a89fc4380f08f2cda6044c930d48db2cd}{
+\hyperlink{classServerUMS_a89fc4380f08f2cda6044c930d48db2cd}{ServerUMS} ()}
+\label{classServerUMS_a89fc4380f08f2cda6044c930d48db2cd}
+
+\begin{DoxyCompactList}\small\item\em Constructor, private because class is singleton. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classServerUMS_afada4a5788f967573d0bebdd86fa27fc}{
+std::string \hyperlink{classServerUMS_afada4a5788f967573d0bebdd86fa27fc}{msendmailScriptPath}}
+\label{classServerUMS_afada4a5788f967573d0bebdd86fa27fc}
+
+\begin{DoxyCompactList}\small\item\em The path to the sendmail script. \item\end{DoxyCompactList}\item 
+\hypertarget{classServerUMS_aaa774476df0842c1c98bd03347c78f59}{
+int \hyperlink{classServerUMS_aaa774476df0842c1c98bd03347c78f59}{mvishnuId}}
+\label{classServerUMS_aaa774476df0842c1c98bd03347c78f59}
+
+\begin{DoxyCompactList}\small\item\em The vishnu id. \item\end{DoxyCompactList}\item 
+\hypertarget{classServerUMS_a6ef0b83c146414d0b277ebec2cb50747}{
+diet\_\-profile\_\-desc\_\-t $\ast$ \hyperlink{classServerUMS_a6ef0b83c146414d0b277ebec2cb50747}{mprofile}}
+\label{classServerUMS_a6ef0b83c146414d0b277ebec2cb50747}
+
+\begin{DoxyCompactList}\small\item\em Structure representing a profile description. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classServerUMS_a335a3efc65ca8b808598602338ee9a4d}{
+static \hyperlink{classServerUMS}{ServerUMS} $\ast$ \hyperlink{classServerUMS_a335a3efc65ca8b808598602338ee9a4d}{minstance}}
+\label{classServerUMS_a335a3efc65ca8b808598602338ee9a4d}
+
+\begin{DoxyCompactList}\small\item\em The singleton reference. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes the UMS server. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classServerUMS_aa82fd34438d581fb1a3915db6d8a9bb9}{
+\index{ServerUMS@{ServerUMS}!getSendmailScriptPath@{getSendmailScriptPath}}
+\index{getSendmailScriptPath@{getSendmailScriptPath}!ServerUMS@{ServerUMS}}
+\subsubsection[{getSendmailScriptPath}]{\setlength{\rightskip}{0pt plus 5cm}std::string ServerUMS::getSendmailScriptPath (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classServerUMS_aa82fd34438d581fb1a3915db6d8a9bb9}
+
+
+To get the path to the sendmail script. 
+
+\begin{DoxyReturn}{Returns}
+the path of the configuration file 
+\end{DoxyReturn}
+\hypertarget{classServerUMS_a6c582b60ba1b73edef1ea5ebb920ff40}{
+\index{ServerUMS@{ServerUMS}!getVishnuId@{getVishnuId}}
+\index{getVishnuId@{getVishnuId}!ServerUMS@{ServerUMS}}
+\subsubsection[{getVishnuId}]{\setlength{\rightskip}{0pt plus 5cm}int ServerUMS::getVishnuId (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classServerUMS_a6c582b60ba1b73edef1ea5ebb920ff40}
+
+
+To get the vishnuId. 
+
+\begin{DoxyReturn}{Returns}
+the path of the configuration file 
+\end{DoxyReturn}
+\hypertarget{classServerUMS_ae3bce55074cf688f585d6a46a9aabe23}{
+\index{ServerUMS@{ServerUMS}!init@{init}}
+\index{init@{init}!ServerUMS@{ServerUMS}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}int ServerUMS::init (
+\begin{DoxyParamCaption}
+\item[{int}]{ vishnuId, }
+\item[{int}]{ dbType, }
+\item[{std::string}]{ dbHost, }
+\item[{std::string}]{ dbUsername, }
+\item[{std::string}]{ dbPassword, }
+\item[{std::string}]{ sendmailScriptPath}
+\end{DoxyParamCaption}
+)}}
+\label{classServerUMS_ae3bce55074cf688f585d6a46a9aabe23}
+
+
+To initialize the UMS server. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbType}]The type of the database (POSTGREDB$|$ORACLEDB) \item[{\em dbHost}]The host of the database server \item[{\em dbUsername}]The name of the database user on the server \item[{\em dbPassword}]The password of the database user on the server \item[{\em sendmailScriptPath}]The path to the script for sending emails \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an error code (0 if success and 1 if an error occurs) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/sed/\hyperlink{ServerUMS_8hpp}{ServerUMS.hpp}\end{DoxyCompactItemize}

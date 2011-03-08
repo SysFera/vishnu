@@ -1,0 +1,44 @@
+\hypertarget{structenv__name__mapper}{
+\section{env\_\-name\_\-mapper Struct Reference}
+\label{structenv__name__mapper}\index{env\_\-name\_\-mapper@{env\_\-name\_\-mapper}}
+}
+
+
+a environment variable name mapper  
+
+
+
+
+{\ttfamily \#include $<$common.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std::string \hyperlink{structenv__name__mapper_af6a2298ccd1d5c657bd73dfd1928314a}{operator()} (std::string name)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+a environment variable name mapper For each environment variable, the name\_\-mapper function is called to obtain the option name. If it returns empty string the variable is ignored. 
+
+\subsection{Member Function Documentation}
+\hypertarget{structenv__name__mapper_af6a2298ccd1d5c657bd73dfd1928314a}{
+\index{env\_\-name\_\-mapper@{env\_\-name\_\-mapper}!operator()@{operator()}}
+\index{operator()@{operator()}!env_name_mapper@{env\_\-name\_\-mapper}}
+\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}std::string env\_\-name\_\-mapper::operator() (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{structenv__name__mapper_af6a2298ccd1d5c657bd73dfd1928314a}
+\hyperlink{classMapper}{Mapper} operator for environnement variable 
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]The environment variable name \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The name used in the program 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/cli/\hyperlink{common_8hpp}{common.hpp}\end{DoxyCompactItemize}

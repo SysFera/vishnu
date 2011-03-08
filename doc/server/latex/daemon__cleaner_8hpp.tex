@@ -1,0 +1,106 @@
+\hypertarget{daemon__cleaner_8hpp}{
+\section{UMS/src/cli/daemon\_\-cleaner.hpp File Reference}
+\label{daemon__cleaner_8hpp}\index{UMS/src/cli/daemon\_\-cleaner.hpp@{UMS/src/cli/daemon\_\-cleaner.hpp}}
+}
+
+
+This file defines a few functions to close properly session and clean the corresponding file.  
+
+
+{\ttfamily \#include $<$cerrno$>$}\par
+{\ttfamily \#include $<$fcntl.h$>$}\par
+{\ttfamily \#include $<$cstdio$>$}\par
+{\ttfamily \#include $<$cstring$>$}\par
+{\ttfamily \#include $<$csignal$>$}\par
+{\ttfamily \#include $<$syslog.h$>$}\par
+{\ttfamily \#include $<$sys/stat.h$>$}\par
+{\ttfamily \#include $<$sys/types.h$>$}\par
+{\ttfamily \#include $<$unistd.h$>$}\par
+{\ttfamily \#include $<$cstdlib$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$list$>$}\par
+{\ttfamily \#include $<$sstream$>$}\par
+{\ttfamily \#include $<$stdexcept$>$}\par
+{\ttfamily \#include $<$boost/scoped\_\-ptr.hpp$>$}\par
+{\ttfamily \#include $<$boost/filesystem.hpp$>$}\par
+{\ttfamily \#include $<$boost/filesystem/fstream.hpp$>$}\par
+{\ttfamily \#include $<$boost/interprocess/sync/named\_\-mutex.hpp$>$}\par
+{\ttfamily \#include $<$boost/interprocess/sync/scoped\_\-lock.hpp$>$}\par
+{\ttfamily \#include $<$boost/interprocess/sync/file\_\-lock.hpp$>$}\par
+{\ttfamily \#include $<$boost/thread/thread.hpp$>$}\par
+{\ttfamily \#include $<$boost/date\_\-time/posix\_\-time/posix\_\-time\_\-types.hpp$>$}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{daemon__cleaner_8hpp_a84df8d416574ff277f50967decd2e43c}{pid\_\-exists} (const std::string \&pid)
+\begin{DoxyCompactList}\small\item\em Check if the pid exists. \item\end{DoxyCompactList}\item 
+void \hyperlink{daemon__cleaner_8hpp_a40ed03ac354e1c02f9ac4a03429be4c4}{deleter} (char $\ast$dietConfig, int ac, char $\ast$av\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Deletes the file corresponding to the terminal closed. \item\end{DoxyCompactList}\item 
+void \hyperlink{daemon__cleaner_8hpp_aa9fb23399dc987e216837a7568eab6f8}{cleaner} (char $\ast$dietConfig, int ac, char $\ast$av\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Creates a child process and call the \hyperlink{daemon__cleaner_8hpp_a40ed03ac354e1c02f9ac4a03429be4c4}{deleter()} function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file defines a few functions to close properly session and clean the corresponding file. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+
+Haikel Guemar (\href{mailto:haikel.guemar@sysfera.com}{\tt haikel.guemar@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{daemon__cleaner_8hpp_aa9fb23399dc987e216837a7568eab6f8}{
+\index{daemon\_\-cleaner.hpp@{daemon\_\-cleaner.hpp}!cleaner@{cleaner}}
+\index{cleaner@{cleaner}!daemon_cleaner.hpp@{daemon\_\-cleaner.hpp}}
+\subsubsection[{cleaner}]{\setlength{\rightskip}{0pt plus 5cm}void cleaner (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ dietConfig, }
+\item[{int}]{ ac, }
+\item[{char $\ast$}]{ av\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}
+\label{daemon__cleaner_8hpp_aa9fb23399dc987e216837a7568eab6f8}
+
+
+Creates a child process and call the \hyperlink{daemon__cleaner_8hpp_a40ed03ac354e1c02f9ac4a03429be4c4}{deleter()} function. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dietConfig,:}]The VISHNU configuration file \item[{\em ac,:}]The number of command parameters \item[{\em av,:}]The names of parameters \end{DoxyParams}
+\hypertarget{daemon__cleaner_8hpp_a40ed03ac354e1c02f9ac4a03429be4c4}{
+\index{daemon\_\-cleaner.hpp@{daemon\_\-cleaner.hpp}!deleter@{deleter}}
+\index{deleter@{deleter}!daemon_cleaner.hpp@{daemon\_\-cleaner.hpp}}
+\subsubsection[{deleter}]{\setlength{\rightskip}{0pt plus 5cm}void deleter (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ dietConfig, }
+\item[{int}]{ ac, }
+\item[{char $\ast$}]{ av\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}
+\label{daemon__cleaner_8hpp_a40ed03ac354e1c02f9ac4a03429be4c4}
+
+
+Deletes the file corresponding to the terminal closed. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em dietConfig,:}]The VISHNU configuration file \item[{\em ac,:}]The number of command parameters \item[{\em av,:}]The names of parameters \end{DoxyParams}
+\hypertarget{daemon__cleaner_8hpp_a84df8d416574ff277f50967decd2e43c}{
+\index{daemon\_\-cleaner.hpp@{daemon\_\-cleaner.hpp}!pid\_\-exists@{pid\_\-exists}}
+\index{pid\_\-exists@{pid\_\-exists}!daemon_cleaner.hpp@{daemon\_\-cleaner.hpp}}
+\subsubsection[{pid\_\-exists}]{\setlength{\rightskip}{0pt plus 5cm}bool pid\_\-exists (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ pid}
+\end{DoxyParamCaption}
+)}}
+\label{daemon__cleaner_8hpp_a84df8d416574ff277f50967decd2e43c}
+
+
+Check if the pid exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pid}]The given pid \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the pid exists 
+\end{DoxyReturn}

@@ -85,10 +85,10 @@ int main (int ac, char* av[]){
     // initializing DIET
 
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
-  
+
       errorUsage(av[0],dietErrorMsg,EXECERROR);
 
-          return  CLI_ERROR_DIET ;
+      return  CLI_ERROR_DIET ;
     }
 
     // get the sessionKey
@@ -116,7 +116,10 @@ int main (int ac, char* av[]){
 
     printSuccessMessage();
   }// End of try bloc
- 
+
+
+  // {{RELAX<CODEREDUCER> The error handling is the same in all command 
+
   catch(po::error& e){ // catch all bad parameter errors
 
     errorUsage(av[0], e.what());
@@ -141,6 +144,8 @@ int main (int ac, char* av[]){
   }
 
   return 0;
+
+  // }}RELAX<CODEREDUCER>
 
 }// end of main
 

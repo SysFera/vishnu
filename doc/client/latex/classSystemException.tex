@@ -1,0 +1,102 @@
+\hypertarget{classSystemException}{
+\section{SystemException Class Reference}
+\label{classSystemException}\index{SystemException@{SystemException}}
+}
+
+
+This class represents the exception that are due to the system.  
+
+
+
+
+{\ttfamily \#include $<$SystemException.hpp$>$}
+
+Inheritance diagram for SystemException:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classSystemException}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSystemException_a6ef82d48c4386f3629a76ecc60aa6dee}{
+\hyperlink{classSystemException_a6ef82d48c4386f3629a76ecc60aa6dee}{SystemException} ()}
+\label{classSystemException_a6ef82d48c4386f3629a76ecc60aa6dee}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classSystemException_a60c558dda09f6c047fbd0aa060966c94}{
+\hyperlink{classSystemException_a60c558dda09f6c047fbd0aa060966c94}{SystemException} (const \hyperlink{classSystemException}{SystemException} \&e)}
+\label{classSystemException_a60c558dda09f6c047fbd0aa060966c94}
+
+\begin{DoxyCompactList}\small\item\em Copy constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classSystemException_a4b00bceb1ecce06d762d619fad3f873e}{
+\hyperlink{classSystemException_a4b00bceb1ecce06d762d619fad3f873e}{SystemException} (int msg, std::string msgComp=\char`\"{}\char`\"{})}
+\label{classSystemException_a4b00bceb1ecce06d762d619fad3f873e}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classSystemException_a28b81b338079cb1add39daf63949c2b6}{
+virtual \hyperlink{classSystemException_a28b81b338079cb1add39daf63949c2b6}{$\sim$SystemException} ()  throw ()}
+\label{classSystemException_a28b81b338079cb1add39daf63949c2b6}
+
+\begin{DoxyCompactList}\small\item\em Default destructor. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classSystemException_ae0fedb1ca3f6302d0c9fbdb35bab3bd7}{getMsg} () const 
+\begin{DoxyCompactList}\small\item\em To get the generic message. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classSystemException_a6d413e18d659f3243a862e43e666666a}{getTypeS} () const 
+\begin{DoxyCompactList}\small\item\em Function to get the exception type in string. \item\end{DoxyCompactList}\item 
+\hypertarget{classSystemException_a94efcab11d5acea72950cc4992febfc3}{
+void \hyperlink{classSystemException_a94efcab11d5acea72950cc4992febfc3}{initMsg} ()}
+\label{classSystemException_a94efcab11d5acea72950cc4992febfc3}
+
+\begin{DoxyCompactList}\small\item\em Function to initialize all the generic messages. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents the exception that are due to the system. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classSystemException_ae0fedb1ca3f6302d0c9fbdb35bab3bd7}{
+\index{SystemException@{SystemException}!getMsg@{getMsg}}
+\index{getMsg@{getMsg}!SystemException@{SystemException}}
+\subsubsection[{getMsg}]{\setlength{\rightskip}{0pt plus 5cm}std::string SystemException::getMsg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classSystemException_ae0fedb1ca3f6302d0c9fbdb35bab3bd7}
+
+
+To get the generic message. 
+
+\begin{DoxyReturn}{Returns}
+Returns the message 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classVishnuException_ae3720dc2e42b83a13a9c7f9eb3b63252}{VishnuException}.
+
+\hypertarget{classSystemException_a6d413e18d659f3243a862e43e666666a}{
+\index{SystemException@{SystemException}!getTypeS@{getTypeS}}
+\index{getTypeS@{getTypeS}!SystemException@{SystemException}}
+\subsubsection[{getTypeS}]{\setlength{\rightskip}{0pt plus 5cm}std::string SystemException::getTypeS (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classSystemException_a6d413e18d659f3243a862e43e666666a}
+
+
+Function to get the exception type in string. 
+
+\begin{DoxyReturn}{Returns}
+Returns the type of the exception 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classVishnuException_ab9704ae9184fd6b786effbdf43c8db75}{VishnuException}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/exception/\hyperlink{SystemException_8hpp}{SystemException.hpp}\end{DoxyCompactItemize}

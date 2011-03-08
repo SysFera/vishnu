@@ -1,0 +1,148 @@
+\hypertarget{utilVishnu_8hpp}{
+\section{core/src/utils/utilVishnu.hpp File Reference}
+\label{utilVishnu_8hpp}\index{core/src/utils/utilVishnu.hpp@{core/src/utils/utilVishnu.hpp}}
+}
+
+
+This file presents the utils functions of the vishnu system.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$sstream$>$}\par
+{\ttfamily \#include $<$boost/random/mersenne\_\-twister.hpp$>$}\par
+{\ttfamily \#include $<$boost/random/uniform\_\-int.hpp$>$}\par
+{\ttfamily \#include $<$boost/random/variate\_\-generator.hpp$>$}\par
+{\ttfamily \#include \char`\"{}boost/date\_\-time/posix\_\-time/posix\_\-time.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}boost/date\_\-time/gregorian/gregorian.hpp\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classFormat__t}{Format\_\-t}
+\begin{DoxyCompactList}\small\item\em The class used to get the variables of the string to parse. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacevishnu}{vishnu}
+
+
+\begin{DoxyCompactList}\small\item\em This naspace contains utils functions of the vishnu system. \item\end{DoxyCompactList}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}{IdType} \{ \hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2adf02ded475565758943c5d421224efec}{MACHINE} =  0, 
+\hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2ae2d30a195cee6b2961cc2c23ea4b520b}{USER} =  1, 
+\hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2a3fb29dd8eb13d25f388e7373acbd1fa7}{JOB} =  2, 
+\hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2a15287ca4a7a9e3cdaabd9f0f17a73cff}{FILETRANSFERT} =  3
+ \}
+\begin{DoxyCompactList}\small\item\em The type of id generated. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{utilVishnu_8hpp_af8fddc209cd7604f6611fac491e14c65}{crypt} (const char $\ast$clef, const char $\ast$salt)
+\begin{DoxyCompactList}\small\item\em Function to encrypt data and password. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\std::string \hyperlink{namespacevishnu_add18720aacc1db6052abecedd5d6feaa}{vishnu::convertToString} (T val)
+\begin{DoxyCompactList}\small\item\em Generic function to convert an object to string. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac1899fb2792ddd63a003a06081fc9066}{vishnu::convertToInt} (std::string val)
+\begin{DoxyCompactList}\small\item\em Function to convert a string to int. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a6315b6f5e86d48f4c75dc73d08348edf}{vishnu::cryptPassword} (const std::string \&salt, const std::string password)
+\begin{DoxyCompactList}\small\item\em To crypt a password. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a93bc913d891933b4f9d7bc0382f72425}{vishnu::generateNumbers} ()
+\begin{DoxyCompactList}\small\item\em Function to get a random number. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ae3f61f1465ef34d3cf2f20c67a019b43}{vishnu::isMonth} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'MONTH'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a646794297931366c08502e5079154ccd}{vishnu::isYear} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'YEAR'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a36b8edc2218c332a4a59f2e39109d627}{vishnu::isSite} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'SITE'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_abaf2c02608b3d96f1f883d65966595a5}{vishnu::isType} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'TYPE'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac123696febe0c4b8fa9f6d59daa6062b}{vishnu::isUName} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'UNAME'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ad10441f9e198c7d70038dcd74963dc54}{vishnu::isMaName} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'MANAME'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a11a59f26c9f250498ef8aed73e316c8b}{vishnu::isDay} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'DAY'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a9f8370bcc63bc78bd464447eecbee191}{vishnu::isCpt} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'CPT'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{vishnu::getKeywords} (int $\ast$size, \hyperlink{classFormat__t}{Format\_\-t} $\ast$array, const char $\ast$format, int cpt, \hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}{IdType} type, std::string name, std::string site)
+\begin{DoxyCompactList}\small\item\em Parse the format and fill the array with the variable and their value. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a1ac2452cabb31484e501d0e568a342c3}{vishnu::getGeneratedName} (const char $\ast$format, int cpt, \hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}{IdType} type, std::string name=\char`\"{}\char`\"{}, std::string site=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to generate an ID. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a0adf01cdd878372e5fb44b3f1d9d86be}{vishnu::getAttrVishnu} (std::string attrname, std::string vishnuid)
+\begin{DoxyCompactList}\small\item\em Function to get information from the table vishnu. \item\end{DoxyCompactList}\item 
+void \hyperlink{namespacevishnu_a999d6bcb9346a8b398d5c94eb01a125a}{vishnu::incrementCpt} (std::string cptName, int cpt)
+\begin{DoxyCompactList}\small\item\em Function to increment a counter of the table vishnu. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a699510f2ba6cb03bd9a6f3696abd9860}{vishnu::takePassword} (const std::string \&prompt)
+\begin{DoxyCompactList}\small\item\em To retrieve the password. \item\end{DoxyCompactList}\item 
+std::time\_\-t \hyperlink{namespacevishnu_ace1a774c9d738133e7cdfe505d358764}{vishnu::string\_\-to\_\-time\_\-t} (const std::string \&ts)
+\begin{DoxyCompactList}\small\item\em Simple function to convert time from string format (YYYY-\/MM-\/DD H:mm:ss) to long integer format in seconds. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a50b77ca8a04c384cba2b8b6cdec4a26f}{vishnu::get\_\-file\_\-content} (const std::string \&filePath)
+\begin{DoxyCompactList}\small\item\em Simple function to read the content of file. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file presents the utils functions of the vishnu system. \begin{DoxyAuthor}{Author}
+Eugène PAMBA CAPO-\/CHICHI (\href{mailto:eugene.capochichi@sysfera.com}{\tt eugene.capochichi@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+15/02/2011 
+\end{DoxyDate}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}{
+\index{utilVishnu.hpp@{utilVishnu.hpp}!IdType@{IdType}}
+\index{IdType@{IdType}!utilVishnu.hpp@{utilVishnu.hpp}}
+\subsubsection[{IdType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf IdType}}}
+\label{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}
+
+
+The type of id generated. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{MACHINE@{MACHINE}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!MACHINE@{MACHINE}}\item[{\em 
+\hypertarget{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2adf02ded475565758943c5d421224efec}{
+MACHINE}
+\label{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2adf02ded475565758943c5d421224efec}
+}]For the machines \index{USER@{USER}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!USER@{USER}}\item[{\em 
+\hypertarget{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2ae2d30a195cee6b2961cc2c23ea4b520b}{
+USER}
+\label{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2ae2d30a195cee6b2961cc2c23ea4b520b}
+}]For The users \index{JOB@{JOB}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!JOB@{JOB}}\item[{\em 
+\hypertarget{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2a3fb29dd8eb13d25f388e7373acbd1fa7}{
+JOB}
+\label{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2a3fb29dd8eb13d25f388e7373acbd1fa7}
+}]For the jobs \index{FILETRANSFERT@{FILETRANSFERT}!utilVishnu.hpp@{utilVishnu.hpp}}\index{utilVishnu.hpp@{utilVishnu.hpp}!FILETRANSFERT@{FILETRANSFERT}}\item[{\em 
+\hypertarget{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2a15287ca4a7a9e3cdaabd9f0f17a73cff}{
+FILETRANSFERT}
+\label{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2a15287ca4a7a9e3cdaabd9f0f17a73cff}
+}]For the file tranfers \end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{utilVishnu_8hpp_af8fddc209cd7604f6611fac491e14c65}{
+\index{utilVishnu.hpp@{utilVishnu.hpp}!crypt@{crypt}}
+\index{crypt@{crypt}!utilVishnu.hpp@{utilVishnu.hpp}}
+\subsubsection[{crypt}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ crypt (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ clef, }
+\item[{const char $\ast$}]{ salt}
+\end{DoxyParamCaption}
+)}}
+\label{utilVishnu_8hpp_af8fddc209cd7604f6611fac491e14c65}
+
+
+Function to encrypt data and password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em clef}]is the data to be encrypted \item[{\em salt}]This string is used to perturb the algorithm \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the string encrypted 
+\end{DoxyReturn}
