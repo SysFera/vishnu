@@ -37,7 +37,8 @@ cp -r core/database/database_init.sql $path/core/database/
 cp -r core/database/postgre_create.sql $path/core/database/
 
 # Copy emf4cpp files
-cp -r core/deps $path/core/
+mkdir $path/core/deps/
+cp -r core/deps/emf4cpp $path/core/deps/
 
 # Copy core sources
 mkdir $path/core/src/
