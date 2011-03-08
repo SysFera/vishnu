@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl"
         href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 
-<book label="UMS.apim#MAN(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<book label="UMS.apim#MAN(user)+CPP(user)+PYTHON(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
    <info>
       <title>User Manual</title>
       <productname>VISHNU</productname>
@@ -99,10 +99,10 @@ same conditions as regards security.</para>
           <para>Chapter 3 contains the VISHNU commands reference.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 4 contains the API C++ reference.</para>
+          <para>Chapter 4 contains the C++ API reference.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 5 contains the Python reference.</para>
+          <para>Chapter 5 contains the Python API reference.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -318,8 +318,6 @@ same conditions as regards security.</para>
      <para> The error: <emphasis role = "italic">"There is no session"</emphasis> can be solved by making a connection to VISHNU using 
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
-      Provide troubleshooting tips. Explain the meanings of any errors the user might encounter, 
-      how to solve the issue, and how to prevent it in the future. This is also the place to include contact and help desk information.
   </section>
  </chapter>
  <!-- PART 1 : VISHNU Presentation -->
