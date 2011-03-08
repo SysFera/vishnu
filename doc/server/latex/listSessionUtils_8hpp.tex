@@ -1,0 +1,81 @@
+\hypertarget{listSessionUtils_8hpp}{
+\section{UMS/src/cli/listSessionUtils.hpp File Reference}
+\label{listSessionUtils_8hpp}\index{UMS/src/cli/listSessionUtils.hpp@{UMS/src/cli/listSessionUtils.hpp}}
+}
+
+
+This file declares useful functions and types for the VISHNU list session command.  
+
+
+{\ttfamily \#include \char`\"{}common.hpp\char`\"{}}\par
+{\ttfamily \#include $<$boost/function.hpp$>$}\par
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{listSessionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{
+typedef boost::function1$<$ void, std::string $>$ \hyperlink{listSessionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType}}
+\label{listSessionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a string parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{listSessionUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}{
+typedef boost::function1$<$ void, UMS\_\-Data::SessionCloseType $>$ \hyperlink{listSessionUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}{ClosePolicycallBackType}}
+\label{listSessionUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}
+
+\begin{DoxyCompactList}\small\item\em The close policy option callback type. \item\end{DoxyCompactList}\item 
+\hypertarget{listSessionUtils_8hpp_a5f49e3e164125d8aeb2158dde355eb05}{
+typedef boost::function1$<$ void, UMS\_\-Data::UMS\_\-Data::StatusType $>$ \hyperlink{listSessionUtils_8hpp_a5f49e3e164125d8aeb2158dde355eb05}{StatuscallBackType}}
+\label{listSessionUtils_8hpp_a5f49e3e164125d8aeb2158dde355eb05}
+
+\begin{DoxyCompactList}\small\item\em The status option callback type. \item\end{DoxyCompactList}\item 
+\hypertarget{listSessionUtils_8hpp_a903911e60a0edd3757aa1c324cecd752}{
+typedef boost::function1$<$ void, long $>$ \hyperlink{listSessionUtils_8hpp_a903911e60a0edd3757aa1c324cecd752}{LongcallBackType}}
+\label{listSessionUtils_8hpp_a903911e60a0edd3757aa1c324cecd752}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a long integer parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{listSessionUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}{
+typedef boost::function1$<$ void, int $>$ \hyperlink{listSessionUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}{IntcallBackType}}
+\label{listSessionUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a integer parameter and without return value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{listSessionUtils_8hpp_ad357938c69910e3700be2f78981f426e}{makeListSessionOptions} (std::string pgName, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fUserId, std::string \&dietConfig, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fMachineId, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fSessionId, \hyperlink{listHistoryCmdUtils_8hpp_a2577410234b4f3f417afd232c5d48864}{StatuscallBackType} \&fStatus, \hyperlink{listHistoryCmdUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}{ClosePolicycallBackType} \&fClosePolicy, \hyperlink{listHistoryCmdUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}{IntcallBackType} \&fSessionInactivityDelay, \hyperlink{listSessionUtils_8hpp_a903911e60a0edd3757aa1c324cecd752}{LongcallBackType} \&fStartDateOption, \hyperlink{listSessionUtils_8hpp_a903911e60a0edd3757aa1c324cecd752}{LongcallBackType} \&fEndDateOption)
+\begin{DoxyCompactList}\small\item\em To build options for the VISHNU list session command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declares useful functions and types for the VISHNU list session command. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{listSessionUtils_8hpp_ad357938c69910e3700be2f78981f426e}{
+\index{listSessionUtils.hpp@{listSessionUtils.hpp}!makeListSessionOptions@{makeListSessionOptions}}
+\index{makeListSessionOptions@{makeListSessionOptions}!listSessionUtils.hpp@{listSessionUtils.hpp}}
+\subsubsection[{makeListSessionOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeListSessionOptions (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ pgName, }
+\item[{{\bf StringcallBackType} \&}]{ fUserId, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fMachineId, }
+\item[{{\bf StringcallBackType} \&}]{ fSessionId, }
+\item[{{\bf StatuscallBackType} \&}]{ fStatus, }
+\item[{{\bf ClosePolicycallBackType} \&}]{ fClosePolicy, }
+\item[{{\bf IntcallBackType} \&}]{ fSessionInactivityDelay, }
+\item[{{\bf LongcallBackType} \&}]{ fStartDateOption, }
+\item[{{\bf LongcallBackType} \&}]{ fEndDateOption}
+\end{DoxyParamCaption}
+)}}
+\label{listSessionUtils_8hpp_ad357938c69910e3700be2f78981f426e}
+
+
+To build options for the VISHNU list session command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fMachineId,:}]The machine identifier option callback \item[{\em fSessionId,:}]The session identifier option callback \item[{\em fStatus,:}]The session status option callback \item[{\em fClosePolicy,:}]The session close policy option callback \item[{\em fSessionInactivityDelay,:}]The session inactivity delay option callback \item[{\em fStartDateOption,:}]The session start date option callback \item[{\em fEndDateOption,:}]The session end date option callback \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The description of all options allowed by the command 
+\end{DoxyReturn}

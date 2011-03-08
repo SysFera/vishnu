@@ -1,0 +1,71 @@
+\hypertarget{classDbFactory}{
+\section{DbFactory Class Reference}
+\label{classDbFactory}\index{DbFactory@{DbFactory}}
+}
+
+
+\hyperlink{classDatabase}{Database} factory.  
+
+
+
+
+{\ttfamily \#include $<$DbFactory.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDbFactory_ac47baec65bb6d6f591b2fb033bd7c193}{
+\hyperlink{classDbFactory_ac47baec65bb6d6f591b2fb033bd7c193}{DbFactory} ()}
+\label{classDbFactory_ac47baec65bb6d6f591b2fb033bd7c193}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classDbFactory_a138084f15091e839a3952c4fe0ccd374}{
+\hyperlink{classDbFactory_a138084f15091e839a3952c4fe0ccd374}{$\sim$DbFactory} ()}
+\label{classDbFactory_a138084f15091e839a3952c4fe0ccd374}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classDbFactory_ac7826a5f8b460e3447bdeb3a2634f809}{getDatabaseInstance} (int type=-\/1, std::string host=\char`\"{}\char`\"{}, std::string user=\char`\"{}\char`\"{}, std::string pwd=\char`\"{}\char`\"{}, std::string db=\char`\"{}\char`\"{}, unsigned int port=0)
+\begin{DoxyCompactList}\small\item\em Function to create a database. The database created depends on the type parameter. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDbFactory_a24e38965baa1ac4f84c80d719c47ae9d}{
+static \hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classDbFactory_a24e38965baa1ac4f84c80d719c47ae9d}{mdb}}
+\label{classDbFactory_a24e38965baa1ac4f84c80d719c47ae9d}
+
+\begin{DoxyCompactList}\small\item\em The unique instance of the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classDatabase}{Database} factory. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classDbFactory_ac7826a5f8b460e3447bdeb3a2634f809}{
+\index{DbFactory@{DbFactory}!getDatabaseInstance@{getDatabaseInstance}}
+\index{getDatabaseInstance@{getDatabaseInstance}!DbFactory@{DbFactory}}
+\subsubsection[{getDatabaseInstance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database} $\ast$ DbFactory::getDatabaseInstance (
+\begin{DoxyParamCaption}
+\item[{int}]{ type = {\ttfamily -\/1}, }
+\item[{std::string}]{ host = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{std::string}]{ user = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{std::string}]{ pwd = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{std::string}]{ db = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{unsigned int}]{ port = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classDbFactory_ac7826a5f8b460e3447bdeb3a2634f809}
+
+
+Function to create a database. The database created depends on the type parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em type}]The type of database to create \item[{\em host}]Host of the database \item[{\em user}]User to connect to the database \item[{\em pwd}]Password of the user \item[{\em db}]The database \item[{\em port}]The port to connect \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A database or a nil pointer 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/database/\hyperlink{DbFactory_8hpp}{DbFactory.hpp}\end{DoxyCompactItemize}

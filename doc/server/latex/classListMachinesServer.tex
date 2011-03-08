@@ -1,0 +1,155 @@
+\hypertarget{classListMachinesServer}{
+\section{ListMachinesServer Class Reference}
+\label{classListMachinesServer}\index{ListMachinesServer@{ListMachinesServer}}
+}
+
+
+\hyperlink{classListMachinesServer}{ListMachinesServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$ListMachinesServer.hpp$>$}
+
+Inheritance diagram for ListMachinesServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classListMachinesServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classListMachinesServer_ab887eeeb9276a22e5c7fd7b69b0a50d9}{ListMachinesServer} (const \hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hyperlink{classListMachinesServer_afe22244c6bdf4340e37e459623a16f9c}{ListMachinesServer} (UMS\_\-Data::ListMachineOptions\_\-ptr params, const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+void \hyperlink{classListMachinesServer_ab89cbee53dab824f863b166836b29ac4}{processOptions} (\hyperlink{classUserServer}{UserServer} userServer, const UMS\_\-Data::ListMachineOptions\_\-ptr \&options, std::string \&sqlRequest)
+\begin{DoxyCompactList}\small\item\em Function to treat the \hyperlink{classListMachinesServer}{ListMachinesServer} options. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::ListMachines $\ast$ \hyperlink{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{list} ()
+\begin{DoxyCompactList}\small\item\em Function to list machines information. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{getCommandName} ()
+\begin{DoxyCompactList}\small\item\em Function to get the name of the \hyperlink{classListMachinesServer}{ListMachinesServer} command line. \item\end{DoxyCompactList}\item 
+\hypertarget{classListMachinesServer_a0ef08a4f9de02a0a4e1941cf2c5c9c80}{
+\hyperlink{classListMachinesServer_a0ef08a4f9de02a0a4e1941cf2c5c9c80}{$\sim$ListMachinesServer} ()}
+\label{classListMachinesServer_a0ef08a4f9de02a0a4e1941cf2c5c9c80}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classListMachinesServer_af8b3b7d6ad082804f41931f3f4f13e2e}{
+std::string \hyperlink{classListMachinesServer_af8b3b7d6ad082804f41931f3f4f13e2e}{mcommandName}}
+\label{classListMachinesServer_af8b3b7d6ad082804f41931f3f4f13e2e}
+
+\begin{DoxyCompactList}\small\item\em The name of the \hyperlink{classListMachinesServer}{ListMachinesServer} command line. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classListMachinesServer}{ListMachinesServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classListMachinesServer_ab887eeeb9276a22e5c7fd7b69b0a50d9}{
+\index{ListMachinesServer@{ListMachinesServer}!ListMachinesServer@{ListMachinesServer}}
+\index{ListMachinesServer@{ListMachinesServer}!ListMachinesServer@{ListMachinesServer}}
+\subsubsection[{ListMachinesServer}]{\setlength{\rightskip}{0pt plus 5cm}ListMachinesServer::ListMachinesServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListMachinesServer_ab887eeeb9276a22e5c7fd7b69b0a50d9}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+\hypertarget{classListMachinesServer_afe22244c6bdf4340e37e459623a16f9c}{
+\index{ListMachinesServer@{ListMachinesServer}!ListMachinesServer@{ListMachinesServer}}
+\index{ListMachinesServer@{ListMachinesServer}!ListMachinesServer@{ListMachinesServer}}
+\subsubsection[{ListMachinesServer}]{\setlength{\rightskip}{0pt plus 5cm}ListMachinesServer::ListMachinesServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::ListMachineOptions\_\-ptr}]{ params, }
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListMachinesServer_afe22244c6bdf4340e37e459623a16f9c}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of \hyperlink{classListMachinesServer}{ListMachinesServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{
+\index{ListMachinesServer@{ListMachinesServer}!getCommandName@{getCommandName}}
+\index{getCommandName@{getCommandName}!ListMachinesServer@{ListMachinesServer}}
+\subsubsection[{getCommandName}]{\setlength{\rightskip}{0pt plus 5cm}std::string ListMachinesServer::getCommandName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}
+
+
+Function to get the name of the \hyperlink{classListMachinesServer}{ListMachinesServer} command line. 
+
+\begin{DoxyReturn}{Returns}
+The the name of the \hyperlink{classListMachinesServer}{ListMachinesServer} command line 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{QueryServer$<$ UMS\_\-Data::ListMachineOptions, UMS\_\-Data::ListMachines $>$}.
+
+\hypertarget{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{
+\index{ListMachinesServer@{ListMachinesServer}!list@{list}}
+\index{list@{list}!ListMachinesServer@{ListMachinesServer}}
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::ListMachines $\ast$ ListMachinesServer::list (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}
+
+
+Function to list machines information. 
+
+\begin{DoxyReturn}{Returns}
+The pointer to the UMS\_\-Data::ListMachines containing machines information 
+
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryServer$<$ UMS\_\-Data::ListMachineOptions, UMS\_\-Data::ListMachines $>$}.
+
+\hypertarget{classListMachinesServer_ab89cbee53dab824f863b166836b29ac4}{
+\index{ListMachinesServer@{ListMachinesServer}!processOptions@{processOptions}}
+\index{processOptions@{processOptions}!ListMachinesServer@{ListMachinesServer}}
+\subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListMachinesServer::processOptions (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ userServer, }
+\item[{const UMS\_\-Data::ListMachineOptions\_\-ptr \&}]{ options, }
+\item[{std::string \&}]{ sqlRequest}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListMachinesServer_ab89cbee53dab824f863b166836b29ac4}
+
+
+Function to treat the \hyperlink{classListMachinesServer}{ListMachinesServer} options. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userServer}]the object which encapsulates user information \item[{\em options}]the object which contains the \hyperlink{classListMachinesServer}{ListMachinesServer} options values \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{ListMachinesServer_8hpp}{ListMachinesServer.hpp}\end{DoxyCompactItemize}

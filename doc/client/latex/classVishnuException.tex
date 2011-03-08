@@ -1,0 +1,339 @@
+\hypertarget{classVishnuException}{
+\section{VishnuException Class Reference}
+\label{classVishnuException}\index{VishnuException@{VishnuException}}
+}
+
+
+This class represents the root of all the exception of the system.  
+
+
+
+
+{\ttfamily \#include $<$VishnuException.hpp$>$}
+
+Inheritance diagram for VishnuException:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classVishnuException}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}{ExceptionType} \{ \par
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a75dfbd63efc45f759335784afc2a21df}{UMS} =  0, 
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a06dc1eee51aff5d00237e67ea4327035}{TMS} =  1, 
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a8bf79f006a7f499ff19a29f961e3b587}{FMS} =  2, 
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a1cad27b5570c824a1ed1dbe3cc2a23ed}{IMS} =  3, 
+\par
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001aa62f896d183527469a8281313eae4ea8}{INTERNAL} =  4, 
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001aff77e716a0cf84478ddbd9b0f4737ce3}{NONE} =  5
+ \}
+\begin{DoxyCompactList}\small\item\em The type of exception. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_aba758c9545d4f417123ce27c512d8f31}{
+typedef enum \hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}{VishnuException::ExceptionType} \hyperlink{classVishnuException_aba758c9545d4f417123ce27c512d8f31}{ExceptionType}}
+\label{classVishnuException_aba758c9545d4f417123ce27c512d8f31}
+
+\begin{DoxyCompactList}\small\item\em The type of exception. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classVishnuException_af9d3de8d97834f2c3db08af6f99c79f5}{
+\hyperlink{classVishnuException_af9d3de8d97834f2c3db08af6f99c79f5}{VishnuException} ()}
+\label{classVishnuException_af9d3de8d97834f2c3db08af6f99c79f5}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_a85bde2d5558cdf5291ceb83bcacfc635}{
+\hyperlink{classVishnuException_a85bde2d5558cdf5291ceb83bcacfc635}{VishnuException} (const \hyperlink{classVishnuException}{VishnuException} \&e)}
+\label{classVishnuException_a85bde2d5558cdf5291ceb83bcacfc635}
+
+\begin{DoxyCompactList}\small\item\em Copy constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_a3fa6b721fcf483c6b201f6fb2cb7c52b}{
+\hyperlink{classVishnuException_a3fa6b721fcf483c6b201f6fb2cb7c52b}{VishnuException} (int msg, std::string msgComp=\char`\"{}\char`\"{})}
+\label{classVishnuException_a3fa6b721fcf483c6b201f6fb2cb7c52b}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_a97b6892ceda39b5d123e25a4110e9686}{
+virtual \hyperlink{classVishnuException_a97b6892ceda39b5d123e25a4110e9686}{$\sim$VishnuException} ()  throw ()}
+\label{classVishnuException_a97b6892ceda39b5d123e25a4110e9686}
+
+\begin{DoxyCompactList}\small\item\em Default destructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}{ExceptionType} \hyperlink{classVishnuException_a4b9c5215a32d42e53655085a5bd121e3}{getTypeI} () const 
+\begin{DoxyCompactList}\small\item\em To get the type of the exception in integer. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classVishnuException_ab9704ae9184fd6b786effbdf43c8db75}{getTypeS} () const 
+\begin{DoxyCompactList}\small\item\em Function to get the exception type in string. \item\end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classVishnuException_a19def10d113f98946265a3b384188443}{what} () const   throw ()
+\begin{DoxyCompactList}\small\item\em To get a complement to the message. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classVishnuException_ae3720dc2e42b83a13a9c7f9eb3b63252}{getMsg} () const 
+\begin{DoxyCompactList}\small\item\em To get the generic message. \item\end{DoxyCompactList}\item 
+virtual std::string \hyperlink{classVishnuException_a50e5c8848325997584a6325fd69ada0c}{getMsgComp} () const 
+\begin{DoxyCompactList}\small\item\em To get the complementary message. \item\end{DoxyCompactList}\item 
+void \hyperlink{classVishnuException_ae69576d59eb83823c728b0c3a4ee6e39}{setType} (\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}{ExceptionType} t)
+\begin{DoxyCompactList}\small\item\em Function to set the type of the exception. \item\end{DoxyCompactList}\item 
+void \hyperlink{classVishnuException_a07556bed229d900b994cb9dcdbf2984f}{setMsgComp} (std::string m)
+\begin{DoxyCompactList}\small\item\em Function to set the complement of a message. \item\end{DoxyCompactList}\item 
+void \hyperlink{classVishnuException_a5a18ccd681b23f9b3c444bb69962ed24}{setMsg} (int val)
+\begin{DoxyCompactList}\small\item\em Function to set the generic message. \item\end{DoxyCompactList}\item 
+void \hyperlink{classVishnuException_a0f1a2665f54991986429c32bd905ceed}{appendMsgComp} (std::string s)
+\begin{DoxyCompactList}\small\item\em Function to append a complement to the detailled message. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_ac17d2964e09c2df48c8ce3e88e1127eb}{
+int \hyperlink{classVishnuException_ac17d2964e09c2df48c8ce3e88e1127eb}{getMsgI} () const }
+\label{classVishnuException_ac17d2964e09c2df48c8ce3e88e1127eb}
+
+\begin{DoxyCompactList}\small\item\em To get the mval as an int. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_a2efc99faea879e45b372787a96ced5dd}{
+virtual void \hyperlink{classVishnuException_a2efc99faea879e45b372787a96ced5dd}{initMsg} ()=0}
+\label{classVishnuException_a2efc99faea879e45b372787a96ced5dd}
+
+\begin{DoxyCompactList}\small\item\em Function to initialize all the generic messages. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classVishnuException_a22a9ad3e0f438accd20442a7a6ffcb58}{buildExceptionString} () const 
+\begin{DoxyCompactList}\small\item\em Function to get the string associated to the exception. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classVishnuException_ab77135569ba3ca0d4ea97df7b1dfbb21}{
+std::map$<$ int, std::string $>$ \hyperlink{classVishnuException_ab77135569ba3ca0d4ea97df7b1dfbb21}{mp}}
+\label{classVishnuException_ab77135569ba3ca0d4ea97df7b1dfbb21}
+
+\begin{DoxyCompactList}\small\item\em Map containing The generic messages. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_a57fffa81de4a47d1b2859f1b46362565}{
+std::string \hyperlink{classVishnuException_a57fffa81de4a47d1b2859f1b46362565}{mmsgc}}
+\label{classVishnuException_a57fffa81de4a47d1b2859f1b46362565}
+
+\begin{DoxyCompactList}\small\item\em A complementatry message to the exception. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_afbac6f50e0096acb6fcec39415a1fb3f}{
+\hyperlink{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}{ExceptionType} \hyperlink{classVishnuException_afbac6f50e0096acb6fcec39415a1fb3f}{mtype}}
+\label{classVishnuException_afbac6f50e0096acb6fcec39415a1fb3f}
+
+\begin{DoxyCompactList}\small\item\em The type of the exception (UMS, TMS, FMS, IMS, NONE). \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_aa9c23311f9ce4a48b7aeba210af55343}{
+int \hyperlink{classVishnuException_aa9c23311f9ce4a48b7aeba210af55343}{mval}}
+\label{classVishnuException_aa9c23311f9ce4a48b7aeba210af55343}
+
+\begin{DoxyCompactList}\small\item\em An exception code refereing to a generic message. -\/1 means no generic error message. \item\end{DoxyCompactList}\item 
+\hypertarget{classVishnuException_a5605d2d7aa6b3d69a9da046c7a3602e2}{
+std::string \hyperlink{classVishnuException_a5605d2d7aa6b3d69a9da046c7a3602e2}{mfullMsg}}
+\label{classVishnuException_a5605d2d7aa6b3d69a9da046c7a3602e2}
+
+\begin{DoxyCompactList}\small\item\em The full exception message. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents the root of all the exception of the system. 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}{
+\index{VishnuException@{VishnuException}!ExceptionType@{ExceptionType}}
+\index{ExceptionType@{ExceptionType}!VishnuException@{VishnuException}}
+\subsubsection[{ExceptionType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf VishnuException::ExceptionType}}}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001}
+
+
+The type of exception. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{UMS@{UMS}!VishnuException@{VishnuException}}\index{VishnuException@{VishnuException}!UMS@{UMS}}\item[{\em 
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a75dfbd63efc45f759335784afc2a21df}{
+UMS}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a75dfbd63efc45f759335784afc2a21df}
+}]UMS exception. \index{TMS@{TMS}!VishnuException@{VishnuException}}\index{VishnuException@{VishnuException}!TMS@{TMS}}\item[{\em 
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a06dc1eee51aff5d00237e67ea4327035}{
+TMS}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a06dc1eee51aff5d00237e67ea4327035}
+}]TMS exception. \index{FMS@{FMS}!VishnuException@{VishnuException}}\index{VishnuException@{VishnuException}!FMS@{FMS}}\item[{\em 
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a8bf79f006a7f499ff19a29f961e3b587}{
+FMS}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a8bf79f006a7f499ff19a29f961e3b587}
+}]FMS exception. \index{IMS@{IMS}!VishnuException@{VishnuException}}\index{VishnuException@{VishnuException}!IMS@{IMS}}\item[{\em 
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a1cad27b5570c824a1ed1dbe3cc2a23ed}{
+IMS}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001a1cad27b5570c824a1ed1dbe3cc2a23ed}
+}]IMS exception. \index{INTERNAL@{INTERNAL}!VishnuException@{VishnuException}}\index{VishnuException@{VishnuException}!INTERNAL@{INTERNAL}}\item[{\em 
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001aa62f896d183527469a8281313eae4ea8}{
+INTERNAL}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001aa62f896d183527469a8281313eae4ea8}
+}]internal exception \index{NONE@{NONE}!VishnuException@{VishnuException}}\index{VishnuException@{VishnuException}!NONE@{NONE}}\item[{\em 
+\hypertarget{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001aff77e716a0cf84478ddbd9b0f4737ce3}{
+NONE}
+\label{classVishnuException_ad9de1e07d1e54a454cd2f7f3883de001aff77e716a0cf84478ddbd9b0f4737ce3}
+}]not an exception \end{description}
+\end{Desc}
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classVishnuException_a0f1a2665f54991986429c32bd905ceed}{
+\index{VishnuException@{VishnuException}!appendMsgComp@{appendMsgComp}}
+\index{appendMsgComp@{appendMsgComp}!VishnuException@{VishnuException}}
+\subsubsection[{appendMsgComp}]{\setlength{\rightskip}{0pt plus 5cm}void VishnuException::appendMsgComp (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{classVishnuException_a0f1a2665f54991986429c32bd905ceed}
+
+
+Function to append a complement to the detailled message. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]The message to append \end{DoxyParams}
+\hypertarget{classVishnuException_a22a9ad3e0f438accd20442a7a6ffcb58}{
+\index{VishnuException@{VishnuException}!buildExceptionString@{buildExceptionString}}
+\index{buildExceptionString@{buildExceptionString}!VishnuException@{VishnuException}}
+\subsubsection[{buildExceptionString}]{\setlength{\rightskip}{0pt plus 5cm}std::string VishnuException::buildExceptionString (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classVishnuException_a22a9ad3e0f438accd20442a7a6ffcb58}
+
+
+Function to get the string associated to the exception. 
+
+\begin{DoxyReturn}{Returns}
+the exception as a string 
+\end{DoxyReturn}
+\hypertarget{classVishnuException_ae3720dc2e42b83a13a9c7f9eb3b63252}{
+\index{VishnuException@{VishnuException}!getMsg@{getMsg}}
+\index{getMsg@{getMsg}!VishnuException@{VishnuException}}
+\subsubsection[{getMsg}]{\setlength{\rightskip}{0pt plus 5cm}std::string VishnuException::getMsg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classVishnuException_ae3720dc2e42b83a13a9c7f9eb3b63252}
+
+
+To get the generic message. 
+
+\begin{DoxyReturn}{Returns}
+Returns the message 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classSystemException_ae0fedb1ca3f6302d0c9fbdb35bab3bd7}{SystemException}, and \hyperlink{classUserException_a93d4fe054b45cbb873c0867fabef4e38}{UserException}.
+
+\hypertarget{classVishnuException_a50e5c8848325997584a6325fd69ada0c}{
+\index{VishnuException@{VishnuException}!getMsgComp@{getMsgComp}}
+\index{getMsgComp@{getMsgComp}!VishnuException@{VishnuException}}
+\subsubsection[{getMsgComp}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string VishnuException::getMsgComp (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classVishnuException_a50e5c8848325997584a6325fd69ada0c}
+
+
+To get the complementary message. 
+
+\begin{DoxyReturn}{Returns}
+Returns the message 
+\end{DoxyReturn}
+\hypertarget{classVishnuException_a4b9c5215a32d42e53655085a5bd121e3}{
+\index{VishnuException@{VishnuException}!getTypeI@{getTypeI}}
+\index{getTypeI@{getTypeI}!VishnuException@{VishnuException}}
+\subsubsection[{getTypeI}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ExceptionType} VishnuException::getTypeI (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classVishnuException_a4b9c5215a32d42e53655085a5bd121e3}
+
+
+To get the type of the exception in integer. 
+
+\begin{DoxyReturn}{Returns}
+Returns the type of the exception 
+\end{DoxyReturn}
+\hypertarget{classVishnuException_ab9704ae9184fd6b786effbdf43c8db75}{
+\index{VishnuException@{VishnuException}!getTypeS@{getTypeS}}
+\index{getTypeS@{getTypeS}!VishnuException@{VishnuException}}
+\subsubsection[{getTypeS}]{\setlength{\rightskip}{0pt plus 5cm}std::string VishnuException::getTypeS (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classVishnuException_ab9704ae9184fd6b786effbdf43c8db75}
+
+
+Function to get the exception type in string. 
+
+\begin{DoxyReturn}{Returns}
+Returns the type of the exception 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classSystemException_a6d413e18d659f3243a862e43e666666a}{SystemException}, and \hyperlink{classUserException_a3932494b3a537260b9b98c8bfc66e30a}{UserException}.
+
+\hypertarget{classVishnuException_a5a18ccd681b23f9b3c444bb69962ed24}{
+\index{VishnuException@{VishnuException}!setMsg@{setMsg}}
+\index{setMsg@{setMsg}!VishnuException@{VishnuException}}
+\subsubsection[{setMsg}]{\setlength{\rightskip}{0pt plus 5cm}void VishnuException::setMsg (
+\begin{DoxyParamCaption}
+\item[{int}]{ val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classVishnuException_a5a18ccd681b23f9b3c444bb69962ed24}
+
+
+Function to set the generic message. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em val}]The val of the msg \end{DoxyParams}
+\hypertarget{classVishnuException_a07556bed229d900b994cb9dcdbf2984f}{
+\index{VishnuException@{VishnuException}!setMsgComp@{setMsgComp}}
+\index{setMsgComp@{setMsgComp}!VishnuException@{VishnuException}}
+\subsubsection[{setMsgComp}]{\setlength{\rightskip}{0pt plus 5cm}void VishnuException::setMsgComp (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ m}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classVishnuException_a07556bed229d900b994cb9dcdbf2984f}
+
+
+Function to set the complement of a message. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em m}]The complement of the message \end{DoxyParams}
+\hypertarget{classVishnuException_ae69576d59eb83823c728b0c3a4ee6e39}{
+\index{VishnuException@{VishnuException}!setType@{setType}}
+\index{setType@{setType}!VishnuException@{VishnuException}}
+\subsubsection[{setType}]{\setlength{\rightskip}{0pt plus 5cm}void VishnuException::setType (
+\begin{DoxyParamCaption}
+\item[{{\bf ExceptionType}}]{ t}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classVishnuException_ae69576d59eb83823c728b0c3a4ee6e39}
+
+
+Function to set the type of the exception. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em t}]The type of the exception \end{DoxyParams}
+\hypertarget{classVishnuException_a19def10d113f98946265a3b384188443}{
+\index{VishnuException@{VishnuException}!what@{what}}
+\index{what@{what}!VishnuException@{VishnuException}}
+\subsubsection[{what}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ VishnuException::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const  throw ()\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classVishnuException_a19def10d113f98946265a3b384188443}
+
+
+To get a complement to the message. 
+
+\begin{DoxyReturn}{Returns}
+Returns a complement to the generic error message 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/exception/\hyperlink{VishnuException_8hpp}{VishnuException.hpp}\end{DoxyCompactItemize}

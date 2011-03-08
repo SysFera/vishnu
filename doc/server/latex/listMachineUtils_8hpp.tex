@@ -1,0 +1,55 @@
+\hypertarget{listMachineUtils_8hpp}{
+\section{UMS/src/cli/listMachineUtils.hpp File Reference}
+\label{listMachineUtils_8hpp}\index{UMS/src/cli/listMachineUtils.hpp@{UMS/src/cli/listMachineUtils.hpp}}
+}
+
+
+This file declares useful functions and types for the VISHNU list machine command.  
+
+
+{\ttfamily \#include \char`\"{}common.hpp\char`\"{}}\par
+{\ttfamily \#include $<$boost/function.hpp$>$}\par
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{listMachineUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{
+typedef boost::function1$<$ void, std::string $>$ \hyperlink{listMachineUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType}}
+\label{listMachineUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a string parameter and without return value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{listMachineUtils_8hpp_a09e987942ea9bad0bcbb3ff4890ee462}{makeListMachineOptions} (std::string pgName, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fUserId, std::string \&dietConfig, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fMachineId)
+\begin{DoxyCompactList}\small\item\em To build options for the VISHNU list machine command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declares useful functions and types for the VISHNU list machine command. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{listMachineUtils_8hpp_a09e987942ea9bad0bcbb3ff4890ee462}{
+\index{listMachineUtils.hpp@{listMachineUtils.hpp}!makeListMachineOptions@{makeListMachineOptions}}
+\index{makeListMachineOptions@{makeListMachineOptions}!listMachineUtils.hpp@{listMachineUtils.hpp}}
+\subsubsection[{makeListMachineOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeListMachineOptions (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ pgName, }
+\item[{{\bf StringcallBackType} \&}]{ fUserId, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fMachineId}
+\end{DoxyParamCaption}
+)}}
+\label{listMachineUtils_8hpp_a09e987942ea9bad0bcbb3ff4890ee462}
+
+
+To build options for the VISHNU list machine command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fMachineId}]: The callback for the machine identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The description of all options allowed by the command 
+\end{DoxyReturn}

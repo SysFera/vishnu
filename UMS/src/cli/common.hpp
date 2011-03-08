@@ -52,9 +52,20 @@ struct env_name_mapper{
 		return result;
 	}
 };
-
+/**
+ * \brief Contains a generic diet error message
+ */
 const std::string dietErrorMsg="DIET initialization failed !";
+
+/**
+ * \brief Contains a generic message to display the current session key
+ */
+
 const std::string currentSessionKeyMsg="the current sessionkey is: ";
+
+/**
+ * \brief Contains a generic error message for required parameter missed
+ */
 const std::string requiredParamMsg="required parameter is missing";
 
 #endif
