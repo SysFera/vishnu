@@ -1,0 +1,168 @@
+\hypertarget{classDatabase}{
+\section{Database Class Reference}
+\label{classDatabase}\index{Database@{Database}}
+}
+
+
+This class describes a database.  
+
+
+
+
+{\ttfamily \#include $<$Database.hpp$>$}
+
+Inheritance diagram for Database:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classDatabase}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual int \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{process} (std::string request)=0
+\begin{DoxyCompactList}\small\item\em Function to process the request in the database. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{connect} ()=0
+\begin{DoxyCompactList}\small\item\em To make a connection to the database. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classDatabase_aeba15395d2a36faf73dcb995695b9204}{setDatabase} (std::string db)=0
+\begin{DoxyCompactList}\small\item\em To set the name of the database to use. \item\end{DoxyCompactList}\item 
+virtual \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{getResult} (std::string request)=0
+\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDatabase_a4703c80e6969d33565ea340f768fdadf}{
+\hyperlink{classDatabase_a4703c80e6969d33565ea340f768fdadf}{Database} ()}
+\label{classDatabase_a4703c80e6969d33565ea340f768fdadf}
+
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{
+virtual \hyperlink{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{$\sim$Database} ()}
+\label{classDatabase_a84d399a2ad58d69daab9b05330e1316d}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual int \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{disconnect} ()=0
+\begin{DoxyCompactList}\small\item\em To disconnect from the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes a database. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{
+\index{Database@{Database}!connect@{connect}}
+\index{connect@{connect}!Database@{Database}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}int Database::connect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}
+
+
+To make a connection to the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{
+\index{Database@{Database}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!Database@{Database}}
+\subsubsection[{disconnect}]{\setlength{\rightskip}{0pt plus 5cm}int Database::disconnect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private, pure virtual\mbox{]}}}}
+\label{classDatabase_adca650f8a5db531ff1fb85aaef25e711}
+
+
+To disconnect from the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{
+\index{Database@{Database}!getResult@{getResult}}
+\index{getResult@{getResult}!Database@{Database}}
+\subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ Database::getResult (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}
+
+
+To get the result of a select request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The request to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An object which encapsulates the database results 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_a41881436b79aac5f4d8e179056564de1}{
+\index{Database@{Database}!process@{process}}
+\index{process@{process}!Database@{Database}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int Database::process (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_a41881436b79aac5f4d8e179056564de1}
+
+
+Function to process the request in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The request to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{POSTGREDatabase}.
+
+\hypertarget{classDatabase_aeba15395d2a36faf73dcb995695b9204}{
+\index{Database@{Database}!setDatabase@{setDatabase}}
+\index{setDatabase@{setDatabase}!Database@{Database}}
+\subsubsection[{setDatabase}]{\setlength{\rightskip}{0pt plus 5cm}int Database::setDatabase (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ db}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classDatabase_aeba15395d2a36faf73dcb995695b9204}
+
+
+To set the name of the database to use. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em db}]The name of database to use \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{POSTGREDatabase}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/database/\hyperlink{Database_8hpp}{Database.hpp}\end{DoxyCompactItemize}

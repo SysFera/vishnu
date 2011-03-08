@@ -1,0 +1,159 @@
+\hypertarget{classMapperRegistry}{
+\section{MapperRegistry Class Reference}
+\label{classMapperRegistry}\index{MapperRegistry@{MapperRegistry}}
+}
+
+
+Registry of all the mapper.  
+
+
+
+
+{\ttfamily \#include $<$MapperRegistry.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classMapperRegistry_a232e9b4c21a48eb91ea0323c430a33d4}{addMapper} (string s, \hyperlink{classMapper}{Mapper} $\ast$m)
+\begin{DoxyCompactList}\small\item\em To add a mapper in the list of active mapper. \item\end{DoxyCompactList}\item 
+\hyperlink{classMapper}{Mapper} $\ast$ \hyperlink{classMapperRegistry_aff1042d6b0d087579370b90580c8d159}{getMapper} (const string \&name)
+\begin{DoxyCompactList}\small\item\em To get a mapper. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMapperRegistry_a9b24e409f7737026cf087339ed48bf25}{removeMapper} (string s)
+\begin{DoxyCompactList}\small\item\em To remove a mapper off the list of active mapper. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapperRegistry_a2dd8065dd451525dd2ec821cda40407a}{
+\hyperlink{classMapperRegistry_a2dd8065dd451525dd2ec821cda40407a}{$\sim$MapperRegistry} ()}
+\label{classMapperRegistry_a2dd8065dd451525dd2ec821cda40407a}
+
+\begin{DoxyCompactList}\small\item\em Default destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMapperRegistry_a8bf1cd8b9de66c62ede81c2b0c018790}{
+static \hyperlink{classMapperRegistry}{MapperRegistry} $\ast$ \hyperlink{classMapperRegistry_a8bf1cd8b9de66c62ede81c2b0c018790}{getInstance} ()}
+\label{classMapperRegistry_a8bf1cd8b9de66c62ede81c2b0c018790}
+
+\begin{DoxyCompactList}\small\item\em To get a mapper registry. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMapperRegistry_ae7a8adc711750042d3b157dda5810887}{
+\hyperlink{classMapperRegistry_ae7a8adc711750042d3b157dda5810887}{MapperRegistry} ()}
+\label{classMapperRegistry_ae7a8adc711750042d3b157dda5810887}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classMapperRegistry_a396daab59d9e55eaafcdbcbdfcf6ef71}{contains} (string s)
+\begin{DoxyCompactList}\small\item\em Return if the list contains the string. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapperRegistry_a9c3214192adad8555edefd69bd513934}{
+void \hyperlink{classMapperRegistry_a9c3214192adad8555edefd69bd513934}{display} ()}
+\label{classMapperRegistry_a9c3214192adad8555edefd69bd513934}
+
+\begin{DoxyCompactList}\small\item\em Debug function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMapperRegistry_aece7a418978de9d026f80770b865f61d}{
+\hyperlink{classSystemException}{SystemException} \hyperlink{classMapperRegistry_aece7a418978de9d026f80770b865f61d}{me}}
+\label{classMapperRegistry_aece7a418978de9d026f80770b865f61d}
+
+\begin{DoxyCompactList}\small\item\em Exception to be thrown. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapperRegistry_a1adafaecf38583be60f1ee48fae5366c}{
+map$<$ string, \hyperlink{classMapper}{Mapper} $\ast$ $>$ \hyperlink{classMapperRegistry_a1adafaecf38583be60f1ee48fae5366c}{mmapper}}
+\label{classMapperRegistry_a1adafaecf38583be60f1ee48fae5366c}
+
+\begin{DoxyCompactList}\small\item\em Map of the map. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMapperRegistry_a4805bcdd59bd36fe7f3e700031e59c98}{
+static \hyperlink{classMapperRegistry}{MapperRegistry} $\ast$ \hyperlink{classMapperRegistry_a4805bcdd59bd36fe7f3e700031e59c98}{mreg}}
+\label{classMapperRegistry_a4805bcdd59bd36fe7f3e700031e59c98}
+
+\begin{DoxyCompactList}\small\item\em The registry. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Registry of all the mapper. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classMapperRegistry_a232e9b4c21a48eb91ea0323c430a33d4}{
+\index{MapperRegistry@{MapperRegistry}!addMapper@{addMapper}}
+\index{addMapper@{addMapper}!MapperRegistry@{MapperRegistry}}
+\subsubsection[{addMapper}]{\setlength{\rightskip}{0pt plus 5cm}int MapperRegistry::addMapper (
+\begin{DoxyParamCaption}
+\item[{string}]{ s, }
+\item[{{\bf Mapper} $\ast$}]{ m}
+\end{DoxyParamCaption}
+)}}
+\label{classMapperRegistry_a232e9b4c21a48eb91ea0323c430a33d4}
+
+
+To add a mapper in the list of active mapper. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]\hyperlink{classMapper}{Mapper} name \item[{\em m}]The mapper \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classMapperRegistry_a396daab59d9e55eaafcdbcbdfcf6ef71}{
+\index{MapperRegistry@{MapperRegistry}!contains@{contains}}
+\index{contains@{contains}!MapperRegistry@{MapperRegistry}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}bool MapperRegistry::contains (
+\begin{DoxyParamCaption}
+\item[{string}]{ s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classMapperRegistry_a396daab59d9e55eaafcdbcbdfcf6ef71}
+
+
+Return if the list contains the string. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]The searched string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if the list contains the s string 
+\end{DoxyReturn}
+\hypertarget{classMapperRegistry_aff1042d6b0d087579370b90580c8d159}{
+\index{MapperRegistry@{MapperRegistry}!getMapper@{getMapper}}
+\index{getMapper@{getMapper}!MapperRegistry@{MapperRegistry}}
+\subsubsection[{getMapper}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mapper} $\ast$ MapperRegistry::getMapper (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ name}
+\end{DoxyParamCaption}
+)}}
+\label{classMapperRegistry_aff1042d6b0d087579370b90580c8d159}
+
+
+To get a mapper. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]Name of the mapper needed (IN) \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The mapper 
+\end{DoxyReturn}
+\hypertarget{classMapperRegistry_a9b24e409f7737026cf087339ed48bf25}{
+\index{MapperRegistry@{MapperRegistry}!removeMapper@{removeMapper}}
+\index{removeMapper@{removeMapper}!MapperRegistry@{MapperRegistry}}
+\subsubsection[{removeMapper}]{\setlength{\rightskip}{0pt plus 5cm}int MapperRegistry::removeMapper (
+\begin{DoxyParamCaption}
+\item[{string}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{classMapperRegistry_a9b24e409f7737026cf087339ed48bf25}
+
+
+To remove a mapper off the list of active mapper. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]\hyperlink{classMapper}{Mapper} name \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/registry/\hyperlink{MapperRegistry_8hpp}{MapperRegistry.hpp}\end{DoxyCompactItemize}

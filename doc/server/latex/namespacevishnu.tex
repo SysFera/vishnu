@@ -1,0 +1,1017 @@
+\hypertarget{namespacevishnu}{
+\section{vishnu Namespace Reference}
+\label{namespacevishnu}\index{vishnu@{vishnu}}
+}
+
+
+This naspace contains utils functions of the vishnu system.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T $>$ }\\std::string \hyperlink{namespacevishnu_add18720aacc1db6052abecedd5d6feaa}{convertToString} (T val)
+\begin{DoxyCompactList}\small\item\em Generic function to convert an object to string. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac1899fb2792ddd63a003a06081fc9066}{convertToInt} (std::string val)
+\begin{DoxyCompactList}\small\item\em Function to convert a string to int. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a6315b6f5e86d48f4c75dc73d08348edf}{cryptPassword} (const std::string \&salt, const std::string password)
+\begin{DoxyCompactList}\small\item\em To crypt a password. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a93bc913d891933b4f9d7bc0382f72425}{generateNumbers} ()
+\begin{DoxyCompactList}\small\item\em Function to get a random number. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ae3f61f1465ef34d3cf2f20c67a019b43}{isMonth} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'MONTH'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a646794297931366c08502e5079154ccd}{isYear} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'YEAR'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a36b8edc2218c332a4a59f2e39109d627}{isSite} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'SITE'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_abaf2c02608b3d96f1f883d65966595a5}{isType} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'TYPE'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac123696febe0c4b8fa9f6d59daa6062b}{isUName} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'UNAME'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ad10441f9e198c7d70038dcd74963dc54}{isMaName} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'MANAME'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a11a59f26c9f250498ef8aed73e316c8b}{isDay} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'DAY'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a9f8370bcc63bc78bd464447eecbee191}{isCpt} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return true if the string starts with 'CPT'. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{getKeywords} (int $\ast$size, \hyperlink{classFormat__t}{Format\_\-t} $\ast$array, const char $\ast$format, int cpt, \hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}{IdType} type, std::string name, std::string site)
+\begin{DoxyCompactList}\small\item\em Parse the format and fill the array with the variable and their value. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a1ac2452cabb31484e501d0e568a342c3}{getGeneratedName} (const char $\ast$format, int cpt, \hyperlink{utilVishnu_8hpp_a059293c4c59976f42ce7f86f5c9cc2a2}{IdType} type, std::string name=\char`\"{}\char`\"{}, std::string site=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to generate an ID. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a0adf01cdd878372e5fb44b3f1d9d86be}{getAttrVishnu} (std::string attrname, std::string vishnuid)
+\begin{DoxyCompactList}\small\item\em Function to get information from the table vishnu. \item\end{DoxyCompactList}\item 
+void \hyperlink{namespacevishnu_a999d6bcb9346a8b398d5c94eb01a125a}{incrementCpt} (std::string cptName, int cpt)
+\begin{DoxyCompactList}\small\item\em Function to increment a counter of the table vishnu. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a699510f2ba6cb03bd9a6f3696abd9860}{takePassword} (const std::string \&prompt)
+\begin{DoxyCompactList}\small\item\em To retrieve the password. \item\end{DoxyCompactList}\item 
+std::time\_\-t \hyperlink{namespacevishnu_ace1a774c9d738133e7cdfe505d358764}{string\_\-to\_\-time\_\-t} (const std::string \&ts)
+\begin{DoxyCompactList}\small\item\em Simple function to convert time from string format (YYYY-\/MM-\/DD H:mm:ss) to long integer format in seconds. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{namespacevishnu_a50b77ca8a04c384cba2b8b6cdec4a26f}{get\_\-file\_\-content} (const std::string \&filePath)
+\begin{DoxyCompactList}\small\item\em Simple function to read the content of file. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{connect} (const std::string \&userId, const std::string \&password, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ae120231ba899d68724dc972374206745}{reconnect} (const std::string \&userId, const std::string \&password, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to return the sessionKey of a session in which the user was disconnected previously without closing it. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a925f5cdd60d012ebd98cd328ed60d398}{close} (const std::string \&sessionKey)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to close the session identfied by the session key. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac7cd83030f8f6e990001b238a9f50640}{addUser} (const std::string \&sessionKey, UMS\_\-Data::User \&newUser)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to add a new user in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1446b24fda1ed0ca910686635b6bb956}{updateUser} (const std::string \&sessionKey, const UMS\_\-Data::User \&user)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to update the user information except the userId and the password. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6c83f6b72fdb7ac3b240f14a19f11786}{deleteUser} (const std::string \&sessionKey, const std::string \&userId)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to remove a user from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a24ec95c164ce8905b8eccf98e9bb633e}{changePassword} (const std::string \&userId, const std::string \&password, const std::string \&passwordNew)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to change the password. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a11f16b7501b8814c491d13431409051c}{resetPassword} (const std::string \&sessionKey, const std::string \&userId, std::string \&tmpPassword)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to reset the password of a user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aca4f5c2716ce1dd8ddc15a2554c95004}{addMachine} (const std::string \&sessionKey, UMS\_\-Data::Machine \&newMachine)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to add a new machine in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1f8fe4e8fa5956be1f264e9a5f78c9f1}{updateMachine} (const std::string \&sessionKey, const UMS\_\-Data::Machine \&machine)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to update machine description. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_abdd14f47db308fc03655149ac7d93199}{deleteMachine} (const std::string \&sessionKey, const std::string \&machineId)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to remove a machine from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ab54431ee8c1616ae24b071e9146d39e9}{addLocalAccount} (const std::string \&sessionKey, const UMS\_\-Data::LocalAccount \&newLocalAccount, std::string \&sshPublicKey)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to add a new local user configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac51341ab58c1ed606b254262fbc053dc}{updateLocalAccount} (const std::string \&sessionKey, const UMS\_\-Data::LocalAccount \&localAccount)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to update a local user configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a2b51028779571b21c45a2a75cd362c59}{deleteLocalAccount} (const std::string \&sessionKey, const std::string \&userId, const std::string \&machineId)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to removes a local user configuration (for a given user on a given machine) from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a2ecc54aee4da202b1caa94dfa6a43d17}{saveConfiguration} (const std::string \&sessionKey, UMS\_\-Data::Configuration \&config)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to save the configuration of VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a60ecb3b47532d0df7b0d44fdf43f98f4}{restoreConfiguration} (const std::string \&sessionKey, const std::string \&filePath)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to restore the configuration of VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a5b88fcd36b780df012b2529fe3526ca1}{configureOption} (const std::string \&sessionKey, const UMS\_\-Data::OptionValue \&optionValue)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to configure an option of the user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a05878cbc7dbb3f5da87dbc32dd25ab78}{configureDefaultOption} (const std::string \&sessionKey, const UMS\_\-Data::OptionValue \&optionValue)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to configure a default option value. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}{listSessions} (const std::string \&sessionKey, UMS\_\-Data::ListSessions \&listSession, const UMS\_\-Data::ListSessionOptions \&options=UMS\_\-Data::ListSessionOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list all sessions of the user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}{listLocalAccount} (const std::string \&sessionKey, UMS\_\-Data::ListLocalAccounts \&listLocalAcc, const UMS\_\-Data::ListLocalAccOptions \&options=UMS\_\-Data::ListLocalAccOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the local user configurations. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}{listMachine} (const std::string \&sessionKey, UMS\_\-Data::ListMachines \&listMachine, const UMS\_\-Data::ListMachineOptions \&options=UMS\_\-Data::ListMachineOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the machines in which the local user configurations are defined for the given user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}{listHistoryCmd} (const std::string \&sessionKey, UMS\_\-Data::ListCommands \&listCommands, const UMS\_\-Data::ListCmdOptions \&options=UMS\_\-Data::ListCmdOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the commands. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a53106e021a6e98049b41106c12356e28}{listOptions} (const std::string \&sessionKey, UMS\_\-Data::ListOptionsValues \&listOptValues, const UMS\_\-Data::ListOptOptions \&options=UMS\_\-Data::ListOptOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the options of the user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6a0175686b0d2aff434015fc61c62ce6}{listUsers} (const std::string \&sessionKey, UMS\_\-Data::ListUsers \&listUsers, const std::string \&userIdOption=std::string())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list VISHNU users. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_adc7892040980c12dd70ed3228f350313}{vishnuInitialize} (char $\ast$cfg, int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Function to initialize the SYSFERA-\/DS configuration. \item\end{DoxyCompactList}\item 
+\hypertarget{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}{
+void \hyperlink{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}{vishnuFinalize} ()}
+\label{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}
+
+\begin{DoxyCompactList}\small\item\em Function to finalize. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}{restore} (const std::string \&filePath)
+\begin{DoxyCompactList}\small\item\em Function to initialize the data base. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This naspace contains utils functions of the vishnu system. 
+
+\subsection{Function Documentation}
+\hypertarget{namespacevishnu_ab54431ee8c1616ae24b071e9146d39e9}{
+\index{vishnu@{vishnu}!addLocalAccount@{addLocalAccount}}
+\index{addLocalAccount@{addLocalAccount}!vishnu@{vishnu}}
+\subsubsection[{addLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::addLocalAccount (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const UMS\_\-Data::LocalAccount \&}]{ newLocalAccount, }
+\item[{std::string \&}]{ sshPublicKey}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_ab54431ee8c1616ae24b071e9146d39e9}
+
+
+Function to add a new local user configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em newLocalAccount}]is is the object which encapsulates the new local user configuration \item[{\em sshPublicKey}]the SSH public key generated by VISHNU for accessing a local account \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_aca4f5c2716ce1dd8ddc15a2554c95004}{
+\index{vishnu@{vishnu}!addMachine@{addMachine}}
+\index{addMachine@{addMachine}!vishnu@{vishnu}}
+\subsubsection[{addMachine}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::addMachine (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::Machine \&}]{ newMachine}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_aca4f5c2716ce1dd8ddc15a2554c95004}
+
+
+Function to add a new machine in VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em newMachine}]is an object which encapsulates the information of the machine which will be added in VISHNU except the machine id which will be created automatically by VISHNU \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ac7cd83030f8f6e990001b238a9f50640}{
+\index{vishnu@{vishnu}!addUser@{addUser}}
+\index{addUser@{addUser}!vishnu@{vishnu}}
+\subsubsection[{addUser}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::addUser (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::User \&}]{ newUser}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_ac7cd83030f8f6e990001b238a9f50640}
+
+
+Function to add a new user in VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em newUser}]is an object containing the new user information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a24ec95c164ce8905b8eccf98e9bb633e}{
+\index{vishnu@{vishnu}!changePassword@{changePassword}}
+\index{changePassword@{changePassword}!vishnu@{vishnu}}
+\subsubsection[{changePassword}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::changePassword (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ userId, }
+\item[{const std::string \&}]{ password, }
+\item[{const std::string \&}]{ passwordNew}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a24ec95c164ce8905b8eccf98e9bb633e}
+
+
+Function to change the password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]represents the VISHNU user identifier \item[{\em password}]represents the password of the user \item[{\em passwordNew}]represents the new password of the user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a925f5cdd60d012ebd98cd328ed60d398}{
+\index{vishnu@{vishnu}!close@{close}}
+\index{close@{close}!vishnu@{vishnu}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::close (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a925f5cdd60d012ebd98cd328ed60d398}
+
+
+Function to close the session identfied by the session key. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a05878cbc7dbb3f5da87dbc32dd25ab78}{
+\index{vishnu@{vishnu}!configureDefaultOption@{configureDefaultOption}}
+\index{configureDefaultOption@{configureDefaultOption}!vishnu@{vishnu}}
+\subsubsection[{configureDefaultOption}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::configureDefaultOption (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const UMS\_\-Data::OptionValue \&}]{ optionValue}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a05878cbc7dbb3f5da87dbc32dd25ab78}
+
+
+Function to configure a default option value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em optionValue}]is an object which encapsulates the option information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a5b88fcd36b780df012b2529fe3526ca1}{
+\index{vishnu@{vishnu}!configureOption@{configureOption}}
+\index{configureOption@{configureOption}!vishnu@{vishnu}}
+\subsubsection[{configureOption}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::configureOption (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const UMS\_\-Data::OptionValue \&}]{ optionValue}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a5b88fcd36b780df012b2529fe3526ca1}
+
+
+Function to configure an option of the user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em optionValue}]is an object which encapsulates the option information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{
+\index{vishnu@{vishnu}!connect@{connect}}
+\index{connect@{connect}!vishnu@{vishnu}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::connect (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ userId, }
+\item[{const std::string \&}]{ password, }
+\item[{UMS\_\-Data::Session \&}]{ session, }
+\item[{const UMS\_\-Data::ConnectOptions \&}]{ connectOpt = {\ttfamily UMS\_\-Data::ConnectOptions()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}
+
+
+Function to open a session. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]The VISHNU user identifier \item[{\em password}]The password of the user \item[{\em session}]is an object containing the encrypted identifier of the session generated by VISHNU \item[{\em connectOpt}]To encapsulate the options available for the connect method. It allows the user to choose the way for way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as she was a specific user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ac1899fb2792ddd63a003a06081fc9066}{
+\index{vishnu@{vishnu}!convertToInt@{convertToInt}}
+\index{convertToInt@{convertToInt}!vishnu@{vishnu}}
+\subsubsection[{convertToInt}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::convertToInt (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ val}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_ac1899fb2792ddd63a003a06081fc9066}
+
+
+Function to convert a string to int. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em val}]a value to convert to int \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int value of the corresponding string 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_add18720aacc1db6052abecedd5d6feaa}{
+\index{vishnu@{vishnu}!convertToString@{convertToString}}
+\index{convertToString@{convertToString}!vishnu@{vishnu}}
+\subsubsection[{convertToString}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std::string vishnu::convertToString (
+\begin{DoxyParamCaption}
+\item[{T}]{ val}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_add18720aacc1db6052abecedd5d6feaa}
+
+
+Generic function to convert an object to string. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em val}]is a generic data to be transformed to string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the string version of val 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a6315b6f5e86d48f4c75dc73d08348edf}{
+\index{vishnu@{vishnu}!cryptPassword@{cryptPassword}}
+\index{cryptPassword@{cryptPassword}!vishnu@{vishnu}}
+\subsubsection[{cryptPassword}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::cryptPassword (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ salt, }
+\item[{const std::string}]{ password}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a6315b6f5e86d48f4c75dc73d08348edf}
+
+
+To crypt a password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em salt}]The salt to use to crypt \item[{\em password}]The password to crypt \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The crypted password 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a2b51028779571b21c45a2a75cd362c59}{
+\index{vishnu@{vishnu}!deleteLocalAccount@{deleteLocalAccount}}
+\index{deleteLocalAccount@{deleteLocalAccount}!vishnu@{vishnu}}
+\subsubsection[{deleteLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::deleteLocalAccount (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ userId, }
+\item[{const std::string \&}]{ machineId}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a2b51028779571b21c45a2a75cd362c59}
+
+
+Function to removes a local user configuration (for a given user on a given machine) from VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em userId}]represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine \item[{\em machineId}]represents the identifier of the machine whose local configuration will be deleted for the given user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_abdd14f47db308fc03655149ac7d93199}{
+\index{vishnu@{vishnu}!deleteMachine@{deleteMachine}}
+\index{deleteMachine@{deleteMachine}!vishnu@{vishnu}}
+\subsubsection[{deleteMachine}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::deleteMachine (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ machineId}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_abdd14f47db308fc03655149ac7d93199}
+
+
+Function to remove a machine from VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em machineId}]represents the identifier of the machine \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a6c83f6b72fdb7ac3b240f14a19f11786}{
+\index{vishnu@{vishnu}!deleteUser@{deleteUser}}
+\index{deleteUser@{deleteUser}!vishnu@{vishnu}}
+\subsubsection[{deleteUser}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::deleteUser (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ userId}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a6c83f6b72fdb7ac3b240f14a19f11786}
+
+
+Function to remove a user from VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em userId}]represents the VISHNU user identifier of the user who will be deleted from VISHNU \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a93bc913d891933b4f9d7bc0382f72425}{
+\index{vishnu@{vishnu}!generateNumbers@{generateNumbers}}
+\index{generateNumbers@{generateNumbers}!vishnu@{vishnu}}
+\subsubsection[{generateNumbers}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::generateNumbers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a93bc913d891933b4f9d7bc0382f72425}
+
+
+Function to get a random number. 
+
+\begin{DoxyReturn}{Returns}
+the number generated 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a50b77ca8a04c384cba2b8b6cdec4a26f}{
+\index{vishnu@{vishnu}!get\_\-file\_\-content@{get\_\-file\_\-content}}
+\index{get\_\-file\_\-content@{get\_\-file\_\-content}!vishnu@{vishnu}}
+\subsubsection[{get\_\-file\_\-content}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::get\_\-file\_\-content (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ filePath}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a50b77ca8a04c384cba2b8b6cdec4a26f}
+
+
+Simple function to read the content of file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em filePath,:}]the path to the file \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The content of the file 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a0adf01cdd878372e5fb44b3f1d9d86be}{
+\index{vishnu@{vishnu}!getAttrVishnu@{getAttrVishnu}}
+\index{getAttrVishnu@{getAttrVishnu}!vishnu@{vishnu}}
+\subsubsection[{getAttrVishnu}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::getAttrVishnu (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ attrname, }
+\item[{std::string}]{ vishnuid}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a0adf01cdd878372e5fb44b3f1d9d86be}
+
+
+Function to get information from the table vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em attrname}]the name of the attribut \item[{\em vishnuid}]the id of the vishnu configuration \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the corresponding attribut 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a1ac2452cabb31484e501d0e568a342c3}{
+\index{vishnu@{vishnu}!getGeneratedName@{getGeneratedName}}
+\index{getGeneratedName@{getGeneratedName}!vishnu@{vishnu}}
+\subsubsection[{getGeneratedName}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::getGeneratedName (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ format, }
+\item[{int}]{ cpt, }
+\item[{{\bf IdType}}]{ type, }
+\item[{std::string}]{ name = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{std::string}]{ site = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a1ac2452cabb31484e501d0e568a342c3}
+
+
+Function to generate an ID. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em format}]Format to use to generate the id \item[{\em cpt}]Value of the counter to use \item[{\em type}]Type of the id generated \item[{\em name}]Name of the user or machine (optionnal) \item[{\em site}]Site of the machine (optionnal) \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the genarated ID 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}{
+\index{vishnu@{vishnu}!getKeywords@{getKeywords}}
+\index{getKeywords@{getKeywords}!vishnu@{vishnu}}
+\subsubsection[{getKeywords}]{\setlength{\rightskip}{0pt plus 5cm}void vishnu::getKeywords (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ size, }
+\item[{{\bf Format\_\-t} $\ast$}]{ array, }
+\item[{const char $\ast$}]{ format, }
+\item[{int}]{ cpt, }
+\item[{{\bf IdType}}]{ type, }
+\item[{std::string}]{ name, }
+\item[{std::string}]{ site}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a04e3438b8bba4e8074e5102cccfd6cd1}
+
+
+Parse the format and fill the array with the variable and their value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em size}]Size of the array (OUT) \item[{\em array}]Array to fill with variables and their value (OUT) \item[{\em format}]The string to parse \item[{\em cpt}]Value of the counter variable \item[{\em type}]Type of the id to generate \item[{\em name}]Name of the user or machine \item[{\em site}]Site of the machine \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success and -\/1 when an error occurs 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a999d6bcb9346a8b398d5c94eb01a125a}{
+\index{vishnu@{vishnu}!incrementCpt@{incrementCpt}}
+\index{incrementCpt@{incrementCpt}!vishnu@{vishnu}}
+\subsubsection[{incrementCpt}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::incrementCpt (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ cptName, }
+\item[{int}]{ cpt}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a999d6bcb9346a8b398d5c94eb01a125a}
+
+
+Function to increment a counter of the table vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cptName}]the name of the counter to increment \item[{\em cpt}]the current value of the counter \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a9f8370bcc63bc78bd464447eecbee191}{
+\index{vishnu@{vishnu}!isCpt@{isCpt}}
+\index{isCpt@{isCpt}!vishnu@{vishnu}}
+\subsubsection[{isCpt}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isCpt (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a9f8370bcc63bc78bd464447eecbee191}
+
+
+Return true if the string starts with 'CPT'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'CPT' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a11a59f26c9f250498ef8aed73e316c8b}{
+\index{vishnu@{vishnu}!isDay@{isDay}}
+\index{isDay@{isDay}!vishnu@{vishnu}}
+\subsubsection[{isDay}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isDay (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a11a59f26c9f250498ef8aed73e316c8b}
+
+
+Return true if the string starts with 'DAY'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'DAY' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ad10441f9e198c7d70038dcd74963dc54}{
+\index{vishnu@{vishnu}!isMaName@{isMaName}}
+\index{isMaName@{isMaName}!vishnu@{vishnu}}
+\subsubsection[{isMaName}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isMaName (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_ad10441f9e198c7d70038dcd74963dc54}
+
+
+Return true if the string starts with 'MANAME'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'MANAME' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ae3f61f1465ef34d3cf2f20c67a019b43}{
+\index{vishnu@{vishnu}!isMonth@{isMonth}}
+\index{isMonth@{isMonth}!vishnu@{vishnu}}
+\subsubsection[{isMonth}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isMonth (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_ae3f61f1465ef34d3cf2f20c67a019b43}
+
+
+Return true if the string starts with 'MONTH'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'MONTH' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a36b8edc2218c332a4a59f2e39109d627}{
+\index{vishnu@{vishnu}!isSite@{isSite}}
+\index{isSite@{isSite}!vishnu@{vishnu}}
+\subsubsection[{isSite}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isSite (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a36b8edc2218c332a4a59f2e39109d627}
+
+
+Return true if the string starts with 'SITE'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'SITE' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_abaf2c02608b3d96f1f883d65966595a5}{
+\index{vishnu@{vishnu}!isType@{isType}}
+\index{isType@{isType}!vishnu@{vishnu}}
+\subsubsection[{isType}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isType (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_abaf2c02608b3d96f1f883d65966595a5}
+
+
+Return true if the string starts with 'TYPE'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'TYPE' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ac123696febe0c4b8fa9f6d59daa6062b}{
+\index{vishnu@{vishnu}!isUName@{isUName}}
+\index{isUName@{isUName}!vishnu@{vishnu}}
+\subsubsection[{isUName}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isUName (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_ac123696febe0c4b8fa9f6d59daa6062b}
+
+
+Return true if the string starts with 'UNAME'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'UNAME' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a646794297931366c08502e5079154ccd}{
+\index{vishnu@{vishnu}!isYear@{isYear}}
+\index{isYear@{isYear}!vishnu@{vishnu}}
+\subsubsection[{isYear}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::isYear (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ s}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a646794297931366c08502e5079154ccd}
+
+
+Return true if the string starts with 'YEAR'. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em s}]String to test \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the string starts with 'YEAR' 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}{
+\index{vishnu@{vishnu}!listHistoryCmd@{listHistoryCmd}}
+\index{listHistoryCmd@{listHistoryCmd}!vishnu@{vishnu}}
+\subsubsection[{listHistoryCmd}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listHistoryCmd (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::ListCommands \&}]{ listCommands, }
+\item[{const UMS\_\-Data::ListCmdOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListCmdOptions()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}
+
+
+Function to list the commands. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listCommands}]is an object which encapsulates the list of commands \item[{\em options}]allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}{
+\index{vishnu@{vishnu}!listLocalAccount@{listLocalAccount}}
+\index{listLocalAccount@{listLocalAccount}!vishnu@{vishnu}}
+\subsubsection[{listLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listLocalAccount (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::ListLocalAccounts \&}]{ listLocalAcc, }
+\item[{const UMS\_\-Data::ListLocalAccOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListLocalAccOptions()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}
+
+
+Function to list the local user configurations. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listLocalAcc}]is an object which encapsulates the list of the local user configuations \item[{\em options}]allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}{
+\index{vishnu@{vishnu}!listMachine@{listMachine}}
+\index{listMachine@{listMachine}!vishnu@{vishnu}}
+\subsubsection[{listMachine}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listMachine (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::ListMachines \&}]{ listMachine, }
+\item[{const UMS\_\-Data::ListMachineOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListMachineOptions()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}
+
+
+Function to list the machines in which the local user configurations are defined for the given user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listMachine}]is an object which encapsulates the list of the machines \item[{\em options}]allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a53106e021a6e98049b41106c12356e28}{
+\index{vishnu@{vishnu}!listOptions@{listOptions}}
+\index{listOptions@{listOptions}!vishnu@{vishnu}}
+\subsubsection[{listOptions}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listOptions (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::ListOptionsValues \&}]{ listOptValues, }
+\item[{const UMS\_\-Data::ListOptOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListOptOptions()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a53106e021a6e98049b41106c12356e28}
+
+
+Function to list the options of the user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listOptValues}]is an object which encapsulates the list of options \item[{\em options}]allows to list a specific option or all default options values or for an admin to list options of a specific user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}{
+\index{vishnu@{vishnu}!listSessions@{listSessions}}
+\index{listSessions@{listSessions}!vishnu@{vishnu}}
+\subsubsection[{listSessions}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listSessions (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::ListSessions \&}]{ listSession, }
+\item[{const UMS\_\-Data::ListSessionOptions \&}]{ options = {\ttfamily UMS\_\-Data::ListSessionOptions()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}
+
+
+Function to list all sessions of the user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listSession}]is an object which encapsulates the list of sessions \item[{\em options}]allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a6a0175686b0d2aff434015fc61c62ce6}{
+\index{vishnu@{vishnu}!listUsers@{listUsers}}
+\index{listUsers@{listUsers}!vishnu@{vishnu}}
+\subsubsection[{listUsers}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listUsers (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::ListUsers \&}]{ listUsers, }
+\item[{const std::string \&}]{ userIdOption = {\ttfamily std::string()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a6a0175686b0d2aff434015fc61c62ce6}
+
+
+Function to list VISHNU users. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listUsers}]is an object which encapsulates the list of users \item[{\em userIdOption}]allows an admin to get information about a specific user identified by his/her userId \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ae120231ba899d68724dc972374206745}{
+\index{vishnu@{vishnu}!reconnect@{reconnect}}
+\index{reconnect@{reconnect}!vishnu@{vishnu}}
+\subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::reconnect (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ userId, }
+\item[{const std::string \&}]{ password, }
+\item[{const std::string \&}]{ sessionId, }
+\item[{UMS\_\-Data::Session \&}]{ session}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_ae120231ba899d68724dc972374206745}
+
+
+Function to return the sessionKey of a session in which the user was disconnected previously without closing it. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]represents the VISHNU user identifier \item[{\em password}]represents the password of the user \item[{\em sessionId}]is the identifier of the session defined in the database \item[{\em session}]is an object containing the encrypted identifier of the session generated by VISHNU and the close policy value \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a11f16b7501b8814c491d13431409051c}{
+\index{vishnu@{vishnu}!resetPassword@{resetPassword}}
+\index{resetPassword@{resetPassword}!vishnu@{vishnu}}
+\subsubsection[{resetPassword}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::resetPassword (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ userId, }
+\item[{std::string \&}]{ tmpPassword}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a11f16b7501b8814c491d13431409051c}
+
+
+Function to reset the password of a user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em userId}]represents represents the VISHNU user identifier of the user whose password will be reset \item[{\em tmpPassword}]New password of the user, temporary \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}{
+\index{vishnu@{vishnu}!restore@{restore}}
+\index{restore@{restore}!vishnu@{vishnu}}
+\subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::restore (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ filePath}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}
+
+
+Function to initialize the data base. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em filePath}]the file \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an error code 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a60ecb3b47532d0df7b0d44fdf43f98f4}{
+\index{vishnu@{vishnu}!restoreConfiguration@{restoreConfiguration}}
+\index{restoreConfiguration@{restoreConfiguration}!vishnu@{vishnu}}
+\subsubsection[{restoreConfiguration}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::restoreConfiguration (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ filePath}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a60ecb3b47532d0df7b0d44fdf43f98f4}
+
+
+Function to restore the configuration of VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em filePath}]is the path of the file used to restore VISHNU configuration \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a2ecc54aee4da202b1caa94dfa6a43d17}{
+\index{vishnu@{vishnu}!saveConfiguration@{saveConfiguration}}
+\index{saveConfiguration@{saveConfiguration}!vishnu@{vishnu}}
+\subsubsection[{saveConfiguration}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::saveConfiguration (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{UMS\_\-Data::Configuration \&}]{ config}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a2ecc54aee4da202b1caa94dfa6a43d17}
+
+
+Function to save the configuration of VISHNU. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em config}]is an object which encapsulates the configuration description \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ace1a774c9d738133e7cdfe505d358764}{
+\index{vishnu@{vishnu}!string\_\-to\_\-time\_\-t@{string\_\-to\_\-time\_\-t}}
+\index{string\_\-to\_\-time\_\-t@{string\_\-to\_\-time\_\-t}!vishnu@{vishnu}}
+\subsubsection[{string\_\-to\_\-time\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}std::time\_\-t vishnu::string\_\-to\_\-time\_\-t (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ ts}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_ace1a774c9d738133e7cdfe505d358764}
+
+
+Simple function to convert time from string format (YYYY-\/MM-\/DD H:mm:ss) to long integer format in seconds. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ts,:}]the time in string format \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the time in long integer format in seconds 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a699510f2ba6cb03bd9a6f3696abd9860}{
+\index{vishnu@{vishnu}!takePassword@{takePassword}}
+\index{takePassword@{takePassword}!vishnu@{vishnu}}
+\subsubsection[{takePassword}]{\setlength{\rightskip}{0pt plus 5cm}std::string vishnu::takePassword (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ prompt}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a699510f2ba6cb03bd9a6f3696abd9860}
+
+
+To retrieve the password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em prompt,:}]The message inviting the user to enter his/her password \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The password entered. 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ac51341ab58c1ed606b254262fbc053dc}{
+\index{vishnu@{vishnu}!updateLocalAccount@{updateLocalAccount}}
+\index{updateLocalAccount@{updateLocalAccount}!vishnu@{vishnu}}
+\subsubsection[{updateLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::updateLocalAccount (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const UMS\_\-Data::LocalAccount \&}]{ localAccount}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_ac51341ab58c1ed606b254262fbc053dc}
+
+
+Function to update a local user configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em localAccount}]is an object which encapsulates the local user configuration changes except the machineId and the userId \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a1f8fe4e8fa5956be1f264e9a5f78c9f1}{
+\index{vishnu@{vishnu}!updateMachine@{updateMachine}}
+\index{updateMachine@{updateMachine}!vishnu@{vishnu}}
+\subsubsection[{updateMachine}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::updateMachine (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const UMS\_\-Data::Machine \&}]{ machine}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a1f8fe4e8fa5956be1f264e9a5f78c9f1}
+
+
+Function to update machine description. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em machine}]is an existing machine information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a1446b24fda1ed0ca910686635b6bb956}{
+\index{vishnu@{vishnu}!updateUser@{updateUser}}
+\index{updateUser@{updateUser}!vishnu@{vishnu}}
+\subsubsection[{updateUser}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::updateUser (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const UMS\_\-Data::User \&}]{ user}
+\end{DoxyParamCaption}
+)  throw ({\bf UserException})}}
+\label{namespacevishnu_a1446b24fda1ed0ca910686635b6bb956}
+
+
+Function to update the user information except the userId and the password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em user}]is an object containing the new user information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_adc7892040980c12dd70ed3228f350313}{
+\index{vishnu@{vishnu}!vishnuInitialize@{vishnuInitialize}}
+\index{vishnuInitialize@{vishnuInitialize}!vishnu@{vishnu}}
+\subsubsection[{vishnuInitialize}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::vishnuInitialize (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ cfg, }
+\item[{int}]{ argc, }
+\item[{char $\ast$$\ast$}]{ argv}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_adc7892040980c12dd70ed3228f350313}
+
+
+Function to initialize the SYSFERA-\/DS configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cfg}]The SYSFERA-\/DS configuration file \item[{\em argc}]The number of arguments of the program \item[{\em argv}]The list of arguments \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an error code 
+\end{DoxyReturn}

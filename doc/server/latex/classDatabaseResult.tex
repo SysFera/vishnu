@@ -1,0 +1,205 @@
+\hypertarget{classDatabaseResult}{
+\section{DatabaseResult Class Reference}
+\label{classDatabaseResult}\index{DatabaseResult@{DatabaseResult}}
+}
+
+
+This class describes the object which encapsulates the database results.  
+
+
+
+
+{\ttfamily \#include $<$DatabaseResult.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDatabaseResult_a9e90ab72a798d7fa818e7e012931609a}{
+void \hyperlink{classDatabaseResult_a9e90ab72a798d7fa818e7e012931609a}{print} ()}
+\label{classDatabaseResult_a9e90ab72a798d7fa818e7e012931609a}
+
+\begin{DoxyCompactList}\small\item\em Function to print the database results. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabaseResult_a8804e1de33bcc2423cd6949504d773f4}{
+void \hyperlink{classDatabaseResult_a8804e1de33bcc2423cd6949504d773f4}{printAttributesNames} ()}
+\label{classDatabaseResult_a8804e1de33bcc2423cd6949504d773f4}
+
+\begin{DoxyCompactList}\small\item\em Function to print the attributes names. \item\end{DoxyCompactList}\item 
+size\_\-t \hyperlink{classDatabaseResult_a6b425ff8cd457025a473afdc1e4d1535}{getNbTuples} () const 
+\begin{DoxyCompactList}\small\item\em To get the number of tuples. \item\end{DoxyCompactList}\item 
+size\_\-t \hyperlink{classDatabaseResult_a793321da7e96547dbb0cdc97a80d09fe}{getNbFields} () const 
+\begin{DoxyCompactList}\small\item\em To get the number of fields. \item\end{DoxyCompactList}\item 
+std::vector$<$ std::string $>$ \hyperlink{classDatabaseResult_af129f9b5cced14a65917ca0d86f77ffc}{get} (size\_\-t position) const 
+\begin{DoxyCompactList}\small\item\em To get a specific results using its position. \item\end{DoxyCompactList}\item 
+std::vector$<$ std::vector$<$ std::string $>$ $>$ \hyperlink{classDatabaseResult_a0068ceed5d4907a7cd1d62cb2a57f173}{getResults} () const 
+\begin{DoxyCompactList}\small\item\em To get the number of fields. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classDatabaseResult_addfd43669b9408978b4da87a962f1e8b}{getFirstElement} () const 
+\begin{DoxyCompactList}\small\item\em To get the first attribut value of the first element. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabaseResult_a703ad51e1e44f037ae26df7610ba54ae}{
+\hyperlink{classDatabaseResult_a703ad51e1e44f037ae26df7610ba54ae}{DatabaseResult} (std::vector$<$ std::vector$<$ std::string $>$ $>$ res, std::vector$<$ std::string $>$ namesAttributes)}
+\label{classDatabaseResult_a703ad51e1e44f037ae26df7610ba54ae}
+
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabaseResult_a67e279aafefdea3dcf1a61540dfa6c8b}{
+\hyperlink{classDatabaseResult_a67e279aafefdea3dcf1a61540dfa6c8b}{$\sim$DatabaseResult} ()}
+\label{classDatabaseResult_a67e279aafefdea3dcf1a61540dfa6c8b}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classDatabaseResult_a7ecbd6dcff94807ef336078f738b72d1}{setNbTuples} (size\_\-t nbtuples)
+\begin{DoxyCompactList}\small\item\em To set the number of tuples. \item\end{DoxyCompactList}\item 
+void \hyperlink{classDatabaseResult_a074e2368ec01570285d829478db73471}{setNbFields} (size\_\-t nbfields)
+\begin{DoxyCompactList}\small\item\em To set the number of fields. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDatabaseResult_a70c370d5776f3418bffc6f857ed56686}{
+size\_\-t \hyperlink{classDatabaseResult_a70c370d5776f3418bffc6f857ed56686}{fields}}
+\label{classDatabaseResult_a70c370d5776f3418bffc6f857ed56686}
+
+\begin{DoxyCompactList}\small\item\em The number of fields. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabaseResult_aed4fa350079f3355cac77d4b410fe6e6}{
+size\_\-t \hyperlink{classDatabaseResult_aed4fa350079f3355cac77d4b410fe6e6}{tuples}}
+\label{classDatabaseResult_aed4fa350079f3355cac77d4b410fe6e6}
+
+\begin{DoxyCompactList}\small\item\em The number of tuples. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabaseResult_aa24044607e6d64e1458b5454adf2b9c4}{
+std::vector$<$ std::vector$<$ std::string $>$ $>$ \hyperlink{classDatabaseResult_aa24044607e6d64e1458b5454adf2b9c4}{results}}
+\label{classDatabaseResult_aa24044607e6d64e1458b5454adf2b9c4}
+
+\begin{DoxyCompactList}\small\item\em The database results. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabaseResult_a5b1d5d56689f44d961f4f3d9bba188bf}{
+std::vector$<$ std::string $>$ \hyperlink{classDatabaseResult_a5b1d5d56689f44d961f4f3d9bba188bf}{attributesNames}}
+\label{classDatabaseResult_a5b1d5d56689f44d961f4f3d9bba188bf}
+
+\begin{DoxyCompactList}\small\item\em The attributes names. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes the object which encapsulates the database results. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classDatabaseResult_af129f9b5cced14a65917ca0d86f77ffc}{
+\index{DatabaseResult@{DatabaseResult}!get@{get}}
+\index{get@{get}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$ std::string $>$ DatabaseResult::get (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ position}
+\end{DoxyParamCaption}
+) const}}
+\label{classDatabaseResult_af129f9b5cced14a65917ca0d86f77ffc}
+
+
+To get a specific results using its position. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em position}]The position of the request \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the tuple associated to the postion 
+\end{DoxyReturn}
+\hypertarget{classDatabaseResult_addfd43669b9408978b4da87a962f1e8b}{
+\index{DatabaseResult@{DatabaseResult}!getFirstElement@{getFirstElement}}
+\index{getFirstElement@{getFirstElement}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{getFirstElement}]{\setlength{\rightskip}{0pt plus 5cm}std::string DatabaseResult::getFirstElement (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classDatabaseResult_addfd43669b9408978b4da87a962f1e8b}
+
+
+To get the first attribut value of the first element. 
+
+\begin{DoxyReturn}{Returns}
+the first attribut value of the first element 
+\end{DoxyReturn}
+\hypertarget{classDatabaseResult_a793321da7e96547dbb0cdc97a80d09fe}{
+\index{DatabaseResult@{DatabaseResult}!getNbFields@{getNbFields}}
+\index{getNbFields@{getNbFields}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{getNbFields}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t DatabaseResult::getNbFields (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classDatabaseResult_a793321da7e96547dbb0cdc97a80d09fe}
+
+
+To get the number of fields. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classDatabaseResult_a6b425ff8cd457025a473afdc1e4d1535}{
+\index{DatabaseResult@{DatabaseResult}!getNbTuples@{getNbTuples}}
+\index{getNbTuples@{getNbTuples}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{getNbTuples}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t DatabaseResult::getNbTuples (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classDatabaseResult_a6b425ff8cd457025a473afdc1e4d1535}
+
+
+To get the number of tuples. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classDatabaseResult_a0068ceed5d4907a7cd1d62cb2a57f173}{
+\index{DatabaseResult@{DatabaseResult}!getResults@{getResults}}
+\index{getResults@{getResults}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{getResults}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$ std::vector$<$ std::string $>$ $>$ DatabaseResult::getResults (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classDatabaseResult_a0068ceed5d4907a7cd1d62cb2a57f173}
+
+
+To get the number of fields. 
+
+\begin{DoxyReturn}{Returns}
+all results 
+\end{DoxyReturn}
+\hypertarget{classDatabaseResult_a074e2368ec01570285d829478db73471}{
+\index{DatabaseResult@{DatabaseResult}!setNbFields@{setNbFields}}
+\index{setNbFields@{setNbFields}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{setNbFields}]{\setlength{\rightskip}{0pt plus 5cm}void DatabaseResult::setNbFields (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ nbfields}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classDatabaseResult_a074e2368ec01570285d829478db73471}
+
+
+To set the number of fields. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em nbfields}]The number of fields \end{DoxyParams}
+\hypertarget{classDatabaseResult_a7ecbd6dcff94807ef336078f738b72d1}{
+\index{DatabaseResult@{DatabaseResult}!setNbTuples@{setNbTuples}}
+\index{setNbTuples@{setNbTuples}!DatabaseResult@{DatabaseResult}}
+\subsubsection[{setNbTuples}]{\setlength{\rightskip}{0pt plus 5cm}void DatabaseResult::setNbTuples (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ nbtuples}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classDatabaseResult_a7ecbd6dcff94807ef336078f738b72d1}
+
+
+To set the number of tuples. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em nbtuples}]The number of tuples \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/database/\hyperlink{DatabaseResult_8hpp}{DatabaseResult.hpp}\end{DoxyCompactItemize}
