@@ -113,7 +113,7 @@ class QueryProxy
 template <class QueryParameters, class ListObject>
 QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session, 
     const std::string& serviceName):
-  mparameters(params), msessionProxy(session), mserviceName(serviceName)
+  mparameters(params), mserviceName(serviceName), msessionProxy(session)
 {
   mlistObject = NULL;
 }

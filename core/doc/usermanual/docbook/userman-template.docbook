@@ -212,8 +212,7 @@ same conditions as regards security.</para>
     <section>
       <title> User account creation </title>
       <para>
-	The first step to access VISHNU is to request a new account creation to a VISHNU administrator. The information required to create a new account are
-	only your full name and your email adress. You will receives automatically an email containing your userId and your password.
+	The first step to access VISHNU is to request a new account to a VISHNU administrator. The only information required to create a new account is your full name and email address. You will automatically receive an email containing your userId and password.
       </para>
     </section>
     
@@ -221,16 +220,15 @@ same conditions as regards security.</para>
     <section>
       <title> Connection to VISHNU </title>
       <para>
-	The connection is possible by using the <emphasis role = "bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
-	The password receives by email is temporary and must be changed at the first connection by using the <emphasis role = "bold"> vishnu_change_password </emphasis> command.
+	To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
+	The password received by email is temporary and must be changed at the first connection by using the <emphasis role = "bold"> vishnu_change_password </emphasis> command.
       </para>
     </section>
     
     <section>
       <title> Reconnection to VISHNU </title>
       <para>
-	The reconnection is possible by using the <emphasis role = "bold">vishnu_reconnect</emphasis> command. This command allows to use an existing session
-	previously opened and not closed. It makes possible the use simultaneously of the same session in different shell terminals.
+	Reconnection is done using the <emphasis role="bold">vishnu_reconnect</emphasis> command. This command allows using an existing session that was previously opened but not closed. It makes it possible to simultaneously use the same session in different shell terminals.
       </para>
     </section>
     
@@ -238,26 +236,23 @@ same conditions as regards security.</para>
     <section>
       <title> Session management in VISHNU </title>
       <para>
-	After successful call to <emphasis role = "bold">vishnu_connect</emphasis> command, a session is created. 
-	The session is required for calling any other commands. It avoids systematic authentification by userId and
-	password. Only the commands <emphasis role = "bold">vishnu_connect, vishnu_reconnect and vishnu_change_password</emphasis> can be used outside a session by using userId and password. 
-	The command <emphasis role = "bold">vishnu_list_history_cmd</emphasis> lists all commands launched within a session.
+	After a successful call to the <emphasis role="bold">vishnu_connect</emphasis> command, a session is created. 
+	The session is required for calling any other commands. It avoids systematic authentification by userId and password. Only commands <emphasis role="bold">vishnu_connect</emphasis>, <emphasis role="bold">vishnu_reconnect</emphasis> and <emphasis role="bold">vishnu_change_password</emphasis> can be used outside a session by using userId and password. 
+	The <emphasis role="bold">vishnu_list_history_cmd</emphasis> command lists all the commands launched within a session.
       </para>
-       <para> To avoid unclosed session when the <emphasis role = "bold">vishnu_close</emphasis> command is not used, the session is closed automatically on timeout or on disconnect (from the terminal). </para>   
+       <para> To prevent unclosed sessions when the <emphasis role="bold">vishnu_close</emphasis> command is not used, the session is automatically closed on timeout or on disconnect (from the terminal). </para> 
 	<section>
-	<title> Session closure on timeout </title>
-	<para> 
+	<title> Session close on timeout </title>
+	<para>  
 	In this mode, the session is automatically closed after an inactivity delay specified by the system or 
 	configured by the user using the <emphasis role = "bold">vishnu_configure_option</emphasis> command.
 	</para>
 	
         </section>
 	<section>
-	<title> Session closure on disconnect </title>
+	<title> Session close on disconnect </title>
 	<para> 
-	In this mode, the session is automatically closed when the shell terminal is closed. It is important to notice that the system makes 
-	impossible the closure of sessions when there is running commands. In this case, a session with automatic closure on disconnect changes 
-	the closure mode to automatic closure on timeout.
+	In this mode, the session is automatically closed when the shell terminal is closed. It is important to note that the system makes it impossible to close a session while commands are running. In this case, a session with automatic close on disconnect changes the close mode to automatic close on timeout.
         </para>
 	</section>
 	
@@ -275,16 +270,17 @@ same conditions as regards security.</para>
       <section>
 	<title> Local user configuration creation </title>
 	  <para>  
-	    To access an UNIX account on a specific machine defined on VISHNU, the user must create a local user configuration by using the 
+	    To access a UNIX account on a specific machine defined on VISHNU, the user must create a local user configuration by using the 
 	    <emphasis role = "bold">vishnu_add_local_account</emphasis> command. The <emphasis role = "bold">vishnu_list_machines</emphasis> command
-	    gives information about machines in which local user configuration can be created or where local user configuration have already been created. The information 
-	    required to create a new local user configuration are: the userId, the machineId, the login of the UNIX account on the specified machine,
+	    gives information about the machines in which a local user configuration can be created or where a local user configuration has already been created. The information 
+	    required to create a new local user configuration is: the userId, the machineId, the login of the UNIX account on the specified machine,
 	    the absolute path to the user's private SSH key (used for file transfers) and the home directory path. 
 	  </para>   
 	  <para>  
 	    The ssh public key of the machine 
-	    named <emphasis role = "italic">"userId-machineId"</emphasis> is returned and stored on the $HOME/.vishnu directory/localAccountPublicKey/ and must be added by the user on the authorized key of the UNIX account.
-	    In this way, VISHNU can be connected directly on this UNIX account for making tasks as it was the user of the UNIX account.
+	    named <emphasis role="italic">&quot;userId-machineId&quot;</emphasis> is returned and stored in the $HOME/.vishnu/localAccountPublicKey/ directory
+	    and must be added by the user in the ssh authorized key directory of the UNIX account.
+	    Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
 	 </para>
       </section>
       
@@ -292,7 +288,7 @@ same conditions as regards security.</para>
 	<title> Local user configuration update </title>
 	  <para>  
 	    All previous parameters used to create a local user configuration can be updated by using the 
-	    <emphasis role = "bold">vishnu_update_local_account</emphasis> command except the userId an the machineId. 
+	    <emphasis role = "bold">vishnu_update_local_account</emphasis> command except for userId and machineId. 
 	 </para>
       </section>
       
@@ -303,10 +299,11 @@ same conditions as regards security.</para>
 	 </para>
       </section>
       <para>
-	It is possible to display the local user configurations with the <emphasis role = "bold">vishnu_list_local_account</emphasis> command. Other 
-	commands which are not cited above can be used to display information such as: the <emphasis role = "bold">vishnu_list_options</emphasis> command which 
-	displays all options configured by the user or the <emphasis role = "bold">vishnu_list_sessions</emphasis> command to
-	display information about sessions.
+	It is possible to display the local user configurations with the <emphasis role="bold">vishnu_list_local_account</emphasis> command. Other 
+	commands which are not cited above can be used to display information, such as the <emphasis
+              role="bold">vishnu_list_options</emphasis> command, which 
+	displays all the options configured by the user, or the <emphasis role="bold">vishnu_list_sessions</emphasis> command, which
+	displays information about the sessions.
       </para>
     </section>
     
@@ -315,7 +312,7 @@ same conditions as regards security.</para>
     
    <section>
      <title> Troubleshooting functions </title>
-     <para> The error: <emphasis role = "italic">"There is no session"</emphasis> can be solved by making a connection to VISHNU using 
+     <para> The <emphasis role = "italic">"There is no session"</emphasis> error can be solved by making a connection to VISHNU using 
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
   </section>
@@ -323,3 +320,4 @@ same conditions as regards security.</para>
  <!-- PART 1 : VISHNU Presentation -->
   
 </book>
+
