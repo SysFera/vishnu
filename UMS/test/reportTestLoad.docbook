@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="">
+<info>
+    <title>VISHNU - UMS - Load test results</title>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>08/03/2011</date>
+        <authorinitials>D. Traore</authorinitials>
+        <revdescription>
+          <para>Deliverable version</para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </info>
+   <para>
+
+     <informaltable frame="all">
+         <tgroup cols="4">
+       <tbody><row>
+               <entry>
+                  <para>Test type</para>
+               </entry>
+               <entry>
+                  <para>Load Test</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Database used </para>
+               </entry>
+               <entry>
+                  <para>PostgreSQL 8.4</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Author of the test code</para>
+               </entry>
+               <entry>
+                  <para>D. Traore</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Author of the report</para>
+               </entry>
+               <entry>
+                  <para>D. Traore</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>OS used to test</para>
+               </entry>
+               <entry>
+                  <para>Ubuntu 10.04</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Cmake </para>
+               </entry>
+               <entry>
+                  <para>V2.6</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>gcc</para>
+               </entry>
+               <entry>
+                  <para>V4.3.3</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>DIET</para>
+               </entry>
+               <entry>
+                  <para>V2.6.1</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry/>
+               <entry/>
+               <entry/>
+            </row>
+            <row>
+               <entry/>
+               <entry/>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Date</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>Results</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.1-connect</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>connect</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.1-listSessions</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>listSessions</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.1-listHistoryCmd</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>listHistoryCmd</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.1-listUsers</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>listUsers</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.1-listMachines</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>listMachines</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.1-listOptions</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Simultaneous launch of 100 commands</para>
+               </entry>
+               <entry>
+                  <para>listOptions</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.2-connect</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Add of 1000 users</para>
+               </entry>
+               <entry>
+                  <para>addUser</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.3-connect</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Configuration of 10 machines</para>
+               </entry>
+               <entry>
+                  <para>addMachine</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>LOAD-2.4-connect</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>Configuration of 1000 machines</para>
+               </entry>
+               <entry>
+                  <para>addMachine</para>
+               </entry>
+               <entry>
+                  <para>normal end of all commands</para>
+               </entry>
+            </row></tbody>
+      </tgroup>
+      </informaltable>
+    </para>
+   <para/>
+</article>
