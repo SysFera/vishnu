@@ -110,13 +110,15 @@ int main (int ac, char* av[]){
 
   }// End of try bloc
 
+
   catch(po::required_option& e){// a required parameter is missing
 
     usage(*opt,"[options] userId ",requiredParamMsg);
     
     return CLI_ERROR_MISSING_PARAMETER;
   }
-  
+  // {{RELAX<CODEREDUCER> The error handling is the same in all command 
+
   catch(po::error& e){ // catch all other bad parameter errors
 
     errorUsage(av[0], e.what());
@@ -149,8 +151,10 @@ int main (int ac, char* av[]){
     
     return CLI_ERROR_RUNTIME;
   }
-
+  
   return 0;
+
+// }}RELAX<CODEREDUCER>
 
 }// end of main
 

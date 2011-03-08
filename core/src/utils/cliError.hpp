@@ -1,5 +1,5 @@
 /**
- * \file errorCli.hpp
+ * \file cliError.hpp
  * \brief This file contains the definition of the 
  * error codes and messages used in the command line interface
  */

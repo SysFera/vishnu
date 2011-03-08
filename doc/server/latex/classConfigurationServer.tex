@@ -1,0 +1,210 @@
+\hypertarget{classConfigurationServer}{
+\section{ConfigurationServer Class Reference}
+\label{classConfigurationServer}\index{ConfigurationServer@{ConfigurationServer}}
+}
+
+
+\hyperlink{classConfigurationServer}{ConfigurationServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$ConfigurationServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classConfigurationServer_a56576161624c4cb62b332079efc733b9}{ConfigurationServer} (\hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classConfigurationServer_a0d37dc5d1d5a5e865f2a28b83fa60840}{ConfigurationServer} (UMS\_\-Data::Configuration $\ast$\&configuration, \hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classConfigurationServer_a7d414b228146e93359137729e0dc7c08}{save} ()
+\begin{DoxyCompactList}\small\item\em Function to save a VISHNU configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{classConfigurationServer_afc429d2da8da6523dd5e61ee91fc087c}{restore} ()
+\begin{DoxyCompactList}\small\item\em Function to restore a VISHNU configuration. \item\end{DoxyCompactList}\item 
+\hypertarget{classConfigurationServer_af1c4ad2e0b6be6c2d44beaffe0eb9ec8}{
+\hyperlink{classConfigurationServer_af1c4ad2e0b6be6c2d44beaffe0eb9ec8}{$\sim$ConfigurationServer} ()}
+\label{classConfigurationServer_af1c4ad2e0b6be6c2d44beaffe0eb9ec8}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::Configuration $\ast$ \hyperlink{classConfigurationServer_ae1ce593072e5a6828128c5c80758604c}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get \hyperlink{classConfiguration}{Configuration} data structure. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std::string \hyperlink{classConfigurationServer_a500cedb52aeaa3eb1b1f308783380375}{userToSql} (UMS\_\-Data::User\_\-ptr user)
+\begin{DoxyCompactList}\small\item\em Function to get the sql code of users from a VISHNU configuration. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classConfigurationServer_a4bafc7113ec51d2e371a9af35881967b}{machineToSql} (UMS\_\-Data::Machine\_\-ptr machine)
+\begin{DoxyCompactList}\small\item\em Function to get the sql code of machines from a VISHNU configuration. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classConfigurationServer_a10dc6a2581fce8e24144f9f49e08d58f}{machineDescToSql} (UMS\_\-Data::Machine\_\-ptr machine)
+\begin{DoxyCompactList}\small\item\em Function to get the sql code of machines description from a VISHNU configuration. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classConfigurationServer_aca605c70418f29ec829030ed12406368}{
+UMS\_\-Data::Configuration $\ast$ \hyperlink{classConfigurationServer_aca605c70418f29ec829030ed12406368}{mconfiguration}}
+\label{classConfigurationServer_aca605c70418f29ec829030ed12406368}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classConfiguration}{Configuration} data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classConfigurationServer_a6248d4b95b441e19a1d31ae881b2d368}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classConfigurationServer_a6248d4b95b441e19a1d31ae881b2d368}{msessionServer}}
+\label{classConfigurationServer_a6248d4b95b441e19a1d31ae881b2d368}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates session data. \item\end{DoxyCompactList}\item 
+\hypertarget{classConfigurationServer_a8b49b5c9d7ce0a2d50bd51995bdbadd4}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classConfigurationServer_a8b49b5c9d7ce0a2d50bd51995bdbadd4}{mdatabaseVishnu}}
+\label{classConfigurationServer_a8b49b5c9d7ce0a2d50bd51995bdbadd4}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classConfigurationServer}{ConfigurationServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classConfigurationServer_a56576161624c4cb62b332079efc733b9}{
+\index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
+\index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{ConfigurationServer}]{\setlength{\rightskip}{0pt plus 5cm}ConfigurationServer::ConfigurationServer (
+\begin{DoxyParamCaption}
+\item[{{\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classConfigurationServer_a56576161624c4cb62b332079efc733b9}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+\hypertarget{classConfigurationServer_a0d37dc5d1d5a5e865f2a28b83fa60840}{
+\index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
+\index{ConfigurationServer@{ConfigurationServer}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{ConfigurationServer}]{\setlength{\rightskip}{0pt plus 5cm}ConfigurationServer::ConfigurationServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::Configuration $\ast$\&}]{ configuration, }
+\item[{{\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classConfigurationServer_a0d37dc5d1d5a5e865f2a28b83fa60840}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em configuration}]The \hyperlink{classConfiguration}{Configuration} data structure \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classConfigurationServer_ae1ce593072e5a6828128c5c80758604c}{
+\index{ConfigurationServer@{ConfigurationServer}!getData@{getData}}
+\index{getData@{getData}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::Configuration $\ast$ ConfigurationServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classConfigurationServer_ae1ce593072e5a6828128c5c80758604c}
+
+
+Function to get \hyperlink{classConfiguration}{Configuration} data structure. 
+
+\begin{DoxyReturn}{Returns}
+The LocalAccount data structure 
+\end{DoxyReturn}
+\hypertarget{classConfigurationServer_a10dc6a2581fce8e24144f9f49e08d58f}{
+\index{ConfigurationServer@{ConfigurationServer}!machineDescToSql@{machineDescToSql}}
+\index{machineDescToSql@{machineDescToSql}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{machineDescToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::machineDescToSql (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::Machine\_\-ptr}]{ machine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classConfigurationServer_a10dc6a2581fce8e24144f9f49e08d58f}
+
+
+Function to get the sql code of machines description from a VISHNU configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em machine}]The machine object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sql code containing the sql code of machines description 
+\end{DoxyReturn}
+\hypertarget{classConfigurationServer_a4bafc7113ec51d2e371a9af35881967b}{
+\index{ConfigurationServer@{ConfigurationServer}!machineToSql@{machineToSql}}
+\index{machineToSql@{machineToSql}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{machineToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::machineToSql (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::Machine\_\-ptr}]{ machine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classConfigurationServer_a4bafc7113ec51d2e371a9af35881967b}
+
+
+Function to get the sql code of machines from a VISHNU configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em machine}]The machine object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sql code containing the sql code of machines 
+\end{DoxyReturn}
+\hypertarget{classConfigurationServer_afc429d2da8da6523dd5e61ee91fc087c}{
+\index{ConfigurationServer@{ConfigurationServer}!restore@{restore}}
+\index{restore@{restore}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}int ConfigurationServer::restore (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classConfigurationServer_afc429d2da8da6523dd5e61ee91fc087c}
+
+
+Function to restore a VISHNU configuration. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classConfigurationServer_a7d414b228146e93359137729e0dc7c08}{
+\index{ConfigurationServer@{ConfigurationServer}!save@{save}}
+\index{save@{save}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}int ConfigurationServer::save (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classConfigurationServer_a7d414b228146e93359137729e0dc7c08}
+
+
+Function to save a VISHNU configuration. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classConfigurationServer_a500cedb52aeaa3eb1b1f308783380375}{
+\index{ConfigurationServer@{ConfigurationServer}!userToSql@{userToSql}}
+\index{userToSql@{userToSql}!ConfigurationServer@{ConfigurationServer}}
+\subsubsection[{userToSql}]{\setlength{\rightskip}{0pt plus 5cm}std::string ConfigurationServer::userToSql (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::User\_\-ptr}]{ user}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classConfigurationServer_a500cedb52aeaa3eb1b1f308783380375}
+
+
+Function to get the sql code of users from a VISHNU configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The user object \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sql code containing the sql code of users 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{ConfigurationServer_8hpp}{ConfigurationServer.hpp}\end{DoxyCompactItemize}
