@@ -109,7 +109,7 @@ int main (int ac, char* av[]){
       cout << lsMachine << endl;
     }
     else {
-      for(int i = 0; i < lsMachine.getMachines().size(); i++) {
+      for(unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
         cout << lsMachine.getMachines().get(i) << endl;
       }
     }

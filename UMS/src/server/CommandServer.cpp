@@ -25,7 +25,7 @@ CommandServer::CommandServer(SessionServer session):msessionServer(session) {
 * \param session The object which encapsulates session data
 */
 CommandServer::CommandServer(std::string cmd, SessionServer session):
-mcommand(cmd), msessionServer(session) {
+  msessionServer(session), mcommand(cmd) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }

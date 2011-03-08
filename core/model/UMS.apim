@@ -163,11 +163,11 @@
       <usedServices href="UMS_Internal.apim#//@modules.0/@services.22"/>
       <details key="description" value="Options in VISHNU corresponds to parameters of some VISHNU commands &#xA;(e.g. the close policy for vishnu_connect)&#xA;that can be preset in the user configuration stored by the VISHNU system. This&#xA;command is used to set the value of an option for the current user (the user who&#xA;opened the session)."/>
     </services>
-    <services name="vishnuInitialize" description="initializes VISHNU" isCommand="false" resultCodes="VISHNU_OK ERRCODE_TEMPORARY_PASSWORD">
+    <services name="vishnuInitialize" description="initializes VISHNU" isCommand="false" resultCodes="VISHNU_OK ERRCODE_DIET">
       <ports name="configPath" dataType="//@typeList/@types.0" description="configPath is the path of VISHNU configuration file" shortOptionLetter="" envOption="VISHNU_CONFIG_FILE"/>
       <details key="description" value="Calling this function is required before calling any function of the VISHNU API. It initializes the connection to the VISHNU infrastructure."/>
     </services>
-    <services name="vishnuFinalize" description="allows a user to go out properly from VISHNU" isCommand="false" resultCodes="VISHNU_OK">
+    <services name="vishnuFinalize" description="allows a user to go out properly from VISHNU" isCommand="false" resultCodes="VISHNU_OK ERRCODE_DIET">
       <details key="description" value="Calling this function is necessary to free ressources consumed due to the VISHNU API"/>
     </services>
     <services name="restore" description="initializes VISHNU environment for tests" isCommand="false" isFunction="false" resultCodes="VISHNU_OK ERRCODE_ROOT_USER_ONLY">
