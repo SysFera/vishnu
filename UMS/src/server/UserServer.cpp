@@ -550,11 +550,7 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
   std::string contentFileName = "/tmp/";
   contentFileName.append("vishnu_email_");
   //To generate the filename
-  std::string generatedString = generatePassword(user.getFirstname(), user.getLastname());
-
-  //To remove point on the filename
-  std::replace (generatedString.begin(), generatedString.end(),'.', 'P');
-  contentFileName.append(generatedString);
+  contentFileName.append(user.getUserId());
 
   try {
     std::ofstream of(contentFileName.c_str());
