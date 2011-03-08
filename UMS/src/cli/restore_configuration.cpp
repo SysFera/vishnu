@@ -63,8 +63,7 @@ int main (int ac, char* av[]){
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
 
-            return  CLI_ERROR_DIET ;
-
+      return  CLI_ERROR_DIET ;
 
     }
 
