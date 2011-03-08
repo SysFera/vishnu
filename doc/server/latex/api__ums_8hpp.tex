@@ -1,0 +1,98 @@
+\hypertarget{api__ums_8hpp}{
+\section{UMS/src/api/api\_\-ums.hpp File Reference}
+\label{api__ums_8hpp}\index{UMS/src/api/api\_\-ums.hpp@{UMS/src/api/api\_\-ums.hpp}}
+}
+
+
+This file contains the VISHNU api functions.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include \char`\"{}SessionProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}MachineProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}LocalAccountProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ConfigurationProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}OptionValueProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}QueryProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UtilsProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UserException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}utilVishnu.hpp\char`\"{}}\par
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacevishnu}{vishnu}
+
+
+\begin{DoxyCompactList}\small\item\em This naspace contains utils functions of the vishnu system. \item\end{DoxyCompactList}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{vishnu::connect} (const std::string \&userId, const std::string \&password, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ae120231ba899d68724dc972374206745}{vishnu::reconnect} (const std::string \&userId, const std::string \&password, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to return the sessionKey of a session in which the user was disconnected previously without closing it. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a925f5cdd60d012ebd98cd328ed60d398}{vishnu::close} (const std::string \&sessionKey)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to close the session identfied by the session key. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac7cd83030f8f6e990001b238a9f50640}{vishnu::addUser} (const std::string \&sessionKey, UMS\_\-Data::User \&newUser)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to add a new user in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1446b24fda1ed0ca910686635b6bb956}{vishnu::updateUser} (const std::string \&sessionKey, const UMS\_\-Data::User \&user)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to update the user information except the userId and the password. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6c83f6b72fdb7ac3b240f14a19f11786}{vishnu::deleteUser} (const std::string \&sessionKey, const std::string \&userId)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to remove a user from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a24ec95c164ce8905b8eccf98e9bb633e}{vishnu::changePassword} (const std::string \&userId, const std::string \&password, const std::string \&passwordNew)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to change the password. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a11f16b7501b8814c491d13431409051c}{vishnu::resetPassword} (const std::string \&sessionKey, const std::string \&userId, std::string \&tmpPassword)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to reset the password of a user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_aca4f5c2716ce1dd8ddc15a2554c95004}{vishnu::addMachine} (const std::string \&sessionKey, UMS\_\-Data::Machine \&newMachine)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to add a new machine in VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a1f8fe4e8fa5956be1f264e9a5f78c9f1}{vishnu::updateMachine} (const std::string \&sessionKey, const UMS\_\-Data::Machine \&machine)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to update machine description. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_abdd14f47db308fc03655149ac7d93199}{vishnu::deleteMachine} (const std::string \&sessionKey, const std::string \&machineId)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to remove a machine from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ab54431ee8c1616ae24b071e9146d39e9}{vishnu::addLocalAccount} (const std::string \&sessionKey, const UMS\_\-Data::LocalAccount \&newLocalAccount, std::string \&sshPublicKey)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to add a new local user configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ac51341ab58c1ed606b254262fbc053dc}{vishnu::updateLocalAccount} (const std::string \&sessionKey, const UMS\_\-Data::LocalAccount \&localAccount)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to update a local user configuration. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a2b51028779571b21c45a2a75cd362c59}{vishnu::deleteLocalAccount} (const std::string \&sessionKey, const std::string \&userId, const std::string \&machineId)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to removes a local user configuration (for a given user on a given machine) from VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a2ecc54aee4da202b1caa94dfa6a43d17}{vishnu::saveConfiguration} (const std::string \&sessionKey, UMS\_\-Data::Configuration \&config)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to save the configuration of VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a60ecb3b47532d0df7b0d44fdf43f98f4}{vishnu::restoreConfiguration} (const std::string \&sessionKey, const std::string \&filePath)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to restore the configuration of VISHNU. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a5b88fcd36b780df012b2529fe3526ca1}{vishnu::configureOption} (const std::string \&sessionKey, const UMS\_\-Data::OptionValue \&optionValue)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to configure an option of the user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a05878cbc7dbb3f5da87dbc32dd25ab78}{vishnu::configureDefaultOption} (const std::string \&sessionKey, const UMS\_\-Data::OptionValue \&optionValue)  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to configure a default option value. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}{vishnu::listSessions} (const std::string \&sessionKey, UMS\_\-Data::ListSessions \&listSession, const UMS\_\-Data::ListSessionOptions \&options=UMS\_\-Data::ListSessionOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list all sessions of the user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a05618a81d403ef5c11e014fcecd7ba00}{vishnu::listLocalAccount} (const std::string \&sessionKey, UMS\_\-Data::ListLocalAccounts \&listLocalAcc, const UMS\_\-Data::ListLocalAccOptions \&options=UMS\_\-Data::ListLocalAccOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the local user configurations. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a59e26ccbe8510d774528c86511f7476b}{vishnu::listMachine} (const std::string \&sessionKey, UMS\_\-Data::ListMachines \&listMachine, const UMS\_\-Data::ListMachineOptions \&options=UMS\_\-Data::ListMachineOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the machines in which the local user configurations are defined for the given user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a8576a50af31abe3869a61bec780aa5ef}{vishnu::listHistoryCmd} (const std::string \&sessionKey, UMS\_\-Data::ListCommands \&listCommands, const UMS\_\-Data::ListCmdOptions \&options=UMS\_\-Data::ListCmdOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the commands. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a53106e021a6e98049b41106c12356e28}{vishnu::listOptions} (const std::string \&sessionKey, UMS\_\-Data::ListOptionsValues \&listOptValues, const UMS\_\-Data::ListOptOptions \&options=UMS\_\-Data::ListOptOptions())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list the options of the user. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6a0175686b0d2aff434015fc61c62ce6}{vishnu::listUsers} (const std::string \&sessionKey, UMS\_\-Data::ListUsers \&listUsers, const std::string \&userIdOption=std::string())  throw (UserException)
+\begin{DoxyCompactList}\small\item\em Function to list VISHNU users. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_adc7892040980c12dd70ed3228f350313}{vishnu::vishnuInitialize} (char $\ast$cfg, int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Function to initialize the SYSFERA-\/DS configuration. \item\end{DoxyCompactList}\item 
+\hypertarget{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}{
+void \hyperlink{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}{vishnu::vishnuFinalize} ()}
+\label{namespacevishnu_a5ef439295f52f8055a0771ae9f257b68}
+
+\begin{DoxyCompactList}\small\item\em Function to finalize. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ab1b9efc3bdb39619f591a2eaa96baac9}{vishnu::restore} (const std::string \&filePath)
+\begin{DoxyCompactList}\small\item\em Function to initialize the data base. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains the VISHNU api functions. \begin{DoxyAuthor}{Author}
+Daouda Traore (\href{mailto:daouda.traore@sysfera.com}{\tt daouda.traore@sysfera.com}) and Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+February 2011 
+\end{DoxyDate}

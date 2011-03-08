@@ -1,0 +1,149 @@
+\hypertarget{classCommandServer}{
+\section{CommandServer Class Reference}
+\label{classCommandServer}\index{CommandServer@{CommandServer}}
+}
+
+
+\hyperlink{classCommandServer}{CommandServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$CommandServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCommandServer_aa15f07a3768c8b15ace8b470d3ff9b34}{CommandServer} (\hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classCommandServer_a1ed27508bf43e78ab53b9c8d1d6abcd7}{CommandServer} (std::string cmd, \hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classCommandServer_a577cacdfa0a6542d39b8f399ff575ecf}{getCommand} ()
+\begin{DoxyCompactList}\small\item\em Function to get the command description. \item\end{DoxyCompactList}\item 
+int \hyperlink{classCommandServer_a365b35bdba349be4d2b33a9b4e3001ba}{record} (\hyperlink{CommandServer_8hpp_a7ae3a49efad67c34030ecbed1d947844}{CmdType} cmdType, std::string startTime=\char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}, std::string endTime=\char`\"{}CURRENT\_\-TIMESTAMP\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to record the command on the database. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classCommandServer_a8561a54ddb732b7d13f1ddde8bacde53}{isRunning} ()
+\begin{DoxyCompactList}\small\item\em Function to check if commands are running. \item\end{DoxyCompactList}\item 
+\hypertarget{classCommandServer_a89f1d55bb111f7954d022e0c63d3b87f}{
+\hyperlink{classCommandServer_a89f1d55bb111f7954d022e0c63d3b87f}{$\sim$CommandServer} ()}
+\label{classCommandServer_a89f1d55bb111f7954d022e0c63d3b87f}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classCommandServer_a509c4c4d806479c96adb21c173dfea17}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classCommandServer_a509c4c4d806479c96adb21c173dfea17}{mdatabaseVishnu}}
+\label{classCommandServer_a509c4c4d806479c96adb21c173dfea17}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classCommandServer_aa325e797756bd9ec80e216788c10aa0f}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classCommandServer_aa325e797756bd9ec80e216788c10aa0f}{msessionServer}}
+\label{classCommandServer_aa325e797756bd9ec80e216788c10aa0f}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates session data. \item\end{DoxyCompactList}\item 
+\hypertarget{classCommandServer_a98ec7cb8ee6d06037e2c52a212e2bf77}{
+std::string \hyperlink{classCommandServer_a98ec7cb8ee6d06037e2c52a212e2bf77}{mcommand}}
+\label{classCommandServer_a98ec7cb8ee6d06037e2c52a212e2bf77}
+
+\begin{DoxyCompactList}\small\item\em The command launched by the user. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classCommandServer}{CommandServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classCommandServer_aa15f07a3768c8b15ace8b470d3ff9b34}{
+\index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
+\index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
+\subsubsection[{CommandServer}]{\setlength{\rightskip}{0pt plus 5cm}CommandServer::CommandServer (
+\begin{DoxyParamCaption}
+\item[{{\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classCommandServer_aa15f07a3768c8b15ace8b470d3ff9b34}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+\hypertarget{classCommandServer_a1ed27508bf43e78ab53b9c8d1d6abcd7}{
+\index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
+\index{CommandServer@{CommandServer}!CommandServer@{CommandServer}}
+\subsubsection[{CommandServer}]{\setlength{\rightskip}{0pt plus 5cm}CommandServer::CommandServer (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ cmd, }
+\item[{{\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classCommandServer_a1ed27508bf43e78ab53b9c8d1d6abcd7}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cmd}]The cmd launched by the user \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classCommandServer_a577cacdfa0a6542d39b8f399ff575ecf}{
+\index{CommandServer@{CommandServer}!getCommand@{getCommand}}
+\index{getCommand@{getCommand}!CommandServer@{CommandServer}}
+\subsubsection[{getCommand}]{\setlength{\rightskip}{0pt plus 5cm}std::string CommandServer::getCommand (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classCommandServer_a577cacdfa0a6542d39b8f399ff575ecf}
+
+
+Function to get the command description. 
+
+\begin{DoxyReturn}{Returns}
+the current command 
+\end{DoxyReturn}
+\hypertarget{classCommandServer_a8561a54ddb732b7d13f1ddde8bacde53}{
+\index{CommandServer@{CommandServer}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!CommandServer@{CommandServer}}
+\subsubsection[{isRunning}]{\setlength{\rightskip}{0pt plus 5cm}bool CommandServer::isRunning (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classCommandServer_a8561a54ddb732b7d13f1ddde8bacde53}
+
+
+Function to check if commands are running. 
+
+\begin{DoxyReturn}{Returns}
+true if commands are running else false 
+\end{DoxyReturn}
+\hypertarget{classCommandServer_a365b35bdba349be4d2b33a9b4e3001ba}{
+\index{CommandServer@{CommandServer}!record@{record}}
+\index{record@{record}!CommandServer@{CommandServer}}
+\subsubsection[{record}]{\setlength{\rightskip}{0pt plus 5cm}int CommandServer::record (
+\begin{DoxyParamCaption}
+\item[{{\bf CmdType}}]{ cmdType, }
+\item[{std::string}]{ startTime = {\ttfamily \char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}}, }
+\item[{std::string}]{ endTime = {\ttfamily \char`\"{}CURRENT\_\-TIMESTAMP\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classCommandServer_a365b35bdba349be4d2b33a9b4e3001ba}
+
+
+Function to record the command on the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cmdType}]The type of the command (UMS, TMS, FMS, IMS) \item[{\em startTime}]The start time of command \item[{\em endTime}]The end time of command \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{CommandServer_8hpp}{CommandServer.hpp}\end{DoxyCompactItemize}

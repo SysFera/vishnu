@@ -1,0 +1,589 @@
+\hypertarget{internalApi_8hpp}{
+\section{UMS/src/sed/internalApi.hpp File Reference}
+\label{internalApi_8hpp}\index{UMS/src/sed/internalApi.hpp@{UMS/src/sed/internalApi.hpp}}
+}
+
+
+This file presents the internal api of UMS.  
+
+
+{\ttfamily \#include $<$exception$>$}\par
+{\ttfamily \#include \char`\"{}VishnuException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}SystemException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}DIET\_\-server.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UserServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}SessionServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}MachineServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}LocalAccountServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ConfigurationServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}QueryServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ListUsersServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ListMachinesServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ListLocalAccountsServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ListOptionsValuesServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ListCommandsServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}ListSessionsServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}CommandServer.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}UMSMapper.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}MapperRegistry.hpp\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{internalApi_8hpp_a4eed09cc6ee0169aad5e92c1b9c248ae}{solveSessionConnect} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service sessionConnect. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ad2fafcac47075a5e57d60ea3d9a03b82}{solveSessionReconnect} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service sessionReconnect. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ade4ac8de35f021b78941ce3040a65f1b}{solveSessionClose} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service sessionClose. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a99bc9c4a40258861b7804006e27fe815}{solveUserCreate} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service userCreate. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a88bc326127f6c1905b030a701bf49884}{solveUserUpdate} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveUserUpdate. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ac44fb636110b1ec735a35984062c491c}{solveUserDelete} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveUserDelete. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a8585672bee81165c284fc19cf649c4f3}{solveUserPasswordChange} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveUserPasswordChange. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a1eabb5a6466f3669ddc709eb16bce81a}{solveUserPasswordReset} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveUserPasswordReset. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ab0b97973b147bf04860724a2009a29c3}{solveMachineCreate} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveMachineCreate. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_aae4f2d55eaad41444c1c9d268f27181d}{solveMachineUpdate} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveMachineUpdate. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ac2d9e21c24a26157aa68ad460d182372}{solveMachineDelete} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveMachineDelete. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a573139c0c6b65353a4f8df95130e979b}{solveLocalAccountCreate} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveLocalAccountCreate. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a13fbde28bb58185e655b0eacbb064c1f}{solveLocalAccountUpdate} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveLocalAccountUpdate. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ab1b7142361d9e11775921ec1759a36a7}{solveLocalAccountDelete} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveLocalAccountDelete. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a2365d3c2ea07505af0ec18e78d92e656}{solveConfigurationSave} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveConfigurationSave. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ad37988e060094d37a101ff22c876b30c}{solveConfigurationRestore} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveConfigurationRestore. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_ae6f217b77e3a9e22e3a680d59d068ae1}{solveOptionValueSet} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveOptionValueSet. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_aec51468a06c25d9a8da6bc318b2fa339}{solveOptionValueSetDefault} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveOptionValueSetDefault. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$class QueryParameters , class List , class QueryType $>$ }\\int \hyperlink{internalApi_8hpp_ad02f5cf6a8cb234a05e8882088659815}{solveGenerique} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveGenerique. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a1c9b48922d3b92eb73c1326d94206802}{solveListUsers} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveListUsers. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a5619e44e1ea7b42f44175219b50c72e3}{solveListMachines} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveListMachines. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a2fd204430cbabb5ee6b26ad5c0ed4e86}{solveListLocalAccount} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveListLocalAccount. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a5ecd28ec79d8142e5c9bbd341df914e8}{solveListOptions} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveListOptions. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a4578276472c18c140b711de0c0adacaf}{solveListHistoryCmd} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveListHistoryCmd. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a7e420644f7e3562cc789a79ad0065dff}{solveListSessions} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveListLocalAccount. \item\end{DoxyCompactList}\item 
+int \hyperlink{internalApi_8hpp_a53d7f3609dc67372f518a21e8ab26545}{solveRestore} (diet\_\-profile\_\-t $\ast$pb)
+\begin{DoxyCompactList}\small\item\em Function to solve the service solveRestore. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file presents the internal api of UMS. \begin{DoxyAuthor}{Author}
+Eugène PAMBA CAPO-\/CHICHI (\href{mailto:eugene.capochichi@sysfera.com}{\tt eugene.capochichi@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+31/01/2001 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{internalApi_8hpp_ad37988e060094d37a101ff22c876b30c}{
+\index{internalApi.hpp@{internalApi.hpp}!solveConfigurationRestore@{solveConfigurationRestore}}
+\index{solveConfigurationRestore@{solveConfigurationRestore}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveConfigurationRestore}]{\setlength{\rightskip}{0pt plus 5cm}int solveConfigurationRestore (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ad37988e060094d37a101ff22c876b30c}
+
+
+Function to solve the service solveConfigurationRestore. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a2365d3c2ea07505af0ec18e78d92e656}{
+\index{internalApi.hpp@{internalApi.hpp}!solveConfigurationSave@{solveConfigurationSave}}
+\index{solveConfigurationSave@{solveConfigurationSave}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveConfigurationSave}]{\setlength{\rightskip}{0pt plus 5cm}int solveConfigurationSave (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a2365d3c2ea07505af0ec18e78d92e656}
+
+
+Function to solve the service solveConfigurationSave. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ad02f5cf6a8cb234a05e8882088659815}{
+\index{internalApi.hpp@{internalApi.hpp}!solveGenerique@{solveGenerique}}
+\index{solveGenerique@{solveGenerique}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveGenerique}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters , class List , class QueryType $>$ int solveGenerique (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ad02f5cf6a8cb234a05e8882088659815}
+
+
+Function to solve the service solveGenerique. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a4578276472c18c140b711de0c0adacaf}{
+\index{internalApi.hpp@{internalApi.hpp}!solveListHistoryCmd@{solveListHistoryCmd}}
+\index{solveListHistoryCmd@{solveListHistoryCmd}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveListHistoryCmd}]{\setlength{\rightskip}{0pt plus 5cm}int solveListHistoryCmd (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a4578276472c18c140b711de0c0adacaf}
+
+
+Function to solve the service solveListHistoryCmd. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a2fd204430cbabb5ee6b26ad5c0ed4e86}{
+\index{internalApi.hpp@{internalApi.hpp}!solveListLocalAccount@{solveListLocalAccount}}
+\index{solveListLocalAccount@{solveListLocalAccount}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveListLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int solveListLocalAccount (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a2fd204430cbabb5ee6b26ad5c0ed4e86}
+
+
+Function to solve the service solveListLocalAccount. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a5619e44e1ea7b42f44175219b50c72e3}{
+\index{internalApi.hpp@{internalApi.hpp}!solveListMachines@{solveListMachines}}
+\index{solveListMachines@{solveListMachines}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveListMachines}]{\setlength{\rightskip}{0pt plus 5cm}int solveListMachines (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a5619e44e1ea7b42f44175219b50c72e3}
+
+
+Function to solve the service solveListMachines. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a5ecd28ec79d8142e5c9bbd341df914e8}{
+\index{internalApi.hpp@{internalApi.hpp}!solveListOptions@{solveListOptions}}
+\index{solveListOptions@{solveListOptions}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveListOptions}]{\setlength{\rightskip}{0pt plus 5cm}int solveListOptions (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a5ecd28ec79d8142e5c9bbd341df914e8}
+
+
+Function to solve the service solveListOptions. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a7e420644f7e3562cc789a79ad0065dff}{
+\index{internalApi.hpp@{internalApi.hpp}!solveListSessions@{solveListSessions}}
+\index{solveListSessions@{solveListSessions}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveListSessions}]{\setlength{\rightskip}{0pt plus 5cm}int solveListSessions (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a7e420644f7e3562cc789a79ad0065dff}
+
+
+Function to solve the service solveListLocalAccount. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a1c9b48922d3b92eb73c1326d94206802}{
+\index{internalApi.hpp@{internalApi.hpp}!solveListUsers@{solveListUsers}}
+\index{solveListUsers@{solveListUsers}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveListUsers}]{\setlength{\rightskip}{0pt plus 5cm}int solveListUsers (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a1c9b48922d3b92eb73c1326d94206802}
+
+
+Function to solve the service solveListUsers. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a573139c0c6b65353a4f8df95130e979b}{
+\index{internalApi.hpp@{internalApi.hpp}!solveLocalAccountCreate@{solveLocalAccountCreate}}
+\index{solveLocalAccountCreate@{solveLocalAccountCreate}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveLocalAccountCreate}]{\setlength{\rightskip}{0pt plus 5cm}int solveLocalAccountCreate (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a573139c0c6b65353a4f8df95130e979b}
+
+
+Function to solve the service solveLocalAccountCreate. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ab1b7142361d9e11775921ec1759a36a7}{
+\index{internalApi.hpp@{internalApi.hpp}!solveLocalAccountDelete@{solveLocalAccountDelete}}
+\index{solveLocalAccountDelete@{solveLocalAccountDelete}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveLocalAccountDelete}]{\setlength{\rightskip}{0pt plus 5cm}int solveLocalAccountDelete (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ab1b7142361d9e11775921ec1759a36a7}
+
+
+Function to solve the service solveLocalAccountDelete. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a13fbde28bb58185e655b0eacbb064c1f}{
+\index{internalApi.hpp@{internalApi.hpp}!solveLocalAccountUpdate@{solveLocalAccountUpdate}}
+\index{solveLocalAccountUpdate@{solveLocalAccountUpdate}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveLocalAccountUpdate}]{\setlength{\rightskip}{0pt plus 5cm}int solveLocalAccountUpdate (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a13fbde28bb58185e655b0eacbb064c1f}
+
+
+Function to solve the service solveLocalAccountUpdate. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ab0b97973b147bf04860724a2009a29c3}{
+\index{internalApi.hpp@{internalApi.hpp}!solveMachineCreate@{solveMachineCreate}}
+\index{solveMachineCreate@{solveMachineCreate}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveMachineCreate}]{\setlength{\rightskip}{0pt plus 5cm}int solveMachineCreate (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ab0b97973b147bf04860724a2009a29c3}
+
+
+Function to solve the service solveMachineCreate. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ac2d9e21c24a26157aa68ad460d182372}{
+\index{internalApi.hpp@{internalApi.hpp}!solveMachineDelete@{solveMachineDelete}}
+\index{solveMachineDelete@{solveMachineDelete}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveMachineDelete}]{\setlength{\rightskip}{0pt plus 5cm}int solveMachineDelete (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ac2d9e21c24a26157aa68ad460d182372}
+
+
+Function to solve the service solveMachineDelete. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_aae4f2d55eaad41444c1c9d268f27181d}{
+\index{internalApi.hpp@{internalApi.hpp}!solveMachineUpdate@{solveMachineUpdate}}
+\index{solveMachineUpdate@{solveMachineUpdate}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveMachineUpdate}]{\setlength{\rightskip}{0pt plus 5cm}int solveMachineUpdate (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_aae4f2d55eaad41444c1c9d268f27181d}
+
+
+Function to solve the service solveMachineUpdate. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ae6f217b77e3a9e22e3a680d59d068ae1}{
+\index{internalApi.hpp@{internalApi.hpp}!solveOptionValueSet@{solveOptionValueSet}}
+\index{solveOptionValueSet@{solveOptionValueSet}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveOptionValueSet}]{\setlength{\rightskip}{0pt plus 5cm}int solveOptionValueSet (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ae6f217b77e3a9e22e3a680d59d068ae1}
+
+
+Function to solve the service solveOptionValueSet. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_aec51468a06c25d9a8da6bc318b2fa339}{
+\index{internalApi.hpp@{internalApi.hpp}!solveOptionValueSetDefault@{solveOptionValueSetDefault}}
+\index{solveOptionValueSetDefault@{solveOptionValueSetDefault}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveOptionValueSetDefault}]{\setlength{\rightskip}{0pt plus 5cm}int solveOptionValueSetDefault (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_aec51468a06c25d9a8da6bc318b2fa339}
+
+
+Function to solve the service solveOptionValueSetDefault. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a53d7f3609dc67372f518a21e8ab26545}{
+\index{internalApi.hpp@{internalApi.hpp}!solveRestore@{solveRestore}}
+\index{solveRestore@{solveRestore}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveRestore}]{\setlength{\rightskip}{0pt plus 5cm}int solveRestore (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a53d7f3609dc67372f518a21e8ab26545}
+
+
+Function to solve the service solveRestore. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ade4ac8de35f021b78941ce3040a65f1b}{
+\index{internalApi.hpp@{internalApi.hpp}!solveSessionClose@{solveSessionClose}}
+\index{solveSessionClose@{solveSessionClose}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveSessionClose}]{\setlength{\rightskip}{0pt plus 5cm}int solveSessionClose (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ade4ac8de35f021b78941ce3040a65f1b}
+
+
+Function to solve the service sessionClose. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a4eed09cc6ee0169aad5e92c1b9c248ae}{
+\index{internalApi.hpp@{internalApi.hpp}!solveSessionConnect@{solveSessionConnect}}
+\index{solveSessionConnect@{solveSessionConnect}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveSessionConnect}]{\setlength{\rightskip}{0pt plus 5cm}int solveSessionConnect (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a4eed09cc6ee0169aad5e92c1b9c248ae}
+
+
+Function to solve the service sessionConnect. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ad2fafcac47075a5e57d60ea3d9a03b82}{
+\index{internalApi.hpp@{internalApi.hpp}!solveSessionReconnect@{solveSessionReconnect}}
+\index{solveSessionReconnect@{solveSessionReconnect}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveSessionReconnect}]{\setlength{\rightskip}{0pt plus 5cm}int solveSessionReconnect (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ad2fafcac47075a5e57d60ea3d9a03b82}
+
+
+Function to solve the service sessionReconnect. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a99bc9c4a40258861b7804006e27fe815}{
+\index{internalApi.hpp@{internalApi.hpp}!solveUserCreate@{solveUserCreate}}
+\index{solveUserCreate@{solveUserCreate}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveUserCreate}]{\setlength{\rightskip}{0pt plus 5cm}int solveUserCreate (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a99bc9c4a40258861b7804006e27fe815}
+
+
+Function to solve the service userCreate. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_ac44fb636110b1ec735a35984062c491c}{
+\index{internalApi.hpp@{internalApi.hpp}!solveUserDelete@{solveUserDelete}}
+\index{solveUserDelete@{solveUserDelete}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveUserDelete}]{\setlength{\rightskip}{0pt plus 5cm}int solveUserDelete (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_ac44fb636110b1ec735a35984062c491c}
+
+
+Function to solve the service solveUserDelete. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a8585672bee81165c284fc19cf649c4f3}{
+\index{internalApi.hpp@{internalApi.hpp}!solveUserPasswordChange@{solveUserPasswordChange}}
+\index{solveUserPasswordChange@{solveUserPasswordChange}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveUserPasswordChange}]{\setlength{\rightskip}{0pt plus 5cm}int solveUserPasswordChange (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a8585672bee81165c284fc19cf649c4f3}
+
+
+Function to solve the service solveUserPasswordChange. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a1eabb5a6466f3669ddc709eb16bce81a}{
+\index{internalApi.hpp@{internalApi.hpp}!solveUserPasswordReset@{solveUserPasswordReset}}
+\index{solveUserPasswordReset@{solveUserPasswordReset}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveUserPasswordReset}]{\setlength{\rightskip}{0pt plus 5cm}int solveUserPasswordReset (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a1eabb5a6466f3669ddc709eb16bce81a}
+
+
+Function to solve the service solveUserPasswordReset. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{internalApi_8hpp_a88bc326127f6c1905b030a701bf49884}{
+\index{internalApi.hpp@{internalApi.hpp}!solveUserUpdate@{solveUserUpdate}}
+\index{solveUserUpdate@{solveUserUpdate}!internalApi.hpp@{internalApi.hpp}}
+\subsubsection[{solveUserUpdate}]{\setlength{\rightskip}{0pt plus 5cm}int solveUserUpdate (
+\begin{DoxyParamCaption}
+\item[{diet\_\-profile\_\-t $\ast$}]{ pb}
+\end{DoxyParamCaption}
+)}}
+\label{internalApi_8hpp_a88bc326127f6c1905b030a701bf49884}
+
+
+Function to solve the service solveUserUpdate. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pb}]is a structure which corresponds to the descriptor of a profile \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
