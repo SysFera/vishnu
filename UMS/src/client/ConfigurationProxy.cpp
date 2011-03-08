@@ -17,7 +17,7 @@
  * \brief Constructor, raises an exception on error
  */
 ConfigurationProxy::ConfigurationProxy(const std::string& filePath, const SessionProxy& session):
-  mfilePath(filePath), msessionProxy(session)
+  msessionProxy(session), mfilePath(filePath)
 {
   mconfiguration = NULL;
 }

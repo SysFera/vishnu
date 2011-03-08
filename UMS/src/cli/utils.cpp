@@ -232,7 +232,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   int  status;
   int  closePolicy;
 
-  for(int i = 0; i < listSession.getSessions().size(); i++) {
+  for(unsigned int i = 0; i < listSession.getSessions().size(); i++) {
 
      sessionId = (listSession.getSessions().get(i))->getSessionId();
      maxSessionIdSize = max(maxSessionIdSize, sessionId.size());
@@ -281,7 +281,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   os << endl;
 
 
-  for(int i = 0; i < listSession.getSessions().size(); i++) {
+  for(unsigned int i = 0; i < listSession.getSessions().size(); i++) {
     sessionId = (listSession.getSessions().get(i))->getSessionId();
 
     userId = (listSession.getSessions().get(i))->getUserId();
@@ -382,7 +382,7 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
   std::string machineId;
   std::string acLogin;
 
-  for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
+  for(unsigned int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
 
      userId = (lsLocalAccount.getAccounts().get(i))->getUserId();
      maxUserSize = max(maxUserSize, userId.size());
@@ -402,7 +402,7 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
   os << endl;
 
 
-  for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
+  for(unsigned int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
     userId = (lsLocalAccount.getAccounts().get(i))->getUserId();
     machineId = (lsLocalAccount.getAccounts().get(i))->getMachineId();
     acLogin = (lsLocalAccount.getAccounts().get(i))->getAcLogin();
@@ -467,7 +467,7 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
   std::string site;
   int  status;
 
-  for(int i = 0; i < lsMachine.getMachines().size(); i++) {
+  for(unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
 
      name = (lsMachine.getMachines().get(i))->getName();
      maxNameSize = max(maxNameSize, name.size());
@@ -490,7 +490,7 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
   os << endl;
 
 
-  for(int i = 0; i < lsMachine.getMachines().size(); i++) {
+  for(unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
 
      name = (lsMachine.getMachines().get(i))->getName();
      machineId = (lsMachine.getMachines().get(i))->getMachineId();
@@ -579,7 +579,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
    boost::posix_time::ptime pt;
 
 
-   for(int i = 0; i < lsCommand.getCommands().size(); i++) {
+   for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
 
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      maxCommandIdSize = max(maxCommandIdSize, commandId.size());
@@ -617,7 +617,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
   setFill(maxEndTimeSize, os);
   os << endl;
 
-  for(int i = 0; i < lsCommand.getCommands().size(); i++) {
+  for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
 
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      sessionId = (lsCommand.getCommands().get(i))->getSessionId();
@@ -688,7 +688,7 @@ operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions) {
   size_t maxNameSize = std::string("Name").size();
   size_t maxValueSize = std::string("Value").size();
 
-  for(int i = 0; i < lsOptions.getOptionValues().size(); i++) {
+  for(unsigned int i = 0; i < lsOptions.getOptionValues().size(); i++) {
 
      name = (lsOptions.getOptionValues().get(i))->getOptionName();
      maxNameSize = max(maxNameSize, name.size());
@@ -704,7 +704,7 @@ operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions) {
   setFill(maxValueSize, os);
   os << endl;
 
-  for(int i = 0; i < lsOptions.getOptionValues().size(); i++) {
+  for(unsigned int i = 0; i < lsOptions.getOptionValues().size(); i++) {
 
      name = (lsOptions.getOptionValues().get(i))->getOptionName();
      value = (lsOptions.getOptionValues().get(i))->getValue();
@@ -768,7 +768,7 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
   size_t maxLastnameSize = std::string("Lastname").size();
   size_t maxUserIdSize = std::string("UserId").size();
 
-  for(int i = 0; i < lsUsers.getUsers().size(); i++) {
+  for(unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
 
      firstname = (lsUsers.getUsers().get(i))->getFirstname();
      maxFirstnameSize = max(maxFirstnameSize, firstname.size());
@@ -790,7 +790,7 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
   setFill(6, os);
   os << endl;
 
-  for(int i = 0; i < lsUsers.getUsers().size(); i++) {
+  for(unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
 
      firstname = (lsUsers.getUsers().get(i))->getFirstname();
      lastname = (lsUsers.getUsers().get(i))->getLastname();

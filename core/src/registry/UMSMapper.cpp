@@ -78,6 +78,7 @@ UMSMapper::getCommand(const int& key,string& command){
       return 0;
     }
   }
+  return 0;
 }
 
 int
@@ -89,6 +90,7 @@ UMSMapper::getKey(const string& command, int& key){
       return 0;
     }
   }
+  return 0;
 }
 
 int
@@ -245,7 +247,7 @@ UMSMapper::decode (const string& msg){
 
 void
 UMSMapper::findSeparator(const string& s, vector<int>& vec){
-  int cpt = 0;
+  unsigned int cpt = 0;
   do{
     cpt=s.find_first_of("#", cpt);
     if (cpt ==string::npos){
@@ -436,7 +438,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
 
   ecorecpp::parser::parser parser;
   Machine_ptr ac = parser.load(std::string(a))->as< Machine >();
-  
+
   res+= " ";
   res+= ac->getMachineId();
   res+=" ";
@@ -675,7 +677,7 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   ecorecpp::parser::parser parser;
   OptionValue_ptr opt = parser.load(std::string(u))->as< OptionValue >();
 
- 
+
   res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
 
   u = opt->getOptionName();
@@ -775,7 +777,7 @@ UMSMapper::getUupdate(string serial){
 
   res+= " ";
   res += user->getUserId();
-  
+
   tmp = user->getFirstname();
   if(tmp.compare("")!=0){
     res +=" -f ";

@@ -107,7 +107,7 @@ int main (int ac, char* av[]){
       cout << lsLocalAccount << endl;
     }
     else {
-      for(int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
+      for(unsigned int i = 0; i < lsLocalAccount.getAccounts().size(); i++) {
         cout << lsLocalAccount.getAccounts().get(i) ;
       }
     }
