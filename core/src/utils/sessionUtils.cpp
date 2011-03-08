@@ -68,12 +68,10 @@ SessionEntry::serialize(Archive& ar, const unsigned int version){
  * \param session:The session to print
  * \return The stream where the session parameters have been printed
  */
-
-
-
 std::ostream&
 operator <<(std::ostream& os, const SessionEntry& session){
   std::cout << "sessionKey: " << session.sessionKey << "  closePolicy: "<< session.closePolicy << std::endl;
+  return os;
 }
 
 
