@@ -1,6 +1,4 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <csignal>
 #include <fstream>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
@@ -85,6 +83,7 @@ int main(int argc, char* argv[], char* envp[]) {
   sendmailScriptPath = argv[7];
 
   pid_t pid;
+  pid_t ppid;
   pid = fork();
 
   if (pid > 0) {
@@ -104,7 +103,11 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
     monitor.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
-    monitor.run();
+    ppid = getppid();
+
+    while(kill(ppid,0) == 0) {
+      monitor.run();
+    }
   } else {
     std::cerr << "There was a problem to initialize the server" << std::endl;
     exit(1);
