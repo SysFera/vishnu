@@ -1,0 +1,72 @@
+\hypertarget{listHistoryCmdUtils_8hpp}{
+\section{UMS/src/cli/listHistoryCmdUtils.hpp File Reference}
+\label{listHistoryCmdUtils_8hpp}\index{UMS/src/cli/listHistoryCmdUtils.hpp@{UMS/src/cli/listHistoryCmdUtils.hpp}}
+}
+
+
+This file declares useful functions and types for the VISHNU list history command.  
+
+
+{\ttfamily \#include \char`\"{}common.hpp\char`\"{}}\par
+{\ttfamily \#include $<$boost/function.hpp$>$}\par
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{listHistoryCmdUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{
+typedef boost::function1$<$ void, std::string $>$ \hyperlink{listHistoryCmdUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType}}
+\label{listHistoryCmdUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a string parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{listHistoryCmdUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}{
+typedef boost::function1$<$ void, UMS\_\-Data::SessionCloseType $>$ \hyperlink{listHistoryCmdUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}{ClosePolicycallBackType}}
+\label{listHistoryCmdUtils_8hpp_a6894ee6fc897662e9bb7b47a2a5b8e32}
+
+\begin{DoxyCompactList}\small\item\em The close policy option callback type. \item\end{DoxyCompactList}\item 
+\hypertarget{listHistoryCmdUtils_8hpp_a2577410234b4f3f417afd232c5d48864}{
+typedef boost::function1$<$ void, UMS\_\-Data::StatusType $>$ \hyperlink{listHistoryCmdUtils_8hpp_a2577410234b4f3f417afd232c5d48864}{StatuscallBackType}}
+\label{listHistoryCmdUtils_8hpp_a2577410234b4f3f417afd232c5d48864}
+
+\begin{DoxyCompactList}\small\item\em The status option callback type. \item\end{DoxyCompactList}\item 
+\hypertarget{listHistoryCmdUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}{
+typedef boost::function1$<$ void, int $>$ \hyperlink{listHistoryCmdUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}{IntcallBackType}}
+\label{listHistoryCmdUtils_8hpp_aa3e44f02f484eb761ca0cd499931cde2}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a integer parameter and without return value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ \hyperlink{listHistoryCmdUtils_8hpp_a4a451435fc366dd5f622c4dc64d1d6a1}{makeListHistoryCmdOptions} (std::string pgName, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fUserId, std::string \&dietConfig, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fSessionId, std::string \&startDateOption, std::string \&endDateOption)
+\begin{DoxyCompactList}\small\item\em To build options for the VISHNU list history command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declares useful functions and types for the VISHNU list history command. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{listHistoryCmdUtils_8hpp_a4a451435fc366dd5f622c4dc64d1d6a1}{
+\index{listHistoryCmdUtils.hpp@{listHistoryCmdUtils.hpp}!makeListHistoryCmdOptions@{makeListHistoryCmdOptions}}
+\index{makeListHistoryCmdOptions@{makeListHistoryCmdOptions}!listHistoryCmdUtils.hpp@{listHistoryCmdUtils.hpp}}
+\subsubsection[{makeListHistoryCmdOptions}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<${\bf Options}$>$ makeListHistoryCmdOptions (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ pgName, }
+\item[{{\bf StringcallBackType} \&}]{ fUserId, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fSessionId, }
+\item[{std::string \&}]{ startDateOption, }
+\item[{std::string \&}]{ endDateOption}
+\end{DoxyParamCaption}
+)}}
+\label{listHistoryCmdUtils_8hpp_a4a451435fc366dd5f622c4dc64d1d6a1}
+
+
+To build options for the VISHNU list history command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pgName}]: The name of the command \item[{\em fUserId,:}]The user identifier option callback \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fSessionId}]: The callback for the session identifier \item[{\em startDateOption,:}]The start date option \item[{\em endDateOption,:}]The end date option \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The description of all options allowed by the command 
+\end{DoxyReturn}

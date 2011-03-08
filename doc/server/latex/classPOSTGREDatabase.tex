@@ -1,0 +1,288 @@
+\hypertarget{classPOSTGREDatabase}{
+\section{POSTGREDatabase Class Reference}
+\label{classPOSTGREDatabase}\index{POSTGREDatabase@{POSTGREDatabase}}
+}
+
+
+POSTGRESQL implementation of the \hyperlink{classDatabase}{Database} class.  
+
+
+
+
+{\ttfamily \#include $<$POSTGREDatabase.hpp$>$}
+
+Inheritance diagram for POSTGREDatabase:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classPOSTGREDatabase}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structPOSTGREDatabase_1_1pool__t}{pool\_\-t}
+\begin{DoxyCompactList}\small\item\em An element of the pool. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{process} (std::string request)
+\begin{DoxyCompactList}\small\item\em Function to process the request in the database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{connect} ()
+\begin{DoxyCompactList}\small\item\em To make a connection to the database. \item\end{DoxyCompactList}\item 
+\hyperlink{classPOSTGREDatabase_adbdbad8b33beb05a5b6cdaae17d252cd}{POSTGREDatabase} (std::string hostname, std::string username, std::string pwd, std::string database=\char`\"{}\char`\"{}, unsigned int port=0)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a455249ba891bb36b51ea2fb67f5043bf}{
+\hyperlink{classPOSTGREDatabase_a455249ba891bb36b51ea2fb67f5043bf}{$\sim$POSTGREDatabase} ()}
+\label{classPOSTGREDatabase_a455249ba891bb36b51ea2fb67f5043bf}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+int \hyperlink{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{setDatabase} (std::string db)
+\begin{DoxyCompactList}\small\item\em To set the db to use. \item\end{DoxyCompactList}\item 
+\hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{getResult} (std::string request)
+\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classPOSTGREDatabase_a48a0b798834146488a3626ea8af3acdb}{
+typedef struct \hyperlink{structPOSTGREDatabase_1_1pool__t}{POSTGREDatabase::pool\_\-t} \hyperlink{classPOSTGREDatabase_a48a0b798834146488a3626ea8af3acdb}{pool\_\-t}}
+\label{classPOSTGREDatabase_a48a0b798834146488a3626ea8af3acdb}
+
+\begin{DoxyCompactList}\small\item\em An element of the pool. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+PGconn $\ast$ \hyperlink{classPOSTGREDatabase_adbea0ea18a50130d51b68dbaa86c1e89}{getConnexion} (int \&pos)
+\begin{DoxyCompactList}\small\item\em To get a valid connexion. \item\end{DoxyCompactList}\item 
+void \hyperlink{classPOSTGREDatabase_a6bc07c4256ea310f59b85bfc5803a340}{releaseConnexion} (int pos)
+\begin{DoxyCompactList}\small\item\em To release a connexion. \item\end{DoxyCompactList}\item 
+int \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{disconnect} ()
+\begin{DoxyCompactList}\small\item\em To disconnect from the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classPOSTGREDatabase_af17ff578ff7b312615ef07153a99d508}{
+\hyperlink{structPOSTGREDatabase_1_1pool__t}{pool\_\-t} \hyperlink{classPOSTGREDatabase_af17ff578ff7b312615ef07153a99d508}{mpool} \mbox{[}\hyperlink{classPOSTGREDatabase_a9e7541e24b03ddcf15554e6a359fab2f}{POOLSIZE}\mbox{]}}
+\label{classPOSTGREDatabase_af17ff578ff7b312615ef07153a99d508}
+
+\begin{DoxyCompactList}\small\item\em The pool of connection. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a4a2ec3cb7b8b66e52e1614622c0106b6}{
+std::string \hyperlink{classPOSTGREDatabase_a4a2ec3cb7b8b66e52e1614622c0106b6}{mhost}}
+\label{classPOSTGREDatabase_a4a2ec3cb7b8b66e52e1614622c0106b6}
+
+\begin{DoxyCompactList}\small\item\em The host of the base. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a8990563dfc4b6f156cdded1306126ce2}{
+std::string \hyperlink{classPOSTGREDatabase_a8990563dfc4b6f156cdded1306126ce2}{musername}}
+\label{classPOSTGREDatabase_a8990563dfc4b6f156cdded1306126ce2}
+
+\begin{DoxyCompactList}\small\item\em The username to connect. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a8942b28fd34e15da3bcb16a509e14a41}{
+std::string \hyperlink{classPOSTGREDatabase_a8942b28fd34e15da3bcb16a509e14a41}{mpwd}}
+\label{classPOSTGREDatabase_a8942b28fd34e15da3bcb16a509e14a41}
+
+\begin{DoxyCompactList}\small\item\em The password to connect. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a4045964ca3981bb2596c854d2ff25bf3}{
+std::string \hyperlink{classPOSTGREDatabase_a4045964ca3981bb2596c854d2ff25bf3}{mdatabase}}
+\label{classPOSTGREDatabase_a4045964ca3981bb2596c854d2ff25bf3}
+
+\begin{DoxyCompactList}\small\item\em The database to connect. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a6d90a3e1956edf536d26453a0656669f}{
+int \hyperlink{classPOSTGREDatabase_a6d90a3e1956edf536d26453a0656669f}{mport}}
+\label{classPOSTGREDatabase_a6d90a3e1956edf536d26453a0656669f}
+
+\begin{DoxyCompactList}\small\item\em The port to use. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_aa4f59d325b41b9b328878323c9589ac4}{
+bool \hyperlink{classPOSTGREDatabase_aa4f59d325b41b9b328878323c9589ac4}{misConnected}}
+\label{classPOSTGREDatabase_aa4f59d325b41b9b328878323c9589ac4}
+
+\begin{DoxyCompactList}\small\item\em If the connection is right. \item\end{DoxyCompactList}\item 
+\hypertarget{classPOSTGREDatabase_a8be0fe1af42ae6713524210d5e623a3a}{
+std::string \hyperlink{classPOSTGREDatabase_a8be0fe1af42ae6713524210d5e623a3a}{mSQLtransaction}}
+\label{classPOSTGREDatabase_a8be0fe1af42ae6713524210d5e623a3a}
+
+\begin{DoxyCompactList}\small\item\em The current transaction. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classPOSTGREDatabase_a9e7541e24b03ddcf15554e6a359fab2f}{
+static const int \hyperlink{classPOSTGREDatabase_a9e7541e24b03ddcf15554e6a359fab2f}{POOLSIZE} = 20}
+\label{classPOSTGREDatabase_a9e7541e24b03ddcf15554e6a359fab2f}
+
+\begin{DoxyCompactList}\small\item\em Size of the pool. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+POSTGRESQL implementation of the \hyperlink{classDatabase}{Database} class. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classPOSTGREDatabase_adbdbad8b33beb05a5b6cdaae17d252cd}{
+\index{POSTGREDatabase@{POSTGREDatabase}!POSTGREDatabase@{POSTGREDatabase}}
+\index{POSTGREDatabase@{POSTGREDatabase}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{POSTGREDatabase}]{\setlength{\rightskip}{0pt plus 5cm}POSTGREDatabase::POSTGREDatabase (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ hostname, }
+\item[{std::string}]{ username, }
+\item[{std::string}]{ pwd, }
+\item[{std::string}]{ database = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{unsigned int}]{ port = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classPOSTGREDatabase_adbdbad8b33beb05a5b6cdaae17d252cd}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em hostname}]The name of the host to connect \item[{\em username}]The username to connect to the database \item[{\em pwd}]The password to connect to the database \item[{\em database}]The database to connect \item[{\em port}]The port to use \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{
+\index{POSTGREDatabase@{POSTGREDatabase}!connect@{connect}}
+\index{connect@{connect}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}int POSTGREDatabase::connect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}
+
+
+To make a connection to the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{Database}.
+
+\hypertarget{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{
+\index{POSTGREDatabase@{POSTGREDatabase}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{disconnect}]{\setlength{\rightskip}{0pt plus 5cm}int POSTGREDatabase::disconnect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private, virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}
+
+
+To disconnect from the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{Database}.
+
+\hypertarget{classPOSTGREDatabase_adbea0ea18a50130d51b68dbaa86c1e89}{
+\index{POSTGREDatabase@{POSTGREDatabase}!getConnexion@{getConnexion}}
+\index{getConnexion@{getConnexion}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{getConnexion}]{\setlength{\rightskip}{0pt plus 5cm}PGconn $\ast$ POSTGREDatabase::getConnexion (
+\begin{DoxyParamCaption}
+\item[{int \&}]{ pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classPOSTGREDatabase_adbea0ea18a50130d51b68dbaa86c1e89}
+
+
+To get a valid connexion. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pos}]The position of the connexion gotten in the pool \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A valid and free connexion 
+\end{DoxyReturn}
+\hypertarget{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{
+\index{POSTGREDatabase@{POSTGREDatabase}!getResult@{getResult}}
+\index{getResult@{getResult}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ POSTGREDatabase::getResult (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}
+
+
+To get the result of a select request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The request to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An object which encapsulates the database results 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{Database}.
+
+\hypertarget{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{
+\index{POSTGREDatabase@{POSTGREDatabase}!process@{process}}
+\index{process@{process}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int POSTGREDatabase::process (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}
+
+
+Function to process the request in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The request to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{Database}.
+
+\hypertarget{classPOSTGREDatabase_a6bc07c4256ea310f59b85bfc5803a340}{
+\index{POSTGREDatabase@{POSTGREDatabase}!releaseConnexion@{releaseConnexion}}
+\index{releaseConnexion@{releaseConnexion}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{releaseConnexion}]{\setlength{\rightskip}{0pt plus 5cm}void POSTGREDatabase::releaseConnexion (
+\begin{DoxyParamCaption}
+\item[{int}]{ pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classPOSTGREDatabase_a6bc07c4256ea310f59b85bfc5803a340}
+
+
+To release a connexion. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pos}]The position of the connexion to release \end{DoxyParams}
+\hypertarget{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{
+\index{POSTGREDatabase@{POSTGREDatabase}!setDatabase@{setDatabase}}
+\index{setDatabase@{setDatabase}!POSTGREDatabase@{POSTGREDatabase}}
+\subsubsection[{setDatabase}]{\setlength{\rightskip}{0pt plus 5cm}int POSTGREDatabase::setDatabase (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ db}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}
+
+
+To set the db to use. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em db}]The name of the database to use \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_aeba15395d2a36faf73dcb995695b9204}{Database}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/database/\hyperlink{POSTGREDatabase_8hpp}{POSTGREDatabase.hpp}\end{DoxyCompactItemize}

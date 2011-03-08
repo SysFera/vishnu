@@ -1,0 +1,410 @@
+\hypertarget{classUserServer}{
+\section{UserServer Class Reference}
+\label{classUserServer}\index{UserServer@{UserServer}}
+}
+
+
+\hyperlink{classUserServer}{UserServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$UserServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUserServer_a64281da3f0076b3273bf9e83123211a2}{UserServer} (std::string userId, std::string password)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classUserServer_a5b19188b031a3ab5fc40cabc2a097b1d}{UserServer} (const UMS\_\-Data::User \&user)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classUserServer_a2a8ac1a46357a5fb7d10ea741b534b3d}{UserServer} (\hyperlink{classSessionServer}{SessionServer} sessionServer)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUserServer_a05207b09729ba075b82abe57908ccff1}{add} (UMS\_\-Data::User $\ast$\&user)
+\begin{DoxyCompactList}\small\item\em Function to add a new VISHNU user. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUserServer_a6653ef686b1622001ca6b211da5d9f3b}{update} (UMS\_\-Data::User $\ast$user)
+\begin{DoxyCompactList}\small\item\em Function to update user information. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUserServer_acb26d67e359123b9b4b80fa007d37423}{deleteUser} (UMS\_\-Data::User user)
+\begin{DoxyCompactList}\small\item\em Function to delete VISHNU user. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUserServer_a63b49fc59574e8b81fde104f09a4585e}{changePassword} (std::string newPassword)
+\begin{DoxyCompactList}\small\item\em Function to change VISHNU user password. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUserServer_a3fc3db7042acf71dcb73c4c7924a9d1c}{resetPassword} (UMS\_\-Data::User \&user)
+\begin{DoxyCompactList}\small\item\em Function to change VISHNU user password. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserServer_a12cc28c2c2c5b3c88d2f760c97bd088d}{
+\hyperlink{classUserServer_a12cc28c2c2c5b3c88d2f760c97bd088d}{$\sim$UserServer} ()}
+\label{classUserServer_a12cc28c2c2c5b3c88d2f760c97bd088d}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::User \hyperlink{classUserServer_a539501563b61edfcb374ad6954b3d930}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get user information. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserServer_a0aad281d77ffbe98423f3275884781c1}{
+void \hyperlink{classUserServer_a0aad281d77ffbe98423f3275884781c1}{init} ()}
+\label{classUserServer_a0aad281d77ffbe98423f3275884781c1}
+
+\begin{DoxyCompactList}\small\item\em Function to initialize user data for constructor with sessionServer. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classUserServer_a26ccae7a3b8ee7e62e2224312119aece}{exist} (bool flagForChangePwd=false)
+\begin{DoxyCompactList}\small\item\em Function to check user on database. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classUserServer_a7dab9117c2ca5a706bb674e43b183255}{isAdmin} ()
+\begin{DoxyCompactList}\small\item\em Function to check the VISHNU user privilege. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classUserServer_aecc5dd38cacf2460a187f6e751000c9a}{isAttributOk} (std::string attributName, int valueOk)
+\begin{DoxyCompactList}\small\item\em Function to check the user attribut value. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classUserServer_aaabcde0c694987b990a3ba1af445f718}{getAttribut} (std::string condition, std::string attrname=\char`\"{}numuserid\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to get user information from the database vishnu. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classUserServer_ac61e9715aa922ad746ecd8f788130834}{existuserId} (std::string userId)
+\begin{DoxyCompactList}\small\item\em Function to check a userId. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std::string \hyperlink{classUserServer_a61f17775588f641c30035349e5e8bfef}{generatePassword} (std::string value1, std::string value2)
+\begin{DoxyCompactList}\small\item\em Function to generate a password. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUserServer_a6b7dc36a39371743c079635fdc1fcdbe}{sendMailToUser} (const UMS\_\-Data::User \&user, std::string content, std::string subject)
+\begin{DoxyCompactList}\small\item\em Function to send an email to the user. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classUserServer_a4896a5d7bd51b8ad24cf6864ba400487}{getMailContent} (const UMS\_\-Data::User \&user, bool flagAdduser)
+\begin{DoxyCompactList}\small\item\em Function to get the email content. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classUserServer_ac6ce31683fb8b809052ddc54f1ec95b4}{
+UMS\_\-Data::User \hyperlink{classUserServer_ac6ce31683fb8b809052ddc54f1ec95b4}{muser}}
+\label{classUserServer_ac6ce31683fb8b809052ddc54f1ec95b4}
+
+\begin{DoxyCompactList}\small\item\em The user data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserServer_a7917e4e9597c28a5170d169e8ef09c9b}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classUserServer_a7917e4e9597c28a5170d169e8ef09c9b}{mdatabaseVishnu}}
+\label{classUserServer_a7917e4e9597c28a5170d169e8ef09c9b}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserServer_a74e667762e96a81bc42c686a0e598e09}{
+\hyperlink{classSessionServer}{SessionServer} $\ast$ \hyperlink{classUserServer_a74e667762e96a81bc42c686a0e598e09}{msessionServer}}
+\label{classUserServer_a74e667762e96a81bc42c686a0e598e09}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates session data. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classUserServer}{UserServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUserServer_a64281da3f0076b3273bf9e83123211a2}{
+\index{UserServer@{UserServer}!UserServer@{UserServer}}
+\index{UserServer@{UserServer}!UserServer@{UserServer}}
+\subsubsection[{UserServer}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::UserServer (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ userId, }
+\item[{std::string}]{ password}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a64281da3f0076b3273bf9e83123211a2}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]The userId of the user \item[{\em password}]The password of the user \end{DoxyParams}
+\hypertarget{classUserServer_a5b19188b031a3ab5fc40cabc2a097b1d}{
+\index{UserServer@{UserServer}!UserServer@{UserServer}}
+\index{UserServer@{UserServer}!UserServer@{UserServer}}
+\subsubsection[{UserServer}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::UserServer (
+\begin{DoxyParamCaption}
+\item[{const UMS\_\-Data::User \&}]{ user}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a5b19188b031a3ab5fc40cabc2a097b1d}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The user data structure \end{DoxyParams}
+\hypertarget{classUserServer_a2a8ac1a46357a5fb7d10ea741b534b3d}{
+\index{UserServer@{UserServer}!UserServer@{UserServer}}
+\index{UserServer@{UserServer}!UserServer@{UserServer}}
+\subsubsection[{UserServer}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::UserServer (
+\begin{DoxyParamCaption}
+\item[{{\bf SessionServer}}]{ sessionServer}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a2a8ac1a46357a5fb7d10ea741b534b3d}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionServer}]The object to manipulate session \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classUserServer_a05207b09729ba075b82abe57908ccff1}{
+\index{UserServer@{UserServer}!add@{add}}
+\index{add@{add}!UserServer@{UserServer}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::add (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::User $\ast$\&}]{ user}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a05207b09729ba075b82abe57908ccff1}
+
+
+Function to add a new VISHNU user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The user data structure \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a63b49fc59574e8b81fde104f09a4585e}{
+\index{UserServer@{UserServer}!changePassword@{changePassword}}
+\index{changePassword@{changePassword}!UserServer@{UserServer}}
+\subsubsection[{changePassword}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::changePassword (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ newPassword}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a63b49fc59574e8b81fde104f09a4585e}
+
+
+Function to change VISHNU user password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em newPassword}]The new password of the user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classUserServer_acb26d67e359123b9b4b80fa007d37423}{
+\index{UserServer@{UserServer}!deleteUser@{deleteUser}}
+\index{deleteUser@{deleteUser}!UserServer@{UserServer}}
+\subsubsection[{deleteUser}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::deleteUser (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::User}]{ user}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_acb26d67e359123b9b4b80fa007d37423}
+
+
+Function to delete VISHNU user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The user data structure \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a26ccae7a3b8ee7e62e2224312119aece}{
+\index{UserServer@{UserServer}!exist@{exist}}
+\index{exist@{exist}!UserServer@{UserServer}}
+\subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::exist (
+\begin{DoxyParamCaption}
+\item[{bool}]{ flagForChangePwd = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a26ccae7a3b8ee7e62e2224312119aece}
+
+
+Function to check user on database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em flagForChangePwd}]A flag to check the password state \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the password state has not to be checked else false 
+\end{DoxyReturn}
+\hypertarget{classUserServer_ac61e9715aa922ad746ecd8f788130834}{
+\index{UserServer@{UserServer}!existuserId@{existuserId}}
+\index{existuserId@{existuserId}!UserServer@{UserServer}}
+\subsubsection[{existuserId}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::existuserId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ userId}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_ac61e9715aa922ad746ecd8f788130834}
+
+
+Function to check a userId. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]The userId to check \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the userId exists 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a61f17775588f641c30035349e5e8bfef}{
+\index{UserServer@{UserServer}!generatePassword@{generatePassword}}
+\index{generatePassword@{generatePassword}!UserServer@{UserServer}}
+\subsubsection[{generatePassword}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::generatePassword (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ value1, }
+\item[{std::string}]{ value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUserServer_a61f17775588f641c30035349e5e8bfef}
+
+
+Function to generate a password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em value1}]a string used to generate the password \item[{\em value2}]a string used to generate the password \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an encrypted message 
+\end{DoxyReturn}
+\hypertarget{classUserServer_aaabcde0c694987b990a3ba1af445f718}{
+\index{UserServer@{UserServer}!getAttribut@{getAttribut}}
+\index{getAttribut@{getAttribut}!UserServer@{UserServer}}
+\subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}UserServer::getAttribut (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}numuserid\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_aaabcde0c694987b990a3ba1af445f718}
+
+
+Function to get user information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the attribut or empty string if no results 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a539501563b61edfcb374ad6954b3d930}{
+\index{UserServer@{UserServer}!getData@{getData}}
+\index{getData@{getData}!UserServer@{UserServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::User UserServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a539501563b61edfcb374ad6954b3d930}
+
+
+Function to get user information. 
+
+\begin{DoxyReturn}{Returns}
+The user data structure 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a4896a5d7bd51b8ad24cf6864ba400487}{
+\index{UserServer@{UserServer}!getMailContent@{getMailContent}}
+\index{getMailContent@{getMailContent}!UserServer@{UserServer}}
+\subsubsection[{getMailContent}]{\setlength{\rightskip}{0pt plus 5cm}std::string UserServer::getMailContent (
+\begin{DoxyParamCaption}
+\item[{const UMS\_\-Data::User \&}]{ user, }
+\item[{bool}]{ flagAdduser}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUserServer_a4896a5d7bd51b8ad24cf6864ba400487}
+
+
+Function to get the email content. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]the user who will receives the email \item[{\em flagAdduser}]a flag which means that it is uses on adduser function \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the email content 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a7dab9117c2ca5a706bb674e43b183255}{
+\index{UserServer@{UserServer}!isAdmin@{isAdmin}}
+\index{isAdmin@{isAdmin}!UserServer@{UserServer}}
+\subsubsection[{isAdmin}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::isAdmin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a7dab9117c2ca5a706bb674e43b183255}
+
+
+Function to check the VISHNU user privilege. 
+
+\begin{DoxyReturn}{Returns}
+true if the user is an admin else false 
+\end{DoxyReturn}
+\hypertarget{classUserServer_aecc5dd38cacf2460a187f6e751000c9a}{
+\index{UserServer@{UserServer}!isAttributOk@{isAttributOk}}
+\index{isAttributOk@{isAttributOk}!UserServer@{UserServer}}
+\subsubsection[{isAttributOk}]{\setlength{\rightskip}{0pt plus 5cm}bool UserServer::isAttributOk (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ attributName, }
+\item[{int}]{ valueOk}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_aecc5dd38cacf2460a187f6e751000c9a}
+
+
+Function to check the user attribut value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em attributName}]The name of the attribut to check \item[{\em valueOk}]the value which will be compare to attribut name value \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the attributName value is valueOk 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a3fc3db7042acf71dcb73c4c7924a9d1c}{
+\index{UserServer@{UserServer}!resetPassword@{resetPassword}}
+\index{resetPassword@{resetPassword}!UserServer@{UserServer}}
+\subsubsection[{resetPassword}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::resetPassword (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::User \&}]{ user}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a3fc3db7042acf71dcb73c4c7924a9d1c}
+
+
+Function to change VISHNU user password. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The user data structure \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a6b7dc36a39371743c079635fdc1fcdbe}{
+\index{UserServer@{UserServer}!sendMailToUser@{sendMailToUser}}
+\index{sendMailToUser@{sendMailToUser}!UserServer@{UserServer}}
+\subsubsection[{sendMailToUser}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::sendMailToUser (
+\begin{DoxyParamCaption}
+\item[{const UMS\_\-Data::User \&}]{ user, }
+\item[{std::string}]{ content, }
+\item[{std::string}]{ subject}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUserServer_a6b7dc36a39371743c079635fdc1fcdbe}
+
+
+Function to send an email to the user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]the user to whom send the email \item[{\em content}]the body of the email \item[{\em subject}]the subject of the email \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error or success code 
+\end{DoxyReturn}
+\hypertarget{classUserServer_a6653ef686b1622001ca6b211da5d9f3b}{
+\index{UserServer@{UserServer}!update@{update}}
+\index{update@{update}!UserServer@{UserServer}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int UserServer::update (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::User $\ast$}]{ user}
+\end{DoxyParamCaption}
+)}}
+\label{classUserServer_a6653ef686b1622001ca6b211da5d9f3b}
+
+
+Function to update user information. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The user data structure \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{UserServer_8hpp}{UserServer.hpp}\end{DoxyCompactItemize}

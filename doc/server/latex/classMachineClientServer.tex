@@ -1,0 +1,165 @@
+\hypertarget{classMachineClientServer}{
+\section{MachineClientServer Class Reference}
+\label{classMachineClientServer}\index{MachineClientServer@{MachineClientServer}}
+}
+
+
+\hyperlink{classMachineClientServer}{MachineClientServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$MachineClientServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMachineClientServer_a87d108a996a785273525e941a1865041}{MachineClientServer} (std::string sshKey, std::string host)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMachineClientServer_af55d6bdfcade48ab4a32c4734157a690}{recordMachineClient} ()
+\begin{DoxyCompactList}\small\item\em Function to record the client machine on the database. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classMachineClientServer_a5e6fd30cd39767c320d85fa429b78dc5}{getId} ()
+\begin{DoxyCompactList}\small\item\em Function to get the id number of the client machine. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classMachineClientServer_a9522688e79c164be6b40d09ab4ff8ddf}{getSSHKey} () const 
+\begin{DoxyCompactList}\small\item\em Function to get the ssh key of the client machine. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classMachineClientServer_a869f92107107e7d56672b2376ec6bd26}{getHost} () const 
+\begin{DoxyCompactList}\small\item\em Function to get the hostname of the client machine. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineClientServer_a1e954577913db9ee09397b2d8f0d48a2}{
+\hyperlink{classMachineClientServer_a1e954577913db9ee09397b2d8f0d48a2}{$\sim$MachineClientServer} ()}
+\label{classMachineClientServer_a1e954577913db9ee09397b2d8f0d48a2}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classMachineClientServer_ae31358ba9f93a020de45f2ded4573b0c}{exist} ()
+\begin{DoxyCompactList}\small\item\em Function to check the client machine on the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMachineClientServer_ac6d46956262fd196c9749dd1188b9743}{
+std::string \hyperlink{classMachineClientServer_ac6d46956262fd196c9749dd1188b9743}{mmachineSSHKey}}
+\label{classMachineClientServer_ac6d46956262fd196c9749dd1188b9743}
+
+\begin{DoxyCompactList}\small\item\em The ssh key of the client machine. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineClientServer_a8b9f12f2f463fff6a15ca65e5942a40c}{
+std::string \hyperlink{classMachineClientServer_a8b9f12f2f463fff6a15ca65e5942a40c}{mhostname}}
+\label{classMachineClientServer_a8b9f12f2f463fff6a15ca65e5942a40c}
+
+\begin{DoxyCompactList}\small\item\em The hostname of the client machine. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineClientServer_a49bb6af93339f9f77423f795da452e8b}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classMachineClientServer_a49bb6af93339f9f77423f795da452e8b}{mdatabaseVishnu}}
+\label{classMachineClientServer_a49bb6af93339f9f77423f795da452e8b}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classMachineClientServer}{MachineClientServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMachineClientServer_a87d108a996a785273525e941a1865041}{
+\index{MachineClientServer@{MachineClientServer}!MachineClientServer@{MachineClientServer}}
+\index{MachineClientServer@{MachineClientServer}!MachineClientServer@{MachineClientServer}}
+\subsubsection[{MachineClientServer}]{\setlength{\rightskip}{0pt plus 5cm}MachineClientServer::MachineClientServer (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ sshKey, }
+\item[{std::string}]{ host}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineClientServer_a87d108a996a785273525e941a1865041}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sshKey}]The ssh key of the client machine \item[{\em host}]The name of the client host \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMachineClientServer_ae31358ba9f93a020de45f2ded4573b0c}{
+\index{MachineClientServer@{MachineClientServer}!exist@{exist}}
+\index{exist@{exist}!MachineClientServer@{MachineClientServer}}
+\subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}bool MachineClientServer::exist (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classMachineClientServer_ae31358ba9f93a020de45f2ded4573b0c}
+
+
+Function to check the client machine on the database. 
+
+\begin{DoxyReturn}{Returns}
+true if the machine exists on the database else false 
+\end{DoxyReturn}
+\hypertarget{classMachineClientServer_a869f92107107e7d56672b2376ec6bd26}{
+\index{MachineClientServer@{MachineClientServer}!getHost@{getHost}}
+\index{getHost@{getHost}!MachineClientServer@{MachineClientServer}}
+\subsubsection[{getHost}]{\setlength{\rightskip}{0pt plus 5cm}std::string MachineClientServer::getHost (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classMachineClientServer_a869f92107107e7d56672b2376ec6bd26}
+
+
+Function to get the hostname of the client machine. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classMachineClientServer_a5e6fd30cd39767c320d85fa429b78dc5}{
+\index{MachineClientServer@{MachineClientServer}!getId@{getId}}
+\index{getId@{getId}!MachineClientServer@{MachineClientServer}}
+\subsubsection[{getId}]{\setlength{\rightskip}{0pt plus 5cm}std::string MachineClientServer::getId (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineClientServer_a5e6fd30cd39767c320d85fa429b78dc5}
+
+
+Function to get the id number of the client machine. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classMachineClientServer_a9522688e79c164be6b40d09ab4ff8ddf}{
+\index{MachineClientServer@{MachineClientServer}!getSSHKey@{getSSHKey}}
+\index{getSSHKey@{getSSHKey}!MachineClientServer@{MachineClientServer}}
+\subsubsection[{getSSHKey}]{\setlength{\rightskip}{0pt plus 5cm}std::string MachineClientServer::getSSHKey (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classMachineClientServer_a9522688e79c164be6b40d09ab4ff8ddf}
+
+
+Function to get the ssh key of the client machine. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classMachineClientServer_af55d6bdfcade48ab4a32c4734157a690}{
+\index{MachineClientServer@{MachineClientServer}!recordMachineClient@{recordMachineClient}}
+\index{recordMachineClient@{recordMachineClient}!MachineClientServer@{MachineClientServer}}
+\subsubsection[{recordMachineClient}]{\setlength{\rightskip}{0pt plus 5cm}int MachineClientServer::recordMachineClient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineClientServer_af55d6bdfcade48ab4a32c4734157a690}
+
+
+Function to record the client machine on the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{MachineClientServer_8hpp}{MachineClientServer.hpp}\end{DoxyCompactItemize}
