@@ -312,7 +312,7 @@ same conditions as regards security.</para>
     
    <section>
      <title> Troubleshooting functions </title>
-     <para> The <emphasis role = "italic">"There is no session"</emphasis> error can be solved by making a connection to VISHNU using 
+     <para> <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by making a connection to VISHNU using 
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
   </section>
