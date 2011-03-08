@@ -8,13 +8,20 @@
       <productname>VISHNU</productname>
       <releaseinfo>1.0</releaseinfo>
       <date>February 2011</date>
-      
       <author>
-        <personname><firstname>Benjamin</firstname><surname>ISNARD</surname></personname>
+      <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
-      
       <author>
-        <personname><firstname>Eugène </firstname><surname> PAMBA CAPO-CHICHI </surname></personname>
+	<personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+      </author>
+      <author>
+	<personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+      </author>
+      <author>
+	<personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
+      <author>
+	<personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
       </author>
       
       <title> VISHNU User Manual</title>
@@ -26,7 +33,7 @@
 	    <authorinitials>SysFera</authorinitials>
 	    <revdescription>
 		
-	      <para> The first version of the VISHNU user manual which concerns only the UMS package.</para></revdescription>
+	      <para> First version of the VISHNU user manual which concerns only the UMS package.</para></revdescription>
 	  </revision>
 	</revhistory>
       
@@ -139,7 +146,7 @@ same conditions as regards security.</para>
        which must be installed before.
       </para>
   
-     <para> Installation requirements:</para>
+     <para> <emphasis role = "bold">Installation requirements:</emphasis></para>
      <itemizedlist>
        <listitem>
 	    <para> GCC V4.4.3 </para>
@@ -169,6 +176,34 @@ same conditions as regards security.</para>
 	    <para> LIBCRYPT </para>
       </listitem>
     </itemizedlist>
+    
+    <para><emphasis role = "bold">Installation procedure:</emphasis></para>
+    <para>
+     <itemizedlist>
+       <listitem>
+	    <para> Download the VISHNU install sources </para>
+      </listitem>
+      <listitem>
+	    <para> Decompress it and go to the vishnu directory </para>
+      </listitem>
+      
+      <listitem>
+	    <para> Create a build directory and run CMake as follows: </para>
+	    <para>> mkdir build </para>
+	    <para>> cd build </para>
+	    <para> If your install directory is for example: /opt/vishnu </para>
+	    <para>> cmake -DCLIENT_ONLY=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu .. </para>
+	    <!--<para> For python: </para>
+	    <para>> cmake -DENABLE_PYTHON=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu .. </para>
+	    -->
+<!-- 	    <para> For installation: </para> -->
+	    <para>> make &amp;&amp; make install</para>
+      </listitem>
+      
+     </itemizedlist>
+   </para>
+    
+    
    </section>
    
    <section>
@@ -221,7 +256,7 @@ same conditions as regards security.</para>
 	<title> Session closure on disconnect </title>
 	<para> 
 	In this mode, the session is automatically closed when the shell terminal is closed. It is important to notice that the system makes 
-	impossible the closure of sessions when there is running command. In this case, a session with automatic closure on disconnect changes 
+	impossible the closure of sessions when there is running commands. In this case, a session with automatic closure on disconnect changes 
 	the closure mode to automatic closure on timeout.
         </para>
 	</section>
@@ -249,7 +284,7 @@ same conditions as regards security.</para>
 	  <para>  
 	    The ssh public key of the machine 
 	    named <emphasis role = "italic">"userId-machineId"</emphasis> is returned and stored on the $HOME/.vishnu directory/localAccountPublicKey/ and must be added by the user on the authorized key of the UNIX account.
-	    In this way, VISHNU can be connected directly on this UNIX account for making tash as it was the user of the UNIX account.
+	    In this way, VISHNU can be connected directly on this UNIX account for making tasks as it was the user of the UNIX account.
 	 </para>
       </section>
       
