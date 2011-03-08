@@ -1,6 +1,8 @@
 #!/bin/sh
 #
-# Script to prepare the release
+# Script to prepare the release for the UMS module in vishnu
+# Author K. Coulomb (kevin.coulomb@sysfera.com)
+# Date 08/03/11
 #
 
 # Create temporary directory
@@ -72,7 +74,11 @@ for i in  $(find . -name "*~") ; do rm $i;  done ;
 # remove all build dir
 for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
 
-cd -
+cd ..
 
 # Archive to send
-tar -czvf VISHNU_UMS.tar.gz $path
+tar -czvf VISHNU_UMS.tar.gz VISHNU_UMS_1.0
+
+# Moving archive in /tmp
+mv VISHNU_UMS.tar.gz /tmp/
+
