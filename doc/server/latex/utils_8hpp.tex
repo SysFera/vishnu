@@ -1,0 +1,427 @@
+\hypertarget{utils_8hpp}{
+\section{UMS/src/cli/utils.hpp File Reference}
+\label{utils_8hpp}\index{UMS/src/cli/utils.hpp@{UMS/src/cli/utils.hpp}}
+}
+
+
+this file contains a declaration of helper functions used by the command line interface  
+
+
+{\ttfamily \#include \char`\"{}UMS\_\-Data.hpp\char`\"{}}\par
+{\ttfamily \#include $<$iostream$>$}\par
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45a}{ErrorType} \{ \hyperlink{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45aabad8b7d8b1e3d216b3bebda060e141c0}{PARAMERROR}, 
+\hyperlink{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45aac2843be4c176551ae93267dc258fd5d3}{EXECERROR}
+ \}
+\begin{DoxyCompactList}\small\item\em a convenient type to classify error type \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{utils_8hpp_af509b9dd94dd558746a6d3e04fa653a8}{helpUsage} (const \hyperlink{classOptions}{Options} \&opt, const std::string \&signature)
+\begin{DoxyCompactList}\small\item\em helper function to display help about a specific command \item\end{DoxyCompactList}\item 
+void \hyperlink{utils_8hpp_abeb391e2dfb181bfd74c264072c6443d}{errorUsage} (const std::string \&cli, const std::string \&errMsg, const \hyperlink{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45a}{ErrorType} \&err=PARAMERROR)
+\begin{DoxyCompactList}\small\item\em helper function to display error about a specific command \item\end{DoxyCompactList}\item 
+int \hyperlink{utils_8hpp_a288ac39ba8d8adc8afd1b1d502377405}{usage} (const \hyperlink{classOptions}{Options} \&opt, const std::string \&mess, const std::string \&ewhat)
+\begin{DoxyCompactList}\small\item\em Helper function to display information (error or usage) about a specific command. \item\end{DoxyCompactList}\item 
+void \hyperlink{utils_8hpp_a1a9d575146744af073ca796687534de5}{checkVishnuConfig} (const \hyperlink{classOptions}{Options} \&opt)
+\begin{DoxyCompactList}\small\item\em A helper function which check if VISHNU\_\-CONFIG\_\-FILE is set. \item\end{DoxyCompactList}\item 
+\hypertarget{utils_8hpp_a6636b2b73728278e57c8de74eacf3ea4}{
+void \hyperlink{utils_8hpp_a6636b2b73728278e57c8de74eacf3ea4}{printSuccessMessage} ()}
+\label{utils_8hpp_a6636b2b73728278e57c8de74eacf3ea4}
+
+\begin{DoxyCompactList}\small\item\em Function to print success message. \item\end{DoxyCompactList}\item 
+void \hyperlink{utils_8hpp_abf3aa08d0f9d8488c285a7a142db9b75}{setFill} (int size, std::ostream \&os)
+\begin{DoxyCompactList}\small\item\em Display a '-\/' caracter. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a23bc3b997503e3e179ce7824caf8b9ab}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::Session\_\-ptr \&session)
+\begin{DoxyCompactList}\small\item\em Helper function to display a session. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a51703811ea182465c7327b5a941fdc78}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListSessions \&listSession)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of session. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::LocalAccount\_\-ptr \&account)
+\begin{DoxyCompactList}\small\item\em Helper function to display a local account. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_aea7af2fc33f3de9727cb591ee7871e1a}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListLocalAccounts \&lsLocalAccounts)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of local accounts. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a4848c3c727920b58b2c8ea3e99dd7f5f}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::Machine\_\-ptr \&machine)
+\begin{DoxyCompactList}\small\item\em Helper function to display a machine. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_afbd9b0dae6f2ef4948c7b7c84de28ff2}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListMachines \&lsMachine)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of machines. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::Command\_\-ptr \&command)
+\begin{DoxyCompactList}\small\item\em Helper function to display a command. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_aba784d63c5583c6122ea8416c589af13}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListCommands \&lsCommand)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of command. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a8d47a1fc191be0bcaaa75c2ef2aaa24a}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::OptionValue\_\-ptr \&optionValue)
+\begin{DoxyCompactList}\small\item\em Helper function to display an option value. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a842d29fcc4a18e3df54799bfe2559d1d}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListOptionsValues \&lsOptions)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of options. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}{operator$<$$<$} (std::ostream \&os, const UMS\_\-Data::User\_\-ptr \&user)
+\begin{DoxyCompactList}\small\item\em Helper function to display a user. \item\end{DoxyCompactList}\item 
+std::ostream \& \hyperlink{utils_8hpp_a2894c5ead835df5118aee7c80a25b5d3}{operator$<$$<$} (std::ostream \&os, UMS\_\-Data::ListUsers \&lsUsers)
+\begin{DoxyCompactList}\small\item\em Helper function to display a list of users. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+this file contains a declaration of helper functions used by the command line interface \begin{DoxyAuthor}{Authors}
+Daouda Traore (\href{mailto:daouda.traore@sysfera.com}{\tt daouda.traore@sysfera.com}) and Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45a}{
+\index{utils.hpp@{utils.hpp}!ErrorType@{ErrorType}}
+\index{ErrorType@{ErrorType}!utils.hpp@{utils.hpp}}
+\subsubsection[{ErrorType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf ErrorType}}}
+\label{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45a}
+
+
+a convenient type to classify error type 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{PARAMERROR@{PARAMERROR}!utils.hpp@{utils.hpp}}\index{utils.hpp@{utils.hpp}!PARAMERROR@{PARAMERROR}}\item[{\em 
+\hypertarget{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45aabad8b7d8b1e3d216b3bebda060e141c0}{
+PARAMERROR}
+\label{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45aabad8b7d8b1e3d216b3bebda060e141c0}
+}]for any invalid parameter error \index{EXECERROR@{EXECERROR}!utils.hpp@{utils.hpp}}\index{utils.hpp@{utils.hpp}!EXECERROR@{EXECERROR}}\item[{\em 
+\hypertarget{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45aac2843be4c176551ae93267dc258fd5d3}{
+EXECERROR}
+\label{utils_8hpp_ab0df38968e4f03a3f1f6d6df0f31f45aac2843be4c176551ae93267dc258fd5d3}
+}]for any runtime error \end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{utils_8hpp_a1a9d575146744af073ca796687534de5}{
+\index{utils.hpp@{utils.hpp}!checkVishnuConfig@{checkVishnuConfig}}
+\index{checkVishnuConfig@{checkVishnuConfig}!utils.hpp@{utils.hpp}}
+\subsubsection[{checkVishnuConfig}]{\setlength{\rightskip}{0pt plus 5cm}void checkVishnuConfig (
+\begin{DoxyParamCaption}
+\item[{const {\bf Options} \&}]{ opt}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a1a9d575146744af073ca796687534de5}
+
+
+A helper function which check if VISHNU\_\-CONFIG\_\-FILE is set. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em opt,:}]describes all options allowed by the command \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em raise}]a runtime exception if the VISHNU\_\-CONFIG\_\-FILE is not set \end{DoxyExceptions}
+\hypertarget{utils_8hpp_abeb391e2dfb181bfd74c264072c6443d}{
+\index{utils.hpp@{utils.hpp}!errorUsage@{errorUsage}}
+\index{errorUsage@{errorUsage}!utils.hpp@{utils.hpp}}
+\subsubsection[{errorUsage}]{\setlength{\rightskip}{0pt plus 5cm}void errorUsage (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ cli, }
+\item[{const std::string \&}]{ errMsg, }
+\item[{const {\bf ErrorType} \&}]{ err = {\ttfamily PARAMERROR}}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_abeb391e2dfb181bfd74c264072c6443d}
+
+
+helper function to display error about a specific command 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cli}]:The name of the command \item[{\em errMsg,:}]The error message to display \item[{\em err}]: The error type \end{DoxyParams}
+\hypertarget{utils_8hpp_af509b9dd94dd558746a6d3e04fa653a8}{
+\index{utils.hpp@{utils.hpp}!helpUsage@{helpUsage}}
+\index{helpUsage@{helpUsage}!utils.hpp@{utils.hpp}}
+\subsubsection[{helpUsage}]{\setlength{\rightskip}{0pt plus 5cm}void helpUsage (
+\begin{DoxyParamCaption}
+\item[{const {\bf Options} \&}]{ opt, }
+\item[{const std::string \&}]{ signature}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_af509b9dd94dd558746a6d3e04fa653a8}
+
+
+helper function to display help about a specific command 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em opt,:}]describes all options allowed by the command \item[{\em signature,:}]defines the usage of the command \end{DoxyParams}
+\hypertarget{utils_8hpp_a842d29fcc4a18e3df54799bfe2559d1d}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListOptionsValues \&}]{ lsOptions}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a842d29fcc4a18e3df54799bfe2559d1d}
+
+
+Helper function to display a list of options. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsOptions,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of options has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a8d47a1fc191be0bcaaa75c2ef2aaa24a}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::OptionValue\_\-ptr \&}]{ optionValue}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a8d47a1fc191be0bcaaa75c2ef2aaa24a}
+
+
+Helper function to display an option value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the option value will be printed \item[{\em optionValue,:}]The option value to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the option value has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::User\_\-ptr \&}]{ user}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_ac0ab9b7087e81b34d44e96624f2fe808}
+
+
+Helper function to display a user. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the user will be printed \item[{\em user,:}]The user to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the user has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::Command\_\-ptr \&}]{ command}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_af52097d3ca43d66de877be2de334b2a2}
+
+
+Helper function to display a command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the command will be printed \item[{\em command,:}]The command to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the command has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a2894c5ead835df5118aee7c80a25b5d3}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListUsers \&}]{ lsUsers}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a2894c5ead835df5118aee7c80a25b5d3}
+
+
+Helper function to display a list of users. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsUsers,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of users has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a4848c3c727920b58b2c8ea3e99dd7f5f}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::Machine\_\-ptr \&}]{ machine}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a4848c3c727920b58b2c8ea3e99dd7f5f}
+
+
+Helper function to display a machine. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the machine will be printed \item[{\em machine,:}]The machine to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the machine has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a51703811ea182465c7327b5a941fdc78}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListSessions \&}]{ listSession}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a51703811ea182465c7327b5a941fdc78}
+
+
+Helper function to display a list of session. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em listSession,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of sessions has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::LocalAccount\_\-ptr \&}]{ account}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a2a4e4278d35e12b33b324f50631ea1eb}
+
+
+Helper function to display a local account. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the local account will be printed \item[{\em account,:}]The local account to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the local account has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_aea7af2fc33f3de9727cb591ee7871e1a}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListLocalAccounts \&}]{ lsLocalAccounts}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_aea7af2fc33f3de9727cb591ee7871e1a}
+
+
+Helper function to display a list of local accounts. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsLocalAccounts,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of local accounts has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_aba784d63c5583c6122ea8416c589af13}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListCommands \&}]{ lsCommand}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_aba784d63c5583c6122ea8416c589af13}
+
+
+Helper function to display a list of command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsCommand,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of command has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_afbd9b0dae6f2ef4948c7b7c84de28ff2}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{UMS\_\-Data::ListMachines \&}]{ lsMachine}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_afbd9b0dae6f2ef4948c7b7c84de28ff2}
+
+
+Helper function to display a list of machines. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]The output stream in which the list will be printed \item[{\em lsMachine,:}]The list to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the list of machines has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_a23bc3b997503e3e179ce7824caf8b9ab}{
+\index{utils.hpp@{utils.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!utils.hpp@{utils.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const UMS\_\-Data::Session\_\-ptr \&}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a23bc3b997503e3e179ce7824caf8b9ab}
+
+
+Helper function to display a session. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]An output stream in which the session will be printed \item[{\em session,:}]The session to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream in which the session has been printed 
+\end{DoxyReturn}
+\hypertarget{utils_8hpp_abf3aa08d0f9d8488c285a7a142db9b75}{
+\index{utils.hpp@{utils.hpp}!setFill@{setFill}}
+\index{setFill@{setFill}!utils.hpp@{utils.hpp}}
+\subsubsection[{setFill}]{\setlength{\rightskip}{0pt plus 5cm}void setFill (
+\begin{DoxyParamCaption}
+\item[{int}]{ size, }
+\item[{std::ostream \&}]{ os}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_abf3aa08d0f9d8488c285a7a142db9b75}
+
+
+Display a '-\/' caracter. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em size,:}]The number of '-\/' to diplay \item[{\em os}]The output stream in which the display will be done. \end{DoxyParams}
+\hypertarget{utils_8hpp_a288ac39ba8d8adc8afd1b1d502377405}{
+\index{utils.hpp@{utils.hpp}!usage@{usage}}
+\index{usage@{usage}!utils.hpp@{utils.hpp}}
+\subsubsection[{usage}]{\setlength{\rightskip}{0pt plus 5cm}int usage (
+\begin{DoxyParamCaption}
+\item[{const {\bf Options} \&}]{ opt, }
+\item[{const std::string \&}]{ mess, }
+\item[{const std::string \&}]{ ewhat}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8hpp_a288ac39ba8d8adc8afd1b1d502377405}
+
+
+Helper function to display information (error or usage) about a specific command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em opt}]:describes all options allowed by the command \item[{\em mess,:}]The help usage message to display \item[{\em ewhat}]: The error message to display \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if an help is required or 1 if an error must me displayed 
+\end{DoxyReturn}

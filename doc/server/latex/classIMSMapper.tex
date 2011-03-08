@@ -1,0 +1,148 @@
+\hypertarget{classIMSMapper}{
+\section{IMSMapper Class Reference}
+\label{classIMSMapper}\index{IMSMapper@{IMSMapper}}
+}
+
+
+\hyperlink{classMapper}{Mapper} implementation for the IMS module.  
+
+
+
+
+{\ttfamily \#include $<$IMSMapper.hpp$>$}
+
+Inheritance diagram for IMSMapper:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classIMSMapper}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classIMSMapper_ae98b7c56f1613969e0919f2885ce123d}{IMSMapper} (\hyperlink{classMapperRegistry}{MapperRegistry} $\ast$reg, string name)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classIMSMapper_aa9a81362b530648633c95d7fb2f6bbca}{
+\hyperlink{classIMSMapper_aa9a81362b530648633c95d7fb2f6bbca}{IMSMapper} ()}
+\label{classIMSMapper_aa9a81362b530648633c95d7fb2f6bbca}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classIMSMapper_a5454adaabc0a8049263f2f9c50f71d36}{registerMapper} ()
+\begin{DoxyCompactList}\small\item\em To register a mapper in the list of active mapper. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classIMSMapper_a688bf20409385a8c7505164153d243ac}{unregisterMapper} ()
+\begin{DoxyCompactList}\small\item\em To unregister a mapper in the list of active mapper. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classIMSMapper_a25a97459b750bf8204178b9a18637113}{getCommand} (const int \&key, string \&command)
+\begin{DoxyCompactList}\small\item\em To get the command corresponding to a key. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classIMSMapper_a762164cb091f97d2a4698de59cc66cb5}{getKey} (const string \&command, int \&key)
+\begin{DoxyCompactList}\small\item\em To get the key corresponding to a command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classMapper}{Mapper} implementation for the IMS module. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classIMSMapper_ae98b7c56f1613969e0919f2885ce123d}{
+\index{IMSMapper@{IMSMapper}!IMSMapper@{IMSMapper}}
+\index{IMSMapper@{IMSMapper}!IMSMapper@{IMSMapper}}
+\subsubsection[{IMSMapper}]{\setlength{\rightskip}{0pt plus 5cm}IMSMapper::IMSMapper (
+\begin{DoxyParamCaption}
+\item[{{\bf MapperRegistry} $\ast$}]{ reg, }
+\item[{string}]{ name}
+\end{DoxyParamCaption}
+)}}
+\label{classIMSMapper_ae98b7c56f1613969e0919f2885ce123d}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em reg}]Registry to register \item[{\em name}]Name to use to register \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classIMSMapper_a25a97459b750bf8204178b9a18637113}{
+\index{IMSMapper@{IMSMapper}!getCommand@{getCommand}}
+\index{getCommand@{getCommand}!IMSMapper@{IMSMapper}}
+\subsubsection[{getCommand}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::getCommand (
+\begin{DoxyParamCaption}
+\item[{const int \&}]{ key, }
+\item[{string \&}]{ command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classIMSMapper_a25a97459b750bf8204178b9a18637113}
+
+
+To get the command corresponding to a key. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em key}]The key to use \item[{\em command}]OUT, the command corresponding to the key \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classIMSMapper_a762164cb091f97d2a4698de59cc66cb5}{
+\index{IMSMapper@{IMSMapper}!getKey@{getKey}}
+\index{getKey@{getKey}!IMSMapper@{IMSMapper}}
+\subsubsection[{getKey}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::getKey (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ command, }
+\item[{int \&}]{ key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classIMSMapper_a762164cb091f97d2a4698de59cc66cb5}
+
+
+To get the key corresponding to a command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em command}]The 'key' to use \item[{\em key}]OUT, the key corresponding to the command \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classIMSMapper_a5454adaabc0a8049263f2f9c50f71d36}{
+\index{IMSMapper@{IMSMapper}!registerMapper@{registerMapper}}
+\index{registerMapper@{registerMapper}!IMSMapper@{IMSMapper}}
+\subsubsection[{registerMapper}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::registerMapper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classIMSMapper_a5454adaabc0a8049263f2f9c50f71d36}
+
+
+To register a mapper in the list of active mapper. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classMapper_a6d7b0051fbf45b48b33e6787092b95bc}{Mapper}.
+
+\hypertarget{classIMSMapper_a688bf20409385a8c7505164153d243ac}{
+\index{IMSMapper@{IMSMapper}!unregisterMapper@{unregisterMapper}}
+\index{unregisterMapper@{unregisterMapper}!IMSMapper@{IMSMapper}}
+\subsubsection[{unregisterMapper}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::unregisterMapper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classIMSMapper_a688bf20409385a8c7505164153d243ac}
+
+
+To unregister a mapper in the list of active mapper. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classMapper_a8e34d570895cfa42aa998e4a30f80f2c}{Mapper}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/registry/\hyperlink{IMSMapper_8hpp}{IMSMapper.hpp}\end{DoxyCompactItemize}

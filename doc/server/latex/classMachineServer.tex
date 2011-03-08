@@ -1,0 +1,207 @@
+\hypertarget{classMachineServer}{
+\section{MachineServer Class Reference}
+\label{classMachineServer}\index{MachineServer@{MachineServer}}
+}
+
+
+\hyperlink{classMachineServer}{MachineServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$MachineServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMachineServer_a067dab7512c1882721579dea892a5f8c}{MachineServer} (UMS\_\-Data::Machine $\ast$\&machine)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classMachineServer_ac65f4c23f95852a0725a0561b276f383}{MachineServer} (UMS\_\-Data::Machine $\ast$\&machine, \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMachineServer_ad70b95ea991526066056bf81c016c8fc}{add} ()
+\begin{DoxyCompactList}\small\item\em Function to add a new VISHNU machine. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMachineServer_a06dcfd04b484d41b54554978c45b73c8}{update} ()
+\begin{DoxyCompactList}\small\item\em Function to update a VISHNU machine. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMachineServer_a0efa7bde46c67e38e973705363c3d8a1}{deleteMachine} ()
+\begin{DoxyCompactList}\small\item\em Function to delete a VISHNU machine. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineServer_a03bf79f9afe40bcc63212b03b0eef81a}{
+\hyperlink{classMachineServer_a03bf79f9afe40bcc63212b03b0eef81a}{$\sim$MachineServer} ()}
+\label{classMachineServer_a03bf79f9afe40bcc63212b03b0eef81a}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::Machine $\ast$ \hyperlink{classMachineServer_a525e619128a0472920cf9894184f5b45}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get machine information. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classMachineServer_a14afc6c4424dd26be8cc0843aac3f2f3}{getAttribut} (std::string condition, std::string attrname=\char`\"{}nummachineid\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to get machine information from the database vishnu. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classMachineServer_a75c136bdf1d210f19b5794f7c7ccd948}{getPublicKey} ()
+\begin{DoxyCompactList}\small\item\em Function to get the content of the public ssh key. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMachineServer_a48d96e37c0b86de1627eabfab0a16f3a}{
+UMS\_\-Data::Machine $\ast$ \hyperlink{classMachineServer_a48d96e37c0b86de1627eabfab0a16f3a}{mmachine}}
+\label{classMachineServer_a48d96e37c0b86de1627eabfab0a16f3a}
+
+\begin{DoxyCompactList}\small\item\em The machine data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineServer_a8ad620f122d53ed6114e1a9924857694}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classMachineServer_a8ad620f122d53ed6114e1a9924857694}{msessionServer}}
+\label{classMachineServer_a8ad620f122d53ed6114e1a9924857694}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates session data. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineServer_ae4205cd70c90227760b0c799b67b9f02}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classMachineServer_ae4205cd70c90227760b0c799b67b9f02}{mdatabaseVishnu}}
+\label{classMachineServer_ae4205cd70c90227760b0c799b67b9f02}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classMachineServer_af5b160283015cb15b5da6a4658a06f92}{
+std::string \hyperlink{classMachineServer_af5b160283015cb15b5da6a4658a06f92}{msshpublickey}}
+\label{classMachineServer_af5b160283015cb15b5da6a4658a06f92}
+
+\begin{DoxyCompactList}\small\item\em The content of the ssh public key. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classMachineServer}{MachineServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMachineServer_a067dab7512c1882721579dea892a5f8c}{
+\index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
+\index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
+\subsubsection[{MachineServer}]{\setlength{\rightskip}{0pt plus 5cm}MachineServer::MachineServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::Machine $\ast$\&}]{ machine}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_a067dab7512c1882721579dea892a5f8c}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em machine}]The machine data structure \end{DoxyParams}
+\hypertarget{classMachineServer_ac65f4c23f95852a0725a0561b276f383}{
+\index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
+\index{MachineServer@{MachineServer}!MachineServer@{MachineServer}}
+\subsubsection[{MachineServer}]{\setlength{\rightskip}{0pt plus 5cm}MachineServer::MachineServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::Machine $\ast$\&}]{ machine, }
+\item[{{\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_ac65f4c23f95852a0725a0561b276f383}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em machine}]The machine data structure \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMachineServer_ad70b95ea991526066056bf81c016c8fc}{
+\index{MachineServer@{MachineServer}!add@{add}}
+\index{add@{add}!MachineServer@{MachineServer}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int MachineServer::add (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_ad70b95ea991526066056bf81c016c8fc}
+
+
+Function to add a new VISHNU machine. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classMachineServer_a0efa7bde46c67e38e973705363c3d8a1}{
+\index{MachineServer@{MachineServer}!deleteMachine@{deleteMachine}}
+\index{deleteMachine@{deleteMachine}!MachineServer@{MachineServer}}
+\subsubsection[{deleteMachine}]{\setlength{\rightskip}{0pt plus 5cm}int MachineServer::deleteMachine (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_a0efa7bde46c67e38e973705363c3d8a1}
+
+
+Function to delete a VISHNU machine. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classMachineServer_a14afc6c4424dd26be8cc0843aac3f2f3}{
+\index{MachineServer@{MachineServer}!getAttribut@{getAttribut}}
+\index{getAttribut@{getAttribut}!MachineServer@{MachineServer}}
+\subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}MachineServer::getAttribut (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}nummachineid\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_a14afc6c4424dd26be8cc0843aac3f2f3}
+
+
+Function to get machine information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the attribut or empty string if no results 
+\end{DoxyReturn}
+\hypertarget{classMachineServer_a525e619128a0472920cf9894184f5b45}{
+\index{MachineServer@{MachineServer}!getData@{getData}}
+\index{getData@{getData}!MachineServer@{MachineServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::Machine $\ast$ MachineServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_a525e619128a0472920cf9894184f5b45}
+
+
+Function to get machine information. 
+
+\begin{DoxyReturn}{Returns}
+The user data structure 
+\end{DoxyReturn}
+\hypertarget{classMachineServer_a75c136bdf1d210f19b5794f7c7ccd948}{
+\index{MachineServer@{MachineServer}!getPublicKey@{getPublicKey}}
+\index{getPublicKey@{getPublicKey}!MachineServer@{MachineServer}}
+\subsubsection[{getPublicKey}]{\setlength{\rightskip}{0pt plus 5cm}std::string MachineServer::getPublicKey (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_a75c136bdf1d210f19b5794f7c7ccd948}
+
+
+Function to get the content of the public ssh key. 
+
+\begin{DoxyReturn}{Returns}
+The content of the ssh public key 
+\end{DoxyReturn}
+\hypertarget{classMachineServer_a06dcfd04b484d41b54554978c45b73c8}{
+\index{MachineServer@{MachineServer}!update@{update}}
+\index{update@{update}!MachineServer@{MachineServer}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int MachineServer::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMachineServer_a06dcfd04b484d41b54554978c45b73c8}
+
+
+Function to update a VISHNU machine. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{MachineServer_8hpp}{MachineServer.hpp}\end{DoxyCompactItemize}
