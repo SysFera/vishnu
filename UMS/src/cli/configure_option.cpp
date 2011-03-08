@@ -12,7 +12,7 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt(new Options(av[0])) ;
 
-
+// {{RELAX<CODEREDUCER> The error handling is the same in all command
 
   try {
 
@@ -55,6 +55,8 @@ int main (int ac, char* av[]){
   }
 
   return 0;
+
+  // }}RELAX<CODEREDUCER>
 
 }// end of main
 

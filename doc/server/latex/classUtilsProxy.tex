@@ -1,0 +1,150 @@
+\hypertarget{classUtilsProxy}{
+\section{UtilsProxy Class Reference}
+\label{classUtilsProxy}\index{UtilsProxy@{UtilsProxy}}
+}
+
+
+The class with the utilitaries function (not in the cli api).  
+
+
+
+
+{\ttfamily \#include $<$UtilsProxy.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classUtilsProxy_aaafa5c4ab604c906d313bbeb86fae89d}{
+\hyperlink{classUtilsProxy_aaafa5c4ab604c906d313bbeb86fae89d}{UtilsProxy} ()}
+\label{classUtilsProxy_aaafa5c4ab604c906d313bbeb86fae89d}
+
+\begin{DoxyCompactList}\small\item\em Constructor, default constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classUtilsProxy_ac5a9f462a23dca72804c9949de07dfb3}{UtilsProxy} (char $\ast$cfg, int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classUtilsProxy_afc7b1c01f7d1129e80d1fe63da23c39c}{UtilsProxy} (const std::string \&filePath)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUtilsProxy_a037ff9b798890eb865cddef7dd9eec94}{initialize} ()
+\begin{DoxyCompactList}\small\item\em Function to initialize the SYSFERA-\/DS configuration. \item\end{DoxyCompactList}\item 
+void \hyperlink{classUtilsProxy_a2dbe3b111c081b7acf07fcd3e7ee1353}{finalize} ()
+\begin{DoxyCompactList}\small\item\em Function to finalize. \item\end{DoxyCompactList}\item 
+int \hyperlink{classUtilsProxy_a185d510ddd2ff67d2f4ab60d0a2bffda}{restore} ()
+\begin{DoxyCompactList}\small\item\em Function to initialize the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classUtilsProxy_a7ba14b7bc3d594279b050dfbadafe53e}{
+char $\ast$ \hyperlink{classUtilsProxy_a7ba14b7bc3d594279b050dfbadafe53e}{mcfg}}
+\label{classUtilsProxy_a7ba14b7bc3d594279b050dfbadafe53e}
+
+\begin{DoxyCompactList}\small\item\em The name of the Sysfera-\/DS configuration file. \item\end{DoxyCompactList}\item 
+\hypertarget{classUtilsProxy_addc7c06a5e2acd28d2c952e397e91788}{
+int \hyperlink{classUtilsProxy_addc7c06a5e2acd28d2c952e397e91788}{margc}}
+\label{classUtilsProxy_addc7c06a5e2acd28d2c952e397e91788}
+
+\begin{DoxyCompactList}\small\item\em The number of arguments used Sysfera-\/DS. \item\end{DoxyCompactList}\item 
+\hypertarget{classUtilsProxy_a5217a4157bd80b6c546bc198e7fc3f68}{
+char $\ast$$\ast$ \hyperlink{classUtilsProxy_a5217a4157bd80b6c546bc198e7fc3f68}{margv}}
+\label{classUtilsProxy_a5217a4157bd80b6c546bc198e7fc3f68}
+
+\begin{DoxyCompactList}\small\item\em The list of arguments used Sysfera-\/DS. \item\end{DoxyCompactList}\item 
+\hypertarget{classUtilsProxy_abe1479afd2eb2f89157c031b119a3105}{
+std::string \hyperlink{classUtilsProxy_abe1479afd2eb2f89157c031b119a3105}{mfilePath}}
+\label{classUtilsProxy_abe1479afd2eb2f89157c031b119a3105}
+
+\begin{DoxyCompactList}\small\item\em The file used by the restore function. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The class with the utilitaries function (not in the cli api). 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUtilsProxy_ac5a9f462a23dca72804c9949de07dfb3}{
+\index{UtilsProxy@{UtilsProxy}!UtilsProxy@{UtilsProxy}}
+\index{UtilsProxy@{UtilsProxy}!UtilsProxy@{UtilsProxy}}
+\subsubsection[{UtilsProxy}]{\setlength{\rightskip}{0pt plus 5cm}UtilsProxy::UtilsProxy (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ cfg, }
+\item[{int}]{ argc, }
+\item[{char $\ast$$\ast$}]{ argv}
+\end{DoxyParamCaption}
+)}}
+\label{classUtilsProxy_ac5a9f462a23dca72804c9949de07dfb3}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cfg}]The SYSFERA-\/DS configuration file \item[{\em argc}]The number of arguments of the program \item[{\em argv}]The list of arguments \end{DoxyParams}
+\hypertarget{classUtilsProxy_afc7b1c01f7d1129e80d1fe63da23c39c}{
+\index{UtilsProxy@{UtilsProxy}!UtilsProxy@{UtilsProxy}}
+\index{UtilsProxy@{UtilsProxy}!UtilsProxy@{UtilsProxy}}
+\subsubsection[{UtilsProxy}]{\setlength{\rightskip}{0pt plus 5cm}UtilsProxy::UtilsProxy (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ filePath}
+\end{DoxyParamCaption}
+)}}
+\label{classUtilsProxy_afc7b1c01f7d1129e80d1fe63da23c39c}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em filePath}]The file used by the restore function \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classUtilsProxy_a2dbe3b111c081b7acf07fcd3e7ee1353}{
+\index{UtilsProxy@{UtilsProxy}!finalize@{finalize}}
+\index{finalize@{finalize}!UtilsProxy@{UtilsProxy}}
+\subsubsection[{finalize}]{\setlength{\rightskip}{0pt plus 5cm}void UtilsProxy::finalize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classUtilsProxy_a2dbe3b111c081b7acf07fcd3e7ee1353}
+
+
+Function to finalize. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classUtilsProxy_a037ff9b798890eb865cddef7dd9eec94}{
+\index{UtilsProxy@{UtilsProxy}!initialize@{initialize}}
+\index{initialize@{initialize}!UtilsProxy@{UtilsProxy}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}int UtilsProxy::initialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classUtilsProxy_a037ff9b798890eb865cddef7dd9eec94}
+
+
+Function to initialize the SYSFERA-\/DS configuration. 
+
+\begin{DoxyReturn}{Returns}
+0 if success else 1 if error 
+\end{DoxyReturn}
+\hypertarget{classUtilsProxy_a185d510ddd2ff67d2f4ab60d0a2bffda}{
+\index{UtilsProxy@{UtilsProxy}!restore@{restore}}
+\index{restore@{restore}!UtilsProxy@{UtilsProxy}}
+\subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}int UtilsProxy::restore (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classUtilsProxy_a185d510ddd2ff67d2f4ab60d0a2bffda}
+
+
+Function to initialize the database. 
+
+\begin{DoxyReturn}{Returns}
+an error code 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/client/\hyperlink{UtilsProxy_8hpp}{UtilsProxy.hpp}\end{DoxyCompactItemize}

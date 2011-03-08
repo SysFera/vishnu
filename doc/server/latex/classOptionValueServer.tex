@@ -1,0 +1,182 @@
+\hypertarget{classOptionValueServer}{
+\section{OptionValueServer Class Reference}
+\label{classOptionValueServer}\index{OptionValueServer@{OptionValueServer}}
+}
+
+
+\hyperlink{classOptionValueServer}{OptionValueServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$OptionValueServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classOptionValueServer_a8a72322eb8f598eb671f3c80265379e9}{
+\hyperlink{classOptionValueServer_a8a72322eb8f598eb671f3c80265379e9}{OptionValueServer} ()}
+\label{classOptionValueServer_a8a72322eb8f598eb671f3c80265379e9}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classOptionValueServer_a2f432257cbe83451b54d59c584cc35c6}{OptionValueServer} (UMS\_\-Data::OptionValue $\ast$\&optionvalue, \hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classOptionValueServer_afe5c33ad15ac74fe72690c8d54302729}{configureOption} (bool defaultOptions=false)
+\begin{DoxyCompactList}\small\item\em Function to configure options on the database. \item\end{DoxyCompactList}\item 
+\hypertarget{classOptionValueServer_ac302d5f497a13eabd1bbeea9c3b124d8}{
+\hyperlink{classOptionValueServer_ac302d5f497a13eabd1bbeea9c3b124d8}{$\sim$OptionValueServer} ()}
+\label{classOptionValueServer_ac302d5f497a13eabd1bbeea9c3b124d8}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::OptionValue $\ast$ \hyperlink{classOptionValueServer_a9d40a465b4c6c048d49dd121cbbcb4c4}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get option data structure. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classOptionValueServer_a9be8cdef4ed59ef0fdf421bb973257d0}{getAttribut} (std::string condition, std::string attrname=\char`\"{}value\char`\"{}, bool defaultOptions=false)
+\begin{DoxyCompactList}\small\item\em Function to get option information from the database vishnu. \item\end{DoxyCompactList}\item 
+int \hyperlink{classOptionValueServer_a156098735b4d0ce3a23de69278d40d6a}{getClosureInfo} (std::string numuserId, std::string nameInfo=\char`\"{}VISHNU\_\-CLOSE\_\-POLICY\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to get closure information from the database vishnu. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOptionValueServer_aa9d00391ec222d6f200c7ea1db8a4892}{isCorrectValue} ()
+\begin{DoxyCompactList}\small\item\em Function to check the value for a specific option. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classOptionValueServer_afffe0327c43751ff0daa1b53b94be62f}{
+UMS\_\-Data::OptionValue $\ast$ \hyperlink{classOptionValueServer_afffe0327c43751ff0daa1b53b94be62f}{moptionValue}}
+\label{classOptionValueServer_afffe0327c43751ff0daa1b53b94be62f}
+
+\begin{DoxyCompactList}\small\item\em The option data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classOptionValueServer_a815114e58f01214f1b09c8d55bab5a53}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classOptionValueServer_a815114e58f01214f1b09c8d55bab5a53}{mdatabaseVishnu}}
+\label{classOptionValueServer_a815114e58f01214f1b09c8d55bab5a53}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classOptionValueServer_a7b01e99f3d94398360efeebec599f287}{
+\hyperlink{classSessionServer}{SessionServer} $\ast$ \hyperlink{classOptionValueServer_a7b01e99f3d94398360efeebec599f287}{msessionServer}}
+\label{classOptionValueServer_a7b01e99f3d94398360efeebec599f287}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates user data. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classOptionValueServer}{OptionValueServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOptionValueServer_a2f432257cbe83451b54d59c584cc35c6}{
+\index{OptionValueServer@{OptionValueServer}!OptionValueServer@{OptionValueServer}}
+\index{OptionValueServer@{OptionValueServer}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{OptionValueServer}]{\setlength{\rightskip}{0pt plus 5cm}OptionValueServer::OptionValueServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::OptionValue $\ast$\&}]{ optionvalue, }
+\item[{{\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classOptionValueServer_a2f432257cbe83451b54d59c584cc35c6}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em optionvalue}]the option data structure \item[{\em session}]The object to manipulate session \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOptionValueServer_afe5c33ad15ac74fe72690c8d54302729}{
+\index{OptionValueServer@{OptionValueServer}!configureOption@{configureOption}}
+\index{configureOption@{configureOption}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{configureOption}]{\setlength{\rightskip}{0pt plus 5cm}int OptionValueServer::configureOption (
+\begin{DoxyParamCaption}
+\item[{bool}]{ defaultOptions = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classOptionValueServer_afe5c33ad15ac74fe72690c8d54302729}
+
+
+Function to configure options on the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em defaultOptions}]the flag to get data from defauts options table \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classOptionValueServer_a9be8cdef4ed59ef0fdf421bb973257d0}{
+\index{OptionValueServer@{OptionValueServer}!getAttribut@{getAttribut}}
+\index{getAttribut@{getAttribut}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}std::string OptionValueServer::getAttribut (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}value\char`\"{}}, }
+\item[{bool}]{ defaultOptions = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classOptionValueServer_a9be8cdef4ed59ef0fdf421bb973257d0}
+
+
+Function to get option information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \item[{\em defaultOptions}]the flag to get data from defauts options table \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the attribut or empty string if no results 
+\end{DoxyReturn}
+\hypertarget{classOptionValueServer_a156098735b4d0ce3a23de69278d40d6a}{
+\index{OptionValueServer@{OptionValueServer}!getClosureInfo@{getClosureInfo}}
+\index{getClosureInfo@{getClosureInfo}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{getClosureInfo}]{\setlength{\rightskip}{0pt plus 5cm}int OptionValueServer::getClosureInfo (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ numuserId, }
+\item[{std::string}]{ nameInfo = {\ttfamily \char`\"{}VISHNU\_\-CLOSE\_\-POLICY\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classOptionValueServer_a156098735b4d0ce3a23de69278d40d6a}
+
+
+Function to get closure information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em numuserId}]The database number id of the user who wants to get closure information \item[{\em nameInfo}]the name of the closure information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error or success code 
+\end{DoxyReturn}
+\hypertarget{classOptionValueServer_a9d40a465b4c6c048d49dd121cbbcb4c4}{
+\index{OptionValueServer@{OptionValueServer}!getData@{getData}}
+\index{getData@{getData}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::OptionValue OptionValueServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classOptionValueServer_a9d40a465b4c6c048d49dd121cbbcb4c4}
+
+
+Function to get option data structure. 
+
+\begin{DoxyReturn}{Returns}
+The user data structure 
+\end{DoxyReturn}
+\hypertarget{classOptionValueServer_aa9d00391ec222d6f200c7ea1db8a4892}{
+\index{OptionValueServer@{OptionValueServer}!isCorrectValue@{isCorrectValue}}
+\index{isCorrectValue@{isCorrectValue}!OptionValueServer@{OptionValueServer}}
+\subsubsection[{isCorrectValue}]{\setlength{\rightskip}{0pt plus 5cm}bool OptionValueServer::isCorrectValue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classOptionValueServer_aa9d00391ec222d6f200c7ea1db8a4892}
+
+
+Function to check the value for a specific option. 
+
+\begin{DoxyReturn}{Returns}
+true if the option value is correct else false 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{OptionValueServer_8hpp}{OptionValueServer.hpp}\end{DoxyCompactItemize}

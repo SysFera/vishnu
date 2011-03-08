@@ -1,0 +1,106 @@
+\hypertarget{Options_8hpp}{
+\section{core/src/utils/Options.hpp File Reference}
+\label{Options_8hpp}\index{core/src/utils/Options.hpp@{core/src/utils/Options.hpp}}
+}
+
+
+This file defines a class to handle command line options.  
+
+
+{\ttfamily \#include $<$typeinfo$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$boost/program\_\-options.hpp$>$}\par
+{\ttfamily \#include $<$boost/function.hpp$>$}\par
+{\ttfamily \#include $<$boost/shared\_\-ptr.hpp$>$}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classConfiguration}{Configuration}
+\begin{DoxyCompactList}\small\item\em Standard configuration class. \item\end{DoxyCompactList}\item 
+class \hyperlink{classOptions}{Options}
+\begin{DoxyCompactList}\small\item\em Used to process the users command line parameters. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{Options_8hpp_a3e992ba9ff50fb8a17ae2d36ea9b3f80}{
+typedef boost::function1$<$ std::string, std::string $>$ \hyperlink{Options_8hpp_a3e992ba9ff50fb8a17ae2d36ea9b3f80}{func1}}
+\label{Options_8hpp_a3e992ba9ff50fb8a17ae2d36ea9b3f80}
+
+\begin{DoxyCompactList}\small\item\em function type used to map environnement variable name \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{Options_8hpp_abca947614755a7e288afe5c44b07c98d}{Group\_\-type} \{ \hyperlink{Options_8hpp_abca947614755a7e288afe5c44b07c98da9e022e6380da28dd73210ed34b137c36}{GENERIC} = 0, 
+\hyperlink{Options_8hpp_abca947614755a7e288afe5c44b07c98da702582f7f825ca83bdb076b15b4c0fc2}{CONFIG}, 
+\hyperlink{Options_8hpp_abca947614755a7e288afe5c44b07c98da90a589408899045d76b41b0b3520afaf}{ENV}, 
+\hyperlink{Options_8hpp_abca947614755a7e288afe5c44b07c98da41ae0a505430bf564b119bc82db7592d}{HIDDEN}
+ \}
+\begin{DoxyCompactList}\small\item\em A convenient type allowing to group options. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T $>$ }\\std::ostream \& \hyperlink{Options_8hpp_a1772ef9b3f0665605d4aea3794c7fde3}{operator$<$$<$} (std::ostream \&os, const std::vector$<$ T $>$ \&v)
+\begin{DoxyCompactList}\small\item\em A helper function to simplify the display of vector. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file defines a class to handle command line options. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{Options_8hpp_abca947614755a7e288afe5c44b07c98d}{
+\index{Options.hpp@{Options.hpp}!Group\_\-type@{Group\_\-type}}
+\index{Group\_\-type@{Group\_\-type}!Options.hpp@{Options.hpp}}
+\subsubsection[{Group\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Group\_\-type}}}
+\label{Options_8hpp_abca947614755a7e288afe5c44b07c98d}
+
+
+A convenient type allowing to group options. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{GENERIC@{GENERIC}!Options.hpp@{Options.hpp}}\index{Options.hpp@{Options.hpp}!GENERIC@{GENERIC}}\item[{\em 
+\hypertarget{Options_8hpp_abca947614755a7e288afe5c44b07c98da9e022e6380da28dd73210ed34b137c36}{
+GENERIC}
+\label{Options_8hpp_abca947614755a7e288afe5c44b07c98da9e022e6380da28dd73210ed34b137c36}
+}]a generic group of options allowed for all commands \index{CONFIG@{CONFIG}!Options.hpp@{Options.hpp}}\index{Options.hpp@{Options.hpp}!CONFIG@{CONFIG}}\item[{\em 
+\hypertarget{Options_8hpp_abca947614755a7e288afe5c44b07c98da702582f7f825ca83bdb076b15b4c0fc2}{
+CONFIG}
+\label{Options_8hpp_abca947614755a7e288afe5c44b07c98da702582f7f825ca83bdb076b15b4c0fc2}
+}]configuration options \index{ENV@{ENV}!Options.hpp@{Options.hpp}}\index{Options.hpp@{Options.hpp}!ENV@{ENV}}\item[{\em 
+\hypertarget{Options_8hpp_abca947614755a7e288afe5c44b07c98da90a589408899045d76b41b0b3520afaf}{
+ENV}
+\label{Options_8hpp_abca947614755a7e288afe5c44b07c98da90a589408899045d76b41b0b3520afaf}
+}]environment variables \index{HIDDEN@{HIDDEN}!Options.hpp@{Options.hpp}}\index{Options.hpp@{Options.hpp}!HIDDEN@{HIDDEN}}\item[{\em 
+\hypertarget{Options_8hpp_abca947614755a7e288afe5c44b07c98da41ae0a505430bf564b119bc82db7592d}{
+HIDDEN}
+\label{Options_8hpp_abca947614755a7e288afe5c44b07c98da41ae0a505430bf564b119bc82db7592d}
+}]options that will not shown to the user \end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{Options_8hpp_a1772ef9b3f0665605d4aea3794c7fde3}{
+\index{Options.hpp@{Options.hpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Options.hpp@{Options.hpp}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std::ostream \&}]{ os, }
+\item[{const std::vector$<$ T $>$ \&}]{ v}
+\end{DoxyParamCaption}
+)}}
+\label{Options_8hpp_a1772ef9b3f0665605d4aea3794c7fde3}
+
+
+A helper function to simplify the display of vector. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em os,:}]an ostream to write data in \item[{\em v,:}]a vector to print \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the ostream in which the data is written 
+\end{DoxyReturn}

@@ -1,0 +1,151 @@
+\hypertarget{UMSMapper_8hpp}{
+\section{core/src/registry/UMSMapper.hpp File Reference}
+\label{UMSMapper_8hpp}\index{core/src/registry/UMSMapper.hpp@{core/src/registry/UMSMapper.hpp}}
+}
+
+
+\hyperlink{classMapper}{Mapper} for the UMS module.  
+
+
+{\ttfamily \#include $<$map$>$}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include \char`\"{}Mapper.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}MapperRegistry.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}utilVishnu.hpp\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classUMSMapper}{UMSMapper}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classMapper}{Mapper} implementation for the UMS module. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{UMSMapper_8hpp_ade76eea1ea6e34a865ff24d32f2c96f9}{
+const int \hyperlink{UMSMapper_8hpp_ade76eea1ea6e34a865ff24d32f2c96f9}{VISHNU\_\-CONNECT} = 1}
+\label{UMSMapper_8hpp_ade76eea1ea6e34a865ff24d32f2c96f9}
+
+\begin{DoxyCompactList}\small\item\em Connection key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ae2b1c08821f79cd2e32852f11d86563d}{
+const int \hyperlink{UMSMapper_8hpp_ae2b1c08821f79cd2e32852f11d86563d}{VISHNU\_\-RECONNECT} = 2}
+\label{UMSMapper_8hpp_ae2b1c08821f79cd2e32852f11d86563d}
+
+\begin{DoxyCompactList}\small\item\em Reconnection key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ac5f1410a43ed8f71b104bd68b2a285d2}{
+const int \hyperlink{UMSMapper_8hpp_ac5f1410a43ed8f71b104bd68b2a285d2}{VISHNU\_\-CLOSE} = 3}
+\label{UMSMapper_8hpp_ac5f1410a43ed8f71b104bd68b2a285d2}
+
+\begin{DoxyCompactList}\small\item\em Closure key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a77f104db8aed30691f7773ae4526433d}{
+const int \hyperlink{UMSMapper_8hpp_a77f104db8aed30691f7773ae4526433d}{VISHNU\_\-ADD\_\-VISHNU\_\-USER} = 4}
+\label{UMSMapper_8hpp_a77f104db8aed30691f7773ae4526433d}
+
+\begin{DoxyCompactList}\small\item\em Add user key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a316f063cd45307913cefea8a7516bf78}{
+const int \hyperlink{UMSMapper_8hpp_a316f063cd45307913cefea8a7516bf78}{VISHNU\_\-UPDATE\_\-VISHNU\_\-USER} = 5}
+\label{UMSMapper_8hpp_a316f063cd45307913cefea8a7516bf78}
+
+\begin{DoxyCompactList}\small\item\em Update user key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ad6235a0612700f4cd217178c407376eb}{
+const int \hyperlink{UMSMapper_8hpp_ad6235a0612700f4cd217178c407376eb}{VISHNU\_\-DELETE\_\-VISHNU\_\-USER} = 6}
+\label{UMSMapper_8hpp_ad6235a0612700f4cd217178c407376eb}
+
+\begin{DoxyCompactList}\small\item\em Delete user key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_af22748ff967f25a08ffac32c5dd77b1f}{
+const int \hyperlink{UMSMapper_8hpp_af22748ff967f25a08ffac32c5dd77b1f}{VISHNU\_\-CHANGE\_\-PASSWORD} = 7}
+\label{UMSMapper_8hpp_af22748ff967f25a08ffac32c5dd77b1f}
+
+\begin{DoxyCompactList}\small\item\em Change password key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a66e5091b82542f4780dd788181dcd710}{
+const int \hyperlink{UMSMapper_8hpp_a66e5091b82542f4780dd788181dcd710}{VISHNU\_\-RESET\_\-PASSWORD} = 8}
+\label{UMSMapper_8hpp_a66e5091b82542f4780dd788181dcd710}
+
+\begin{DoxyCompactList}\small\item\em Reset password key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ad1ece5d472826de75c40034c7e892025}{
+const int \hyperlink{UMSMapper_8hpp_ad1ece5d472826de75c40034c7e892025}{VISHNU\_\-ADD\_\-LOCAL\_\-ACCOUNT} = 9}
+\label{UMSMapper_8hpp_ad1ece5d472826de75c40034c7e892025}
+
+\begin{DoxyCompactList}\small\item\em Add account key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a95b7c68360284a0f2fbc2966d11e60fc}{
+const int \hyperlink{UMSMapper_8hpp_a95b7c68360284a0f2fbc2966d11e60fc}{VISHNU\_\-UPDATE\_\-LOCAL\_\-ACCOUNT} = 10}
+\label{UMSMapper_8hpp_a95b7c68360284a0f2fbc2966d11e60fc}
+
+\begin{DoxyCompactList}\small\item\em Update account key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a6088c26eafbf8bad064ffd9b8e179c1f}{
+const int \hyperlink{UMSMapper_8hpp_a6088c26eafbf8bad064ffd9b8e179c1f}{VISHNU\_\-DELETE\_\-LOCAL\_\-ACCOUNT} = 11}
+\label{UMSMapper_8hpp_a6088c26eafbf8bad064ffd9b8e179c1f}
+
+\begin{DoxyCompactList}\small\item\em Delete account key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a398b33a2e04a9ed2bb47de5cc524fac7}{
+const int \hyperlink{UMSMapper_8hpp_a398b33a2e04a9ed2bb47de5cc524fac7}{VISHNU\_\-SAVE\_\-CONFIGURATION} = 12}
+\label{UMSMapper_8hpp_a398b33a2e04a9ed2bb47de5cc524fac7}
+
+\begin{DoxyCompactList}\small\item\em Save configuration key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ac5f1c34f88af915e1da7d2a9600c3417}{
+const int \hyperlink{UMSMapper_8hpp_ac5f1c34f88af915e1da7d2a9600c3417}{VISHNU\_\-RESTORE\_\-CONFIGURATION} = 13}
+\label{UMSMapper_8hpp_ac5f1c34f88af915e1da7d2a9600c3417}
+
+\begin{DoxyCompactList}\small\item\em Restore configuration key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a629d26836f7942f2edfeb094f36ce302}{
+const int \hyperlink{UMSMapper_8hpp_a629d26836f7942f2edfeb094f36ce302}{VISHNU\_\-ADD\_\-MACHINE} = 14}
+\label{UMSMapper_8hpp_a629d26836f7942f2edfeb094f36ce302}
+
+\begin{DoxyCompactList}\small\item\em Add machine key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ade266a3306273382d6781bdecd12bb99}{
+const int \hyperlink{UMSMapper_8hpp_ade266a3306273382d6781bdecd12bb99}{VISHNU\_\-UPDATE\_\-MACHINE} = 15}
+\label{UMSMapper_8hpp_ade266a3306273382d6781bdecd12bb99}
+
+\begin{DoxyCompactList}\small\item\em Update machine key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_aaf6aab8f3ae4c995a2e93c4f4653ff1c}{
+const int \hyperlink{UMSMapper_8hpp_aaf6aab8f3ae4c995a2e93c4f4653ff1c}{VISHNU\_\-DELETE\_\-MACHINE} = 16}
+\label{UMSMapper_8hpp_aaf6aab8f3ae4c995a2e93c4f4653ff1c}
+
+\begin{DoxyCompactList}\small\item\em Delete machine key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a3edf775b1b32f59aea76e6d34aa3576e}{
+const int \hyperlink{UMSMapper_8hpp_a3edf775b1b32f59aea76e6d34aa3576e}{VISHNU\_\-LIST\_\-LOCAL\_\-ACCOUNT} = 17}
+\label{UMSMapper_8hpp_a3edf775b1b32f59aea76e6d34aa3576e}
+
+\begin{DoxyCompactList}\small\item\em List account key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a2ee0069a657ff46b84fa98414882965a}{
+const int \hyperlink{UMSMapper_8hpp_a2ee0069a657ff46b84fa98414882965a}{VISHNU\_\-LIST\_\-MACHINE} = 18}
+\label{UMSMapper_8hpp_a2ee0069a657ff46b84fa98414882965a}
+
+\begin{DoxyCompactList}\small\item\em List machine key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a326c0e202419d19a3f556ab0308a8c82}{
+const int \hyperlink{UMSMapper_8hpp_a326c0e202419d19a3f556ab0308a8c82}{VISHNU\_\-LIST\_\-HISTORY\_\-CMD} = 19}
+\label{UMSMapper_8hpp_a326c0e202419d19a3f556ab0308a8c82}
+
+\begin{DoxyCompactList}\small\item\em List history key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a10b59c05d66233e5759819a2042b0aa9}{
+const int \hyperlink{UMSMapper_8hpp_a10b59c05d66233e5759819a2042b0aa9}{VISHNU\_\-LIST\_\-OPTIONS} = 20}
+\label{UMSMapper_8hpp_a10b59c05d66233e5759819a2042b0aa9}
+
+\begin{DoxyCompactList}\small\item\em List option key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_aeb156ce12bca8304f669520bc2a77554}{
+const int \hyperlink{UMSMapper_8hpp_aeb156ce12bca8304f669520bc2a77554}{VISHNU\_\-LIST\_\-USERS} = 21}
+\label{UMSMapper_8hpp_aeb156ce12bca8304f669520bc2a77554}
+
+\begin{DoxyCompactList}\small\item\em List user key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a3e6344e18041c1faf0364e570ed61ea2}{
+const int \hyperlink{UMSMapper_8hpp_a3e6344e18041c1faf0364e570ed61ea2}{VISHNU\_\-LIST\_\-SESSIONS} = 22}
+\label{UMSMapper_8hpp_a3e6344e18041c1faf0364e570ed61ea2}
+
+\begin{DoxyCompactList}\small\item\em List session key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_a004a3e2c40020f746d4e64b9047a42ff}{
+const int \hyperlink{UMSMapper_8hpp_a004a3e2c40020f746d4e64b9047a42ff}{VISHNU\_\-CONFIGURE\_\-DEFAULT\_\-OPTION} = 23}
+\label{UMSMapper_8hpp_a004a3e2c40020f746d4e64b9047a42ff}
+
+\begin{DoxyCompactList}\small\item\em Configure default option key. \item\end{DoxyCompactList}\item 
+\hypertarget{UMSMapper_8hpp_ae128371bf0f5edab567b7cddbc3e503d}{
+const int \hyperlink{UMSMapper_8hpp_ae128371bf0f5edab567b7cddbc3e503d}{VISHNU\_\-CONFIGURE\_\-OPTION} = 24}
+\label{UMSMapper_8hpp_ae128371bf0f5edab567b7cddbc3e503d}
+
+\begin{DoxyCompactList}\small\item\em Configure option key. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classMapper}{Mapper} for the UMS module. \begin{DoxyAuthor}{Author}
+Kevin Coulomb (\href{mailto:kevin.coulomb@sysfera.com}{\tt kevin.coulomb@sysfera.com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+10/02/11 
+\end{DoxyDate}

@@ -1,0 +1,78 @@
+\hypertarget{configureOptionUtils_8hpp}{
+\section{UMS/src/cli/configureOptionUtils.hpp File Reference}
+\label{configureOptionUtils_8hpp}\index{UMS/src/cli/configureOptionUtils.hpp@{UMS/src/cli/configureOptionUtils.hpp}}
+}
+
+
+This file declare useful functions and types for the VISHNU configure option command.  
+
+
+{\ttfamily \#include \char`\"{}common.hpp\char`\"{}}\par
+{\ttfamily \#include $<$boost/function.hpp$>$}\par
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{
+typedef boost::function1$<$ void, std::string $>$ \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType}}
+\label{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}
+
+\begin{DoxyCompactList}\small\item\em A convenient function type taking a string parameter and without return value. \item\end{DoxyCompactList}\item 
+\hypertarget{configureOptionUtils_8hpp_a460334d72d1cfff489b7b982c5b584ab}{
+typedef boost::function2$<$ int, const std::string \&, const UMS\_\-Data::OptionValue \& $>$ \hyperlink{configureOptionUtils_8hpp_a460334d72d1cfff489b7b982c5b584ab}{ConfigureCallBackType}}
+\label{configureOptionUtils_8hpp_a460334d72d1cfff489b7b982c5b584ab}
+
+\begin{DoxyCompactList}\small\item\em Another convenient function type to handle the callback. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{configureOptionUtils_8hpp_aebcc5e5cfeb3b2641997ebe5e159b11e}{makeConfigureOptions} (boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ opt, std::string \&dietConfig, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fOptionName, \hyperlink{configureOptionUtils_8hpp_af175c3bbfc8af0bcd8d1e14538713acc}{StringcallBackType} \&fValue)
+\begin{DoxyCompactList}\small\item\em To build options for the VISHNU configure option command. \item\end{DoxyCompactList}\item 
+void \hyperlink{configureOptionUtils_8hpp_acd53556179fd367463f7ed703a070e2e}{commonConfigure} (boost::shared\_\-ptr$<$ \hyperlink{classOptions}{Options} $>$ opt, int ac, char $\ast$av\mbox{[}$\,$\mbox{]}, const \hyperlink{configureOptionUtils_8hpp_a460334d72d1cfff489b7b982c5b584ab}{ConfigureCallBackType} \&conf\_\-func)
+\begin{DoxyCompactList}\small\item\em A common function betwenn the VISHNU configure option command and the VISHNU configure default option command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file declare useful functions and types for the VISHNU configure option command. \begin{DoxyAuthor}{Author}
+Ibrahima Cisse (\href{mailto:ibrahima.cisse@sysfera.com}{\tt ibrahima.cisse@sysfera.com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{configureOptionUtils_8hpp_acd53556179fd367463f7ed703a070e2e}{
+\index{configureOptionUtils.hpp@{configureOptionUtils.hpp}!commonConfigure@{commonConfigure}}
+\index{commonConfigure@{commonConfigure}!configureOptionUtils.hpp@{configureOptionUtils.hpp}}
+\subsubsection[{commonConfigure}]{\setlength{\rightskip}{0pt plus 5cm}void commonConfigure (
+\begin{DoxyParamCaption}
+\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ opt, }
+\item[{int}]{ ac, }
+\item[{char $\ast$}]{ av\mbox{[}$\,$\mbox{]}, }
+\item[{const {\bf ConfigureCallBackType} \&}]{ conf\_\-func}
+\end{DoxyParamCaption}
+)}}
+\label{configureOptionUtils_8hpp_acd53556179fd367463f7ed703a070e2e}
+
+
+A common function betwenn the VISHNU configure option command and the VISHNU configure default option command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em opt,:}]Describes all allowed options for the command \item[{\em ac}]: The number of parameters the command takes \item[{\em av}]: The name of all of that parameters \item[{\em conf\_\-func,:}]The VISHNU API function, configureOption our ConfigureDefaultOption \end{DoxyParams}
+\hypertarget{configureOptionUtils_8hpp_aebcc5e5cfeb3b2641997ebe5e159b11e}{
+\index{configureOptionUtils.hpp@{configureOptionUtils.hpp}!makeConfigureOptions@{makeConfigureOptions}}
+\index{makeConfigureOptions@{makeConfigureOptions}!configureOptionUtils.hpp@{configureOptionUtils.hpp}}
+\subsubsection[{makeConfigureOptions}]{\setlength{\rightskip}{0pt plus 5cm}void makeConfigureOptions (
+\begin{DoxyParamCaption}
+\item[{boost::shared\_\-ptr$<$ {\bf Options} $>$}]{ opt, }
+\item[{std::string \&}]{ dietConfig, }
+\item[{{\bf StringcallBackType} \&}]{ fOptionName, }
+\item[{{\bf StringcallBackType} \&}]{ fValue}
+\end{DoxyParamCaption}
+)}}
+\label{configureOptionUtils_8hpp_aebcc5e5cfeb3b2641997ebe5e159b11e}
+
+
+To build options for the VISHNU configure option command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em opt,:}]Describes all allowed options for the VISHNU configure option command \item[{\em dietConfig,:}]Represents the VISHNU config file \item[{\em fOptionName}]: A callback for the option name \item[{\em fValue}]: A callback for the option value \end{DoxyParams}
