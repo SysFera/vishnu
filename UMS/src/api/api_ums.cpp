@@ -392,19 +392,19 @@ vishnu::saveConfiguration(const std::string& sessionKey,
     if(configData!=NULL) {
       UMS_Data::User_ptr user;
       //To set the user list
-      for(int i = 0; i < configData->getListConfUsers().size(); i++) {
+      for(unsigned int i = 0; i < configData->getListConfUsers().size(); i++) {
         user = configData->getListConfUsers().get(i);
         config.getListConfUsers().push_back(user);
       }
       //To set the machine list
       UMS_Data::Machine_ptr machine;
-      for(int i = 0; i < configData->getListConfMachines().size(); i++) {
+      for(unsigned int i = 0; i < configData->getListConfMachines().size(); i++) {
         machine = configData->getListConfMachines().get(i);
         config.getListConfMachines().push_back(machine);
       }
       //To set the LocalAccounts list
       UMS_Data::LocalAccount_ptr localAccount;
-      for(int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
+      for(unsigned int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
         localAccount = configData->getListConfLocalAccounts().get(i);
         config.getListConfLocalAccounts().push_back(localAccount);
       }
@@ -509,7 +509,7 @@ vishnu::listSessions(const std::string& sessionKey,
 
   if(listSession_ptr!=NULL) {
     UMS_Data::Session_ptr session;
-    for(int i = 0; i < listSession_ptr->getSessions().size(); i++) {
+    for(unsigned int i = 0; i < listSession_ptr->getSessions().size(); i++) {
       session = listSession_ptr->getSessions().get(i);
       listSession.getSessions().push_back(session);
     }
@@ -540,7 +540,7 @@ vishnu::listLocalAccount(const std::string& sessionKey,
 
   if(listLocalAcc_ptr!=NULL) {
     UMS_Data::LocalAccount_ptr account;
-    for(int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
+    for(unsigned int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
       account = listLocalAcc_ptr->getAccounts().get(i);
       listLocalAcc.getAccounts().push_back(account);
     }
@@ -571,7 +571,7 @@ vishnu::listMachine(const std::string& sessionKey,
 
   if(listMachine_ptr!=NULL) {
     UMS_Data::Machine_ptr machine;
-    for(int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
+    for(unsigned int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
       machine = listMachine_ptr->getMachines().get(i);
       listMachine.getMachines().push_back(machine);
     }
@@ -600,7 +600,7 @@ vishnu::listHistoryCmd(const std::string& sessionKey,
 
   if(listCommands_ptr!=NULL) {
     UMS_Data::Command_ptr command;
-    for(int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
+    for(unsigned int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
       command = listCommands_ptr->getCommands().get(i);
       listCommands.getCommands().push_back(command);
     }
@@ -630,7 +630,7 @@ vishnu::listOptions(const std::string& sessionKey,
 
   if(listOptValues_ptr!=NULL) {
     UMS_Data::OptionValue_ptr optionValue;
-    for(int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
+    for(unsigned int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
       optionValue = listOptValues_ptr->getOptionValues().get(i);
       listOptValues.getOptionValues().push_back(optionValue);
     }
@@ -659,7 +659,7 @@ vishnu::listUsers(const std::string& sessionKey,
 
   if(listUsers_ptr!=NULL) {
     UMS_Data::User_ptr user;
-    for(int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
+    for(unsigned int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
       user = listUsers_ptr->getUsers().get(i);
       listUsers.getUsers().push_back(user);
     }
