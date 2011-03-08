@@ -36,12 +36,11 @@ void Configuration::setConfigFile(const string& configFile) {
 
 // standard Options constructor. Get a string (command name)
 
-Options:: Options(const std::string& pgName )   : generic_options("Generic Options"),
+Options:: Options(const std::string& pgName )   : conf(new Configuration(pgName)),
+                                                  generic_options("Generic Options"),
                                                   config_options("Configuration"),
-                                                  env_options("Environment variables"),
                                                   hidden_options("Hidden Options"),
-                                                  conf(new Configuration(pgName)){
-
+                                                  env_options("Environment variables") {
 
   generic_options.add_options()
    ("help,h", "produce help message");
@@ -53,12 +52,12 @@ Options:: Options(const std::string& pgName )   : generic_options("Generic Optio
 Options::Options(boost::shared_ptr<Configuration> otherConf):conf(otherConf),
                                                              generic_options("Generic Options"),
                                                              config_options("Configuration"),
-                                                             env_options("Environment variables"),
-                                                             hidden_options("Hidden Options"){
+                                                             hidden_options("Hidden Options"),
+                                                             env_options("Environment variables") {
 
   generic_options.add_options()
    ("help,h", "produce help message");
-      
+
 
 
   }
@@ -85,7 +84,7 @@ Options::setGroup (const po::options_description& tmp_options,
 
   switch(group){
 
-    case GENERIC:// for options always allowed 
+    case GENERIC:// for options always allowed
 
       generic_options.add(tmp_options);
       break;
@@ -95,7 +94,7 @@ Options::setGroup (const po::options_description& tmp_options,
       config_options.add(tmp_options);
       break;
 
-    case ENV: // for global options 
+    case ENV: // for global options
 
       env_options.add(tmp_options);
       break;
@@ -149,12 +148,12 @@ Options::setPosition(const std::string& name, int pos ){
 
 /**
  * \brief To parse command line
- * \param ac: The number of parameters of the command 
+ * \param ac: The number of parameters of the command
  * \param av: the names of all paramters
  */
 
 
-void 
+void
 Options::parse_cli(int ac, char* av[]) {
 
   po::options_description cmdline_options;
@@ -191,7 +190,7 @@ Options::parse_cfile() {
 /**
  * \brief To parse environement variable
  * \param name_mapper: a functor providing a simple name from the conventional
- * name of the environment variable 
+ * name of the environment variable
  * Ex: for VISHNU_CONFIG_FILE, it returns dietConfig
  */
 
@@ -221,7 +220,7 @@ Options::notify (){
  * \param key: the name of the option
  */
 
-int 
+int
 Options::count(const std::string& key)const{
 
   return (vm.count(key));
