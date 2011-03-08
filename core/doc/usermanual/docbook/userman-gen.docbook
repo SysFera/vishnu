@@ -287,13 +287,13 @@ same conditions as regards security.</para>
     </section>
     <section>
       <title> Troubleshooting functions </title>
-      <para> The <emphasis role="italic">&quot;There is no session&quot;</emphasis> error can be solved by making a connection to VISHNU using 
+      <para> <emphasis role="italic">&quot;There is no session in this terminal&quot;</emphasis> error can be solved by making a connection to VISHNU using 
      the <emphasis role="bold">vishnu_connect</emphasis> command.
    </para>
     </section>
   </chapter>
   <reference>
-    <title>Commands reference</title>
+    <title>Command reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>vishnu_connect</refentrytitle>
@@ -313,7 +313,7 @@ same conditions as regards security.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>Opening a VISHNU session is the first step before using any other VISHNU command.
-This command authenticates the user, who must be registered in the VISHNU system
+This command authenticates you. You must have been registered in the VISHNU system
 by an administrator.  It also creates a session that remains open after the command is
 completed and until the session is either manually or automatically closed.</para>
       </refsect1>
@@ -406,9 +406,9 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows to reuse a session that has been opened previously and that has not yet
+        <para>This command allows you to resume a session that has been opened previously and that has not yet
 been closed. You can disconnect from a session without closing it (for example if there are running
-commands in that session) by setting the session close policy (at connection time) to CLOSE_ON_TIMEOUT.
+commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.
 As sessions are linked to a specific client system, you cannot reconnect to a 
 session that was opened on another client system.</para>
       </refsect1>
@@ -480,8 +480,8 @@ session that was opened on another client system.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command closes the session that is currently active in the terminal. It will return
-an error if there are still some active requests that have been submitted by the user during
-the session (e.g. job submission or file transfers). After the session is closed it cannot be re-opened.</para>
+an error if there are still some active requests that were been submitted by the user during
+the session (e.g., job submission or file transfers). After the session is closed, it cannot be re-opened.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -543,7 +543,7 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows to change the password. It can be done voluntarily or when the password is temporary:  at the first connection on VISHNU or after the password reset  by an admin . </para>
+        <para>This command is used to change the password. It can be done voluntarily or when the password is only temporary:  for your first connection to VISHNU or after your password is reset  by an administrator . </para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -599,10 +599,10 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>A local user configuration must be added to allow the user identified by userId to connect on a machine identified by machineId.
+        <para>A local user configuration must be added to allow you (identified by userId) to connect to machine (identified by machineId).
 This configuration must match an existing system account on that machine with a login that matches acLogin.
-The parameters sshKeyPath (absolute path to the user's private SSH key, used for file transfers) and the
-homeDirectory path must be provided.</para>
+The parameters sshKeyPath parameter (the absolute path to your private SSH key, used for file transfers) must be provided as well as the
+homeDirectory path .</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -679,7 +679,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The local user configuration can be updated by the user. She/ he can update information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
+        <para>The local user configuration can be updated. You can modify information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -767,7 +767,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted all information about it are deleted from VISHNU.</para>
+        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted, all the information about it is deleted from VISHNU.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -831,7 +831,7 @@ homeDirectory path must be provided.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>A local configuration is used to configure the access to a given system for a
-given user through VISHNU. It is related to a system account on that system
+given user through VISHNU. It is related to an account on that system
 that is identified using its login. This command allows you to check all the
 local configurations related to your VISHNU account. </para>
       </refsect1>
@@ -918,8 +918,8 @@ local configurations related to your VISHNU account. </para>
 The machines you can access through VISHNU are those that are configured in 
 VISHNU by the VISHNU administrator, and that have been added to your personal
 VISHNU configuration using the vishnu_add_local_account command.
-The results contain for each machine a machine identifier that you can use as a parameter
-of other VISHNU services.</para>
+The results contain, for each machine, a machine identifier that you can use as a parameter
+for other VISHNU commands.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1002,7 +1002,7 @@ of other VISHNU services.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the commands done by the users. Several options can be used to specify the commands to list.</para>
+        <para>This command displays a history of the commands you ran. Several options can be used to specify which commands to list.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1095,7 +1095,7 @@ of other VISHNU services.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the options configured by the user.</para>
+        <para>This command displays the options you configured.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1193,7 +1193,7 @@ of other VISHNU services.</para>
         <para>This command is used to display and filter the list of all your sessions.
 For each session, a session identifier is provided which you can use to
 reconnect to a given session using the vishnu_reconnect command.
-The session status is either 0 (Inactive) or 1 (active).</para>
+The session's status is either 0 (inactive) or 1 (active).</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1311,8 +1311,8 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>Options in VISHNU corresponds to parameters of some VISHNU commands 
-(e.g. the close policy for vishnu_connect)
+        <para>Options in VISHNU corresponds to the parameters of some VISHNU commands 
+(e.g., the close policy for vishnu_connect)
 that can be preset in the user configuration stored by the VISHNU system. This
 command is used to set the value of an option for the current user (the user who
 opened the session).</para>
@@ -1380,7 +1380,7 @@ opened the session).</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>Opening a VISHNU session is the first step before using any other VISHNU command.
-This command authenticates the user, who must be registered in the VISHNU system
+This command authenticates you. You must have been registered in the VISHNU system
 by an administrator.  It also creates a session that remains open after the command is
 completed and until the session is either manually or automatically closed.</para>
       </refsect1>
@@ -1390,25 +1390,25 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>session</emphasis></term>
             <listitem>
-              <para>The session object that contains the created session details.</para>
+              <para>Output argument. The session object that contains the created session details.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user.</para>
+              <para>Input argument. Options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1454,9 +1454,9 @@ completed and until the session is either manually or automatically closed.</par
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows to reuse a session that has been opened previously and that has not yet
+        <para>This command allows you to resume a session that has been opened previously and that has not yet
 been closed. You can disconnect from a session without closing it (for example if there are running
-commands in that session) by setting the session close policy (at connection time) to CLOSE_ON_TIMEOUT.
+commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.
 As sessions are linked to a specific client system, you cannot reconnect to a 
 session that was opened on another client system.</para>
       </refsect1>
@@ -1466,25 +1466,25 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>userId </emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>sessionId</emphasis></term>
             <listitem>
-              <para>sessionId is the identifier of the session defined in the database.</para>
+              <para>Input argument. SessionId is the identifier of the session defined in the database.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>session</emphasis></term>
             <listitem>
-              <para>The session object containing session information.</para>
+              <para>Output argument. The session object containing session information.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1535,8 +1535,8 @@ session that was opened on another client system.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command closes the session that is currently active in the terminal. It will return
-an error if there are still some active requests that have been submitted by the user during
-the session (e.g. job submission or file transfers). After the session is closed it cannot be re-opened.</para>
+an error if there are still some active requests that were been submitted by the user during
+the session (e.g., job submission or file transfers). After the session is closed, it cannot be re-opened.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1544,7 +1544,7 @@ the session (e.g. job submission or file transfers). After the session is closed
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1582,7 +1582,7 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows to change the password. It can be done voluntarily or when the password is temporary:  at the first connection on VISHNU or after the password reset  by an admin . </para>
+        <para>This command is used to change the password. It can be done voluntarily or when the password is only temporary:  for your first connection to VISHNU or after your password is reset  by an administrator . </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1590,19 +1590,19 @@ the session (e.g. job submission or file transfers). After the session is closed
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>passwordNew</emphasis></term>
             <listitem>
-              <para>passwordNew represents the new password of the user.</para>
+              <para>Input argument. PasswordNew represents the new password of the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1636,10 +1636,10 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>A local user configuration must be added to allow the user identified by userId to connect on a machine identified by machineId.
+        <para>A local user configuration must be added to allow you (identified by userId) to connect to machine (identified by machineId).
 This configuration must match an existing system account on that machine with a login that matches acLogin.
-The parameters sshKeyPath (absolute path to the user's private SSH key, used for file transfers) and the
-homeDirectory path must be provided.</para>
+The parameters sshKeyPath parameter (the absolute path to your private SSH key, used for file transfers) must be provided as well as the
+homeDirectory path .</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1647,19 +1647,19 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>newAccount</emphasis></term>
             <listitem>
-              <para>newAccount is the object which encapsulates the new local user configuration.</para>
+              <para>Input argument. NewAccount is the object which encapsulates the new local user configuration.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>sshPublicKey</emphasis></term>
             <listitem>
-              <para>The SSH public key generated by VISHNU for accessing a local account.</para>
+              <para>Output argument. The SSH public key generated by VISHNU for accessing a local account.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1709,7 +1709,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The local user configuration can be updated by the user. She/ he can update information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
+        <para>The local user configuration can be updated. You can modify information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1717,13 +1717,13 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>LocalAccUpd</emphasis></term>
             <listitem>
-              <para>is an object which encapsulates the local user configuration changes except the machineId and the userId.</para>
+              <para>Input argument. Is an object which encapsulates the local user configuration changes except the machineId and the userId.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1769,7 +1769,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted all information about it are deleted from VISHNU.</para>
+        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted, all the information about it is deleted from VISHNU.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1777,19 +1777,19 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine .</para>
+              <para>Input argument. UserId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>machineId represents the identifier of the machine whose local configuration will be deleted for the given user .</para>
+              <para>Input argument. MachineId represents the identifier of the machine whose local configuration will be deleted for the given user .</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1828,7 +1828,7 @@ homeDirectory path must be provided.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>A local configuration is used to configure the access to a given system for a
-given user through VISHNU. It is related to a system account on that system
+given user through VISHNU. It is related to an account on that system
 that is identified using its login. This command allows you to check all the
 local configurations related to your VISHNU account. </para>
       </refsect1>
@@ -1838,19 +1838,19 @@ local configurations related to your VISHNU account. </para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listLocalAcct</emphasis></term>
             <listitem>
-              <para>listLocalAccount is the list of the local user configuations .</para>
+              <para>Output argument. ListLocalAccount is the list of the local user configuations .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine.</para>
+              <para>Input argument. Allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1892,8 +1892,8 @@ local configurations related to your VISHNU account. </para>
 The machines you can access through VISHNU are those that are configured in 
 VISHNU by the VISHNU administrator, and that have been added to your personal
 VISHNU configuration using the vishnu_add_local_account command.
-The results contain for each machine a machine identifier that you can use as a parameter
-of other VISHNU services.</para>
+The results contain, for each machine, a machine identifier that you can use as a parameter
+for other VISHNU commands.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1901,19 +1901,19 @@ of other VISHNU services.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listMachine</emphasis></term>
             <listitem>
-              <para>listLocalAccount is the list of the local configs .</para>
+              <para>Output argument. ListLocalAccount is the list of the local configs .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user.</para>
+              <para>Input argument. Allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1951,7 +1951,7 @@ of other VISHNU services.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the commands done by the users. Several options can be used to specify the commands to list.</para>
+        <para>This command displays a history of the commands you ran. Several options can be used to specify which commands to list.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1959,19 +1959,19 @@ of other VISHNU services.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listCommands</emphasis></term>
             <listitem>
-              <para>listCommands is the list of commands.</para>
+              <para>Output argument. ListCommands is the list of commands.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user.</para>
+              <para>Input argument. Allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2009,7 +2009,7 @@ of other VISHNU services.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the options configured by the user.</para>
+        <para>This command displays the options you configured.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2017,19 +2017,19 @@ of other VISHNU services.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listOptValues</emphasis></term>
             <listitem>
-              <para>listOptValues is an object which encapsulates the list of options.</para>
+              <para>Output argument. ListOptValues is an object which encapsulates the list of options.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows to list a specific option or all default options values or for an admin to list options of a specific user.</para>
+              <para>Input argument. Allows to list a specific option or all default options values or for an admin to list options of a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2078,7 +2078,7 @@ of other VISHNU services.</para>
         <para>This command is used to display and filter the list of all your sessions.
 For each session, a session identifier is provided which you can use to
 reconnect to a given session using the vishnu_reconnect command.
-The session status is either 0 (Inactive) or 1 (active).</para>
+The session's status is either 0 (inactive) or 1 (active).</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2086,19 +2086,19 @@ The session status is either 0 (Inactive) or 1 (active).</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listsession</emphasis></term>
             <listitem>
-              <para>listsession is the list of sessions .</para>
+              <para>Output argument. Listsession is the list of sessions .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user..</para>
+              <para>Input argument. Allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2136,8 +2136,8 @@ The session status is either 0 (Inactive) or 1 (active).</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>Options in VISHNU corresponds to parameters of some VISHNU commands 
-(e.g. the close policy for vishnu_connect)
+        <para>Options in VISHNU corresponds to the parameters of some VISHNU commands 
+(e.g., the close policy for vishnu_connect)
 that can be preset in the user configuration stored by the VISHNU system. This
 command is used to set the value of an option for the current user (the user who
 opened the session).</para>
@@ -2148,13 +2148,13 @@ opened the session).</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>optionValue</emphasis></term>
             <listitem>
-              <para>The optionValue is an object which encapsulates the option information.</para>
+              <para>Input argument. The optionValue is an object which encapsulates the option information.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2200,7 +2200,7 @@ opened the session).</para>
           <varlistentry>
             <term><emphasis>configPath</emphasis></term>
             <listitem>
-              <para>configPath is the path of VISHNU configuration file.</para>
+              <para>Input argument. ConfigPath is the path of VISHNU configuration file.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2210,7 +2210,7 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The password is a temporary password&quot; [26]</term>
+            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2232,6 +2232,16 @@ opened the session).</para>
         <title>DESCRIPTION</title>
         <para>Calling this function is necessary to free ressources consumed due to the VISHNU API</para>
       </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
     </refentry>
   </reference>
   <reference>
@@ -2251,7 +2261,7 @@ opened the session).</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>Opening a VISHNU session is the first step before using any other VISHNU command.
-This command authenticates the user, who must be registered in the VISHNU system
+This command authenticates you. You must have been registered in the VISHNU system
 by an administrator.  It also creates a session that remains open after the command is
 completed and until the session is either manually or automatically closed.</para>
       </refsect1>
@@ -2261,25 +2271,42 @@ completed and until the session is either manually or automatically closed.</par
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>session</emphasis></term>
             <listitem>
-              <para>The session object that contains the created session details.</para>
+              <para>Output argument. The session object that contains the created session details.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user.</para>
+              <para>Input argument. Options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as he/she was a specific user.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>sessionKey (string)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains the session key.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2289,23 +2316,23 @@ completed and until the session is either manually or automatically closed.</par
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>UMSVishnuException(&quot;Unknown user&quot; [20])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The value of the timeout is incorrect&quot; [43]</term>
+            <term>UMSVishnuException(&quot;The value of the timeout is incorrect&quot; [43])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2325,9 +2352,9 @@ completed and until the session is either manually or automatically closed.</par
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows to reuse a session that has been opened previously and that has not yet
+        <para>This command allows you to resume a session that has been opened previously and that has not yet
 been closed. You can disconnect from a session without closing it (for example if there are running
-commands in that session) by setting the session close policy (at connection time) to CLOSE_ON_TIMEOUT.
+commands in that session) by setting the session's close policy (at connection time) to CLOSE_ON_TIMEOUT.
 As sessions are linked to a specific client system, you cannot reconnect to a 
 session that was opened on another client system.</para>
       </refsect1>
@@ -2337,25 +2364,42 @@ session that was opened on another client system.</para>
           <varlistentry>
             <term><emphasis>userId </emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>sessionId</emphasis></term>
             <listitem>
-              <para>sessionId is the identifier of the session defined in the database.</para>
+              <para>Input argument. SessionId is the identifier of the session defined in the database.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>session</emphasis></term>
             <listitem>
-              <para>The session object containing session information.</para>
+              <para>Output argument. The session object containing session information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>sessionKey (string)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains the session key.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2365,27 +2409,27 @@ session that was opened on another client system.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>UMSVishnuException(&quot;Unknown user&quot; [20])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session Id is unknown&quot; [30]</term>
+            <term>UMSVishnuException(&quot;The session Id is unknown&quot; [30])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine does not exist or it is locked&quot; [36]</term>
+            <term>UMSVishnuException(&quot;The machine does not exist or it is locked&quot; [36])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2406,8 +2450,8 @@ session that was opened on another client system.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>This command closes the session that is currently active in the terminal. It will return
-an error if there are still some active requests that have been submitted by the user during
-the session (e.g. job submission or file transfers). After the session is closed it cannot be re-opened.</para>
+an error if there are still some active requests that were been submitted by the user during
+the session (e.g., job submission or file transfers). After the session is closed, it cannot be re-opened.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2415,7 +2459,18 @@ the session (e.g. job submission or file transfers). After the session is closed
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2425,15 +2480,15 @@ the session (e.g. job submission or file transfers). After the session is closed
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Commands are running&quot; [31]</term>
+            <term>UMSVishnuException(&quot;Commands are running&quot; [31])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2453,7 +2508,7 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows to change the password. It can be done voluntarily or when the password is temporary:  at the first connection on VISHNU or after the password reset  by an admin . </para>
+        <para>This command is used to change the password. It can be done voluntarily or when the password is only temporary:  for your first connection to VISHNU or after your password is reset  by an administrator . </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2461,19 +2516,30 @@ the session (e.g. job submission or file transfers). After the session is closed
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier.</para>
+              <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>password</emphasis></term>
             <listitem>
-              <para>password represents the password of the user.</para>
+              <para>Input argument. Password represents the password of the user.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>passwordNew</emphasis></term>
             <listitem>
-              <para>passwordNew represents the new password of the user.</para>
+              <para>Input argument. PasswordNew represents the new password of the user.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2483,11 +2549,11 @@ the session (e.g. job submission or file transfers). After the session is closed
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>UMSVishnuException(&quot;Unknown user&quot; [20])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is locked&quot; [23]</term>
+            <term>UMSVishnuException(&quot;The user is locked&quot; [23])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2507,10 +2573,10 @@ the session (e.g. job submission or file transfers). After the session is closed
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>A local user configuration must be added to allow the user identified by userId to connect on a machine identified by machineId.
+        <para>A local user configuration must be added to allow you (identified by userId) to connect to machine (identified by machineId).
 This configuration must match an existing system account on that machine with a login that matches acLogin.
-The parameters sshKeyPath (absolute path to the user's private SSH key, used for file transfers) and the
-homeDirectory path must be provided.</para>
+The parameters sshKeyPath parameter (the absolute path to your private SSH key, used for file transfers) must be provided as well as the
+homeDirectory path .</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2518,19 +2584,30 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>newAccount</emphasis></term>
             <listitem>
-              <para>newAccount is the object which encapsulates the new local user configuration.</para>
+              <para>Input argument. NewAccount is the object which encapsulates the new local user configuration.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>sshPublicKey</emphasis></term>
             <listitem>
-              <para>The SSH public key generated by VISHNU for accessing a local account.</para>
+              <para>Output argument. The SSH public key generated by VISHNU for accessing a local account.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2540,27 +2617,27 @@ homeDirectory path must be provided.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine is locked&quot; [34]</term>
+            <term>UMSVishnuException(&quot;The machine is locked&quot; [34])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The local account already exists&quot; [37]</term>
+            <term>UMSVishnuException(&quot;The local account already exists&quot; [37])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2580,7 +2657,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The local user configuration can be updated by the user. She/ he can update information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
+        <para>The local user configuration can be updated. You can modify information of its local configuration such as acLogin, sshKeypath or homeDirectory.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2588,13 +2665,24 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>LocalAccUpd</emphasis></term>
             <listitem>
-              <para>is an object which encapsulates the local user configuration changes except the machineId and the userId.</para>
+              <para>Input argument. Is an object which encapsulates the local user configuration changes except the machineId and the userId.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2604,23 +2692,23 @@ homeDirectory path must be provided.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The local is unknown&quot; [38]</term>
+            <term>UMSVishnuException(&quot;The local is unknown&quot; [38])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2640,7 +2728,7 @@ homeDirectory path must be provided.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted all information about it are deleted from VISHNU.</para>
+        <para>The local user configuration can be deleted from VISHNU. When a local user configuration is deleted, all the information about it is deleted from VISHNU.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2648,19 +2736,30 @@ homeDirectory path must be provided.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>userId</emphasis></term>
             <listitem>
-              <para>userId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine .</para>
+              <para>Input argument. UserId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>machineId represents the identifier of the machine whose local configuration will be deleted for the given user .</para>
+              <para>Input argument. MachineId represents the identifier of the machine whose local configuration will be deleted for the given user .</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2670,15 +2769,15 @@ homeDirectory path must be provided.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The local is unknown&quot; [38]</term>
+            <term>UMSVishnuException(&quot;The local is unknown&quot; [38])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2699,7 +2798,7 @@ homeDirectory path must be provided.</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>A local configuration is used to configure the access to a given system for a
-given user through VISHNU. It is related to a system account on that system
+given user through VISHNU. It is related to an account on that system
 that is identified using its login. This command allows you to check all the
 local configurations related to your VISHNU account. </para>
       </refsect1>
@@ -2709,19 +2808,30 @@ local configurations related to your VISHNU account. </para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listLocalAcct</emphasis></term>
             <listitem>
-              <para>listLocalAccount is the list of the local user configuations .</para>
+              <para>Output argument. ListLocalAccount is the list of the local user configuations .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine.</para>
+              <para>Input argument. Allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2731,15 +2841,15 @@ local configurations related to your VISHNU account. </para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2763,8 +2873,8 @@ local configurations related to your VISHNU account. </para>
 The machines you can access through VISHNU are those that are configured in 
 VISHNU by the VISHNU administrator, and that have been added to your personal
 VISHNU configuration using the vishnu_add_local_account command.
-The results contain for each machine a machine identifier that you can use as a parameter
-of other VISHNU services.</para>
+The results contain, for each machine, a machine identifier that you can use as a parameter
+for other VISHNU commands.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2772,19 +2882,30 @@ of other VISHNU services.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listMachine</emphasis></term>
             <listitem>
-              <para>listLocalAccount is the list of the local configs .</para>
+              <para>Output argument. ListLocalAccount is the list of the local configs .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user.</para>
+              <para>Input argument. Allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2794,15 +2915,15 @@ of other VISHNU services.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2822,7 +2943,7 @@ of other VISHNU services.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the commands done by the users. Several options can be used to specify the commands to list.</para>
+        <para>This command displays a history of the commands you ran. Several options can be used to specify which commands to list.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2830,19 +2951,30 @@ of other VISHNU services.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listCommands</emphasis></term>
             <listitem>
-              <para>listCommands is the list of commands.</para>
+              <para>Output argument. ListCommands is the list of commands.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user.</para>
+              <para>Input argument. Allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2852,15 +2984,15 @@ of other VISHNU services.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2880,7 +3012,7 @@ of other VISHNU services.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command displays the options configured by the user.</para>
+        <para>This command displays the options you configured.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2888,19 +3020,30 @@ of other VISHNU services.</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listOptValues</emphasis></term>
             <listitem>
-              <para>listOptValues is an object which encapsulates the list of options.</para>
+              <para>Output argument. ListOptValues is an object which encapsulates the list of options.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows to list a specific option or all default options values or for an admin to list options of a specific user.</para>
+              <para>Input argument. Allows to list a specific option or all default options values or for an admin to list options of a specific user.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2910,23 +3053,23 @@ of other VISHNU services.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2949,7 +3092,7 @@ of other VISHNU services.</para>
         <para>This command is used to display and filter the list of all your sessions.
 For each session, a session identifier is provided which you can use to
 reconnect to a given session using the vishnu_reconnect command.
-The session status is either 0 (Inactive) or 1 (active).</para>
+The session's status is either 0 (inactive) or 1 (active).</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2957,19 +3100,30 @@ The session status is either 0 (Inactive) or 1 (active).</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>listsession</emphasis></term>
             <listitem>
-              <para>listsession is the list of sessions .</para>
+              <para>Output argument. Listsession is the list of sessions .</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user..</para>
+              <para>Input argument. Allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user..</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2979,15 +3133,15 @@ The session status is either 0 (Inactive) or 1 (active).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The userId is unknown&quot; [21]</term>
+            <term>UMSVishnuException(&quot;The userId is unknown&quot; [21])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3007,8 +3161,8 @@ The session status is either 0 (Inactive) or 1 (active).</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>Options in VISHNU corresponds to parameters of some VISHNU commands 
-(e.g. the close policy for vishnu_connect)
+        <para>Options in VISHNU corresponds to the parameters of some VISHNU commands 
+(e.g., the close policy for vishnu_connect)
 that can be preset in the user configuration stored by the VISHNU system. This
 command is used to set the value of an option for the current user (the user who
 opened the session).</para>
@@ -3019,13 +3173,24 @@ opened the session).</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
+              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>optionValue</emphasis></term>
             <listitem>
-              <para>The optionValue is an object which encapsulates the option information.</para>
+              <para>Input argument. The optionValue is an object which encapsulates the option information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3035,15 +3200,15 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
+            <term>UMSVishnuException(&quot;The sessionKey is expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3071,7 +3236,18 @@ opened the session).</para>
           <varlistentry>
             <term><emphasis>configPath</emphasis></term>
             <listitem>
-              <para>configPath is the path of VISHNU configuration file.</para>
+              <para>Input argument. ConfigPath is the path of VISHNU configuration file.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3081,7 +3257,7 @@ opened the session).</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;The password is a temporary password&quot; [26]</term>
+            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -3102,6 +3278,27 @@ opened the session).</para>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
         <para>Calling this function is necessary to free ressources consumed due to the VISHNU API</para>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
       </refsect1>
     </refentry>
   </reference>
