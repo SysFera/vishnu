@@ -87,33 +87,31 @@ MonitorUMS::run() {
   std::vector<std::string> tmp;
   SessionServer closer;
 
-  while (true) {
-    try {
-      DatabaseResult *result = closer.getSessionToclosebyTimeout();
+  try {
+    DatabaseResult *result = closer.getSessionToclosebyTimeout();
 
-      if (result->getNbTuples() != 0) {
-         for (size_t i = 0; i < result->getNbTuples(); ++i) {
-          tmp.clear();
-          tmp = result->get(i);
+    if (result->getNbTuples() != 0) {
+      for (size_t i = 0; i < result->getNbTuples(); ++i) {
+        tmp.clear();
+        tmp = result->get(i);
 
-          ii=tmp.begin();
-          SessionServer sessionServer (*ii);
+        ii=tmp.begin();
+        SessionServer sessionServer (*ii);
 
-          try {
-            //closure of the session
-            sessionServer.close();
-          }
-          catch (VishnuException& e) {
+        try {
+          //closure of the session
+          sessionServer.close();
+        }
+        catch (VishnuException& e) {
 
-            string errorInfo =  e.buildExceptionString();
-          }
+          string errorInfo =  e.buildExceptionString();
         }
       }
-      sleep(minterval);
-
-    } catch (VishnuException& e) {
-      string errorInfo =  e.buildExceptionString();
     }
+    sleep(minterval);
+
+  } catch (VishnuException& e) {
+    string errorInfo =  e.buildExceptionString();
   }
   return 0;
 }
