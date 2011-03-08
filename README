@@ -1,2 +1,30 @@
-Informatique : Alliance d'un science inexacte et d'une activité humaine faillible. (Luc Fayard)
+#
+# README 
+#
+
+This README presents what the archive of the UMS module will contain.
+
+This archive contains the following elements:
+
+The root directory VISHNU_UMS
+                      |---------- The Cmake directory that contains the cmake macro used to compile
+                      | 
+                      |---------- The core directory that contains the sql scripts (core/database), the emf4cpp lib (core/deps) and the common code (core/src)
+                      | 
+                      |---------- The doc directory that contains the doxygen documentation
+                      | 
+                      |---------- The Licence directory that contains the licence of VISHNU
+                      | 
+                      |---------- The UMS directory that contains the sources of the UMS module
+                      | 
+                      | 
+                      |---------- The CMakeLists.txt file that is used to generate the makefile
+                      | 
+                      |---------- The copyright file
+                      | 
+                      |---------- The DOXYFILE and DOXYFILE_API files used to generate the documentation in doxygen
+                      | 
+                      |---------- This README that describes the archive
+
+To install and use the module, please refer to the user guide or the admin guide that are available with the archive.
 
