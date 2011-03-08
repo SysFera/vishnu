@@ -1,0 +1,259 @@
+\hypertarget{classOracleDatabase}{
+\section{OracleDatabase Class Reference}
+\label{classOracleDatabase}\index{OracleDatabase@{OracleDatabase}}
+}
+
+
+Oracle implementation of the \hyperlink{classDatabase}{Database} class.  
+
+
+
+
+{\ttfamily \#include $<$OracleDatabase.hpp$>$}
+
+Inheritance diagram for OracleDatabase:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOracleDatabase}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{process} (std::string request)
+\begin{DoxyCompactList}\small\item\em Function to process the request in the database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classOracleDatabase_a24767193dece017c4e97ca5bce7214e6}{startTransaction} (std::string request)
+\begin{DoxyCompactList}\small\item\em To start a transaction with the database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}{connect} ()
+\begin{DoxyCompactList}\small\item\em To make a connection to the database. \item\end{DoxyCompactList}\item 
+\hyperlink{classOracleDatabase_aee0fb586efbd08f76089b1d343ad9345}{OracleDatabase} (std::string hostname, std::string username, std::string pwd, std::string database=\char`\"{}\char`\"{}, unsigned int port=0)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_acf0c68ce86bdafbe0ba05304f0039d14}{
+\hyperlink{classOracleDatabase_acf0c68ce86bdafbe0ba05304f0039d14}{$\sim$OracleDatabase} ()}
+\label{classOracleDatabase_acf0c68ce86bdafbe0ba05304f0039d14}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+int \hyperlink{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{setDatabase} (std::string db)
+\begin{DoxyCompactList}\small\item\em To set the db to use. \item\end{DoxyCompactList}\item 
+\hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{getResult} (std::string request)
+\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{disconnect} ()
+\begin{DoxyCompactList}\small\item\em To disconnect from the database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classOracleDatabase_a5a3094ed80aeff4a7637e31eb86fab86}{
+Environment $\ast$ \hyperlink{classOracleDatabase_a5a3094ed80aeff4a7637e31eb86fab86}{menvironment}}
+\label{classOracleDatabase_a5a3094ed80aeff4a7637e31eb86fab86}
+
+\begin{DoxyCompactList}\small\item\em The oracle environnement. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_a5dc53869aaff49e9780885bf54d4acc6}{
+Connection $\ast$ \hyperlink{classOracleDatabase_a5dc53869aaff49e9780885bf54d4acc6}{mcon}}
+\label{classOracleDatabase_a5dc53869aaff49e9780885bf54d4acc6}
+
+\begin{DoxyCompactList}\small\item\em The connection structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_ad6cd3577621325feda91be87b9ef4b29}{
+Statement $\ast$ \hyperlink{classOracleDatabase_ad6cd3577621325feda91be87b9ef4b29}{mstmt}}
+\label{classOracleDatabase_ad6cd3577621325feda91be87b9ef4b29}
+
+\begin{DoxyCompactList}\small\item\em The statement (=request). \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_a97515c847c370c74e704cbd473ce54de}{
+ResultSet $\ast$ \hyperlink{classOracleDatabase_a97515c847c370c74e704cbd473ce54de}{mres}}
+\label{classOracleDatabase_a97515c847c370c74e704cbd473ce54de}
+
+\begin{DoxyCompactList}\small\item\em The result of a request. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_a37125a639f4f689daaa1433d6ed57b60}{
+std::string \hyperlink{classOracleDatabase_a37125a639f4f689daaa1433d6ed57b60}{mhost}}
+\label{classOracleDatabase_a37125a639f4f689daaa1433d6ed57b60}
+
+\begin{DoxyCompactList}\small\item\em The host of the base. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_a2377bf882e2086afa2defe873c2560b2}{
+std::string \hyperlink{classOracleDatabase_a2377bf882e2086afa2defe873c2560b2}{musername}}
+\label{classOracleDatabase_a2377bf882e2086afa2defe873c2560b2}
+
+\begin{DoxyCompactList}\small\item\em The username to connect. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_a19613d7c0f3e400a8145e996e96962cb}{
+std::string \hyperlink{classOracleDatabase_a19613d7c0f3e400a8145e996e96962cb}{mpwd}}
+\label{classOracleDatabase_a19613d7c0f3e400a8145e996e96962cb}
+
+\begin{DoxyCompactList}\small\item\em The password to connect. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_aa976189ee2c8b9ee6431c4893b39d8da}{
+std::string \hyperlink{classOracleDatabase_aa976189ee2c8b9ee6431c4893b39d8da}{mdatabase}}
+\label{classOracleDatabase_aa976189ee2c8b9ee6431c4893b39d8da}
+
+\begin{DoxyCompactList}\small\item\em The database to connect. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_a7c808cda4f5516a9988d13e69035ea28}{
+int \hyperlink{classOracleDatabase_a7c808cda4f5516a9988d13e69035ea28}{mport}}
+\label{classOracleDatabase_a7c808cda4f5516a9988d13e69035ea28}
+
+\begin{DoxyCompactList}\small\item\em The port to use. \item\end{DoxyCompactList}\item 
+\hypertarget{classOracleDatabase_af044c8d8c050f17599b0e45453518ddf}{
+bool \hyperlink{classOracleDatabase_af044c8d8c050f17599b0e45453518ddf}{misConnected}}
+\label{classOracleDatabase_af044c8d8c050f17599b0e45453518ddf}
+
+\begin{DoxyCompactList}\small\item\em If the connection is right. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Oracle implementation of the \hyperlink{classDatabase}{Database} class. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOracleDatabase_aee0fb586efbd08f76089b1d343ad9345}{
+\index{OracleDatabase@{OracleDatabase}!OracleDatabase@{OracleDatabase}}
+\index{OracleDatabase@{OracleDatabase}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{OracleDatabase}]{\setlength{\rightskip}{0pt plus 5cm}OracleDatabase::OracleDatabase (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ hostname, }
+\item[{std::string}]{ username, }
+\item[{std::string}]{ pwd, }
+\item[{std::string}]{ database = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{unsigned int}]{ port = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classOracleDatabase_aee0fb586efbd08f76089b1d343ad9345}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em hostname}]The name of the host to connect \item[{\em username}]The username to connect to the database \item[{\em pwd}]The password to connect to the database \item[{\em database}]The database to connect \item[{\em port}]The port to use \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}{
+\index{OracleDatabase@{OracleDatabase}!connect@{connect}}
+\index{connect@{connect}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::connect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}
+
+
+To make a connection to the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{Database}.
+
+\hypertarget{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{
+\index{OracleDatabase@{OracleDatabase}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{disconnect}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::disconnect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private, virtual\mbox{]}}}}
+\label{classOracleDatabase_a9839467588dcecbdb4c4582903379346}
+
+
+To disconnect from the database. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{Database}.
+
+\hypertarget{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{
+\index{OracleDatabase@{OracleDatabase}!getResult@{getResult}}
+\index{getResult@{getResult}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{getResult}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ OracleDatabase::getResult (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}
+
+
+To get the result of a select request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The request to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An object which encapsulates the database results 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{Database}.
+
+\hypertarget{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{
+\index{OracleDatabase@{OracleDatabase}!process@{process}}
+\index{process@{process}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::process (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}
+
+
+Function to process the request in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The request to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_a41881436b79aac5f4d8e179056564de1}{Database}.
+
+\hypertarget{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{
+\index{OracleDatabase@{OracleDatabase}!setDatabase@{setDatabase}}
+\index{setDatabase@{setDatabase}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{setDatabase}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::setDatabase (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ db}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}
+
+
+To set the db to use. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em db}]The name of the database to use \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classDatabase_aeba15395d2a36faf73dcb995695b9204}{Database}.
+
+\hypertarget{classOracleDatabase_a24767193dece017c4e97ca5bce7214e6}{
+\index{OracleDatabase@{OracleDatabase}!startTransaction@{startTransaction}}
+\index{startTransaction@{startTransaction}!OracleDatabase@{OracleDatabase}}
+\subsubsection[{startTransaction}]{\setlength{\rightskip}{0pt plus 5cm}int OracleDatabase::startTransaction (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ request}
+\end{DoxyParamCaption}
+)}}
+\label{classOracleDatabase_a24767193dece017c4e97ca5bce7214e6}
+
+
+To start a transaction with the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em request}]The series of requests to process \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/database/\hyperlink{OracleDatabase_8hpp}{OracleDatabase.hpp}\end{DoxyCompactItemize}

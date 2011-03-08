@@ -5,6 +5,7 @@
 * \date 31/01/2011
 */
 
+#include <algorithm>
 #include "UserServer.hpp"
 #include "ServerUMS.hpp"
 
@@ -548,10 +549,15 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
   // create file containing the body of the mail
   std::string contentFileName = "/tmp/";
   contentFileName.append("vishnu_email_");
-  contentFileName.append(generatePassword(user.getFirstname(), user.getLastname()));
+  //To generate the filename
+  std::string generatedString = generatePassword(user.getFirstname(), user.getLastname());
+
+  //To remove point on the filename
+  std::replace (generatedString.begin(), generatedString.end(),'.', 'P');
+  contentFileName.append(generatedString);
+
   try {
-    std::ofstream of;
-    of.open(contentFileName.c_str(), std::ios_base::out);
+    std::ofstream of(contentFileName.c_str());
     of << content;
     of.close();
   } catch (...) {
