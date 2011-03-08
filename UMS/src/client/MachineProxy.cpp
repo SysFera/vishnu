@@ -43,6 +43,17 @@ int MachineProxy::add()
   //To serialize the mmachine object in to machineToString 
   machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
+  std::string sshKeyFilePath = mmachine.getSshPublicKey();
+  if(sshKeyFilePath.find("\"")!=std::string::npos) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, " The machine SshPublicKey contains special character double quote \"");
+  }
+  if(sshKeyFilePath.find("<")!=std::string::npos) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, " The machine SshPublicKey contains special character < ");
+  }
+  if(sshKeyFilePath.find(">")!=std::string::npos) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, " The machine SshPublicKey contains special character > ");
+  }
+
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
