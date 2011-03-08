@@ -164,14 +164,14 @@ int ConfigurationServer::restore() {
       "DELETE FROM machine; DELETE FROM account;");
 
       //To get all users
-      for(int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
+      for(unsigned int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
         UMS_Data::User_ptr user = mconfiguration->getListConfUsers().get(i);
         //userServer.add(user);
         sqlcode.append(userToSql(user));
       }
 
       //To get all machines
-      for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
+      for(unsigned int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
         UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
         sqlcode.append(machineToSql(machine));
       }
@@ -180,7 +180,7 @@ int ConfigurationServer::restore() {
       mdatabaseVishnu->process(sqlcode.c_str());
 
       //To get machines description
-      for(int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
+      for(unsigned int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
         UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
         sqlCodeDescMachine.append(machineDescToSql(machine));
       }
@@ -189,7 +189,7 @@ int ConfigurationServer::restore() {
       mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
 
       //To insert localAccount
-      for(int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
+      for(unsigned int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
         UMS_Data::LocalAccount_ptr localAccount = mconfiguration->getListConfLocalAccounts().get(i);
         LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
         localAccountServer.add();
@@ -272,11 +272,12 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
 
   UMS_Data::Machine* machinetmp = new UMS_Data::Machine();
   MachineServer machineServer = MachineServer(machinetmp);
-
-  return ("insert into description (machine_nummachineid, lang, "
+  std::string res;  
+  res = "insert into description (machine_nummachineid, lang, "
   "description) values "
   "("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+","
-  "'"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');");
+  "'"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');";
 
   delete machinetmp;
+  return res;
 }

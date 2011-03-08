@@ -567,6 +567,7 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
   std::string command = sendmailScriptPath + " --to " + address + " -s " + "\""
                         + subject + "\"" + " -f " + contentFileName + " 1>/dev/null 2>/dev/null &";
   system(command.c_str());
+  return 0;
 }
 
 /**
