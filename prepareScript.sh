@@ -36,10 +36,6 @@ mkdir $path/core/database
 cp -r core/database/database_init.sql $path/core/database/
 cp -r core/database/postgre_create.sql $path/core/database/
 
-# Copy emf4cpp files
-mkdir $path/core/deps/
-cp -r core/deps/emf4cpp $path/core/deps/
-
 # Copy core sources
 mkdir $path/core/src/
 mkdir $path/core/src/database
@@ -67,7 +63,23 @@ cp -r UMS/src/sed $path/UMS/src
 cp -r UMS/src/server $path/UMS/src
 cp -r UMS/src/utils $path/UMS/src
 
+cp setCopyright.sh $path/
+
 cd $path
+
+./setCopyright.sh copyright
+
+rm setCopyright.sh
+
+cd -
+
+# Copy emf4cpp files
+mkdir $path/core/deps/
+cp -r core/deps/emf4cpp $path/core/deps/
+
+cd $path
+
+rm tmp.txt
 
 # remove all ~ files
 for i in  $(find . -name "*~") ; do rm $i;  done ;
