@@ -1,0 +1,274 @@
+\hypertarget{classMapper}{
+\section{Mapper Class Reference}
+\label{classMapper}\index{Mapper@{Mapper}}
+}
+
+
+Generic mapper.  
+
+
+
+
+{\ttfamily \#include $<$Mapper.hpp$>$}
+
+Inheritance diagram for Mapper:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classMapper}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMapper_a3ceeb740084ee1ee24164cc5c5c4f253}{Mapper} (\hyperlink{classMapperRegistry}{MapperRegistry} $\ast$reg)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapper_a15fd8e5e4f913d24bb3a2c1371d6426c}{
+\hyperlink{classMapper_a15fd8e5e4f913d24bb3a2c1371d6426c}{Mapper} ()}
+\label{classMapper_a15fd8e5e4f913d24bb3a2c1371d6426c}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapper_a24b42bce1e3052a0009181ed283d1070}{
+\hyperlink{classMapper_a24b42bce1e3052a0009181ed283d1070}{$\sim$Mapper} ()}
+\label{classMapper_a24b42bce1e3052a0009181ed283d1070}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classMapper_a5cdd791945456f75a903295e65d818d7}{Mapper} (const \hyperlink{classMapper}{Mapper} \&m)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classMapper_a6d7b0051fbf45b48b33e6787092b95bc}{registerMapper} ()
+\begin{DoxyCompactList}\small\item\em To register a mapper in the list of active mapper. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classMapper_a8e34d570895cfa42aa998e4a30f80f2c}{unregisterMapper} ()
+\begin{DoxyCompactList}\small\item\em To unregister a mapper in the list of active mapper. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classMapper_a8bd089cd656e7d8da672253df70baead}{getCommand} (const string \&key, string \&command)
+\begin{DoxyCompactList}\small\item\em To get the command corresponding to a key. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classMapper_a94b8783c6c56f0928a32bb4c80c875de}{getKey} (const string \&command, string \&key)
+\begin{DoxyCompactList}\small\item\em To get the key corresponding to a command. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classMapper_a915f9829fd340b2b0978323b90eda360}{code} (const string \&cmd, unsigned int code=0)
+\begin{DoxyCompactList}\small\item\em Function to add an element to code. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classMapper_a568fcb8dba98cb9d37700972ef5d8df0}{finalize} (int key)
+\begin{DoxyCompactList}\small\item\em To end a command, delete it from the map and get its value. \item\end{DoxyCompactList}\item 
+virtual string \hyperlink{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{decode} (const string \&msg)
+\begin{DoxyCompactList}\small\item\em To get, from a coded string, the CPP command that made it. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMapper_a694827c3dd2b369e3fe5cce6945a46e6}{
+\hyperlink{classMapperRegistry}{MapperRegistry} $\ast$ \hyperlink{classMapper_a694827c3dd2b369e3fe5cce6945a46e6}{mreg}}
+\label{classMapper_a694827c3dd2b369e3fe5cce6945a46e6}
+
+\begin{DoxyCompactList}\small\item\em The mapper registry. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapper_a2b545ffb6c51ba5e9cc40afc974557cd}{
+map$<$ int, string $>$ \hyperlink{classMapper_a2b545ffb6c51ba5e9cc40afc974557cd}{mmap}}
+\label{classMapper_a2b545ffb6c51ba5e9cc40afc974557cd}
+
+\begin{DoxyCompactList}\small\item\em The map containing the function and their code. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapper_a4aca28f71e018f3d1aa7cd696dc4057e}{
+string \hyperlink{classMapper_a4aca28f71e018f3d1aa7cd696dc4057e}{mname}}
+\label{classMapper_a4aca28f71e018f3d1aa7cd696dc4057e}
+
+\begin{DoxyCompactList}\small\item\em The name of the mapper. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapper_a3f193841d3eedb7adbf0a2be05f5e7c0}{
+map$<$ int, string $>$ \hyperlink{classMapper_a3f193841d3eedb7adbf0a2be05f5e7c0}{mcmd}}
+\label{classMapper_a3f193841d3eedb7adbf0a2be05f5e7c0}
+
+\begin{DoxyCompactList}\small\item\em Map used to store the string that are decoded. \item\end{DoxyCompactList}\item 
+\hypertarget{classMapper_a5a9ae264121a8706ee9f4954959ddd57}{
+pthread\_\-mutex\_\-t \hyperlink{classMapper_a5a9ae264121a8706ee9f4954959ddd57}{mutex}}
+\label{classMapper_a5a9ae264121a8706ee9f4954959ddd57}
+
+\begin{DoxyCompactList}\small\item\em Mutex to protect the id generation for the mcmd map. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Generic mapper. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMapper_a3ceeb740084ee1ee24164cc5c5c4f253}{
+\index{Mapper@{Mapper}!Mapper@{Mapper}}
+\index{Mapper@{Mapper}!Mapper@{Mapper}}
+\subsubsection[{Mapper}]{\setlength{\rightskip}{0pt plus 5cm}Mapper::Mapper (
+\begin{DoxyParamCaption}
+\item[{{\bf MapperRegistry} $\ast$}]{ reg}
+\end{DoxyParamCaption}
+)}}
+\label{classMapper_a3ceeb740084ee1ee24164cc5c5c4f253}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em reg}]Registry to register \end{DoxyParams}
+\hypertarget{classMapper_a5cdd791945456f75a903295e65d818d7}{
+\index{Mapper@{Mapper}!Mapper@{Mapper}}
+\index{Mapper@{Mapper}!Mapper@{Mapper}}
+\subsubsection[{Mapper}]{\setlength{\rightskip}{0pt plus 5cm}Mapper::Mapper (
+\begin{DoxyParamCaption}
+\item[{const {\bf Mapper} \&}]{ m}
+\end{DoxyParamCaption}
+)}}
+\label{classMapper_a5cdd791945456f75a903295e65d818d7}
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em m}]The mapper to copy \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMapper_a915f9829fd340b2b0978323b90eda360}{
+\index{Mapper@{Mapper}!code@{code}}
+\index{code@{code}!Mapper@{Mapper}}
+\subsubsection[{code}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::code (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ cmd, }
+\item[{unsigned int}]{ code = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a915f9829fd340b2b0978323b90eda360}
+
+
+Function to add an element to code. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cmd}]The string to add \item[{\em code}]If 0, the code is created, otherwize it is the key in the map to add the string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if param code = 0, the assigned code to add other element to the same item, otherwize return 0 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classUMSMapper_af5aec06e19b9b242645cf1abc2d6dad0}{UMSMapper}.
+
+\hypertarget{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}{
+\index{Mapper@{Mapper}!decode@{decode}}
+\index{decode@{decode}!Mapper@{Mapper}}
+\subsubsection[{decode}]{\setlength{\rightskip}{0pt plus 5cm}string Mapper::decode (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a5e51b9148704b25e26e5ec48bd643a0b}
+
+
+To get, from a coded string, the CPP command that made it. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em msg}]The coded string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The CPP command 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classUMSMapper_a09302a31b4cc2698d0e0d563988fb7c3}{UMSMapper}.
+
+\hypertarget{classMapper_a568fcb8dba98cb9d37700972ef5d8df0}{
+\index{Mapper@{Mapper}!finalize@{finalize}}
+\index{finalize@{finalize}!Mapper@{Mapper}}
+\subsubsection[{finalize}]{\setlength{\rightskip}{0pt plus 5cm}string Mapper::finalize (
+\begin{DoxyParamCaption}
+\item[{int}]{ key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a568fcb8dba98cb9d37700972ef5d8df0}
+
+
+To end a command, delete it from the map and get its value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em key}]The entry in the map to get an remove \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The coded value of the command 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classUMSMapper_a831047c74368517e2164acc872ecb288}{UMSMapper}.
+
+\hypertarget{classMapper_a8bd089cd656e7d8da672253df70baead}{
+\index{Mapper@{Mapper}!getCommand@{getCommand}}
+\index{getCommand@{getCommand}!Mapper@{Mapper}}
+\subsubsection[{getCommand}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::getCommand (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ key, }
+\item[{string \&}]{ command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a8bd089cd656e7d8da672253df70baead}
+
+
+To get the command corresponding to a key. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em key}]The key to use \item[{\em command}]OUT, the command corresponding to the key \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classMapper_a94b8783c6c56f0928a32bb4c80c875de}{
+\index{Mapper@{Mapper}!getKey@{getKey}}
+\index{getKey@{getKey}!Mapper@{Mapper}}
+\subsubsection[{getKey}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::getKey (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ command, }
+\item[{string \&}]{ key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a94b8783c6c56f0928a32bb4c80c875de}
+
+
+To get the key corresponding to a command. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em command}]The 'key' to use \item[{\em key}]OUT, the key corresponding to the command \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+\hypertarget{classMapper_a6d7b0051fbf45b48b33e6787092b95bc}{
+\index{Mapper@{Mapper}!registerMapper@{registerMapper}}
+\index{registerMapper@{registerMapper}!Mapper@{Mapper}}
+\subsubsection[{registerMapper}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::registerMapper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a6d7b0051fbf45b48b33e6787092b95bc}
+
+
+To register a mapper in the list of active mapper. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classFMSMapper_a9bc0c707f78b3b77bd5e12c2adca8b3c}{FMSMapper}, \hyperlink{classIMSMapper_a5454adaabc0a8049263f2f9c50f71d36}{IMSMapper}, \hyperlink{classTMSMapper_a80861ce29842aea1375efc77cb093a17}{TMSMapper}, and \hyperlink{classUMSMapper_a39acbc8e93c31d005a3a676ce9ec5e4c}{UMSMapper}.
+
+\hypertarget{classMapper_a8e34d570895cfa42aa998e4a30f80f2c}{
+\index{Mapper@{Mapper}!unregisterMapper@{unregisterMapper}}
+\index{unregisterMapper@{unregisterMapper}!Mapper@{Mapper}}
+\subsubsection[{unregisterMapper}]{\setlength{\rightskip}{0pt plus 5cm}int Mapper::unregisterMapper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classMapper_a8e34d570895cfa42aa998e4a30f80f2c}
+
+
+To unregister a mapper in the list of active mapper. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, an error code otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classFMSMapper_a6d775c27ca0443e6969c857eb2b87377}{FMSMapper}, \hyperlink{classIMSMapper_a688bf20409385a8c7505164153d243ac}{IMSMapper}, \hyperlink{classTMSMapper_a0780bd57fb6ddcbf4b2b9002370d307f}{TMSMapper}, and \hyperlink{classUMSMapper_ae825ecd7039b09d7ddd74be5e2236628}{UMSMapper}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/registry/\hyperlink{Mapper_8hpp}{Mapper.hpp}\end{DoxyCompactItemize}
