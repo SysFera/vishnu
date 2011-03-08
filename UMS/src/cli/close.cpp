@@ -85,8 +85,10 @@ int main (int ac, char* av[]){
       close(sessionKey);
 
       removeLastSession(sessionFile);
-    }
 
+      printSuccessMessage();
+    }
+    
 
 
   }// End of try bloc
@@ -105,6 +107,7 @@ int main (int ac, char* av[]){
       std::string sessionFile=getSessionLocation(getppid());
  
       removeLastSession(sessionFile);// remove from the file
+
     }
 
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
