@@ -35,64 +35,59 @@ int MachineProxy::add()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  try {
+  profile = diet_profile_alloc("machineCreate", 1, 1, 3);
+  sessionKey = msessionProxy.getSessionKey();
 
-    profile = diet_profile_alloc("machineCreate", 1, 1, 3);
-    sessionKey = msessionProxy.getSessionKey();
+  const char* name = "addMachineInformation";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the mmachine object in to machineToString 
+  machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
-    const char* name = "addMachineInformation";
-    ::ecorecpp::serializer::serializer _ser(name);
-    //To serialize the mmachine object in to machineToString 
-    machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
+  //IN Parameters
+  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+sessionKey;
+    raiseDietMsgException(msg); 
+  }
+  if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+    msg += "with machineToString parameter "+machineToString;
+    raiseDietMsgException(msg);
+  }
 
-    //IN Parameters
-    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-      msg += "with sessionKey parameter "+sessionKey;
-      raiseDietMsgException(msg); 
-    }
-    if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
-      msg += "with machineToString parameter "+machineToString;
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &machineInString, NULL)){
+      msg += "by receiving Machine serialized  message";
       raiseDietMsgException(msg);
     }
-
-    //OUT Parameters
-    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-    if(!diet_call(profile)) {
-      if(diet_string_get(diet_parameter(profile,2), &machineInString, NULL)){
-        msg += "by receiving Machine serialized  message";
-        raiseDietMsgException(msg);
-      }
-      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-        msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
-      }
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+      msg += "by receiving errorInfo message";
+      raiseDietMsgException(msg);
     }
-    else {
-      raiseDietMsgException("DIET call failure");
-    }
-
-    /*To raise a vishnu exception if the receiving message is not empty*/
-    raiseExceptionIfNotEmptyMsg(errorInfo);
-
-    // CREATE DATA MODEL
-    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-    //Parse the model
-    ecorecpp::parser::parser parser;
-    //To set the mconfiguration 
-    UMS_Data::Machine_ptr machine_ptr = parser.load(machineInString)->as< UMS_Data::Machine >();
-
-    mmachine = *machine_ptr;
-
-  } catch (...) {
-    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
+  else {
+    raiseDietMsgException("DIET call failure");
+  }
+
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  // CREATE DATA MODEL
+  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+  //Parse the model
+  ecorecpp::parser::parser parser;
+  //To set the mconfiguration 
+  UMS_Data::Machine_ptr machine_ptr = parser.load(machineInString)->as< UMS_Data::Machine >();
+
+  mmachine = *machine_ptr;
 
   return 0;
-  }
+
+}
 
 /**
  * \brief Function to update machine description 
@@ -107,45 +102,39 @@ int MachineProxy::update()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  try {
+  profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+  sessionKey = msessionProxy.getSessionKey();
 
-    profile = diet_profile_alloc("machineUpdate", 1, 1, 2);
-    sessionKey = msessionProxy.getSessionKey();
+  const char* name = "addMachineInformation";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the mmachine object in to machineToString 
+  machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
-    const char* name = "addMachineInformation";
-    ::ecorecpp::serializer::serializer _ser(name);
-    //To serialize the mmachine object in to machineToString 
-    machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
-
-    //IN Parameters
-    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-      msg += "with sessionKey parameter "+sessionKey;
-      raiseDietMsgException(msg);
-    }
-    if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
-      msg += "with machineToString parameter "+machineToString;
-      raiseDietMsgException(msg);
-    }
-
-    //OUT Parameters
-    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-
-    if(!diet_call(profile)) {
-      if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
-      }
-    }
-    else {
-      raiseDietMsgException("DIET call failure");
-    }
-
-    /*To raise a vishnu exception if the receiving message is not empty*/
-    raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  } catch (...) {
-    throw UMSVishnuException(ERRCODE_SYSTEM);
+  //IN Parameters
+  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+sessionKey;
+    raiseDietMsgException(msg);
   }
+  if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+    msg += "with machineToString parameter "+machineToString;
+    raiseDietMsgException(msg);
+  }
+
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+      msg += "by receiving errorInfo message";
+      raiseDietMsgException(msg);
+    }
+  }
+  else {
+    raiseDietMsgException("DIET call failure");
+  }
+
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
@@ -163,41 +152,35 @@ int MachineProxy::deleteMachine()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  try {
+  profile = diet_profile_alloc("machineDelete", 1, 1, 2);
+  sessionKey = msessionProxy.getSessionKey();
+  machineId = mmachine.getMachineId();
 
-    profile = diet_profile_alloc("machineDelete", 1, 1, 2);
-    sessionKey = msessionProxy.getSessionKey();
-    machineId = mmachine.getMachineId();
+  //IN Parameters
+  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msg += "with sessionKey parameter "+sessionKey;
+    raiseDietMsgException(msg); 
+  }
+  if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
+    msg += "with machineId parameter "+machineId;
+    raiseDietMsgException(msg);
+  }
 
-    //IN Parameters
-    if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-      msg += "with sessionKey parameter "+sessionKey;
+  //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+      msg += "by receiving errorInfo message";
       raiseDietMsgException(msg); 
     }
-    if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
-      msg += "with machineId parameter "+machineId;
-      raiseDietMsgException(msg);
-    }
-
-    //OUT Parameters
-    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-
-    if(!diet_call(profile)) {
-      if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
-        msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg); 
-      }
-    }
-    else {
-      raiseDietMsgException("DIET call failure"); 
-    }
-
-    /*To raise a vishnu exception if the receiving message is not empty*/
-    raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  } catch (...) {
-    throw UMSVishnuException(ERRCODE_SYSTEM);
   }
+  else {
+    raiseDietMsgException("DIET call failure"); 
+  }
+
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
