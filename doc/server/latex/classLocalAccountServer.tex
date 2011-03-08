@@ -1,0 +1,219 @@
+\hypertarget{classLocalAccountServer}{
+\section{LocalAccountServer Class Reference}
+\label{classLocalAccountServer}\index{LocalAccountServer@{LocalAccountServer}}
+}
+
+
+\hyperlink{classLocalAccountServer}{LocalAccountServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$LocalAccountServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLocalAccountServer_ac7397f6bc278ea36788bb97340b92f88}{LocalAccountServer} (UMS\_\-Data::LocalAccount $\ast$\&account, \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classLocalAccountServer_aafbc4994794b98375146fbaf398986ab}{add} ()
+\begin{DoxyCompactList}\small\item\em Function to add a new VISHNU localAccount. \item\end{DoxyCompactList}\item 
+int \hyperlink{classLocalAccountServer_a106360dbde0601ccb4d59a0348a654e4}{update} ()
+\begin{DoxyCompactList}\small\item\em Function to update a VISHNU localAccount. \item\end{DoxyCompactList}\item 
+int \hyperlink{classLocalAccountServer_a1d79f9b073ec95f09d2f34e29b5f9053}{deleteLocalAccount} ()
+\begin{DoxyCompactList}\small\item\em Function to delete a VISHNU localAccount. \item\end{DoxyCompactList}\item 
+\hypertarget{classLocalAccountServer_a07799fc2f2411379c43c5d9015ea0b13}{
+\hyperlink{classLocalAccountServer_a07799fc2f2411379c43c5d9015ea0b13}{$\sim$LocalAccountServer} ()}
+\label{classLocalAccountServer_a07799fc2f2411379c43c5d9015ea0b13}
+
+\begin{DoxyCompactList}\small\item\em Destructor,. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::LocalAccount $\ast$ \hyperlink{classLocalAccountServer_a1bb0c984d1ce965e20ae82e3618f630b}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get localAccount data structure. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classLocalAccountServer_a053a743969d33cc7eef2d921c0c0ca55}{getAttribut} (std::string condition, std::string attrname=\char`\"{}numaccountid\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to get localAccount information from the database vishnu. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classLocalAccountServer_a5d6c7a0b3ce13905d606046ecf57d56e}{exist} (std::string idmachine, std::string iduser)
+\begin{DoxyCompactList}\small\item\em Function to check localAccount on database. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classLocalAccountServer_a38294d33446210c15297f0dcc32130ff}{getPublicKey} ()
+\begin{DoxyCompactList}\small\item\em Function to get the content of the public ssh generated. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLocalAccountServer_a2cbcd93a4b1dcd0cdc85bbfc08338356}{
+std::string \hyperlink{classLocalAccountServer_a2cbcd93a4b1dcd0cdc85bbfc08338356}{generateKey} ()}
+\label{classLocalAccountServer_a2cbcd93a4b1dcd0cdc85bbfc08338356}
+
+\begin{DoxyCompactList}\small\item\em Function to generate a private/public ssh key. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLocalAccountServer_abe6fd379011deb69279d5a6b137b8511}{
+UMS\_\-Data::LocalAccount $\ast$ \hyperlink{classLocalAccountServer_abe6fd379011deb69279d5a6b137b8511}{mlocalAccount}}
+\label{classLocalAccountServer_abe6fd379011deb69279d5a6b137b8511}
+
+\begin{DoxyCompactList}\small\item\em The localAccount data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classLocalAccountServer_a3aa9508d0413c66af764f91a649dee61}{
+\hyperlink{classSessionServer}{SessionServer} \hyperlink{classLocalAccountServer_a3aa9508d0413c66af764f91a649dee61}{msessionServer}}
+\label{classLocalAccountServer_a3aa9508d0413c66af764f91a649dee61}
+
+\begin{DoxyCompactList}\small\item\em An object which encapsulates session data. \item\end{DoxyCompactList}\item 
+\hypertarget{classLocalAccountServer_ad46d4a698cf64186f517acf55caa9a51}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classLocalAccountServer_ad46d4a698cf64186f517acf55caa9a51}{mdatabaseVishnu}}
+\label{classLocalAccountServer_ad46d4a698cf64186f517acf55caa9a51}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\item 
+\hypertarget{classLocalAccountServer_a607ade4283d00544839df6713e90893b}{
+std::string \hyperlink{classLocalAccountServer_a607ade4283d00544839df6713e90893b}{msshpublickey}}
+\label{classLocalAccountServer_a607ade4283d00544839df6713e90893b}
+
+\begin{DoxyCompactList}\small\item\em The content of the ssh public key generated. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classLocalAccountServer}{LocalAccountServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classLocalAccountServer_ac7397f6bc278ea36788bb97340b92f88}{
+\index{LocalAccountServer@{LocalAccountServer}!LocalAccountServer@{LocalAccountServer}}
+\index{LocalAccountServer@{LocalAccountServer}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{LocalAccountServer}]{\setlength{\rightskip}{0pt plus 5cm}LocalAccountServer::LocalAccountServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::LocalAccount $\ast$\&}]{ account, }
+\item[{{\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_ac7397f6bc278ea36788bb97340b92f88}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em account}]The LocalAccount data structure \item[{\em session}]The object which encapsulates session data \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classLocalAccountServer_aafbc4994794b98375146fbaf398986ab}{
+\index{LocalAccountServer@{LocalAccountServer}!add@{add}}
+\index{add@{add}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}int LocalAccountServer::add (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_aafbc4994794b98375146fbaf398986ab}
+
+
+Function to add a new VISHNU localAccount. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classLocalAccountServer_a1d79f9b073ec95f09d2f34e29b5f9053}{
+\index{LocalAccountServer@{LocalAccountServer}!deleteLocalAccount@{deleteLocalAccount}}
+\index{deleteLocalAccount@{deleteLocalAccount}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{deleteLocalAccount}]{\setlength{\rightskip}{0pt plus 5cm}int LocalAccountServer::deleteLocalAccount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_a1d79f9b073ec95f09d2f34e29b5f9053}
+
+
+Function to delete a VISHNU localAccount. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classLocalAccountServer_a5d6c7a0b3ce13905d606046ecf57d56e}{
+\index{LocalAccountServer@{LocalAccountServer}!exist@{exist}}
+\index{exist@{exist}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}bool LocalAccountServer::exist (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ idmachine, }
+\item[{std::string}]{ iduser}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_a5d6c7a0b3ce13905d606046ecf57d56e}
+
+
+Function to check localAccount on database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em idmachine}]The id of the machine \item[{\em iduser}]The id of the user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the localAccount exists else false 
+\end{DoxyReturn}
+\hypertarget{classLocalAccountServer_a053a743969d33cc7eef2d921c0c0ca55}{
+\index{LocalAccountServer@{LocalAccountServer}!getAttribut@{getAttribut}}
+\index{getAttribut@{getAttribut}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}LocalAccountServer::getAttribut (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}numaccountid\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_a053a743969d33cc7eef2d921c0c0ca55}
+
+
+Function to get localAccount information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the attribut or empty string if no results 
+\end{DoxyReturn}
+\hypertarget{classLocalAccountServer_a1bb0c984d1ce965e20ae82e3618f630b}{
+\index{LocalAccountServer@{LocalAccountServer}!getData@{getData}}
+\index{getData@{getData}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::LocalAccount LocalAccountServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_a1bb0c984d1ce965e20ae82e3618f630b}
+
+
+Function to get localAccount data structure. 
+
+\begin{DoxyReturn}{Returns}
+The LocalAccount data structure 
+\end{DoxyReturn}
+\hypertarget{classLocalAccountServer_a38294d33446210c15297f0dcc32130ff}{
+\index{LocalAccountServer@{LocalAccountServer}!getPublicKey@{getPublicKey}}
+\index{getPublicKey@{getPublicKey}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{getPublicKey}]{\setlength{\rightskip}{0pt plus 5cm}std::string LocalAccountServer::getPublicKey (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_a38294d33446210c15297f0dcc32130ff}
+
+
+Function to get the content of the public ssh generated. 
+
+\begin{DoxyReturn}{Returns}
+The content of the ssh public key generated 
+\end{DoxyReturn}
+\hypertarget{classLocalAccountServer_a106360dbde0601ccb4d59a0348a654e4}{
+\index{LocalAccountServer@{LocalAccountServer}!update@{update}}
+\index{update@{update}!LocalAccountServer@{LocalAccountServer}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int LocalAccountServer::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classLocalAccountServer_a106360dbde0601ccb4d59a0348a654e4}
+
+
+Function to update a VISHNU localAccount. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{LocalAccountServer_8hpp}{LocalAccountServer.hpp}\end{DoxyCompactItemize}

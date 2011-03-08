@@ -1,0 +1,404 @@
+\hypertarget{classSessionServer}{
+\section{SessionServer Class Reference}
+\label{classSessionServer}\index{SessionServer@{SessionServer}}
+}
+
+
+\hyperlink{classUserServer}{UserServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$SessionServer.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSessionServer_a8a473b02addc08564c164faa1ea77575}{
+\hyperlink{classSessionServer_a8a473b02addc08564c164faa1ea77575}{SessionServer} ()}
+\label{classSessionServer_a8a473b02addc08564c164faa1ea77575}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classSessionServer_ab08e4536bb4721e4f0134c60cce12f91}{SessionServer} (std::string sessionKey)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classSessionServer_aecde9b72364184948e1a0ebdb747d52c}{SessionServer} (const UMS\_\-Data::Session \&session)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a6ef9ca5f9b6613aa9dd8ad072efafccc}{connectSession} (\hyperlink{classUserServer}{UserServer} user, \hyperlink{classMachineClientServer}{MachineClientServer} host, UMS\_\-Data::ConnectOptions $\ast$connectOpt)
+\begin{DoxyCompactList}\small\item\em Function to connect the session. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a01efa9d1722806ededc76da544590b88}{reconnect} (\hyperlink{classUserServer}{UserServer} user, \hyperlink{classMachineClientServer}{MachineClientServer} host, std::string sessionId)
+\begin{DoxyCompactList}\small\item\em Function to reconnect the session. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a988e014536e580c59c920bc55d201f24}{close} ()
+\begin{DoxyCompactList}\small\item\em Function to close the session. \item\end{DoxyCompactList}\item 
+\hypertarget{classSessionServer_aa5d1074c861360c8052a2f523f47b8f8}{
+\hyperlink{classSessionServer_aa5d1074c861360c8052a2f523f47b8f8}{$\sim$SessionServer} ()}
+\label{classSessionServer_aa5d1074c861360c8052a2f523f47b8f8}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::Session \hyperlink{classSessionServer_a4c23b390fd8d49b83f34a57c1d7e1b23}{getData} ()
+\begin{DoxyCompactList}\small\item\em Function to get the session information. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classSessionServer_af3fce86cf1e28afee1b44ac35b925925}{getAttribut} (std::string condition, std::string attrname=\char`\"{}sessionkey\char`\"{})
+\begin{DoxyCompactList}\small\item\em Function to get user information from the database vishnu. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a479f3e2aee3b4c5009e8f496612ae9bc}{saveConnection} ()
+\begin{DoxyCompactList}\small\item\em Function to save the date of the last connection. \item\end{DoxyCompactList}\item 
+\hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classSessionServer_a21db5603b7a91581d5860d1b24f38cd5}{getSessionToclosebyTimeout} ()
+\begin{DoxyCompactList}\small\item\em Function to get the list of sessions with close on timeout mode to close. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classSessionServer_a2e33c0fefafc3cf9256a031b648fe20d}{generateSessionKey} (std::string salt)
+\begin{DoxyCompactList}\small\item\em Function to generate the session key. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a1e183bdc40894f3ed77ec57c75d8201f}{generateSessionId} (std::string userId)
+\begin{DoxyCompactList}\small\item\em Function to generate the session identifier. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a1485d4253466f28c4191210ea843a7d9}{recordSessionServer} (std::string idmachine, std::string iduser)
+\begin{DoxyCompactList}\small\item\em Function to record the session on the database. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classSessionServer_af9416a5a26dcb63589480a73a1d60cf1}{exist} (bool flagSessionId=false)
+\begin{DoxyCompactList}\small\item\em Function to check the session on database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a297167a64f374c538e8f7a719c5771e7}{getState} (bool flagSessionId=false)
+\begin{DoxyCompactList}\small\item\em Function to check the session on database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_aa31001984aba984a1374e4088ffbbb6f}{getSessionkey} (std::string idmachine, std::string iduser, bool flagAdmin=false)
+\begin{DoxyCompactList}\small\item\em Function to check the session on database. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_af64544a743117d025df4248e82de2321}{solveConnectionMode} (UMS\_\-Data::ConnectOptions $\ast$connectOpt, std::string numuserId)
+\begin{DoxyCompactList}\small\item\em Function to solve the session connection parameters. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSessionServer_a6dd2ad0cba4c14cb23beb28b19dde390}{disconnetToTimeout} (\hyperlink{classUserServer}{UserServer} user)
+\begin{DoxyCompactList}\small\item\em Function to change the closure connection mode disconnet to timeout. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSessionServer_acad3f309e8c4ac30ecb2458c1bc830bb}{
+UMS\_\-Data::Session \hyperlink{classSessionServer_acad3f309e8c4ac30ecb2458c1bc830bb}{msession}}
+\label{classSessionServer_acad3f309e8c4ac30ecb2458c1bc830bb}
+
+\begin{DoxyCompactList}\small\item\em The session data structure. \item\end{DoxyCompactList}\item 
+\hypertarget{classSessionServer_a050132782999456a25c7bd0651b30558}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classSessionServer_a050132782999456a25c7bd0651b30558}{mdatabaseVishnu}}
+\label{classSessionServer_a050132782999456a25c7bd0651b30558}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classUserServer}{UserServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classSessionServer_ab08e4536bb4721e4f0134c60cce12f91}{
+\index{SessionServer@{SessionServer}!SessionServer@{SessionServer}}
+\index{SessionServer@{SessionServer}!SessionServer@{SessionServer}}
+\subsubsection[{SessionServer}]{\setlength{\rightskip}{0pt plus 5cm}SessionServer::SessionServer (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ sessionKey}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_ab08e4536bb4721e4f0134c60cce12f91}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]The session key of the session \end{DoxyParams}
+\hypertarget{classSessionServer_aecde9b72364184948e1a0ebdb747d52c}{
+\index{SessionServer@{SessionServer}!SessionServer@{SessionServer}}
+\index{SessionServer@{SessionServer}!SessionServer@{SessionServer}}
+\subsubsection[{SessionServer}]{\setlength{\rightskip}{0pt plus 5cm}SessionServer::SessionServer (
+\begin{DoxyParamCaption}
+\item[{const UMS\_\-Data::Session \&}]{ session}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_aecde9b72364184948e1a0ebdb747d52c}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The session data structure \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classSessionServer_a988e014536e580c59c920bc55d201f24}{
+\index{SessionServer@{SessionServer}!close@{close}}
+\index{close@{close}!SessionServer@{SessionServer}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_a988e014536e580c59c920bc55d201f24}
+
+
+Function to close the session. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a6ef9ca5f9b6613aa9dd8ad072efafccc}{
+\index{SessionServer@{SessionServer}!connectSession@{connectSession}}
+\index{connectSession@{connectSession}!SessionServer@{SessionServer}}
+\subsubsection[{connectSession}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::connectSession (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ user, }
+\item[{{\bf MachineClientServer}}]{ host, }
+\item[{UMS\_\-Data::ConnectOptions $\ast$}]{ connectOpt}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_a6ef9ca5f9b6613aa9dd8ad072efafccc}
+
+
+Function to connect the session. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The object which manipulates user information \item[{\em host}]The object which manipulates client machine information \item[{\em connectOpt}]The options data structure for connection \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a6dd2ad0cba4c14cb23beb28b19dde390}{
+\index{SessionServer@{SessionServer}!disconnetToTimeout@{disconnetToTimeout}}
+\index{disconnetToTimeout@{disconnetToTimeout}!SessionServer@{SessionServer}}
+\subsubsection[{disconnetToTimeout}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::disconnetToTimeout (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ user}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_a6dd2ad0cba4c14cb23beb28b19dde390}
+
+
+Function to change the closure connection mode disconnet to timeout. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The object which manipulates user information \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new connection parameters are registered on the session data structure 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_af9416a5a26dcb63589480a73a1d60cf1}{
+\index{SessionServer@{SessionServer}!exist@{exist}}
+\index{exist@{exist}!SessionServer@{SessionServer}}
+\subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}bool SessionServer::exist (
+\begin{DoxyParamCaption}
+\item[{bool}]{ flagSessionId = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_af9416a5a26dcb63589480a73a1d60cf1}
+
+
+Function to check the session on database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em flagSessionId}]A flag to check the session id \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the session key (or sessionId) exists else false 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a1e183bdc40894f3ed77ec57c75d8201f}{
+\index{SessionServer@{SessionServer}!generateSessionId@{generateSessionId}}
+\index{generateSessionId@{generateSessionId}!SessionServer@{SessionServer}}
+\subsubsection[{generateSessionId}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::generateSessionId (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ userId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_a1e183bdc40894f3ed77ec57c75d8201f}
+
+
+Function to generate the session identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userId}]the userId of the owner of the session \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+record the the session id on the session data structure 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a2e33c0fefafc3cf9256a031b648fe20d}{
+\index{SessionServer@{SessionServer}!generateSessionKey@{generateSessionKey}}
+\index{generateSessionKey@{generateSessionKey}!SessionServer@{SessionServer}}
+\subsubsection[{generateSessionKey}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::generateSessionKey (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ salt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_a2e33c0fefafc3cf9256a031b648fe20d}
+
+
+Function to generate the session key. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em salt}]This string is used to perturb the algorithm \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an encrypted message registered on the session data structure 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_af3fce86cf1e28afee1b44ac35b925925}{
+\index{SessionServer@{SessionServer}!getAttribut@{getAttribut}}
+\index{getAttribut@{getAttribut}!SessionServer@{SessionServer}}
+\subsubsection[{getAttribut}]{\setlength{\rightskip}{0pt plus 5cm}SessionServer::getAttribut (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ condition, }
+\item[{std::string}]{ attrname = {\ttfamily \char`\"{}sessionkey\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_af3fce86cf1e28afee1b44ac35b925925}
+
+
+Function to get user information from the database vishnu. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em condition}]The condition of the select request \item[{\em attrname}]the name of the attribut to get \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the attribut or empty string if no results 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a4c23b390fd8d49b83f34a57c1d7e1b23}{
+\index{SessionServer@{SessionServer}!getData@{getData}}
+\index{getData@{getData}!SessionServer@{SessionServer}}
+\subsubsection[{getData}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::Session SessionServer::getData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_a4c23b390fd8d49b83f34a57c1d7e1b23}
+
+
+Function to get the session information. 
+
+\begin{DoxyReturn}{Returns}
+The session data structure 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_aa31001984aba984a1374e4088ffbbb6f}{
+\index{SessionServer@{SessionServer}!getSessionkey@{getSessionkey}}
+\index{getSessionkey@{getSessionkey}!SessionServer@{SessionServer}}
+\subsubsection[{getSessionkey}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::getSessionkey (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ idmachine, }
+\item[{std::string}]{ iduser, }
+\item[{bool}]{ flagAdmin = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_aa31001984aba984a1374e4088ffbbb6f}
+
+
+Function to check the session on database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em idmachine}]the database number id of the client machine \item[{\em iduser}]the database number id of the owner of the session \item[{\em flagAdmin}]A flag for an admin to get the session key from another user \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success and -\/1 if there is no results 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a21db5603b7a91581d5860d1b24f38cd5}{
+\index{SessionServer@{SessionServer}!getSessionToclosebyTimeout@{getSessionToclosebyTimeout}}
+\index{getSessionToclosebyTimeout@{getSessionToclosebyTimeout}!SessionServer@{SessionServer}}
+\subsubsection[{getSessionToclosebyTimeout}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DatabaseResult} $\ast$ SessionServer::getSessionToclosebyTimeout (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_a21db5603b7a91581d5860d1b24f38cd5}
+
+
+Function to get the list of sessions with close on timeout mode to close. 
+
+\begin{DoxyReturn}{Returns}
+the list of results 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a297167a64f374c538e8f7a719c5771e7}{
+\index{SessionServer@{SessionServer}!getState@{getState}}
+\index{getState@{getState}!SessionServer@{SessionServer}}
+\subsubsection[{getState}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::getState (
+\begin{DoxyParamCaption}
+\item[{bool}]{ flagSessionId = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_a297167a64f374c538e8f7a719c5771e7}
+
+
+Function to check the session on database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em flagSessionId}]A flag to check the session identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the session status 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a01efa9d1722806ededc76da544590b88}{
+\index{SessionServer@{SessionServer}!reconnect@{reconnect}}
+\index{reconnect@{reconnect}!SessionServer@{SessionServer}}
+\subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::reconnect (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ user, }
+\item[{{\bf MachineClientServer}}]{ host, }
+\item[{std::string}]{ sessionId}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_a01efa9d1722806ededc76da544590b88}
+
+
+Function to reconnect the session. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em user}]The object which manipulates user information \item[{\em host}]The object which manipulates client machine information \item[{\em sessionId}]The session identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a1485d4253466f28c4191210ea843a7d9}{
+\index{SessionServer@{SessionServer}!recordSessionServer@{recordSessionServer}}
+\index{recordSessionServer@{recordSessionServer}!SessionServer@{SessionServer}}
+\subsubsection[{recordSessionServer}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::recordSessionServer (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ idmachine, }
+\item[{std::string}]{ iduser}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_a1485d4253466f28c4191210ea843a7d9}
+
+
+Function to record the session on the database. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em idmachine}]the database number id of the client machine \item[{\em iduser}]the database number id of the owner of the session \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+record the the session id on the session data structure 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_a479f3e2aee3b4c5009e8f496612ae9bc}{
+\index{SessionServer@{SessionServer}!saveConnection@{saveConnection}}
+\index{saveConnection@{saveConnection}!SessionServer@{SessionServer}}
+\subsubsection[{saveConnection}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::saveConnection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classSessionServer_a479f3e2aee3b4c5009e8f496612ae9bc}
+
+
+Function to save the date of the last connection. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{classSessionServer_af64544a743117d025df4248e82de2321}{
+\index{SessionServer@{SessionServer}!solveConnectionMode@{solveConnectionMode}}
+\index{solveConnectionMode@{solveConnectionMode}!SessionServer@{SessionServer}}
+\subsubsection[{solveConnectionMode}]{\setlength{\rightskip}{0pt plus 5cm}int SessionServer::solveConnectionMode (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::ConnectOptions $\ast$}]{ connectOpt, }
+\item[{std::string}]{ numuserId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSessionServer_af64544a743117d025df4248e82de2321}
+
+
+Function to solve the session connection parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em connectOpt}]the connection parameters \item[{\em numuserId}]the database number id of the user to connect \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the connection parameters are registered on the session data structure 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{SessionServer_8hpp}{SessionServer.hpp}\end{DoxyCompactItemize}

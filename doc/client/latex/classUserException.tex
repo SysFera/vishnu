@@ -1,0 +1,105 @@
+\hypertarget{classUserException}{
+\section{UserException Class Reference}
+\label{classUserException}\index{UserException@{UserException}}
+}
+
+
+This class represents the exception due to a user misuse.  
+
+
+
+
+{\ttfamily \#include $<$UserException.hpp$>$}
+
+Inheritance diagram for UserException:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classUserException}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classUserException_a11ef0dec3eb2fb07924f67383f20ad58}{
+\hyperlink{classUserException_a11ef0dec3eb2fb07924f67383f20ad58}{UserException} ()}
+\label{classUserException_a11ef0dec3eb2fb07924f67383f20ad58}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserException_a03a6c47177026f6b1b6d51ec63592327}{
+\hyperlink{classUserException_a03a6c47177026f6b1b6d51ec63592327}{UserException} (const \hyperlink{classUserException}{UserException} \&e)}
+\label{classUserException_a03a6c47177026f6b1b6d51ec63592327}
+
+\begin{DoxyCompactList}\small\item\em Copy constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserException_ae767ba459dc64e32e405fa1f39f50b50}{
+\hyperlink{classUserException_ae767ba459dc64e32e405fa1f39f50b50}{UserException} (int msg, std::string msgComp=\char`\"{}\char`\"{})}
+\label{classUserException_ae767ba459dc64e32e405fa1f39f50b50}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classUserException_a10233c4e7180fa44fd083713c08db311}{
+virtual \hyperlink{classUserException_a10233c4e7180fa44fd083713c08db311}{$\sim$UserException} ()  throw ()}
+\label{classUserException_a10233c4e7180fa44fd083713c08db311}
+
+\begin{DoxyCompactList}\small\item\em Default destructor. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classUserException_a3932494b3a537260b9b98c8bfc66e30a}{getTypeS} () const 
+\begin{DoxyCompactList}\small\item\em Function to get the exception type in string. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classUserException_a93d4fe054b45cbb873c0867fabef4e38}{getMsg} () const 
+\begin{DoxyCompactList}\small\item\em To get the generic message. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classUserException_a4ff1ebcac42d31f2080015f06b576c06}{
+void \hyperlink{classUserException_a4ff1ebcac42d31f2080015f06b576c06}{initMsg} ()}
+\label{classUserException_a4ff1ebcac42d31f2080015f06b576c06}
+
+\begin{DoxyCompactList}\small\item\em Function to initialize all the generic messages. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents the exception due to a user misuse. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classUserException_a93d4fe054b45cbb873c0867fabef4e38}{
+\index{UserException@{UserException}!getMsg@{getMsg}}
+\index{getMsg@{getMsg}!UserException@{UserException}}
+\subsubsection[{getMsg}]{\setlength{\rightskip}{0pt plus 5cm}std::string UserException::getMsg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUserException_a93d4fe054b45cbb873c0867fabef4e38}
+
+
+To get the generic message. 
+
+\begin{DoxyReturn}{Returns}
+Returns the message 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classVishnuException_ae3720dc2e42b83a13a9c7f9eb3b63252}{VishnuException}.
+
+\hypertarget{classUserException_a3932494b3a537260b9b98c8bfc66e30a}{
+\index{UserException@{UserException}!getTypeS@{getTypeS}}
+\index{getTypeS@{getTypeS}!UserException@{UserException}}
+\subsubsection[{getTypeS}]{\setlength{\rightskip}{0pt plus 5cm}std::string UserException::getTypeS (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUserException_a3932494b3a537260b9b98c8bfc66e30a}
+
+
+Function to get the exception type in string. 
+
+\begin{DoxyReturn}{Returns}
+Returns the type of the exception 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classVishnuException_ab9704ae9184fd6b786effbdf43c8db75}{VishnuException}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+core/src/exception/\hyperlink{UserException_8hpp}{UserException.hpp}\end{DoxyCompactItemize}

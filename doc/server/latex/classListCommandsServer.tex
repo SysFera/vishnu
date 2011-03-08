@@ -1,0 +1,176 @@
+\hypertarget{classListCommandsServer}{
+\section{ListCommandsServer Class Reference}
+\label{classListCommandsServer}\index{ListCommandsServer@{ListCommandsServer}}
+}
+
+
+\hyperlink{classListCommandsServer}{ListCommandsServer} class implementation.  
+
+
+
+
+{\ttfamily \#include $<$ListCommandsServer.hpp$>$}
+
+Inheritance diagram for ListCommandsServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classListCommandsServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classListCommandsServer_a026e657dcd109d5ba27db145a123f7d3}{ListCommandsServer} (const \hyperlink{classSessionServer}{SessionServer} session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hyperlink{classListCommandsServer_a78e10da7e68e9fddfee054fc39195063}{ListCommandsServer} (UMS\_\-Data::ListCmdOptions\_\-ptr params, const \hyperlink{classSessionServer}{SessionServer} \&session)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+void \hyperlink{classListCommandsServer_a796730b81d44caa578bef2ea89362755}{processOptions} (\hyperlink{classUserServer}{UserServer} userServer, const UMS\_\-Data::ListCmdOptions\_\-ptr \&options, std::string \&sqlRequest)
+\begin{DoxyCompactList}\small\item\em Function to treat the \hyperlink{classListCommandsServer}{ListCommandsServer} options. \item\end{DoxyCompactList}\item 
+UMS\_\-Data::ListCommands $\ast$ \hyperlink{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{list} ()
+\begin{DoxyCompactList}\small\item\em Function to list commands information. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{getCommandName} ()
+\begin{DoxyCompactList}\small\item\em Function to get the name of the \hyperlink{classListCommandsServer}{ListCommandsServer} command line. \item\end{DoxyCompactList}\item 
+std::string \hyperlink{classListCommandsServer_af253d25c235222b5872c31e590869a7a}{convertCmdType} (\hyperlink{CommandServer_8hpp_a7ae3a49efad67c34030ecbed1d947844}{CmdType} type)
+\begin{DoxyCompactList}\small\item\em To convert the command type in string. \item\end{DoxyCompactList}\item 
+\hypertarget{classListCommandsServer_afad26228bcf19880e8280e2bf5a54cad}{
+\hyperlink{classListCommandsServer_afad26228bcf19880e8280e2bf5a54cad}{$\sim$ListCommandsServer} ()}
+\label{classListCommandsServer_afad26228bcf19880e8280e2bf5a54cad}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classListCommandsServer_a4587e9f6bf59c8fe3bc0b9635e8880fd}{
+std::string \hyperlink{classListCommandsServer_a4587e9f6bf59c8fe3bc0b9635e8880fd}{mcommandName}}
+\label{classListCommandsServer_a4587e9f6bf59c8fe3bc0b9635e8880fd}
+
+\begin{DoxyCompactList}\small\item\em The name of the \hyperlink{classListCommandsServer}{ListCommandsServer} command line. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classListCommandsServer}{ListCommandsServer} class implementation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classListCommandsServer_a026e657dcd109d5ba27db145a123f7d3}{
+\index{ListCommandsServer@{ListCommandsServer}!ListCommandsServer@{ListCommandsServer}}
+\index{ListCommandsServer@{ListCommandsServer}!ListCommandsServer@{ListCommandsServer}}
+\subsubsection[{ListCommandsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListCommandsServer::ListCommandsServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf SessionServer}}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListCommandsServer_a026e657dcd109d5ba27db145a123f7d3}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+\hypertarget{classListCommandsServer_a78e10da7e68e9fddfee054fc39195063}{
+\index{ListCommandsServer@{ListCommandsServer}!ListCommandsServer@{ListCommandsServer}}
+\index{ListCommandsServer@{ListCommandsServer}!ListCommandsServer@{ListCommandsServer}}
+\subsubsection[{ListCommandsServer}]{\setlength{\rightskip}{0pt plus 5cm}ListCommandsServer::ListCommandsServer (
+\begin{DoxyParamCaption}
+\item[{UMS\_\-Data::ListCmdOptions\_\-ptr}]{ params, }
+\item[{const {\bf SessionServer} \&}]{ session}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListCommandsServer_a78e10da7e68e9fddfee054fc39195063}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of \hyperlink{classListCommandsServer}{ListCommandsServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classListCommandsServer_af253d25c235222b5872c31e590869a7a}{
+\index{ListCommandsServer@{ListCommandsServer}!convertCmdType@{convertCmdType}}
+\index{convertCmdType@{convertCmdType}!ListCommandsServer@{ListCommandsServer}}
+\subsubsection[{convertCmdType}]{\setlength{\rightskip}{0pt plus 5cm}std::string ListCommandsServer::convertCmdType (
+\begin{DoxyParamCaption}
+\item[{{\bf CmdType}}]{ type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListCommandsServer_af253d25c235222b5872c31e590869a7a}
+
+
+To convert the command type in string. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em type}]The type to convert \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The corresponding string 
+\end{DoxyReturn}
+\hypertarget{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{
+\index{ListCommandsServer@{ListCommandsServer}!getCommandName@{getCommandName}}
+\index{getCommandName@{getCommandName}!ListCommandsServer@{ListCommandsServer}}
+\subsubsection[{getCommandName}]{\setlength{\rightskip}{0pt plus 5cm}std::string ListCommandsServer::getCommandName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}
+
+
+Function to get the name of the \hyperlink{classListCommandsServer}{ListCommandsServer} command line. 
+
+\begin{DoxyReturn}{Returns}
+The the name of the \hyperlink{classListCommandsServer}{ListCommandsServer} command line 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{QueryServer$<$ UMS\_\-Data::ListCmdOptions, UMS\_\-Data::ListCommands $>$}.
+
+\hypertarget{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{
+\index{ListCommandsServer@{ListCommandsServer}!list@{list}}
+\index{list@{list}!ListCommandsServer@{ListCommandsServer}}
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::ListCommands $\ast$ ListCommandsServer::list (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}
+
+
+Function to list commands information. 
+
+\begin{DoxyReturn}{Returns}
+The pointer to the UMS\_\-Data::ListCommands containing commands information 
+
+raises an exception on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{QueryServer$<$ UMS\_\-Data::ListCmdOptions, UMS\_\-Data::ListCommands $>$}.
+
+\hypertarget{classListCommandsServer_a796730b81d44caa578bef2ea89362755}{
+\index{ListCommandsServer@{ListCommandsServer}!processOptions@{processOptions}}
+\index{processOptions@{processOptions}!ListCommandsServer@{ListCommandsServer}}
+\subsubsection[{processOptions}]{\setlength{\rightskip}{0pt plus 5cm}void ListCommandsServer::processOptions (
+\begin{DoxyParamCaption}
+\item[{{\bf UserServer}}]{ userServer, }
+\item[{const UMS\_\-Data::ListCmdOptions\_\-ptr \&}]{ options, }
+\item[{std::string \&}]{ sqlRequest}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListCommandsServer_a796730b81d44caa578bef2ea89362755}
+
+
+Function to treat the \hyperlink{classListCommandsServer}{ListCommandsServer} options. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em userServer}]the object which encapsulates user information \item[{\em options}]the object which contains the \hyperlink{classListCommandsServer}{ListCommandsServer} options values \item[{\em sqlRequest}]the sql data base request \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/server/\hyperlink{ListCommandsServer_8hpp}{ListCommandsServer.hpp}\end{DoxyCompactItemize}

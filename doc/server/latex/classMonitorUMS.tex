@@ -1,0 +1,109 @@
+\hypertarget{classMonitorUMS}{
+\section{MonitorUMS Class Reference}
+\label{classMonitorUMS}\index{MonitorUMS@{MonitorUMS}}
+}
+
+
+This class describes the UMS Monitor.  
+
+
+
+
+{\ttfamily \#include $<$MonitorUMS.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMonitorUMS_ab3e7af32b9eb1e778ade65438d52fd8b}{MonitorUMS} (int interval=1)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+\hypertarget{classMonitorUMS_a4dd94f7d4a5cfafb4c668cde6f231e3e}{
+\hyperlink{classMonitorUMS_a4dd94f7d4a5cfafb4c668cde6f231e3e}{$\sim$MonitorUMS} ()}
+\label{classMonitorUMS_a4dd94f7d4a5cfafb4c668cde6f231e3e}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classMonitorUMS_aab02ba843105bb0abcfe34fa12ecaa59}{init} (int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
+\begin{DoxyCompactList}\small\item\em To initialize the UMS monitor with individual parameters instead of configuration file. \item\end{DoxyCompactList}\item 
+int \hyperlink{classMonitorUMS_aa4e9d26960b0519c7bfd4e470d1fc0a7}{run} ()
+\begin{DoxyCompactList}\small\item\em To launch the UMS Monitor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMonitorUMS_a1d5bb8d46af814421bd426bca2ea19b5}{
+int \hyperlink{classMonitorUMS_a1d5bb8d46af814421bd426bca2ea19b5}{minterval}}
+\label{classMonitorUMS_a1d5bb8d46af814421bd426bca2ea19b5}
+
+\begin{DoxyCompactList}\small\item\em The interval in seconds to check the database. \item\end{DoxyCompactList}\item 
+\hypertarget{classMonitorUMS_ac1d6be2c23b3b81a2a06e2547f0aa34e}{
+\hyperlink{classDatabase}{Database} $\ast$ \hyperlink{classMonitorUMS_ac1d6be2c23b3b81a2a06e2547f0aa34e}{mdatabaseVishnu}}
+\label{classMonitorUMS_ac1d6be2c23b3b81a2a06e2547f0aa34e}
+
+\begin{DoxyCompactList}\small\item\em An instance of vishnu database. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes the UMS Monitor. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMonitorUMS_ab3e7af32b9eb1e778ade65438d52fd8b}{
+\index{MonitorUMS@{MonitorUMS}!MonitorUMS@{MonitorUMS}}
+\index{MonitorUMS@{MonitorUMS}!MonitorUMS@{MonitorUMS}}
+\subsubsection[{MonitorUMS}]{\setlength{\rightskip}{0pt plus 5cm}MonitorUMS::MonitorUMS (
+\begin{DoxyParamCaption}
+\item[{int}]{ interval = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)}}
+\label{classMonitorUMS_ab3e7af32b9eb1e778ade65438d52fd8b}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em interval}]The interval in seconds to check the database \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMonitorUMS_aab02ba843105bb0abcfe34fa12ecaa59}{
+\index{MonitorUMS@{MonitorUMS}!init@{init}}
+\index{init@{init}!MonitorUMS@{MonitorUMS}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}int MonitorUMS::init (
+\begin{DoxyParamCaption}
+\item[{int}]{ vishnuId, }
+\item[{int}]{ dbType, }
+\item[{std::string}]{ dbHost, }
+\item[{std::string}]{ dbUsername, }
+\item[{std::string}]{ dbPassword}
+\end{DoxyParamCaption}
+)}}
+\label{classMonitorUMS_aab02ba843105bb0abcfe34fa12ecaa59}
+
+
+To initialize the UMS monitor with individual parameters instead of configuration file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em vishnuId}]The password of the root user vishnu\_\-user for the connection with the database \item[{\em dbType}]The type of the database (POSTGREDB$|$ORACLEDB) \item[{\em dbHost}]The host of the database server \item[{\em dbUsername}]The name of the database user on the server \item[{\em dbPassword}]The password of the database user on the server \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an execption 
+\end{DoxyReturn}
+\hypertarget{classMonitorUMS_aa4e9d26960b0519c7bfd4e470d1fc0a7}{
+\index{MonitorUMS@{MonitorUMS}!run@{run}}
+\index{run@{run}!MonitorUMS@{MonitorUMS}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}int MonitorUMS::run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classMonitorUMS_aa4e9d26960b0519c7bfd4e470d1fc0a7}
+
+
+To launch the UMS Monitor. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+UMS/src/sed/\hyperlink{MonitorUMS_8hpp}{MonitorUMS.hpp}\end{DoxyCompactItemize}
