@@ -52,6 +52,7 @@ FMSMapper::getCommand(const int& key,string& command){
       return 0;
     }
   }
+  return 0;
 }
 
 int
@@ -63,4 +64,5 @@ FMSMapper::getKey(const string& command, int& key){
       return 0;
     }
   }
+  return 0;
 }

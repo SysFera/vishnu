@@ -48,6 +48,7 @@ IMSMapper::getCommand(const int& key,string& command){
       return 0;
     }
   }
+  return 0;
 }
 
 int
@@ -59,4 +60,5 @@ IMSMapper::getKey(const string& command, int& key){
       return 0;
     }
   }
+  return 0;
 }
