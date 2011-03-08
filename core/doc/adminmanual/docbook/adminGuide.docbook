@@ -171,7 +171,7 @@
 	Lancer la compilation avec cmake et les options qui vont bien. Par exemple pour compiler le client et le 
 	serveur en ayant le python et pour installer dans /opt/vishnu :
 	cmake -DENABLE_PYTHON=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu
-	Puis faire make && make install
+	Puis faire make &amp;&amp; make install
 
 	Attention, pour bien avoir accès aux commandes de vishnu, bien mettre le dossier d'installation dans le path.
       </para>
