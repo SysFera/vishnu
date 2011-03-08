@@ -100,7 +100,7 @@ int main (int ac, char* av[]){
       cout << lsUsers << endl;
     }
     else {
-      for(int i = 0; i < lsUsers.getUsers().size(); i++) {
+      for(unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
         cout << lsUsers.getUsers().get(i) << endl;
       }
     }

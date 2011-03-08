@@ -123,7 +123,7 @@ int main (int ac, char* av[]){
       cout << lsOptionsValues << endl;
     }
     else {
-      for(int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
+      for(unsigned int i = 0; i < lsOptionsValues.getOptionValues().size(); i++) {
         cout << lsOptionsValues.getOptionValues().get(i) << endl;
       }
     }
