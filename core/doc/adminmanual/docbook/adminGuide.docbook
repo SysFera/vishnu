@@ -145,7 +145,35 @@
     <section>
       <title> Compilation des sources </title>
       <para>Se rendre dans le dossier VISHNU. Faire un répertoire build (mkdir build). Se rendre dans le répertoire (cd build).
-	TODO
+	Il y a quatre options principales utilisables :
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut). 
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      ENABLE_PYTHON, qui permet d'activer la compilation du code PYTHON (OFF par défaut).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      ENABLE_JAVA, qui permet d'activer la compilation des sources JAVA pour les webs services (OFF par défaut).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      CMAKE_INSTALL_PREFIX, le dossier d'installation en cas de make install
+	    </para>
+	  </listitem>
+	</itemizedlist>
+	Lancer la compilation avec cmake et les options qui vont bien. Par exemple pour compiler le client et le 
+	serveur en ayant le python et pour installer dans /opt/vishnu :
+	cmake -DENABLE_PYTHON=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu
+	Puis faire make && make install
+
+	Attention, pour bien avoir accès aux commandes de vishnu, bien mettre le dossier d'installation dans le path.
       </para>
     </section> <!-- End compilation des sources -->
   </chapter> <!-- End compilation -->
