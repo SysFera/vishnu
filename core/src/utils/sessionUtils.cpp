@@ -22,7 +22,8 @@ SessionEntry::SessionEntry( int closePolicy_):closePolicy(closePolicy_){}
  */
 
 
-SessionEntry::SessionEntry(const std::string& sessionKey_, int closePolicy_):sessionKey(sessionKey_),closePolicy(closePolicy_){}
+SessionEntry::SessionEntry(const std::string& sessionKey_, int closePolicy_)
+  : closePolicy(closePolicy_), sessionKey(sessionKey_) {}
 
 
 /**
@@ -31,7 +32,7 @@ SessionEntry::SessionEntry(const std::string& sessionKey_, int closePolicy_):ses
  */
 
 
-std::string 
+std::string
 SessionEntry::getSessionKey()const{
   return sessionKey;
 }
@@ -48,14 +49,14 @@ SessionEntry::getClosePolicy()const{
 }
 
 /**
- * \brief The serializer function 
- * \param ar: An archive type which can be text type or xml type 
+ * \brief The serializer function
+ * \param ar: An archive type which can be text type or xml type
  * \param version: The version of serialized class
  */
 
 
 template<class Archive>
-void 
+void
 SessionEntry::serialize(Archive& ar, const unsigned int version){
   ar & sessionKey & closePolicy ;
 }
@@ -143,7 +144,7 @@ storeLastSession(const SessionEntry& session,const std::string& terminal){
 
 
 /**
- * \brief helper function which which wrappes getFromFile function 
+ * \brief helper function which which wrappes getFromFile function
  * and ensures that all error exception is catched .
  * \param terminal: the file corresponding to the terminal which launched the
  * serialization process
@@ -168,7 +169,7 @@ getAllSessions(const std::string& terminal){
 }
 
 
-/** 
+/**
  * To get the last open session corrseponding to the last session stored in the
  * file
  * \param terminal : The terminal in which the session was running
@@ -231,7 +232,7 @@ removeLastSession(const std::string & terminal){
 
       file.close();
     }
-    throw std::runtime_error( "all sessions in this terminal have been closed"); 
+    throw std::runtime_error( "all sessions in this terminal have been closed");
   }
 
 }
@@ -275,13 +276,13 @@ getSessionLocation(int tpid){
 
 /**
  * \brief Another function to store last session open
- * \param sessionKey: The key of the session which will be stored 
+ * \param sessionKey: The key of the session which will be stored
  * \param closePolicy: The session close type
  * \param ppid: The identifier of the terminal as process
  */
 
 
-void 
+void
 storeLastSession(const std::string& sessionKey ,int closePolicy,int ppid){
 
   std::string sessionFile=getSessionLocation(ppid);
