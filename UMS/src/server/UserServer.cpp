@@ -5,7 +5,6 @@
 * \date 31/01/2011
 */
 
-#include <algorithm>
 #include "UserServer.hpp"
 #include "ServerUMS.hpp"
 
