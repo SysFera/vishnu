@@ -6,4 +6,10 @@ de l'element 'book':
 REMPLACER: <book xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 PAR: <book xmlns="http://docbook.org/ns/docbook" version="5.0">
 
+# CONVERSION HTML
+xsltproc docbook-xsl/xhtml/docbook.xsl fichier.docbook > fichier.html
+
+# CONVERSION MANPAGES
+xsltproc fichier-man.docbook
+(normalement le lien vers la stylesheet xsl est dans l'entete du fichier XML)
 
