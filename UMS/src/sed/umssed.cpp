@@ -2,6 +2,8 @@
 #include <fstream>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 
 using namespace vishnu;
 /**
@@ -11,10 +13,10 @@ using namespace vishnu;
  *
  * \image html logoSysFera.jpg
  *
- * \authors CAPOCHICHI Eugene 
- * \authors CISSE      Ibrahima 
- * \authors COULOMB    Kevin 
- * \authors ISNARD     Benjamin 
+ * \authors CAPOCHICHI Eugene
+ * \authors CISSE      Ibrahima
+ * \authors COULOMB    Kevin
+ * \authors ISNARD     Benjamin
  * \authors TRAORE     Daouda
  *
  * \file umssed.cpp
@@ -57,13 +59,15 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   // Check DIET Configuration file
-  {
-    std::ifstream f(argv[1], std::ifstream::in);
-    if (!f.good()) {
-      std::cerr << "Error: cannot open DIET configuration file" << std::endl;
-      exit(1);
-    }
-    f.close();
+  if(!boost::filesystem::is_regular_file(argv[1])) {
+    std::cerr << "Error: cannot open DIET configuration file" << std::endl;
+    exit(1);
+  }
+
+  // Check the script path for sending mail
+  if(!boost::filesystem::is_regular_file(argv[7])) {
+    std::cerr << "Error: cannot open the script file for sending mail" << std::endl;
+    exit(1);
   }
 
   // Other command-line parameters
