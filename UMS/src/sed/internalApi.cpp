@@ -7,6 +7,7 @@
 
 #include "internalApi.hpp"
 #include "utilVishnu.hpp"
+#include "utilServer.hpp"
 
 using namespace vishnu;
 
@@ -452,18 +453,17 @@ solveMachineCreate(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  Machine_ptr machine = parser.load(std::string(machineSerialized))->as< Machine >();
-  MachineServer machineServer = MachineServer(machine, sessionServer);
-
   try {
+
+    Machine_ptr machine;
+    std::string msgComp = "invalid machine content (ex: sshPublicKeyFile contains special charchar (< or > or double quote)";
+    if(parseEmfObject(std::string(machineSerialized), machine, msgComp)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp); 
+    };
+    
+    MachineServer machineServer = MachineServer(machine, sessionServer);
     machineServer.add();
 
     //To save the last connection on the database
@@ -488,11 +488,11 @@ solveMachineCreate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-      errorInfo =  e.buildExceptionString();
-      //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  }
+    errorInfo =  e.buildExceptionString();
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  } 
 
   return 0;
 }
@@ -870,19 +870,19 @@ solveConfigurationRestore(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &configurationSerialized, NULL);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  UMS_Data::Configuration_ptr configuration = parser.load(std::string(configurationSerialized))->as< UMS_Data::Configuration >();
-
-  ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
-
   try {
+
+    std::string msgComp = "invalid file content is not a valid restauration content";
+    Configuration_ptr configuration;
+    if(parseEmfObject(std::string(configurationSerialized), configuration, msgComp)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+    };
+
+
+    ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
+
     configurationServer.restore();
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -900,10 +900,10 @@ solveConfigurationRestore(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
   } catch (VishnuException& e) {
-      errorInfo =  e.buildExceptionString();
-      //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  }
+    errorInfo =  e.buildExceptionString();
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  } 
 
   return 0;
 }
