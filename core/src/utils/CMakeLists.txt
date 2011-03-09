@@ -5,6 +5,9 @@ INCLUDE_DIRECTORIES(
 ${DATA_BASE_INCLUDE_DIR}
 ${POSTGRESQL_INCLUDE_DIR}
 ${VISHNU_EXCEPTION_INCLUDE_DIR}
+${EMF_DATA_DIR}
+${UMS_DATA_DIR}
+${EMF4CPP_INCLUDE_DIR}
 )
 
 LINK_DIRECTORIES(
@@ -21,8 +24,19 @@ SET_TARGET_PROPERTIES(utils-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
 TARGET_LINK_LIBRARIES(
   utils-vishnu
   crypt
-  database-vishnu
   exception-vishnu
 )
+
+ADD_LIBRARY(utils-server STATIC
+  utilServer
+  )
+SET_TARGET_PROPERTIES(utils-server PROPERTIES COMPILE_FLAGS "-fPIC")
+
+TARGET_LINK_LIBRARIES(
+  utils-server
+  utils-vishnu
+  database-vishnu
+)
+
 
 INSTALL ( FILES sendmail.py DESTINATION sbin/)
