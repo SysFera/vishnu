@@ -51,6 +51,7 @@ cp core/src/database/*pp $path/core/src/database/
 cp core/src/exception/*pp $path/core/src/exception/
 cp core/src/registry/*pp $path/core/src/registry/
 cp core/src/utils/*pp $path/core/src/utils/
+cp core/src/utils/*i $path/core/src/utils/
 
 # Copy the sendmail script
 cp core/src/utils/sendmail.py $path/core/src/utils/
