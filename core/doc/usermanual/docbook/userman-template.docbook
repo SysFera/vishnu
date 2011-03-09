@@ -7,7 +7,7 @@
       <title>User Manual</title>
       <productname>VISHNU</productname>
       <releaseinfo>1.0</releaseinfo>
-      <date>February 2011</date>
+      <date>March 8, 2011</date>
       <author>
       <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -29,7 +29,7 @@
       <revhistory>
 	  <revision>
 	    <revnumber>1</revnumber>
-	    <date>25/02/2011</date>
+	    <date>08/03/2011</date>
 	    <authorinitials>SysFera</authorinitials>
 	    <revdescription>
 		
@@ -312,7 +312,7 @@ same conditions as regards security.</para>
     
    <section>
      <title> Troubleshooting functions </title>
-     <para> The <emphasis role = "italic">"There is no session"</emphasis> error can be solved by making a connection to VISHNU using 
+     <para> <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by making a connection to VISHNU using 
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
   </section>
