@@ -87,6 +87,9 @@ rm tmp.txt
 # remove all ~ files
 for i in  $(find . -name "*~") ; do rm $i;  done ;
 
+# remove all bak files
+for i in  $(find . -name "*bak") ; do rm $i;  done ;
+
 # remove all build dir
 for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
 
