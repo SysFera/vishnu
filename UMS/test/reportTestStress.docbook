@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="">
+   <para>
+<info>
+    <title>VISHNU - UMS - Stress test results</title>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>08/03/2011</date>
+        <authorinitials>D. Traore</authorinitials>
+        <revdescription>
+          <para>Deliverable version</para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </info>
+     <informaltable frame="all">
+         <tgroup cols="5.117647058823529">
+       <tbody><row>
+               <entry>
+                  <para>Test type</para>
+               </entry>
+               <entry>
+                  <para>Stress Test</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Database used </para>
+               </entry>
+               <entry>
+                  <para>PostgreSQL 8.4</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Author of the test code</para>
+               </entry>
+               <entry>
+                  <para>D. Traore</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Author of the report</para>
+               </entry>
+               <entry>
+                  <para>D. Traore</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>OS used to test</para>
+               </entry>
+               <entry>
+                  <para>Ubuntu 10.04</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>Cmake </para>
+               </entry>
+               <entry>
+                  <para>V2.6</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>gcc</para>
+               </entry>
+               <entry>
+                  <para>V4.3.3</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>DIET</para>
+               </entry>
+               <entry>
+                  <para>V2.6.1</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry/>
+               <entry/>
+               <entry/>
+            </row>
+            <row>
+               <entry/>
+               <entry/>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Date</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>Results</para>
+               </entry>
+               <entry>
+                  <para>Remarks</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>close</para>
+               </entry>
+               <entry>
+                  <para>normal close</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>listSessions</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>listHistoryCmd</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>listUsers</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>listMachines</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>listOptions</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>addUser</para>
+               </entry>
+               <entry>
+                  <para>normal add user</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>deleteUser</para>
+               </entry>
+               <entry>
+                  <para>normal delete</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>addMachine</para>
+               </entry>
+               <entry>
+                  <para>normal delete</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>deleteMachine</para>
+               </entry>
+               <entry>
+                  <para>normal delete</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>upDateUser</para>
+               </entry>
+               <entry>
+                  <para>normal update</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>upDateMachine</para>
+               </entry>
+               <entry>
+                  <para>normal update</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>upDateLocalAccounts</para>
+               </entry>
+               <entry>
+                  <para>normal update</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>addLocalAccount</para>
+               </entry>
+               <entry>
+                  <para>normal add user</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>deleteLocallAccount</para>
+               </entry>
+               <entry>
+                  <para>normal delete</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>listLocalAccounts</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>resetPassword</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>configureOption</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>configureDefaultOption</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>saveConfiguration</para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SERV-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The ums sed is stopped and restarted</para>
+               </entry>
+               <entry>
+                  <para>restoreConfiguration </para>
+               </entry>
+               <entry>
+                  <para>normal execution</para>
+               </entry>
+               <entry/>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-AGENT-DOWN</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The SysFera-DS Agent is stopped and restarted all</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para>failure</para>
+               </entry>
+               <entry>
+                  <para>The ums server must be restarted manually after the SysFera-DS is restarted</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>STR-SPECIAL-CHARS</para>
+               </entry>
+               <entry>
+                  <para>03/03/11</para>
+               </entry>
+               <entry>
+                  <para>The file content for sshPublicKeyFile parameter of the addMachine service contains special xml characters : &lt; , &gt;, double quote</para>
+               </entry>
+               <entry/>
+               <entry>
+                  <para>failure</para>
+               </entry>
+               <entry>
+                  <para>Test is not part of this test plan </para>
+               </entry>
+            </row></tbody>
+      </tgroup>
+      </informaltable>
+    </para>
+   <para/>
+   <para/>
+   <para/>
+</article>

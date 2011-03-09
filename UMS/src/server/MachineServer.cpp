@@ -157,7 +157,7 @@ MachineServer::update() {
         //if a new ssh public key has been defined
         if (mmachine->getSshPublicKey().size() != 0) {
           sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'"
-          " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          " where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //if a new language has been defined
