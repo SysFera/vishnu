@@ -25,4 +25,4 @@ TARGET_LINK_LIBRARIES(
   exception-vishnu
 )
 
-INSTALL ( FILES sendmail.py DESTINATION /sbin/)
+INSTALL ( FILES sendmail.py DESTINATION sbin/)
