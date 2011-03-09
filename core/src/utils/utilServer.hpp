@@ -46,7 +46,7 @@ namespace vishnu {
    * \return raises an exception if error
    */
   template<class T>
-    int parseEmfObject(const std::string& objectSerialized, T* object_ptr, const std::string msgComp=std::string()) {
+    int parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
 
       object_ptr = NULL;
 
