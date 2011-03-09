@@ -42,6 +42,13 @@
           
         <para>Version initiale pour le module UMS uniquement</para></revdescription>
       </revision>
+        <revnumber>2</revnumber>
+        <date>09/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          
+        <para>Ajout du détails des paquets PostgreSQL</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -155,7 +162,18 @@
           <para>OMNIORB version 4.1.4</para>
         </listitem>
         <listitem>
-          <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+          <para>PGSQL-API (api PostgreSQL) version 8.0 minimum</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para>apt-get install postgresql</para>
+	    </listitem>
+	    <listitem>
+	      <para>apt-get install libpq5 : La librairie nécessaire pour PostgreSQL</para>
+	    </listitem>
+	    <listitem>
+	      <para>apt-get install libpq5-dev : La partie développeur (avec les includes)</para>
+	    </listitem>
+	  </itemizedlist>
         </listitem>
         <listitem>
           <para>libcrypt</para>
@@ -249,7 +267,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
         <listitem>
-          <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+          <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostgreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
         </listitem>
         <listitem>
           <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
