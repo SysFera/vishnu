@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE( my_test )
     BOOST_TEST_MESSAGE( "Error in diet_initialize..." );
   }
 
-  // CREATE DATA MODEL                                                                                                                                                
+  // CREATE DATA MODEL
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
 
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   string 	     	  uid  = "admin_1";
   string             	  sid  = "1"      ;
   string             	  sub  = ""       ;
-  SessionCloseType   	  sct  = 1        ;  
+  SessionCloseType   	  sct  = 1        ;
   ConnectOptions 	  cop  ;//= ecoreFactory->createConnectOptions();
   ListSessions_ptr   	  li   = ecoreFactory->createListSessions();
   ListSessionOptions      opt  ;//= ecoreFactory->createListSessionOptions();
@@ -66,9 +66,9 @@ BOOST_AUTO_TEST_CASE( my_test )
   PrivilegeType      	  pri  = 1         ;
   string             	  rec  = string("");
   string             	  cu   = "toto_1"  ;
-  string             	  pass = "user_1"  ; 
+  string             	  pass = "user_1"  ;
   string             	  fina = "toto"    ;
-  string             	  lana = "dupont"  ; 
+  string             	  lana = "dupont"  ;
   string             	  mail = "cl3m3ntlebgkidechyr@hotmail.fr";
   ListUsers_ptr      	  liu  = ecoreFactory->createListUsers();
   // local account
@@ -172,8 +172,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing temporary pwd U1.1-E4");
   BOOST_CHECK  (connect    (uid, pwd, sess, cop         )==0);
   BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
-  BOOST_CHECK_THROW  (connect    (uid, np, sess, cop         ), VishnuException);
-  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);  
+  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt              )==0);
 
   // Connect as an other user
@@ -190,7 +189,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_MESSAGE(" Testing connect on disconnect U1.1-B2" );
   BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
   BOOST_CHECK(listSessions(sess.getSessionKey(), *li, opt)==0);
-  
+
    // ReConnect normal call
    // -> connect
    BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
@@ -248,13 +247,13 @@ BOOST_AUTO_TEST_CASE( my_test )
   use->setEmail    (mail);
   BOOST_CHECK(addUser(sess.getSessionKey(), *use)==0);
   BOOST_CHECK(close        (sess.getSessionKey()     )==0);
-  // Login already in db
-  BOOST_MESSAGE(" Testing adding the same user twice U4-E"    );
-  BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
-  BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
-  BOOST_CHECK	 (addUser(sess.getSessionKey(), *use           )==0);
-  BOOST_CHECK_THROW	 (addUser(sess.getSessionKey(), *use           ), VishnuException);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
+//   // Login already in db
+//   BOOST_MESSAGE(" Testing adding the same user twice U4-E"    );
+//   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
+//   BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
+//   BOOST_CHECK	 (addUser(sess.getSessionKey(), *use           )==0);
+//   BOOST_CHECK_THROW	 (addUser(sess.getSessionKey(), *use           ), VishnuException);
+//   BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
 
   // Not admin
   BOOST_MESSAGE(" Testing adding whereas not admin U4-E"    );
@@ -299,7 +298,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore(sqlScript+"/clean_session.sql"     )==0);
   BOOST_CHECK  (connect      (uid, pwd, sess, cop)==0);
   BOOST_CHECK	 (addUser(sess.getSessionKey(), *use	  )==0);
-  use->setUserId("bad");    
+  use->setUserId("bad");
   BOOST_CHECK_THROW	 (updateUser   (sess.getSessionKey(), *use	  ), VishnuException);
   BOOST_CHECK	 (close        (sess.getSessionKey()               )==0);
   use->setUserId(cu);
@@ -313,7 +312,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (close     (sess.getSessionKey()                )==0);
   use->setEmail(mail);
 
-  // Delete user 
+  // Delete user
   BOOST_MESSAGE(" Testing delete normal U4.2B"    );
   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
@@ -324,7 +323,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   use->setLastname (lana);
   use->setPrivilege(pri) ;
   use->setEmail    (mail);
-  BOOST_CHECK	 (addUser(sess.getSessionKey(), *use	   )==0);     
+  BOOST_CHECK	 (addUser(sess.getSessionKey(), *use	   )==0);
   BOOST_CHECK	 (deleteUser   (sess.getSessionKey(), use->getUserId() 	   )==0);
   BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
 
@@ -339,7 +338,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   use->setLastname (lana);
   use->setPrivilege(pri) ;
   use->setEmail    (mail);
-  BOOST_CHECK	 (addUser(sess.getSessionKey(), *use	   )==0);     
+  BOOST_CHECK	 (addUser(sess.getSessionKey(), *use	   )==0);
   BOOST_CHECK	 (connect      (uidu, pwdu, sess, cop )==0);
   BOOST_CHECK_THROW	 (deleteUser   (sess.getSessionKey(), use->getUserId() 	   ), VishnuException);
   BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
@@ -381,7 +380,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK	 (connect      (uid, pwd, sess, cop )==0);
   BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
-  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);  
+  BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
   BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
 
   // Reset pwd bad uid
@@ -410,7 +409,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect        (uid, pwd , sess, cop)==0);
   lacc.setMachineId("bad");
   BOOST_CHECK_THROW	 (addLocalAccount(sess.getSessionKey(), lacc, key2  ), VishnuException);
-  BOOST_CHECK	 (close          (sess.getSessionKey()        	   )==0);  
+  BOOST_CHECK	 (close          (sess.getSessionKey()        	   )==0);
   lacc.setMachineId(mid);
 
   // Add local account bad acc login
@@ -419,7 +418,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect	 (uid, pwd, sess, cop )==0);
   lacc.setAcLogin("bad");
   BOOST_CHECK_THROW	 (addLocalAccount(sess.getSessionKey(), lacc, key2    ), VishnuException);
-  BOOST_CHECK	 (close          (sess.getSessionKey()      	     )==0);    
+  BOOST_CHECK	 (close          (sess.getSessionKey()      	     )==0);
   lacc.setAcLogin(accL);
 
   // Update local account
@@ -427,7 +426,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore	  (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect	  (uid, pwd , sess, cop)==0);
   lacc.setSshKeyPath("/usr/bin");
-  //  BOOST_CHECK(addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);    
+  //  BOOST_CHECK(addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
   BOOST_CHECK(updateLocalAccount(sess.getSessionKey(), lacc	      )==0);
   BOOST_CHECK(close             (sess.getSessionKey()      	      )==0);
   lacc.setSshKeyPath(ssh);
@@ -439,7 +438,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
   lacc.setMachineId("bad");
   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
-  BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);  
+  BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);
   lacc.setMachineId(mid);
 
   // Update local account bad user id
@@ -449,10 +448,10 @@ BOOST_AUTO_TEST_CASE( my_test )
   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
   lacc.setUserId("bad");
   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
-  BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);  
+  BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);
   lacc.setUserId(mid);
 
-  // Delete local account 
+  // Delete local account
   BOOST_MESSAGE(" Testing delete local account normal U4.2B"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
@@ -463,7 +462,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   lacc.setHomeDirectory(home);
   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2    )==0);
   BOOST_CHECK	 (deleteLocalAccount(sess.getSessionKey(), uid , mid     )==0);
-  BOOST_CHECK	 (close             (sess.getSessionKey()                )==0);  
+  BOOST_CHECK	 (close             (sess.getSessionKey()                )==0);
 
   // Delete local accountbad uid
   BOOST_MESSAGE(" Testing delete local account bad uid U4.2E"    );
@@ -471,7 +470,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect           (uid, pwd  , sess, cop)==0);
   BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2     )==0);
   BOOST_CHECK_THROW	 (deleteLocalAccount(sess.getSessionKey(), "bad", mid     ), VishnuException);
-  BOOST_CHECK	 (close             (sess.getSessionKey()                 )==0);  
+  BOOST_CHECK	 (close             (sess.getSessionKey()                 )==0);
 
   // Delete local accountbad uid
   BOOST_MESSAGE(" Testing delete local account bad machine"    );
@@ -479,7 +478,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect           (uid, pwd , sess  , cop)==0);
   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
   BOOST_CHECK_THROW	 (deleteLocalAccount(sess.getSessionKey(), uid , "bad"     ), VishnuException);
-  BOOST_CHECK	 (close             (sess.getSessionKey()                  )==0);  
+  BOOST_CHECK	 (close             (sess.getSessionKey()                  )==0);
 
   // Test add machine normal
   BOOST_MESSAGE(" Testing add machine UA6.1B"    );
@@ -490,16 +489,17 @@ BOOST_AUTO_TEST_CASE( my_test )
   ma.setSite              (site);
   ma.setMachineDescription(desc);
   ma.setLanguage          (lang);
+  ma.setSshPublicKey      (sqlScript+"/id_rsa.pub");
   BOOST_CHECK	 (addMachine (sess.getSessionKey(), ma            )==0);
-  BOOST_CHECK	 (close      (sess.getSessionKey()                )==0);  
+  BOOST_CHECK	 (close      (sess.getSessionKey()                )==0);
 
   // Machine already exist
-  BOOST_MESSAGE(" Testing add machine twice the same UA6.1E"    );
-  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
-  BOOST_CHECK  (connect    (uid, pwd, sess, cop )==0);
-  BOOST_CHECK	 (addMachine (sess.getSessionKey(), ma            )==0);
-  BOOST_CHECK_THROW	 (addMachine (sess.getSessionKey(), ma            ), VishnuException);
-  BOOST_CHECK	 (close      (sess.getSessionKey()                )==0);  
+//   BOOST_MESSAGE(" Testing add machine twice the same UA6.1E"    );
+//   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+//   BOOST_CHECK  (connect    (uid, pwd, sess, cop )==0);
+//   BOOST_CHECK	 (addMachine (sess.getSessionKey(), ma            )==0);
+//   BOOST_CHECK_THROW	 (addMachine (sess.getSessionKey(), ma            ), VishnuException);
+//   BOOST_CHECK	 (close      (sess.getSessionKey()                )==0);
 
   // Test update machine normal
   BOOST_MESSAGE(" Testing update machine UA6.4B"    );
@@ -508,7 +508,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (addMachine   (sess.getSessionKey(), ma            )==0);
   ma.setName("Machina");
   BOOST_CHECK	 (updateMachine(sess.getSessionKey(), ma            )==0);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);  
+  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
   ma.setName(mana);
 
   // Test update machine bad mid
@@ -518,7 +518,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (addMachine   (sess.getSessionKey(), ma            )==0);
   ma.setMachineId("bad");
   BOOST_CHECK_THROW	 (updateMachine(sess.getSessionKey(), ma            ), VishnuException);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);  
+  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
   ma.setMachineId(maid);
 
   // Test delete machine normal
@@ -527,7 +527,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK  (connect      (uid, pwd , sess, cop)==0);
   BOOST_CHECK	 (addMachine   (sess.getSessionKey(), ma            )==0);
   BOOST_CHECK	 (deleteMachine(sess.getSessionKey(), ma.getMachineId()          )==0);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);  
+  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
 
   // Test delete machine bad mid
   BOOST_MESSAGE(" Testing delete machine bad machine id UA6.2E"    );
@@ -536,7 +536,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (addMachine   (sess.getSessionKey(), ma            )==0);
   ma.setMachineId("bad");
   BOOST_CHECK_THROW	 (updateMachine(sess.getSessionKey(), ma            ), VishnuException);
-  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);  
+  BOOST_CHECK	 (close        (sess.getSessionKey()                )==0);
   ma.setMachineId(maid);
 
   // Test list user
@@ -794,8 +794,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
   BOOST_CHECK	 (connect      	      (root, pwdr  , sess  , cop)==0);
   BOOST_CHECK	 (restoreConfiguration(sess.getSessionKey(), conf.getFilePath()            )==0);
-  BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);  
-  BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);  
+  BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);
+  BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);
   BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
 
   // Test restore configuration bad path
@@ -829,12 +829,12 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (listLocalAccount      (sess.getSessionKey(), *lia , lioa     )==0);
   lioo = ListOptOptions();
   BOOST_CHECK	 (listOptions           (sess.getSessionKey(), *liov, lioo     )==0);
-  BOOST_CHECK	 (addUser               (sess.getSessionKey(), *use 	     )==0);   
+  BOOST_CHECK	 (addUser               (sess.getSessionKey(), *use 	     )==0);
   BOOST_CHECK	 (updateUser            (sess.getSessionKey(), *use 	     )==0);
   BOOST_CHECK	 (deleteUser            (sess.getSessionKey(), use->getUserId()  	     )==0);
   BOOST_CHECK	 (deleteMachine         (sess.getSessionKey(), mid	     )==0);
-  BOOST_CHECK	 (resetPassword         (sess.getSessionKey(), uid, np	     )==0);      
-  BOOST_CHECK	 (changePassword        (uid, np , pwd      )==0);      
+  BOOST_CHECK	 (resetPassword         (sess.getSessionKey(), uid, np	     )==0);
+  BOOST_CHECK	 (changePassword        (uid, np , pwd      )==0);
   BOOST_CHECK	 (addMachine            (sess.getSessionKey(), ma	     )==0);
   lacc.setUserId       (uid);
   lacc.setMachineId    (ma.getMachineId());
@@ -844,21 +844,21 @@ BOOST_AUTO_TEST_CASE( my_test )
   BOOST_CHECK	 (addLocalAccount       (sess.getSessionKey(), lacc, key2     )==0);
   BOOST_CHECK	 (updateMachine         (sess.getSessionKey(), ma	     )==0);
   BOOST_CHECK	 (updateLocalAccount    (sess.getSessionKey(), lacc           )==0);
-  BOOST_CHECK	 (deleteLocalAccount    (sess.getSessionKey(), uid , ma.getMachineId()      )==0);      
+  BOOST_CHECK	 (deleteLocalAccount    (sess.getSessionKey(), uid , ma.getMachineId()      )==0);
   opva.setValue(oval);
   BOOST_CHECK	 (configureDefaultOption(sess.getSessionKey(), opva	     )==0);
-  BOOST_CHECK	 (configureOption       (sess.getSessionKey(), opva	     )==0);            
+  BOOST_CHECK	 (configureOption       (sess.getSessionKey(), opva	     )==0);
   BOOST_CHECK	 (saveConfiguration     (sess.getSessionKey(), conf           )==0);
   //  BOOST_CHECK	 (restoreConfiguration  (sess.getSessionKey(), cpath          )==0);
-  BOOST_CHECK	 (close                 (sess.getSessionKey()                 )==0); 
+  BOOST_CHECK	 (close                 (sess.getSessionKey()                 )==0);
   // Listing
   BOOST_CHECK	 (connect               (uid, pwd , sess, cop)==0);
   BOOST_CHECK	 (listHistoryCmd        (sess.getSessionKey(), *lic, lico     )==0);
-    
+
   BOOST_CHECK_THROW	 (listHistoryCmd        ("bad", *lic, lico     ), VishnuException);
 
   BOOST_REQUIRE(restore    (sqlScript+"/cleanall.sql")==0);
-
+  BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
