@@ -77,4 +77,5 @@ genCli(${cli})
 
 endforeach(cli)
 
+install( TARGETS utils-cli DESTINATION lib )
 
