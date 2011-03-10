@@ -38,34 +38,30 @@ namespace vishnu {
 
 
   /**
-   * \brief Function to parse the EMF object 
-   * \param objectSerialized the EMF object serialized  
+   * \brief Function to parse the EMF object
+   * \param objectSerialized the EMF object serialized
    * \param object_ptr the object build with the objectSerialized
-   * \param msgComp an exception message 
-   * \return 0 if success 
-   * \return raises an exception if error
+   * \param msgComp an exception message
+   * \return  true if success else false
    */
   template<class T>
-    int parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
+  bool parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
 
-      object_ptr = NULL;
+    object_ptr = NULL;
+    try {
+      //CREATE DATA MODEL
+      UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+      ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 
-      try {
-
-        //CREATE DATA MODEL
-        UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-        ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-        //Parse the model
-        ecorecpp::parser::parser parser;
-        object_ptr = parser.load(objectSerialized)->as< T >();
-
-      } catch (std::exception& e) {
-        return -1;
-      }
-
-      return 0;
+      //Parse the model
+      ecorecpp::parser::parser parser;
+      object_ptr = parser.load(objectSerialized)->as< T >();
     }
+    catch (std::exception& e) {
+      return false;
+    }
+    return true;
+  }
 }
 
-#endif //_UTILSERVER_H_ 
+#endif //_UTILSERVER_H_
