@@ -24,7 +24,7 @@
 #include <fstream>
 #include "../mapping.hpp"
 #include <string.h>
-
+#include <stdexcept>
 
 #ifdef DEBUG
 #include <sys/time.h>
@@ -47,6 +47,7 @@ parser::~parser()
     //  Create our SAX handler object and install it on the parser, as the
     //  document and error handler.
     //
+    
     handler _handler;
 
     xml_parser::SemanticState< handler > ss (_handler);
@@ -70,7 +71,6 @@ parser::~parser()
     buffer = strdup(myString.c_str());
     State< xml_parser::SemanticState< handler > >
         st(ss, buffer, length);
-
     //
     //  Get the starting time and kick off the parse of the indicated
     //  file. Catch any exceptions that might propogate out of it.
@@ -102,6 +102,11 @@ parser::~parser()
     _handler.resolveReferences();
 
     ::ecore::EObject_ptr _r = _handler.getRootElement();
+   
+    if(_r==NULL) {
+      throw std::runtime_error("NULL emf pointer ***"); //TODO: a remplacer par EMF exception
+    }
+
     _r->_initialize();
     return _r;
 }
