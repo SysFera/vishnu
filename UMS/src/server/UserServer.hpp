@@ -22,6 +22,7 @@
 #include "DatabaseResult.hpp"
 #include "SessionServer.hpp"
 #include "utilVishnu.hpp"
+#include "utilServer.hpp"
 
 using namespace vishnu;
 
