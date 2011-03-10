@@ -157,18 +157,15 @@ cleaner(char* dietConfig,int ac,char* av[]){
   daemon_file=vishnu_dir;
   session_dir /= vishnu_dir;   // set the directory in which will be stored all session files
 
-
-
   daemon_file/="daemon.pid";
-
 
 
   session_dir /= "sessions";
 
 
-  if (false==bfs::exists(vishnu_dir)){ // make sure vishnu_dir exists 
+  if (false==bfs::exists(session_dir)){ // make sure session_dir exists 
 
-    bfs::create_directories(vishnu_dir);
+    bfs::create_directories(session_dir);
 
   }
 
@@ -182,7 +179,6 @@ cleaner(char* dietConfig,int ac,char* av[]){
     f.close();
 
   }
-
 
   pid_t pid = fork();// create a process resident to delete and close  all sessions corresponding on close terminal
 
