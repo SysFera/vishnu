@@ -39,15 +39,14 @@ solveSessionConnect(diet_profile_t* pb) {
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
   SessionServer sessionServer("");
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  ConnectOptions_ptr connectOpt = parser.load(std::string(options))->as< ConnectOptions >();
-
   try {
+    ConnectOptions_ptr connectOpt;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(options), connectOpt)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
     //To serialize the user object
     const char* name = "solveConnect";
@@ -65,7 +64,6 @@ solveSessionConnect(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   return 0;
 }
 /**
@@ -97,7 +95,6 @@ solveSessionReconnect(diet_profile_t* pb) {
 
 
   SessionServer sessionServer = SessionServer(std::string(""));
-
   sessionServer.getData().setSessionId(std::string(sessionId));
 
   try {
@@ -139,6 +136,7 @@ solveSessionClose(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+
   try {
     sessionServer.close();
 
@@ -157,7 +155,7 @@ solveSessionClose(diet_profile_t* pb) {
       errorInfo =  e.buildExceptionString();
       //OUT parameter
       diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
-}
+  }
   return 0;
 }
 
@@ -185,15 +183,14 @@ solveUserCreate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  User_ptr user = parser.load(std::string(userSerialized))->as< User >();
-
   try {
+    User_ptr user;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(userSerialized), user)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
     userServer.init();
     userServer.add(user);
 
@@ -251,16 +248,14 @@ solveUserUpdate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  //Parse the model
-  ecorecpp::parser::parser parser;
-
-  User_ptr user = parser.load(std::string(userSerialized))->as< User >();
-
   try {
+    User_ptr user;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(userSerialized), user)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    };
+
     userServer.init();
     userServer.update(user);
 
@@ -458,11 +453,13 @@ solveMachineCreate(diet_profile_t* pb) {
   try {
 
     Machine_ptr machine;
-    std::string msgComp = "invalid machine content (ex: sshPublicKeyFile contains special charchar (< or > or double quote)";
-    if(parseEmfObject(std::string(machineSerialized), machine, msgComp)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp); 
-    };
-    
+    std::string msgComp = "The ssh public key file content is invalid";
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(machineSerialized), machine, msgComp)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+    }
+
     MachineServer machineServer = MachineServer(machine, sessionServer);
     machineServer.add();
 
@@ -492,7 +489,7 @@ solveMachineCreate(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  } 
+  }
 
   return 0;
 }
@@ -517,18 +514,17 @@ solveMachineUpdate(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  Machine_ptr machine = parser.load(std::string(machineSerialized))->as< Machine >();
-  MachineServer machineServer = MachineServer(machine, sessionServer);
-
   try {
+    Machine_ptr machine;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(machineSerialized), machine)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    MachineServer machineServer = MachineServer(machine, sessionServer);
     machineServer.update();
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -551,7 +547,6 @@ solveMachineUpdate(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   return 0;
 }
 /**
@@ -605,7 +600,6 @@ solveMachineDelete(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   delete machine;
   return 0;
 }
@@ -626,23 +620,21 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   Mapper* mapper;
   std::string cmd;
 
-
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  LocalAccount_ptr localAccount = parser.load(std::string(laccountSerialized))->as< LocalAccount >();
-  LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
-
   try {
+    LocalAccount_ptr localAccount;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
     localAccountServer.add();
 
     //To save the last connection on the database
@@ -658,14 +650,12 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     CommandServer commandServer = CommandServer(cmd, sessionServer);
     commandServer.record(UMS);
 
-
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-
       //OUT Parameters
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
@@ -694,18 +684,17 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
 
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  LocalAccount_ptr localAccount = parser.load(std::string(laccountSerialized))->as< LocalAccount >();
-  LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
-
   try {
+    LocalAccount_ptr localAccount;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
     localAccountServer.update();
 
     //To save the last connection on the database
@@ -873,16 +862,14 @@ solveConfigurationRestore(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
-
-    std::string msgComp = "invalid file content is not a valid restauration content";
+    std::string msgComp = "The file content is invalid";
     Configuration_ptr configuration;
-    if(parseEmfObject(std::string(configurationSerialized), configuration, msgComp)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
-    };
 
+    if(!parseEmfObject(std::string(configurationSerialized), configuration, msgComp)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+    }
 
     ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
-
     configurationServer.restore();
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -903,7 +890,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
     errorInfo =  e.buildExceptionString();
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  } 
+  }
 
   return 0;
 }
@@ -929,18 +916,17 @@ solveOptionValueSet(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
 
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  // Parse the model
-  ecorecpp::parser::parser parser;
-  UMS_Data::OptionValue_ptr optionValue = parser.load(optionValueSerialized)->as< UMS_Data::OptionValue >();
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
-  OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
 
   try {
+    UMS_Data::OptionValue_ptr optionValue;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
     optionValueServer.configureOption();
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -985,19 +971,19 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
 
-  //CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  UMS_Data::OptionValue_ptr optionValue = parser.load(optionValueSerialized)->as< UMS_Data::OptionValue >();
-
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
-  OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
 
   try {
+    UMS_Data::OptionValue_ptr optionValue;
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
     optionValueServer.configureOption(true);
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
@@ -1018,7 +1004,6 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   return 0;
 }
 
@@ -1041,25 +1026,21 @@ solveGenerique(diet_profile_t* pb) {
   Mapper* mapper;
   std::string cmd;
 
-
-
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
 
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  // Parse the model
-  ecorecpp::parser::parser parser;
-  QueryParameters* options = parser.load(optionValueSerialized)->as< QueryParameters >();
-
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
-  QueryType query(options, sessionServer);
 
   try {
+    QueryParameters* options;
 
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    QueryType query(options, sessionServer);
     List* list = query.list();
 
     //To save the last connection on the database
@@ -1090,9 +1071,7 @@ solveGenerique(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
-return 0;
-
+  return 0;
 }
 
 /**
@@ -1236,5 +1215,5 @@ solveRestore(diet_profile_t* pb) {
   catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
   }
-return 0;
+  return 0;
 }
