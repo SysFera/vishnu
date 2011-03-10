@@ -41,4 +41,5 @@ target_link_libraries(ums-server
   exception-vishnu
   register-vishnu
   utils-vishnu
+  utils-server
 )
