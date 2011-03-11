@@ -247,7 +247,7 @@ UMSMapper::decode (const string& msg){
 
 void
 UMSMapper::findSeparator(const string& s, vector<int>& vec){
-  unsigned int cpt = 0;
+  size_t cpt = 0;
   do{
     cpt=s.find_first_of("#", cpt);
     if (cpt ==string::npos){

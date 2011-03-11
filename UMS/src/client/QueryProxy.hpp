@@ -172,11 +172,8 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   /*To check the receiving message error*/
   raiseExceptionIfNotEmptyMsg(errorInfo);   
 
-  //CREATE the ListOject
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-  ecorecpp::parser::parser parser;
-  mlistObject = parser.load(std::string(listObjectInString))->as< ListObject >();
+  //To parse List object serialized
+  parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving List object serialized");
 
   return mlistObject;
 }
@@ -228,12 +225,9 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
   /*To check the receiving message error*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  //CREATE the ListOject
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-  ecorecpp::parser::parser parser;
-  mlistObject = parser.load(listObjectInString)->as< ListObject >();
-
+  //To parse ListUsers object serialized
+  parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving ListUsers object serialized");
+ 
   return mlistObject;
 
 }
