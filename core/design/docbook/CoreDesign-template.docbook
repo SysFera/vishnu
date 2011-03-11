@@ -757,7 +757,7 @@
   
   <chapter><!-- PART 4 : MODULES ARCHITECTURE -->
   <title>VISHNU modules architecture</title>
-  <para>This chapter contains details of the VISHNU architecture for some VISHNU modules.
+  <para>This chapter contains details of the VISHNU architecture for some VISHNU modules.</para>
     
     <section>
       <title>TMS module details</title>
@@ -772,10 +772,40 @@
       <section>
         <title>FMS service call sequence</title>
         <para></para>
+        
+        <figure>
+          <title>FMS synchronous transfer sequence diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS SynchronousTransferSequenceDiagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        
+        <figure>
+          <title>FMS asynchronous transfer sequence diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS AsynchronousTransferSequenceDiagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
       </section>
       
       <section>
         <title>FMS server deployment</title>
+        
+        <figure>
+          <title>FMS deployment diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS_Deployment_Diagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
       </section>
     </section>
     
