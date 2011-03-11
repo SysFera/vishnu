@@ -78,15 +78,9 @@ int ConfigurationProxy::save()
 
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-  // Parse the model
-  ecorecpp::parser::parser parser;
-  //To set the mconfiguration 
-  mconfiguration = parser.load(configurationInString)->as< UMS_Data::Configuration >(); 
+  
+  //To parse the Configuration object serialized 
+  parseEmfObject(std::string(configurationInString), mconfiguration, "Error by receiving Configuration object serialized");
 
   mconfiguration->setFilePath(mfilePath);
 
