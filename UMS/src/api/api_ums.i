@@ -14,9 +14,13 @@
 #include "api_ums.hpp"
 %}
 
+ // Include for exception handling
+%include "exception.i"
+
 // this includes the typemaps for STL strings
 %include "std_string.i"
 %include "std_except.i"
+
 
 // this includes the required type declarations for EMF4CPP
 // WARNING: some may be missing!
@@ -61,6 +65,7 @@
 %template(ECommandList) ::ecorecpp::mapping::EList<::UMS_Data::Command>;
 %template(EOptionList) ::ecorecpp::mapping::EList<::UMS_Data::OptionValue>;
 
+
 #ifdef SWIGPYTHON
 
 // Remove output parameters from the command
@@ -82,6 +87,18 @@
 %include "string.i"
 %apply std::string &INOUT { std::string& tmpPassword };
 %apply std::string &INOUT { std::string& sshPublicKey };
+
+// Rule to add throw vishnu exception to functions
+%javaexception ("VishnuException"){
+  try {
+    $action
+      } catch(VishnuException* e) {
+    jclass clazz = jenv->FindClass("VishnuException");
+    jenv->ThrowNew(clazz, e->buildExceptionString().c_str());
+    return $null;
+  }
+ }
+
 #endif
 
 // Remove the parameters of vishnuInitialize
@@ -93,6 +110,14 @@
 }
 
 %include "api_ums.hpp"
+
+#ifdef SWIGJAVA
+ // Remove rule for vishnuexception and userexception generation. Otherwise, these file would have functions that throw vishnuexception
+%nojavaexception;
+// To make vishnuexception inherit from the java exception class
+%typemap(javabase) VishnuException "java.lang.Exception"
+#endif
+
 %include "VishnuException.hpp"
 %include "UserException.hpp"
 
