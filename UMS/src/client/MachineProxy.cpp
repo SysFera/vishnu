@@ -79,14 +79,10 @@ int MachineProxy::add()
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  UMS_Data::Machine_ptr machine_ptr; 
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  //To set the mconfiguration 
-  UMS_Data::Machine_ptr machine_ptr = parser.load(machineInString)->as< UMS_Data::Machine >();
+  //To parse machine object serialized
+  parseEmfObject(std::string(machineInString), machine_ptr, "Error by receiving Machine object serialized");
 
   mmachine = *machine_ptr;
 

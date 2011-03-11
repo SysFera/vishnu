@@ -95,15 +95,10 @@ int UserProxy::add(UMS_Data::User& user)
   /*To raise a vishnu exception if the receiving message is not empty*/ 
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  UMS_Data::User_ptr user_ptr;
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  //To set the muser
-  UMS_Data::User_ptr user_ptr = parser.load(std::string(userInString))->as< UMS_Data::User >();
-
+  //To parse User object serialized
+  parseEmfObject(std::string(userInString), user_ptr, "Error by receiving User object serialized");
   user = *user_ptr;
   muser = user;
 
