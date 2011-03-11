@@ -14,7 +14,7 @@ UMSVishnuException::UMSVishnuException():UserException(){
 }
 void
 UMSVishnuException::initMsg(){
-  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_USER, std::string("The user is unknown")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_USER, std::string("The user is unknown or the password is wrong")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_USERID, std::string("The userid is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_USERID_EXISTING, std::string("The userid already exists")));
   mp.insert(std::pair<int, std::string>(ERRCODE_USER_LOCKED, std::string("The user is locked")));
