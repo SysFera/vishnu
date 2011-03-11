@@ -778,8 +778,77 @@
       <title>TMS module details</title>
       <para>This sections presents the specificities of TMS (Tasks Management Service) services architecture and the
         model of deployment for this module.</para>
-    </section>
-    
+      <section>
+     
+        <title> TMS submit job call sequence </title>
+        <para> Among the services provided by the TMS module we present the call sequence for the <emphasis role="bold">submit job function.</emphasis>
+          For the specifications of this service, see the use cases T1.CP1. </para>
+        <para> The following steps and diagrams represent the different steps for submit a job through vishnu </para>  
+        <para>  
+          <itemizedlist>
+          <listitem><para> A TMS server must be running on each machine where a batch scheduler is installed. </para></listitem> 
+          <listitem><para> The user must open the vishnu session before using the vishnu submit job function.  </para></listitem>
+          <listitem><para> After authentification of the user, a valid vishnu session key is created, the submit function uses 
+              this session key to submit a job through vishnu system.   </para></listitem>
+          <listitem><para> In addition of the session key value, the vishnu submit function takes in arguments the identifier of 
+              the machine on which the user want to submit his job, the path of the script containing the job characteristics and the possible options.  </para></listitem>
+           <listitem><para>The machinedId and the client host must be known to the VISHNU system (i.e. it has been registered by a VISHNU Administrator).</para></listitem>
+            <listitem><para>The user who want to submit a job must have a <emphasis role="bold">VISHNU local account</emphasis>
+              configured on both machines except if the machine is the client host itself. A local account on a machine contains the unix account details
+              of the VISHNU user on the corresponding host (user login, home directory path, ssh key path).</para></listitem>
+          <listitem><para> To submit a job the vishnu submit function programm contacts the Sysfera-DS agent  to get the reference of the machine on which the job will be submitted.
+                       </para></listitem>
+          <listitem><para> The submit function programm contacts the selected machine and sends all input data (sessionKey, machineId, scriptPath and options) and waits the output values : a valid output valid or an vishnu exception. The machineId is valid if it exists in the vishnu Data Base and if the submit job owner has an account on this machine. </para></listitem>
+          <listitem><para> The TMS server launched on the selected machine recieves the input values, checks the validity of the sessionKey and machineId by contacted the vishnu Data Base.  </para></listitem>
+          <listitem><para> If the two values are valids, the TMS server calls the underlying batch scheduler API submit function (llsubmit(...)  for the LoadLeveler scheduler, pbs_submit for TORQUE scheduler).  </para></listitem>
+          <listitem><para> If the job was performed successfully, the TMS creates a vishnu jobId and  sends it the user. </para></listitem>
+         </itemizedlist>
+       </para>
+
+       <figure>
+          <title>TMS submitJob sequence of all steps</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/jobSubmitSequenceDiagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+       </figure>
+
+
+       <figure>
+          <title>TMS subjob sequence diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/jobSubmitAsthaSequenceDiagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      
+ 
+    </section> 
+
+     <section>
+        <title>TMS server deployment</title>
+        <para>The following diagram shows the relationships and their cardinalities between the different hosts involved in the deployment
+          of the VISHNU TMS module. Several TMS Servers can be deployed within a single VISHNU infrastructure and will provide the same
+            services for all the machines configured in VISHNU. The TMS Servers will share the same VISHNU database where all logs and
+            dynamical information will be stored.</para>
+        <para>Note: the choice of a particular TMS Server will be done automatically by VISHNU and will be transparent for the user.</para>
+        <figure>
+          <title>TMS deployment diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/TMSDeploymentDiagram.png"
+                  align="center" scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+ 
+   </section>
+
     <section>
       <title>FMS module details</title>
       <para>This section presents the specificities of FMS (File Management Service) services architecture and the
