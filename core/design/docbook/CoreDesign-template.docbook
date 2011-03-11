@@ -806,7 +806,7 @@
        </para>
 
        <figure>
-          <title>TMS submitJob sequence of all steps</title>
+          <title>TMS job submission steps</title>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/jobSubmitSequenceDiagram.png"
@@ -817,7 +817,7 @@
 
 
        <figure>
-          <title>TMS subjob sequence diagram</title>
+          <title>TMS submit job sequence diagram</title>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/jobSubmitAsthaSequenceDiagram.png"
