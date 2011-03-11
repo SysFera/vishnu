@@ -32,6 +32,8 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Added chapter 5 for TMS and FMS details</para>
+          <para>In §3.1, added definition for VISHNU machine</para>
+          <para>In §3.4, modified flows VFT, UFT and DFT, and added CFT</para>
         </revdescription>
         </revision>
       </revhistory>
@@ -410,6 +412,11 @@
              <para><emphasis role="bold">VISHNU Database</emphasis>: represents the logical database used by VISHNU to store internal data.</para>
           </listitem>
           <listitem>
+             <para><emphasis role="bold">VISHNU Machine</emphasis>: represents a given host that has been registered in the VISHNU Database by
+             a VISHNU administrator. Each machine is identified by a unique identifier that is generated when the machine is registered in
+             VISHNU.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">VISHNU Module</emphasis>: macro software component that provides a set of services to the user. It contains both client and 
             server software providing these services. A module may have dependencies to other modules.</para>
           </listitem>
@@ -581,14 +588,6 @@
               <entry>Database connection</entry>
             </row>
             <row>
-              <entry>VFT</entry>
-              <entry>VISHNU VSS</entry>
-              <entry>VISHNU VSS</entry>
-              <entry>SSH (22/tcp)</entry>
-              <entry>depends on file size</entry>
-              <entry>File transfer between servers</entry>
-            </row>
-	    <row>
               <entry>VDT</entry>
               <entry>VISHNU VSS</entry>
               <entry>VISHNU VSS</entry>
@@ -597,20 +596,36 @@
               <entry>Data transfer between servers</entry>
             </row>
             <row>
+              <entry>VFT</entry>
+              <entry>VISHNU Machine</entry>
+              <entry>VISHNU Machine</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry>depends on file size</entry>
+              <entry>File transfer between machines</entry>
+            </row>
+            <row>
               <entry>UFT</entry>
               <entry>Client system or Web server</entry>
-              <entry>VISHNU VSS</entry>
+              <entry>VISHNU Machine</entry>
               <entry>SSH (22/tcp)</entry>
               <entry>depends on file size</entry>
               <entry>Upload file</entry>
             </row>
             <row>
               <entry>DFT</entry>
-              <entry>VISHNU VSS</entry>
+              <entry>VISHNU Machine</entry>
               <entry>Client system or Web server</entry>
               <entry>SSH (22/tcp)</entry>
               <entry>depends on file size</entry>
               <entry>Download file</entry>
+            </row>
+            <row>
+              <entry>CFT</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>VISHNU Machine or Client system or Web server</entry>
+              <entry>SSH (22/tcp)</entry>
+              <entry>1kB/request</entry>
+              <entry>Remote file command</entry>
             </row>
             <row>
               <entry>VSE</entry>
@@ -767,12 +782,43 @@
     
     <section>
       <title>FMS module details</title>
-      <para>This sections presents the specificities of FMS (File Management Service) services architecture and the
+      <para>This section presents the specificities of FMS (File Management Service) services architecture and the
         model of deployment for this module.</para>
       <section>
         <title>FMS service call sequence</title>
-        <para></para>
+        <para>Among the services provided by the FMS module we present the call sequence for three of the most representative
+          ones: a <emphasis role="bold">file copy</emphasis> from &quot;MachineA&quot; to &quot;MachineB&quot; with the synchronous
+          and asynchronous variants, and the service for file information retrieval. 
+          For the specifications of these services, see the use cases F2.CP1, F2.CP2 and F1.DI5 in [D1.1a].</para>
+        <para>In the following diagrams, the objects represents different processes that may be running on different hosts. The generic
+          names &quot;MachineA&quot; and &quot;MachineB&quot; could be mapped to either a VISHNU Machine or to the Client host itself. The
+            constraints on a given host to be &quot;MachineA&quot; or &quot;MachineB&quot; are the following:</para>
+        <para>
+          <itemizedlist>
+            <listitem><para>A ssh server must be running on the host.</para></listitem>
+            <listitem><para>The programs <command>scp</command>, <command>rsync</command>, <command>ls</command>, <command>rm</command>,
+            <command>head</command>, <command>tail</command>, <command>mkdir</command>, <command>chgrp</command>, <command>cat</command>
+            must be available on the host.</para></listitem>
+            <listitem><para>The host must be known to the VISHNU system as either a <emphasis role="bold">Machine</emphasis> 
+            (i.e. it has been registered by a VISHNU Administrator)
+              or a <emphasis role="bold">Client</emphasis> (i.e it is the host from where the request is sent).</para></listitem>
+            <listitem><para>The VISHNU user who is requesting the file transfer must have a <emphasis role="bold">VISHNU local account</emphasis>
+              configured on both machines except if the machine is the client host itself. A local account on a machine contains the unix account details
+              of the VISHNU user on the corresponding host (user login, home directory path, ssh key path).</para></listitem>
+            <listitem><para>The ssh configuration on both hosts corresponding to &quot;MachineA&quot; and &quot;MachineB&quot;
+              <emphasis role="italics">and the network</emphasis> between these hosts must allow ssh connections: <itemizedlist>
+                <listitem><para>from the FMS Server host to &quot;MachineA&quot; and to &quot;MachineB&quot;.</para></listitem>
+                <listitem><para>from &quot;MachineA&quot; to &quot;MachineB&quot;.</para></listitem>
+              </itemizedlist>
+              </para></listitem>
+          </itemizedlist>
+        </para>
         
+        <para>The call sequence is designed around the usage of the <emphasis role="bold">scp</emphasis> and <emphasis role="bold">rsync</emphasis>
+        command-line programs according to the project requirements. Therefore the FMS Server software will use system &quot;"exec"&quot; calls to
+        launch file transfers or other system calls related to file management (chmod, ls, etc.). This solution allows access to many hosts from a
+        single FMS server (see deployment paragraph below), but reduces the interoperability as it depends on unix/linux-specific features.
+        </para>
         <figure>
           <title>FMS synchronous transfer sequence diagram</title>
           <mediaobject>
@@ -783,6 +829,9 @@
           </mediaobject>
         </figure>
         
+        <para>In the case of an asynchronous file transfer, the call from client1 to mServer1 terminates as soon as the file transfer
+          is initiated from MachineA. The state of an asynchronous file transfer can be requested using another FMS Service, and the
+          transfer can be stopped asynchronously as shown on the diagram.</para>
         <figure>
           <title>FMS asynchronous transfer sequence diagram</title>
           <mediaobject>
@@ -796,7 +845,11 @@
       
       <section>
         <title>FMS server deployment</title>
-        
+        <para>The following diagram shows the relationships and their cardinalities between the different hosts involved in the deployment
+          of the VISHNU FMS module. Several FMS Servers can be deployed within a single VISHNU infrastructure and will provide the same
+            services for all the machines configured in VISHNU. The FMS Servers will share the same VISHNU database where all logs and
+            dynamical information will be stored.</para>
+        <para>Note: the choice of a particular FMS Server will be done automatically by VISHNU and will be transparent for the user.</para>
         <figure>
           <title>FMS deployment diagram</title>
           <mediaobject>
