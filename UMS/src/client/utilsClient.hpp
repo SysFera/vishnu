@@ -11,6 +11,11 @@
 #include <iostream>
 #include <sstream>
 
+//EMF
+#include <ecore.hpp> // Ecore metamodel
+#include <ecorecpp.hpp> // EMF4CPP utils
+#include "UMS_Data.hpp"
+
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 
@@ -54,4 +59,30 @@ void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, con
  * \return raises an exception on error 
  */
 void checkEmail(const std::string& mail);
+
+/**
+ * \brief Function to parse the EMF object
+ * \param objectSerialized the EMF object serialized
+ * \param object_ptr the object build with the objectSerialized
+ * \param msgComp an exception message
+ * \return raises an exception on error 
+ */
+template<class T>
+void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
+
+  object_ptr = NULL;
+  try {
+    //CREATE DATA MODEL
+    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+
+    //Parse the model
+    ecorecpp::parser::parser parser;
+    object_ptr = parser.load(objectSerialized)->as< T >();
+  }
+  catch (std::exception& e) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+  }
+
+}
 #endif
