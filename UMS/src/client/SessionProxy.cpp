@@ -199,14 +199,10 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  // CREATE DATA MODEL
-  UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
+  UMS_Data::Session_ptr session_ptr; 
 
-  //Parse the model
-  ecorecpp::parser::parser parser;
-  //To set the muser
-  UMS_Data::Session_ptr session_ptr = parser.load(std::string(sessionInString))->as< UMS_Data::Session >();
+  //To parse Session object serialized
+  parseEmfObject(std::string(sessionInString), session_ptr, "Error by receiving Session object serialized");
   msession = *session_ptr;
 
   if(key!=NULL) {
