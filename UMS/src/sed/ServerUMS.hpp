@@ -59,7 +59,7 @@ public :
   * \return the path of the configuration file
   */
   int
-  getVishnuId();
+  getVishnuId() const;
 
   /**
   * \brief To get the path to the sendmail script
@@ -67,7 +67,7 @@ public :
   * \return the path of the configuration file
   */
   std::string
-  getSendmailScriptPath();
+  getSendmailScriptPath() const;
 
    /**
    * \brief To initialize the UMS server
