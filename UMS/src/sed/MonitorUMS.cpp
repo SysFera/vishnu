@@ -5,6 +5,7 @@
 * \date 31/01/2001
 */
 
+#include <boost/scoped_ptr.hpp>
 #include "MonitorUMS.hpp"
 
 /**
@@ -51,26 +52,19 @@ MonitorUMS::init(int vishnuId,
                                                 dbPassword,
                                                 DATABASENAME);
 
-  DatabaseResult *result;
-
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
-
 
   try {
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
     /* Checking of vishnuid on the database */
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    std::cout.flush();
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
     if (result->getResults().size() == 0) {
-      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
-      throw e;
-
+      throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
-
   } catch (VishnuException& e) {
-        exit(0);
+    exit(0);
   }
 
 }
@@ -88,14 +82,14 @@ MonitorUMS::run() {
   SessionServer closer;
 
   try {
-    DatabaseResult *result = closer.getSessionToclosebyTimeout();
+    boost::scoped_ptr<DatabaseResult> result(closer.getSessionToclosebyTimeout());
 
     if (result->getNbTuples() != 0) {
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
         tmp.clear();
         tmp = result->get(i);
 
-        ii=tmp.begin();
+        ii = tmp.begin();
         SessionServer sessionServer (*ii);
 
         try {
@@ -103,7 +97,6 @@ MonitorUMS::run() {
           sessionServer.close();
         }
         catch (VishnuException& e) {
-
           string errorInfo =  e.buildExceptionString();
         }
       }
