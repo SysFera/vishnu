@@ -29,7 +29,7 @@ ServerUMS::getInstance() {
 * \return the path of the configuration file
 */
 int
-ServerUMS::getVishnuId() {
+ServerUMS::getVishnuId() const {
   return mvishnuId;
 }
 
@@ -39,7 +39,7 @@ ServerUMS::getVishnuId() {
 * \return the path of the configuration file
 */
 std::string
-ServerUMS::getSendmailScriptPath() {
+ServerUMS::getSendmailScriptPath() const {
   return msendmailScriptPath;
 }
 /**
