@@ -545,22 +545,10 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
   if (sendmailScriptPath.empty()) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid server configuration");
   }
-  // create file containing the body of the mail
-  std::string contentFileName = "/tmp/";
-  contentFileName.append("vishnu_email_");
-  //To generate the filename
-  contentFileName.append(user.getUserId());
 
-  try {
-    std::ofstream of(contentFileName.c_str());
-    of << content;
-    of.close();
-  } catch (...) {
-    throw SystemException(ERRCODE_SYSTEM, "Could not create temporary file for email body");
-  }
   // call the script in the background
   std::string command = sendmailScriptPath + " --to " + address + " -s " + "\""
-                        + subject + "\"" + " -f " + contentFileName + " 1>/dev/null 2>/dev/null &";
+                        + subject + "\"" + " \"" + content + " \" 1>/dev/null 2>/dev/null &";
   system(command.c_str());
   return 0;
 }
