@@ -97,6 +97,11 @@ private :
    */
   ServerUMS();
 
+  /**
+   * \brief operator=
+   */
+  ServerUMS& operator=(const ServerUMS&);
+
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
