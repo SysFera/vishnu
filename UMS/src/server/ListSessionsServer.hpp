@@ -145,7 +145,6 @@ public:
    */
   UMS_Data::ListSessions* list()
   {
-    DatabaseResult *ListOfSessions;
     std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect, "
     "creation, closure from vsession, users where vsession.users_numuserid=users.numuserid";
 
@@ -163,7 +162,7 @@ public:
       processOptions(userServer, mparameters, sqlListOfSessions);
 
       //To get the list of sessions from the database
-      ListOfSessions = mdatabaseVishnu->getResult(sqlListOfSessions.c_str());
+      boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabaseVishnu->getResult(sqlListOfSessions.c_str()));
 
       if (ListOfSessions->getNbTuples() != 0){
         for (size_t i = 0; i < ListOfSessions->getNbTuples(); ++i) {

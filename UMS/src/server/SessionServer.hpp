@@ -16,6 +16,7 @@
 #include <ecorecpp.hpp>
 #include <iostream>
 #include <exception>
+#include <boost/scoped_ptr.hpp>
 #include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SystemException.hpp"
