@@ -19,7 +19,7 @@
 
 // this includes the typemaps for STL strings
 %include "std_string.i"
-%include "std_except.i"
+%include "std_except.i" 
 
 
 // this includes the required type declarations for EMF4CPP
@@ -99,6 +99,53 @@
   }
  }
 
+//%typemap(jni) long int IN, long int IN %{jobjectLong%}
+//%typemap(jtype) long int IN, long int IN "java.lang.Long"
+//%typemap(jstype) long int IN, long int IN "java.lang.Long"
+//%typemap(javain) long int IN, long int IN "$javainput"
+
+
+//%define INPUT_TYPEMAP(TYPE, JNITYPE, JTYPE, JNIDESC)
+//%typemap(jni) TYPE *INPUT, TYPE &INPUT "JNITYPE"
+//%typemap(jtype) TYPE *INPUT, TYPE &INPUT "JTYPE"
+//%typemap(jstype) TYPE *INPUT, TYPE &INPUT "JTYPE"
+//%typemap(javain) TYPE *INPUT, TYPE &INPUT "$javainput"
+//%typemap(javadirectorin) TYPE *INPUT, TYPE &INPUT "$jniinput"
+//%typemap(javadirectorout) TYPE *INPUT, TYPE &INPUT "$javacall"
+//
+//%typemap(in) TYPE *INPUT, TYPE &INPUT
+//%{ $1 = ($1_ltype)&$input; %}
+//
+//%typemap(freearg) TYPE *INPUT, TYPE &INPUT ""
+//
+//%typemap(directorout) TYPE *INPUT, TYPE &INPUT
+//%{ $result = ($1_ltype)&$input; %}
+//
+//%typemap(directorin,descriptor=JNIDESC) TYPE &INPUT
+//%{ *(($&1_ltype) $input) = (JNITYPE *) &$1; %}
+//
+//%typemap(directorin,descriptor=JNIDESC) TYPE *INPUT
+//%{ *(($&1_ltype) $input) = (JNITYPE *) $1; %}
+//
+//%typemap(typecheck) TYPE *INPUT = TYPE;
+//%typemap(typecheck) TYPE &INPUT = TYPE;
+//%enddef
+
+
+//INPUT_TYPEMAP(long, jint, long, "J");
+//%typemap(jni, descriptor="Ljava.lang.Long;") ::ecore::ELong,               ::ecore::ELong               "jlong"
+//%typemap(jtype, descriptor="Ljava.lang.Long;")  ::ecore::ELong,            ::ecore::ELong               "jlong"
+//%typemap(jstype, descriptor="Ljava.lang.Long;")  ::ecore::ELong,           ::ecore::ELong               "jlong"
+//%typemap(javain, descriptor="Ljava.lang.Long;")  ::ecore::ELong,           ::ecore::ELong               "jlong"
+//%typemap(directorin, descriptor="Ljava.lang.Long;") ::ecore::ELong             "$input = (jlong) $1;"
+//%typemap(out) ::ecore::ELong           %{ $result = (jlong)$1; %}
+//%typemap(directorin, descriptor="Ljava.lang.Long;") const ::ecore::ELong &           "$input = (jlong)$1_name;"
+//%typemap(out) const ::ecore::ELong &           %{ $result = (jlong)*$1; %} 
+
+//%apply
+//%typemap(in) ELong {
+//  $1  = java.lang.Long($input)
+//  }
 #endif
 
 // Remove the parameters of vishnuInitialize
