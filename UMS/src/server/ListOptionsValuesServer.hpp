@@ -105,7 +105,6 @@ public:
    * \return raises an exception on error
    */
   UMS_Data::ListOptionsValues* list() {
-    DatabaseResult *ListofOptions;
     std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
 
     std::vector<std::string>::iterator ii;
@@ -114,16 +113,17 @@ public:
     mlistObject = ecoreFactory->createListOptionsValues();
 
 
-        //Creation of the object user
-        UserServer userServer = UserServer(msessionServer);
-        userServer.init();
+      //Creation of the object user
+      UserServer userServer = UserServer(msessionServer);
+      userServer.init();
       //if the user exists
       if (userServer.exist()) {
         //To process options
         processOptions(userServer, mparameters, sqlListofOptions);
 
         //To get the list of options values from the database
-        ListofOptions = mdatabaseVishnu->getResult(sqlListofOptions.c_str());
+        boost::scoped_ptr<DatabaseResult> ListofOptions (mdatabaseVishnu->getResult(sqlListofOptions.c_str()));
+
         if (ListofOptions->getNbTuples() != 0){
           for (size_t i = 0; i < ListofOptions->getNbTuples(); ++i) {
             results.clear();

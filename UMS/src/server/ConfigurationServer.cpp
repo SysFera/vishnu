@@ -41,10 +41,6 @@ ConfigurationServer::ConfigurationServer(UMS_Data::Configuration*& configuration
 int
 ConfigurationServer::save() {
 
-  DatabaseResult *ListofUsers;
-  DatabaseResult *ListofMachines;
-  DatabaseResult *ListofLocalAccount;
-
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
   "where not userid='"+ROOTUSERNAME+"'";
 
@@ -60,8 +56,6 @@ ConfigurationServer::save() {
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
   mconfiguration= ecoreFactory->createConfiguration();
 
-
-
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -70,7 +64,7 @@ ConfigurationServer::save() {
     //if the user is an admin
     if (userServer.isAdmin()) {
       //To get the list of users from the database
-      ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
+      boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlListofUsers.c_str()));
 
       if (ListofUsers->getNbTuples() != 0){
         for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
@@ -91,7 +85,7 @@ ConfigurationServer::save() {
       }
 
       //To get the list of machines from the database
-      ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+      boost::scoped_ptr<DatabaseResult> ListofMachines (mdatabaseVishnu->getResult(sqlListofMachines.c_str()));
 
       if (ListofMachines->getNbTuples() != 0){
         for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
@@ -113,7 +107,7 @@ ConfigurationServer::save() {
 
 
       //To get the list of local accounts from the database
-      ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+      boost::scoped_ptr<DatabaseResult> ListofLocalAccount (mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str()));
 
       if (ListofLocalAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
@@ -272,7 +266,7 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
 
   UMS_Data::Machine* machinetmp = new UMS_Data::Machine();
   MachineServer machineServer = MachineServer(machinetmp);
-  std::string res;  
+  std::string res;
   res = "insert into description (machine_nummachineid, lang, "
   "description) values "
   "("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+","
