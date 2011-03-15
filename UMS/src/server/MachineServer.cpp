@@ -255,12 +255,10 @@ MachineServer::getData() {
 
 std::string
 MachineServer::getAttribut(std::string condition, std::string attrname) {
-  DatabaseResult* result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
-
 }
 
 /**
