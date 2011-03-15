@@ -63,7 +63,7 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
   if(options.size()!=0) {
     sqlRequest.append(" and userid=");
     sqlRequest.append("'"+moption+"'");
-    DatabaseResult *ListofUsers = mdatabaseVishnu->getResult(sqlRequest.c_str());
+    boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlRequest.c_str()));
     if(ListofUsers->getNbTuples()==0) {
       UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
       throw e ;
@@ -79,7 +79,6 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
  */
 ListUsers* ListUsersServer::list()
 {
-  DatabaseResult *ListofUsers;
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
                               "where not userid='"+ ROOTUSERNAME +"'";
 
@@ -96,8 +95,7 @@ ListUsers* ListUsersServer::list()
 
     processOptions(userServer, moption, sqlListofUsers);
     //To get the list of users from the database
-    ListofUsers = mdatabaseVishnu->getResult(sqlListofUsers.c_str());
-
+    boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlListofUsers.c_str()));
     if (ListofUsers->getNbTuples() != 0){
       for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
         results.clear();
