@@ -91,7 +91,7 @@
 // Exception rule for user exception
 %typemap (throws) UserException{
     std::cout << " @@@ jenv " << jenv << std::endl;
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/MyException");
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
     std::cout << " @@@ clazz " << clazz << std::endl;
     std::string ret = $1.buildExceptionString() + $1.getMsg();
     if (clazz) {
@@ -123,7 +123,4 @@
 // To make vishnuexception inherit from the java exception class
 %typemap(javabase) VishnuException "java.lang.Exception"
 #endif
-
-%include "VishnuException.hpp"
-%include "UserException.hpp"
 
