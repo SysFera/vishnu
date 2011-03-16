@@ -15,7 +15,6 @@ option(ENABLE_PYTHON OFF "compile the python api")
 option(ENABLE_JAVA OFF "compile the java api")
 option(ENABLE_ORACLE OFF "compile with the oracle support. Deprecated")
 
-
 find_package(DIET)
 if (DIET_FOUND)
 else (DIET_FOUND)
@@ -94,9 +93,12 @@ set( UMS_TEST_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/test/src/sql )
 set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
 set (TEST_SQL "${UMS_TEST_DIR}")
 
+set(MANDIR "/usr/share/man/man1")
+
 add_subdirectory(core/src)
 add_subdirectory(core/deps/emf4cpp)
 add_subdirectory(UMS/src)
+add_subdirectory(man/man1)
 # macros used to setup test environment
 #include(UMSTestingMacros)
 #ums_test_setup()
