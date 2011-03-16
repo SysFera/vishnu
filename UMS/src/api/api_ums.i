@@ -65,7 +65,6 @@
 %template(ECommandList) ::ecorecpp::mapping::EList<::UMS_Data::Command>;
 %template(EOptionList) ::ecorecpp::mapping::EList<::UMS_Data::OptionValue>;
 
-
 #ifdef SWIGPYTHON
 
 // Remove output parameters from the command
@@ -88,64 +87,24 @@
 %apply std::string &INOUT { std::string& tmpPassword };
 %apply std::string &INOUT { std::string& sshPublicKey };
 
-// Rule to add throw vishnu exception to functions
-%javaexception ("VishnuException"){
-  try {
-    $action
-      } catch(VishnuException* e) {
-    jclass clazz = jenv->FindClass("VishnuException");
-    jenv->ThrowNew(clazz, e->buildExceptionString().c_str());
+
+// Exception rule for user exception
+%typemap (throws) UserException{
+    std::cout << " @@@ jenv " << jenv << std::endl;
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
+    std::cout << " @@@ clazz " << clazz << std::endl;
+    std::string ret = $1.buildExceptionString() + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    std::cout << " @@@ exception :  " << ret << std::endl;
     return $null;
-  }
+  
  }
 
-//%typemap(jni) long int IN, long int IN %{jobjectLong%}
-//%typemap(jtype) long int IN, long int IN "java.lang.Long"
-//%typemap(jstype) long int IN, long int IN "java.lang.Long"
-//%typemap(javain) long int IN, long int IN "$javainput"
+// Add throw to method declaration
+%javaexception ("MyException") { $action }
 
-
-//%define INPUT_TYPEMAP(TYPE, JNITYPE, JTYPE, JNIDESC)
-//%typemap(jni) TYPE *INPUT, TYPE &INPUT "JNITYPE"
-//%typemap(jtype) TYPE *INPUT, TYPE &INPUT "JTYPE"
-//%typemap(jstype) TYPE *INPUT, TYPE &INPUT "JTYPE"
-//%typemap(javain) TYPE *INPUT, TYPE &INPUT "$javainput"
-//%typemap(javadirectorin) TYPE *INPUT, TYPE &INPUT "$jniinput"
-//%typemap(javadirectorout) TYPE *INPUT, TYPE &INPUT "$javacall"
-//
-//%typemap(in) TYPE *INPUT, TYPE &INPUT
-//%{ $1 = ($1_ltype)&$input; %}
-//
-//%typemap(freearg) TYPE *INPUT, TYPE &INPUT ""
-//
-//%typemap(directorout) TYPE *INPUT, TYPE &INPUT
-//%{ $result = ($1_ltype)&$input; %}
-//
-//%typemap(directorin,descriptor=JNIDESC) TYPE &INPUT
-//%{ *(($&1_ltype) $input) = (JNITYPE *) &$1; %}
-//
-//%typemap(directorin,descriptor=JNIDESC) TYPE *INPUT
-//%{ *(($&1_ltype) $input) = (JNITYPE *) $1; %}
-//
-//%typemap(typecheck) TYPE *INPUT = TYPE;
-//%typemap(typecheck) TYPE &INPUT = TYPE;
-//%enddef
-
-
-//INPUT_TYPEMAP(long, jint, long, "J");
-//%typemap(jni, descriptor="Ljava.lang.Long;") ::ecore::ELong,               ::ecore::ELong               "jlong"
-//%typemap(jtype, descriptor="Ljava.lang.Long;")  ::ecore::ELong,            ::ecore::ELong               "jlong"
-//%typemap(jstype, descriptor="Ljava.lang.Long;")  ::ecore::ELong,           ::ecore::ELong               "jlong"
-//%typemap(javain, descriptor="Ljava.lang.Long;")  ::ecore::ELong,           ::ecore::ELong               "jlong"
-//%typemap(directorin, descriptor="Ljava.lang.Long;") ::ecore::ELong             "$input = (jlong) $1;"
-//%typemap(out) ::ecore::ELong           %{ $result = (jlong)$1; %}
-//%typemap(directorin, descriptor="Ljava.lang.Long;") const ::ecore::ELong &           "$input = (jlong)$1_name;"
-//%typemap(out) const ::ecore::ELong &           %{ $result = (jlong)*$1; %} 
-
-//%apply
-//%typemap(in) ELong {
-//  $1  = java.lang.Long($input)
-//  }
 #endif
 
 // Remove the parameters of vishnuInitialize
@@ -164,7 +123,4 @@
 // To make vishnuexception inherit from the java exception class
 %typemap(javabase) VishnuException "java.lang.Exception"
 #endif
-
-%include "VishnuException.hpp"
-%include "UserException.hpp"
 
