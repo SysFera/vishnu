@@ -5,7 +5,7 @@
  * \date 15/02/2011
  */
 
-
+#include <boost/scoped_ptr.hpp>
 #include "POSTGREDatabase.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
@@ -24,12 +24,11 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
 
   DbFactory factory;
   Database *databaseVishnu;
-  DatabaseResult *result;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
   databaseVishnu = factory.getDatabaseInstance();
-  result = databaseVishnu->getResult(sqlCommand.c_str());
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
 
 }

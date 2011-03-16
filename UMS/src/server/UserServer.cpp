@@ -5,6 +5,7 @@
 * \date 31/01/2011
 */
 
+#include <boost/scoped_ptr.hpp>
 #include "UserServer.hpp"
 #include "ServerUMS.hpp"
 
@@ -478,12 +479,9 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
 * \return the value of the attribut or empty string if no results
 */
 std::string UserServer::getAttribut(std::string condition, std::string attrname) {
-
-  DatabaseResult* result;
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
-
 }
 
 /**
@@ -535,21 +533,65 @@ UserServer::generatePassword(std::string value1, std::string value2) {
 * \param subject  the subject of the email
 */
 int
-UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject)
-{
+UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject) {
+
+  std::vector<std::string> tokens;
+  std::ostringstream command;
+  pid_t pid;
+  int status;
   std::string address = user.getEmail();
+  //If the address is empty
   if (address.empty()) {
     throw UserException(ERRCODE_INVALID_MAIL_ADRESS, "Empty email address");
   }
   std::string sendmailScriptPath = ServerUMS::getInstance()->getSendmailScriptPath();
+  //If the script is empty
   if (sendmailScriptPath.empty()) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid server configuration");
   }
+  // To build the script command
+  command << sendmailScriptPath << " --to " << address << " -s ";
 
-  // call the script in the background
-  std::string command = sendmailScriptPath + " --to " + address + " -s " + "\""
-                        + subject + "\"" + " \"" + content + " \" 1>/dev/null 2>/dev/null &";
-  system(command.c_str());
+  std::istringstream is(command.str());
+  std::copy(std::istream_iterator<std::string>(is),
+  std::istream_iterator<std::string>(),
+  std::back_inserter<std::vector<std::string> >(tokens));
+
+  char* argv[tokens.size()+6];
+  argv[tokens.size()+5]=NULL;
+  //Use of tokens
+  for (unsigned int i = 0; i < tokens.size(); ++i) {
+    argv[i]=strdup(tokens[i].c_str());
+  }
+  //To avoid mutiple values by using tokens because of spaces
+  argv[tokens.size()]=strdup(subject.c_str());
+  argv[tokens.size()+1]=strdup(content.c_str());
+  //To execute the script on background
+  argv[tokens.size()+2]=strdup(std::string(" 1>/dev/null ").c_str());
+  argv[tokens.size()+3]=strdup(std::string(" 2>/dev/null ").c_str());
+  argv[tokens.size()+4]=strdup(std::string(" & ").c_str());
+
+  pid = fork();
+  if (pid == -1) {//if an error occurs during fork
+    for (unsigned int i=0; i<tokens.size()+5; ++i) {
+      free(argv[i]);
+    }
+    throw SystemException(ERRCODE_SYSTEM, "Error during the creation of the process for sending mail to "
+    +user.getFirstname()+ " with userId:" +user.getUserId());
+  }
+
+  if (pid == 0) {//if the child process
+    freopen("dev/null", "r", stdin);
+    freopen("dev/null", "w", stdout);
+    freopen("dev/null", "w", stderr);
+
+    if (execv(argv[0], argv) == -1) {
+      exit(1);
+    }
+  }
+  for (unsigned int i=0; i<tokens.size()+5; ++i) {
+    free(argv[i]);
+  }
   return 0;
 }
 
@@ -564,7 +606,6 @@ UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
   std::string content;
   std::stringstream newline;
   newline << std::endl;
-
 
   if (flagAdduser) {
     content.append("Dear "+user.getFirstname()+" "+user.getLastname()+ ",");
