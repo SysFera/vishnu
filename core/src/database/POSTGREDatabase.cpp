@@ -176,13 +176,12 @@ POSTGREDatabase::getResult(std::string request) {
     }
     releaseConnexion(reqPos);
     PQclear(res);
-    return new DatabaseResult(results, attributesNames);
   }
   else {
     releaseConnexion(reqPos);
     throw SystemException(ERRCODE_DBCONN, "The database is not connected");
   }
-  return SUCCESS;
+  return new DatabaseResult(results, attributesNames);
 }
 
 PGconn* POSTGREDatabase::getConnexion(int& id){
