@@ -114,7 +114,7 @@ POSTGREDatabase::~POSTGREDatabase(){
 int
 POSTGREDatabase::disconnect(){
   int i;
-  for (i=0;i<25;i++){
+  for (i = 0; i < POOLSIZE; i++){
     if (mpool[i].mconn != NULL) {
       PQfinish(mpool[i].mconn);
     }

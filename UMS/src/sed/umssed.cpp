@@ -98,7 +98,9 @@ int main(int argc, char* argv[], char* envp[]) {
     if (!res) {
       diet_print_service_table();
       res = diet_SeD(argv[1], argc, argv);
-      delete server;
+      if (server != NULL) {
+        delete server;
+      }
     } else {
       std::cerr << "There was a problem during services initialization" << std::endl;
       exit(1);
