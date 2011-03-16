@@ -14,6 +14,10 @@
  */
 #define NB_SRV 25
 #include "DIET_server.h"
+#include "UMSMapper.hpp"
+#include "MapperRegistry.hpp"
+
+class Database;
 
 static const char* SRV[NB_SRV] = {
   "sessionConnect",
@@ -108,7 +112,7 @@ private :
   /**
    * \brief The singleton reference
    */
-  static ServerUMS*  minstance;
+  static ServerUMS *minstance;
   /**
   * \brief The path to the sendmail script
   */
@@ -121,5 +125,13 @@ private :
   * \brief Structure representing a profile description
   */
   diet_profile_desc_t* mprofile;
+  /**
+  * \brief Instance of Database
+  */
+  static Database *mdatabaseVishnu;
+  /**
+  * \brief Instance of UMSMapper
+  */
+  static UMSMapper *mmapper;
 };
 #endif // SERVERUMS
