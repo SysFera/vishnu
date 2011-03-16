@@ -1444,13 +1444,13 @@
       <section>
         <title>Class diagrams</title>
         <section>
-          <title>UMS Data Class Diagram</title>
+          <title>TMS Data Class Diagram</title>
           <para>This diagram illustrates the structure and the relationship between data manipulated by the components Client and Server. </para>
           <figure>
-            <title>UMS Data Class Diagram</title>
+            <title>TMS Data Class Diagram</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/png/UMS_Data_Class_Diagram.png" align="center"
+                <imagedata fileref="images/png/TMS_Data_Class_Diagram.png" align="center"
                     scale="40"/>
               </imageobject>
             </mediaobject>
