@@ -825,10 +825,6 @@ solveConfigurationSave(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     configurationSerialized =  _ser.serialize(configurationServer.getData());
 
-    if (configurationServer.getData() != NULL) {
-      delete configurationServer.getData();
-    }
-
     //To save the last connection on the database
     sessionServer.saveConnection();
 
@@ -888,10 +884,6 @@ solveConfigurationRestore(diet_profile_t* pb) {
 
     ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
     configurationServer.restore();
-
-    if (configuration != NULL) {
-      delete configuration;
-    }
 
     //To save the last connection on the database
     sessionServer.saveConnection();
