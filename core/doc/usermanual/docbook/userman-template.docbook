@@ -95,14 +95,17 @@ same conditions as regards security.</para>
          <listitem>
           <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
         </listitem>
-	<listitem>
-          <para>Chapter 3 contains the VISHNU commands reference.</para>
+        <listitem>
+          <para>Chapter 3 is a quick start guide for the different VISHNU interfaces.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 4 contains the C++ API reference.</para>
+          <para>Chapter 4 contains the VISHNU commands reference.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 5 contains the Python API reference.</para>
+          <para>Chapter 5 contains the C++ API reference.</para>
+        </listitem>
+	<listitem>
+          <para>Chapter 6 contains the Python API reference.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -112,6 +115,9 @@ same conditions as regards security.</para>
       <para><itemizedlist>
         <listitem>
           <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
+        </listitem>
+        <listitem>
+          <para>[DIETMAN]: DIET User's Manual v2.6 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -316,8 +322,25 @@ same conditions as regards security.</para>
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
   </section>
- </chapter>
- <!-- PART 1 : VISHNU Presentation -->
+ </chapter> <!-- PART 1 : VISHNU Presentation -->
+
+ 
+ <chapter><!-- PART 2 : Quick start guide -->
+  <title>VISHNU interfaces quick start guide</title>
+  
+  <section>
+    <title>Command-line interface</title>
+  </section>
+  
+  <section>
+    <title>C++ API</title>
+  </section>
+  
+  <section>
+    <title>Python API</title>
+  </section>
+  
+ </chapter><!-- PART 2 : Quick start guide -->
   
 </book>
 
