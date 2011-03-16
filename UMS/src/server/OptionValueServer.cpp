@@ -118,9 +118,6 @@ OptionValueServer::configureOption(bool defaultOptions) {
 * \fn  ~OptionValueServer()
 */
 OptionValueServer::~OptionValueServer() {
-  /*if (moptionValue != NULL) {
-    delete moptionValue;
-  }*/
 }
 /**
 * \brief Function to get option data structure
