@@ -19,18 +19,12 @@
 using namespace vishnu;
 
 UMSMapper::UMSMapper(){
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 };
 
 UMSMapper::~UMSMapper(){
 };
 
 UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
-  //CREATE DATA MODEL
-  UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
-  ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
   mname = na;
   mmap.insert (pair<int, string>(VISHNU_CONNECT           	, "vishnu_connect"));
   mmap.insert (pair<int, string>(VISHNU_RECONNECT 	  	, "vishnu_reconnect"));
@@ -326,8 +320,13 @@ UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_ADD_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  LocalAccount_ptr ac = parser.load(std::string(a))->as< LocalAccount >();
+  LocalAccount_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   res+=" ";
   res += ac->getUserId();
   res+=" ";
@@ -338,6 +337,11 @@ UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){
   res += ac->getSshKeyPath();
   res+=" ";
   res += ac->getHomeDirectory();
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -348,8 +352,12 @@ UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_UPDATE_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  LocalAccount_ptr ac = parser.load(std::string(a))->as< LocalAccount >();
+  LocalAccount_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   a = ac->getAcLogin();
   if (a.compare("")){
@@ -370,6 +378,10 @@ UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
   res += ac->getUserId();
   res+=" ";
   res += ac->getMachineId();
+
+  if (ac != NULL) {
+    delete ac;
+  }
   return res;
 }
 
@@ -402,9 +414,18 @@ UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){
   a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
-  Configuration_ptr ac = parser.load(std::string(a))->as< Configuration >();
+  Configuration_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   res += ac->getFilePath();
+
+  if (ac != NULL) {
+    delete ac;
+  }
 
   return res;
 }
@@ -416,8 +437,13 @@ UMSMapper::decodeAddM(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_ADD_MACHINE))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  Machine_ptr ac = parser.load(std::string(a))->as< Machine >();
+  Machine_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   res+=" ";
   res += ac->getName();
   res+=" ";
@@ -426,6 +452,11 @@ UMSMapper::decodeAddM(vector<int> separator, const string& msg){
   res += ac->getLanguage();
   res+=" ";
   res += "SshPublicKey";
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -436,8 +467,12 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_UPDATE_MACHINE))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  Machine_ptr ac = parser.load(std::string(a))->as< Machine >();
+  Machine_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   res+= " ";
   res+= ac->getMachineId();
@@ -472,6 +507,11 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
     res+=" -k ";
     res+=a;
   }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -493,8 +533,13 @@ UMSMapper::decodeListAcc(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  ListLocalAccOptions_ptr ac = parser.load(std::string(a))->as< ListLocalAccOptions >();
+  ListLocalAccOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   if (ac->isAdminListOption()){
     res+=" -a ";
   }
@@ -508,6 +553,11 @@ UMSMapper::decodeListAcc(vector<int> separator, const string& msg){
     res+=" -i ";
     res+=a;
   }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -518,8 +568,13 @@ UMSMapper::decodeListM(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_MACHINE))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  ListMachineOptions_ptr ac = parser.load(std::string(a))->as< ListMachineOptions >();
+  ListMachineOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   a = ac->getUserId();
   if (a.compare("")){
     res+=" -u ";
@@ -533,6 +588,11 @@ UMSMapper::decodeListM(vector<int> separator, const string& msg){
     res+=" -m ";
     res+=a;
   }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -544,8 +604,13 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_HISTORY_CMD))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  ListCmdOptions_ptr ac = parser.load(std::string(a))->as< ListCmdOptions >();
+  ListCmdOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   if (ac->isAdminListOption()){
     res+=" -a ";
   }
@@ -569,6 +634,11 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
     res+=" -e ";
     res+=a;
   }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -579,8 +649,13 @@ UMSMapper::decodeListOp(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_OPTIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  ListOptOptions_ptr ac = parser.load(std::string(a))->as< ListOptOptions >();
+  ListOptOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   if (ac->isListAllDeftValue()){
     res+=" -a ";
   }
@@ -594,6 +669,11 @@ UMSMapper::decodeListOp(vector<int> separator, const string& msg){
     res+=" -n ";
     res+=a;
   }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -619,8 +699,13 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_SESSIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  ListSessionOptions_ptr ac = parser.load(std::string(a))->as< ListSessionOptions >();
+  ListSessionOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
   res+=" -t ";
   res += convertToString(ac->getStatus());
   if(ac->getSessionClosePolicy() > 0) {
@@ -666,6 +751,11 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
     res+=" -e ";
     res+=a;
   }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
   return res;
 }
 
@@ -674,9 +764,13 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   string res = string("");
   string u;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  ecorecpp::parser::parser parser;
-  OptionValue_ptr opt = parser.load(std::string(u))->as< OptionValue >();
 
+  OptionValue_ptr opt = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(u)), opt)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
 
@@ -691,7 +785,9 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
     res += u;
   }
 
-
+  if (opt != NULL) {
+    delete opt;
+  }
 //  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
 //  res += " ";
 //  res += u;
@@ -710,9 +806,12 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
   res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ecorecpp::parser::parser parser;
-  OptionValue_ptr opt = parser.load(std::string(u))->as< OptionValue >();
+  OptionValue_ptr opt = NULL;
 
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(u)), opt)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   u = opt->getOptionName();
   if (u.compare("")!=0){
@@ -725,6 +824,9 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
     res += u;
   }
 
+  if (opt != NULL) {
+    delete opt;
+  }
 //  res += " ";
 //  res += u;
 //  res+= " ";
@@ -738,8 +840,13 @@ string
 UMSMapper::getU(string serial){
   string res = string("");
   string tmp;
-  ecorecpp::parser::parser parser;
-  User_ptr user = parser.load(std::string(serial))->as< User >();
+
+  User_ptr user = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(serial)), user)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   tmp = user->getFirstname();
   if(tmp.compare("")!=0){
@@ -764,6 +871,11 @@ UMSMapper::getU(string serial){
     res+=" ";
     res += user->getEmail();
   }
+
+  if (user != NULL) {
+    delete user;
+  }
+
   return res;
 
 }
@@ -772,8 +884,13 @@ string
 UMSMapper::getUupdate(string serial){
   string res = string("");
   string tmp;
-  ecorecpp::parser::parser parser;
-  User_ptr user = parser.load(std::string(serial))->as< User >();
+
+  User_ptr user = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(serial)), user)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
 
   res+= " ";
   res += user->getUserId();
@@ -802,6 +919,9 @@ UMSMapper::getUupdate(string serial){
     res +=" -m ";
     res += user->getEmail();
   }
-  return res;
 
+  if (user != NULL) {
+    delete user;
+  }
+  return res;
 }
