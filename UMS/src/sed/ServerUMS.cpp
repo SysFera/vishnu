@@ -74,10 +74,10 @@ ServerUMS::init(int vishnuId,
   try {
     //To get database instance
     mdatabaseVishnu = factory.getDatabaseInstance(dbType,
-                                                            dbHost,
-                                                            dbUsername,
-                                                            dbPassword,
-                                                            DATABASENAME);
+                                                  dbHost,
+                                                  dbUsername,
+                                                  dbPassword,
+                                                  DATABASENAME);
 
     mvishnuId = vishnuId;
 
@@ -429,11 +429,11 @@ ServerUMS::init(int vishnuId,
 * \brief Destructor, raises an exception on error
 */
 ServerUMS::~ServerUMS() {
-  if (minstance != NULL) {
-    delete minstance;
-  }
   if (mmapper != NULL) {
     delete mmapper;
+  }
+  if (mdatabaseVishnu != NULL) {
+    delete mdatabaseVishnu;
   }
 }
 
