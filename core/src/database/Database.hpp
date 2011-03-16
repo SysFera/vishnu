@@ -2,7 +2,7 @@
  * \file Database.hpp
  * \brief This file presents an abstract database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
- * \date 15/12/10 
+ * \date 15/12/10
  */
 
 #ifndef _ABSTRACTDATABASE_H_
@@ -25,14 +25,14 @@ public :
    * \param request The request to process
    * \return raises an exception on error
    */
-  virtual int 
+  virtual int
   process(std::string request) = 0;
   /**
   * \brief To make a connection to the database
   * \fn int connect()
   * \return raises an exception on error
   */
-  virtual int 
+  virtual int
   connect() = 0;
   /**
    * \brief To set the name of the database to use
@@ -50,25 +50,26 @@ public :
   */
   virtual DatabaseResult*
   getResult(std::string request) = 0;
-  
+
+    /**
+   * \fn ~Database()
+   * \brief Destructor, raises an exception on error
+   */
+virtual ~Database();
 protected :
   /**
    * \fn Database()
    * \brief Constructor, raises an exception on error
    */
   Database();
-  /**
-   * \fn ~Database()
-   * \brief Destructor, raises an exception on error
-   */
-virtual ~Database();
+
 private :
   /**
    * \brief To disconnect from the database
    * \fn virtual int disconnect() = 0
    * \return raises an exception on error
    */
-  virtual int 
+  virtual int
   disconnect() = 0;
 };
 

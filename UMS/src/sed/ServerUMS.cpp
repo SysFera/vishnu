@@ -6,12 +6,11 @@
 */
 
 #include "ServerUMS.hpp"
-#include "UMSMapper.hpp"
-#include "MapperRegistry.hpp"
 #include "internalApi.hpp"
 
-ServerUMS* ServerUMS::minstance = NULL;
-
+Database *ServerUMS::mdatabaseVishnu = NULL;
+ServerUMS *ServerUMS::minstance = NULL;
+UMSMapper *ServerUMS::mmapper = NULL;
 /**
  * \brief To get the unique instance of the server
  */
@@ -72,28 +71,27 @@ ServerUMS::init(int vishnuId,
 
   DbFactory factory;
 
-  //To get database instance
-  Database *mdatabaseVishnu = factory.getDatabaseInstance(dbType,
-                                                          dbHost,
-                                                          dbUsername,
-                                                          dbPassword,
-                                                          DATABASENAME);
-  mvishnuId = vishnuId;
-  DatabaseResult *result;
-
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
-
   try {
+    //To get database instance
+    mdatabaseVishnu = factory.getDatabaseInstance(dbType,
+                                                  dbHost,
+                                                  dbUsername,
+                                                  dbPassword,
+                                                  DATABASENAME);
+
+    mvishnuId = vishnuId;
+
+    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
-    UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
-    mapper->registerMapper();
+    //UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
+    mmapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
+    mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
-    result = mdatabaseVishnu->getResult(sqlCommand.c_str());
-    std::cout.flush();
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
@@ -105,6 +103,11 @@ ServerUMS::init(int vishnuId,
   }
 
   // initialization of the service table
+  diet_service_table_init(NB_SRV);
+
+  /* solveSessionConnect */
+
+// initialization of the service table
   diet_service_table_init(NB_SRV);
 
   /* solveSessionConnect */
@@ -121,6 +124,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveSessionConnect)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveSessionReconnect */
 
@@ -136,6 +140,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveSessionReconnect)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveSessionClose */
 
@@ -146,7 +151,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveSessionClose)) {
     return 1;
   }
-
+  diet_profile_desc_free(mprofile);
   /* solveUserCreate */
 
   mprofile = diet_profile_desc_alloc(SRV[3], 1, 1, 3);
@@ -158,7 +163,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveUserCreate)) {
     return 1;
   }
-
+  diet_profile_desc_free(mprofile);
   /* solveUserUpdate */
 
   mprofile = diet_profile_desc_alloc(SRV[4], 1, 1, 2);
@@ -169,6 +174,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveUserUpdate)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveUserDelete */
 
@@ -180,6 +186,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveUserDelete)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveUserPasswordChange */
 
@@ -192,6 +199,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveUserPasswordChange)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveUserPasswordReset */
 
@@ -204,6 +212,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveUserPasswordReset)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveMachineCreate */
 
@@ -216,7 +225,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveMachineCreate)) {
     return 1;
   }
-
+  diet_profile_desc_free(mprofile);
   /* solveMachineUpdate */
 
   mprofile = diet_profile_desc_alloc(SRV[9], 1, 1, 2);
@@ -227,6 +236,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveMachineUpdate)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveMachineDelete */
 
@@ -238,6 +248,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveMachineDelete)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveLocalAccountCreate */
 
@@ -250,6 +261,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveLocalAccountCreate)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveLocalAccountUpdate */
 
@@ -261,6 +273,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveLocalAccountUpdate)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveLocalAccountDelete */
 
@@ -273,6 +286,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveLocalAccountDelete)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveConfigurationSave */
 
@@ -284,6 +298,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveConfigurationSave)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveConfigurationRestore */
 
@@ -295,6 +310,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveConfigurationRestore)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveOptionValueSet */
 
@@ -306,6 +322,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveOptionValueSet)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveOptionValueSetDefault */
 
@@ -317,6 +334,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveOptionValueSetDefault)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveListSessions */
 
@@ -329,6 +347,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveListSessions)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveListLocalAccount */
 
@@ -341,6 +360,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveListLocalAccount)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveListMachines */
 
@@ -353,6 +373,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveListMachines)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveListHistoryCmd */
 
@@ -365,6 +386,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveListHistoryCmd)) {
     return 1;
   }
+  diet_profile_desc_free(mprofile);
 
   /* solveListOptions */
 
@@ -377,7 +399,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveListOptions)) {
     return 1;
   }
-
+  diet_profile_desc_free(mprofile);
   /* solveListUsres */
 
   mprofile = diet_profile_desc_alloc(SRV[23], 1, 1, 3);
@@ -389,7 +411,7 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveListUsers)) {
     return 1;
   }
-
+  diet_profile_desc_free(mprofile);
   /* solveRestore */
 
   mprofile = diet_profile_desc_alloc(SRV[24], 0, 0, 0);
@@ -397,7 +419,6 @@ ServerUMS::init(int vishnuId,
   if (diet_service_table_add(mprofile, NULL, solveRestore)) {
     return 1;
   }
-
   diet_profile_desc_free(mprofile);
 
   return 0;
@@ -408,5 +429,11 @@ ServerUMS::init(int vishnuId,
 * \brief Destructor, raises an exception on error
 */
 ServerUMS::~ServerUMS() {
+  if (mmapper != NULL) {
+    delete mmapper;
+  }
+  if (mdatabaseVishnu != NULL) {
+    delete mdatabaseVishnu;
+  }
 }
 
