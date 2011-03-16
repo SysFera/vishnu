@@ -228,7 +228,6 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   int  size;
   Format_t *keywords;
 
-
   keywords = new Format_t[strlen(format)+1];
   int ret = getKeywords (&size, keywords, format, cpt, type, name, site); // Getting var and their value
 
@@ -250,7 +249,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
       }
     }
   }
-
+  delete keywords;
   return res;
 }
 
@@ -267,13 +266,13 @@ vishnu::takePassword(const std::string& prompt){
 }
 
 /**
- * \brief Simple function to convert time 
+ * \brief Simple function to convert time
  * from string format (YYYY-MM-DD H:M:S) to
  * long integer format in seconds
  * \param ts: the time in string format
  * \return the time in long integer format in seconds
  */
-std::time_t 
+std::time_t
 vishnu::string_to_time_t(const std::string& ts){
 
   // two aliases for convenience
@@ -295,14 +294,14 @@ vishnu::string_to_time_t(const std::string& ts){
 
 
   bps::time_duration::sec_type x = (t - epoch).total_seconds();
-  
+
   return std::time_t(x);
 
 
 }
 
 /**
-   * \brief Simple function to read the content of file 
+   * \brief Simple function to read the content of file
    * \param filePath: the path to the file
    * \return The content of the file
    */
