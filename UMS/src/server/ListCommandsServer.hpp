@@ -114,7 +114,6 @@ public:
    */
   UMS_Data::ListCommands* list()
   {
-    DatabaseResult *ListOfCommands;
     std::string sqlListOfCommands;
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -140,7 +139,7 @@ public:
       processOptions(userServer, mparameters, sqlListOfCommands);
 
       //To get the list of commands from the database
-      ListOfCommands = mdatabaseVishnu->getResult(sqlListOfCommands.c_str());
+      boost::scoped_ptr<DatabaseResult> ListOfCommands (mdatabaseVishnu->getResult(sqlListOfCommands.c_str()));
       if (ListOfCommands->getNbTuples() != 0){
         for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
           results.clear();
