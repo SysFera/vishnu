@@ -105,7 +105,6 @@ ConfigurationServer::save() {
         }
       }
 
-
       //To get the list of local accounts from the database
       boost::scoped_ptr<DatabaseResult> ListofLocalAccount (mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str()));
 
