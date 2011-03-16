@@ -118,9 +118,6 @@ OptionValueServer::configureOption(bool defaultOptions) {
 * \fn  ~OptionValueServer()
 */
 OptionValueServer::~OptionValueServer() {
-  if (moptionValue != NULL) {
-    delete moptionValue;
-  }
 }
 /**
 * \brief Function to get option data structure
@@ -141,8 +138,6 @@ OptionValueServer::getData() {
 */
 std::string
 OptionValueServer::getAttribut(std::string condition, std::string attrname, bool defaultOptions) {
-
-  DatabaseResult* result;
   std::string sqlCommand;
 
   if (defaultOptions) {
@@ -151,8 +146,7 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
   else {
     sqlCommand = "SELECT "+attrname+" FROM optionvalue "+condition;
   }
-
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
 
 }

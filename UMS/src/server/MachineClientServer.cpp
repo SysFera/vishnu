@@ -5,6 +5,7 @@
 * \date 31/01/2011
 */
 
+#include <boost/scoped_ptr.hpp>
 #include "MachineClientServer.hpp"
 /**
 * \brief Constructor
@@ -48,15 +49,12 @@ int MachineClientServer::recordMachineClient() {
 std::string
 MachineClientServer::getId() {
 
-  DatabaseResult* result;
-
   std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
   sqlCommand.append(mmachineSSHKey+ "' and name='");
   sqlCommand.append(mhostname+"'");
 
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
-
 }
 /**
 * \brief Function to get the ssh key of the client machine

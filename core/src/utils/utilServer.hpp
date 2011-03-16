@@ -14,7 +14,6 @@
 #include "ecorecpp.hpp" // EMF4CPP utils
 #include "UMS_Data.hpp"
 
-
 namespace vishnu {
 
   /**

@@ -40,7 +40,7 @@ solveSessionConnect(diet_profile_t* pb) {
   SessionServer sessionServer("");
 
   try {
-    ConnectOptions_ptr connectOpt;
+    ConnectOptions_ptr connectOpt = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(options), connectOpt)) {
@@ -48,6 +48,11 @@ solveSessionConnect(diet_profile_t* pb) {
     }
 
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
+
+    if (connectOpt != NULL) {
+      delete connectOpt;
+    }
+
     //To serialize the user object
     const char* name = "solveConnect";
     ::ecorecpp::serializer::serializer _ser(name);
@@ -129,7 +134,6 @@ solveSessionClose(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameter
@@ -141,7 +145,7 @@ solveSessionClose(diet_profile_t* pb) {
     sessionServer.close();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+      Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_close");
     cmd = mapper->finalize(mapperkey);
 
@@ -172,7 +176,6 @@ solveUserCreate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
 
@@ -184,7 +187,7 @@ solveUserCreate(diet_profile_t* pb) {
   UserServer userServer = UserServer(sessionServer);
 
   try {
-    User_ptr user;
+    User_ptr user = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(userSerialized), user)) {
@@ -198,7 +201,7 @@ solveUserCreate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_user");
     mapper->code(std::string(userSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -211,6 +214,10 @@ solveUserCreate(diet_profile_t* pb) {
     const char* name = "solveUserCreate";
     ::ecorecpp::serializer::serializer _ser(name);
     std::string userSerializedUpdate = _ser.serialize(user);
+
+    if (user != NULL) {
+      delete user;
+    }
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(userSerializedUpdate.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
@@ -237,7 +244,6 @@ solveUserUpdate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
 
@@ -249,7 +255,7 @@ solveUserUpdate(diet_profile_t* pb) {
   UserServer userServer = UserServer(sessionServer);
 
   try {
-    User_ptr user;
+    User_ptr user = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(userSerialized), user)) {
@@ -259,11 +265,14 @@ solveUserUpdate(diet_profile_t* pb) {
     userServer.init();
     userServer.update(user);
 
+    if (user != NULL) {
+      delete user;
+    }
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_user");
     mapper->code(std::string(userSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -295,7 +304,6 @@ solveUserDelete(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
 
@@ -317,7 +325,7 @@ solveUserDelete(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_user");
     mapper->code(std::string(userId), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -385,7 +393,6 @@ solveUserPasswordReset(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -406,7 +413,7 @@ solveUserPasswordReset(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_reset_password");
     mapper->code(std::string(userId), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -441,7 +448,6 @@ solveMachineCreate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -452,7 +458,7 @@ solveMachineCreate(diet_profile_t* pb) {
 
   try {
 
-    Machine_ptr machine;
+    Machine_ptr machine = NULL;
     std::string msgComp = "The ssh public key file content is invalid";
 
     //To parse the object serialized
@@ -467,7 +473,7 @@ solveMachineCreate(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_machine");
     mapper->code(std::string(machineSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -480,6 +486,10 @@ solveMachineCreate(diet_profile_t* pb) {
     const char* name = "solveMachineCreate";
     ::ecorecpp::serializer::serializer _ser(name);
     std::string machineSerializedUpdate = _ser.serialize(machine);
+
+    if (machine != NULL) {
+      delete machine;
+    }
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(machineSerializedUpdate.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
@@ -490,7 +500,6 @@ solveMachineCreate(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   return 0;
 }
 /**
@@ -507,7 +516,6 @@ solveMachineUpdate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -517,7 +525,7 @@ solveMachineUpdate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
-    Machine_ptr machine;
+    Machine_ptr machine = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(machineSerialized), machine)) {
@@ -526,11 +534,15 @@ solveMachineUpdate(diet_profile_t* pb) {
 
     MachineServer machineServer = MachineServer(machine, sessionServer);
     machineServer.update();
+
+    if (machine != NULL) {
+      delete machine;
+    }
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_machine");
     mapper->code(std::string(machineSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -563,7 +575,6 @@ solveMachineDelete(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
 
@@ -583,7 +594,7 @@ solveMachineDelete(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_machine");
     mapper->code(std::string(machineId), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -617,7 +628,6 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -627,7 +637,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
-    LocalAccount_ptr localAccount;
+    LocalAccount_ptr localAccount = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
@@ -637,11 +647,15 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
     localAccountServer.add();
 
+    if (localAccount != NULL) {
+      delete localAccount;
+    }
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_local_account");
     mapper->code(std::string(laccountSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -677,7 +691,6 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -687,7 +700,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
-    LocalAccount_ptr localAccount;
+    LocalAccount_ptr localAccount = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
@@ -697,11 +710,15 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
     LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
     localAccountServer.update();
 
+    if (localAccount != NULL) {
+      delete localAccount;
+    }
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_local_account");
     mapper->code(std::string(laccountSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -718,7 +735,6 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   return 0;
 }
 
@@ -737,7 +753,6 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -758,7 +773,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_local_account");
     mapper->code(std::string(userId), mapperkey);
     mapper->code(std::string(machineId), mapperkey);
@@ -796,7 +811,6 @@ solveConfigurationSave(diet_profile_t* pb) {
   std::string configurationSerialized("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameter
@@ -811,11 +825,15 @@ solveConfigurationSave(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     configurationSerialized =  _ser.serialize(configurationServer.getData());
 
+    if (configurationServer.getData() != NULL) {
+      delete configurationServer.getData();
+    }
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_save_configuration");
     cmd = mapper->finalize(mapperkey);
 
@@ -852,7 +870,6 @@ solveConfigurationRestore(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -863,7 +880,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
 
   try {
     std::string msgComp = "The file content is invalid";
-    Configuration_ptr configuration;
+    Configuration_ptr configuration = NULL;
 
     if(!parseEmfObject(std::string(configurationSerialized), configuration, msgComp)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
@@ -871,11 +888,16 @@ solveConfigurationRestore(diet_profile_t* pb) {
 
     ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
     configurationServer.restore();
+
+    if (configuration != NULL) {
+      delete configuration;
+    }
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_restore_configuration");
     mapper->code(std::string(configurationSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -909,7 +931,6 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -919,7 +940,7 @@ solveOptionValueSet(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
-    UMS_Data::OptionValue_ptr optionValue;
+    UMS_Data::OptionValue_ptr optionValue = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
@@ -928,11 +949,16 @@ solveOptionValueSet(diet_profile_t* pb) {
 
     OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
     optionValueServer.configureOption();
+
+    if (optionValue != NULL) {
+      delete optionValue;
+    }
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_option");
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -964,7 +990,6 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -974,7 +999,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
-    UMS_Data::OptionValue_ptr optionValue;
+    UMS_Data::OptionValue_ptr optionValue = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
@@ -984,11 +1009,15 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
     optionValueServer.configureOption(true);
 
+    if (optionValue != NULL) {
+      delete optionValue;
+    }
+
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_default_option");
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1023,7 +1052,6 @@ solveGenerique(diet_profile_t* pb) {
   std::string empty = "";
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
   //IN Parameters
@@ -1043,11 +1071,14 @@ solveGenerique(diet_profile_t* pb) {
     QueryType query(options, sessionServer);
     List* list = query.list();
 
+    if (options != NULL) {
+      delete options;
+    }
     //To save the last connection on the database
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1059,6 +1090,10 @@ solveGenerique(diet_profile_t* pb) {
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
     listSerialized =  _ser.serialize(list);
+
+    if (list != NULL) {
+      delete list;
+    }
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
@@ -1089,7 +1124,6 @@ solveListUsers(diet_profile_t* pb) {
   std::string empty = "";
   std::string errorInfo;
   int mapperkey;
-  Mapper* mapper;
   std::string cmd;
 
 
@@ -1108,7 +1142,7 @@ solveListUsers(diet_profile_t* pb) {
     sessionServer.saveConnection();
 
     //MAPPER CREATION
-    mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_list_users");
     mapper->code(std::string(option), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1120,6 +1154,10 @@ solveListUsers(diet_profile_t* pb) {
     const char* name = "listUsers";
     ::ecorecpp::serializer::serializer _ser(name);
     listUsersSerialized =  _ser.serialize(listUsers);
+
+    /*if (listUsers != NULL) {
+      delete listUsers;
+    }*/
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
