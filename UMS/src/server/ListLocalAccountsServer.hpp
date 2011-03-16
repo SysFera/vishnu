@@ -106,7 +106,6 @@ public:
    */
   UMS_Data::ListLocalAccounts* list()
   {
-    DatabaseResult *ListofLocalAccount;
     std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home "
     "from account, machine, users where account.machine_nummachineid=machine.nummachineid and "
     "account.users_numuserid=users.numuserid";
@@ -126,7 +125,7 @@ public:
       //To process options
       processOptions(userServer, mparameters, sqlListofLocalAccount);
 
-      ListofLocalAccount = mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str());
+      boost::scoped_ptr<DatabaseResult> ListofLocalAccount (mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str()));
       if (ListofLocalAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
           results.clear();

@@ -111,7 +111,6 @@ public:
   * \return raises an exception on error
   */
  UMS_Data::ListMachines* list() {
-    DatabaseResult *ListofMachines;
     std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description "
     "where machine.nummachineid = description.machine_nummachineid";
 
@@ -129,7 +128,7 @@ public:
       //To process options
       processOptions(userServer, mparameters, sqlListofMachines);
 
-      ListofMachines = mdatabaseVishnu->getResult(sqlListofMachines.c_str());
+      boost::scoped_ptr<DatabaseResult> ListofMachines (mdatabaseVishnu->getResult(sqlListofMachines.c_str()));
       if (ListofMachines->getNbTuples() != 0){
         for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
           results.clear();

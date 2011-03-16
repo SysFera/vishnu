@@ -24,7 +24,11 @@ mdatabaseVishnu = NULL;
 */
 
 MonitorUMS::~MonitorUMS() {
+  if (mdatabaseVishnu != NULL) {
+    delete mdatabaseVishnu;
+  }
 }
+
 
 /**
 * \brief To initialize the UMS monitor with individual parameters instead of configuration file
