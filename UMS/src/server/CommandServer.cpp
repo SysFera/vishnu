@@ -69,15 +69,14 @@ CommandServer::record(CmdType cmdType,
 */
 bool
 CommandServer::isRunning() {
-  DatabaseResult* result;
+
   std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL "
   "and vsession_numsessionid=");
 
   sqlCommand.append(msessionServer.getAttribut("WHERE "
   "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
-
-  result = mdatabaseVishnu->getResult(sqlCommand.c_str());
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return (result->getNbTuples() != 0);
 }
 
