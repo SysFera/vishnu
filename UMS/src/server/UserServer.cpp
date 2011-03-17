@@ -538,7 +538,7 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
   std::vector<std::string> tokens;
   std::ostringstream command;
   pid_t pid;
-  int status;
+
   std::string address = user.getEmail();
   //If the address is empty
   if (address.empty()) {
