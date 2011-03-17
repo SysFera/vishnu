@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 2.6)
 project(UserManagementSystem)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${UserManagementSystem_SOURCE_DIR}/Cmake)
+set (MANDIR /usr/share/man CACHE string "the man path")
 
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
 option(CLIENT_ONLY OFF "only compile the client side")
@@ -89,16 +90,13 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 set( UMS_TEST_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/test/src/sql )
 
-
 set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
 set (TEST_SQL "${UMS_TEST_DIR}")
-
-set(MANDIR "/usr/share/man/man1")
 
 add_subdirectory(core/src)
 add_subdirectory(core/deps/emf4cpp)
 add_subdirectory(UMS/src)
-add_subdirectory(man/man1)
+add_subdirectory(UMS/doc/man)
 # macros used to setup test environment
 #include(UMSTestingMacros)
 #ums_test_setup()
