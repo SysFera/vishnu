@@ -73,6 +73,15 @@ mkdir $path/UMS/doc/man
 mkdir $path/UMS/doc/man/man1
 mkdir $path/UMS/doc/man/man3
 
+# Copy tests
+mkdir $path/UMS/test
+mkdir $path/UMS/test/src
+cp -r UMS/test/src/sql $path/UMS/test/src
+cp UMS/test/src/*pp $path/UMS/test/src
+cp UMS/test/src/config.h.in $path/UMS/test/src
+cp UMS/test/src/CMakeLists.txt $path/UMS/test/src
+
+# Copy man pages
 cp  UMS/doc/man/CMakeLists.txt $path/UMS/doc/man/
 cp  -r UMS/doc/man/man1/ $path/UMS/doc/man/ 
 cp  -r UMS/doc/man/man3/ $path/UMS/doc/man/ 
@@ -108,8 +117,8 @@ for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
 cd ..
 
 # Archive to send
-tar -czvf VISHNU_UMS.tar.gz VISHNU_UMS_1.0
+tar -czvf VISHNU_D2_2a-UMS_v1_0.tgz VISHNU_UMS_1.0
 
 # Moving archive in /tmp
-mv VISHNU_UMS.tar.gz /tmp/
+mv VISHNU_D2_2a-UMS_v1_0.tgz /tmp/
 
