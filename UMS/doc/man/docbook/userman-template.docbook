@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type="text/xsl"
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
+
+<book label="UMS.apim#MAN(user)+CPP(user)+PYTHON(user)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+   <info>
+      <title>User Manual</title>
+      <productname>VISHNU</productname>
+      <releaseinfo>1.0</releaseinfo>
+      <date>February 2011</date>
+      <author>
+        <personname>
+          <firstname></firstname>
+          <surname>SysFera SAS</surname>
+        </personname>
+        <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
+        <address>
+          <email>info@sysfera.com</email>
+        </address>
+      </author>
+      <copyright>
+              <year>2011</year>
+              <holder>SysFera SAS</holder>
+      </copyright>
+      <legalnotice>
+              <para>These manual pages are provided under the following conditions:</para>
+              <para>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</para>
+              <orderedlist>
+                      <listitem>
+                              <para>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</para>
+                      </listitem>
+                      <listitem>
+                              <para>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para>
+                      </listitem>
+              </orderedlist>
+<para>This software is governed by the CECILL licence under French law and
+abiding by the rules of distribution of free software.  You can  use, 
+modify and/ or redistribute the software under the terms of the CeCILL
+license as circulated by CEA, CNRS and INRIA at the following URL
+&quot;http://www.cecill.info&quot;.</para>
+<para>As a counterpart to the access to the source code and  rights to copy,
+modify and redistribute granted by the license, users are provided only
+with a limited warranty  and the software's author,  the holder of the
+economic rights,  and the successive licensors  have only  limited
+liability.</para>
+<para>In this respect, the user's attention is drawn to the risks associated
+with loading,  using,  modifying and/or developing or reproducing the
+software by the user in light of its specific status of free software,
+that may mean  that it is complicated to manipulate,  and  that  also
+therefore means  that it is reserved for developers  and  experienced
+professionals having in-depth computer knowledge. Users are therefore
+encouraged to load and test the software's suitability as regards their
+requirements in conditions enabling the security of their systems and/or 
+data to be ensured and,  more generally, to use and operate it in the 
+same conditions as regards security.</para>
+       </legalnotice>
+  </info>
+
+</book>
