@@ -39,8 +39,9 @@ solveSessionConnect(diet_profile_t* pb) {
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
   SessionServer sessionServer("");
 
+  ConnectOptions_ptr connectOpt = NULL;
+
   try {
-    ConnectOptions_ptr connectOpt = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(options), connectOpt)) {
@@ -48,10 +49,6 @@ solveSessionConnect(diet_profile_t* pb) {
     }
 
     sessionServer.connectSession(userServer, machineClientServer, connectOpt);
-
-    if (connectOpt != NULL) {
-      delete connectOpt;
-    }
 
     //To serialize the user object
     const char* name = "solveConnect";
@@ -69,6 +66,7 @@ solveSessionConnect(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete connectOpt;
   return 0;
 }
 /**
@@ -186,8 +184,9 @@ solveUserCreate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
 
+  User_ptr user = NULL;
+
   try {
-    User_ptr user = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(userSerialized), user)) {
@@ -215,9 +214,6 @@ solveUserCreate(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     std::string userSerializedUpdate = _ser.serialize(user);
 
-    if (user != NULL) {
-      delete user;
-    }
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(userSerializedUpdate.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
@@ -228,6 +224,7 @@ solveUserCreate(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete user;
   return 0;
 }
 
@@ -254,8 +251,9 @@ solveUserUpdate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
 
+  User_ptr user = NULL;
+
   try {
-    User_ptr user = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(userSerialized), user)) {
@@ -265,9 +263,6 @@ solveUserUpdate(diet_profile_t* pb) {
     userServer.init();
     userServer.update(user);
 
-    if (user != NULL) {
-      delete user;
-    }
     //To save the last connection on the database
     sessionServer.saveConnection();
 
@@ -289,6 +284,7 @@ solveUserUpdate(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete user;
   return 0;
 }
 /**
@@ -456,9 +452,10 @@ solveMachineCreate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
+  Machine_ptr machine = NULL;
+
   try {
 
-    Machine_ptr machine = NULL;
     std::string msgComp = "The ssh public key file content is invalid";
 
     //To parse the object serialized
@@ -487,19 +484,17 @@ solveMachineCreate(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     std::string machineSerializedUpdate = _ser.serialize(machine);
 
-    if (machine != NULL) {
-      delete machine;
-    }
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(machineSerializedUpdate.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
-    errorInfo =  e.buildExceptionString();
-    //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      errorInfo =  e.buildExceptionString();
+      //OUT Parameter
+      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete machine;
   return 0;
 }
 /**
@@ -524,9 +519,9 @@ solveMachineUpdate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  try {
-    Machine_ptr machine = NULL;
+  Machine_ptr machine = NULL;
 
+  try {
     //To parse the object serialized
     if(!parseEmfObject(std::string(machineSerialized), machine)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
@@ -535,9 +530,6 @@ solveMachineUpdate(diet_profile_t* pb) {
     MachineServer machineServer = MachineServer(machine, sessionServer);
     machineServer.update();
 
-    if (machine != NULL) {
-      delete machine;
-    }
     //To save the last connection on the database
     sessionServer.saveConnection();
 
@@ -559,6 +551,7 @@ solveMachineUpdate(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete machine;
   return 0;
 }
 /**
@@ -636,8 +629,9 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
+  LocalAccount_ptr localAccount = NULL;
+
   try {
-    LocalAccount_ptr localAccount = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
@@ -646,10 +640,6 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
     LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
     localAccountServer.add();
-
-    if (localAccount != NULL) {
-      delete localAccount;
-    }
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -674,7 +664,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
+  delete localAccount;
   return 0;
 }
 
@@ -698,9 +688,9 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  LocalAccount_ptr localAccount = NULL;
 
   try {
-    LocalAccount_ptr localAccount = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
@@ -709,10 +699,6 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
 
     LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
     localAccountServer.update();
-
-    if (localAccount != NULL) {
-      delete localAccount;
-    }
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -735,6 +721,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete localAccount;
   return 0;
 }
 
@@ -843,12 +830,10 @@ solveConfigurationSave(diet_profile_t* pb) {
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-
       //OUT Parameters
       diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-
   return 0;
 }
 
@@ -931,9 +916,9 @@ solveOptionValueSet(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  try {
-    UMS_Data::OptionValue_ptr optionValue = NULL;
+  UMS_Data::OptionValue_ptr optionValue = NULL;
 
+  try {
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
@@ -941,10 +926,6 @@ solveOptionValueSet(diet_profile_t* pb) {
 
     OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
     optionValueServer.configureOption();
-
-    if (optionValue != NULL) {
-      delete optionValue;
-    }
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -966,6 +947,7 @@ solveOptionValueSet(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete optionValue;
   return 0;
 }
 
@@ -989,9 +971,9 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UMS_Data::OptionValue_ptr optionValue = NULL;
 
   try {
-    UMS_Data::OptionValue_ptr optionValue = NULL;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
@@ -1000,10 +982,6 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
 
     OptionValueServer optionValueServer = OptionValueServer(optionValue, sessionServer);
     optionValueServer.configureOption(true);
-
-    if (optionValue != NULL) {
-      delete optionValue;
-    }
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -1025,6 +1003,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
       //OUT Parameter
       diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete optionValue;
   return 0;
 }
 
@@ -1052,8 +1031,10 @@ solveGenerique(diet_profile_t* pb) {
 
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
 
+  QueryParameters* options = NULL;
+  List* list = NULL;
+
   try {
-    QueryParameters* options;
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), options)) {
@@ -1061,11 +1042,8 @@ solveGenerique(diet_profile_t* pb) {
     }
 
     QueryType query(options, sessionServer);
-    List* list = query.list();
+    list = query.list();
 
-    if (options != NULL) {
-      delete options;
-    }
     //To save the last connection on the database
     sessionServer.saveConnection();
 
@@ -1083,10 +1061,6 @@ solveGenerique(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     listSerialized =  _ser.serialize(list);
 
-    if (list != NULL) {
-      delete list;
-    }
-
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
@@ -1098,6 +1072,8 @@ solveGenerique(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete options;
+  delete list;
   return 0;
 }
 
@@ -1126,9 +1102,11 @@ solveListUsers(diet_profile_t* pb) {
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
   ListUsersServer queryUsers(std::string(option), sessionServer);
 
+  UMS_Data::ListUsers_ptr listUsers = NULL;
+
   try {
 
-    UMS_Data::ListUsers_ptr listUsers  = queryUsers.list();
+    listUsers  = queryUsers.list();
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -1147,10 +1125,6 @@ solveListUsers(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     listUsersSerialized =  _ser.serialize(listUsers);
 
-    /*if (listUsers != NULL) {
-      delete listUsers;
-    }*/
-
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
@@ -1161,6 +1135,7 @@ solveListUsers(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,2), strdup(listUsersSerialized.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete listUsers;
   return 0;
 
 }
