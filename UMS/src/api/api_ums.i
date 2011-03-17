@@ -90,20 +90,16 @@
 
 // Exception rule for user exception
 %typemap (throws) UserException{
-    std::cout << " @@@ jenv " << jenv << std::endl;
     jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
-    std::cout << " @@@ clazz " << clazz << std::endl;
     std::string ret = $1.buildExceptionString() + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
     }
-    std::cout << " @@@ exception :  " << ret << std::endl;
-    return $null;
-  
+    return $null;  
  }
 
 // Add throw to method declaration
-%javaexception ("MyException") { $action }
+%javaexception ("InternalUMSException") { $action }
 
 #endif
 
