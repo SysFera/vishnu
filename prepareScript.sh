@@ -67,6 +67,17 @@ cp -r UMS/src/sed $path/UMS/src
 cp -r UMS/src/server $path/UMS/src
 cp -r UMS/src/utils $path/UMS/src
 
+# Copy UMS man
+mkdir $path/UMS/doc/
+mkdir $path/UMS/doc/man
+mkdir $path/UMS/doc/man/man1
+mkdir $path/UMS/doc/man/man3
+
+cp  UMS/doc/man/CMakeLists.txt $path/UMS/doc/man/
+cp  -r UMS/doc/man/man1/ $path/UMS/doc/man/ 
+cp  -r UMS/doc/man/man3/ $path/UMS/doc/man/ 
+
+
 cp setCopyright.sh $path/
 
 cd $path
