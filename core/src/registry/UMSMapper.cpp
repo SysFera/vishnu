@@ -626,11 +626,13 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
   }
   date = ac->getStartDateOption();
   if (date>0){
+    a = convertToString(date);
     res+=" -s ";
     res+=a;
   }
   date = ac->getEndDateOption();
   if (date>0){
+    a = convertToString(date);
     res+=" -e ";
     res+=a;
   }
