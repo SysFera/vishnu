@@ -153,12 +153,12 @@ namespace ecore
     /*PROTECTED REGION ID(ecore_ELong) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
-    typedef long ELong;
+    typedef long long ELong;
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_ELongObject) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
-    typedef long ELongObject;
+    typedef long long ELongObject;
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EResource) START*/
     // Please, enable the protected region if you add manually written code.
