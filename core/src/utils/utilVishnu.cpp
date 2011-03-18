@@ -241,15 +241,16 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
     for (i=0;i<size;i++){
       res.append (keywords[i].value);
       // If other variables
-      if (*(format+keywords[i].end+1) != '\0' && i!=size-1)
+      if (*(format+keywords[i].end+1) != '\0' && i!=size-1) {
         res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
       // If text after the variable
+      }
       else if (*(format+keywords[i].end+1) != '\0' ){
         res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
       }
     }
   }
-  delete keywords;
+  delete [] keywords;
   return res;
 }
 
