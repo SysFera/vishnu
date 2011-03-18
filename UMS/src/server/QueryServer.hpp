@@ -1,9 +1,9 @@
 /**
  * \file QueryServer.hpp
  * \brief This file contains the VISHNU QueryServer class.
- * \author Daouda Traore (daouda.traore@sysfera.com) and 
+ * \author Daouda Traore (daouda.traore@sysfera.com) and
  *   Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date February 2011 
+ * \date February 2011
  */
 #ifndef _QUERY_SERVER_H_
 #define _QUERY_SERVER_H_
@@ -17,8 +17,8 @@
 #include "SessionServer.hpp"
 
 /**
- * \class QueryServer 
- * \brief QueryServer class implementation 
+ * \class QueryServer
+ * \brief QueryServer class implementation
  */
 template <class QueryParameters, class ListObject>
 class QueryServer
@@ -41,7 +41,7 @@ public:
   /**
    * \fn QueryServer(QueryParameters* params,
    *                 const SessionServer& session)
-   * \param params The object which encapsulates the information of query options 
+   * \param params The object which encapsulates the information of query options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
@@ -55,7 +55,7 @@ public:
   };
 
   /**
-   * \brief Function to list query information 
+   * \brief Function to list query information
    * \fn virtual ListObject* list() = 0
    * \return The pointer to the ListOject containing list information
    * \return raises an exception on error
@@ -63,29 +63,29 @@ public:
   virtual ListObject* list() = 0;
 
   /**
-   * \brief Function to get the name of the query command line 
-   * \fn  virtual std::string getCommandName() = 0 
-   * \return The the name of the query command line 
+   * \brief Function to get the name of the query command line
+   * \fn  virtual std::string getCommandName() = 0
+   * \return The the name of the query command line
    */
   virtual std::string getCommandName() = 0;
 
   /**
-   * \brief Function to add sql resquest "and condition" to a given request 
-   * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request) 
-   * \param name The column name of the data base table 
-   * \param value The value to search in the given column 
+   * \brief Function to add sql resquest "and condition" to a given request
+   * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request)
+   * \param name The column name of the data base table
+   * \param value The value to search in the given column
    * \param request The request
-   */ 
+   */
   void addOptionRequest(const std::string& name, const std::string& value, std::string& request) {
     request.append(" and "+name+"=");
     request.append("'"+value+"'");
   }
 
   /**
-   * \brief Function to add sql resquest "and condition" which contain an integer value to a given request 
+   * \brief Function to add sql resquest "and condition" which contain an integer value to a given request
    * \fn void addIntegerOptionRequest(const std::string& name, T& value, std::string& request)
-   * \param name The column name of the data base table 
-   * \param value The integer value to search in the given column 
+   * \param name The column name of the data base table
+   * \param value The integer value to search in the given column
    * \param request the request
    */
   template <class T>
@@ -97,10 +97,10 @@ public:
   }
 
   /**
-   * \brief Function to add sql resquest "and condition" which contain an integer value to a given request 
+   * \brief Function to add sql resquest "and condition" which contain an integer value to a given request
    * \fn void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp)
-   * \param name The column name of the data base table 
-   * \param value The integer value to search in the given column 
+   * \param name The column name of the data base table
+   * \param value The integer value to search in the given column
    * \param request the request
    * \param comp The where statement
    */
@@ -113,10 +113,10 @@ public:
   }
 
   /**
-   * \brief Function to add sql resquest "where condition" to a given request 
-   * \fn void addCondition(const std::string& name, const std::string& value, std::string& request) 
-   * \param name The column name of the data base table 
-   * \param value The value to search in the given column 
+   * \brief Function to add sql resquest "where condition" to a given request
+   * \fn void addCondition(const std::string& name, const std::string& value, std::string& request)
+   * \param name The column name of the data base table
+   * \param value The value to search in the given column
    * \param request The request
    */
   void addCondition(const std::string& name, const std::string& value, std::string& request) {
@@ -125,10 +125,10 @@ public:
   }
 
   /**
-   * \brief Function to add sql resquest "where condition" which contain an integer value to a given request 
+   * \brief Function to add sql resquest "where condition" which contain an integer value to a given request
    * \fn void addIntegerCondition(const std::string& name, T& value, std::string& request)
-   * \param name The column name of the data base table 
-   * \param value The integer value to search in the given column 
+   * \param name The column name of the data base table
+   * \param value The integer value to search in the given column
    * \param request the request
    */
   template <class T>
@@ -140,29 +140,29 @@ public:
   }
 
   /**
-   * \brief Function to convert a given date into correspondant long value 
-   * \fn long convertToTimeType(std::string date) 
-   * \param date The date to convert 
+   * \brief Function to convert a given date into correspondant long value
+   * \fn long long convertToTimeType(std::string date)
+   * \param date The date to convert
    * \return The converted value
    */
-  long convertToTimeType(std::string date) {
-    
+  long long convertToTimeType(std::string date) {
+
       if(date.size()==0) {
         return 0;
       }
-         
+
       boost::posix_time::ptime pt(time_from_string(date));
       boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
       time_duration::sec_type time = (pt - epoch).total_seconds();
-     
-    return time_t(time);
+
+    return (long long) time_t(time);
 
   }
 
   /**
-   * \brief Function to check if a given user identifier exists 
-   * \fn void checkUserId(std::string userId) 
-   * \param userId the user identifier 
+   * \brief Function to check if a given user identifier exists
+   * \fn void checkUserId(std::string userId)
+   * \param userId the user identifier
    * \return raises an exception on error
    */
   void checkUserId(std::string userId) {
@@ -174,9 +174,9 @@ public:
   }
 
   /**
-   * \brief Function to check if a given machine identifier exists 
-   * \fn void checkMachineId(std::string machineId) 
-   * \param machineId the machine identifier 
+   * \brief Function to check if a given machine identifier exists
+   * \fn void checkMachineId(std::string machineId)
+   * \param machineId the machine identifier
    */
   void checkMachineId(std::string machineId) {
     std::string sqlMachineRequest = "SELECT machineid from machine where machineid='"+machineId+"'";
@@ -187,9 +187,9 @@ public:
   }
 
   /**
-   * \brief Function to check if a given machine client identifier exists 
-   * \fn void checkClientMachineName(std::string clmachineId) 
-   * \param clmachineId the machine client identifier 
+   * \brief Function to check if a given machine client identifier exists
+   * \fn void checkClientMachineName(std::string clmachineId)
+   * \param clmachineId the machine client identifier
    */
   void checkClientMachineName(std::string clmachineId) {
     std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
@@ -200,9 +200,9 @@ public:
   }
 
   /**
-   * \brief Function to check if a given option name exists 
-   * \fn void checkOptionName(std::string name) 
-   * \param name The name of the option 
+   * \brief Function to check if a given option name exists
+   * \fn void checkOptionName(std::string name)
+   * \param name The name of the option
    * \return raises an exception on error
    */
   void checkOptionName(std::string name) {
@@ -211,13 +211,13 @@ public:
     if(nameResults->getNbTuples()==0) {
        throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
     }
-  } 
+  }
 
   /**
-   * \brief Function to check if a given session identifier exists 
-   * \fn void checkSessionId(std::string sessionId) 
-   * \param sessionId the session identifier 
-   */ 
+   * \brief Function to check if a given session identifier exists
+   * \fn void checkSessionId(std::string sessionId)
+   * \param sessionId the session identifier
+   */
   void checkSessionId(std::string sessionId) {
     std::string sqlSessionRequest = "SELECT vsessionid from vsession where vsessionid='"+sessionId+"'";
     DatabaseResult *session = mdatabaseVishnu->getResult(sqlSessionRequest.c_str());
@@ -226,9 +226,9 @@ public:
     }
   }
 
-  /**                         
-   * \brief Function to check a status value 
-   * \fn void void checkStatus(const int& status) 
+  /**
+   * \brief Function to check a status value
+   * \fn void void checkStatus(const int& status)
    * \param status The status to check
    */
   void checkStatus(const int& status) {
@@ -237,9 +237,9 @@ public:
      }
   }
 
-  /**                         
-   * \brief Function to check a close policy value 
-   * \fn void checkClosePolicy(const int& closePolicy) 
+  /**
+   * \brief Function to check a close policy value
+   * \fn void checkClosePolicy(const int& closePolicy)
    * \param closePolicy The closePolicy value to check
    */
   void checkClosePolicy(const int& closePolicy) {
@@ -251,7 +251,7 @@ public:
   /**
    * \fn ~QueryServer()
    * \brief Destructor, raises an exception on error
-   */ 
+   */
   virtual ~QueryServer()
   {
   }
@@ -264,7 +264,7 @@ protected:
 
 
   /**
-  * \brief The pointer to the QueryParameters information 
+  * \brief The pointer to the QueryParameters information
   */
   QueryParameters *mparameters;
   /**
@@ -273,7 +273,7 @@ protected:
   */
   SessionServer msessionServer;
   /**
-  * \brief The Object containing query information 
+  * \brief The Object containing query information
   */
   ListObject* mlistObject;
   /**
