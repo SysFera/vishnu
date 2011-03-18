@@ -1406,13 +1406,13 @@
       <section>
         <title>Class diagrams</title>
         <section>
-          <title>UMS Client Class Diagram</title>
+          <title>TMS Server Class Diagram</title>
           <para>This diagram describes all classes used to communicate with VISHNU System. Each class proxy contains the corresponding data class illustrated on the UMS Data modelization section and the methods usable by the UMS Client component. A QueryProxy class implements a generic model to list objects of VISHNU.</para>
           <figure>
-            <title>UMS Client Class Diagram</title>
+            <title>TMS Server Class Diagram</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/png/UMS_Client_Class_Diagram.png" align="center"
+                <imagedata fileref="images/png/TMS_Server_Class_Diagram.png" align="center"
                     scale="40"/>
               </imageobject>
             </mediaobject>
@@ -1424,19 +1424,6 @@
       <title>TMS server modelization</title>
       <section>
         <title>Class diagrams</title>
-        <section>
-          <title>UMS Server Class Diagram</title>
-          <para>This diagram presents the main objects used by UMS server component to process the UMS Client component requests. Each object that can be listed have a static method list with the corresponding options.</para>
-          <figure>
-            <title>UMS Server Class Diagram</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/UMS_Server_Class_Diagram.png" align="center"
-                    scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
       </section>
     </section>
     <section annotations="TMS/design/data.asta#CLASSDIAG(data)">
