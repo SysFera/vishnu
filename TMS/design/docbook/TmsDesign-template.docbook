@@ -328,7 +328,7 @@
       <title>TMS data modelization</title>
     </section>
        
-    <section annotations="core/design/coreDesign.asta#CLASSDIAG">
+    <!--section annotations="core/design/coreDesign.asta#CLASSDIAG">
       <title>Vishnu core functions modelization</title>
       <section>
 	<title>Introduction</title>
@@ -338,8 +338,7 @@
       </section>
       <section>
 	<title>Tables relationships</title>
-	<!--l. 9
-	  -->
+	
 	<para>
 	  In order to have a coherent System, we have designed a relational model for the database. We need only one database that can contain all the Vishnu tables. The model is represented in figure 4.4. The rectangles are the tables and the lines represent the links between the tables.
 	</para>
@@ -714,7 +713,7 @@
 	  </para>
 	</section>
       </section>
-    </section>
+    </section-->
     
   </chapter><!-- END PART 3 : CLASSES AND DATA -->
   
