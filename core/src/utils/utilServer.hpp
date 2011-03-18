@@ -8,8 +8,6 @@
 #ifndef _UTILSERVER_H_
 #define _UTILSERVER_H_
 
-//#include "UMSVishnuException.hpp"
-
 #include "ecore.hpp" // Ecore metamodel
 #include "ecorecpp.hpp" // EMF4CPP utils
 #include "UMS_Data.hpp"
