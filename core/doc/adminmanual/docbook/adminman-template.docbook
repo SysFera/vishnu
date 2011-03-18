@@ -27,6 +27,14 @@
           <para>Version initiale pour le module UMS uniquement</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>08/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Ajout du lancement manuel avec forwarder</para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -195,26 +203,26 @@ pratiques communèment admises.
         <para>
 Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API 
   Python puis l'installer dans le répertoire /opt/vishnu sous *nix:</para>
-<itemizedlist>
-  <listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para></listitem>
-<listitem><para>$ mkdir build</para></listitem>
-<listitem><para>$ cd build</para></listitem>
-<listitem><para>2. générer le Makefile</para></listitem>
-<listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=ON</para></listitem>
-<listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
-<listitem><para>$ make -j 2</para></listitem>
-<listitem><para>4. installation (en mode super-utilisateur)</para></listitem>
-<listitem><para># make install</para></listitem>
-</itemizedlist>
-<para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
-  utilisateur pour avoir accès à la commande.</para>
+	<itemizedlist>
+	  <listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para></listitem>
+	  <listitem><para>$ mkdir build</para></listitem>
+	  <listitem><para>$ cd build</para></listitem>
+	  <listitem><para>2. générer le Makefile</para></listitem>
+	  <listitem><para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu</para></listitem>
+	  <listitem><para>3. lancer la compilation avec 2 jobs</para></listitem>
+	  <listitem><para>$ make -j 2</para></listitem>
+	  <listitem><para>4. installation (en mode super-utilisateur)</para></listitem>
+	  <listitem><para># make install</para></listitem>
+	</itemizedlist>
+	<para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
+	  utilisateur pour avoir accès à la commande.</para>
 
     </section> <!-- End compilation des sources -->
   </chapter> <!-- End compilation -->
   <chapter>
     <title>Déploiement de VISHNU</title>
     <section>
-      <title>Lancement des serveurs </title>
+      <title>Lancement sur un même réseau</title>
       <para>Le module UMS peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
@@ -226,7 +234,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	  <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
 	</listitem>
 	<listitem>
-	  <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : 'dietAgent config.cfg'. Le fichier de configuration peut contenir les 3 lignes suivantes :
+	  <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
 	    <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 1' : Le niveau de verbosité du master agent, cette valeur peut être entre 1 et 10 compris. </para>
@@ -245,7 +253,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	    <itemizedlist>
 	      <listitem>
 		<para>
-		  '~/myClient_server/mathOp/SeD.cfg' : le chemin jusqu'au fichier de configuration du SeD. Ce fichier peut par exemple contenir les 2 lignes suivantes :
+		  '~/myClient_server/mathOp/SeD.cfg' : le chemin jusqu'au fichier de configuration du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
 		  <itemizedlist>
 		    <listitem>
 		      <para>'traceLevel = 10' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 1 et 10 compris.</para>
@@ -285,6 +293,168 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	  </para>
 	</listitem>
       </orderedlist>
+    </section>
+    <section>
+      <title>Lancement sur plusieurs réseaux</title>
+      <para>Le module UMS peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration. On suppose dans notre cas que le MA sera sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparé par un pare-feu</para>
+      <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
+      <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
+      <orderedlist>
+	<listitem>
+	  <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le service de nommage CORBA sur la machine préfrontale sur le premier réseau. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le forwarder sur le reseau 2 :  dietForwarder --name name_1 --net-config forwarder.cfg
+	    <itemizedlist>
+	      <listitem><para>
+		  --name : Il faut lui donner le nom à donner à ce forwarder, name_1 ici.
+	      </para></listitem>
+	      <listitem><para>
+		  --net-config : Le fichier de configuration à donner, ici forwarder.cfg.  Voir la figure 4.3 pour un exemple de configuration.
+		  <itemizedlist>
+		    <listitem>
+		      <para> La première ligne correspond à l'origine des connexions acceptées. Dans le fichier exemple, .* signie toutes.</para>
+		    </listitem>
+		    <listitem>
+		      <para> L'autre élément représente les IP à rejetter, il faut que la machine mette sa propre IP.</para>
+		  </listitem>
+		  </itemizedlist>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>   ./dietForwarder -C --peer-name name_1 --ssh-host machine_distante --remote-port 50005 --name name_2 --net-config forwarder.cfg --remote-host localhost --ssh-login login
+	    <itemizedlist>
+	      <listitem><para>
+		  -C : Pour dire que c'est ce coté du réseau qui créera le tunnel.
+	      </para></listitem>
+	      <listitem><para>
+		  --peer-name : Le nom donné au forwarder de l'autre coté, ici name_1
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-host : La machine distante pour se connecter, par exemple graal.ens-lyon.fr
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-port : Le port à utiliser pour le tunnel ssh, ici 50005
+	      </para></listitem>
+	      <listitem><para>
+		  --name : Il faut lui donner le nom à donner à ce forwarder, name_2 ici.
+	      </para></listitem>
+	      <listitem><para>
+		  --net-config : Le fichier de configuration à donner, ici forwarder.cfg. Le fichier doit avoir les champs reject et accept également, ou la machine rejette son IP. Voir la figure 4.3 pour un exemple de fichier de configuration.
+		  <itemizedlist>
+		    <listitem>
+		      <para> La première ligne correspond à l'origine des connexions acceptées. Dans le fichier exemple, .* signie toutes.</para>
+		    </listitem>
+		    <listitem>
+		      <para> L'autre élément représente les IP à rejetter, il faut que la machine mette sa propre IP.</para>
+		  </listitem>
+		  </itemizedlist>
+	      </para></listitem>
+	      <listitem><para>
+		  --remote-host : Champs à mettre, avec la valeur localhost
+	      </para></listitem>
+	      <listitem><para>
+		  --ssh-login : Pour pouvoir choisir le login de connexion sur la machine distante
+	      </para></listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Si la clé ssh a été mise sur la machine, la passphrase est demandée et la connexion ssh s'établie</para>
+	</listitem>
+	<listitem>
+	  <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
+	    <itemizedlist>
+	      <listitem>
+		<para> 'traceLevel = 1' : Le niveau de verbosité du master agent, cette valeur peut être entre 1 et 10 compris. </para>
+	      </listitem>
+	      <listitem>
+		<para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'name = MA0' : Le nom que l'on veut donner à l'agent.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Lancer le SeD UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/myClient_server/mathOp/SeD.cfg 1 pg localhost vishnu_user vishnu_user ~/Bureau/sendmail.py'
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  '~/myClient_server/mathOp/SeD.cfg' : le chemin jusqu'au fichier de configuration du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
+		  <itemizedlist>
+		    <listitem>
+		      <para>'traceLevel = 10' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 1 et 10 compris.</para>
+		    </listitem>
+		    <listitem>
+		      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
+		    </listitem>
+		  </itemizedlist>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para> '1' : L'id de VISHNU à utiliser dans la DB, une seule est utilisable actuellement .</para>
+	      </listitem>
+	      <listitem>
+		<para> 'pg' : Pour utiliser une base postgrel. Actuellement la base oracle n'est pas utilisable.</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  'localhost' : La DB à utiliser.
+		</para>
+	      </listitem>
+	      <listitem>
+		<para> 'vishnu_user' (le premier) : Le nom d'utilisateur pour se connecter à la DB.</para>
+	      </listitem>
+	      <listitem>
+		<para> 'vishnu_user' (le second) : Le mot de passe pour se connecter à la DB.</para>
+	      </listitem>
+	      <listitem>
+		<para> '~/Bureau/sendmail.py' : Le script à utiliser pour envoyer les mails. Il sera fourni avec le module UMS.</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Le module UMS de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
+	  </para>
+	</listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Exemples de fichiers de configuration</title>
+      <figure>
+        <title>Fichier de configuration de MA</title>
+	<mediaobject>
+	  <imageobject>
+            <imagedata fileref="image/png/MA.png" align="center"/>
+	  </imageobject>
+	</mediaobject>
+      </figure>
+      <figure>
+	<title>Fichier de configuration exemple de SeD</title>
+	<mediaobject>
+	  <imageobject>
+            <imagedata fileref="image/png/SED.png" align="center"/>
+	  </imageobject>
+	</mediaobject>
+      </figure>
+      <figure>
+	<title>Fichier de configuration exemple de forwarder</title>
+	<mediaobject>
+	  <imageobject>
+            <imagedata fileref="image/png/forwarder.png" align="center"/>
+	  </imageobject>
+	</mediaobject>
+      </figure>
     </section>
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
