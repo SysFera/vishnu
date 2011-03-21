@@ -20,7 +20,7 @@
       <revhistory>
         <revision>
         <revnumber>1</revnumber>
-        <date>18/03/2011</date>
+        <date>25/03/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
@@ -32,8 +32,8 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para>This document presents the detailed internal design of the Users Management System (TMS) package. The purpose of this
-        package is to handle all aspects of user management and session management within the VISHNU system. The functional
+      <para> This document presents the detailed internal design of the Tasks Management Service (TMS) package. The purpose of this
+        package is to handle all aspects of Tasks Management Service within the VISHNU system. The functional
         and non-functional requirements for this package are those described in the referenced specification documents. The current
         document is part of the design phase of the software and therefore its main goal is to define the main components of the
         system architecture and their relationships.
@@ -46,13 +46,14 @@
           <para>Chapter 1 contains a brief overview of the document content.</para>
         </listitem>
         <listitem>
-          <para>Chapter 2 contains a high-level overview of the system architecture.</para>
+          <para>Chapter 2 contains a high-level overview of the system architecture except the TMS deployment diagram which is described in the delivrable D1.1g 
+             (VISHNU Technical Architecture).</para>
         </listitem>
         <listitem>
           <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
         </listitem>
         <listitem>
-          <para>Chapter 4 describes the internal class and data structures</para>
+          <para>Chapter 4 describes the internal class and data structures except the Vishnu core functions modelization which is described in the delivrable D2.1a (VISHNU User            Mangement Service Package Design)</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -68,6 +69,12 @@
         </listitem>
        <listitem>
           <para>[D1.1c]: VISHNU API Detailed specifications</para>
+        </listitem>
+        <listitem>
+          <para>[D1.1g]: VISHNU Technical Architecture</para>
+        </listitem>
+        <listitem>
+          <para>[D2.1a]: VISHNU User Management Service Package Design</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -91,10 +98,13 @@
             <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">TMS</emphasis>: Users management system</para>
+	    <para><emphasis role="bold">TMS</emphasis>: Tasks management service</para>
 	  </listitem>
           <listitem>
             <para><emphasis role="bold">WS</emphasis>: Web services</para>
+          </listitem>
+          <listitem>
+           <para><emphasis role="bold">LL</emphasis>: LoadLeveler</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -159,11 +169,11 @@
             <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Torque API </emphasis>: the C API provided by the Torque batch scheduler.
+            <para><emphasis role="bold">Torque API </emphasis>: is the C API provided by the Torque batch scheduler.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">LoadLeveler API </emphasis>: the C API provided by the LoadLeveler batch scheduler..
+            <para><emphasis role="bold">LoadLeveler API </emphasis>: is the C API provided by the LoadLeveler batch scheduler..
             </para>
           </listitem>
 	  <listitem>
@@ -175,38 +185,6 @@
       </para>
     </section>
 
-    <section>
-      <title> Deployment aspects of TMS</title>
-       <para>
-        We explains here how the TMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The TMS consists of: 
-	<itemizedlist>
-	  <listitem>
-	    <para><emphasis role="bold"> TMS Server </emphasis>is the provider of all TMS services. It consists of the TMS Monitor component and what we called the TMS SeD (TMS Server daemon) which gathers all TMS services published.
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para><emphasis role="bold">Client host </emphasis> is TMS service requester. It contains all components allowing to make a TMS service request.	  
-	    </para>
-	  </listitem>
-           <listitem>
-            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
-            </para>
-          </listitem>
-	 </itemizedlist>
-       </para>
-
-       <para> It is important to note that we can have several Secondary TMS servers (where an TMS Sed is running in each) but only one instance of TMS Monitor daemon running in the Main TMS Server as we can see in figure 2.1.
-       </para>
-    </section>	
-
-
-
-		
-    
   </chapter><!-- PART 1 : ARCHITECTURE -->
   
   <!-- PART 2 : INTERNAL API -->
@@ -309,10 +287,6 @@
             <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
               <emphasis role="it">TMS Client</emphasis> component and the <emphasis role="it">TMS Server</emphasis> component.</para>
           </listitem>
-          <listitem>
-            <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
-              the VISHNU cross-modules components (components that are used by TMS and other VISHNU modules).</para>
-          </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -328,393 +302,6 @@
       <title>TMS data modelization</title>
     </section>
        
-    <section annotations="core/design/coreDesign.asta#CLASSDIAG">
-      <title>Vishnu core functions modelization</title>
-      <section>
-	<title>Introduction</title>
-	<para>
-	The following elements describe the core classes (i.e. the classes that will be used by each module such as the exceptions and the databases). The modelization diagrams are given with some explanations about them.
-	</para>
-      </section>
-      <section>
-	<title>Tables relationships</title>
-	<!--l. 9
-	  -->
-	<para>
-	  In order to have a coherent System, we have designed a relational model for the database. We need only one database that can contain all the Vishnu tables. The model is represented in figure 4.4. The rectangles are the tables and the lines represent the links between the tables.
-	</para>
-	<para>The links between the tables are based on the following rules:
-	</para>
-	<itemizedlist>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>The <emphasis
-			     role="it">VISHNU</emphasis> table has one or more <emphasis
-										  role="it">MACHINE</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">MACHINE</emphasis> is in one and only one <emphasis
-										  role="it">VISHNU</emphasis> infrastructure
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">MACHINE</emphasis> has one or more <emphasis
-									   role="it">CPU</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>
-		  A <emphasis
-		       role="it">CPU</emphasis> is in one and only one <emphasis
-									  role="it">MACHINE</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">MACHINE</emphasis> has one or more <emphasis
-									   role="it">DESCRIPTION</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">DESCRIPTION</emphasis> is for one and only one <emphasis
-										       role="it">MACHINE</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      
-            </para><itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">MACHINE</emphasis> has one or more <emphasis
-									   role="it">THRESHOLD</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">THRESHOLD</emphasis> is for one and only one <emphasis
-										     role="it">MACHINE</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">MACHINE</emphasis> has one or more <emphasis
-									   role="it">ACCOUNT</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>An <emphasis
-			    role="it">ACCOUNT</emphasis> is for one and only one <emphasis
-										    role="it">MACHINE</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>The <emphasis
-			     role="it">VISHNU</emphasis> table has one or more <emphasis
-										  role="it">USER</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>An <emphasis
-			    role="it">USER</emphasis> is in one and only one <emphasis
-										role="it">VISHNU</emphasis> infrastructure
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>An <emphasis
-			    role="it">USER</emphasis> has one or more <emphasis
-									 role="it">ACCOUNT</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>An <emphasis
-			    role="it">ACCOUNT</emphasis> is for one and only one <emphasis
-										    role="it">USER</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>An <emphasis
-			    role="it">USER</emphasis> has one or more <emphasis
-									 role="it">FILE TRANSFER</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">FILE TRANSFER</emphasis> is for one and only one <emphasis
-											 role="it">USER</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>An <emphasis
-			    role="it">USER</emphasis> has one or more <emphasis
-									 role="it">OPTION VALUE</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>An <emphasis
-			    role="it">OPTION VALUE</emphasis> is for one and only one <emphasis
-											 role="it">USER</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>An <emphasis
-			    role="it">USER</emphasis> sets one or more <emphasis
-									  role="it">THRESHOLD</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">THRESHOLD</emphasis> is set by one and only one <emphasis
-											role="it">USER</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-	    </para>
-	    <itemizedlist>
-              <listitem>
-		<para>An <emphasis
-			    role="it">OPTION</emphasis> has one or more <emphasis
-									   role="it">OPTION VALUE</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>An <emphasis
-			    role="it">OPTION VALUE</emphasis> is for one and only one <emphasis
-											 role="it">OPTION</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>An <emphasis
-			    role="it">USER</emphasis> has one or more <emphasis
-									 role="it">SESSION</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">SESSION</emphasis> is for one and only one <emphasis
-										   role="it">USER</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-	    </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">SESSION</emphasis> has one or more <emphasis
-									   role="it">COMMAND</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">COMMAND</emphasis> is for one and only one <emphasis
-										   role="it">SESSION</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">CLIENT MACHINE</emphasis> has one or more <emphasis
-											     role="it">SESSION</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A  <emphasis
-			    role="it">SESSION</emphasis>  is  for  one  and  only  one  <emphasis
-											   role="it">CLIENT
-		    MACHINE</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">MACHINE</emphasis> has one or more <emphasis
-									   role="it">STATE</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">STATE</emphasis> is for one and only one <emphasis
-										 role="it">MACHINE</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">COMMAND</emphasis> can have one or more <emphasis
-										role="it">JOB</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">JOB</emphasis> is for one and only one <emphasis
-									       role="it">COMMAND</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	  <listitem>
-	    <para>
-            </para>
-	    <itemizedlist>
-              <listitem>
-		<para>A <emphasis
-			   role="it">COMMAND</emphasis> can have one or more <emphasis
-										role="it">FILE</emphasis>
-		</para>
-	      </listitem>
-              <listitem>
-		<para>A <emphasis
-			   role="it">FILE</emphasis> is for one and only one <emphasis
-										role="it">COMMAND</emphasis>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </listitem>
-	</itemizedlist>
-      </section>
-      <section>
-          <title>Relational model</title>
-          <figure>
-            <title>Relational model</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/png/relationnalmodel.png" align="center" scale="40"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </section>
-      <section>
-	<title>
-	  The modelization
-	</title>
-	<section>
-	  <title>The database classes</title>
-	  <para>
-	    The database class diagram is very simple. There is a database interface that defines a set of public operations that can be done over a database:
-	    <itemizedlist>
-              <listitem>
-		<para>
-		  commit
-		</para>
-	      </listitem>
-              <listitem>
-		<para>
-		  rollback
-		</para>
-	      </listitem>
-              <listitem>
-		<para>
-		  execute a query
-		</para>
-	      </listitem>
-              <listitem>
-		<para>
-		  connect
-		</para>
-	      </listitem>
-              <listitem>
-		<para>
-		  disconnect ...
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
-	    See the diagram 4.5.
-	  </para>
-	</section>
-	<section>
-	  <title>The exception classes</title>
-	  <para>
-	    The exception class diagram defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two subclasses, the <emphasis role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
-	    See the diagram 4.6.
-	  </para>
-	</section>
-      </section>
-    </section>
     
   </chapter><!-- END PART 3 : CLASSES AND DATA -->
   
