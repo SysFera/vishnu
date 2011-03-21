@@ -19,7 +19,7 @@
 
 // this includes the typemaps for STL strings
 %include "std_string.i"
-%include "std_except.i" 
+%include "std_except.i"
 
 
 // this includes the required type declarations for EMF4CPP
@@ -95,7 +95,7 @@
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
     }
-    return $null;  
+    return $null;
  }
 
 // Add throw to method declaration
@@ -112,11 +112,7 @@
 }
 
 %include "api_ums.hpp"
-
-#ifdef SWIGJAVA
- // Remove rule for vishnuexception and userexception generation. Otherwise, these file would have functions that throw vishnuexception
-%nojavaexception;
-// To make vishnuexception inherit from the java exception class
-%typemap(javabase) VishnuException "java.lang.Exception"
+#ifdef SWIGPYTHON
+%include "VishnuException.hpp"
+%include "UserException.hpp"
 #endif
-
