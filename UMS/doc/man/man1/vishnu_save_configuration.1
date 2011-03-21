@@ -1,0 +1,107 @@
+'\" t
+.\"     Title: vishnu_save_configuration
+.\"    Author:  SysFera SAS <info@sysfera.com>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: February 2011
+.\"    Manual: Command reference
+.\"    Source: VISHNU 1.0
+.\"  Language: English
+.\"
+.TH "VISHNU_SAVE_CONFIGUR" "1" "February 2011" "VISHNU 1.0" "Command reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vishnu_save_configuration \- saves the configuration of VISHNU
+.SH "SYNOPSIS"
+.HP \w'\fBvishnu_save_configuration\fR\ 'u
+\fBvishnu_save_configuration\fR [\fB\-h\fR]
+.SH "DESCRIPTION"
+.PP
+This commands allows an admin to save the VISHNU configuration\&. This configuration contains the list of users, the lists of machines and the list of local user configurations\&. It is saved on a xml format on a file registered on the directory $HOME/\&.vishnu/configurationSaved/\&.
+.SH "OPTIONS"
+.PP
+\fB\-h \fR\fB\fIhelp\fR\fR
+.RS 4
+help about the command\&.
+.RE
+.SH "ENVIRONMENT"
+.PP
+\fBVISHNU_CONFIG_FILE\fR
+.RS 4
+Contains the path to the local configuration file for VISHNU\&.
+.RE
+.SH "DIAGNOSTICS"
+.PP
+The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
+.PP
+"There is no open session in this terminal" [10]
+.RS 4
+.RE
+.PP
+"The user is not an administrator" [25]
+.RS 4
+.RE
+.PP
+"A problem occurs during the configuration saving " [39]
+.RS 4
+.RE
+.SH "AUTHOR"
+.PP
+\fB SysFera SAS\fR <\&info@sysfera.com\&>
+.RS 4
+Developed the first version of these man pages as part of the VISHNU project.
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011 SysFera SAS
+.br
+.PP
+These manual pages are provided under the following conditions:
+.PP
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+.RE
+.PP
+This software is governed by the CECILL licence under French law and abiding by the rules of distribution of free software. You can use, modify and/ or redistribute the software under the terms of the CeCILL license as circulated by CEA, CNRS and INRIA at the following URL "http://www.cecill.info".
+.PP
+As a counterpart to the access to the source code and rights to copy, modify and redistribute granted by the license, users are provided only with a limited warranty and the software's author, the holder of the economic rights, and the successive licensors have only limited liability.
+.PP
+In this respect, the user's attention is drawn to the risks associated with loading, using, modifying and/or developing or reproducing the software by the user in light of its specific status of free software, that may mean that it is complicated to manipulate, and that also therefore means that it is reserved for developers and experienced professionals having in-depth computer knowledge. Users are therefore encouraged to load and test the software's suitability as regards their requirements in conditions enabling the security of their systems and/or data to be ensured and, more generally, to use and operate it in the same conditions as regards security.
+.sp
