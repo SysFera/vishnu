@@ -44,11 +44,19 @@
       </revision>
       <revision>
         <revnumber>2</revnumber>
-        <date>08/03/2011</date>
+        <date>18/03/2011</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
           
-        <para>Ajout du lancement manuel avec forwarder</para></revdescription>
+        <para>Ajout du lancement manuel avec forwarder et d'image de fichiers de configuration exemple</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>21/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          
+        <para>Ajout de l'installation pour les webs services</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -70,6 +78,9 @@
           </listitem>
           <listitem>
             <para>L'installation</para>
+          </listitem>
+          <listitem>
+            <para>L'installation des webs services</para>
           </listitem>
           <listitem>
             <para>Déploiement</para>
@@ -104,6 +115,9 @@
         </listitem>
         <listitem>
           <para>SQL : Langage de requêtes sur les bases de données</para>
+        </listitem>
+        <listitem>
+          <para>WS : Web Services</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -246,6 +260,110 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH 
 	  utilisateur pour avoir accès à la commande.</para>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Installation des WS</title>
+    <section>
+      <title>Prérequis</title>
+      <itemizedlist>
+        <listitem>
+          <para>Le module UMS (C++) de VISHNU d'installé</para>
+        </listitem>
+        <listitem>
+          <para>Java 1.6 d'installé et la variable JAVA_HOME définie et pointant sur le répertoire racine de l'installation de java</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Installation de JBOSS</title>
+      <itemizedlist>
+        <listitem>
+          <para>Télécharger le package JBOSSAS : (la version binaire est disponible) sur http://www.jboss.org/jbossas/downloads => version 5.1.0GA</para>
+        </listitem>
+        <listitem>
+          <para>Télécharger le package JBOSSWS : (la version binaire est disponible) sur http://www.jboss.org/jbossws/downloads/ => version 3.3.1.GA</para>
+        </listitem>
+        <listitem>
+          <para>Décompresser l'archive du package JBOSSAS 5.1.0</para>
+        </listitem>
+        <listitem>
+          <para> Définir la variable d'environement JBOSS_HOME sur le répertoire décompressé. Par exemple dans le .bashrc :
+	    'export JBOSS_HOME=/home/toto/jboss-5.1.0.GA'</para>
+        </listitem>
+        <listitem>
+          <para>Décompresser l'archive du package JBOSSWS 3.3.1 et aller dans le répertoire créé</para>
+        </listitem>
+        <listitem>
+          <para> Copier le fichier 'ant.properties.example' en 'ant.properties'</para>
+        </listitem>
+        <listitem>
+          <para> Editer le fichier nouvellement créé 'ant.properties'. Mettre la valeur de la variable jboss510.home à la valeur du répertoire de JBOSSAS (même valeur que dans la variable JBOSS_HOME). Il faut noter que si une autre version que la 5.1.0 de jboss a été prise, il faut modifier la variable correspondant à cette version</para>
+        </listitem>
+        <listitem>
+          <para> Lancer la commande 'ant deploy-jboss510'. Si une autre version de jboss a été prise, il faut faire la commande de la version correspondante</para>
+        </listitem>
+        <listitem>
+          <para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title> Eléments nécessaires à l'utilisation des WS pour VISHNU</title>
+      <itemizedlist>
+        <listitem>
+          <para>vishnulib.jar
+	    <itemizedlist>
+              <listitem>
+                <para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para>
+              </listitem>
+              <listitem>
+                <para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para>
+              </listitem>
+              <listitem>
+                <para>Le changer implique un redémarrage du serveur JBOSS.</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>WSAPI.jar
+	    <itemizedlist>
+              <listitem>
+                <para>Contient les classes issues du WSDL et l'implémentation des WS.</para>
+              </listitem>
+              <listitem>
+                <para>Utilise la variable d'environnement <emphasis role="bold">VISHNU_CONFIG_FILE</emphasis>, qui indique le fichier de configuration pour le client.</para>
+              </listitem>
+              <listitem>
+                <para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/deploy</emphasis>.</para>
+              </listitem>
+              <listitem>
+                <para>Peut être mis à jour sans redémarrer le serveur JBOSS.</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>libVISHNU_UMS.so
+	    <itemizedlist>
+              <listitem>
+                <para>Nécessaire pour le fonctionnement des WS</para>
+              </listitem>
+              <listitem>
+                <para>Le dossier la contenant doit être dans le <emphasis role="bold">LD_LIBRARY_PATH</emphasis></para>
+              </listitem>
+              <listitem>
+                <para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>VISHNU_CONFIG_FILE : Variable d'environnement à définir sur un fichier de configuration client de VISHNU. Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
+	  </para>
+        </listitem>
+      </itemizedlist>
     </section>
   </chapter>
   <chapter>
