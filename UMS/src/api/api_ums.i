@@ -105,12 +105,10 @@
 
 #ifdef SWIGPYTHON
 
-// Exception rule for user exception
+// Exception rule for UMS user exception
 %typemap (throws) UserException{
-    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
-  printf("toto \n");
-  //   return $null;
- }
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+}
 
 // Add throw to method declaration
 //%exception ("UserException") { $action }
