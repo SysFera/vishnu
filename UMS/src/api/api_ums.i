@@ -19,7 +19,7 @@
 
 // this includes the typemaps for STL strings
 %include "std_string.i"
-%include "std_except.i" 
+%include "std_except.i"
 
 
 // this includes the required type declarations for EMF4CPP
@@ -95,13 +95,28 @@
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
     }
-    return $null;  
+    return $null;
  }
 
 // Add throw to method declaration
 %javaexception ("InternalUMSException") { $action }
 
 #endif
+
+#ifdef SWIGPYTHON
+
+// Exception rule for user exception
+%typemap (throws) UserException{
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
+  printf("toto \n");
+  //   return $null;
+ }
+
+// Add throw to method declaration
+//%exception ("UserException") { $action }
+
+#endif
+
 
 // Remove the parameters of vishnuInitialize
 %typemap(in, numinputs=0) int argc {
@@ -112,11 +127,8 @@
 }
 
 %include "api_ums.hpp"
-
-#ifdef SWIGJAVA
- // Remove rule for vishnuexception and userexception generation. Otherwise, these file would have functions that throw vishnuexception
-%nojavaexception;
-// To make vishnuexception inherit from the java exception class
-%typemap(javabase) VishnuException "java.lang.Exception"
+#ifdef SWIGPYTHON
+%include "VishnuException.hpp"
+%include "UserException.hpp"
+%include "UMSVishnuException.hpp"
 #endif
-
