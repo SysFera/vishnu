@@ -132,7 +132,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -169,7 +169,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CLOSE_ON_
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>userId </replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -206,7 +206,7 @@ session that was opened on another client system.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -339,7 +339,7 @@ the session (e.g., job submission or file transfers). After the session is close
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1221,7 +1221,7 @@ completed and until the session is either manually or automatically closed.</par
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1257,7 +1257,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId </parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::reconnect</function></funcdef><paramdef>const string&amp; <parameter>userId</parameter></paramdef><paramdef>const string&amp; <parameter>password</parameter></paramdef><paramdef>const string&amp; <parameter>sessionId</parameter></paramdef><paramdef>Session&amp; <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1271,7 +1271,7 @@ session that was opened on another client system.</para>
         <title>ARGUMENTS</title>
         <variablelist>
           <varlistentry>
-            <term><emphasis>userId </emphasis></term>
+            <term><emphasis>userId</emphasis></term>
             <listitem>
               <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
@@ -1321,7 +1321,7 @@ session that was opened on another client system.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1479,7 +1479,7 @@ the session (e.g., job submission or file transfers). After the session is close
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Unknown user&quot; [20]</term>
+            <term>&quot;The user is unknown or the password is wrong&quot; [20]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2407,7 +2407,7 @@ completed and until the session is either manually or automatically closed.</par
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Unknown user&quot; [20])</term>
+            <term>UMSVishnuException(&quot;The user is unknown or the password is wrong&quot; [20])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2443,7 +2443,7 @@ completed and until the session is either manually or automatically closed.</par
         <refpurpose>reconnects to a session that is still active</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.reconnect</function></funcdef><paramdef>string <parameter>userId </parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.reconnect</function></funcdef><paramdef>string <parameter>userId</parameter></paramdef><paramdef>string <parameter>password</parameter></paramdef><paramdef>string <parameter>sessionId</parameter></paramdef><paramdef>Session <parameter>session</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2457,7 +2457,7 @@ session that was opened on another client system.</para>
         <title>ARGUMENTS</title>
         <variablelist>
           <varlistentry>
-            <term><emphasis>userId </emphasis></term>
+            <term><emphasis>userId</emphasis></term>
             <listitem>
               <para>Input argument. UserId represents the VISHNU user identifier.</para>
             </listitem>
@@ -2524,7 +2524,7 @@ session that was opened on another client system.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Unknown user&quot; [20])</term>
+            <term>UMSVishnuException(&quot;The user is unknown or the password is wrong&quot; [20])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2704,7 +2704,7 @@ the session (e.g., job submission or file transfers). After the session is close
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Unknown user&quot; [20])</term>
+            <term>UMSVishnuException(&quot;The user is unknown or the password is wrong&quot; [20])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
