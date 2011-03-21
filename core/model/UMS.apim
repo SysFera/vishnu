@@ -174,7 +174,7 @@
       <ports name="file" dataType="//@typeList/@types.0" description="file containing a sql script to restore the database" shortOptionLetter="" envOption="VISHNU_CONFIG_FILE"/>
     </services>
     <resultCodeList>
-      <resultCodes name="ERRCODE_UNKNOWN_USER" description="Unknown user" value="20" diagnostic=""/>
+      <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
       <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21"/>
       <resultCodes name="ERRCODE_USERID_EXISTING" description="The userId already exists in the database" value="22"/>
       <resultCodes name="ERRCODE_USER_LOCKED" description="The user is locked" value="23" diagnostic=""/>
