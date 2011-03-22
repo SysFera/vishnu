@@ -250,11 +250,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>ERRCODE_VISHNU_OK</para></entry>
                 <entry><para>The service has been performed successfully.</para></entry>
               </row>
               <row>
-                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
               </row>
             </tbody>
