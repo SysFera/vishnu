@@ -227,13 +227,11 @@
       </section>
       <section>
         <title>SysFera-DS Bus Details</title>
-         <para> This diagram shows the communication paths between the Client host and the TMS servers using the SysFera-DS Bus. On each remote VISHNU machine on which a batch scheduler library and API are installed a TMS server must be launched (for example in the figure 2.3 we have three TMS servers launched on three different nodes). The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the TMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one TMS Server in the case of  several available TMS servers. The diagram shows here all the communication paths in the case where the TMS Server2 is chosen by the MasterAgent.
-      
-          <para><emphasis role="bold">Note</emphasis>: each TMS server is associated to an unique owner (we called this owner vishnu_global_owner). All vishnu jobs will be submitted with the name of this global owner to LoadLeveler or Torque API. After each job submission the vishnu TMS transforms the returned API job identifier to a correspondant Vishnu job identifier and transforms the vishnu_global_owner to the name of the user who has submitted the job.</para>
+        <para> This diagram shows the communication paths between the Client host and the TMS servers using the SysFera-DS Bus. On each remote VISHNU machine on which a batch scheduler library and API are installed a TMS server must be launched (for example in the figure 2.3 we have three TMS servers launched on three different nodes). The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the TMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one TMS Server in the case of  several available TMS servers. The diagram shows here all the communication paths in the case where the TMS Server2 is chosen by the MasterAgent. </para>
 
-        </para>
-
-        <figure>
+          <para><emphasis role="bold">Note</emphasis>: each TMS server is associated to an unique owner (we called this owner vishnu_global_owner). All vishnu jobs will be submitted with the name of this global owner through LoadLeveler or Torque API. After each job submission the vishnu TMS transforms the returned API job identifier to a correspondant Vishnu job identifier and transforms the vishnu_global_owner to the name of the user who has submitted the job.</para>
+  
+          <figure>
           <title>SysFera-DS Bus Details</title>
           <mediaobject>
             <imageobject>
@@ -307,11 +305,11 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>ERRCODE_VISHNU_OK</para></entry>
                 <entry><para>The service has been performed successfully.</para></entry>
               </row>
               <row>
-                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
               </row>
             </tbody>
@@ -586,7 +584,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para>n/a</para></entry>
                 <entry><para>Is the id of the machine on which  the job is running</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -694,7 +692,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para>n/a</para></entry>
                 <entry><para>Is the id of the machine on which  the jobs are running</para></entry>
                 <entry><para>IN</para></entry>
               </row>
@@ -1027,7 +1025,7 @@
               </row>
               <row>
                 <entry><para>value</para></entry>
-                <entry><para>##TBD##</para></entry>
+                <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
                 <entry><para>Is the refresh interval value (in seconds)</para></entry>
                 <entry><para>IN</para></entry>
