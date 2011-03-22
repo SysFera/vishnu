@@ -1,0 +1,159 @@
+'\" t
+.\"     Title: VISHNU_UMS.reconnect
+.\"    Author:  SysFera SAS <info@sysfera.com>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: February 2011
+.\"    Manual: Python API Reference
+.\"    Source: VISHNU 1.0
+.\"  Language: English
+.\"
+.TH "VISHNU_UMS\&.RECONNE" "3" "February 2011" "VISHNU 1.0" "Python API Reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+VISHNU_UMS.reconnect \- reconnects to a session that is still active
+.SH "SYNOPSIS"
+.HP \w'VISHNU_UMS\&.reconnect('u
+.BI "VISHNU_UMS\&.reconnect(string\ " "userId" ", string\ " "password" ", string\ " "sessionId" ", Session\ " "session" ");"
+.SH "DESCRIPTION"
+.PP
+This command allows you to resume a session that has been opened previously and that has not yet been closed\&. You can disconnect from a session without closing it (for example if there are running commands in that session) by setting the session\*(Aqs close policy (at connection time) to CLOSE_ON_TIMEOUT\&. As sessions are linked to a specific client system, you cannot reconnect to a session that was opened on another client system\&.
+.SH "ARGUMENTS"
+.PP
+\fIuserId\fR
+.RS 4
+Input argument\&. UserId represents the VISHNU user identifier\&.
+.RE
+.PP
+\fIpassword\fR
+.RS 4
+Input argument\&. Password represents the password of the user\&.
+.RE
+.PP
+\fIsessionId\fR
+.RS 4
+Input argument\&. SessionId is the identifier of the session defined in the database\&.
+.RE
+.PP
+\fIsession\fR
+.RS 4
+Output argument\&. The session object containing session information\&.
+.RE
+.SH "RETURNED OBJECTS"
+.PP
+\fIerrorCode (integer)\fR
+.RS 4
+Output parameter\&. Contains 0 on success and the error code on failure\&.
+.RE
+.PP
+\fIsessionKey (string)\fR
+.RS 4
+Output parameter\&. Contains the session key\&.
+.RE
+.SH "EXCEPTIONS"
+.PP
+The following exceptions may be thrown:
+.PP
+SystemException("Internal Error: SysDS service failure" [1])
+.RS 4
+.RE
+.PP
+SystemException("Internal Error: Database returned an error" [2])
+.RS 4
+.RE
+.PP
+SystemException("Internal Error: Database connection failure" [3])
+.RS 4
+.RE
+.PP
+SystemException("Internal Error: System call failure" [4])
+.RS 4
+.RE
+.PP
+SystemException("Internal Error: Undefined exception" [9])
+.RS 4
+.RE
+.PP
+UMSVishnuException("The user is unknown or the password is wrong" [20])
+.RS 4
+.RE
+.PP
+UMSVishnuException("The user is locked" [23])
+.RS 4
+.RE
+.PP
+UMSVishnuException("The session key is unrecognized" [28])
+.RS 4
+.RE
+.PP
+UMSVishnuException("The sessionKey is expired\&. The session is closed\&." [29])
+.RS 4
+.RE
+.PP
+UMSVishnuException("The session Id is unknown" [30])
+.RS 4
+.RE
+.PP
+UMSVishnuException("The machine does not exist or it is locked" [36])
+.RS 4
+.RE
+.SH "AUTHOR"
+.PP
+\fB SysFera SAS\fR <\&info@sysfera.com\&>
+.RS 4
+Developed the first version of these man pages as part of the VISHNU project.
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011 SysFera SAS
+.br
+.PP
+These manual pages are provided under the following conditions:
+.PP
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+.RE
+.PP
+This software is governed by the CECILL licence under French law and abiding by the rules of distribution of free software. You can use, modify and/ or redistribute the software under the terms of the CeCILL license as circulated by CEA, CNRS and INRIA at the following URL "http://www.cecill.info".
+.PP
+As a counterpart to the access to the source code and rights to copy, modify and redistribute granted by the license, users are provided only with a limited warranty and the software's author, the holder of the economic rights, and the successive licensors have only limited liability.
+.PP
+In this respect, the user's attention is drawn to the risks associated with loading, using, modifying and/or developing or reproducing the software by the user in light of its specific status of free software, that may mean that it is complicated to manipulate, and that also therefore means that it is reserved for developers and experienced professionals having in-depth computer knowledge. Users are therefore encouraged to load and test the software's suitability as regards their requirements in conditions enabling the security of their systems and/or data to be ensured and, more generally, to use and operate it in the same conditions as regards security.
+.sp
