@@ -50,6 +50,11 @@
         <details key="content" value="The group name of the owner"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="perms" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="Description">
+        <details key="content" value="The protection of the file"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
       <eAnnotations source="Description">
         <details key="content" value="The user identifier of the owner"/>
@@ -129,6 +134,12 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LsTransferOptions" instanceTypeName="LsTransferOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="a given transfer id"/>
+        <details key="shortOption" value="t"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromMachineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="the machine that is the source of the file transfer"/>
@@ -193,6 +204,71 @@
       <eAnnotations source="Description">
         <details key="content" value="allows the admin to list file transfers initiated by a specific user"/>
         <details key="shortOption" value="u"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FileTransfer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The file  transfer identifier"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status">
+      <eAnnotations source="Description">
+        <details key="content" value="The file transfer status"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The user identifier"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientMachineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The client machine identifier"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceMachineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The source machine identifier"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="destinationMachineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The destination machine identifier"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceFilePath" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The source file path"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="destinationFilePath" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The destination file path"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType Ecore.ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The size of the file "/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="start_time" eType="ecore:EDataType Ecore.ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The start time of the file  transfer"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand">
+      <eAnnotations source="Description">
+        <details key="content" value="The command used for the file transfer (scp or rsync)"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FileTransferList" instanceTypeName="FileTransferList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listOfFileTransfer" upperBound="-1"
+        eType="#//FileTransfer" containment="true">
+      <eAnnotations source="Description">
+        <details key="content" value="list of inodes."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
