@@ -27,7 +27,7 @@ vishnu::connect(const string& userId,
                 const string& password,
                 UMS_Data::Session& session,
                 const UMS_Data::ConnectOptions& connectOpt)
-                                                          throw(UserException)
+                                                          throw(UserException, SystemException)
 {
 
   if((connectOpt.getClosePolicy() < 0) || (connectOpt.getClosePolicy() > 2)) {
@@ -58,7 +58,7 @@ vishnu::reconnect(const string& userId,
                   const string& password,
                   const string& sessionId,
                   UMS_Data::Session& session)
-                                            throw(UserException)
+                                            throw(UserException, SystemException)
 {
 
   std::string encryptedPassword = vishnu::cryptPassword(userId, password);
@@ -81,7 +81,7 @@ vishnu::reconnect(const string& userId,
  */
 int
 vishnu::close(const string&  sessionKey)
-                                       throw(UserException)
+                                       throw(UserException, SystemException)
 {
 
   return SessionProxy(sessionKey).close();
@@ -95,7 +95,7 @@ vishnu::close(const string&  sessionKey)
  */
 int
 vishnu::addUser(const string& sessionKey, UMS_Data::User& newUser) 
-                                                                 throw(UserException)
+                                                                 throw(UserException, SystemException)
 {
 
   if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
@@ -125,7 +125,7 @@ vishnu::addUser(const string& sessionKey, UMS_Data::User& newUser)
 int
 vishnu::updateUser(const string& sessionKey,
                    const UMS_Data::User& user)
-                                             throw(UserException)
+                                             throw(UserException, SystemException)
 {
 
   if((user.getPrivilege() < 0) || (user.getPrivilege() > 1)) {
@@ -147,7 +147,7 @@ vishnu::updateUser(const string& sessionKey,
 int
 vishnu::deleteUser(const string& sessionKey,
                    const string& userId)
-                                       throw(UserException)
+                                       throw(UserException, SystemException)
 {
 
   UMS_Data::User user;
@@ -169,7 +169,7 @@ int
 vishnu::changePassword(const std::string& userId,
                        const std::string& password,
                        const std::string& passwordNew)
-                                                     throw(UserException)
+                                                     throw(UserException, SystemException)
 {
 
   checkIfTextIsEmpty(passwordNew, "The new password is empty", ERRCODE_INVALID_PARAM);
@@ -194,7 +194,7 @@ int
 vishnu::resetPassword(const std::string& sessionKey,
                       const std::string& userId,
                       std::string& tmpPassword)
-                                             throw(UserException)
+                                             throw(UserException, SystemException)
 {
 
   UMS_Data::User user;
@@ -217,7 +217,7 @@ vishnu::resetPassword(const std::string& sessionKey,
 int
 vishnu::addMachine(const std::string& sessionKey,
                    UMS_Data::Machine& newMachine)
-                                                throw(UserException)
+                                                throw(UserException, SystemException)
 {
 
   if((newMachine.getStatus() < 0) || (newMachine.getStatus() > 1)) {
@@ -247,7 +247,7 @@ vishnu::addMachine(const std::string& sessionKey,
 int
 vishnu::updateMachine(const std::string& sessionKey,
                       const UMS_Data::Machine& machine)
-                                                      throw(UserException)
+                                                      throw(UserException, SystemException)
 {
 
   if((machine.getStatus() < 0) || (machine.getStatus() > 1)) {
@@ -269,7 +269,7 @@ vishnu::updateMachine(const std::string& sessionKey,
 int
 vishnu::deleteMachine(const std::string& sessionKey,
                       const std::string& machineId)
-                                                  throw(UserException)
+                                                  throw(UserException, SystemException)
 {
 
   UMS_Data::Machine machine;
@@ -291,7 +291,7 @@ int
 vishnu::addLocalAccount(const std::string& sessionKey,
                         const UMS_Data::LocalAccount& newLocalAccount,
                         std::string& sshPublicKey)
-                                                 throw(UserException)
+                                                 throw(UserException, SystemException)
 {
 
   checkIfTextIsEmpty(newLocalAccount.getUserId(), "The local account userId is empty", ERRCODE_INVALID_PARAM);
@@ -318,7 +318,7 @@ vishnu::addLocalAccount(const std::string& sessionKey,
 int
 vishnu::updateLocalAccount(const std::string& sessionKey,
                            const UMS_Data::LocalAccount& localAccount)
-                                                                     throw(UserException)
+                                                                     throw(UserException, SystemException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -338,7 +338,7 @@ int
 vishnu::deleteLocalAccount(const std::string& sessionKey,
                            const std::string& userId,
                            const std::string& machineId)
-                                                      throw(UserException)
+                                                      throw(UserException, SystemException)
 {
 
   UMS_Data::LocalAccount localAccount;
@@ -359,7 +359,7 @@ vishnu::deleteLocalAccount(const std::string& sessionKey,
 int
 vishnu::saveConfiguration(const std::string& sessionKey,
                           UMS_Data::Configuration& config)
-                                                        throw(UserException)
+                                                        throw(UserException, SystemException)
 {
 
   //the current time
@@ -425,7 +425,7 @@ vishnu::saveConfiguration(const std::string& sessionKey,
 int
 vishnu::restoreConfiguration(const std::string& sessionKey,
                              const std::string& filePath)
-                                                       throw(UserException)
+                                                       throw(UserException, SystemException)
 {
 
   if(false==boost::filesystem::exists(filePath)) {
@@ -450,7 +450,7 @@ vishnu::restoreConfiguration(const std::string& sessionKey,
 int
 vishnu::configureOption(const std::string& sessionKey,
                         const UMS_Data::OptionValue& optionValue)
-                                                                throw(UserException)
+                                                                throw(UserException, SystemException)
 {
 
   checkIfTextIsEmpty(optionValue.getOptionName(), "The name of the option is empty", ERRCODE_INVALID_PARAM);
@@ -471,7 +471,7 @@ vishnu::configureOption(const std::string& sessionKey,
 int
 vishnu::configureDefaultOption(const std::string& sessionKey,
                                const UMS_Data::OptionValue& optionValue)
-                                                                      throw(UserException)
+                                                                      throw(UserException, SystemException)
 {
   checkIfTextIsEmpty(optionValue.getOptionName(), "The name of the option is empty", ERRCODE_INVALID_PARAM);
   checkIfTextIsEmpty(optionValue.getValue(), "The value of the option is empty", ERRCODE_INVALID_PARAM);
@@ -495,7 +495,7 @@ int
 vishnu::listSessions(const std::string& sessionKey,
                      UMS_Data::ListSessions& listSession,
                      const UMS_Data::ListSessionOptions& options)
-                                                               throw(UserException)
+                                                               throw(UserException, SystemException)
 {
   if((options.getSessionClosePolicy() < 0) || (options.getSessionClosePolicy() > 2)) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
@@ -533,7 +533,7 @@ int
 vishnu::listLocalAccount(const std::string& sessionKey,
                          UMS_Data::ListLocalAccounts& listLocalAcc,
                          const UMS_Data::ListLocalAccOptions& options)
-                                                                     throw(UserException)
+                                                                     throw(UserException, SystemException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -564,7 +564,7 @@ int
 vishnu::listMachine(const std::string& sessionKey,
                     UMS_Data::ListMachines& listMachine,
                     const UMS_Data::ListMachineOptions& options)
-                                                               throw(UserException)
+                                                               throw(UserException, SystemException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -594,7 +594,7 @@ int
 vishnu::listHistoryCmd(const std::string& sessionKey,
                        UMS_Data::ListCommands& listCommands,
                        const UMS_Data::ListCmdOptions& options)
-                                                             throw(UserException)
+                                                             throw(UserException, SystemException)
 {
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListCmdOptions, UMS_Data::ListCommands> query(options, sessionProxy, "commandList");
@@ -623,7 +623,7 @@ int
 vishnu::listOptions(const std::string& sessionKey,
                     UMS_Data::ListOptionsValues& listOptValues,
                     const UMS_Data::ListOptOptions& options)
-                                                          throw(UserException)
+                                                          throw(UserException, SystemException)
 {
 
   SessionProxy sessionProxy(sessionKey);
@@ -653,7 +653,7 @@ int
 vishnu::listUsers(const std::string& sessionKey,
                   UMS_Data::ListUsers& listUsers,
                   const std::string& userIdOption)
-                                         throw(UserException)
+                                         throw(UserException, SystemException)
 {
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<std::string, UMS_Data::ListUsers> query(userIdOption, sessionProxy, "userList");
