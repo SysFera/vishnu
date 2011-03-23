@@ -87,6 +87,15 @@
 %apply std::string &INOUT { std::string& tmpPassword };
 %apply std::string &INOUT { std::string& sshPublicKey };
 
+// Exception rule for system exception
+%typemap (throws) SystemException{
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
+    std::string ret = $1.buildExceptionString() + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    return $null;
+ }
 
 // Exception rule for user exception
 %typemap (throws) UserException{
@@ -103,19 +112,6 @@
 
 #endif
 
-#ifdef SWIGPYTHON
-
-// Exception rule for UMS user exception
-%typemap (throws) UserException{
-    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
-}
-
-// Add throw to method declaration
-//%exception ("UserException") { $action }
-
-#endif
-
-
 // Remove the parameters of vishnuInitialize
 %typemap(in, numinputs=0) int argc {
   $1 = 0;
@@ -128,5 +124,5 @@
 #ifdef SWIGPYTHON
 %include "VishnuException.hpp"
 %include "UserException.hpp"
-%include "UMSVishnuException.hpp"
+%include "SystemException.hpp"
 #endif
