@@ -53,7 +53,7 @@ namespace vishnu {
           const std::string& password, 
           UMS_Data::Session& session, 
           const UMS_Data::ConnectOptions& connectOpt=UMS_Data::ConnectOptions())
-                                                                                throw(UserException); 
+    throw(UserException, SystemException); 
 
   /**
    * \brief Function to return the sessionKey of a session in which the user was disconnected previously without closing it
@@ -68,7 +68,7 @@ namespace vishnu {
             const std::string& password, 
             const std::string& sessionId, 
             UMS_Data::Session& session) 
-                                      throw(UserException);
+                                      throw(UserException, SystemException);
 
   /**
    * \brief Function to close the session identfied by the session key
@@ -77,7 +77,7 @@ namespace vishnu {
    */
   int 
   close(const std::string& sessionKey) 
-                                     throw(UserException);
+                                     throw(UserException, SystemException);
 
   /**
    * \brief Function to add a new user in VISHNU
@@ -88,7 +88,7 @@ namespace vishnu {
   int 
   addUser(const std::string& sessionKey, 
           UMS_Data::User& newUser) 
-                                 throw(UserException);
+                                 throw(UserException, SystemException);
 
   /**
    * \brief Function to update the user information except the userId and the password
@@ -99,7 +99,7 @@ namespace vishnu {
   int 
   updateUser(const std::string& sessionKey, 
              const UMS_Data::User& user) 
-                                       throw(UserException);
+                                       throw(UserException, SystemException);
 
   /**
    * \brief Function to remove a user from VISHNU
@@ -110,7 +110,7 @@ namespace vishnu {
   int 
   deleteUser(const std::string& sessionKey,
              const std::string& userId)
-                                      throw(UserException);
+                                      throw(UserException, SystemException);
 
   /**
    * \brief Function to change the password
@@ -123,7 +123,7 @@ namespace vishnu {
   changePassword(const std::string& userId, 
                  const std::string& password, 
                  const std::string& passwordNew)
-                                                 throw(UserException);
+                                                 throw(UserException, SystemException);
 
   /**
    * \brief Function to reset the password of a user
@@ -136,7 +136,7 @@ namespace vishnu {
   resetPassword(const std::string& sessionKey, 
                 const std::string& userId,
                 std::string& tmpPassword)
-                                       throw(UserException);
+                                       throw(UserException, SystemException);
 
   /**
    * \brief Function to add a new machine in VISHNU
@@ -148,7 +148,7 @@ namespace vishnu {
   int 
   addMachine(const std::string& sessionKey, 
              UMS_Data::Machine& newMachine)
-                                          throw(UserException);
+                                          throw(UserException, SystemException);
 
   /**
    * \brief Function to update machine description 
@@ -159,7 +159,7 @@ namespace vishnu {
   int
   updateMachine(const std::string& sessionKey, 
                 const UMS_Data::Machine& machine)
-                                                throw(UserException);
+                                                throw(UserException, SystemException);
 
   /**
    * \brief Function to remove a machine from VISHNU
@@ -170,7 +170,7 @@ namespace vishnu {
   int 
   deleteMachine(const std::string& sessionKey, 
                 const std::string& machineId)
-                                            throw(UserException);
+                                            throw(UserException, SystemException);
 
   /**
    * \brief Function to add a new local user configuration
@@ -183,7 +183,7 @@ namespace vishnu {
   addLocalAccount(const std::string& sessionKey,
                   const UMS_Data::LocalAccount& newLocalAccount, 
                   std::string&  sshPublicKey)
-                                            throw(UserException);
+                                            throw(UserException, SystemException);
 
   /**
    * \brief Function to update a local user configuration
@@ -194,7 +194,7 @@ namespace vishnu {
   int
   updateLocalAccount(const std::string& sessionKey, 
                      const UMS_Data::LocalAccount& localAccount)
-                                                               throw(UserException);
+                                                               throw(UserException, SystemException);
 
   /**
    * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU
@@ -207,7 +207,7 @@ namespace vishnu {
   deleteLocalAccount(const std::string& sessionKey, 
                      const std::string& userId, 
                      const std::string& machineId) 
-                                                 throw(UserException);
+                                                 throw(UserException, SystemException);
 
   /**
    * \brief Function to save the configuration of VISHNU
@@ -218,7 +218,7 @@ namespace vishnu {
   int
   saveConfiguration(const std::string& sessionKey,
                     UMS_Data::Configuration& config)
-                                                     throw(UserException);
+                                                     throw(UserException, SystemException);
 
   /**
    * \brief Function to restore the configuration of VISHNU
@@ -229,7 +229,7 @@ namespace vishnu {
   int
   restoreConfiguration(const std::string& sessionKey, 
                        const std::string& filePath)
-                                                  throw(UserException);
+                                                  throw(UserException, SystemException);
 
   /**
    * \brief Function to configure an option of the user
@@ -240,7 +240,7 @@ namespace vishnu {
   int
   configureOption(const std::string& sessionKey,
                   const UMS_Data::OptionValue& optionValue)
-                                                          throw(UserException);
+                                                          throw(UserException, SystemException);
 
   /**
    * \brief Function to configure a default option value
@@ -251,7 +251,7 @@ namespace vishnu {
   int
   configureDefaultOption(const std::string& sessionKey, 
                          const UMS_Data::OptionValue& optionValue)
-                                                                 throw(UserException);
+                                                                 throw(UserException, SystemException);
   /**
    * \brief Function to list all sessions of the user
    * \param sessionKey is the encrypted identifier of the session generated by VISHNU
@@ -265,7 +265,7 @@ namespace vishnu {
   listSessions(const std::string& sessionKey,
                UMS_Data::ListSessions& listSession, 
                const UMS_Data::ListSessionOptions& options=UMS_Data::ListSessionOptions())
-                                                                                         throw(UserException);
+                                                                                         throw(UserException, SystemException);
 
   /**
    * \brief Function to list the local user configurations
@@ -279,7 +279,7 @@ namespace vishnu {
   listLocalAccount(const std::string& sessionKey, 
                    UMS_Data::ListLocalAccounts& listLocalAcc,
                    const UMS_Data::ListLocalAccOptions& options=UMS_Data::ListLocalAccOptions())
-                                                                                               throw(UserException); 
+                                                                                               throw(UserException, SystemException); 
 
   /**
    * \brief Function to list the machines in which the local user configurations are defined for the given user
@@ -293,7 +293,7 @@ namespace vishnu {
   listMachine(const std::string& sessionKey, 
               UMS_Data::ListMachines& listMachine,
               const UMS_Data::ListMachineOptions& options=UMS_Data::ListMachineOptions())
-                                                                                        throw(UserException) ;
+                                                                                        throw(UserException, SystemException) ;
 
   /**
    * \brief Function to list the commands
@@ -307,7 +307,7 @@ namespace vishnu {
   listHistoryCmd(const std::string& sessionKey, 
                  UMS_Data::ListCommands& listCommands,
                  const UMS_Data::ListCmdOptions& options=UMS_Data::ListCmdOptions())
-                                                                                   throw(UserException);
+                                                                                   throw(UserException, SystemException);
 
   /**
    * \brief Function to list the options of the user
@@ -320,7 +320,7 @@ namespace vishnu {
   listOptions(const std::string& sessionKey,
               UMS_Data::ListOptionsValues& listOptValues,
               const UMS_Data::ListOptOptions& options=UMS_Data::ListOptOptions())
-                                                                                  throw(UserException) ;
+                                                                                  throw(UserException, SystemException) ;
 
   /**
    * \brief Function to list VISHNU users
@@ -333,7 +333,7 @@ namespace vishnu {
   listUsers(const std::string& sessionKey, 
             UMS_Data::ListUsers& listUsers, 
             const std::string& userIdOption=std::string())
-                                                     throw(UserException);
+                                                     throw(UserException, SystemException);
 
   /**
    * \brief Function to initialize the SYSFERA-DS configuration
