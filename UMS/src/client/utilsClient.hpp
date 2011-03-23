@@ -18,6 +18,7 @@
 
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
+#include "ExceptionFactory.hpp"
 
 /**
  * \brief Function to print an error message and the line and file where this error has been occured 
