@@ -13,7 +13,7 @@
  * \return raises an exception on error
  */
 void raiseDietMsgException(const std::string& msg) {
-  UMSVishnuException e(ERRCODE_DIET, msg);
+  SystemException e(ERRCODE_DIET, msg);
   throw e;
 }
 
@@ -34,7 +34,9 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
         int ret;
         isCode >> ret;
         std::string message = msg.substr(pos+1);
-        throw UMSVishnuException(ret, message);
+	ExceptionFactory fact = ExceptionFactory();
+	throw fact.create(ret, message);
+	//        throw UMSVishnuException(ret, message);
       }
     } else {
       throw UMSVishnuException(-1, msg);
