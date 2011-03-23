@@ -32,9 +32,10 @@
     <title>Document presentation</title>
     <section>
       <title>Document objectives</title>
-      <para> This document presents the detailed internal design of the Tasks Management Service (TMS) package. The purpose of this
-        package is to handle all aspects of Tasks Management Service within the VISHNU system. The functional
-        and non-functional requirements for this package are those described in the referenced specification documents. The current
+      <para> This document presents the detailed internal design of the Tasks Management Service (TMS) module. The purpose of this
+        module is to handle all aspects of Tasks Management Service within the VISHNU system. The functional
+        and non-functional requirements for this module are those described in the [D1.1a] and [D1.1c] documents (see References). 
+        The current
         document is part of the design phase of the software and therefore its main goal is to define the main components of the
         system architecture and their relationships.
       </para>
@@ -42,76 +43,79 @@
     <section>
       <title>Document structure</title>
       <para><itemizedlist>
-        <listitem>
-          <para>Chapter 1 contains a brief overview of the document content.</para>
-        </listitem>
-        <listitem>
-          <para>Chapter 2 contains a high-level overview of the system architecture except the TMS deployment diagram which is described in the delivrable D1.1g 
+          <listitem>
+            <para>Chapter 1 contains a brief overview of the document content.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 2 contains a high-level overview of the system architecture except the TMS deployment diagram which is described in [D1.1g]. 
              (VISHNU Technical Architecture).</para>
-        </listitem>
-        <listitem>
-          <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
-        </listitem>
-        <listitem>
-          <para>Chapter 4 describes the internal class and data structures except the Vishnu core functions modelization which is described in the delivrable D2.1a (VISHNU User            Mangement Service Package Design)</para>
-        </listitem>
-      </itemizedlist></para>
+          </listitem>
+          <listitem>
+            <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 4 describes the internal classes and data structures except the Vishnu core functions modelization which is included in [D2.1a] (VISHNU User Management Service Module Design)</para>
+          </listitem>
+        </itemizedlist></para>
     </section>
-
-   <section>
+    <section>
       <title>References</title>
       <para><itemizedlist>
-        <listitem>
-          <para>[D1.1a]: VISHNU General specifications</para>
-        </listitem>
-         <listitem>
-          <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
-        </listitem>
-       <listitem>
-          <para>[D1.1c]: VISHNU API Detailed specifications</para>
-        </listitem>
-        <listitem>
-          <para>[D1.1g]: VISHNU Technical Architecture</para>
-        </listitem>
-        <listitem>
-          <para>[D2.1a]: VISHNU User Management Service Package Design</para>
-        </listitem>
-      </itemizedlist></para>
+          <listitem>
+            <para>[D1.1a]: VISHNU General specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1c]: VISHNU API Detailed specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1g]: VISHNU Technical Architecture</para>
+          </listitem>
+          <listitem>
+            <para>[D2.1a]: VISHNU User Management Service Package Design</para>
+          </listitem>
+        </itemizedlist></para>
     </section>
     <section>
       <title>Acronyms</title>
       <para>
         <itemizedlist>
-	  <listitem>
-            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
-          </listitem>
           <listitem>
-            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
+            <para><emphasis role="bold">API</emphasis>: Application Programming Interface</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">DB</emphasis>: DataBase</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+            <para><emphasis role="bold">CLI</emphasis>: Command Line Interface</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
-          </listitem>
-	  <listitem>
-	    <para><emphasis role="bold">TMS</emphasis>: Tasks management service</para>
-	  </listitem>
-          <listitem>
-            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+            <para><emphasis role="bold">LL</emphasis>: IBM LoadLeveler software</para>
           </listitem>
           <listitem>
-           <para><emphasis role="bold">LL</emphasis>: LoadLeveler</para>
+            <para><emphasis role="bold">N/A</emphasis>: Not Applicable</para>
           </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon (SysFera-DS agent)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SOA</emphasis>: Service Oriented Architecture</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">TMS</emphasis>: Tasks Management Service</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web Services</para>
+          </listitem>
+          
         </itemizedlist>
       </para>
     </section>
     <section>
-     <title>Glossary</title>
-     <para>
+      <title>Glossary</title>
+      <para>
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
@@ -133,34 +137,37 @@
     <section>
       <title>Overview of the TMS software infrastructure</title>
       <para>We present in this section a detailed description of the TMS package architecture in terms of software components.
-	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
-        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
-	The TMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
+        In addition we show the dependencies between components to highlight their reuse. These components follow a SOA model where each
+        server publish a set of services that can be used by the clients. The communication and service assignment layer is provided by
+        the SysFera-DS middleware.
+        We present the different software layers from the API (services provided directly to the user) to the database (used by the server). 
+        The TMS module is splitted into eight different interrelated components. The diagrams shown in section 2.3 describe
         the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">External API</emphasis>
-	     contains precisely the services provided to the user as defined in the detailed specifications.
-	     We're on the client side.
-	    </para>
+             publishes the services provided locally to the user as defined in the detailed specifications. The external API is
+             actually implemented in C++ but wrapping layers are provided for the Python language and for Web Services.
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Internal API</emphasis>
-	     is the middle layer of the server side. The services announced previously are performed here by combining a set of classes defined 
-	    in the two following components.
-	    </para>
+             publishes the services provided by the servers. The services of the external API are implemented using requests sent through
+             the SysFera-DS middleware to this API.
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">TMS Client</emphasis>
-	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis role="bold">TMS Server</emphasis>.
-	    </para>
+            contains intermediate (proxy) classes providing remote access to the business objects of <emphasis
+                  role="bold">TMS Server</emphasis>.
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">TMS Server</emphasis>
-	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
-	    </para>
+             contains all classes implementing business objects that process requests sent by the TMS Client.
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
@@ -173,17 +180,40 @@
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">LoadLeveler API </emphasis>: is the C API provided by the LoadLeveler batch scheduler..
+            <para><emphasis role="bold">LoadLeveler API </emphasis>: is the C API provided by the IBM LoadLeveler batch scheduler..
             </para>
           </listitem>
-	  <listitem>
-	    <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the TMS Server.
-	    </para>
-	  </listitem>
-
+          <listitem>
+            <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the TMS Server.
+            </para>
+          </listitem>
         </itemizedlist>
       </para>
     </section>
+    <section>
+      <title>Installation prerequisites</title>
+      <section>
+        <title>Client side</title>
+        <para>TODO</para>
+        <para>TODO</para>
+      </section>
+      <section>
+        <title>Server side</title>
+        <para>TODO</para>
+        <para>creation of system account to submit jobs on the batch scheduler. This account needs permissions on the local
+          batch scheduler to submit jobs, view jobs and cancel jobs (applicable to jobs submitted by this user only).</para>
+      </section>
+    </section>
+    <section>
+        <title>Job owner and identifier</title>
+       <para>Each TMS server process runs using a specific local system account dedicated to VISHNU.
+         All VISHNU jobs will be submitted to LoadLeveler or Torque API using this system account and will be identified on these
+         batch schedulers by local identifiers. For example a given job on LL will be visible as a job with identifier "hostname.344.0"
+         and owner "vishnu".
+         From the VISHNU user point of view, these local identifiers and the local job owner will be hidden and replaced by the user's identifier
+         and global job identifiers. For example the previous job will be visible in VISHNU as job "JOB_6767" and userId "jdupond".</para>
+       <para>This data translation is entirely transparent to the VISHNU user and simplifies job management</para>.
+     </section>
 
   </chapter><!-- PART 1 : ARCHITECTURE -->
   
