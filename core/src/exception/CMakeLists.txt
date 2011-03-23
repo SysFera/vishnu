@@ -8,7 +8,6 @@ ADD_LIBRARY(exception-vishnu STATIC
  SystemException.cpp
  UserException.cpp
  UMSVishnuException.cpp
- ExceptionFactory.cpp
 #  TMSVishnuException.cpp
 #  IMSVishnuException.cpp
 #  FMSVishnuException.cpp
@@ -21,7 +20,6 @@ INSTALL( FILES
     UserException.hpp
     SystemException.hpp
     UMSVishnuException.hpp
-    ExceptionFactory.hpp
 #     TMSVishnuException.hpp
 #     FMSVishnuException.hpp
 #     IMSVishnuException.hpp
