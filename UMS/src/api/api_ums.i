@@ -90,7 +90,7 @@
 // Exception rule for system exception
 %typemap (throws) SystemException{
     jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
-    std::string ret = $1.buildExceptionString() + $1.getMsg();
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
     }
@@ -100,7 +100,7 @@
 // Exception rule for user exception
 %typemap (throws) UserException{
     jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
-    std::string ret = $1.buildExceptionString() + $1.getMsg();
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
     }
