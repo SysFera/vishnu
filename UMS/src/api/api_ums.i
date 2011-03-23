@@ -87,11 +87,20 @@
 %apply std::string &INOUT { std::string& tmpPassword };
 %apply std::string &INOUT { std::string& sshPublicKey };
 
+// Exception rule for system exception
+%typemap (throws) SystemException{
+    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
+    if (clazz) {
+      jenv->ThrowNew(clazz, ret.c_str());
+    }
+    return $null;
+ }
 
 // Exception rule for user exception
 %typemap (throws) UserException{
     jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/ums/internal/InternalUMSException");
-    std::string ret = $1.buildExceptionString() + $1.getMsg();
+    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
     if (clazz) {
       jenv->ThrowNew(clazz, ret.c_str());
     }
@@ -115,4 +124,5 @@
 #ifdef SWIGPYTHON
 %include "VishnuException.hpp"
 %include "UserException.hpp"
+%include "SystemException.hpp"
 #endif
