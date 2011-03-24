@@ -197,7 +197,7 @@
         <para>The installation of FMS module on the client needs the following libraries </para>
         <itemizedlist>
           <listitem>
-            <para>VISHNU UMS librarie: the VISHNU User Management Service that allow the session creation and user authentification.
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
             </para>
           </listitem>
           <listitem>
@@ -234,31 +234,32 @@
         </itemizedlist>
       </section>
     </section>
-		
-  <section>
+
+    <section>
       <title>Architecture diagrams</title>
       <section>
         <title>FMS client-side components</title>
         <para>This diagram shows the components that compose the client side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS external API (cf [D1.1c]) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the FMS Client component are shown. We can note that the FMS External API uses the UMS Client Lib to handle user and machines authentication.</para>
+
         <figure>
           <title>FMS client-side components</title>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/FMS_client-side_components.png" align="center"
-                  scale="40"/>
+                scale="40"/>
             </imageobject>
           </mediaobject>
         </figure>
       </section>
       <section>
         <title>FMS server-side components</title>
-        <para>This diagram shows the components that compose the server side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS internal API are shown here for example. These services are consumed by the FMS Client component through the SysFera-DS API. All the interfaces of the FMS Server component are shown.</para>
+        <para>This diagram shows the components that compose the server side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS internal API are shown here for example. These services are published by the FMS Sed and are consumed by the FMS Client component through the SysFera-DS API. All the interfaces of the FMS Server component are shown.</para>
         <figure>
           <title>FMS server-side components</title>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/FMS_server-side_components.png" align="center"
-                  scale="40"/>
+                scale="40"/>
             </imageobject>
           </mediaobject>
                                                                                                                                                       245,1          9%
