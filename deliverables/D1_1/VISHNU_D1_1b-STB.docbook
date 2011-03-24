@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <title>VISHNU D1.1b - Spécifications techniques des besoins</title>
+    <revhistory>
+      <revision>
+        <revnumber>01</revnumber>
+        <date>07/12/2010</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+                    
+                <para>Exemple pour validation du format</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>02</revnumber>
+        <date>14/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para>Version du livrable</para></revdescription>
+      </revision>
+    </revhistory>
+  </info>
+  <chapter>
+    <title>Présentation du document</title>
+    <section>
+      <title>Objectifs</title>
+      <para>Ce document présente les spécifications techniques des besoins pour le système
+                Vishnu. Elles sont basées sur les documents de Cahier des charges du
+                système Vishnu (voir Références) et sur la proposition technique de la société
+                Sysfera. Ces spécifications incluent les contraintes d'implémentation du
+                logiciel. L'objectif principal de ces spécifications est de valider l'adéquation de
+                la solution proposée par rapport aux contraintes de l'environnement d'utilisation.</para>
+      <para>Ce document pourra également contenir des prévisions sur les évolutions futures du
+                logiciel et préciser quelles fonctions devraient être faciles à ajouter ou
+                supprimer.</para>
+    </section>
+    <section>
+      <title>Structure du document</title>
+      <para>Le document est composé de 3 parties correspondant à des domaines techniques
+                différents:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Besoins liés à la sécurité du système et des données</para>
+        </listitem>
+        <listitem>
+          <para>Besoins liés à l'environnement matériel et logiciel</para>
+        </listitem>
+        <listitem>
+          <para>Besoins en performance, fiabilité et robustesse</para>
+        </listitem>
+      </itemizedlist>
+      <para>Chaque partie contient un tableau des exigences qui fait l'inventaire des tous les
+                besoins techniques concernant le domaine spécifié. Ce tableau est suivi d'un
+                dictionnaire des termes techniques employés afin de les préciser le cas
+                échéant.</para>
+    </section>
+    <section>
+      <title>Références</title>
+      <itemizedlist>
+        <listitem>
+          <para>Cahier des charges pour les services de base de l’intergiciel réparti VISHNU [EDF R&amp;D, Juillet 2010]</para>
+        </listitem>
+        <listitem>
+          <para>Compléments au cahier des charges pour les services de base de l’intergiciel réparti VISHNU [EDF R&amp;D, Août 2010]</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Glossaire</title>
+      <itemizedlist>
+        <listitem>
+          <para>UMS (&quot;User Management System&quot;): nom du module Vishnu de gestion des
+                        sessions et des utilisateurs</para>
+        </listitem>
+        <listitem>
+          <para>TMS (&quot;Tasks Management System&quot;): nom du module Vishnu de gestion des
+                        tâches</para>
+        </listitem>
+        <listitem>
+          <para>FMS (&quot;Files Management System&quot;): nom du module Vishnu de gestion des
+                        transferts de fichiers</para>
+        </listitem>
+        <listitem>
+          <para>IMS (&quot;Information Management System&quot;): nom du module Vishnu de gestion des
+                        informations</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </chapter>
+  <chapter annotations="core/specs/stb/STB_SECURITE.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
+    <title>Sécurité du système et des données</title>
+    <section>
+      <title>Tableau des Exigences</title>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="10cm"/>
+          <thead>
+            <row>
+              <entry>ID
+</entry>
+              <entry>Name
+</entry>
+              <entry>Text
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>1</para></entry>
+              <entry><para>Sessions et authentification</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1</para></entry>
+              <entry><para>Types d'utilisateurs</para></entry>
+              <entry><para>Les utilisateurs de l’intergiciel réparti VISHNU seront de deux types : utilisateurs ou administrateurs. Les administrateurs sont des utilisateurs avec des droits supplémentaires. L'identification dans le système d'un utilisateur se fera à l'aide d'un login unique et d'un mot de passe qui sera crypté. </para></entry>
+            </row>
+            <row>
+              <entry><para>1.2</para></entry>
+              <entry><para>Format des identifiants et mots de passe</para></entry>
+              <entry><para>Le login et le mot de passe respecteront respectivement les expressions régulières suivantes:</para><para>^[A-Za-z0-9_]{LOGIN_MIN_SIZE ,LOGIN_MAX_SIZE}$ et ^[^\s]{PASSWORD_MIN_SIZE ,PASSWORD_MAX_SIZE}$</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3</para></entry>
+              <entry><para>Caractéristique d'une authentification</para></entry>
+              <entry><para>Une authentification se fait à l'aide d'un login et d'un mot de passe qui doivent être au préalable enregistrés dans la base de données pour vérification. Le login est unique et le mot de passe enregistré est crypté en utilisant la fonction crypt de la librairie libcrypt de Linux. La procédure d'authentification est donc sécurisée en ce sens que le login est unique dans la base de données et que le mot de passe est crypté par un algorithme efficace SHA-512. Avant tout ajout d'un nouvel utilisateur via vishnu dans la base de données le système vérifie que le login n'est pas déjà utilisé.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4</para></entry>
+              <entry><para>Authentification unique</para></entry>
+              <entry><para>Une fois authentifié dans l’intergiciel, l’utilisateur n’aura plus à s’authentifier pour utiliser les services de l'intergiciel avec son propre compte. Un identifiant de session sera créé par le système et retourné à l'utilisateur. Cet identifiant est ensuite enregistré dans une variable VISHNU_SESSION_ID pour éviter d'avoir à fournir cette information pour chaque requête (dans le cadre du client shell Unix). La complexité de cet identifiant garantit son unicité mais surtout un niveau de sécurité pour une utilisation du système sans authentification systématique. </para></entry>
+            </row>
+            <row>
+              <entry><para>1.5</para></entry>
+              <entry><para>Fermeture de session</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.5.1</para></entry>
+              <entry><para>Fermeture manuelle de session</para></entry>
+              <entry><para>L'utilisateur peut fermer manuellement la session dans laquelle il se trouve. Avant la fermeture, le système vérifie la présence de commandes en cours d'exécution dans la session. Si il existe une ou plusieurs commandes en cours d'exécution le système rend impossible la fermeture de session sinon la session est fermée. Cette fermeture est possible en utilisant l'identifiant de session défini dans la variable VISHNU_SESSION_ID. </para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.2</para></entry>
+              <entry><para>Choix de l'option de fermeture automatique de session</para></entry>
+              <entry><para>L'utilisateur peut choisir entre deux options de fermeture automatique de session: soit l'option de fermeture à la déconnexion du terminal, soit l'option de fermeture après expiration du délai d'inactivité (période sans aucun appel aux services de l'intergiciel). Le choix est enregistré dans la configuration permanente de l'utilisateur et peut également être modifié pour une session donnée. Le choix de fermeture à la déconnexion du terminal n'est possible que dans le cas d'une session de type &quot;shell unix&quot;. Dans les deux cas, la présence de commandes en cours d'exécution rend impossible la fermeture de session. Par contre, pour l'option de fermeture après expiration du délai d'inactivité, il y a une réinitialisation du délai d'inactivité lorsqu'il y a des commandes en cours d'exécution.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.3</para></entry>
+              <entry><para>Vérification des commandes en cours avant fermeture de session</para></entry>
+              <entry><para>Le système vérifie que toutes les commandes lancées pendant la session sont terminées avant de fermer la session. Dans le cas où l'utilisateur s'est déconnecté de son terminal et que la session doit être fermée automatiquement, la session ne sera pas fermée avant la fin de l'exécution de toutes les commandes en cours, et elle sera fermée après expiration du délai d'inactivité.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6</para></entry>
+              <entry><para>Reconnection à une session</para></entry>
+              <entry><para>Un utilisateur peut se connecter à une session déjà ouverte sur la même machine cliente en fournissant un identifiant unique de session ainsi que son login et mot de passe. S'il se trouve déjà dans une session ouverte, le système lui propose de fermer cette session ou bien de la conserver ouverte avec une déconnexion automatique au bout du temps maximum d'inactivité.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.7</para></entry>
+              <entry><para>Accès aux informations sur les sessions</para></entry>
+              <entry><para>Pour un utilisateur normal, l'affichage des sessions (actives ou fermées) n'est possible qu'après une authentification à partir du login et du mot de passe de l'utilisateur. Un administrateur peut par contre accéder à toutes les informations de sessions de tous les utilisateurs.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.8</para></entry>
+              <entry><para>Accès aux machines</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.8.1</para></entry>
+              <entry><para>Création et modification d'accès</para></entry>
+              <entry><para>L'accès à une machine au travers de l'intergiciel Vishnu se fera à l'aide d'un couple clé SSH privée/publique spécifique à chaque couple (machine, utilisateur). L'utilisateur du système Vishnu devra ajouter la clef publique aux clefs autorisées sur son compte Unix.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.8.2</para></entry>
+              <entry><para>Révocation d'un accès au compte unix par un utilisateur</para></entry>
+              <entry><para>L'utilisateur pour supprimer l'accès au travers de l'intergiciel Vishnu à son compte Unix sur une machine donnée en supprimant simplement la clef publique de la liste des cles autorisées sur son compte.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.8.3</para></entry>
+              <entry><para>Respect des autorisations d'accès</para></entry>
+              <entry><para>L'accès au compte de l'utilisateur sur une machine et aux informations y étant stockées se faisant via SSH avec le compte de l'utilisateur, tous les droits d'accès système seront respectés.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.8.4</para></entry>
+              <entry><para>Utilisation de comptes individuels</para></entry>
+              <entry><para>Un utilisateur Vishnu ne peut enregistrer un compte Unix sur une machine donnée que si ce compte n'est pas déjà utilisé par un autre utilisateur Vishnu. Si c'est le cas, le système Vishnu doit refuser la création (ou modification) de l'accès à la machine.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.9</para></entry>
+              <entry><para>Changement de mot de passe</para></entry>
+              <entry><para>Un utilisateur peut modifier son mot de passe lorsqu'il a déjà ouvert une session. Le nouveau mot de passe est actif immédiatement c'est-à-dire que toute nouvelle authentification se fera avec le nouveau mot de passe.</para></entry>
+            </row>
+            <row>
+              <entry><para>2</para></entry>
+              <entry><para>Sécurité des communications</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>2.1</para></entry>
+              <entry><para>Données des requêtes au système</para></entry>
+              <entry><para>Les requêtes au système vishnu sont authentifiées mais non cryptées.</para></entry>
+            </row>
+            <row>
+              <entry><para>2.2</para></entry>
+              <entry><para>Communications à travers un firewall</para></entry>
+              <entry><para>Les communications entre machines du système Vishnu pourront être configurées pour traverser un firewall permettant les communications cryptées.</para></entry>
+            </row>
+            <row>
+              <entry><para>2.3</para></entry>
+              <entry><para>Fichiers des utilisateurs</para></entry>
+              <entry><para>Les fichiers des utilisateurs sont transférés en utilisant le cryptage SSH avec les clefs de l'utilisateur. Pour qu'un transfert puisse avoir lieu entre deux machines l'utilisateur doit avoir configuré ses clefs SSH (indépendamment de Vishnu) pour permettre une communication entre ces deux machines.</para></entry>
+            </row>
+            <row>
+              <entry><para>2.4</para></entry>
+              <entry><para>Informations stockées par le système</para></entry>
+              <entry><para>Le système Vishnu stockera toutes les informations relatives aux utilisateurs, aux tâches, transferts de fichiers, mesures de performance et trace des requêtes dans une base de données PostgreSQL sans être cryptées. L'accès du système Vishnu à la base de données sera authentifié par login/mot de passe dont l'envoi au travers de la connexion sera réalisé après hachage MD5. Les communications entre le système Vishnu et la base de données pourront être cryptées si nécessaires par le protocole SSL en configurant le système Vishnu et la base de données.</para></entry>
+            </row>
+            <row>
+              <entry><para>3</para></entry>
+              <entry><para>Sécurité des fonctions administrateurs</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>3.1</para></entry>
+              <entry><para>Configuration de l'option par défaut de fin de session</para></entry>
+              <entry><para>Un administrateur peut définir quelle est l'option par défaut pour la fermeture automatique d'une session utilisateur: soit terminaison en cas de déconnexion de l'utilisateur du client, soit terminaison après expiration du délai d'inactivité</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2</para></entry>
+              <entry><para>Utilisation d'un compte tiers</para></entry>
+              <entry><para>Un administrateur de l’intergiciel pourra ouvrir une session VISHNU avec le compte d’un utilisateur n’étant pas administrateur lui-même.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section>
+      <title>Glossaire</title>
+      <para><itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Firewall (ou pare-feu en français)</emphasis>: est un matériel ou un logiciel
+qui impose une politique de sécurité 
+pour protéger un réseau en constituant une
+barrière (un filtre) avec d'autres réseaux.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">MD5</emphasis>: est un acronyme de Message Digest 5. 
+C'est une fonction de hachage cryptographique.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SHA-512</emphasis>: SHA-512 est un acronyme de Secure Hash Algorithm avec une empreinte de 512 bits. C'est une fonction de hachage cryptographique dérivée
+de SHA-1.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SSH</emphasis>: à la fois programme exécutable et protocole de communication sécurisé utilisant un échange de clés de chiffrement en début de connexion.</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+  </chapter>
+  <chapter annotations="core/specs/stb/STB_SoftHardWare.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
+    <title>Environnement matériel et logiciel</title>
+    <section>
+      <title>Tableau des Exigences</title>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="10cm"/>
+          <thead>
+            <row>
+              <entry>ID
+</entry>
+              <entry>Name
+</entry>
+              <entry>Text
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>1.</para></entry>
+              <entry><para>Plateformes supportées</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1</para></entry>
+              <entry><para>Machines clientes</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.3</para></entry>
+              <entry><para>Nombre et vitesse des processeurs</para></entry>
+              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.4</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 1Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.5</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 1Go disponible</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.6</para></entry>
+              <entry><para>Logiciels requis</para></entry>
+              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.7</para></entry>
+              <entry><para>Variables d'environnement</para></entry>
+              <entry><para>La clé RSA ou DSA du serveur SSH (chemin complet sur la clé publique) afin d'identifier le client</para></entry>
+            </row>
+            <row>
+              <entry><para>1.1.8</para></entry>
+              <entry><para>Interface réseau</para></entry>
+              <entry><para>Adresse IP dynamique et nom DNS dynamique</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2</para></entry>
+              <entry><para>Serveurs de calcul ou de stockage</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.2.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86 ou IBM BlueGene/P® (PPC 32-bits)</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.3</para></entry>
+              <entry><para>Nombre et vitesse des processeurs</para></entry>
+              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.4</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 1Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.5</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 10 Go disponible</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.6</para></entry>
+              <entry><para>Logiciels de gestion de jobs batch supportés</para></entry>
+              <entry><para>- Torque </para><para>- IBM LoadLeveler</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.7</para></entry>
+              <entry><para>Logiciels requis</para></entry>
+              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync, Client database (Oracle ou PostGreSQL)</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.8</para></entry>
+              <entry><para>Ports pour tunnel(s) SSH</para></entry>
+              <entry><para>1 port réseau disponible pour un tunnel SSH si serveur placé derrière un firewall</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2.9</para></entry>
+              <entry><para>Interface réseau</para></entry>
+              <entry><para>Adresse IP et nom DNS statiques</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3</para></entry>
+              <entry><para>Serveurs dédiés VISHNU</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.3.1</para></entry>
+              <entry><para>Nombre de serveurs</para></entry>
+              <entry><para>Au minimum 2 serveurs dédiés. Un ratio de 1 serveur supplémentaire pour 5 serveurs de calcul ou stockage est conseillé.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2</para></entry>
+              <entry><para>Plateforme</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.3.2.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2.3</para></entry>
+              <entry><para>Nombre et vitesse des processeurs</para></entry>
+              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2.4</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 2 Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2.5</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 10 Go disponibles</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2.6</para></entry>
+              <entry><para>Ports pour tunnel(s) SSH</para></entry>
+              <entry><para>N ports réseau disponibles pour un/des tunnel(s) SSH où N est le nombre de serveurs de calcul ou de stockage placés derrière un firewall.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3.2.7</para></entry>
+              <entry><para>Interface réseau</para></entry>
+              <entry><para>Adresse IP et nom DNS statiques</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4</para></entry>
+              <entry><para>Serveur Web (pour API Web Services)</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.4.1</para></entry>
+              <entry><para>Plateforme</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.4.1.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.1.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.1.3</para></entry>
+              <entry><para>Nombre et vitesse des processeurs</para></entry>
+              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.1.4</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 2Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.1.5</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 500 Go (espace nécessaire au stockage de fichiers temporaires)</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.1.6</para></entry>
+              <entry><para>Interface réseau</para></entry>
+              <entry><para>Adresse IP et nom DNS statiques </para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.2</para></entry>
+              <entry><para>Standard de publication des services web</para></entry>
+              <entry><para>WSDL 1.1</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.3</para></entry>
+              <entry><para>Machine virtuelle Java</para></entry>
+              <entry><para>Java SDK v1.6.0 ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.4</para></entry>
+              <entry><para>Serveur web d'applications</para></entry>
+              <entry><para>JBoss AS 5.1.0 ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.5</para></entry>
+              <entry><para>Module Web Services</para></entry>
+              <entry><para>Module JBossWS version Stack CXF Server 3.3.1.GA ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4.6</para></entry>
+              <entry><para>Autres logiciels requis</para></entry>
+              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5</para></entry>
+              <entry><para>Serveur de Base de données</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.5.1</para></entry>
+              <entry><para>Plateforme</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.5.1.1</para></entry>
+              <entry><para>Système d'exploitation</para></entry>
+              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.1.2</para></entry>
+              <entry><para>Architecture matérielle</para></entry>
+              <entry><para>Intel x86</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.1.3</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 2Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.1.4</para></entry>
+              <entry><para>Nombre et vitesse des processeurs</para></entry>
+              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.1.5</para></entry>
+              <entry><para>Espace disque</para></entry>
+              <entry><para>Minimum 500 Go</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.1.6</para></entry>
+              <entry><para>Ports pour tunnel(s) SSH</para></entry>
+              <entry><para>N ports réseau disponibles pour un/des tunnel(s) SSH où N est le nombre de serveurs de calcul ou de stockage placés derrière un firewall.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.1.7</para></entry>
+              <entry><para>Interface réseau</para></entry>
+              <entry><para>Adresse IP et nom DNS statiques</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.2</para></entry>
+              <entry><para>SGBD supportés</para></entry>
+              <entry><para>L'un des deux SGBD suivantes doit être installé:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- Oracle Database 11g (v11.1.0.6 minimum)</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5.3</para></entry>
+              <entry><para>Réplication de la base de données</para></entry>
+              <entry><para>Afin de garantir un temps de réponse maximum aux requêtes des machines de la plate-forme VISHNU, la base de donnée pourra être répliquée selon une architecture maître-esclave (écriture sur un seul serveur, lecture sur plusieurs serveurs).</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6</para></entry>
+              <entry><para>Infrastructure réseau</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.6.1</para></entry>
+              <entry><para>Connexion entre serveurs (calcul/stockage/VISHNU) et serveur de base de données</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.6.1.1</para></entry>
+              <entry><para>Débit</para></entry>
+              <entry><para>Minimum 100Mb/s</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.1.2</para></entry>
+              <entry><para>Temps de réponse</para></entry>
+              <entry><para>Maximum 100ms</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.1.3</para></entry>
+              <entry><para>Protocoles autorisés</para></entry>
+              <entry><para>TCP SSH (port 22) minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.2</para></entry>
+              <entry><para>Connexion entre clients (ou serveur web) et serveurs (calcul/stockage/VISHNU)</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.6.2.1</para></entry>
+              <entry><para>Débit</para></entry>
+              <entry><para>Minimum 10Mb/s</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.2.2</para></entry>
+              <entry><para>Temps de réponse</para></entry>
+              <entry><para>Maximum 200ms</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.2.3</para></entry>
+              <entry><para>Protocoles autorisés</para></entry>
+              <entry><para>TCP SSH (port 22) minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.3</para></entry>
+              <entry><para>Connexion vers un serveur de messagerie</para></entry>
+              <entry><para>Les serveurs de calcul et de stockage de la plateforme VISHNU doivent pouvoir se connecter sur un serveur de messagerie via le protocole SMTP.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6.3.1</para></entry>
+              <entry><para>Compte de messagerie</para></entry>
+              <entry><para>Un compte de messagerie sera utilisé par le système VISHNU pour envoyer des messages email aux utilisateurs.</para></entry>
+            </row>
+            <row>
+              <entry><para>2.</para></entry>
+              <entry><para>Versions des logiciels requis</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>2.1</para></entry>
+              <entry><para>SSH</para></entry>
+              <entry><para>serveur ssh et client ssh - version minimum TBD</para></entry>
+            </row>
+            <row>
+              <entry><para>2.2</para></entry>
+              <entry><para>CORBA</para></entry>
+              <entry><para>OmniORB v4.1.4 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>2.3</para></entry>
+              <entry><para>Librairie BOOST C++</para></entry>
+              <entry><para>v1.45 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>2.4</para></entry>
+              <entry><para>Librairies des Batch schedulers</para></entry>
+              <entry><para>Torque API / LoadLeveler API</para></entry>
+            </row>
+            <row>
+              <entry><para>2.5</para></entry>
+              <entry><para>Logiciels de transferts de fichiers</para></entry>
+              <entry><para>RSync v3.0 ou ultérieure</para></entry>
+            </row>
+            <row>
+              <entry><para>2.6</para></entry>
+              <entry><para>SysFera-DS</para></entry>
+              <entry><para>Une version de SysFera-DS supérieure ou égale à 2.6 et strictement inférieure à la version 3.0 doit être disponible</para></entry>
+            </row>
+            <row>
+              <entry><para>2.7</para></entry>
+              <entry><para>Modules SysFera-DS</para></entry>
+              <entry><para>Le module LogService de SysFera-DS devra faire partie de l'installation de SysFera-DS.</para></entry>
+            </row>
+            <row>
+              <entry><para>2.8</para></entry>
+              <entry><para>Client database</para></entry>
+              <entry><para>- Oracle Database Client 11g (v11.1.0.6 minimum)</para><para>- PostgreSQL client v8.0</para></entry>
+            </row>
+            <row>
+              <entry><para>3.</para></entry>
+              <entry><para>Outils de compilation</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>3.1</para></entry>
+              <entry><para>CMake</para></entry>
+              <entry><para>CMake v2.6 minimum</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2</para></entry>
+              <entry><para>GCC</para></entry>
+              <entry><para>GCC v4.4.3 minimum (Janvier 2010)</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section>
+      <title>Glossaire</title>
+      <para><itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">SGBD</emphasis>: (Système de gestion de bases de données, en anglais DBMS)</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+  </chapter>
+  <chapter annotations="core/specs/stb/STB_Performance.asta#REQS[Tableau des Exigences]+DICT(STB MindMap/GLOSSAIRE)[Glossaire]">
+    <title>Performances, fiabilité et robustesse</title>
+    <section>
+      <title>Tableau des Exigences</title>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="10cm"/>
+          <thead>
+            <row>
+              <entry>ID
+</entry>
+              <entry>Name
+</entry>
+              <entry>Text
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>1</para></entry>
+              <entry><para>Fiabilité</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>1.1</para></entry>
+              <entry><para>Réponse aux requêtes</para></entry>
+              <entry><para>Toute requête lancée à travers le système Vishnu conduit à une réponse. Cette réponse peut  être soit le résultat prévu, soit un message d'erreur. </para><para>Pour chaque message d'erreur, le système vishnu associe un code d'erreur (type entier) correspondant. Un code égal à zero correspondra à un résultat correct. Les interfaces de programmation de Vishnu fourniront un mécanisme d'exceptions permettant à l'utilisateur de traiter séparément les erreurs selon leur cause.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.2</para></entry>
+              <entry><para>Enregistrement des requêtes</para></entry>
+              <entry><para>Le système Vishnu conserve la trace de chaque requête utilisateur dans une base de données. Cette trace comprend les identifiants de l'utilisateur et de la machine cliente, le nom de la commande ayant permis le lancement de la requête et les paramètres de la requête. Dans le cas d'une requête soumise via l'API Web Services, la machine cliente sera le serveur web lui-même.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.3</para></entry>
+              <entry><para>Reproductibilité des requêtes</para></entry>
+              <entry><para>Le système Vishnu peut ré-executer une ou plusieurs requêtes à partir des traces enregistrées. Pour chaque requête, les paramètres de la requête seront les mêmes que lors de la soumission initiale à l'exception de l'utilisateur et de la machine cliente qui proviendront de la session courante (remarque: un administrateur peut ouvrir une session en tant qu'un autre utilisateur).</para></entry>
+            </row>
+            <row>
+              <entry><para>1.4</para></entry>
+              <entry><para>Erreurs dues à l'infrastructure</para></entry>
+              <entry><para>Lorsqu'une machine de l'infrastructure est arrêtée ou injoignable le système répond aux requêtes des utilisateurs concernant cette machine avec un message d'erreur indiquant que la machine n'est pas disponible.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.5</para></entry>
+              <entry><para>Erreurs d'utilisation</para></entry>
+              <entry><para>Une requête lancée avec des paramètres incorrects sera rejetée par le système Vishnu, et pour chaque paramère incorrect, le système Vishnu indiquera le motif du rejet. Le système Vishnu indiquera à l'utilisateur l'utilisation correcte de la requête avec les bons paramètres.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.6</para></entry>
+              <entry><para>Erreurs dues à l'intergiciel</para></entry>
+              <entry><para>Lorsqu'un processus serveur fournissant un service de l'intergiciel Vishnu crashe pendant l'exécution de ce service le système Vishnu informe l'utilisateur de l'arrêt de ce service par un message d'erreur ou une exception. Dans le cas d'un appel de service asynchrone, après que la requête utilisateur a été lancée, un arrêt du service ne sera pas signalé à l'utilisateur. Si le service est redémarré avant une requête d'interrogation de l'utilisateur alors l'utilisateur recevra des informations sur l'état de ses requêtes sans être informé de l'arrêt temporaire du service.</para></entry>
+            </row>
+            <row>
+              <entry><para>1.7</para></entry>
+              <entry><para>Erreurs dues aux droits d'accès</para></entry>
+              <entry><para>L'accès à certaines informations nécessite des permissions en lecture ou écriture. Si un utilisateur n'a pas les droits nécessaires pour accéder à ces informations, le système Vishnu l'en informera par un message indiquant la nature de la permission manquante et l'objet concerné.</para></entry>
+            </row>
+            <row>
+              <entry><para>2</para></entry>
+              <entry><para>Capacité</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>2.1</para></entry>
+              <entry><para>Nombre de requêtes simultanées</para></entry>
+              <entry><para>Le système pourra supporter au minimum 100 requêtes simultanées. </para></entry>
+            </row>
+            <row>
+              <entry><para>2.2</para></entry>
+              <entry><para>Nombre d'utilisateurs</para></entry>
+              <entry><para>Le système pourra supporter au minimum 1000 utilisateurs enregistrés.</para></entry>
+            </row>
+            <row>
+              <entry><para>2.3</para></entry>
+              <entry><para>Nombre de machines serveur</para></entry>
+              <entry><para>Le système pourra supporter au minimum 10 machines serveurs (supercalculateurs ou frontales de cluster)</para></entry>
+            </row>
+            <row>
+              <entry><para>2.4</para></entry>
+              <entry><para>Nombre de machines clientes</para></entry>
+              <entry><para>Le système pourra supporter au minimum 1000 machines clientes (postes scientifiques)</para></entry>
+            </row>
+            <row>
+              <entry><para>3</para></entry>
+              <entry><para>Performance</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>3.1</para></entry>
+              <entry><para>Latence</para></entry>
+              <entry><para>En fonctionnement normal (ressources des machines non saturées), avec l'interface d'utilisation en ligne de commande, la latence sera inférieure ou égale à celle obtenue par une commande ssh ayant le même effet en termes de soumission de job ou transfert de fichiers.</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2</para></entry>
+              <entry><para>Consommation de ressources</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>3.2.1</para></entry>
+              <entry><para>Consommation mémoire moyenne des processus VISHNU</para></entry>
+              <entry><para>La consommation moyenne des processus VISHNU ne devra pas dépasser 500Mb de mémoire virtuelle </para></entry>
+            </row>
+            <row>
+              <entry><para>3.2.2</para></entry>
+              <entry><para>Consommation CPU moyenne des processus VISHNU</para></entry>
+              <entry><para>La consommation CPU des processus VISHNU ne devra pas dépasser 10% lorsque le système n'est pas soumis à des requêtes utilisateur (la consommation étant essentiellement dûe aux processus de supervision)</para></entry>
+            </row>
+            <row>
+              <entry><para>3.2.3</para></entry>
+              <entry><para>Consommation ponctuelle pour l'exécution d'une requête utilisateur</para></entry>
+              <entry><para>L'utilisation de Vishnu pour exécuter des requêtes sur un gestionnaire de jobs (soumission de job ou interrogation) ne devra pas consommer en moyenne davantage de ressources sur le serveur que l'utilisation d'un client en ligne de commande (client &quot;lourd&quot; du gestionnaire de jobs).</para></entry>
+            </row>
+            <row>
+              <entry><para>4</para></entry>
+              <entry><para>Robustesse</para></entry>
+              <entry/>
+            </row>
+            <row>
+              <entry><para>4.1</para></entry>
+              <entry><para>Absence de plantage intempestif</para></entry>
+              <entry><para>Les processus du système ne doivent pas s'interrompre en fonctionnement &quot;de croisière&quot; (c'est-à-dire hors de toute défaillance logicielle ou matérielle du système hôte).</para></entry>
+            </row>
+            <row>
+              <entry><para>4.2</para></entry>
+              <entry><para>Résistance aux défaillances</para></entry>
+              <entry><para>Le système doit rester disponible en cas de défaillance de l'infrastructure n'affectant pas la connection de l'utilisateur aux point(s) d'entrée du système. Plusieurs points d'entrée pourront être configurés mais le nombre de processus lancés par le système sur les machines sera alors augmenté.</para></entry>
+            </row>
+            <row>
+              <entry><para>4.3</para></entry>
+              <entry><para>Délestage</para></entry>
+              <entry><para>Le délestage permettra à un administrateur de réduire de manière immédiate la charge générée par l'intergiciel sur une machine de l'infrastructure. Deux niveaux de délestage seront possible.</para></entry>
+            </row>
+            <row>
+              <entry><para>4.3.1</para></entry>
+              <entry><para>Délestage &quot;soft&quot;</para></entry>
+              <entry><para>Au niveau &quot;soft&quot;, le délestage interrompra les activités en cours sur la machine concernée (activités contrôlées par le système Vishnu uniquement). Ces activités pourront être relancées par le système lors de la commande de fin de délestage executée par l'administrateur.</para></entry>
+            </row>
+            <row>
+              <entry><para>4.3.2</para></entry>
+              <entry><para>Délestage &quot;hard&quot;</para></entry>
+              <entry><para>Au niveau &quot;hard&quot;, le délestage interrompra tous les processus de l'intergiciel sur la machine concernée sans effectuer d'actions éventuellement nécessaires à leur redémarrage. Le redémarrage de Vishnu sur la machine utilisera la même procédure qu'un démarrage &quot;à froid&quot; standard.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section>
+      <title>Glossaire</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>Aucun terme à définir</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+  </chapter>
+</book>
