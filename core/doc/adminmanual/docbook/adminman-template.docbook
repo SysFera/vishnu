@@ -37,7 +37,7 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>21/03/2011</date>
+        <date>22/03/2011</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
           <para>Ajout de l'installation pour les webs services</para>
@@ -244,6 +244,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	</listitem>
 	<listitem><para>Java 1.6 d'installé et la variable JAVA_HOME définie et pointant sur le répertoire racine de l'installation de java</para></listitem>
       </itemizedlist>
+	<para>Maven 2 pour recompiler les jars. <emphasis role="bold">Attention :</emphasis> Une compilation avec maven nécessite une connexion internet valide</para>
     </section><!-- end prerequis -->
     <section>
       <title>Installation de JBOSS</title>
@@ -273,18 +274,25 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	<listitem>
 	  <para> Lancer la commande 'ant deploy-jboss510'. Si une autre version de jboss a été prise, il faut faire la commande de la version correspondante</para>
 	</listitem>
-	<listitem><para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh</para></listitem>
+	<listitem><para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh. Pour lancer jboss autrement que sur localhost, utiliser l'option '-b IP' </para></listitem>
       </itemizedlist>
     </section>
     <section>
       <title> Eléments nécessaires à l'utilisation des WS pour VISHNU</title>
       <itemizedlist>
 	<listitem>
-	  <para>vishnuums.jar
+	  <para>VishnuLib-1.0-SNAPSHOT.jar
 	    <itemizedlist>
 	      <listitem><para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para></listitem>
 	      <listitem><para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para></listitem>
 	      <listitem><para>Le changer implique un redémarrage du serveur JBOSS.</para></listitem>
+	      <listitem><para>Compilation (si nécessaire)
+		  <itemizedlist>
+		    <listitem><para>Aller dans le répertoire VishnuLib</para></listitem>
+		    <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
+		    <listitem><para>Le jar se trouve dans target/</para></listitem>
+		  </itemizedlist>
+	      </para></listitem>
 	    </itemizedlist>
 	  </para>
 	</listitem>
@@ -295,13 +303,21 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	      <listitem><para>Utilise la variable d'environnement <emphasis role="bold">VISHNU_CONFIG_FILE</emphasis>, qui indique le fichier de configuration pour le client.</para></listitem>
 	      <listitem><para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/deploy</emphasis>.</para></listitem>
 	      <listitem><para>Peut être mis à jour sans redémarrer le serveur JBOSS.</para></listitem>
+	      <listitem><para>Compilation (si nécessaire)
+		  <itemizedlist>
+		    <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VishnuLib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
+		    <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
+		    <listitem><para>Le jar se trouve dans target/</para></listitem>
+		    <listitem><para>Renommer le jar en WSAPI.jar avant de le mettre dans jboss, ceci est nécessaire</para></listitem>
+		  </itemizedlist>
+	      </para></listitem>
 	    </itemizedlist>
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>libVISHNU_UMS.so
 	    <itemizedlist>
-	      <listitem><para>Nécessaire pour le fonctionnement des WS</para></listitem>
+	      <listitem><para>Nécessaire pour le fonctionnement des WS, obtenue en compilant VISHNU (C++)</para></listitem>
 	      <listitem><para>Le dossier la contenant doit être dans le <emphasis role="bold">LD_LIBRARY_PATH</emphasis></para></listitem>
 	      <listitem><para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH</para></listitem>
 	    </itemizedlist>
