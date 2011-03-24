@@ -1,0 +1,1494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="fr-FR">
+   <informaltable frame="all">
+      <tgroup cols="2"><tbody><row>
+            <entry>
+               <para>
+                  <inlinegraphic fileref="embedded:images1" width="21.002cm" depth="5.808cm"/>VISHNU_D4_1b-TMS-PlanTests</para>
+            </entry>
+            <entry>
+               <para>Politique de tests du module TMS</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/>
+   <para/>
+   <para/>
+   <para/>
+   <para>PROJET VISHNU</para>
+   <para/>
+   <para>DOCUMENTS DE REFERENCE</para>
+   <para/>
+   <para/>
+   <para/>
+   <para/>
+   <para>PLAN</para>
+   <para>DE</para>
+   <para/>
+   <para>TESTS</para>
+   <para/>
+   <para/>
+   <para/>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="2"><tbody><row>
+            <entry>
+               <para>Ref. document</para>
+            </entry>
+            <entry>
+               <para>VISHNU_D4_1b-TMS-PlanTests</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>Objet du document</para>
+            </entry>
+            <entry>
+               <para>Référentiel du plan de tests du module TMS du projet Vishnu</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para/>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/>
+   <para>TABLE DES REVISIONS</para>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="4"><tbody><row>
+            <entry>
+               <para>Version</para>
+            </entry>
+            <entry>
+               <para>Date</para>
+            </entry>
+            <entry>
+               <para>Modifications</para>
+            </entry>
+            <entry>
+               <para>Auteur</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>V1.0</para>
+            </entry>
+            <entry>
+               <para>21/03/11</para>
+            </entry>
+            <entry>
+               <para>Version initiale</para>
+            </entry>
+            <entry>
+               <para>Benjamin Isnard, Daouda Traoré, Eugène Pamba Capo-Chichi</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/>
+   <para>VALIDATION DU DOCUMENT</para>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="2"><tbody><row>
+            <entry>
+               <para>Date</para>
+            </entry>
+            <entry>
+               <para>Personne</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para/>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para/>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/>
+   <para>REFERENCES</para>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="2"><tbody><row>
+            <entry>
+               <para>Ref. document</para>
+            </entry>
+            <entry>
+               <para>Description</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>VISHNU_D1_1e-POL-TESTS</para>
+            </entry>
+            <entry>
+               <para>Politique de tests du projet VISHNU </para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>VISHNU_D1_1a-SPECSGEN</para>
+            </entry>
+            <entry>
+               <para>Spécifications générales du projet VISHNU</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>VISHNU_D1_1b-STB</para>
+            </entry>
+            <entry>
+               <para>Spécifications Techniques des besoins</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>VISHNU_D1_1g-ARCH</para>
+            </entry>
+            <entry>
+               <para>VISHNU Technical  Architecture</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/><sect1><title>        Présentation du document</title><sect2><title>        Objectifs du document</title>
+   <para>Les objectifs de ce document sont les suivants :</para>
+   <orderedlist>
+      <listitem>
+         <para>Présenter les fonctionnalités du module TMS à tester.</para>
+      </listitem>
+      <listitem>
+         <para>Présenter les différents types de tests  permettant  de valider les cas d'utilisation de chaque fonctionnalité du module TMS.</para>
+      </listitem>
+      <listitem>
+         <para>Présenter les méthodes et outils utilisés pour ces tests.</para>
+      </listitem>
+      <listitem>
+         <para>Donner des détails de l'environnement de test</para>
+      </listitem>
+   </orderedlist></sect2><sect2><title>        Structure du document</title>
+   <para>Le chapitre 1 présente le document.</para>
+   <para>Le chapitre 2 présente les environnements et outils de tests.</para>
+   <para>La chapitre 3 décrit la liste des tests qui s'appliquent aux fonctionnalités à tester.</para>
+   <para>La chapitre 4 présente les outils utilisés pour ces tests.</para></sect2><sect2><title>        Glossaire, abréviations et acronymes</title><sect3><title>        Glossaire</title>
+   <orderedlist>
+      <listitem>
+         <para>Script de test : c'est un programme qui contient les instructions permettant de réaliser les tests.</para>
+      </listitem>
+      <listitem>
+         <para>Certificat : correspond à la « session key » définie dans [SPECSGEN].</para>
+      </listitem>
+   </orderedlist></sect3><sect3><title>        Acronymes</title>
+   <orderedlist>
+      <listitem>
+         <para>STB : Spécification Technique des Besoins</para>
+      </listitem>
+      <listitem>
+         <para>DSG : Document de Spécification générale</para>
+      </listitem>
+      <listitem>
+         <para>DSD : Document de Spécification Détaillées</para>
+      </listitem>
+      <listitem>
+         <para>API : Application Programming Interface (Interface de programmation d'applications)</para>
+      </listitem>
+      <listitem>
+         <para>MPI : Message Passing Interface</para>
+      </listitem>
+      <listitem>
+         <para>Batch Scheduler : outil logiciel effectuant la gestion des ressources informatiques dans des supercalculateurs ou dans des grappes de serveurs informatiques. Ces outils permettent aux utilisateurs d'effectuer des réservations de ces ressources pour un temps donné.</para>
+      </listitem>
+   </orderedlist></sect3><sect3><title>        Abréviations</title>
+   <orderedlist>
+      <listitem>
+         <para>Id.         Identifiant</para>
+      </listitem>
+      <listitem>
+         <para>Réf.        Référence</para>
+      </listitem>
+      <listitem>
+         <para>Rel.#        Numéro de release/version</para>
+      </listitem>
+      <listitem>
+         <para>Resp.        Responsable(s)</para>
+      </listitem>
+   </orderedlist></sect3></sect2></sect1><sect1><title>  Environnements et outils de tests</title><sect2><title> Environnements de tests</title>
+   <para>Pour ces tests, nous allons utiliser les deux environnements de tests suivants avec des systèmes dédiés aux tests:</para>
+   <para/>
+   <para>Environnement 1 :</para>
+   <para/>
+   <orderedlist>
+      <listitem>
+         <para>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</para>
+      </listitem>
+      <listitem>
+         <para>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</para>
+      </listitem>
+      <listitem>
+         <para> Nombre de machines serveurs : un serveur TMS sur une machine sur laquelle est installée un gestionnaire de ressources Torque  [ARCH] .</para>
+      </listitem>
+      <listitem>
+         <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
+      </listitem>
+   </orderedlist>
+   <para/>
+   <para>Environnement 2 :</para>
+   <para/>
+   <orderedlist>
+      <listitem>
+         <para>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</para>
+      </listitem>
+      <listitem>
+         <para>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</para>
+      </listitem>
+      <listitem>
+         <para> Nombre de machines serveurs:  un serveur TMS  sur une machine sur laquelle est installée un gestionnaire de ressources LoadLeveler [ARCH]. </para>
+      </listitem>
+      <listitem>
+         <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
+      </listitem>
+   </orderedlist>
+   <para/></sect2><sect2><title> Outils de tests </title>
+   <para>Les outils suivants seront utilisés pour les tests :</para>
+   <orderedlist>
+      <listitem>
+         <para>Hudson (serveur d'intégration)  sera utilisé pour les tests d'intégration continue (compilation, installation).</para>
+      </listitem>
+      <listitem>
+         <para>La librairie Boost test sera utilisée pour la réalisation des tests unitaires en C++.</para>
+      </listitem>
+      <listitem>
+         <para>Le framework JUnit sera utilisé pour  la réalisation des tests unitaires en JAVA.</para>
+      </listitem>
+      <listitem>
+         <para>Des scripts Python seront utilisés pour la réalisation des tests unitaires en Python.</para>
+      </listitem>
+      <listitem>
+         <para>Des scripts SHELL BASH seront utilisés pour la réalisation des tests unitaires de la ligne de commande.</para>
+      </listitem>
+      <listitem>
+         <para>Squore et Logiscope seront utilisés pour la qualité du code.</para>
+      </listitem>
+      <listitem>
+         <para>Valgrind sera utilisé pour la détection de fuite mémoire.</para>
+      </listitem>
+   </orderedlist></sect2></sect1><sect1><title>  Cycle de vie du test</title>
+   <para>Le schéma suivant donne une vue d'ensemble du plan de test sur des cas de tests à réaliser jusqu'à la rédaction du  </para>
+   <para>rapport de tests :</para>
+   <para/>
+   <para/>
+   <para/></sect1><sect1><title> Liste des tests</title><sect2><title>        Tests fonctionnels</title>
+   <para>Les tests fonctionnels ou tests de boites noires permettent à partir des données en entrée d'observer les réactions du logiciel à tester.</para>
+   <para>Les fonctionnalités  sont classées par catégories de tests :</para>
+   <para/>
+   <orderedlist>
+      <listitem>
+         <para>Catégorie 1 : regroupe les fonctionnalités permettant de soumettre une action au serveur TMS: vishnu_submit_job, vishnu_cancel_job, vishnu_set_machine_refresh_period.</para>
+      </listitem>
+      <listitem>
+         <para>Catégorie 2 : regroupe les fonctionnalités permettant de solliciter des informations du serveur TMS: vishnu_get_job_info, vishnu_get_job_progress, vishnu_get_job_out_put, vishnu_get_all_jobs_out_put, vishnu_get_machine_refresh_period, vishnu_list_queues, vishnu_list_jobs.</para>
+      </listitem>
+   </orderedlist>
+   <para>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</para>
+   <para>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API TMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</para>
+   <orderedlist>
+      <listitem>
+         <para>Est ce que le programme réalise les fonctions attendues en accord avec les spécifications?</para>
+      </listitem>
+      <listitem>
+         <para>Est ce que le programme fonctionne correctement ?</para>
+      </listitem>
+   </orderedlist><sect3><title> Identifiant de tests</title>
+   <para>Les identifiants des tests sont de la forme: &lt;ID DSG&gt;-[B|E]:&lt;NOM_TEST&gt;-&lt;INTERFACE&gt; où 'ID DSG' est l'identifiant du cas d'utilisation dans le document [SDG] , 'B' la séquence de base (exécution du cas d'utilisation avec des paramètres valides), 'E' la séquence d'exception (comportement du cas d'utilisation en cas d'erreurs),  'NOM_TEST' le nom du test décrit dans [SDG] et 'INTERFACE' les différents codes des interfaces utilisées par VISHNU : fonctions API/C++(CPP), API/Python (PY), ligne de commande utilisateur (CLI) et API web services  (WS).  L'absence du code de l'interface signifie que le test s'applique à toutes les interfaces précédentes.</para>
+   <para>Il faut noter que les tests avec des paramètres corrects sont effectués dans une session active avec un mode de fermeture à la déconnexion (CLOSE_ON_DISCONNECT) et un certificat de session valide.</para></sect3><sect3><title>   Tests de la Catégorie 1</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3.625"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Actions</para>
+            </entry>
+            <entry>
+               <para>Résultats</para>
+            </entry>
+            <entry>
+               <para>Considérations particulières</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T1.1-B:submit a job </para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job. </para>
+                  </listitem>
+                  <listitem>
+                     <para>Si l'identifiant de machine et le script sont valides, un identifiant du job généré par VISHNU et le chemin jusqu'au résultats du job sont retournés .</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer la commande vishnu_list_jobs et vérifier que </para>
+                     <para>l'identifiant du job est bien présent dans la liste.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>Le script soumis doit  respecter les directives du Batch scheduler utilisé.</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T1.1-E1:submit a job T1.1-E2 : submit a job</para>
+               <para>T1.1-E3 : submit a job</para>
+               <para>T1.1-E4 : submit a job</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects.</para>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer la commande vishnu_submit_job avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message correspondant.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <para/>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.2-B:cancel a job </para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_cancel_job avec l'identifiant de la machine sur laquelle le job sera annulé et  l'identifiant du job à annuler.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_get_job_info avec les paramètres précédents (l'identifiant de la machine sur laquelle le job a été annulé et  l'identifiant du job annulé) et vérifier que son exécution échoue. </para>
+                  </listitem>
+               </orderedlist>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para/>
+               <para>T2.2-E1:cancel a job </para>
+               <para>T2.2-E2:cancel a job</para>
+               <para>T2.2-E3:cancel a job</para>
+               <para>T2.2-E4:cancel a job</para>
+               <para/>
+            </entry>
+            <entry>
+               <para/>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects.</para>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer la commande vishnu_cancel_job avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>TA1-B:set machine refresh period </para>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects et l'utilisateur est un administrateur du système VISHNU.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_get_machine_refresh_period avec l'identifiant de la machine dont l'administrateur souhaite obtenir la période de rafraichissement.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_set_machine_refresh_period avec l'identifiant de la machine sur laquelle la période de rafraichissement sera appliquée et le nouveau délai de rafraichissement.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Faire  vishnu_get_machine_refresh_period avec l'identifiant de la machine dont la période a été modifiée et vérifier que le nouveau délai de rafraichissement a été bien pris en compte.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer le cas de test T1.2-B en vérifiant que la fréquence de mise à jour des résultats de jobs correspond à la valeur définie à l'étape 3.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>Une nouvelle période de rafraichissement est attribuée au système.</para>
+            </entry>
+            <entry>
+               <para>L'utilisateur qui exécute les commandes doit être un administrateur du système VISHNU</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>TA1-E1:set machine refresh period</para>
+               <para>TA1-E2:set machine refresh period</para>
+               <para>TA1-E3:set machine refresh period  </para>
+               <para>TA1-E4:set machine refresh period  </para>
+               <para/>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects.</para>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer  vishnu_set_machine_refresh_period avec le cas de test (E1, E2, E3 ou E4) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry namest="c1" nameend="c4">
+               <para/>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/></sect3><sect3><title>  Tests de la catégorie 2</title>
+   <para/>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="4"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Actions</para>
+            </entry>
+            <entry>
+               <para>Résultats</para>
+            </entry>
+            <entry>
+               <para>Considérations particulières</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.1-B:get job information</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_list_jobs avec l'option -i suivie de l'identifiant du job généré par VISHNU et  l'identifiant de la machine sur laquelle le job a été soumis.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_get_job_info avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job généré par VISHNU.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Comparer les résultats des commandes précédentes et vérifier qu'ils sont identiques.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- les informations correspondant au job sont retournées.</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.1-E1:get job information</para>
+               <para>T2.1-E2:get job information</para>
+               <para>T2.1-E3:get job information</para>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer le commande vishnu_get_job_info avec le cas de test (E1, E2 ou E3) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                  </listitem>
+               </orderedlist>
+               <para/>
+            </entry>
+            <entry>
+               <para>- Un message d'erreur correspondant au cas d'erreur est affiché </para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.5-B1:get jobs progression</para>
+               <para>T2.5-B2:get jobs progression</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Vérifier qu'aucun job n'est soumis ou en cours d'exécution  sinon les annuler à l'aide de vishnu_cancel_job.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  successivement vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job puis conserver les identifiants de job retournés par le système.</para>
+                  </listitem>
+               </orderedlist>
+               <para>Pour le cas B1 :</para>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_job_progress avec le même identifiant de machine que précédemment.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Vérifier que les progressions des deux jobs lancés précédemment sont retournées par VISHNU.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Répéter la commande précédente jusqu'à ce que la progression soit de 100% pour chacun des jobs</para>
+                  </listitem>
+                  <listitem>
+                     <para>Faire vishnu_get_job_out_put avec l'identifiant de la machine sur laquelle les deux jobs ont été soumis et l'identifiant de chaque job et vérifier que le résultat de chacun des jobs est bien retourné.</para>
+                  </listitem>
+               </orderedlist>
+               <para>Pour le cas B2 :</para>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_job_progress  avec l'option -i  suivie d'un identifiant de job généré par VISHNU et  l'identifiant de la machine sur laquelle le job a été soumis.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Répéter la commande précédente jusqu'à ce que la progression du job soit de 100% .</para>
+                  </listitem>
+                  <listitem>
+                     <para>Faire vishnu_get_job_out_put avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job et vérifier que le résultat job est bien retourné.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- La progression du job est retournée par le système</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.5-E1:get jobs progression</para>
+               <para>T2.5-E2:get jobs progression</para>
+               <para>T2.5-E3:get jobs progression</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects</para>
+                  </listitem>
+               </orderedlist>
+               <para/>
+               <para>Pour le cas B1 et B2:</para>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <para>Pour le cas B2 :</para>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer vishnu_get_job_progress avec les paramètres correspondant à chaque cas et vérifier que l'exécution de la commande échoue avec le message d'erreur correspondant.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Un message correspondant au code d'erreur est affiché</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.6-B:get job outputs synchronously</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job et conserver l'identifiant du job retourné par le système.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Attendre pendant une durée égale au temps d'exécution du job défini dans le script.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Faire vishnu_get_job_out_put avec l'identifiant de la machine sur laquelle le job a été soumis et l'identifiant du job et vérifier que le résultat job est bien retourné dans les chemins spécifiés dans le scripts de soumission.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Les résultats de job sont récupérés.</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.6-E1:get job outputs synchronously</para>
+               <para>T2.6-E2:get job outputs synchronously</para>
+               <para>T2.6-E3:get job outputs synchronously</para>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+                  <listitem>
+                     <para>Lancer le programme vishnu_get_job_out_put avec le cas de test (E1, E2 ou E3) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <para/>
+            </entry>
+            <entry>
+               <para>- Un message correspondant au cas d'erreur est affiché</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T1.2-B : get job outputs asynchronously</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Vérifier qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de vishnu_cancel_job. </para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer deux fois la commande vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job dont les chemins « outputPath » et « errorPath » et le temps d'exécution de chacun des jobs . Dans le script du premier job, le temps d'exécution estimé est d'une minute et dans le script du second job, il  est de deux minutes.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_all_jobs_out_put </para>
+                  </listitem>
+                  <listitem>
+                     <para>Une minute après le lancement de la commande   vishnu_get_all_jobs_out_put vérifier que les résultats du premier job ont été bien rapatriés dans les chemins spécifiés dans le script de soumission.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Deux minutes après le lancement de la commande   vishnu_get_all_jobs_out_put vérifier que les résultats du second job ont été bien rapatriés dans les chemins spécifiés dans le script de soumission.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Les résultats des deux jobs soumis sont rapatriés.</para>
+            </entry>
+            <entry>
+               <para>La période de rafraichissement est d'une minute.</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T1.2-E1 : get job outputs asynchronously</para>
+               <para>T1.2-E2 : get job outputs</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_all_jobs_out_put avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Le message d'erreur correspondant au cas d'erreur est affiché</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.7-B:get machine refresh period</para>
+            </entry>
+            <entry>
+               <para/>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_set_machine_refresh_period avec l'identifiant de la machine sur laquelle la période de rafraichissement sera appliquée et le nouveau délai de rafraichissement.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer  la commande vishnu_get_machine_refresh_period avec l'identifiant de la machine utilisée précédemment et vérifier que la valeur est bien celle qui a été attribuée.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Répéter l'étape 1 avec un délai de rafraichissement différent de celui qui précède puis faire l'étape 2.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Le délai de rafraichissement est retourné.</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.7-E1:get machine refresh period</para>
+               <para>T2.7-E2:get machine refresh period</para>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+                  <listitem>
+                     <para>Lancer la commande vishnu_get_machine_refresh_period avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Un message correspondant au cas d'erreur est affiché</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.3-B:list job queues</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer la commande vishnu_list_queues avec l'identifiant de la machine rattachée au Batch scheduler dont les queues seront listées et conserver la liste des queues.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Se connecter au Batch scheduler associé à la machine précédente.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <para>      Cas 1 : le Batch scheduler est Torque </para>
+               <para>     - Lancer la commande qstat -Q et vérifier que la liste des        queues obtenue est la même que celle qui précède.  </para>
+               <para/>
+               <para>      Cas 2 : le Batch  scheduler est LoadLeveler</para>
+               <para>     - Lancer la commande llclass et vérifier que la liste des queues obtenue est la même que celle qui précède.</para>
+               <para/>
+            </entry>
+            <entry>
+               <para>- Les queues du Batch scheduler sont listées.</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.3-E1:list job queues</para>
+               <para>T2.3-E2:list job queues</para>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : paramètres sont incorrects.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+                  <listitem>
+                     <para>Lancer la commande vishnu_list_queues avec le cas de test (E1 ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Un message correspondant au cas d'erreur est affiché</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.4-B:list jobs</para>
+               <para/>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont corrects.</para>
+                     <para/>
+                  </listitem>
+                  <listitem>
+                     <para>Vérifier qu'aucun job n'est soumis ou en cours d'exécution sinon les annuler à l'aide de vishnu_cancel_job. </para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer cinq fois vishnu_submit_job avec l'identifiant de la machine sur laquelle le job sera soumis et  le chemin vers le script contenant les caractéristiques du job puis conserver les</para>
+                     <para>identifiants des jobs.</para>
+                  </listitem>
+                  <listitem>
+                     <para>Lancer la commande vishnu_list_jobs et vérifier que les cinq jobs précédents sont affichés.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>Les jobs soumis sont affichés.</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>T2.4-E1:list jobs</para>
+               <para>T2.4-E2:list jobs</para>
+            </entry>
+            <entry>
+               <orderedlist>
+                  <listitem>
+                     <para>Cas de test : les paramètres sont incorrects.</para>
+                     <para/>
+                  </listitem>
+               </orderedlist>
+               <orderedlist>
+                  <listitem/>
+               </orderedlist>
+               <orderedlist>
+                  <listitem>
+                     <para>Lancer la commande vishnu_list_jobs avec le cas de test (E1  ou E2) et vérifier que son exécution échoue avec le message d'erreur correspondant.</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Un message correspondant au cas d'erreur est affiché</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/></sect3></sect2><sect2><title> Tests de stress        </title><sect3><title> Présentation</title>
+   <para>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et être récupérée pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</para></sect3><sect3><title> Environnement des tests</title>
+   <para>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</para></sect3><sect3><title> Identifiants de tests</title>
+   <para>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</para></sect3><sect3><title> Liste des tests</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Technique</para>
+            </entry>
+            <entry>
+               <para>Critère de complétion</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>STR-SERV-DOWN</para>
+               <para/>
+            </entry>
+            <entry>
+               <para>- Lancer la commande vishnu_submit_job</para>
+               <para>- Arrêter le serveur TMS après l'exécution de la commande</para>
+               <para>- Redémarrer le serveur TMS</para>
+               <para>- Lancer la commande vishnu_cancel_job</para>
+               <para/>
+            </entry>
+            <entry>
+               <para>- Terminaison normale de la commande vishnu_cancel_job</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>STR-AGENT-DOWN</para>
+               <para/>
+            </entry>
+            <entry>
+               <para>- Lancer la commande vishnu_submit_job</para>
+               <para>- Arrêter l'agent SysFera-DS après l'exécution de la commande</para>
+               <para>- Redémarrer l'agent SysFera-DS</para>
+               <para>- Lancer la commande vishnu_cancel_job</para>
+            </entry>
+            <entry>
+               <para>- Terminaison normale de la commande vishnu_cancel_job</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>STR-BATCH-DOWN</para>
+            </entry>
+            <entry>
+               <para>- Arrêter le Batch scheduler</para>
+               <para>- Lancer la commande vishnu_submit_job</para>
+            </entry>
+            <entry>
+               <para>- Une erreur due à une indisponibilité du Batch scheduler est retournée par le système.</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable><sect4><title/></sect4></sect3></sect2><sect2><title> Contrôle des performances</title><sect3><title> Présentation</title>
+   <para>Ces tests ont pour objectif de vérifier que les exigences de performance quantifiées sont effectivement satisfaites. </para></sect3><sect3><title> Environnement de tests</title>
+   <para>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</para></sect3><sect3><title> Identifiants des tests</title>
+   <para>Les identifiants des tests sont de la forme: CDP-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB] au paragraphe « performances, fiabilité et robustesse ». </para></sect3><sect3><title> Liste des tests</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Technique</para>
+            </entry>
+            <entry>
+               <para> Critère de completion</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDP-3.1-submit a job</para>
+            </entry>
+            <entry>
+               <para>Cas 1 :Batch scheduler Torque</para>
+               <para>- Lancer une commande 'ssh &lt;host&gt; qsub' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>Cas 2 :Batch scheduler LoadLeveler</para>
+               <para>Lancer une commande 'ssh &lt;host&gt; llsubmit' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>- Lancer la commande vishnu_submit_job en mesurant le temps de réponse</para>
+            </entry>
+            <entry>
+               <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDP-3.1-cancel a job</para>
+            </entry>
+            <entry>
+               <para>Cas 1 :Batch scheduler Torque</para>
+               <para>- Lancer une commande 'ssh &lt;host&gt; qdel' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>Cas 2 :Batch scheduler LoadLeveler</para>
+               <para>Lancer une commande 'ssh &lt;host&gt; llcancel' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>- Lancer la commande vishnu_cancel_job en mesurant le temps de réponse</para>
+            </entry>
+            <entry>
+               <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDP-3.1-list jobs</para>
+            </entry>
+            <entry>
+               <para>Cas 1 :Batch scheduler Torque</para>
+               <para>- Lancer une commande 'ssh &lt;host&gt; qstat' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>Cas 2 :Batch scheduler LoadLeveler</para>
+               <para>Lancer une commande 'ssh &lt;host&gt; llq' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>- Lancer la commande vishnu_list_jobs en mesurant le temps de réponse temps de réponse  (temps de référence).</para>
+               <para/>
+            </entry>
+            <entry>
+               <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDP-3.2.1-list job queues</para>
+            </entry>
+            <entry>
+               <para>Cas 1 :Batch scheduler Torque</para>
+               <para>- Lancer une commande 'ssh &lt;host&gt; qstat -Q' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>Cas 2 :Batch scheduler LoadLeveler</para>
+               <para>Lancer une commande 'ssh &lt;host&gt; llclass' sur une machine serveur en mesurant le temps de réponse (temps de référence)</para>
+               <para/>
+               <para>- Lancer la commande vishnu_list_queues en mesurant le temps de réponse</para>
+            </entry>
+            <entry>
+               <para>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDP-3.2.2-submit a job</para>
+            </entry>
+            <entry>
+               <para>- Lancer le serveur TMS</para>
+            </entry>
+            <entry>
+               <para>Consommation CPU inférieure à 10%.</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDP-MemServer</para>
+            </entry>
+            <entry>
+               <para>- Lancer le serveur TMS</para>
+               <para>- Laisser le serveur fonctionner sans utiliser les services pendant 24h</para>
+               <para>- Vérifier que l'espace mémoire consommé par le processus serveur n'a pas augmenté.</para>
+            </entry>
+            <entry>
+               <para>Consommation mémoire constante.</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/></sect3></sect2><sect2><title> Tests de charge</title><sect3><title> Présentation</title>
+   <para>Les tests de charge ont pour objectif de vérifier que les exigences de capacité du système sont vérifiées.</para></sect3><sect3><title> Environnement de tests</title>
+   <para/>
+   <para>Nous utiliserons l'environnement de test 1 décrit dans le chapitre 2.</para>
+   <para/>
+   <para>Par ailleurs, les requêtes envoyées en simultané seront en fait envoyées par une seule machine cliente avec un programme de synchronisation (MPI).</para></sect3><sect3><title> Identifiants de tests</title>
+   <para>Les identifiants des tests sont de la forme: LOAD-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB]. </para></sect3><sect3><title> Liste des tests</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Technique</para>
+            </entry>
+            <entry>
+               <para>Résultats attendus</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>LOAD-2.1-submit a job</para>
+            </entry>
+            <entry>
+               <para>- Lancer  100 commandes vishnu_submit_job simultanées</para>
+            </entry>
+            <entry>
+               <para>- Terminaison normale de toutes les commandes</para>
+               <para>- Etat normal du serveur TMS</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>LOAD-2.1-list jobs,</para>
+               <para>LOAD-2.1-list job queues,</para>
+            </entry>
+            <entry>
+               <para>- Lancer 100 commandes vishnu_list_jobs/ vishnu_list_queues simultanées</para>
+            </entry>
+            <entry>
+               <para>- Terminaison normale de toutes les commandes</para>
+               <para>- Etat normal du serveur TMS</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable></sect3></sect2><sect2><title/></sect2><sect2><title> Contrôle de la qualité du code</title><sect3><title> Présentation</title>
+   <para>L'objectif de ces tests est de vérifier que le code source (C/C++ ou Java) respecte les contraintes de qualité logiciel fixées dans les spécifications et le cahier des charges.</para></sect3><sect3><title> Identifiants des tests</title>
+   <para>Les identifiants des tests sont de la forme: [IdentifiantDeTest]-[IdentifiantDesModules] où les identifiants sont les suivants:</para>
+   <orderedlist>
+      <listitem>
+         <para>Identifiants de tests</para>
+      </listitem>
+      <listitem>
+         <para>Identifiants de modules</para>
+      </listitem>
+   </orderedlist></sect3><sect3><title> Liste des tests</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Technique</para>
+            </entry>
+            <entry>
+               <para>Résultats attendus</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CRP-CSC</para>
+            </entry>
+            <entry>
+               <para>Audit du code C/C++ avec l'outil LOGISCOPE</para>
+            </entry>
+            <entry>
+               <para>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CRP-JSC</para>
+            </entry>
+            <entry>
+               <para>Audit du code Java avec l'outil LOGISCOPE</para>
+            </entry>
+            <entry>
+               <para>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>MCC-CSC</para>
+            </entry>
+            <entry>
+               <para>Audit du code C/C++ avec l'outil SQUORE</para>
+            </entry>
+            <entry>
+               <para>Pas plus de 1% de composants classés « A risque » </para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>MCC-JSC</para>
+            </entry>
+            <entry>
+               <para>Audit du code Java avec l'outil SQUORE</para>
+            </entry>
+            <entry>
+               <para>Pas plus de 1% de composants classés « A risque » </para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>DDC-CSC</para>
+            </entry>
+            <entry>
+               <para>Audit du code C/C++ avec l'outil  SQUORE</para>
+            </entry>
+            <entry>
+               <para>Moins de 10% de code dupliqué. </para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>DDC-JSC</para>
+            </entry>
+            <entry>
+               <para>Audit du code Java avec l'outil SQUORE</para>
+            </entry>
+            <entry>
+               <para>Moins de 10% de code dupliqué. </para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/>
+   <para/></sect3></sect2><sect2><title>  Tests de compilation et d'installation</title><sect3><title> Présentation</title>
+   <para>La compilation des différents exécutables et librairies composant le module TMS sera réalisée par un serveur d'intégration continue (du type HUDSON).</para>
+   <para>Par ailleurs les tests d'installation ont pour objectif de valider la procédure d'installation de l'ensemble des différents composants d'une plateforme VISHNU (clients, serveurs, agents SysFera-DS).</para></sect3><sect3><title> Environnement des tests</title>
+   <para>Nous utiliserons l'environnement de test décrit dans le chapitre 2.</para></sect3><sect3><title> Liste des tests</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Technique</para>
+            </entry>
+            <entry>
+               <para>Résultats attendus</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>COMP-CSC</para>
+            </entry>
+            <entry>
+               <para>Compilation du code C/C++ avec l'outil GCC/CMake</para>
+            </entry>
+            <entry>
+               <para>Compilation correcte de tous les exécutables</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>INS-SERVER-PGSQL</para>
+               <para>INS-SERVER-ORACLE</para>
+            </entry>
+            <entry>
+               <para>Installation des différents éléments serveur de la plateforme VISHNU</para>
+               <orderedlist>
+                  <listitem>
+                     <para>serveur de calcul</para>
+                  </listitem>
+                  <listitem>
+                     <para>serveur de stockage</para>
+                  </listitem>
+                  <listitem>
+                     <para>serveur dédié VISHNU</para>
+                  </listitem>
+                  <listitem>
+                     <para>serveur de base de données</para>
+                  </listitem>
+               </orderedlist>
+            </entry>
+            <entry>
+               <para>- Tous les processus démarrés et operationnels</para>
+               <para>- Documentation disponible (pages man)</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>INS-CLI</para>
+            </entry>
+            <entry>
+               <para>Installation du client VISHNU en ligne de commande</para>
+            </entry>
+            <entry>
+               <para>- Toutes les commandes installées</para>
+               <para>- Documentation disponible (pages man)</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>INS-PGAPI</para>
+            </entry>
+            <entry>
+               <para>Installation des librairies API VISHNU (C++ et Python)</para>
+            </entry>
+            <entry>
+               <para>- Librairie C++ installée</para>
+               <para>- Librairie Python installée et pouvant être chargée dans l'interpréteur Python 2.x</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>INS-WSAPI</para>
+            </entry>
+            <entry>
+               <para>Installation des services web VISHNU sur le serveur JBoss</para>
+            </entry>
+            <entry>
+               <para>- Services operationnels (contrôle via la console webservices de JBoss)</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable></sect3></sect2><sect2><title/></sect2><sect2><title> Contrôle de la documentation utilisateur</title><sect3><title> Présentation</title>
+   <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</para></sect3><sect3><title> Liste des tests</title>
+   <para/>
+   <informaltable frame="all">
+      <tgroup cols="3"><tbody><row>
+            <entry>
+               <para>Identifiant de tests</para>
+            </entry>
+            <entry>
+               <para>Technique</para>
+            </entry>
+            <entry>
+               <para>Résultats attendus</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDU-MAN</para>
+            </entry>
+            <entry>
+               <para>Vérifier les pages de manuel attachées à chaque commande</para>
+            </entry>
+            <entry>
+               <para>Toutes les pages de manuel contiennent toutes les informations nécessaires à l'utilisateur pour utiliser les commandes.</para>
+            </entry>
+         </row>
+         <row>
+            <entry>
+               <para>CDU-USERGUIDE</para>
+            </entry>
+            <entry>
+               <para>Suivre le guide de l'utilisateur </para>
+            </entry>
+            <entry>
+               <para>Le guide permet une prise en main rapide des fonctions du logiciel</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/></sect3></sect2></sect1><para/>
+   <informaltable frame="all">
+      <tgroup cols="4"><tbody><row>
+            <entry>
+               <para>SysFera</para>
+               <para>13 av. Einstein</para>
+               <para>69100 Villeurbanne</para>
+            </entry>
+            <entry>
+               <para/>
+            </entry>
+            <entry>
+               <para>Tel. + 33 (0)4 72 72 88 50</para>
+               <para>Fax + 33 (0)4 72 72 80 80</para>
+               <para>contact@sysfera.com</para>
+               <para>www.sysfera.com</para>
+            </entry>
+            <entry>
+               <para>1|16</para>
+            </entry>
+         </row></tbody></tgroup>
+   </informaltable>
+   <para/>
+</article>
