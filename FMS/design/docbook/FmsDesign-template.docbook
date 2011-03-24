@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+    <info>
+      <title>D4.1a - VISHNU File Management Services Package Design</title>
+      <author>
+        <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+      </author>
+      <author>
+        <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+      </author>
+      <revhistory>
+        <revision>
+        <revnumber>1</revnumber>
+        <date>25/03/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Deliverable version</para>
+        </revdescription>
+        </revision>
+      </revhistory>
+    </info>
+  <chapter>
+    <title>Document presentation</title>
+    <section>
+      <title>Document objectives</title>
+      <para>This document presents the detailed internal design of the File Management Services (FMS) module. The purpose of this
+        package is to handle all aspects of file transfer and file property modification within the VISHNU system. The functional
+        and non-functional requirements for this module are those described in the [D1.1a] and [D1.1c] document (see References). The current
+        document is part of the design phase of the software and therefore its main goal is to define the main class used in the FMS software and their relationships.
+      </para>
+    </section>
+    <section>
+      <title>Document structure</title>
+      <para><itemizedlist>
+        <listitem>
+          <para>Chapter 1 contains a brief overview of the document content.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 2 contains a high-level overview of the system architecture except the deployment aspect which
+            is well discribed in the architecture document (see [D1.1g]).</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+        </listitem>
+        <listitem>
+          <para>Chapter 4 describes the internal classes and data structures except the Vishnu core functions modelization which is
+          included in the VISHNU Users Management Service Design document (see[D2.1a]).</para>
+        </listitem>
+      </itemizedlist></para>
+    </section>
+
+   <section>
+      <title>References</title>
+      <para><itemizedlist>
+        <listitem>
+          <para>[D1.1a]: VISHNU General specifications</para>
+        </listitem>
+        <listitem>
+          <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
+        </listitem>
+       <listitem>
+          <para>[D1.1c]: VISHNU API Detailed specifications</para>
+        </listitem>
+       <listitem>
+          <para>[D1.1g]: VISHNU technical architecture</para>
+        </listitem>
+       <listitem>
+          <para>[D2.1a]: VISHNU users management services package design</para>
+        </listitem>
+      </itemizedlist></para>
+    </section>
+    <section>
+      <title>Acronyms</title>
+      <para>
+        <itemizedlist>
+	  <listitem>
+            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+	  <listitem>
+	    <para><emphasis role="bold">FMS</emphasis>: File management services</para>
+	  </listitem>
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+     <title>Glossary</title>
+     <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </chapter>
+
+  <!-- PART 1 : ARCHITECTURE -->
+  <chapter annotations="FMS/design/Archi.asta#ARCHIDIAG(architecture)">
+    <title>System Architecture</title>
+    <section>
+      <title>Introduction</title>
+      <para> The purpose of this section is to precise the role of the FMS as VISHNU module. As indicated in [D1.1g], FMS is the part of VISHNU
+        architecture which handles the file transfers between storage resources.
+        Futhermore, FMS provides several other services to manipulate a property of a file, like changing its owner, changing its access permissions, get its
+        complete or partial content, see the section for exhaustive list of
+        providesd services. 
+      </para>
+    </section>
+    <section>
+      <title>Overview of the FMS software infrastructure</title>
+      <para>We present in this section a detailed description of the FMS package architecture in terms of software components.
+        In addition we show the dependencies between components to highlight their reuse. These components follow a SOA model where each
+        server publishes a set of services that can be used by the clients.
+        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
+        The FMS client server package has been split into seven different interrelated components. The deployment aspects have already been described
+        in the technical architecture document (cf [D1.1g]). The diagrams shown in section 2.2 describe
+        the relationships between these components. The definitions of the components are the following:
+       </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">External API</emphasis>
+	     contains precisely the services provided to the user as defined in the detailed specifications.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Internal API</emphasis>
+	     publishes the services provided by the servers. The services of the external API are implemented using requests sent through
+       the SysFera-DS middleware to this API.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">FMS Client</emphasis>
+	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis role="bold">FMS Server</emphasis>.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">FMS Server</emphasis>
+	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <!--listitem>
+            <para><emphasis role="bold">FMS Monitor Daemon</emphasis> which the only role is to keep an eye on the session inactivity by checking the TIME_OUT parameter in the <emphasis role="bold">Vishnu Database.</emphasis> 
+	    </para>
+          </listitem-->
+	  <listitem>
+      <para><emphasis role="bold">Vishnu Database</emphasis> has been already described in [D2.1a]. As we could see, it stores the file transfer
+       data used by the FMS Server.
+	    </para>
+	  </listitem>
+
+        </itemizedlist>
+      </para>
+    </section>
+
+   <section>
+      <title>Installation prerequisites</title>
+      <section>
+        <title>Client side</title>
+        <para>The installation of   </para>
+        <para>TODO</para>
+      </section>
+      <section>
+        <title>Server side</title>
+        <para>TODO</para>
+        <para>
+          </para>
+      </section>
+    </section>
+
+    <!--section>
+      <title> Deployment aspects of FMS</title>
+       <para>
+        We explains here how the FMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The FMS consists of: 
+	<itemizedlist>
+	  <listitem>
+	    <para><emphasis role="bold"> Main FMS Server </emphasis>is the provider of all FMS services. It consists of the FMS Monitor component and what we called the FMS SeD (FMS Server daemon) which gathers all FMS services published.
+	    </para>
+	  </listitem>
+          <listitem>
+            <para><emphasis role="bold">Secondary FMS Server </emphasis> is optional and contains only the FMS SeD allowing to make a FMS service request.  
+            </para>
+          </listitem>
+	  <listitem>
+	    <para><emphasis role="bold">Client host </emphasis> is FMS service requester. It contains all components allowing to make a FMS service request.	  
+	    </para>
+	  </listitem>
+           <listitem>
+            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
+            </para>
+          </listitem>
+	 </itemizedlist>
+       </para>
+
+       <para> It is important to note that we can have several Secondary FMS servers (where an FMS Sed is running in each) but only one instance of FMS Monitor daemon running in the Main FMS Server as we can see in figure 2.1.
+       </para>
+    </section-->	
+
+
+
+		
+    
+  </chapter><!-- PART 1 : ARCHITECTURE -->
+  
+  <!-- PART 2 : INTERNAL API -->
+  <chapter annotations="core/model/FMS_Internal.apim#SERVICES">
+    <title>Internal API specification</title>
+     <section> <!-- Generic definition formats presentation -->
+      <title>Generic definition formats presentation</title>
+      <para>This section presents the formats used in this chapter to describe the services provided
+            by the internal API.</para>
+      <section><!-- Service definition format -->
+        <title>Service definition format</title>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>This is an example of a required string input parameter</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfJobs</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>ListJobs</para></entry>
+                <entry><para>This is an example of an object output parameter that is serialized as a string</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>Here is detailed the purpose of the service 'myService'</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>Here are detailed the different return codes provided by the service.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed successfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>This shows the list of functions from the external Vishnu API (see [D1_1c]) that use this service.</para>
+      </section> <!-- Service definition format -->
+    </section> <!-- Generic definition formats presentation -->
+  </chapter><!-- END PART 2 : INTERNAL API -->
+  
+  <chapter><!-- PART 3 : CLASSES AND DATA -->
+    <title>Internal class and data structures</title>
+    <section>
+      <title>Introduction</title>
+      <para>This chapter introduces the details of the implementation of the different components described in chapter 2 (Architecture).
+        It is composed of three sections:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Client modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">FMS Client</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">FMS Server</emphasis> component.</para>
+          </listitem>
+	   <listitem>
+            <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
+              <emphasis role="it">FMS Client</emphasis> component and the <emphasis role="it">FMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
+              the VISHNU cross-modules components (components that are used by FMS and other VISHNU modules).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section annotations="FMS/design/Design.asta#CLASSDIAG(client)">
+      <title>FMS client modelization</title>
+    </section>
+    
+    <section annotations="FMS/design/Design.asta#CLASSDIAG(server)">
+      <title>FMS server modelization</title>
+    </section>
+    
+    <section annotations="FMS/design/Design.asta#CLASSDIAG(data)">
+      <title>FMS data modelization</title>
+    </section>
+       
+    
+  </chapter><!-- END PART 3 : CLASSES AND DATA -->
+  
+</book>
+  
