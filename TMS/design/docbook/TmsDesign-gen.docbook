@@ -63,7 +63,7 @@
             <para>Chapter 1 contains a brief overview of the document content.</para>
           </listitem>
           <listitem>
-            <para>Chapter 2 contains a high-level overview of the system architecture except the TMS deployment diagram which is described in [D1.1g]. 
+            <para>Chapter 2 contains a high-level overview of the system architecture except the TMS deployment diagram which is described in [D1.1g] 
              (VISHNU Technical Architecture).</para>
           </listitem>
           <listitem>
@@ -145,7 +145,7 @@
       </para>
     </section>
   </chapter>
-  <chapter annotations="TMS/design/Archi.asta#ARCHIDIAG(architecture)">
+  <chapter>
     <title>System Architecture</title>
     <section>
       <title>Overview of the TMS software infrastructure</title>
@@ -154,7 +154,7 @@
         server publish a set of services that can be used by the clients. The communication and service assignment layer is provided by
         the SysFera-DS middleware.
         We present the different software layers from the API (services provided directly to the user) to the database (used by the server). 
-        The TMS module is splitted into eight different interrelated components. The diagrams shown in section 2.3 describe
+        The TMS module is splitted into eight different interrelated components. The diagrams shown in section 2.4 describe
         the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
@@ -189,11 +189,11 @@
             <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Torque API </emphasis>: is the C API provided by the Torque batch scheduler.
+            <para><emphasis role="bold">Torque API </emphasis> is the C API provided by the Torque batch scheduler.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">LoadLeveler API </emphasis>: is the C API provided by the IBM LoadLeveler batch scheduler..
+            <para><emphasis role="bold">LoadLeveler API </emphasis> is the C API provided by the IBM LoadLeveler batch scheduler..
             </para>
           </listitem>
           <listitem>
@@ -207,14 +207,41 @@
       <title>Installation prerequisites</title>
       <section>
         <title>Client side</title>
-        <para>TODO</para>
-        <para>TODO</para>
+        <para>The installation of TMS module on the client needs the following libraries or API</para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS librarie: the VISHNU User Management Service that allow the session creation and user authentification.
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries and API</para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Client librarie and API</para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Server side</title>
-        <para>TODO</para>
-        <para>creation of system account to submit jobs on the batch scheduler. This account needs permissions on the local
-          batch scheduler to submit jobs, view jobs and cancel jobs (applicable to jobs submitted by this user only).</para>
+        <para>The installation of TMS module on the server side needs the following libraries or API</para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS librarie and API: the VISHNU User Management Service that allow the session creation and user authentification.
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries and API</para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Server librarie and API</para>
+          </listitem>
+          <listitem>
+            <para>IBM LoadLeveler librarie and API</para>
+          </listitem>
+          <listitem>
+            <para>Torque librarie and API</para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
     <section>
@@ -231,7 +258,24 @@
       <title>Architecture diagrams</title>
       <section>
         <title>TMS client-side components</title>
-        <para>This diagram shows the TMS client side components. Two services among all the services of the TMS external API (see ref. D1.1c) are shown here for example. These services are consumed by serval user interfaces: command-line, web services and python. All the interfaces of the TMS Client component are shown.</para>
+        <para>This diagram shows the TMS client side components. Two services among all the services of the TMS external API (see ref. D1.1c) are shown here for example. These services are consumed by serval user interfaces: command-line, web services and python. All the interfaces of the TMS Client component are shown. The TMS client component provides four classes which are defined below:</para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">JobProxy</emphasis>
+             provides the services that allow to sumbit and cancel a job.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression).</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">JobOutPutProxy</emphasis> provides the services that allow to get the results of all finished jobs or a specific given job.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">TMSMachineProxy </emphasis> provides the services that allow to get information on a given machine (list of all availables queues on this machine, the refreshement delay to get the finished jobs results.
+            </para>
+          </listitem>
+        </itemizedlist>
         <figure>
           <title>TMS client-side components</title>
           <mediaobject>
@@ -244,7 +288,24 @@
       </section>
       <section>
         <title>TMS server-side components</title>
-        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque and LoadLeveler API as underlying batch sheduler.</para>
+        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque and IBM LoadLeveler API as underlying batch sheduler.</para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">JobServer</emphasis>
+             resolves the services that allow to sumbit and cancel a job.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression).</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">JobOutPutServer</emphasis> resolves the services that allow to get the results of all finished jobs or a specific given job.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">TMSMachineServer </emphasis> resolves the services that allow to get information on a given machine (list of all availables queues on this machine, the refreshement delay to get the finished jobs results.
+            </para>
+          </listitem>
+        </itemizedlist>
         <figure>
           <title>TMS server-side components</title>
           <mediaobject>
@@ -257,7 +318,7 @@
       </section>
       <section>
         <title>SysFera-DS Bus Details</title>
-        <para>   This diagram shows the communication paths between the Client host and the TMS Main and Secondary server using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the TMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one TMS Server in the case of  several available TMS servers. The choice will be transparent to the user as all TMS Servers connect to the same database.  The diagram shows here all the communication paths in the case where the Main TMS Server is chosen by the MasterAgent. </para>
+        <para> This diagram shows the communication paths between the Client host and the TMS servers using the SysFera-DS Bus. On each remote VISHNU machine on which a batch scheduler library and API are installed a TMS server must be launched (for example in the figure 2.3 we have three TMS servers launched on three different nodes). The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the TMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of the TMS server to call. The diagram shows here all the communication paths in the case where the TMS Server2 is chosen by the MasterAgent.</para>
         <figure>
           <title>SysFera-DS Bus Details</title>
           <mediaobject>
