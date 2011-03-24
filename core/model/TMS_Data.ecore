@@ -293,7 +293,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListProgress" instanceTypeName="ListProgress">
+  <eClassifiers xsi:type="ecore:EClass" name="ListProgression" instanceTypeName="ListProgression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbJobs" eType="ecore:EDataType Ecore.ecore#//EInt">
       <eAnnotations source="Description">
         <details key="content" value="Represents the number of jobs in progression list."/>
