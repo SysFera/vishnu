@@ -40,7 +40,7 @@
         <date>22/03/2011</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
-          <para>Ajout de l'installation pour les webs services</para>
+          <para>Ajout des web services</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -64,10 +64,10 @@
             <para>Définitions</para>
           </listitem>  
 	  <listitem>
-            <para>L'installation</para>
+            <para>Installation</para>
           </listitem>
 	  <listitem>
-            <para>L'installation des webs services</para>
+            <para>Installation des web services</para>
           </listitem>
 	  <listitem>
 	    <para>Déploiement</para>
@@ -95,11 +95,11 @@
       <title>Acronymes</title> 
 	<itemizedlist>
 	  <listitem>
-	    <para>DB : Base de données. Elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
+	    <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
 	      par le module UMS. Cette base de données sera considérée comme étant de type PostgreSQL dans ce document.</para>
 	  </listitem>
 	  <listitem>
-	    <para> MA : Le 'Master Agent', élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
+	    <para> MA : "Master Agent": élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
 	  </listitem>
 	  <listitem>
 	    <para>SQL : Langage de requêtes sur les bases de données</para>
@@ -141,7 +141,7 @@
 	    <para>Sysfera-DS : Middleware open source développé par SysFera. </para>
 	  </listitem>
           <listitem>
-            <para>Se référer au glossaire du document [ARCH] pour des définitions additionelles.</para>
+            <para>Se référer au glossaire du document [ARCH] pour des définitions additionnelles.</para>
             </listitem>
 	</itemizedlist>
       </para>
@@ -183,7 +183,7 @@
 	  <para>JAVA version 1.6  (Option)</para>
 	</listitem>
 	<listitem>
-	  <para>Python au moins 2.5 (Option)</para>
+          <para>Python version 2.x x>=5 (Option)</para>
 	</listitem>
       </itemizedlist>
     </section><!-- end prerequis -->
@@ -205,7 +205,7 @@ pratiques communèment admises.
 	  </listitem>
 	  <listitem>
 	    <para>
-	      ENABLE_JAVA, qui permet d'activer la compilation des sources JAVA pour les webs services (OFF par défaut).
+	      ENABLE_JAVA, qui permet d'activer la compilation des sources JAVA pour les web services (OFF par défaut).
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -235,22 +235,30 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
   </chapter> <!-- End compilation -->
 
   <chapter> 
-    <title>Installation des WS</title>
+    <title>Installation des web services</title>
     <section>
-      <title>Prérequis</title>
+      <title>Pré-requis</title>
       <itemizedlist>
+        <listitem>
+          <para>Installer <emphasis role="bold">Java 1.6</emphasis> (commande 'sudo apt-get install openjdk-6-jdk' ou bien 'sudo apt-get install sun-java6-jdk' sur Linux Debian) 
+            et vérifier que la variable JAVA_HOME est bien définie et contient le répertoire racine de l'installation de java.</para>
+        </listitem>
 	<listitem>
-	  <para>Le module UMS (C++) de VISHNU d'installé</para>
+	  <para>Installer le module <emphasis role="bold">VISHNU UMS</emphasis> avec l'option -DENABLE_JAVA=ON.</para>
 	</listitem>
-	<listitem><para>Java 1.6 d'installé et la variable JAVA_HOME définie et pointant sur le répertoire racine de l'installation de java</para></listitem>
+        <listitem>
+          <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars ( <emphasis role="bold">Note</emphasis> : 
+          Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services. 
+          Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
+        </listitem>
       </itemizedlist>
-	<para>Maven 2 pour recompiler les jars. <emphasis role="bold">Attention :</emphasis> Une compilation avec maven nécessite une connexion internet valide</para>
+
     </section><!-- end prerequis -->
     <section>
-      <title>Installation de JBOSS</title>
+      <title>Installation de JBoss</title>
       <itemizedlist>
 	<listitem>
-	  <para>Télécharger le package JBOSSAS : (la version binaire est disponible) sur http://www.jboss.org/jbossas/downloads => version 5.1.0GA</para>
+	  <para>Télécharger le package JBOSSAS : (la version binaire est disponible) sur http://www.jboss.org/jbossas/downloads => version 5.1.0.GA</para>
 	</listitem>
 	<listitem>
 	  <para>Télécharger le package JBOSSWS : (la version binaire est disponible) sur http://www.jboss.org/jbossws/downloads/ => version 3.3.1.GA</para>
@@ -274,60 +282,94 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
 	<listitem>
 	  <para> Lancer la commande 'ant deploy-jboss510'. Si une autre version de jboss a été prise, il faut faire la commande de la version correspondante</para>
 	</listitem>
-	<listitem><para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh. Pour lancer jboss autrement que sur localhost, utiliser l'option '-b IP' </para></listitem>
+	<listitem>
+          <para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh. Pour que le serveur jboss soit accessible depuis une autre machine, utiliser l'option '-b adresseIP' où
+          adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
+        </listitem>
+        <listitem>
+          <para>Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
+            sur l'adresse 'http://localhost:8080/jbossws' (ou 'http://adresseIP:8080/jbossws') et vérifier que la page affiche bien la version
+            du module web services (jbossws-cxf-3.3.1.GA).</para> 
+        </listitem>
       </itemizedlist>
     </section>
     <section>
-      <title> Eléments nécessaires à l'utilisation des WS pour VISHNU</title>
-      <itemizedlist>
-	<listitem>
-	  <para>VishnuLib-1.0-SNAPSHOT.jar
-	    <itemizedlist>
-	      <listitem><para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para></listitem>
-	      <listitem><para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para></listitem>
-	      <listitem><para>Le changer implique un redémarrage du serveur JBOSS.</para></listitem>
-	      <listitem><para>Compilation (si nécessaire)
-		  <itemizedlist>
-		    <listitem><para>Aller dans le répertoire VishnuLib</para></listitem>
-		    <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
-		    <listitem><para>Le jar se trouve dans target/</para></listitem>
-		  </itemizedlist>
-	      </para></listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>WSAPI.jar
-	    <itemizedlist>
-	      <listitem><para>Contient les classes issues du WSDL et l'implémentation des WS.</para></listitem>
-	      <listitem><para>Utilise la variable d'environnement <emphasis role="bold">VISHNU_CONFIG_FILE</emphasis>, qui indique le fichier de configuration pour le client.</para></listitem>
-	      <listitem><para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/deploy</emphasis>.</para></listitem>
-	      <listitem><para>Peut être mis à jour sans redémarrer le serveur JBOSS.</para></listitem>
-	      <listitem><para>Compilation (si nécessaire)
-		  <itemizedlist>
-		    <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VishnuLib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
-		    <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
-		    <listitem><para>Le jar se trouve dans target/</para></listitem>
-		    <listitem><para>Renommer le jar en WSAPI.jar avant de le mettre dans jboss, ceci est nécessaire</para></listitem>
-		  </itemizedlist>
-	      </para></listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>libVISHNU_UMS.so
-	    <itemizedlist>
-	      <listitem><para>Nécessaire pour le fonctionnement des WS, obtenue en compilant VISHNU (C++)</para></listitem>
-	      <listitem><para>Le dossier la contenant doit être dans le <emphasis role="bold">LD_LIBRARY_PATH</emphasis></para></listitem>
-	      <listitem><para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH</para></listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>VISHNU_CONFIG_FILE : Variable d'environnement à définir sur un fichier de configuration client de VISHNU. Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
-	  </para>
-	</listitem>
-      </itemizedlist>
+      <title>Installation du module UMS WS dans JBoss</title>
+      <section>
+        <title>Fichiers à installer</title>
+        <itemizedlist>
+          <listitem>
+            <para>VishnuLib-1.0-SNAPSHOT.jar
+              <itemizedlist>
+                <listitem><para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para></listitem>
+                <listitem><para>A copier dans <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para></listitem>
+                <listitem><para>Le changer implique un redémarrage du serveur JBOSS.</para></listitem>
+                <listitem><para>Compilation (si nécessaire)
+                    <itemizedlist>
+                      <listitem><para>Aller dans le répertoire VishnuLib</para></listitem>
+                      <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
+                      <listitem><para>Le fichier .jar produit se trouve dans le répertoire target/</para></listitem>
+                    </itemizedlist>
+                </para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem>
+            <para>WSAPI.jar
+              <itemizedlist>
+                <listitem><para>Contient les classes issues du WSDL et l'implémentation des WS.</para></listitem>
+                <listitem><para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/deploy</emphasis>.</para></listitem>
+                <listitem><para>Peut être mis à jour sans redémarrer le serveur JBOSS.</para></listitem>
+                <listitem><para>Compilation (si nécessaire)
+                    <itemizedlist>
+                      <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VishnuLib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
+                      <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
+                      <listitem><para>Le fichier .jar produit se trouve dans le répertoire target/</para></listitem>
+                      <listitem><para>Renommer le jar en WSAPI.jar avant de le mettre dans jboss, ceci est nécessaire</para></listitem>
+                    </itemizedlist>
+                </para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem>
+            <para>libVISHNU_UMS.so
+              <itemizedlist>
+                <listitem><para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU UMS avec l'option ENABLE_JAVA.</para></listitem>
+                <listitem><para>Le fichier est normalement installé par le package VISHNU UMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para></listitem>
+                <listitem><para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          </itemizedlist>
+        </section>
+       <section>
+        <title>Variables d'environnement à définir</title>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer 
+            au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
+            Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
+            </para>
+          </listitem>
+          <listitem>
+            <para>LD_LIBRARY_PATH : contient les chemins des répertoires contenant les librairies VISHNU, notamment libVISHNU_UMS.so.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Lancement du serveur JBoss avec le module WS UMS</title>
+        <itemizedlist>
+          <listitem>
+            <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh 
+              (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
+         </listitem>
+          <listitem>
+            <para>Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
+              sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le 
+                "service endPoint" : <emphasis role="bold">VishnuUMSPortImpl</emphasis> est actif.</para> 
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
   </chapter><!-- End WS -->  
   <chapter>
