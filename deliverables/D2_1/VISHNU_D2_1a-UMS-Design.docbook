@@ -1,0 +1,3225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cissé</surname>
+      </personname>
+    </author>
+    <title>D2.1a - VISHNU User Management System Package Design</title>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>25/01/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Deliverable version</para></revdescription>
+      </revision>
+    </revhistory>
+  </info>
+  <chapter>
+    <title>Document presentation</title>
+    <section>
+      <title>Document objectives</title>
+      <para>This document presents the detailed internal design of the Users Management System (UMS) package. The purpose of this
+        package is to handle all aspects of user management and session management within the VISHNU system. The functional
+        and non-functional requirements for this package are those described in the referenced specification documents. The current
+        document is part of the design phase of the software and therefore its main goal is to define the main components of the
+        system architecture and their relationships.
+      </para>
+    </section>
+    <section>
+      <title>Document structure</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>Chapter 1 contains a brief overview of the document content.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 2 contains a high-level overview of the system architecture.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 4 describes the internal class and data structures</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>References</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>[D1.1a]: VISHNU General specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1c]: VISHNU API Detailed specifications</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>Acronyms</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS</emphasis>: Users management system</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Glossary</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </chapter>
+  <chapter annotations="UMS/design/Archi.asta#ARCHIDIAG(architecture)">
+    <title>System Architecture</title>
+    <section>
+      <title>Overview of the UMS software infrastructure</title>
+      <para>We present in this section a detailed description of the UMS package architecture in terms of software components.
+	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
+        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
+	The UMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
+        the relationships between these components. The definitions of the components are the following:
+       </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">External API</emphasis>
+	     contains precisely the services provided to the user as defined in the detailed specifications.
+	     We're on the client side.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Internal API</emphasis>
+	     is the middle layer of the server side. The services announced previously are performed here by combining a set of classes defined 
+	    in the two following components.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Client</emphasis>
+	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis
+                  role="bold">UMS Server</emphasis>.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Server</emphasis>
+	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">UMS Monitor Daemon</emphasis> which the only role is to keep an eye on the session inactivity by checking the TIME_OUT parameter in the <emphasis
+                  role="bold">Vishnu Database.</emphasis> 
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the UMS Server.
+	    </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title> Deployment aspects of UMS</title>
+      <para>
+        We explains here how the UMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The UMS consists of: 
+	<itemizedlist>
+          <listitem>
+            <para><emphasis role="bold"> Main UMS Server </emphasis>is the provider of all UMS services. It consists of the UMS Monitor component and what we called the UMS SeD (UMS Server daemon) which gathers all UMS services published.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Secondary UMS Server </emphasis> is optional and contains only the UMS SeD allowing to make a UMS service request.  
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Client host </emphasis> is UMS service requester. It contains all components allowing to make a UMS service request.	  
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
+            </para>
+          </listitem>
+        </itemizedlist>
+       </para>
+      <para> It is important to note that we can have several Secondary UMS servers (where an UMS Sed is running in each) but only one instance of UMS Monitor daemon running in the Main UMS Server as we can see in figure 2.1.
+       </para>
+    </section>
+    <section>
+      <title>Architecture diagrams</title>
+      <section>
+        <title>UMS Deployment Diagram</title>
+        <para>This diagram shows the classes of entities that must be deployed for the Vishnu UMS application to work. One Main UMS Server contains both a UMS SeD component and a UMS Monitor Daemon component. The Secondary UMS Server entity is optional and can be duplicated to improve performance and robustness. All UMS Server entities connect to the same Vishnu database. It is important to note that the different classes are here shown on different nodes but they can also be deployed on the same node.</para>
+        <figure>
+          <title>UMS Deployment Diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UMS_Deployment_Diagram.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>UMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the Vishnu UMS system and their interfaces. Two services among all the services of the UMS external API (see ref. D1.1c) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the UMS Client component are shown.</para>
+        <figure>
+          <title>UMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UMS_client-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>UMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the Vishnu UMS system and their interfaces. Two services among all the services of the UMS internal API are shown here for example. These services are consumed by the UMS Client component through the SysFera-DS API. All the interfaces of the UMS Server component are shown.</para>
+        <figure>
+          <title>UMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/UMS_server-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and the UMS Main and Secondary server using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the UMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one UMS Server in the case of  several available UMS servers. The choice will be transparent to the user as all UMS Servers connect to the same database.  The diagram shows here all the communication paths in the case where the Main UMS Server is chosen by the MasterAgent.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
+  </chapter>
+  <chapter annotations="core/model/UMS_Internal.apim#SERVICES">
+    <title>Internal API specification</title>
+    <section>
+      <title>Generic definition formats presentation</title>
+      <para>This section presents the formats used in this chapter to describe the services provided
+            by the internal API.</para>
+      <section>
+        <title>Service definition format</title>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>This is an example of a required string input parameter</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfJobs</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>ListJobs</para></entry>
+                <entry><para>This is an example of an object output parameter that is serialized as a string</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>Here is detailed the purpose of the service 'myService'</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>Here are detailed the different return codes provided by the service.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed successfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>This shows the list of functions from the external Vishnu API (see [D1_1c]) that use this service.</para>
+      </section>
+    </section>
+    <section>
+      <title>Definition of the services of the package</title>
+      <section>
+        <title>Service commandList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListCmdOptions">ListCmdOptions</link></para></entry>
+                <entry><para>allows the user to list commands by using several optional criteria: a period, specific session and for admin to list all commands of all VISHNU users or commands from a specific user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listCommands</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListCommands">ListCommands</link></para></entry>
+                <entry><para>listCommands is the list of commands</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The commandList() function lists the commands</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_DATE_OPTION</para></entry>
+                <entry><para>The date option is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::listHistoryCmd</para>
+      </section>
+      <section>
+        <title>Service sessionConnect</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>password</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>password represents the password of the user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>clientKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The SSH key that identifies the client host</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>clientHostname</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The full DNS name of the client host</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ConnectOptions">ConnectOptions</link></para></entry>
+                <entry><para>options is an object which encapsulates the options available for the connect method. It allows the user to choose the way for closing the session automatically on TIMEOUT or on DISCONNECT and the possibility for an admin to open a session as if he/she was a specific user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The sessionConnect() function opens a session</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NOT_AUTHENTICATED</para></entry>
+                <entry><para>Unknown user</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_CLOSURE_MODE</para></entry>
+                <entry><para>The name of the closure mode is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_TIMEOUT</para></entry>
+                <entry><para>The value of the timeout is incorrect (negative or higher than the TIMEOUT threshold)</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
+                <entry><para>The size of the password is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::connect</para>
+      </section>
+      <section>
+        <title>Service sessionReconnect</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>userId </para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>password</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>password represents the password of the user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>clientKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The SSH key that identifies the client host</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>clientHostname</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The full DNS name of the client host</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The sessionReconnect() function returns the sessionKey of a session from which the user was disconnected previously without closing it</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NOT_AUTHENTICATED</para></entry>
+                <entry><para>Unknown user</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
+                <entry><para>The size of the password is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSION_INCOMPATIBILITY</para></entry>
+                <entry><para>This session identifier is incompatible with the authenticated user</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_SESSION_ID</para></entry>
+                <entry><para>The session Id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_MACHINE_FOR_SESSION</para></entry>
+                <entry><para>This session has been opened with another machine</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::reconnect</para>
+      </section>
+      <section>
+        <title>Service sessionClose</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The sessionClose() function closes the session identfied by the session key</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>COMMAND_RUNNING</para></entry>
+                <entry><para>Command(s) is/are running</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::close</para>
+      </section>
+      <section>
+        <title>Service sessionList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listsession</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListSessions">ListSessions</link></para></entry>
+                <entry><para>listsession is the list of sessions </para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListSessionOptions">ListSessionOptions</link></para></entry>
+                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (active or inactive, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The sessionList() function lists all sessions of the user</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_SESSION_OPTION</para></entry>
+                <entry><para>The name of the session option is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_DATE_OPTION</para></entry>
+                <entry><para>The date option is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::listSessions</para>
+      </section>
+      <section>
+        <title>Service userCreate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>user</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="User">User</link></para></entry>
+                <entry><para>The user object</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The userCreate() function adds a new VISHNU user</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
+                <entry><para>The size of the password is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>USERID_EXISTING</para></entry>
+                <entry><para>The userId already exists in the database</para></entry>
+              </row>
+              <row>
+                <entry><para>INVALID_MAIL_ADRESS</para></entry>
+                <entry><para>The mail adress is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>USERID_REQUIRED</para></entry>
+                <entry><para>The userId must be defined</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::addVishnuUser</para>
+      </section>
+      <section>
+        <title>Service userUpdate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>user</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="User">User</link></para></entry>
+                <entry><para>The user object</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The userUpdate() function updates the user information except the userId and the password</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>INVALID_MAIL_ADRESS</para></entry>
+                <entry><para>The mail adress is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::updateUser</para>
+      </section>
+      <section>
+        <title>Service userDelete</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>userId represents the VISHNU user identifier of the user who will be deleted from VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The userDelete() function removes a user from VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::deleteUser</para>
+      </section>
+      <section>
+        <title>Service userList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>userIdOption</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>allows an admin to get information about a specific user identified by his/her userId</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listuser</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListUsers">ListUsers</link></para></entry>
+                <entry><para>listuser is the list of users </para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The userList() function lists VISHNU users</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_DATE_OPTION</para></entry>
+                <entry><para>The date option is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::listUsers</para>
+      </section>
+      <section>
+        <title>Service userPasswordChange</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>userId represents the VISHNU user identifier</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>password</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>password represents the password of the user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>passwordNew</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>passwordNew represents the new password of the user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The userPasswordChange() function changes the password</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NOT_AUTHENTICATED</para></entry>
+                <entry><para>Unknown user</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
+                <entry><para>The size of the password is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::changePassword</para>
+      </section>
+      <section>
+        <title>Service userPasswordReset</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>userId represents the VISHNU user identifier of the user whose password will be reset</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The userPasswordReset() function resets the password of a user</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_USERID_SIZE</para></entry>
+                <entry><para>The size of the userId is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_PASSWORD_SIZE</para></entry>
+                <entry><para>The size of the password is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::resetPassword</para>
+      </section>
+      <section>
+        <title>Service localAccountCreate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>newAccount</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="LocalAccount">LocalAccount</link></para></entry>
+                <entry><para>newAccount is the object which encapsulates the new local user configuration</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The localAccountCreate() function adds a new local user configuration </para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>LOCAL_ACCOUNT_EXIST</para></entry>
+                <entry><para>The local account already exists for the given user on the given machine</para></entry>
+              </row>
+              <row>
+                <entry><para>USERID_REQUIRED</para></entry>
+                <entry><para>The userId must be defined</para></entry>
+              </row>
+              <row>
+                <entry><para>MACHINEID_REQUIRED</para></entry>
+                <entry><para>The machineId must be defined</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machineId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::addLocalAccount</para>
+      </section>
+      <section>
+        <title>Service localAccountUpdate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>LocalAccUpd</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="LocalAccount">LocalAccount</link></para></entry>
+                <entry><para>is an object which encapsulates the local user configuration changes except the machineId and the userId</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The localAccountUpdate() function updates a local user configuration</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machineId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local configuration for the given user on the given machine is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::updateLocalAccount</para>
+      </section>
+      <section>
+        <title>Service localAccountDelete</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>userId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>userId represents the VISHNU user identifier of the user whose local configuration will be deleted for the given machine </para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>machineId represents the identifier of the machine whose local configuration will be deleted for the given user </para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The localAccountDelete() function removes a local user configuration (for a given user on a given machine) from VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local configuration for the given user on the given machine is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::deleteLocalAccount</para>
+      </section>
+      <section>
+        <title>Service localAccountList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listLocalAcct</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListLocalAccounts">ListLocalAccounts</link></para></entry>
+                <entry><para>listLocalAccount is the list of the local user configuations </para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListLocalAccOptions">ListLocalAccOptions</link></para></entry>
+                <entry><para>allows an admin to list all local configurations of all users or a simple user to list his/her local user configurations on a specific machine</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The localAccountList() function lists the local user configurations</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_DATE_OPTION</para></entry>
+                <entry><para>The date option is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::listLocalAccount</para>
+      </section>
+      <section>
+        <title>Service configurationSave</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>configuration</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Configuration">Configuration</link></para></entry>
+                <entry><para>The configuration is an object which encapsulates the configuration description</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The configurationSave() function saves the configuration of VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>SAVE_CONFIG_ERROR</para></entry>
+                <entry><para>A problem occurs during the configuration saving </para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::saveConfiguration</para>
+      </section>
+      <section>
+        <title>Service configurationRestore</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>configuration </para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Configuration">Configuration</link></para></entry>
+                <entry><para>The configuration is the object which encapsulates the configuration information </para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The configurationRestore() function restores the configuration of VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>RESTORE_CONFIG_ERROR</para></entry>
+                <entry><para>A problem occurs during the configuration restoring</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::restoreConfiguration</para>
+      </section>
+      <section>
+        <title>Service machineCreate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machine</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para>Machine information</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The machineCreate() function adds a new machine in VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>MACHINE_EXISTING</para></entry>
+                <entry><para>The machineId already exists in the database</para></entry>
+              </row>
+              <row>
+                <entry><para>MACHINEID_REQUIRED</para></entry>
+                <entry><para>The machineId must be defined</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::addMachine</para>
+      </section>
+      <section>
+        <title>Service machineUpdate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machine</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Machine">Machine</link></para></entry>
+                <entry><para>existing machine information</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The machineUpdate() function updates a machine description</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>MACHINEID_REQUIRED</para></entry>
+                <entry><para>The machineId must be defined</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machineId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::updateMachine</para>
+      </section>
+      <section>
+        <title>Service machineDelete</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>machineId represents the identifier of the machine</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The machineDelete() function removes a machine from VISHNU</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machineId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::deleteMachine</para>
+      </section>
+      <section>
+        <title>Service machineList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListMachineOptions">ListMachineOptions</link></para></entry>
+                <entry><para>allows a user to list all VISHNU machines or information about a specific machine and an admin to list machines used by a specific user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listMachine</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListMachines">ListMachines</link></para></entry>
+                <entry><para>listLocalAccount is the list of the local configs </para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The machineList() function lists the machines in which  the local user configurations are defined for the given user</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_DATE_OPTION</para></entry>
+                <entry><para>The date option is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::listMachine</para>
+      </section>
+      <section>
+        <title>Service optionValueList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListOptOptions">ListOptOptions</link></para></entry>
+                <entry><para>allows to list a specific option or all default options values or for an admin to list options of a specific user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listOptValues</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListOptionsValues">ListOptionsValues</link></para></entry>
+                <entry><para>listOptValues is an object which encapsulates the list of options</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The optionValueList() function lists the options of the user</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_USERID</para></entry>
+                <entry><para>The userId is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_OPTION</para></entry>
+                <entry><para>the name of the option is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>INCORRECT_DATE_OPTION</para></entry>
+                <entry><para>The date option is incorrect</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::listOptions</para>
+      </section>
+      <section>
+        <title>Service optionValueSet</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>optionValue</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="OptionValue">OptionValue</link></para></entry>
+                <entry><para>The optionValue is an object which encapsulates the option information</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The optionValueSet() function configures an option of the user</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_OPTION</para></entry>
+                <entry><para>the name of the option is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::configureOption</para>
+      </section>
+      <section>
+        <title>Service optionValueSetDefault</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>optionValue</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="OptionValue">OptionValue</link></para></entry>
+                <entry><para>The optionValue is an object which encapsulates the option information</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The optionValueSetDefault() function configures a default option value</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>UNKNOWN_OPTION</para></entry>
+                <entry><para>the name of the option is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The sessionKey is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>UMS::configureDefaultOption</para>
+      </section>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Internal class and data structures</title>
+    <section>
+      <title>Introduction</title>
+      <para>This chapter introduces the details of the implementation of the different components described in chapter 2 (Architecture).
+        It is composed of three sections:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Client modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">UMS Client</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">UMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
+              <emphasis role="it">UMS Client</emphasis> component and the <emphasis
+                  role="it">UMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
+              the VISHNU cross-modules components (components that are used by UMS and other VISHNU modules).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section annotations="UMS/design/Design.asta#CLASSDIAG(client)">
+      <title>UMS client modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>UMS Client Class Diagram</title>
+          <para>This diagram describes all classes used to communicate with VISHNU System. Each class proxy contains the corresponding data class illustrated on the UMS Data modelization section and the methods usable by the UMS Client component. A QueryProxy class implements a generic model to list objects of VISHNU.</para>
+          <figure>
+            <title>UMS Client Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/UMS_Client_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section annotations="UMS/design/Design.asta#CLASSDIAG(server)">
+      <title>UMS server modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>UMS Server Class Diagram</title>
+          <para>This diagram presents the main objects used by UMS server component to process the UMS Client component requests. Each object that can be listed have a static method list with the corresponding options.</para>
+          <figure>
+            <title>UMS Server Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/UMS_Server_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section annotations="UMS/design/data.asta#CLASSDIAG(data)">
+      <title>UMS data modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>UMS Data Class Diagram</title>
+          <para>This diagram illustrates the structure and the relationship between data manipulated by the components Client and Server. </para>
+          <figure>
+            <title>UMS Data Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/UMS_Data_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section annotations="core/design/coreDesign.asta#CLASSDIAG">
+      <title>Vishnu core functions modelization</title>
+      <section>
+        <title>Introduction</title>
+        <para>
+	The following elements describe the core classes (i.e. the classes that will be used by each module such as the exceptions and the databases). The modelization diagrams are given with some explanations about them.
+	</para>
+      </section>
+      <section>
+        <title>Tables relationships</title>
+        <para>
+	  In order to have a coherent System, we have designed a relational model for the database. We need only one database that can contain all the Vishnu tables. The model is represented in figure 4.4. The rectangles are the tables and the lines represent the links between the tables.
+	</para>
+        <para>The links between the tables are based on the following rules:
+	</para>
+        <itemizedlist>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>The <emphasis role="it">VISHNU</emphasis> table has one or more <emphasis
+                      role="it">MACHINE</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">MACHINE</emphasis> is in one and only one <emphasis
+                      role="it">VISHNU</emphasis> infrastructure
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">MACHINE</emphasis> has one or more <emphasis
+                      role="it">CPU</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  A <emphasis role="it">CPU</emphasis> is in one and only one <emphasis role="it">MACHINE</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">MACHINE</emphasis> has one or more <emphasis
+                      role="it">DESCRIPTION</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">DESCRIPTION</emphasis> is for one and only one <emphasis
+                      role="it">MACHINE</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+	      
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">MACHINE</emphasis> has one or more <emphasis
+                      role="it">THRESHOLD</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">THRESHOLD</emphasis> is for one and only one <emphasis
+                      role="it">MACHINE</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">MACHINE</emphasis> has one or more <emphasis
+                      role="it">ACCOUNT</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>An <emphasis role="it">ACCOUNT</emphasis> is for one and only one <emphasis
+                      role="it">MACHINE</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>The <emphasis role="it">VISHNU</emphasis> table has one or more <emphasis
+                      role="it">USER</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>An <emphasis role="it">USER</emphasis> is in one and only one <emphasis
+                      role="it">VISHNU</emphasis> infrastructure
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>An <emphasis role="it">USER</emphasis> has one or more <emphasis
+                      role="it">ACCOUNT</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>An <emphasis role="it">ACCOUNT</emphasis> is for one and only one <emphasis
+                      role="it">USER</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>An <emphasis role="it">USER</emphasis> has one or more <emphasis
+                      role="it">FILE TRANSFER</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">FILE TRANSFER</emphasis> is for one and only one <emphasis
+                      role="it">USER</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>An <emphasis role="it">USER</emphasis> has one or more <emphasis
+                      role="it">OPTION VALUE</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>An <emphasis role="it">OPTION VALUE</emphasis> is for one and only one <emphasis
+                      role="it">USER</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>An <emphasis role="it">USER</emphasis> sets one or more <emphasis
+                      role="it">THRESHOLD</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">THRESHOLD</emphasis> is set by one and only one <emphasis
+                      role="it">USER</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+	    </para>
+            <itemizedlist>
+              <listitem>
+                <para>An <emphasis role="it">OPTION</emphasis> has one or more <emphasis
+                      role="it">OPTION VALUE</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>An <emphasis role="it">OPTION VALUE</emphasis> is for one and only one <emphasis
+                      role="it">OPTION</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>An <emphasis role="it">USER</emphasis> has one or more <emphasis
+                      role="it">SESSION</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">SESSION</emphasis> is for one and only one <emphasis
+                      role="it">USER</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+	    </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">SESSION</emphasis> has one or more <emphasis
+                      role="it">COMMAND</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">COMMAND</emphasis> is for one and only one <emphasis
+                      role="it">SESSION</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">CLIENT MACHINE</emphasis> has one or more <emphasis
+                      role="it">SESSION</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A  <emphasis role="it">SESSION</emphasis>  is  for  one  and  only  one  <emphasis
+                      role="it">CLIENT
+		    MACHINE</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">MACHINE</emphasis> has one or more <emphasis
+                      role="it">STATE</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">STATE</emphasis> is for one and only one <emphasis
+                      role="it">MACHINE</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">COMMAND</emphasis> can have one or more <emphasis
+                      role="it">JOB</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">JOB</emphasis> is for one and only one <emphasis
+                      role="it">COMMAND</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>A <emphasis role="it">COMMAND</emphasis> can have one or more <emphasis
+                      role="it">FILE</emphasis>
+		</para>
+              </listitem>
+              <listitem>
+                <para>A <emphasis role="it">FILE</emphasis> is for one and only one <emphasis
+                      role="it">COMMAND</emphasis>
+		</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Relational model</title>
+        <figure>
+          <title>Relational model</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/relationnalmodel.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>
+	  The modelization
+	</title>
+        <section>
+          <title>The database classes</title>
+          <para>
+	    The database class diagram is very simple. There is a database interface that defines a set of public operations that can be done over a database:
+	    <itemizedlist>
+              <listitem>
+                <para>
+		  commit
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  rollback
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  execute a query
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  connect
+		</para>
+              </listitem>
+              <listitem>
+                <para>
+		  disconnect ...
+		</para>
+              </listitem>
+            </itemizedlist>
+	    And there are two examples of classes that implement the database. There is also a factory that can create the databases.
+	    See the diagram 4.5.
+	  </para>
+        </section>
+        <section>
+          <title>The exception classes</title>
+          <para>
+	    The exception class diagram defines a generic exception class, <emphasis role="it">VishnuException</emphasis> that represents a generic exception that can be raised by a Vishnu function. This class has two subclasses, the <emphasis
+                role="it">SystemException</emphasis> that represents an exception due to a system problem and the <emphasis
+                role="it">UserException</emphasis> that represents an exception due to the user of the function (bad parameters typically). Both the server and clients have this way of building the exceptions. The <emphasis
+                role="it">SystemException</emphasis> has more specific subclasses depending on the modules that raises them. A key function is the append one, that allows to add a message to an existing vishnu exception. Thus, crossing the various level of the call can append information messages to specify the context of the exception.
+	    See the diagram 4.6.
+	  </para>
+        </section>
+      </section>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>DB class diagram</title>
+          <figure>
+            <title>DB class diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/DB_class_diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+        <section>
+          <title>exception</title>
+          <figure>
+            <title>exception</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/exception.png" align="center" scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+  </chapter>
+</book>
