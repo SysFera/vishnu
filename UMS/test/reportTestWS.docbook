@@ -36,7 +36,7 @@
     <title>Environment for the WS tests</title>
     <para>
       <informaltable>
-	<tgroup>
+	<tgroup cols="2">
 	  <tbody>
 	    <row>
               <entry>
@@ -127,7 +127,7 @@
     <title>Results</title>
     <para>
       <informaltable frame="all">
-	<tgroup>
+	<tgroup cols="4">
 	  <tbody>
             <row>
               <entry>
