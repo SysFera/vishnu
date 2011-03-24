@@ -3,7 +3,7 @@
   PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article lang="">
 <info>
-    <title>VISHNU - UMS - WS tests results</title>
+    <title>VISHNU - UMS - Web Services Interface - Tests report</title>
     <author>
       <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
     </author>
@@ -19,10 +19,10 @@
     <revhistory>
       <revision>
         <revnumber>1</revnumber>
-        <date>23/03/2011</date>
+        <date>24/03/2011</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
-          <para>Tests of the WS</para>
+          <para>Deliverable version</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -30,9 +30,10 @@
   <section>
     <title>Acronyms</title>
     <para>WS : Web Services</para>
+    <para>OS : Operating system</para>
   </section>
   <section>
-    <title>Environnement for the WS tests</title>
+    <title>Environment for the WS tests</title>
     <para>
       <informaltable>
 	<tgroup>
@@ -42,7 +43,7 @@
 		<para>Test type</para>
               </entry>
               <entry>
-		<para>WS functionnal Test</para>
+		<para>WS functional Test</para>
               </entry>
             </row>
             <row>
@@ -58,7 +59,7 @@
 		<para>JBOSS used </para>
               </entry>
               <entry>
-		<para>JBOSSAS 5.1.0 and JBOSSWS 3.3.1</para>
+		<para>JBOSS Application Server v5.1.0 and JBOSS-WS CXF v3.3.1</para>
               </entry>
             </row>
             <row>
@@ -115,8 +116,12 @@
     </para>
   </section>
   <section>
-    <title>Way of tests</title>
-    <para>The WS tests are made using <emphasis role="bold">JUnit</emphasis> and are not made to test all the use cases of the functionnalities. They are made to confirm that the service is executed without exception in a normal case, and to confirm the right exception is raised in an exception case.</para>
+    <title>Tests methodology</title>
+    <para>The WS tests are made using <emphasis role="bold">JUnit</emphasis> framework. They are based on a subset of the test scenarios described
+    in the UMS test plan (reference D2.1b). The objective of these tests is to confirm that the service is executed without exception in a normal case,
+    and to confirm the right exception is raised in an exception case.</para>
+    <para>The tests qualified as "simple" on a given functionality of the UMS module correspond to a functional test of the main scenario without optional parameters.
+      The tests of the optional parameters have been already done for the C++ API on which this WS interface is directly based.</para>
   </section>
   <section>
     <title>Results</title>
@@ -143,7 +148,7 @@
                 <para>23/03/11</para>
               </entry>
               <entry>
-                <para>Basic connect </para>
+                <para>Simple connect </para>
               </entry>
               <entry>
                 <para>connect</para>
@@ -157,7 +162,7 @@
                 <para>23/03/11</para>
               </entry>
               <entry>
-                <para>Basic reconnect </para>
+                <para>Simple reconnect </para>
               </entry>
               <entry>
                 <para>reconnect</para>
