@@ -601,6 +601,7 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
   string res = string("");
   string a;
   long date;
+  boost::posix_time::ptime pt;
   res += (mmap.find(VISHNU_LIST_HISTORY_CMD))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
@@ -626,13 +627,15 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
   }
   date = ac->getStartDateOption();
   if (date>0){
-    a = convertToString(date);
+    pt = boost::posix_time::from_time_t(date);
+    a = boost::posix_time::to_simple_string(pt);
     res+=" -s ";
     res+=a;
   }
   date = ac->getEndDateOption();
   if (date>0){
-    a = convertToString(date);
+    pt = boost::posix_time::from_time_t(date);
+    a = boost::posix_time::to_simple_string(pt);
     res+=" -e ";
     res+=a;
   }
@@ -698,6 +701,7 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   string a;
   long date;
   int delay;
+  boost::posix_time::ptime pt;
   res += (mmap.find(VISHNU_LIST_SESSIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
@@ -745,11 +749,15 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   }
   date = ac->getStartDateOption();
   if (date>0){
+    pt =  boost::posix_time::from_time_t(date);
+    a = boost::posix_time::to_simple_string(pt);
     res+=" -s ";
     res+=a;
   }
   date = ac->getEndDateOption();
   if (date>0){
+    pt =  boost::posix_time::from_time_t(date);
+    a = boost::posix_time::to_simple_string(pt);
     res+=" -e ";
     res+=a;
   }
