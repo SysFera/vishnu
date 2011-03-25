@@ -4,12 +4,16 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="IMS_Data"
     nsURI="http://www.sysfera.com/IMS/Data">
   <eClassifiers xsi:type="ecore:EEnum" name="MetricType" instanceTypeName="MetricType">
-    <eLiterals name="CPUNBR"/>
+    <eAnnotations source="Description">
+      <details key="content" value="The metric type is the type of metric to use"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED"/>
     <eLiterals name="CPUUSE" value="1"/>
     <eLiterals name="DISKSPACE" value="2"/>
     <eLiterals name="FREEDISKSPACE" value="3"/>
     <eLiterals name="MEMORY" value="4"/>
     <eLiterals name="FREEMEMORY" value="5"/>
+    <eLiterals name="CPUNBR" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Metric" instanceTypeName="Metric">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType">
@@ -29,14 +33,22 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="RestartType" instanceTypeName="RestartType">
-    <eLiterals name="ALL"/>
+    <eAnnotations source="Description">
+      <details key="source" value="The restart type is the element that is to be restarted"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED"/>
     <eLiterals name="SED" value="1"/>
     <eLiterals name="AGENT" value="2"/>
     <eLiterals name="DAEMON" value="3"/>
+    <eLiterals name="ALL" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LoadShedType" instanceTypeName="LoadShedType">
-    <eLiterals name="SOFT" literal="SOFT"/>
+    <eAnnotations source="Description">
+      <details key="content" value="The load shed type reprensents how to proceed the load shed"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED" literal="SOFT"/>
     <eLiterals name="HARD" value="1"/>
+    <eLiterals name="SOFT" value="2" literal="SOFT"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListMetric" instanceTypeName="ListMetric">
     <eStructuralFeatures xsi:type="ecore:EReference" name="metric" upperBound="-1"
@@ -47,10 +59,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListProcesses" instanceTypeName="ListProcesses">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processName" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="process" upperBound="-1"
+        eType="#//Processes" containment="true">
       <eAnnotations source="Description">
-        <details key="content" value="The Vishnu processes of the list"/>
+        <details key="content" value="The processes of the list"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -67,5 +79,50 @@
         <details key="shortOption" value="d"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Processes" instanceTypeName="Processes">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The value of the metric"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="exportOp" instanceTypeName="exportOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportType" eType="#//exportType"
+        defaultValueLiteral="0"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="exportType" instanceTypeName="exportType">
+    <eAnnotations source="Description">
+      <details key="content" value="The export type is the format to export an history of commands"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+    <eLiterals name="SHELL" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="metricHistOp" instanceTypeName="metricHistOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        defaultValueLiteral="">
+      <eAnnotations source="Description">
+        <details key="content" value="The start time to get the history"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        defaultValueLiteral="">
+      <eAnnotations source="Description">
+        <details key="content" value="The end time to get the history"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" instanceTypeName="restartOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dietConfFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The path to the diet configuration file"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vishnuConf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The path to the vishnu configuration file"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
