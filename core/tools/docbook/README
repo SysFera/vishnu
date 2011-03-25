@@ -13,3 +13,8 @@ xsltproc docbook-xsl/xhtml/docbook.xsl fichier.docbook > fichier.html
 xsltproc fichier-man.docbook
 (normalement le lien vers la stylesheet xsl est dans l'entete du fichier XML)
 
+# CONVERSION OPENOFFICE
+installer le package debian 'openoffice.org-common'
+ouvrir le document dans openoffice
+faire 'save as' et choisir docbook (.dob)
+
