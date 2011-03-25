@@ -125,7 +125,8 @@
   </chapter>
 
   <!-- PART 1 : ARCHITECTURE -->
-  <chapter annotations="FMS/design/Archi.asta#ARCHIDIAG(architecture)">
+  <!--chapter annotations="FMS/design/Archi.asta#ARCHIDIAG(architecture)"-->
+  <chapter>
     <title>System Architecture</title>
     <section>
       <title>Introduction</title>
@@ -190,56 +191,96 @@
     </section>
 
    <section>
-      <title>Installation prerequisites</title>
+     <title>Installation prerequisites</title>
       <section>
         <title>Client side</title>
-        <para>The installation of   </para>
-        <para>TODO</para>
+        <para>The installation of FMS module on the client needs the following libraries </para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries </para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Client libraries </para>
+          </listitem>
+          <listitem>
+            <para>A SSH Server to perform a remote to local transfer file.</para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Server side</title>
-        <para>TODO</para>
-        <para>
-          </para>
+        <para>The installation of FMS module on the server side needs the following libraries:</para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries</para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Server libraries</para>
+          </listitem>
+          <listitem>
+            <para>A SSH Server</para>
+          </listitem>
+          <listitem>
+            <para>The Rsync Debian package </para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
 
-    <!--section>
-      <title> Deployment aspects of FMS</title>
-       <para>
-        We explains here how the FMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The FMS consists of: 
-	<itemizedlist>
-	  <listitem>
-	    <para><emphasis role="bold"> Main FMS Server </emphasis>is the provider of all FMS services. It consists of the FMS Monitor component and what we called the FMS SeD (FMS Server daemon) which gathers all FMS services published.
-	    </para>
-	  </listitem>
-          <listitem>
-            <para><emphasis role="bold">Secondary FMS Server </emphasis> is optional and contains only the FMS SeD allowing to make a FMS service request.  
-            </para>
-          </listitem>
-	  <listitem>
-	    <para><emphasis role="bold">Client host </emphasis> is FMS service requester. It contains all components allowing to make a FMS service request.	  
-	    </para>
-	  </listitem>
-           <listitem>
-            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts. 
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Vishnu database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
-            </para>
-          </listitem>
-	 </itemizedlist>
-       </para>
+    <section>
+      <title>Architecture diagrams</title>
+      <section>
+        <title>FMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS external API (cf [D1.1c]) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the FMS Client component are shown. We can note that the FMS External API uses the UMS Client Lib to handle user and machines authentication.</para>
 
-       <para> It is important to note that we can have several Secondary FMS servers (where an FMS Sed is running in each) but only one instance of FMS Monitor daemon running in the Main FMS Server as we can see in figure 2.1.
-       </para>
-    </section-->	
-
-
-
-		
-    
+        <figure>
+          <title>FMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS_client-side_components.png" align="center"
+                scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>FMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS internal API are shown here for example. These services are published by the FMS Sed and are consumed by the FMS Client component through the SysFera-DS API. All the interfaces of the FMS Server component are shown.</para>
+        <figure>
+          <title>FMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS_server-side_components.png" align="center"
+                scale="40"/>
+            </imageobject>
+          </mediaobject>
+                                                                                                                                                      245,1          9%
+</figure>
+<!--para> The FMS Internal API implements all internal services needed    <\para-->
+      </section>
+      <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and two FMS  server using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the FMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one FMS Server in the case of  several available FMS servers. The choice will be transparent to the user as all FMS Servers connect to the same database.  The diagram shows here all the communication paths in the case where one FMS Server (FMS Server 1) is chosen by the MasterAgent.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
+  
   </chapter><!-- PART 1 : ARCHITECTURE -->
   
   <!-- PART 2 : INTERNAL API -->
