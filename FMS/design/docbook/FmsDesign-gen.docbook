@@ -138,7 +138,7 @@
       </para>
     </section>
   </chapter>
-  <chapter annotations="FMS/design/Archi.asta#ARCHIDIAG(architecture)">
+  <chapter>
     <title>System Architecture</title>
     <section>
       <title>Introduction</title>
@@ -155,8 +155,8 @@
         In addition we show the dependencies between components to highlight their reuse. These components follow a SOA model where each
         server publishes a set of services that can be used by the clients.
         We present the different software layers from services (provided directly to the user) to the database (used by the server). 
-        The FMS client server package has been split into seven different interrelated components. The deployment aspects have already been des
-        cribed in the technical architecture document (cf [D1.1g]). The diagrams shown in section 2.2 describe
+        The FMS client server package has been split into seven different interrelated components. The deployment aspects have already been described
+        in the technical architecture document (cf [D1.1g]). The diagrams shown in section 2.2 describe
         the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
@@ -201,21 +201,51 @@
       <title>Installation prerequisites</title>
       <section>
         <title>Client side</title>
-        <para>TODO</para>
-        <para>TODO</para>
+        <para>The installation of FMS module on the client needs the following libraries </para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries </para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Client libraries </para>
+          </listitem>
+          <listitem>
+            <para>A SSH Server to perform a remote to local transfer file.</para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Server side</title>
-        <para>TODO</para>
-        <para>creation of system account to submit jobs on the batch scheduler. This account needs permissions on the local
-          batch scheduler to submit jobs, view jobs and cancel jobs (applicable to jobs submitted by this user only).</para>
+        <para>The installation of FMS module on the server side needs the following libraries:</para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries</para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Server libraries</para>
+          </listitem>
+          <listitem>
+            <para>A SSH Server</para>
+          </listitem>
+          <listitem>
+            <para>The Rsync Debian package </para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
     <section>
       <title>Architecture diagrams</title>
       <section>
         <title>FMS client-side components</title>
-        <para>This diagram shows the components that compose the client side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS external API (cf [D1.1c]) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the FMS Client component are shown. We can note that The FMS External API uses the UMS Client Lib to handle user and machinesauthentication.</para>
+        <para>This diagram shows the components that compose the client side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS external API (cf [D1.1c]) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the FMS Client component are shown. We can note that the FMS External API uses the UMS Client Lib to handle user and machines authentication.</para>
         <figure>
           <title>FMS client-side components</title>
           <mediaobject>
@@ -228,7 +258,7 @@
       </section>
       <section>
         <title>FMS server-side components</title>
-        <para>This diagram shows the components that compose the server side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS internal API are shown here for example. These services are consumed by the FMS Client component through the SysFera-DS API. All the interfaces of the FMS Server component are shown.</para>
+        <para>This diagram shows the components that compose the server side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS internal API are shown here for example. These services are published by the FMS Sed and are consumed by the FMS Client component through the SysFera-DS API. All the interfaces of the FMS Server component are shown.</para>
         <figure>
           <title>FMS server-side components</title>
           <mediaobject>
@@ -423,20 +453,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -535,20 +561,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -640,20 +662,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -745,20 +763,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -857,20 +871,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -961,10 +971,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -977,12 +983,12 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1088,20 +1094,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1207,20 +1209,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1319,20 +1317,16 @@
                 <entry><para>The path provided is invalid.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DB_ERROR</para></entry>
                 <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1422,10 +1416,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -1438,10 +1428,6 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
               </row>
@@ -1452,6 +1438,10 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1541,10 +1531,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -1555,10 +1541,6 @@
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
@@ -1667,10 +1649,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -1681,10 +1659,6 @@
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
                 <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
@@ -1786,10 +1760,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -1802,10 +1772,6 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
               </row>
@@ -1816,6 +1782,10 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1912,10 +1882,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -1928,10 +1894,6 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
               </row>
@@ -1942,6 +1904,10 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2010,10 +1976,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -2026,10 +1988,6 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
               </row>
@@ -2040,6 +1998,10 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2122,10 +2084,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -2138,10 +2096,6 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
               </row>
@@ -2152,6 +2106,10 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2234,10 +2192,6 @@
                 <entry><para>A problem occurs with the database.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_CFG_FILE</para></entry>
-                <entry><para>Option unknown in the config file.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
                 <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
               </row>
@@ -2250,10 +2204,6 @@
                 <entry><para>User does not have permission access.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SERVER_UNAVAILABLE</para></entry>
-                <entry><para>The FMS server is unavailable.</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
                 <entry><para>Invalid provided machine identifier.</para></entry>
               </row>
@@ -2264,6 +2214,10 @@
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>

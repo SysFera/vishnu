@@ -195,18 +195,18 @@
       <title>Installation prerequisites</title>
       <section>
         <title>Client side</title>
-        <para>The installation of TMS module on the client needs the following libraries or API</para>
+        <para>The installation of TMS module on the client needs the following libraries: </para>
          <itemizedlist>
           <listitem>
-            <para>VISHNU UMS librarie: the VISHNU User Management Service that allow the session creation and user authentification.
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
             </para>
           </listitem>
            <listitem>
-            <para>C++ and Boost-C++ libraries and API</para>
+            <para>C++ and Boost-C++ libraries </para>
           </listitem>
 
           <listitem>
-            <para>Sysfera-DS Client librarie and API</para>
+            <para>Sysfera-DS Client libraries </para>
           </listitem>
  
         </itemizedlist>
@@ -214,23 +214,23 @@
       </section>
       <section>
         <title>Server side</title>
-        <para>The installation of TMS module on the server side needs the following libraries or API</para>
+        <para>The installation of TMS module on the server side needs the following libraries:</para>
         <itemizedlist>
           <listitem>
-            <para>VISHNU UMS librarie and API: the VISHNU User Management Service that allow the session creation and user authentification.
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
             </para>
           </listitem>
            <listitem>
-            <para>C++ and Boost-C++ libraries and API</para>
+            <para>C++ and Boost-C++ libraries</para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS Server librarie and API</para>
+            <para>Sysfera-DS Server libraries </para>
           </listitem>
            <listitem>
-            <para>IBM LoadLeveler librarie and API</para>
+            <para>IBM LoadLeveler library</para>
            </listitem>
            <listitem>
-            <para>Torque librarie and API</para>
+            <para>Torque library</para>
           </listitem>
         </itemizedlist>
       </section>
