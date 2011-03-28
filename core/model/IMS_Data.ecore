@@ -87,18 +87,18 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="exportOp" instanceTypeName="exportOp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportType" eType="#//exportType"
+  <eClassifiers xsi:type="ecore:EClass" name="ExportOp" instanceTypeName="ExportOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportType" eType="#//ExportType"
         defaultValueLiteral="0"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="exportType" instanceTypeName="exportType">
+  <eClassifiers xsi:type="ecore:EEnum" name="ExportType" instanceTypeName="ExportType">
     <eAnnotations source="Description">
       <details key="content" value="The export type is the format to export an history of commands"/>
     </eAnnotations>
     <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
     <eLiterals name="SHELL" value="1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="metricHistOp" instanceTypeName="metricHistOp">
+  <eClassifiers xsi:type="ecore:EClass" name="MetricHistOp" instanceTypeName="MetricHistOp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
         defaultValueLiteral="">
       <eAnnotations source="Description">
@@ -112,7 +112,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" instanceTypeName="restartOp">
+  <eClassifiers xsi:type="ecore:EClass" name="RestartOp" instanceTypeName="RestartOp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dietConfFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The path to the diet configuration file"/>
@@ -124,5 +124,36 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CurMetricOp" instanceTypeName="CurMetricOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The id of the machine where the metric is defined"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType">
+      <eAnnotations source="Description">
+        <details key="content" value="The type of the metric"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessOp" instanceTypeName="ProcessOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The id of the machine"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ThresholdOp" instanceTypeName="ThresholdOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The id of the machine where the metric is defined"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType">
+      <eAnnotations source="Description">
+        <details key="content" value="The type of the metric"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>
