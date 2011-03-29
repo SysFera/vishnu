@@ -367,7 +367,7 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_jobWorkingDir);
     case ::TMS_Data::TMS_DataPackage::JOB__STATUS:
-        return m_status != NOT_SUBMITTED;
+        return m_status != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__SUBMITDATE:
         return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
                 m_submitDate);
