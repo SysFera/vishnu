@@ -623,7 +623,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__jobWorkingDir->setOrdered(true);
     m_Job__status->setEType(m_JobStatusEEnum);
     m_Job__status->setName("status");
-    m_Job__status->setDefaultValueLiteral("NOT_SUBMITTED");
+    m_Job__status->setDefaultValueLiteral("-1");
     m_Job__status->setLowerBound(0);
     m_Job__status->setUpperBound(1);
     m_Job__status->setTransient(false);
@@ -1596,9 +1596,19 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // NOT_SUBMITTED
+        _el->setName("NOT_SUBMITTED");
+        _el->setValue(0);
+        _el->setLiteral("NOT_SUBMITTED");
+        _el->setEEnum(m_JobStatusEEnum);
+        m_JobStatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // RUNNING
         _el->setName("RUNNING");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("RUNNING");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1608,7 +1618,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // WAITING
         _el->setName("WAITING");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("WAITING");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1618,7 +1628,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // COMPLETED
         _el->setName("COMPLETED");
-        _el->setValue(2);
+        _el->setValue(3);
         _el->setLiteral("COMPLETED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1628,7 +1638,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // CANCELED
         _el->setName("CANCELED");
-        _el->setValue(3);
+        _el->setValue(4);
         _el->setLiteral("CANCELED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1638,7 +1648,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // HELD
         _el->setName("HELD");
-        _el->setValue(4);
+        _el->setValue(5);
         _el->setLiteral("HELD");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1648,7 +1658,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // QUEUED
         _el->setName("QUEUED");
-        _el->setValue(5);
+        _el->setValue(6);
         _el->setLiteral("QUEUED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1658,18 +1668,8 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // FAILED
         _el->setName("FAILED");
-        _el->setValue(6);
-        _el->setLiteral("FAILED");
-        _el->setEEnum(m_JobStatusEEnum);
-        m_JobStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // NOT_SUBMITTED
-        _el->setName("NOT_SUBMITTED");
         _el->setValue(7);
-        _el->setLiteral("NOT_SUBMITTED");
+        _el->setLiteral("FAILED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }
