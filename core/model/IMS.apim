@@ -9,9 +9,8 @@
     </services>
     <services name="getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter=""/>
       <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.5" description="Value of the metric"/>
+      <ports name="option" dataType="//@typeList/@types.16" description="The options for the current metric value" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="getMetricHistory" description="Retrieve the history of values of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -24,6 +23,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine the user wants the running processes" shortOptionLetter=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.8" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
+      <ports name="option" dataType="//@typeList/@types.13" description="The options to search for the processes" defaultValueLiteral=""/>
     </services>
     <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -38,9 +38,8 @@
     </services>
     <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="type" dataType="//@typeList/@types.4" description="The threshold type desired" shortOptionLetter="" longOptionName=""/>
       <ports name="value" direction="OUT" dataType="//@typeList/@types.3" description="The threshold value" longOptionName=""/>
+      <ports name="option" dataType="//@typeList/@types.18" description="The options for the threshold" defaultValueLiteral=""/>
     </services>
     <services name="defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -125,14 +124,23 @@
     <types name="SystemInfo" description="Contains the system informations of a machine">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SystemInfo"/>
     </types>
-    <types name="exportOp" description="The option for the export">
-      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//exportOp"/>
+    <types name="ExportOp" description="The option for the export">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ExportOp"/>
     </types>
-    <types name="metricHistOp" description="Optional fields for the metric history">
-      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//metricHistOp"/>
+    <types name="MetricHistOp" description="Optional fields for the metric history">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//MetricHistOp"/>
     </types>
-    <types name="restartOp" description="The option to restart">
-      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//@eClassifiers.11"/>
+    <types name="RestartOp" description="The option to restart">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//RestartOp"/>
+    </types>
+    <types name="CurMetricOpt" description="The options for the curent metric">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//CurMetricOp"/>
+    </types>
+    <types name="ProcessOp" description="The options to search for the processes">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ProcessOp"/>
+    </types>
+    <types name="ThresholdOp" description="Options or the threshold">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ThresholdOp"/>
     </types>
   </typeList>
 </API>
