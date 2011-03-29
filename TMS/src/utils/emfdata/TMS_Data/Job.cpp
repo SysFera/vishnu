@@ -31,8 +31,8 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Job::Job() :
-    m_jobPrio(-1), m_nbCpus(-1), m_status(NOT_SUBMITTED), m_endDate(-1),
-            m_memLimit(-1), m_nbNodes(-1)
+    m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_endDate(-1), m_memLimit(-1),
+            m_nbNodes(-1)
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
