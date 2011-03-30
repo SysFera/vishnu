@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="TMS">
-    <services name="submitJob" description="submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh" resultCodes="ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_JOBPATH ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_QUEUE DB_ERROR">
+    <services name="submitJob" description="submits job on a machine through the use of a script (scriptFilePath). " resultCodes="ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_JOBPATH ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_QUEUE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine where the job must be submitted"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which the job must be submitted"/>
       <ports name="scriptFilePath" dataType="//@typeList/@types.0" description="The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit."/>
-      <ports name="jobId" direction="OUT" dataType="//@typeList/@types.0" description="Is the returned id of the submitted job" longOptionName=""/>
-      <ports name="jobPath" direction="OUT" dataType="//@typeList/@types.0" description="Is the path to the file containing job characteristics" longOptionName=""/>
+      <ports name="jobInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The  Job object containing the output information (ex: jobId and jobPath) of the job to submit"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.1" description="Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance." optional="true" shortOptionLetter=""/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.0"/>
     </services>
@@ -37,15 +36,15 @@
       <ports name="options" dataType="//@modules.0/@typeList/@types.2" description="Additional options for jobs listing" optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.3"/>
     </services>
-    <services name="getJobOutPut" description="gets outputPath and errorPath of a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
+    <services name="getJobOutput" description="gets outputPath and errorPath of a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
-      <ports name="outputPath" direction="OUT" dataType="//@typeList/@types.0" description="The path of the file containinig the output result of the job"/>
-      <ports name="errorPath" direction="OUT" dataType="//@typeList/@types.0" description="The path of the file containinig the errors that has been occurred during the execution  of the job"/>
+      <ports name="outputInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.8" description="The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit"/>
+      <ports name="infoMsg" direction="OUT" dataType="//@typeList/@types.0" description="The information message"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.7"/>
     </services>
-    <services name="getAllJobsOutPut" description="dynamically gets outputPath and errorPath of completed jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
+    <services name="getAllJobsOutput" description="dynamically gets outputPath and errorPath of completed jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
       <ports name="listOfResults" direction="OUT" dataType="//@modules.0/@typeList/@types.7" description="Is the list of jobs results"/>
@@ -94,6 +93,9 @@
       </types>
       <types name="ListJobResults">
         <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//ListJobResults"/>
+      </types>
+      <types name="JobResult">
+        <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//JobResult"/>
       </types>
     </typeList>
     <resultCodeList>
