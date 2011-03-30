@@ -32,13 +32,11 @@
     </services>
     <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="thresholdType" dataType="//@typeList/@types.4" description="The type of the metric to set" shortOptionLetter="" longOptionName=""/>
-      <ports name="value" dataType="//@typeList/@types.3" description="The threshold value" shortOptionLetter="" longOptionName=""/>
+      <ports name="threshold" dataType="//@typeList/@types.20" description="The threshold to set" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="value" direction="OUT" dataType="//@typeList/@types.3" description="The threshold value" longOptionName=""/>
+      <ports name="value" direction="OUT" dataType="//@typeList/@types.19" description="The thresholds value" longOptionName="" defaultValueLiteral=""/>
       <ports name="option" dataType="//@typeList/@types.18" description="The options for the threshold" defaultValueLiteral=""/>
     </services>
     <services name="defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
@@ -133,7 +131,7 @@
     <types name="RestartOp" description="The option to restart">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//RestartOp"/>
     </types>
-    <types name="CurMetricOpt" description="The options for the curent metric">
+    <types name="CurMetricOp" description="The options for the curent metric">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//CurMetricOp"/>
     </types>
     <types name="ProcessOp" description="The options to search for the processes">
@@ -141,6 +139,12 @@
     </types>
     <types name="ThresholdOp" description="Options or the threshold">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ThresholdOp"/>
+    </types>
+    <types name="ListThreshold" description="A list of thresholds">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ListThreshold"/>
+    </types>
+    <types name="Threshold" description="A threshold">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//Threshold"/>
     </types>
   </typeList>
 </API>

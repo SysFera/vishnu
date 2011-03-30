@@ -156,4 +156,26 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListThreshold" instanceTypeName="ListThreshold">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Threshold" upperBound="-1"
+        eType="#//Threshold"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Threshold" instanceTypeName="Threshold">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="Description">
+        <details key="content" value="The value of the threshold"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="">
+      <eAnnotations source="Description">
+        <details key="content" value="The machine ID the threshold is available"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType">
+      <eAnnotations source="Description">
+        <details key="content" value="The type of the threshold"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>
