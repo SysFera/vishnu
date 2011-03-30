@@ -115,7 +115,7 @@
         <details key="content" value="Is the total number of nodes used by the job."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EInt">
       <eAnnotations source="Description">
         <details key="content" value="Is the number of nodes and processors per node used by the job."/>
       </eAnnotations>
