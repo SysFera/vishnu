@@ -14,6 +14,7 @@
     <eLiterals name="MEMORY" value="4"/>
     <eLiterals name="FREEMEMORY" value="5"/>
     <eLiterals name="CPUNBR" value="6"/>
+    <eLiterals name="ALL" value="-1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Metric" instanceTypeName="Metric">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType">
@@ -31,16 +32,6 @@
         <details key="content" value="The timestamp the metric had the value"/>
       </eAnnotations>
     </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="RestartType" instanceTypeName="RestartType">
-    <eAnnotations source="Description">
-      <details key="source" value="The restart type is the element that is to be restarted"/>
-    </eAnnotations>
-    <eLiterals name="UNDEFINED"/>
-    <eLiterals name="SED" value="1"/>
-    <eLiterals name="AGENT" value="2"/>
-    <eLiterals name="DAEMON" value="3"/>
-    <eLiterals name="ALL" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LoadShedType" instanceTypeName="LoadShedType">
     <eAnnotations source="Description">
@@ -81,9 +72,29 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Processes" instanceTypeName="Processes">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="The value of the metric"/>
+        <details key="content" value="The name of the process"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The id of the machine"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dietId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The diet id of the process"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//ProcessState">
+      <eAnnotations source="Description">
+        <details key="content" value="THe state of the process"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+      <eAnnotations source="Description">
+        <details key="content" value="The timestamp corresponding to the moment the process is registered"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -177,5 +188,13 @@
         <details key="content" value="The type of the threshold"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ProcessState" instanceTypeName="ProcessState">
+    <eAnnotations source="Description">
+      <details key="content" value="It defines the state of a process"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+    <eLiterals name="RUNNING" value="1"/>
+    <eLiterals name="DOWN" value="2"/>
   </eClassifiers>
 </ecore:EPackage>
