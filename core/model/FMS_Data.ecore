@@ -187,27 +187,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LsTrStatusOptions" instanceTypeName="LsTrStatusOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="a given transfer id"/>
-        <details key="shortOption" value="i"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromMachineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="the machine that is the source of the file transfer"/>
-        <details key="shortOption" value="m"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="allows the admin to list file transfers initiated by a specific user"/>
-        <details key="shortOption" value="u"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FileTransfer">
+  <eClassifiers xsi:type="ecore:EClass" name="FileTransfer" instanceTypeName="FileTransfer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The file  transfer identifier"/>
@@ -268,7 +248,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="listOfFileTransfer" upperBound="-1"
         eType="#//FileTransfer" containment="true">
       <eAnnotations source="Description">
-        <details key="content" value="list of inodes."/>
+        <details key="content" value="list of file transfers."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
