@@ -167,24 +167,8 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">IMS SeD</emphasis>
-	     contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
-	      The IMS SeD has 3 different roles:
-	      <itemizedlist>
-                <listitem>
-                  <para>Watch the log central with a tool and select the messages directed to the machine the sed is on. 
-		The role of the tool is to get the connection/deconnection messages on the machine to keep persistent data about the platform,
-		    using a publisher/subscriber model. This tool uses a specific process table in the database and will keep it up to date and coherent.</para>
-                </listitem>
-                <listitem>
-                  <para>Get the data about the machine state and fill the database depending on the update frequency. It logs
-		    the evolution of the machines states.</para>
-                </listitem>
-                <listitem>
-                  <para>Realize the external API services</para>
-                </listitem>
-              </itemizedlist>
-	      Each role will be realized in a separate thread. There must be an IMS SeD on each machine to monitor. A machine without 
-	      IMS SeD cannot be monitored.
+	      contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
+	      There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
 	    </para>
           </listitem>
           <listitem>
@@ -228,7 +212,7 @@
       <title>Architecture diagrams</title>
       <section>
         <title>IMS Deployment Diagram</title>
-        <para>This diagram shows the classes of entities that must be deployed for the VISHNU IMS application to work. Some IMS SeD contains an IMS SeD component and there is an IMS Monitor Daemon. All IMS SeD entities connect to the same VISHNU database. It is important to note that the different classes are here shown on different nodes but they can also be deployed on the same node.</para>
+        <para>This diagram shows the classes of entities that must be deployed for the VISHNU IMS application to work. All IMS SeD entities should connect to the same VISHNU database. Moreover, the TMS and FMS SeD are not there because they are necessary, but to show that the IMS client can communicate with them if they are present.</para>
         <figure>
           <title>IMS Deployment Diagram</title>
           <mediaobject>
@@ -267,7 +251,7 @@
       </section>
       <section>
         <title>SysFera-DS Bus Details</title>
-        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all IMS SeD connect to the same database.  The diagram shows here the communication paths.</para>
+        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all IMS SeD connect to the same database.  The diagram shows here the communication paths. The IMS client can be client to the FMS or TMS SeD so they are presented on the diagram. Nevertheless, this call may only happen if a specific to load shed the machine where the FMS or TMS SeD are.</para>
         <figure>
           <title>SysFera-DS Bus Details</title>
           <mediaobject>
@@ -306,26 +290,25 @@
 	The IMS module can play eight different roles. For each role, there is a reference to the above functional figure with the letter corresponding to the functional element.
 	<itemizedlist>
           <listitem>
-            <para>The hard load shedding : It means the death of all the VISHNU processes on a machine. Reference: D.</para>
+            <para>The hard load shedding : It means the death of all the VISHNU processes on a machine. These processes will not be automatically relauched. Only the GoDiet tool, made to launch the processes can make it. Reference: D.</para>
           </listitem>
           <listitem>
-            <para>The soft load shedding : It means the end of the current jobs and file transfer. Reference: E+D</para>
+            <para>The soft load shedding : It means the end of the current jobs (submitted using TMS) and file transfers (made with FMS) on a machine. The stopped commands are set to fail in the database. Reference: E+D</para>
           </listitem>
           <listitem>
-            <para>The export of the commands in a format : It generates a shell script containing all the recorded commands made during a session. Commands such as connect or change password cannot be exported. Reference: A</para>
+            <para>The export of the commands in a format : It generates a shell script containing all the recorded commands made during a session. Commands such as connect or change password cannot be exported. Because the server does not know the user password, the script cannot be automatically executed, a connect call must be added. Reference: A</para>
           </listitem>
           <listitem>
             <para>The live monitor : It means getting the current state of the machines. Reference: A</para>
           </listitem>
           <listitem>
-            <para>The delayed monitor : It means getting past states of a machine. Reference: A+B</para>
+            <para>The delayed monitor : It means getting past states of a machine and automatically record the states of the machine with the time passing. Reference: A+B</para>
           </listitem>
           <listitem>
             <para>The notification monitor : It means to notify automatically the administrator of an abnormal behaviour of the VISHNU system. Reference: B</para>
           </listitem>
           <listitem>
-            <para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot
-	      be the IMS SeD that restart it but GoDIET will make it. Reference: A+C</para>
+            <para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot be the IMS SeD that restart it automatically but GoDIET will make it. Reference: A+C</para>
           </listitem>
           <listitem>
             <para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Reference: F+D</para>

@@ -206,14 +206,13 @@
       <para>
 	The IMS module can play eight different roles. For each role, there is a reference to the above functional figure with the letter corresponding to the functional element.
 	<itemizedlist>
-	  <listitem><para>The hard load shedding : It means the death of all the VISHNU processes on a machine. Reference: D.</para></listitem>
-	  <listitem><para>The soft load shedding : It means the end of the current jobs and file transfer. Reference: E+D</para></listitem>
-	  <listitem><para>The export of the commands in a format : It generates a shell script containing all the recorded commands made during a session. Commands such as connect or change password cannot be exported. Reference: A</para></listitem>
+	  <listitem><para>The hard load shedding : It means the death of all the VISHNU processes on a machine. These processes will not be automatically relauched. Only the GoDiet tool, made to launch the processes can make it. Reference: D.</para></listitem>
+	  <listitem><para>The soft load shedding : It means the end of the current jobs (submitted using TMS) and file transfers (made with FMS) on a machine. The stopped commands are set to fail in the database. Reference: E+D</para></listitem>
+	  <listitem><para>The export of the commands in a format : It generates a shell script containing all the recorded commands made during a session. Commands such as connect or change password cannot be exported. Because the server does not know the user password, the script cannot be automatically executed, a connect call must be added. Reference: A</para></listitem>
 	  <listitem><para>The live monitor : It means getting the current state of the machines. Reference: A</para></listitem>
-	  <listitem><para>The delayed monitor : It means getting past states of a machine. Reference: A+B</para></listitem>
+	  <listitem><para>The delayed monitor : It means getting past states of a machine and automatically record the states of the machine with the time passing. Reference: A+B</para></listitem>
 	  <listitem><para>The notification monitor : It means to notify automatically the administrator of an abnormal behaviour of the VISHNU system. Reference: B</para></listitem>
-	  <listitem><para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot
-	      be the IMS SeD that restart it but GoDIET will make it. Reference: A+C</para></listitem>
+	  <listitem><para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot be the IMS SeD that restart it automatically but GoDIET will make it. Reference: A+C</para></listitem>
 	  <listitem><para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Reference: F+D</para></listitem>
 	</itemizedlist>
       </para>
