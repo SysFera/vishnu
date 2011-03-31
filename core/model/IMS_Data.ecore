@@ -135,7 +135,8 @@
         <details key="content" value="The path to the vishnu configuration file"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sedType" eType="#//SeDType"
+        defaultValueLiteral=""/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CurMetricOp" instanceTypeName="CurMetricOp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType">
@@ -200,5 +201,23 @@
   <eClassifiers xsi:type="ecore:EClass" name="ListSysInfo" instanceTypeName="ListSysInfo">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sysInfo" upperBound="-1"
         eType="#//SystemInfo"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SeDType" instanceTypeName="SeDType">
+    <eAnnotations source="Description">
+      <details key="content" value="The type of sed that can be relaunched"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED"/>
+    <eLiterals name="UMS" value="1"/>
+    <eLiterals name="TMS" value="2"/>
+    <eLiterals name="FMS" value="3"/>
+    <eLiterals name="IMS" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RestartType" instanceTypeName="RestartType">
+    <eAnnotations source="Description">
+      <details key="content" value="The type of element to restart"/>
+    </eAnnotations>
+    <eLiterals name="UNDEFINED"/>
+    <eLiterals name="SED" value="1"/>
+    <eLiterals name="AGENT" value="2"/>
   </eClassifiers>
 </ecore:EPackage>
