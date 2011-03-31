@@ -153,18 +153,8 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">IMS SeD</emphasis>
-	     contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
-	      The IMS SeD has 3 different roles:
-	      <itemizedlist>
-		<listitem><para>Watch the log central with a tool and select the messages directed to the machine the sed is on. 
-		The role of the tool is to get the connection/deconnection messages on the machine to keep persistent data about the platform,
-		    using a publisher/subscriber model. This tool uses a specific process table in the database and will keep it up to date and coherent.</para></listitem>
-		<listitem><para>Get the data about the machine state and fill the database depending on the update frequency. It logs
-		    the evolution of the machines states.</para></listitem>
-		<listitem><para>Realize the external API services</para></listitem>
-	      </itemizedlist>
-	      Each role will be realized in a separate thread. There must be an IMS SeD on each machine to monitor. A machine without 
-	      IMS SeD cannot be monitored.
+	      contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
+	      There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
 	    </para>
           </listitem>
           <listitem>
