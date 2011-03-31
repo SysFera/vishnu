@@ -484,7 +484,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
   }
   a = ac->getSite();
   if (a.compare("")){
-    res+=" -n ";
+    res+=" -s ";
     res+=a;
   }
   a = ac->getMachineDescription();
@@ -499,7 +499,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
   }
   a = ac->getLanguage();
   if (a.compare("")){
-    res+=" -t ";
+    res+=" -l ";
     res+=a;
   }
   a = ac->getSshPublicKey();
