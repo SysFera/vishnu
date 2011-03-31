@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<book
+    xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -49,6 +50,28 @@
           
         <para>First release</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>10/02/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            
+            
+            
+          <para>Removed UMS::SessionStateType.</para><para>Added UMS::StatusType, UMS::PrivilegeType.</para><para>Modified UMS::addVishnuUser, UMS::updateUser, UMS::addLocalAccount, UMS::addMachine, UMS::updateMachine,
+              UMS::listSessions, UMS::restoreConfiguration.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>18/02/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            
+            
+             
+            
+          <para>Renamed all commands to follow C-style command names with vishnu prefix.</para><para>Added the help option to all commands.</para><para>Modified update_machine and export_commands.</para><para>Removed the VISHNU_SESSION_KEY environment variable on all commands.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -64,16 +87,16 @@
         Vishnu system:</para>
       <para><itemizedlist>
           <listitem>
-            <para>UMS: Users Management System</para>
+            <para>UMS: Users Management Service</para>
           </listitem>
           <listitem>
-            <para>TMS: Tasks Management System</para>
+            <para>TMS: Tasks Management Service</para>
           </listitem>
           <listitem>
-            <para>FMS: Files Management System</para>
+            <para>FMS: Files Management Service</para>
           </listitem>
           <listitem>
-            <para>IMS: Information Management System</para>
+            <para>IMS: Information Management Service</para>
           </listitem>
         </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:<itemizedlist>
@@ -159,8 +182,11 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para>The following table contains the list of environment variables information, a required flag and a user option flag. When the user option flag 
-	is true, the environment variable can be defined as a user option stored in the database.</para>
+      <para>The following table contains the list of environment variables information. 
+        These environment variables can be mandatory or optional and the value will be overriden by the
+        corresponding command-line option if applicable. When the user option flag is true, the
+        value for this variable can be defined persistently as a user option stored in the database (see the
+        &quot;vishnu_configure_option&quot; command.</para>
       <para><emphasis role="bold">Environment variables</emphasis></para>
       <informaltable>
         <tgroup cols="6">
@@ -182,8 +208,8 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>VISHNU_SESSION_KEY</para></entry>
-              <entry><para>sessionKey</para></entry>
+              <entry><para>VISHNU_CONFIG_FILE</para></entry>
+              <entry><para>N/A</para></entry>
               <entry><para>string</para></entry>
               <entry><para>This is an example of an environment variable</para></entry>
               <entry><para>YES</para></entry>
@@ -221,19 +247,22 @@
 	    </programlisting></example>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/UMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for User Management System (UMS)</title>
+  <chapter annotations="UMS.apim#CLIOPS+CLIDATA">
+    <title>Commands specification for User Management Service (UMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
-        <title>UMS connect</title>
+        <title>vishnu_connect</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The connect command line opens a session</para>
+        <para>The vishnu_connect command opens a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>connect  </command><arg>-p<replaceable> closePolicy </replaceable></arg><arg>-d<replaceable> sessionInactivityDelay </replaceable></arg><arg>-s<replaceable> substituteUserId </replaceable></arg><arg
-              choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -282,30 +311,66 @@
                 <entry><para>sessionInactivityDelay</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>The sessionInactivityDelay is the maximum delay in seconds between two API commands when the CLOSE_ON_TIMEOUT option is set</para></entry>
+                <entry><para>is the maximum delay in seconds between two user requests when the CLOSE_ON_TIMEOUT policy is set</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>substituteUserId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>s</para></entry>
-                <entry><para>is an option which allows an admin to open a session as if he/she was a specific user identified by his/her userId</para></entry>
+                <entry><para>is an admin option which allows an admin to open a session as if she was another user identified by her userId</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
+        <informaltable>
+          <tgroup cols="6">
+            <colspec colwidth="4.1cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2.5cm"/>
+            <colspec colwidth="4.2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+                <entry>User option
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_CLOSE_POLICY</para></entry>
+                <entry><para>closePolicy</para></entry>
+                <entry><para><link linkend="SessionCloseType">SessionCloseType</link></para></entry>
+                <entry><para>is an option for closing session automatically</para></entry>
+                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
-        <title>UMS reconnect</title>
+        <title>vishnu_reconnect</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The reconnect command line returns the sessionKey of a session in which the user was disconnected previously without closing it</para>
+        <para>The vishnu_reconnect command reconnects to a session that is still active</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>reconnect</command><arg choice="plain"><replaceable> userId  sessionId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId </replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -357,13 +422,85 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS addVishnuUser</title>
+        <title>vishnu_add_user</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addVishnuUser command line adds a new VISHNU user</para>
+        <para>The vishnu_add_user command adds a new VISHNU user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addVishnuUser</command><arg>-f<replaceable> firstname</replaceable></arg><arg>-l<replaceable> lastname</replaceable></arg><arg>-p<replaceable> privilege</replaceable></arg><arg>-m<replaceable> email</replaceable></arg><arg
+        <cmdsynopsis><command>vishnu_add_user</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>firstname</replaceable></arg><arg choice="plain"><replaceable>lastname</replaceable></arg><arg
+              choice="plain"><replaceable>privilege</replaceable></arg><arg choice="plain"><replaceable>email</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>firstname</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the firstname of the user</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>lastname</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the lastname of the user</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>privilege</para></entry>
+                <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
+                <entry/>
+                <entry><para>is the privilege of the user (admin or simple user)</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>email</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>is the email of the user</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_update_user</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_update_user command updates the user information except the userId and the password</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_update_user</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-f <replaceable>firstname</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>lastname</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>privilege</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>email</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
               choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -399,114 +536,6 @@
                 <entry><para>firstname</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>f</para></entry>
-                <entry><para>is the firstname of the user</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>lastname</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
-                <entry><para>is the lastname of the user</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>privilege</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>p</para></entry>
-                <entry><para>is the privilege of the user (admin or simple user)</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>email</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>m</para></entry>
-                <entry><para>is the email of the user</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>UMS updateUser</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateUser command line updates the user information except the userId and the password</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateUser  </command><arg>-f<replaceable> firstname </replaceable></arg><arg>-l<replaceable> lastname </replaceable></arg><arg>-p<replaceable> privilege </replaceable></arg><arg>-m<replaceable> email </replaceable></arg><arg
-              choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>represents the VISHNU user identifier of the user whose information will be updated</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>firstname</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>f</para></entry>
                 <entry><para>represents the updated firstname of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -519,7 +548,7 @@
               </row>
               <row>
                 <entry><para>privilege</para></entry>
-                <entry><para>string</para></entry>
+                <entry><para><link linkend="PrivilegeType">PrivilegeType</link></para></entry>
                 <entry><para>p</para></entry>
                 <entry><para>represents the updated privilege of the user</para></entry>
                 <entry><para>NO</para></entry>
@@ -531,55 +560,28 @@
                 <entry><para>represents the updated email adress of the user</para></entry>
                 <entry><para>NO</para></entry>
               </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
               <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>represents the status of the user (LOCKED or ACTIVE)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS deleteUser</title>
+        <title>vishnu_delete_user</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteUser command line removes a user from VISHNU</para>
+        <para>The vishnu_delete_user command removes a user from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>deleteUser</command><arg choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_delete_user</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -614,99 +616,30 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS close</title>
+        <title>vishnu_close</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The close command line closes the session identfied by the session key</para>
+        <para>The vishnu_close command closes the session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>close</command><arg choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_close</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS changePassword</title>
+        <title>vishnu_change_password</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The changePassword command line changes the password</para>
+        <para>The vishnu_change_password command changes the password</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>changePassword</command><arg choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_change_password</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -758,13 +691,14 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS resetPassword</title>
+        <title>vishnu_reset_password</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The resetPassword command line resets the password of a user</para>
+        <para>The vishnu_reset_password command resets the password of a user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>resetPassword</command><arg choice="plain"><replaceable> userId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_reset_password</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -799,52 +733,95 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_add_local_account</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_add_local_account command adds a new local user configuration </para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_add_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>acLogin</replaceable></arg><arg choice="plain"><replaceable>sshKeyPath</replaceable></arg><arg
+              choice="plain"><replaceable>homeDirectory</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
             <colspec colwidth="1.5cm"/>
             <thead>
               <row>
-                <entry>Name
-</entry>
                 <entry>Parameter
 </entry>
                 <entry>Type
+</entry>
+                <entry>Option
 </entry>
                 <entry>Description
 </entry>
                 <entry>Required
 </entry>
-                <entry>User option
-</entry>
               </row>
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
+                <entry/>
+                <entry><para>The userId represents the VISHNU user identifier of the user of the local user configuration</para></entry>
                 <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The MachineId represents the identifier of the machine associated to the local user configuration</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>acLogin</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sshKeyPath</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>homeDirectory</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS addLocalAccount</title>
+        <title>vishnu_update_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addLocalAccount command line adds a new local user configuration </para>
+        <para>The vishnu_update_local_account command updates a local user configuration</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addLocalAccount</command><arg>-l<replaceable> acLogin</replaceable></arg><arg>-s<replaceable> sshKeyPath</replaceable></arg><arg>-d<replaceable> homeDirectory</replaceable></arg><arg
-              choice="plain"><replaceable>userId machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_update_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-l <replaceable>acLogin</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>sshKeyPath</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>homeDirectory</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -907,159 +884,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS updateLocalAccount</title>
+        <title>vishnu_delete_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateLocalAccount command line updates a local user configuration</para>
+        <para>The vishnu_delete_local_account command removes a local user configuration (for a given user on a given machine) from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateLocalAccount</command><arg>-l<replaceable> acLogin</replaceable></arg><arg>-s<replaceable> sshKeyPath</replaceable></arg><arg>-d<replaceable> homeDirectory</replaceable></arg><arg
-              choice="plain"><replaceable>userId machineId</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The userId represents the VISHNU user identifier of the user of the local user configuration</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The MachineId represents the identifier of the machine associated to the local user configuration</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>acLogin</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
-                <entry><para>accLogin represents the login of the user on the associated machine</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>sshKeyPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>s</para></entry>
-                <entry><para>sshKeyPath is the path of the ssh key of the user on the associated machine</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>homeDirectory</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>d</para></entry>
-                <entry><para>HomeDirectory is the path of the home directory of the user on the associated machine</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>UMS deleteLocalAccount</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any VISHNU user</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteLocalAccount command line removes a local user configuration (for a given user on a given machine) from VISHNU</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>deleteLocalAccount</command><arg choice="plain"><replaceable> userId machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_delete_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1101,51 +936,30 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS saveConfiguration</title>
+        <title>vishnu_save_configuration</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The saveConfiguration command line saves the configuration of VISHNU</para>
+        <para>The vishnu_save_configuration command saves the configuration of VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>saveConfiguration</command><arg choice="plain"><replaceable> filePath</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_save_configuration</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>This command defines no arguments.</para>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_restore_configuration</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_restore_configuration command restores the configuration of VISHNU</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_restore_configuration</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>filePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1173,138 +987,26 @@
                 <entry><para>filePath</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The filePath is the path of the file in which the VISHNU configuration will be saved</para></entry>
+                <entry><para>The filePath is the path of the file used to restore VISHNU configuration</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS restoreConfiguration</title>
+        <title>vishnu_add_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restoreConfiguration command line restores the configuration of VISHNU</para>
+        <para>The vishnu_add_machine command adds a new machine in VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>restoreConfiguration</command><arg choice="plain"><replaceable>  filePath </replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>filePath</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The filePath is the path of the VISHNU configuration file</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>UMS addMachine</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The addMachine command line adds a new machine in VISHNU</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>addMachine</command><arg>-s<replaceable> site</replaceable></arg><arg>-t<replaceable> machineDescription</replaceable></arg><arg>-l<replaceable> language</replaceable></arg><arg
-              choice="plain"><replaceable>name</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_add_machine</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>site</replaceable></arg><arg
+              choice="plain"><replaceable>language</replaceable></arg><arg choice="plain"><replaceable>sshPublicKeyFile</replaceable></arg><arg
+              choice="plain"><replaceable>machineDescription</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1331,80 +1033,58 @@
               <row>
                 <entry><para>name</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>n</para></entry>
+                <entry/>
                 <entry><para>represents the name of the machine</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>site</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>s</para></entry>
+                <entry/>
                 <entry><para>represents the location of the machine</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>machineDescription</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>represents the description of the machine</para></entry>
-                <entry><para>NO</para></entry>
+                <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>l</para></entry>
-                <entry><para>represents the language in which the description of the machine has been done</para></entry>
-                <entry><para>NO</para></entry>
+                <entry/>
+                <entry><para>represents the language used for the description of the machine</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sshPublicKeyFile</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>contains the path to the SSH public key used by VISHNU to access local user accounts</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>machineDescription</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>represents the description of the machine</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS updateMachine</title>
+        <title>vishnu_update_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The updateMachine command line updates machine description</para>
+        <para>The vishnu_update_machine command updates machine description</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>updateMachine</command><arg>-n<replaceable> name</replaceable></arg><arg>-s<replaceable> site</replaceable></arg><arg>-t<replaceable> machineDescription</replaceable></arg><arg>-l<replaceable> language</replaceable></arg><arg
+        <cmdsynopsis><command>vishnu_update_machine</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>machineDescription</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-k <replaceable>sshPublicKeyFile</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -1453,7 +1133,7 @@
               <row>
                 <entry><para>machineDescription</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>t</para></entry>
+                <entry><para>d</para></entry>
                 <entry><para>represents the description of the machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
@@ -1461,58 +1141,38 @@
                 <entry><para>language</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>l</para></entry>
-                <entry><para>represents the language in which the description of the machine has been done</para></entry>
+                <entry><para>represents the language used for the description of the machine</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="StatusType">StatusType</link></para></entry>
+                <entry><para>t</para></entry>
+                <entry><para>represents the status of the machine</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>sshPublicKeyFile</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>k</para></entry>
+                <entry><para>contains the path to the SSH public key used by VISHNU to access local user accounts</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS deleteMachine</title>
+        <title>vishnu_delete_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The deleteMachine command line removes a machine from VISHNU</para>
+        <para>The vishnu_delete_machine command removes a machine from VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>deleteMachine</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_delete_machine</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1547,52 +1207,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS listLocalAccount</title>
+        <title>vishnu_list_local_account</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listLocalAccount command line lists the local user configurations</para>
+        <para>The vishnu_list_local_account command lists the local user configurations</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listLocalAccount  </command><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-i<replaceable> machineId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_local_account</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1641,52 +1267,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS listMachine</title>
+        <title>vishnu_list_machine</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listMachine command line lists the machines in which  the local user configurations are defined for the given user</para>
+        <para>The vishnu_list_machine command lists the machines in which  the local user configurations are defined for the given user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listMachine  </command><arg>-u<replaceable> userId </replaceable></arg><arg>-a</arg><arg>-m<replaceable> machineId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1735,52 +1327,20 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS listHistoryCmd</title>
+        <title>vishnu_list_history_cmd</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listHistoryCmd command line lists the commands</para>
+        <para>The vishnu_list_history_cmd command lists the commands</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listHistoryCmd  </command><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-i<replaceable> sessionId </replaceable></arg><arg>-s<replaceable> startDateOption </replaceable></arg><arg>-e<replaceable> endDateOption </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_history_cmd</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>sessionId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>startDateOption</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>endDateOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1843,52 +1403,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS listOptions</title>
+        <title>vishnu_list_options</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listOptions command line lists the options of the user</para>
+        <para>The vishnu_list_options command lists the options of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listOptions  </command><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-n<replaceable> optionName </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_options</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>optionName</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -1937,52 +1463,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS listUsers</title>
+        <title>vishnu_list_users</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listUsers command line lists VISHNU users</para>
+        <para>The vishnu_list_users command lists VISHNU users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listUsers </command><arg>-i<replaceable> userIdOption</replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_users</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-i <replaceable>userIdOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2017,52 +1508,24 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS listSessions</title>
+        <title>vishnu_list_sessions</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listSessions command line lists all sessions of the user</para>
+        <para>The vishnu_list_sessions command lists all sessions of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listSessions  </command><arg>-t<replaceable> sessionListOption </replaceable></arg><arg>-p<replaceable> sessionClosePolicy </replaceable></arg><arg>-d<replaceable> sessionInactivityDelay </replaceable></arg><arg>-m<replaceable> machineId </replaceable></arg><arg>-a</arg><arg>-u<replaceable> userId </replaceable></arg><arg>-i<replaceable> sessionId </replaceable></arg><arg>-s<replaceable> startDateOption </replaceable></arg><arg>-e<replaceable> endDateOption </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_sessions</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>sessionClosePolicy</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>sessionId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>startDateOption</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>endDateOption</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2087,10 +1550,10 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>sessionListOption</para></entry>
-                <entry><para><link linkend="SessionStateType">SessionStateType</link></para></entry>
+                <entry><para>status</para></entry>
+                <entry><para><link linkend="StatusType">StatusType</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>specifies the type of the sessions which will be listed (INACTIVE or ACTIVE)</para></entry>
+                <entry><para>specifies the status of the sessions which will be listed</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
@@ -2153,51 +1616,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS configureDefaultOption</title>
+        <title>vishnu_configure_default_option</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureDefaultOption command line configures a default option value</para>
+        <para>The vishnu_configure_default_option command configures a default option value</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>configureDefaultOption</command><arg choice="plain"><replaceable>  optionName value </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_configure_default_option</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>optionName</replaceable></arg><arg choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2239,51 +1668,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>UMS configureOption</title>
+        <title>vishnu_configure_option</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The configureOption command line configures an option of the user</para>
+        <para>The vishnu_configure_option command configures an option of the user</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>configureOption</command><arg choice="plain"><replaceable>  optionName value </replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_configure_option</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>optionName</replaceable></arg><arg choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2325,46 +1720,36 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the encrypted identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
     </section>
     <section>
       <title>Parameters definitions</title>
+      <para xml:id="PrivilegeType"><emphasis role="bold">Enumeration UMS::PrivilegeType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>USER</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>ADMIN</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="SessionCloseType"><emphasis role="bold">Enumeration UMS::SessionCloseType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
@@ -2380,17 +1765,21 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
+              <entry><para>UNDEFINED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>CLOSE_ON_TIMEOUT</para></entry>
               <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>CLOSE_ON_DISCONNECT</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="SessionStateType"><emphasis role="bold">Enumeration UMS::SessionStateType Type</emphasis></para>
+      <para xml:id="StatusType"><emphasis role="bold">Enumeration UMS::StatusType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
           <colspec colwidth="4cm"/>
@@ -2417,19 +1806,28 @@
       </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/TMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for Tasks Management System (TMS)</title>
+  <chapter annotations="TMS.apim#CLIOPS+CLIDATA">
+    <title>Commands specification for Tasks Management Service (TMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
-        <title>TMS submitJob</title>
+        <title>vishnu_submit_job</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob command line submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
+        <para>The vishnu_submit_job command submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>submitJob  </command><arg>-n<replaceable> name </replaceable></arg><arg>-p<replaceable> priority </replaceable></arg><arg>-q<replaceable> queue </replaceable></arg><arg>-t<replaceable> wallTime </replaceable></arg><arg>-m<replaceable> memory </replaceable></arg><arg>-P<replaceable> nbCpu </replaceable></arg><arg>-N<replaceable> nbNodesAndCpuPerNode </replaceable></arg><arg>-o<replaceable> outPutPath </replaceable></arg><arg>-e<replaceable> errorPath </replaceable></arg><arg
-              choice="plain"><replaceable> machineId scriptFilePath</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
+              choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>wallTime</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
+              choice="opt"><option>-P <replaceable>nbCpu</replaceable></option></arg><arg
+              choice="opt"><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outPutPath</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2534,51 +1932,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS getJobInfo</title>
+        <title>vishnu_get_job_info</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobInfo command line gets information on a job from its id</para>
+        <para>The vishnu_get_job_info command gets information on a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getJobInfo</command><arg choice="plain"><replaceable> machineId jobId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_job_info</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2620,52 +1984,19 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS getJobProgress</title>
+        <title>vishnu_get_job_progress</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobProgress command line gets the progression status of jobs</para>
+        <para>The vishnu_get_job_progress command gets the progression status of jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getJobProgress  </command><arg>-i<replaceable> jobId </replaceable></arg><arg>-u<replaceable> jobOwner </replaceable></arg><arg
-              choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_job_progress</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>jobOwner</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2714,51 +2045,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS listQueues</title>
+        <title>vishnu_list_queues</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listQueues command line gets queues information</para>
+        <para>The vishnu_list_queues command gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listQueues</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_queues</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2793,52 +2090,27 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS listJobs</title>
+        <title>vishnu_list_jobs</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listJobs command line gets a list of all submitted jobs</para>
+        <para>The vishnu_list_jobs command gets a list of all submitted jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listJobs  </command><arg>-i<replaceable> jobId </replaceable></arg><arg>-P<replaceable> nbCpu </replaceable></arg><arg>-d<replaceable> fromSubmitDate </replaceable></arg><arg>-D<replaceable> toSubmitDate </replaceable></arg><arg>-u<replaceable> owner </replaceable></arg><arg>-s<replaceable> status </replaceable></arg><arg>-p<replaceable> priority </replaceable></arg><arg>-o<replaceable> outPutPath </replaceable></arg><arg>-e<replaceable> errorPath </replaceable></arg><arg>-q<replaceable> queue </replaceable></arg><arg
-              choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_jobs</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
+              choice="opt"><option>-P <replaceable>nbCpu</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>fromSubmitDate</replaceable></option></arg><arg
+              choice="opt"><option>-D <replaceable>toSubmitDate</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>owner</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outPutPath</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>errorPath</replaceable></option></arg><arg
+              choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2943,51 +2215,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS getJobOutPut</title>
+        <title>vishnu_get_job_out_put</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobOutPut command line gets outputPath and errorPath of a job from its id</para>
+        <para>The vishnu_get_job_out_put command gets outputPath and errorPath of a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getJobOutPut</command><arg choice="plain"><replaceable> machineId jobId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_job_out_put</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3029,51 +2267,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS getAllJobsOutPut</title>
+        <title>vishnu_get_all_jobs_out_put</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getAllJobsOutPut command line dynamically gets outputPath and errorPath of completed jobs</para>
+        <para>The vishnu_get_all_jobs_out_put command dynamically gets outputPath and errorPath of completed jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getAllJobsOutPut</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_all_jobs_out_put</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3108,51 +2312,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS cancelJob</title>
+        <title>vishnu_cancel_job</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob command line cancels a job from its id</para>
+        <para>The vishnu_cancel_job command cancels a job from its id</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>cancelJob</command><arg choice="plain"><replaceable> machineId jobId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3194,51 +2364,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS setMachineEnv</title>
+        <title>vishnu_set_machine_env</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineEnv command line sets environment variables on a remote machine</para>
+        <para>The vishnu_set_machine_env command sets environment variables on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setMachineEnv</command><arg choice="plain"><replaceable> machineId listEnv</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_machine_env</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>listEnv</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3280,51 +2416,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>TMS setMachineRefreshPeriod</title>
+        <title>vishnu_set_machine_refresh_period</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineRefreshPeriod command line sets the refresh period of output and error files contents</para>
+        <para>The vishnu_set_machine_refresh_period command sets the refresh period of output and error files contents</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setMachineRefreshPeriod</command><arg choice="plain"><replaceable> machineId value</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_machine_refresh_period</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3366,42 +2468,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The sessionKey is the identifier of the session generated by VISHNU</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
     </section>
     <section>
@@ -3564,18 +2631,19 @@
       </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/IMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for Information Management System (IMS)</title>
+  <chapter annotations="IMS.apim#CLIOPS+CLIDATA">
+    <title>Commands specification for Information Management Service (IMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
-        <title>IMS exportCommands</title>
+        <title>vishnu_export_commands</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The exportCommands command line exports all the commands made by a user during a session</para>
+        <para>The vishnu_export_commands command exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>exportCommands</command><arg choice="plain"><replaceable> oldSessionKey</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>oldSessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3600,61 +2668,27 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>oldSessionKey</para></entry>
+                <entry><para>oldSessionId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The key of the session to export (session has ended)</para></entry>
+                <entry><para>The id of the session to export (session has ended)</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command (current session key)</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS getMetricCurrentValue</title>
+        <title>vishnu_get_metric_current_value</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricCurrentValue command line retrieve the current value of a metric on a machine</para>
+        <para>The vishnu_get_metric_current_value command retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getMetricCurrentValue</command><arg choice="plain"><replaceable> machineId metricType</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3696,51 +2730,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS getMetricHistory</title>
+        <title>vishnu_get_metric_history</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMetricHistory command line retrieve the history of values of a metric on a machine</para>
+        <para>The vishnu_get_metric_history command retrieve the history of values of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getMetricHistory</command><arg choice="plain"><replaceable> machineId startTime endTime metricType</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>startTime</replaceable></arg><arg
+              choice="plain"><replaceable>endTime</replaceable></arg><arg choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3796,51 +2797,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS getProcesses</title>
+        <title>vishnu_get_processes</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getProcesses command line gets the list of the processes running over a front machine</para>
+        <para>The vishnu_get_processes command gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getProcesses</command><arg choice="plain"><replaceable> machineId</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_processes</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3875,51 +2842,19 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS setSystemInfo</title>
+        <title>vishnu_set_system_info</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setSystemInfo command line updates the system information of a machine</para>
+        <para>The vishnu_set_system_info command updates the system information of a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setSystemInfo</command><arg>-m<replaceable> memory</replaceable></arg><arg>-d<replaceable> diskSpace</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_info</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>memory</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>diskSpace</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3968,51 +2903,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS setSystemThreshold</title>
+        <title>vishnu_set_system_threshold</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setSystemThreshold command line sets a threshold on a machine of a system</para>
+        <para>The vishnu_set_system_threshold command sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setSystemThreshold</command><arg choice="plain"><replaceable> machineId thresholdType value</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>thresholdType</replaceable></arg><arg
+              choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4061,51 +2963,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS getSystemThreshold</title>
+        <title>vishnu_get_system_threshold</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getSystemThreshold command line gets a System threshold on a machine</para>
+        <para>The vishnu_get_system_threshold command gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getSystemThreshold</command><arg choice="plain"><replaceable> machineId type</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4147,51 +3015,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS defineUserIdentifier</title>
+        <title>vishnu_define_user_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineUserIdentifier command line defines the shape of the identifiers automatically generated for the users</para>
+        <para>The vishnu_define_user_identifier command defines the shape of the identifiers automatically generated for the users</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineUserIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_user_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4226,51 +3060,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS defineMachineIdentifier</title>
+        <title>vishnu_define_machine_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineMachineIdentifier command line defines the shape of the identifiers automatically generated for the machines</para>
+        <para>The vishnu_define_machine_identifier command defines the shape of the identifiers automatically generated for the machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineMachineIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_machine_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4305,51 +3105,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS defineJobIdentifier</title>
+        <title>vishnu_define_job_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineJobIdentifier command line defines the shape of the identifiers automatically generated for the jobs</para>
+        <para>The vishnu_define_job_identifier command defines the shape of the identifiers automatically generated for the jobs</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineJobIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_job_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4384,51 +3150,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS defineTransferIdentifier</title>
+        <title>vishnu_define_transfer_identifier</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The defineTransferIdentifier command line defines the shape of the identifiers automatically generated for the file transfers</para>
+        <para>The vishnu_define_transfer_identifier command defines the shape of the identifiers automatically generated for the file transfers</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>defineTransferIdentifier</command><arg choice="plain"><replaceable> format</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4463,51 +3195,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS loadShed</title>
+        <title>vishnu_load_shed</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The loadShed command line load sheds a machine</para>
+        <para>The vishnu_load_shed command load sheds a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>loadShed</command><arg choice="plain"><replaceable> machineId loadShedType</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_load_shed</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4549,51 +3247,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS setUpdateFrequency</title>
+        <title>vishnu_set_update_frequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setUpdateFrequency command line sets the update frequency of the IMS tables</para>
+        <para>The vishnu_set_update_frequency command sets the update frequency of the IMS tables</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>setUpdateFrequency</command><arg choice="plain"><replaceable> freq</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_update_frequency</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>freq</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4628,100 +3292,33 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS getUpdateFrequency</title>
+        <title>vishnu_get_update_frequency</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getUpdateFrequency command line gets the update frequency of the IMS database</para>
+        <para>The vishnu_get_update_frequency command gets the update frequency of the IMS database</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>getUpdateFrequency</command><arg choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_update_frequency</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>IMS restart</title>
+        <title>vishnu_restart</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The restart command line restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
+        <para>The vishnu_restart command restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>restart </command><arg>-n<replaceable> componentName </replaceable></arg><arg>-m<replaceable> machineId </replaceable></arg><arg>-f<replaceable> file</replaceable></arg><arg
-              choice="plain"><replaceable> type</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>componentName</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-f <replaceable>file</replaceable></option></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4777,42 +3374,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The key of the session of the user that submits the command</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
     </section>
     <section>
@@ -4918,19 +3480,20 @@
       </informaltable>
     </section>
   </chapter>
-  <chapter annotations="EDF-API/FMS.apim#CLIOPS+CLIDATA">
-    <title>Commands specification for File Management System (FMS)</title>
+  <chapter annotations="FMS.apim#CLIOPS+CLIDATA">
+    <title>Commands specification for File Management Service (FMS)</title>
     <section>
       <title>Command definitions</title>
       <section>
-        <title>FMS createFile</title>
+        <title>vishnu_create_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createFile command line creates  files on  remote machines.</para>
+        <para>The vishnu_create_file command creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>createFile </command><arg>-m<replaceable> mode</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_create_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4972,52 +3535,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS createDir</title>
+        <title>vishnu_create_dir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createDir command line creates directories on remote machines.</para>
+        <para>The vishnu_create_dir command creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>createDir </command><arg>-m<replaceable> mode</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>mode</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5059,51 +3588,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS removeFile</title>
+        <title>vishnu_remove_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeFile command line removes files from  remote hosts.</para>
+        <para>The vishnu_remove_file command removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>removeFile</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_remove_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5138,51 +3633,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS removeDir</title>
+        <title>vishnu_remove_dir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeDir command line removes  directories (and subdirectories) from  remote machines.</para>
+        <para>The vishnu_remove_dir command removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>removeDir</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_remove_dir</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5217,51 +3678,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS chGrp</title>
+        <title>vishnu_ch_grp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chGrp command line changes group owner of  remote files/directories. </para>
+        <para>The vishnu_ch_grp command changes group owner of  remote files/directories. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>chGrp</command><arg choice="plain"><replaceable> path group</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_ch_grp</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg><arg choice="plain"><replaceable>group</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5303,51 +3730,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS chMod</title>
+        <title>vishnu_ch_mod</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chMod command line changes  access rights of remote files/directories.</para>
+        <para>The vishnu_ch_mod command changes  access rights of remote files/directories.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>chMod</command><arg choice="plain"><replaceable> path mode</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_ch_mod</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg><arg choice="plain"><replaceable>mode</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5389,52 +3782,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS headOfFile</title>
+        <title>vishnu_head_of_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The headOfFile command line displays a few first lines of  files located on  remote machines.</para>
+        <para>The vishnu_head_of_file command displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>headOfFile </command><arg>-n<replaceable> nLine</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_head_of_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5476,52 +3835,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS tailOfFile</title>
+        <title>vishnu_tail_of_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The tailOfFile command line displays a few last lines of  files located on remote machines</para>
+        <para>The vishnu_tail_of_file command displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>tailOfFile </command><arg>-n<replaceable> nLine</replaceable></arg><arg
-              choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_tail_of_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-n <replaceable>nLine</replaceable></option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5563,51 +3888,17 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS contentOfFile</title>
+        <title>vishnu_content_of_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The contentOfFile command line displays content  of  files located on remote machines</para>
+        <para>The vishnu_content_of_file command displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>contentOfFile</command><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_content_of_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5642,51 +3933,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS listDir</title>
+        <title>vishnu_list_dir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listDir command line displays  the content of a remote directory. </para>
+        <para>The vishnu_list_dir command displays  the content of a remote directory. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listDir  </command><arg>-l</arg><arg>-a</arg><arg choice="plain"><replaceable> path</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_dir</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-l</option></arg><arg choice="opt"><option>-a</option></arg><arg
+              choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5735,52 +3993,18 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS copyFile</title>
+        <title>vishnu_copy_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyFile command line executes a synchronous copy of file.</para>
+        <para>The vishnu_copy_file command executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>copyFile  </command><arg>-r</arg><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_copy_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5862,14 +4086,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
@@ -5882,14 +4098,15 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS copyAsyncFile</title>
+        <title>vishnu_copy_async_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyAsyncFile command line executes an asynchronous copy of file.</para>
+        <para>The vishnu_copy_async_file command executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>copyAsyncFile  </command><arg>-r</arg><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_copy_async_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-r</option></arg><arg choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -5971,14 +4188,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
@@ -5991,14 +4200,15 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS moveFile</title>
+        <title>vishnu_move_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveFile command line executes a synchronous move of file.</para>
+        <para>The vishnu_move_file command executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>moveFile  </command><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6073,14 +4283,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
@@ -6093,14 +4295,15 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS moveAsyncFile</title>
+        <title>vishnu_move_async_file</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveAsyncFile command line executes an asynchronous move of file.</para>
+        <para>The vishnu_move_async_file command executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>moveAsyncFile  </command><arg>-c<replaceable> trCommand </replaceable></arg><arg
-              choice="plain"><replaceable> src dest</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-c <replaceable>trCommand</replaceable></option></arg><arg
+              choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6175,14 +4378,6 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
@@ -6195,14 +4390,16 @@
         </informaltable>
       </section>
       <section>
-        <title>FMS stopFileTransfer</title>
+        <title>vishnu_stop_file_transfer</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The stopFileTransfer command line stops an execution of a set of file transfers.</para>
+        <para>The vishnu_stop_file_transfer command stops an execution of a set of file transfers.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>stopFileTransfer  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_stop_file_transfer</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6251,52 +4448,19 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS listFileTransferStatus</title>
+        <title>vishnu_list_file_transfer_status</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFileTransferStatus command line displays the status of all file transfers submitted by User.</para>
+        <para>The vishnu_list_file_transfer_status command displays the status of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listFileTransferStatus  </command><arg>-i<replaceable> transferId </replaceable></arg><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_file_transfer_status</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6345,52 +4509,19 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>FMS listFileTransfers</title>
+        <title>vishnu_list_file_transfers</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listFileTransfers command line displays the history of all file transfers submitted by User.</para>
+        <para>The vishnu_list_file_transfers command displays the history of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>listFileTransfers  </command><arg>-m<replaceable> fromMachineId </replaceable></arg><arg>-u<replaceable> userId </replaceable></arg><arg>-s<replaceable> status </replaceable></arg><arg
-              choice="plain"><replaceable></replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_list_file_transfers</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -6439,42 +4570,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
-        <informaltable>
-          <tgroup cols="6">
-            <colspec colwidth="4.1cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="2.5cm"/>
-            <colspec colwidth="4.2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-                <entry>User option
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_SESSION_KEY</para></entry>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>YES</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
+        <para>This command defines no environment variables.</para>
       </section>
     </section>
     <section>

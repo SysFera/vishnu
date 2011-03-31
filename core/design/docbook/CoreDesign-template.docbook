@@ -36,6 +36,14 @@
           <para>In §3.4, modified flows VFT, UFT and DFT, and added CFT</para>
         </revdescription>
         </revision>
+        <revision>
+        <revnumber>3</revnumber>
+        <date>25/03/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>In §3.4, added flows COS and OSS</para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
@@ -539,6 +547,14 @@
               <entry>1kB/request</entry>
               <entry>SysFera-DS Request</entry>
             </row>
+             <row>
+              <entry>COS</entry>
+              <entry>Client system</entry>
+              <entry>omniNames server</entry>
+              <entry>CORBA</entry>
+              <entry>1kB/request</entry>
+              <entry>SysFera-DS Request</entry>
+            </row>
             <row>
               <entry>WMA</entry>
               <entry>Web server</entry>
@@ -554,6 +570,14 @@
               <entry>HTTP (80/tcp)</entry>
               <entry>2kB/request</entry>
               <entry>Web service request</entry>
+            </row>
+             <row>
+              <entry>OSS</entry>
+              <entry>omniNames server</entry>
+              <entry>VISHNU VSS</entry>
+              <entry>CORBA</entry>
+              <entry>1kB*NVSS /request</entry>
+              <entry>Corba request</entry>
             </row>
             <row>
               <entry>CVS</entry>
