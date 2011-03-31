@@ -77,6 +77,12 @@
       <ports name="res" direction="OUT" dataType="//@typeList/@types.20" description="The list of the system information gotten"/>
       <ports name="options" dataType="//@typeList/@types.21" description="Optional field for system information" optional="true" shortOptionLetter=""/>
     </services>
+    <services name="restart" description="To restart a SeD or a MA" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
+      <ports name="type" dataType="//@typeList/@types.23" description="If restarting a sed or an agent" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.22" description="The option for the restart" defaultValueLiteral=""/>
+    </services>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
       <resultCodes name="INVALID_PARAMETER" description="If a parameter is invalid" value="1"/>
@@ -151,6 +157,12 @@
     </types>
     <types name="SysInfoOp" description="Optional fields for system information">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SysInfoOp"/>
+    </types>
+    <types name="RestartOp" description="The option for the restart">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//RestartOp"/>
+    </types>
+    <types name="RestartType" description="The type of element to restart">
+      <ECoreType xsi:type="ecore:EEnum" href="IMS_Data.ecore#//RestartType"/>
     </types>
   </typeList>
 </API>
