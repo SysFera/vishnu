@@ -47,7 +47,7 @@ parser::~parser()
     //  Create our SAX handler object and install it on the parser, as the
     //  document and error handler.
     //
-    
+
     handler _handler;
 
     xml_parser::SemanticState< handler > ss (_handler);
@@ -77,7 +77,8 @@ parser::~parser()
     //
 #ifdef DEBUG
     struct timeval start, end;
-    long mtime, seconds, useconds;
+    long seconds, useconds;
+    double mtime;
 #endif
 
 #ifdef DEBUG
@@ -90,7 +91,7 @@ parser::~parser()
     seconds  = end.tv_sec  - start.tv_sec;
     useconds = end.tv_usec - start.tv_usec;
 
-    mtime = (long)((seconds) * 1000 + useconds/1000.0) + 0.5;
+    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
 #endif
     DEBUG_MSG(cout,"--- DURATION: " << mtime);
 
@@ -102,7 +103,7 @@ parser::~parser()
     _handler.resolveReferences();
 
     ::ecore::EObject_ptr _r = _handler.getRootElement();
-   
+
     if(_r==NULL) {
       throw std::runtime_error("NULL emf pointer ***"); //TODO: a remplacer par EMF exception
     }
