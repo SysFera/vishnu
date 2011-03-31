@@ -9,25 +9,25 @@
     </services>
     <services name="getMetricCurrentValue" description="Retrieve the current value of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" defaultValueLiteral=""/>
       <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.5" description="Value of the metric"/>
-      <ports name="option" dataType="//@typeList/@types.14" description="The options for the current metric value" longOptionName="" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.14" description="The options for the current metric value" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="getMetricHistory" description="Retrieve the history of values of a metric on a machine" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
       <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter="" longOptionName=""/>
       <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.9" description="List of metric values" longOptionName=""/>
-      <ports name="option" dataType="//@typeList/@types.13" description="The optional fields for the metric history" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.13" description="The optional fields for the metric history" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
     </services>
     <services name="getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine the user wants the running processes" shortOptionLetter=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.7" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
-      <ports name="option" dataType="//@typeList/@types.12" description="The options to search for the processes" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.12" description="The options to search for the processes" defaultValueLiteral=""/>
     </services>
     <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter="" longOptionName=""/>
       <ports name="systemInfo" dataType="//@typeList/@types.11" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
     </services>
     <services name="setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
@@ -37,7 +37,7 @@
     <services name="getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="value" direction="OUT" dataType="//@typeList/@types.17" description="The thresholds value" longOptionName="" defaultValueLiteral=""/>
-      <ports name="option" dataType="//@typeList/@types.16" description="The options for the threshold" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.16" description="The options for the threshold" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -58,7 +58,7 @@
     <services name="loadShed" description="load sheds a machine" adminOnly="true" resultCodes="VISHNU_OK COMPONENT_ERROR DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
-      <ports name="loadShedType" dataType="//@typeList/@types.6" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName=""/>
+      <ports name="loadShedType" dataType="//@typeList/@types.6" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -67,6 +67,15 @@
     <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
+    </services>
+    <services name="stop" description="To stop (and do not try to relaunch) a SeD" adminOnly="true" resultCodes="DB_ERROR VISHNU_OK INVALID_PARAMETER">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="process" dataType="//@typeList/@types.19" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
+    </services>
+    <services name="getSystemInfo" description="To get the system info on a machine" resultCodes="DB_ERROR INVALID_PARAMETER VISHNU_OK">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="res" direction="OUT" dataType="//@typeList/@types.20" description="The list of the system information gotten"/>
+      <ports name="options" dataType="//@typeList/@types.21" description="Optional field for system information" optional="true" shortOptionLetter=""/>
     </services>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
@@ -133,6 +142,15 @@
     </types>
     <types name="Threshold" description="A threshold">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//Threshold"/>
+    </types>
+    <types name="Process" description="The process to stop">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//Process"/>
+    </types>
+    <types name="ListSysInfo" description="List of system info element">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ListSysInfo"/>
+    </types>
+    <types name="SysInfoOp" description="Optional fields for system information">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SysInfoOp"/>
     </types>
   </typeList>
 </API>
