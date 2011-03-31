@@ -36,6 +36,14 @@
           <para>In §3.4, modified flows VFT, UFT and DFT, and added CFT</para>
         </revdescription>
         </revision>
+        <revision>
+        <revnumber>3</revnumber>
+        <date>25/03/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>In §3.4, added flows COS and OSS</para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
