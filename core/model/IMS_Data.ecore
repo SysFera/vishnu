@@ -51,7 +51,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListProcesses" instanceTypeName="ListProcesses">
     <eStructuralFeatures xsi:type="ecore:EReference" name="process" upperBound="-1"
-        eType="#//Processes" containment="true">
+        eType="#//Process" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="The processes of the list"/>
       </eAnnotations>
@@ -70,8 +70,9 @@
         <details key="shortOption" value="d"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Processes" instanceTypeName="Processes">
+  <eClassifiers xsi:type="ecore:EClass" name="Process" instanceTypeName="Process">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="processName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The name of the process"/>
@@ -137,11 +138,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CurMetricOp" instanceTypeName="CurMetricOp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="The id of the machine where the metric is defined"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType">
       <eAnnotations source="Description">
         <details key="content" value="The type of the metric"/>
@@ -196,5 +192,13 @@
     <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
     <eLiterals name="RUNNING" value="1"/>
     <eLiterals name="DOWN" value="2"/>
+    <eLiterals name="DELETED" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SysInfoOp" instanceTypeName="SysInfoOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListSysInfo" instanceTypeName="ListSysInfo">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sysInfo" upperBound="-1"
+        eType="#//SystemInfo"/>
   </eClassifiers>
 </ecore:EPackage>
