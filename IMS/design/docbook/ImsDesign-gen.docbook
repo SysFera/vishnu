@@ -66,10 +66,13 @@
             <para>Chapter 2 contains a high-level overview of the system architecture.</para>
           </listitem>
           <listitem>
-            <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+            <para>Chapter 3 contains an overview of the internal IMS organisation.</para>
           </listitem>
           <listitem>
-            <para>Chapter 4 describes the internal class and data structures</para>
+            <para>Chapter 4 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 5 describes the internal classes and data structures</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -164,7 +167,24 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">IMS SeD</emphasis>
-	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
+	     contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
+	      The IMS SeD has 3 different roles:
+	      <itemizedlist>
+                <listitem>
+                  <para>Watch the log central with a tool and select the messages directed to the machine the sed is on. 
+		The role of the tool is to get the connection/deconnection messages on the machine to keep persistent data about the platform,
+		    using a publisher/subscriber model. This tool uses a specific process table in the database and will keep it up to date and coherent.</para>
+                </listitem>
+                <listitem>
+                  <para>Get the data about the machine state and fill the database depending on the update frequency. It logs
+		    the evolution of the machines states.</para>
+                </listitem>
+                <listitem>
+                  <para>Realize the external API services</para>
+                </listitem>
+              </itemizedlist>
+	      Each role will be realized in a separate thread. There must be an IMS SeD on each machine to monitor. A machine without 
+	      IMS SeD cannot be monitored.
 	    </para>
           </listitem>
           <listitem>
@@ -172,11 +192,6 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">IMS Monitor Daemon</emphasis> 
-	      that spends its time calling the IMS SeDs to get information about the state of the server machine and updating the database.
-	    </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">VISHNU Database</emphasis> stores all data manipulated by the IMS SeD.
@@ -191,11 +206,7 @@
         We explain here how the IMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The IMS consists of: 
 	<itemizedlist>
           <listitem>
-            <para><emphasis role="bold"> IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeDs component which gathers all IMS services published. There is one IMS SeD per frontale.
-	    </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold"> IMS monitor daemon </emphasis>is the daemon that spends its time calling for IMS services to get information about the state of the system and saving them in the database.
+            <para><emphasis role="bold"> IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeD component which gathers all IMS services published. There is one IMS SeD per machine to supervise.
 	    </para>
           </listitem>
           <listitem>
@@ -266,6 +277,78 @@
             </imageobject>
           </mediaobject>
         </figure>
+      </section>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Overview of the internal IMS organisation</title>
+    <section annotations="IMS/design/Design.asta#ARCHIDIAG(role)">
+      <title>The role modelisation</title>
+      <section>
+        <title>Architecture diagrams</title>
+        <section>
+          <title>role</title>
+          <para>The following diagram is functional. The IMS client can ask the IMS SeD to fill four functions. It is important to note that the IMS client can access specific TMS and FMS services. Morevover, all the SeD will have to save the command that was used to launch them.</para>
+          <figure>
+            <title>role</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/role.png" align="center" scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section>
+      <title>The organisation</title>
+      <para>
+	The IMS module can play eight different roles. For each role, there is a reference to the above functional figure with the letter corresponding to the functional element.
+	<itemizedlist>
+          <listitem>
+            <para>The hard load shedding : It means the death of all the VISHNU processes on a machine. Reference: D.</para>
+          </listitem>
+          <listitem>
+            <para>The soft load shedding : It means the end of the current jobs and file transfer. Reference: E+D</para>
+          </listitem>
+          <listitem>
+            <para>The export of the commands in a format : It generates a shell script containing all the recorded commands made during a session. Commands such as connect or change password cannot be exported. Reference: A</para>
+          </listitem>
+          <listitem>
+            <para>The live monitor : It means getting the current state of the machines. Reference: A</para>
+          </listitem>
+          <listitem>
+            <para>The delayed monitor : It means getting past states of a machine. Reference: A+B</para>
+          </listitem>
+          <listitem>
+            <para>The notification monitor : It means to notify automatically the administrator of an abnormal behaviour of the VISHNU system. Reference: B</para>
+          </listitem>
+          <listitem>
+            <para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot
+	      be the IMS SeD that restart it but GoDIET will make it. Reference: A+C</para>
+          </listitem>
+          <listitem>
+            <para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Reference: F+D</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section annotations="IMS/design/Design.asta#ARCHIDIAG(classes)">
+      <title>The role modelisation</title>
+      <section>
+        <title>Architecture diagrams</title>
+        <section>
+          <title>classes</title>
+          <para>The following figure presents the links between the functional roles and the classes corresponding. There are two main groups of classes. The DATA, that correspond to the external API and that deal with the database, and the CONTROLER that only interact with the DATA classes</para>
+          <figure>
+            <title>classes</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/classes.png" align="center" scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
       </section>
     </section>
   </chapter>
@@ -1323,10 +1406,6 @@
               <emphasis role="it">IMS Client</emphasis> component and the <emphasis
                   role="it">IMS SeD</emphasis> component.</para>
           </listitem>
-          <listitem>
-            <para><emphasis role="bold">The daemon</emphasis>: describes the data structure used to implement the 
-              <emphasis role="it">IMS Monitor daemon</emphasis> and its external API.</para>
-          </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -1386,34 +1465,6 @@
           </figure>
         </section>
       </section>
-    </section>
-    <section>
-      <title>The daemon</title>
-      <para>
-	The IMS daemon must be running on the administration machine. It is both a client and a SeD for IMS: a client because it calls SeD services and a SeD because it updates the database. The daemon waits and acts upon receiving a request in its request queue. The daemon will have a cron-like component that will spend its time asking for the machines' states. This cron like component can be activated/desactivated. But the daemon can be called by outsiders to get monitoring data (it offers its own api). This daemon is used to retrieve data about the running processes on the machines and to realize the inner SeD job to update the database with the machines states.
-      </para>
-      <para>The external API will be:
-	<itemizedlist>
-          <listitem>
-            <para>int setProcessesName(string sessionKey, ProcessNameSet s)</para>
-          </listitem>
-          <listitem>
-            <para>int addProcessesName(string sessionKey, ProcessNameSet s)</para>
-          </listitem>
-          <listitem>
-            <para>int getProcessesName(string sessionKey, ProcessNameSet s)</para>
-          </listitem>
-          <listitem>
-            <para>int getCorrespondingId(string sessionKey, string machineName, string machineId)</para>
-          </listitem>
-          <listitem>
-            <para>int getProcesses(string sessionKey, ProcessSet s, ProcessOp op, ProcessNameSet s = NULL)</para>
-          </listitem>
-          <listitem>
-            <para>int getListMachine(string sessionKey, MachineSet m, MachineOp op)</para>
-          </listitem>
-        </itemizedlist>
-      </para>
     </section>
   </chapter>
 </book>
