@@ -51,6 +51,14 @@
               Added UA1.3 and modified 2.3.</para>
           </revdescription>
         </revision>
+        <revision>
+          <revnumber>05</revnumber>
+          <date>31/03/2011</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+            <para>Modified 4.2.6, UC IA2. Fix set threshold available in branch c, the threshold is the cpuload and not the number of processes</para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
