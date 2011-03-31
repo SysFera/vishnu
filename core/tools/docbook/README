@@ -7,7 +7,8 @@ REMPLACER: <book xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-ins
 PAR: <book xmlns="http://docbook.org/ns/docbook" version="5.0">
 
 # CONVERSION HTML
-xsltproc docbook-xsl/xhtml/docbook.xsl fichier.docbook > fichier.html
+xsltproc --param ignore.image.scaling 1 docbook-xsl/xhtml/docbook.xsl fichier.docbook > fichier.html
+(le parametre ignore.image.scaling est important pour eviter d'avoir des images toutes petites!)
 
 # CONVERSION MANPAGES
 xsltproc fichier-man.docbook
