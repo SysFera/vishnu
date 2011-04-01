@@ -73,6 +73,12 @@
        <listitem>
           <para>[D1.1c]: VISHNU API Detailed specifications</para>
         </listitem>
+        <listitem>
+          <para>[D1.1g]: VISHNU Technical architecture</para>
+        </listitem>
+        <listitem>
+          <para>[D1.1g-DAT]: VISHNU Dossier d'Architecture Technique</para>
+        </listitem>
       </itemizedlist></para>
     </section>
     <section>
@@ -110,8 +116,11 @@
           <listitem>
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
+           <listitem>
+            <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all processes of the VISHNU infrastructure.</para>
+          </listitem>
           <listitem>
-            <para><emphasis role="bold">Log central</emphasis>: component of the SysFera-DS middleware that provides event notifications within a SysFera-DS platform.</para>
+            <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
@@ -155,9 +164,10 @@
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS SeD</emphasis>
-	      contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
-	      There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
+            <para><emphasis role="bold">IMS Server</emphasis>
+	     provides the business logic of the IMS module on the server side. The set of classes in this component cover all the IMS objects
+             that have a proxy class that publishes services to the external API, and additionnally some classes that provide internal
+             mechanisms of the IMS module.
 	    </para>
           </listitem>
           <listitem>
@@ -173,22 +183,113 @@
         </itemizedlist>
       </para>
     </section>
+    
+    <section>
+      <title>IMS package dependencies</title>
+      <para>In order to install the IMS service on the infrastructure, the following tables list all the packages that must be
+        installed on the IMS client and on the IMS server hosts:</para>
+        <section>
+          <title>IMS Client host</title>
+          <informaltable>
+            <tgroup cols="2">
+              <colspec colwidth="8.5cm"/>
+              <colspec colwidth="9cm"/>
+              <thead>
+                <row>
+                  <entry>Package Name</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><para>SysFera-DS/DIET</para></entry>
+                  <entry><para>Middleware</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU UMS</para></entry>
+                  <entry><para>VISHNU Package for user and session management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU TMS</para></entry>
+                  <entry><para>VISHNU Package for tasks management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU FMS</para></entry>
+                  <entry><para>VISHNU Package for files management</para></entry>
+                </row>
+                <row>
+                  <entry><para>Python (optional)</para></entry>
+                  <entry><para>Python language, required to use the VISHNU Python API</para></entry>
+                </row>
+                <row>
+                  <entry><para>Java 1.6 (optional)</para></entry>
+                  <entry><para>Java environment, required to use the VISHNU WS API</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        
+        <section>
+          <title>IMS Server host</title>
+          <informaltable>
+            <tgroup cols="2">
+              <colspec colwidth="8.5cm"/>
+              <colspec colwidth="9cm"/>
+              <thead>
+                <row>
+                  <entry>Package Name</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><para>SysFera-DS/DIET</para></entry>
+                  <entry><para>Middleware</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU UMS</para></entry>
+                  <entry><para>VISHNU Package for user and session management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU TMS</para></entry>
+                  <entry><para>VISHNU Package for tasks management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU FMS</para></entry>
+                  <entry><para>VISHNU Package for files management</para></entry>
+                </row>
+                <row>
+                  <entry><para>PostgreSQL client (or Oracle client)</para></entry>
+                  <entry><para>Database client</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+    </section>
 
     <section>
-      <title> Deployment aspects of IMS</title>
+      <title>Deployment aspects of IMS</title>
        <para>
         We explain here how the IMS package will be deployed on a physical infrastructure as illustrated in figure 2.1.
         Each box in the figure represents an operating system in which a component or a set of components are running as processes.
         The IMS consists of: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeD component which gathers all IMS services published. There is one IMS SeD per machine to supervise.
-	    </para>
+	    <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services. It uses the IMS SeD and IMS Server components.
+            This process is required on any host of the VISHNU infrastructure where VISHNU processes have to be monitored. Without an IMS process running on the 
+            host it won't be possible to use IMS services on that host, i.e. restart processes, get system information, do loadshedding, etc.</para>
 	  </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Client host </emphasis> is IMS service requester. It contains all components allowing to make a IMS service request.	  
+	    <para><emphasis role="bold">Client host</emphasis> is the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
+            It contains all the client components required to make an IMS service request.
 	    </para>
 	  </listitem>
+          <listitem>
+            <para><emphasis role="bold">LogCentral</emphasis> TODO.
+            </para>
+          </listitem>
            <listitem>
             <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts.
             </para>
@@ -204,8 +305,17 @@
   
   <chapter><!-- CHAPTER 3 : MODELIZATION -->
     <title>Overview of the IMS modelization</title>
-    <section annotations="IMS/design/Design.asta#ARCHIDIAG(role)">
-      <title>Roles model</title>
+    <section>
+      <title>Functional view</title>
+      <para>The following diagram is functional. The IMS client can ask the IMS SeD to fill four functions. It is important to note that the IMS client can access specific TMS and FMS services. Morevover, all the SeD will have to save the command that was used to launch them.</para>
+      <figure>
+        <title>Functional roles</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/role.png" align="center" scale="40"/>
+          </imageobject>
+        </mediaobject>
+          </figure>
     </section>
     <section>
       <title>Roles description</title>
@@ -219,12 +329,21 @@
 	  <listitem><para>The delayed monitor : It means getting past states of a machine and automatically record the states of the machine with the time passing. Reference: A+B</para></listitem>
 	  <listitem><para>The notification monitor : It means to notify automatically the administrator of an abnormal behaviour of the VISHNU system. Reference: B</para></listitem>
 	  <listitem><para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot be the IMS SeD that restart it automatically but GoDIET will make it. Reference: A+C</para></listitem>
-	  <listitem><para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Reference: F+D</para></listitem>
+	  <listitem><para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Only VISHNU SeD can be relaunched throught the API. Reference: F+D</para></listitem>
 	</itemizedlist>
       </para>
     </section>
-    <section annotations="IMS/design/Design.asta#ARCHIDIAG(classes)">
-      <title>The role modelisation</title>
+    <section>
+      <title>Classes and roles</title>
+      <para>The following figure presents the links between the functional roles and the classes corresponding. There are two main groups of classes. The DATA, that correspond to the external API and that deal with the database, and the CONTROLER that only interact with the DATA classes</para>
+      <figure>
+        <title>Classes implementing the roles</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/classes.png" align="center" scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </chapter><!-- CHAPTER 3 : MODELIZATION -->
   
@@ -331,16 +450,44 @@
         </itemizedlist>
       </para>
     </section>
-    <section annotations="IMS/design/Design.asta#CLASSDIAG(client)">
-      <title>IMS client modelization</title>
+    <section>
+      <title>IMS Proxy ClassDiagram</title>
+      <para>The following figure presents the class diagram on the client side</para>
+      <figure>
+        <title>IMS Proxy ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Proxy_ClassDiagram.png" align="center"
+                       scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
-    
-    <section annotations="IMS/design/Design.asta#CLASSDIAG(server)">
-      <title>IMS SeD modelization</title>
+    <section>
+      <title>IMS Server ClassDiagram</title>
+      <para>The following figure presents the class diagram on the server side</para>
+      <figure>
+        <title>IMS Server ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Server_ClassDiagram.png" align="center"
+                       scale="39"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
-    
-    <section annotations="IMS/design/Design.asta#CLASSDIAG(data)">
-      <title>IMS data modelization</title>
+    <section>
+      <title>IMS Datatype ClassDiagram</title>
+      <para>The following figure presents the links between the datatypes</para>
+      <figure>
+        <title>IMS Datatype ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Datatype_ClassDiagram.png" align="center"
+                       scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </chapter><!-- END CHAPTER 5 : CLASSES AND DATA -->
   
