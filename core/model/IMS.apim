@@ -22,9 +22,8 @@
     </services>
     <services name="getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true" resultCodes="VISHNU_OK INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine the user wants the running processes" shortOptionLetter=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.7" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
-      <ports name="options" dataType="//@typeList/@types.12" description="The options to search for the processes" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.15" description="The options to search for the processes" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
     </services>
     <services name="setSystemInfo" description="updates the system information of a machine" adminOnly="true" resultCodes="VISHNU_OK DB_ERROR INVALID_PARAMETER">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
