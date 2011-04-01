@@ -47,10 +47,10 @@
           <para>Chapter 1 contains a brief overview of the document content.</para>
         </listitem>
         <listitem>
-          <para>Chapter 2 contains a high-level overview of the system architecture.</para>
+          <para>Chapter 2 contains a description of the IMS system architecture.</para>
         </listitem>
         <listitem>
-          <para>Chapter 3 contains an overview of the internal IMS organisation.</para>
+          <para>Chapter 3 contains an overview of the IMS system modelization.</para>
         </listitem>
         <listitem>
           <para>Chapter 4 describes the internal API used for remote procedure calls through SysFera-DS.</para>
@@ -80,25 +80,25 @@
       <para>
         <itemizedlist>
 	  <listitem>
-            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
+            <para><emphasis role="bold">API</emphasis>: Application Programming Interface</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+            <para><emphasis role="bold">DB</emphasis>: Database</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+            <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">IMS</emphasis>: Information management service</para>
+	    <para><emphasis role="bold">IMS</emphasis>: Information Management Services</para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+            <para><emphasis role="bold">WS</emphasis>: Web Services</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -111,7 +111,10 @@
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
+            <para><emphasis role="bold">Log central</emphasis>: component of the SysFera-DS middleware that provides event notifications within a SysFera-DS platform.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
@@ -121,12 +124,12 @@
     </section>
   </chapter>
 
-  <!-- PART 1 : ARCHITECTURE -->
+  <!-- CHAPTER 2 : ARCHITECTURE -->
   <chapter annotations="IMS/design/Archi.asta#ARCHIDIAG(architecture)">
-    <title>System Architecture</title>
+    <title>IMS System Architecture</title>
     <section>
-      <title>Overview of the IMS software infrastructure</title>
-      <para>We present in this section a detailed description of the IMS package architecture in terms of software components.
+      <title>IMS software components</title>
+      <para>We present in this section a description of the IMS package in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
         We present the different software layers from services (provided directly to the user) to the database (used by the server). 
 	The IMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
@@ -142,8 +145,8 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">Internal API</emphasis>
-	     is the middle layer of the server side. The services announced previously are performed here by combining a set of classes defined 
-	    in the two following components.
+	     is the interface of the server side, used by the IMS Client components. It provides a set of services that are remotely accessible
+             through the SysFera-DS middleware. This layer does not contain any business logic and uses directly the IMS SeD for service implementation.
 	    </para>
           </listitem>
           <listitem>
@@ -164,7 +167,7 @@
             <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">VISHNU Database</emphasis> stores all data manipulated by the IMS SeD.
+	    <para><emphasis role="bold">VISHNU Database</emphasis> stores all data handled by the IMS SeD.
 	    </para>
 	  </listitem>
         </itemizedlist>
@@ -174,10 +177,12 @@
     <section>
       <title> Deployment aspects of IMS</title>
        <para>
-        We explain here how the IMS package will be deployed in a physical hardware as illustrated in figure 2.1  where each cube represents an environement in which a component or a set of components execute. The IMS consists of: 
+        We explain here how the IMS package will be deployed on a physical infrastructure as illustrated in figure 2.1.
+        Each box in the figure represents an operating system in which a component or a set of components are running as processes.
+        The IMS consists of: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold"> IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeD component which gathers all IMS services published. There is one IMS SeD per machine to supervise.
+	    <para><emphasis role="bold">IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeD component which gathers all IMS services published. There is one IMS SeD per machine to supervise.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -195,14 +200,15 @@
 	 </itemizedlist>
        </para>
     </section>
-  </chapter><!-- PART 1 : ARCHITECTURE -->
-  <chapter>
-    <title>Overview of the internal IMS organisation</title>
+  </chapter><!-- CHAPTER 2 : ARCHITECTURE -->
+  
+  <chapter><!-- CHAPTER 3 : MODELIZATION -->
+    <title>Overview of the IMS modelization</title>
     <section annotations="IMS/design/Design.asta#ARCHIDIAG(role)">
-      <title>The role modelisation</title>
+      <title>Roles model</title>
     </section>
     <section>
-      <title>The organisation</title>
+      <title>Roles description</title>
       <para>
 	The IMS module can play eight different roles. For each role, there is a reference to the above functional figure with the letter corresponding to the functional element.
 	<itemizedlist>
@@ -220,8 +226,9 @@
     <section annotations="IMS/design/Design.asta#ARCHIDIAG(classes)">
       <title>The role modelisation</title>
     </section>
-  </chapter>
-  <!-- PART 2 : INTERNAL API -->
+  </chapter><!-- CHAPTER 3 : MODELIZATION -->
+  
+  <!-- CHAPTER 4 : INTERNAL API -->
   <chapter annotations="core/model/IMS_Internal.apim#SERVICES">
     <title>Internal API specification</title>
      <section> <!-- Generic definition formats presentation -->
@@ -298,13 +305,13 @@
         <para>This shows the list of functions from the external Vishnu API (see [D1_1c]) that use this service.</para>
       </section> <!-- Service definition format -->
     </section> <!-- Generic definition formats presentation -->
-  </chapter><!-- END PART 2 : INTERNAL API -->
+  </chapter><!-- CHAPTER 4 : INTERNAL API -->
   
-  <chapter><!-- PART 3 : CLASSES AND DATA -->
+  <chapter><!-- CHAPTER 5 : CLASSES AND DATA -->
     <title>Internal class and data structures</title>
     <section>
       <title>Introduction</title>
-      <para>This chapter introduces the details of the implementation of the different components described in chapter 2 (Architecture).
+      <para>This chapter introduces the details of the implementation of the different components described in chapter 2.
         It is composed of three sections:
       </para>
       <para>
@@ -335,7 +342,7 @@
     <section annotations="IMS/design/Design.asta#CLASSDIAG(data)">
       <title>IMS data modelization</title>
     </section>
-  </chapter><!-- END PART 3 : CLASSES AND DATA -->
+  </chapter><!-- END CHAPTER 5 : CLASSES AND DATA -->
   
 </book>
   
