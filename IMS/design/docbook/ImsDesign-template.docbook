@@ -204,8 +204,17 @@
   
   <chapter><!-- CHAPTER 3 : MODELIZATION -->
     <title>Overview of the IMS modelization</title>
-    <section annotations="IMS/design/Design.asta#ARCHIDIAG(role)">
-      <title>Roles model</title>
+    <section>
+      <title>Functional view</title>
+      <para>The following diagram is functional. The IMS client can ask the IMS SeD to fill four functions. It is important to note that the IMS client can access specific TMS and FMS services. Morevover, all the SeD will have to save the command that was used to launch them.</para>
+      <figure>
+        <title>Functional roles</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/role.png" align="center" scale="40"/>
+          </imageobject>
+        </mediaobject>
+          </figure>
     </section>
     <section>
       <title>Roles description</title>
@@ -223,8 +232,17 @@
 	</itemizedlist>
       </para>
     </section>
-    <section annotations="IMS/design/Design.asta#ARCHIDIAG(classes)">
-      <title>The role modelisation</title>
+    <section>
+      <title>Classes and roles</title>
+      <para>The following figure presents the links between the functional roles and the classes corresponding. There are two main groups of classes. The DATA, that correspond to the external API and that deal with the database, and the CONTROLER that only interact with the DATA classes</para>
+      <figure>
+        <title>Classes implementing the roles</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/classes.png" align="center" scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </chapter><!-- CHAPTER 3 : MODELIZATION -->
   
@@ -331,16 +349,44 @@
         </itemizedlist>
       </para>
     </section>
-    <section annotations="IMS/design/Design.asta#CLASSDIAG(client)">
-      <title>IMS client modelization</title>
+    <section>
+      <title>IMS Proxy ClassDiagram</title>
+      <para>The following figure presents the class diagram on the client side</para>
+      <figure>
+        <title>IMS Proxy ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Proxy_ClassDiagram.png" align="center"
+                       scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
-    
-    <section annotations="IMS/design/Design.asta#CLASSDIAG(server)">
-      <title>IMS SeD modelization</title>
+    <section>
+      <title>IMS Server ClassDiagram</title>
+      <para>The following figure presents the class diagram on the server side</para>
+      <figure>
+        <title>IMS Server ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Server_ClassDiagram.png" align="center"
+                       scale="39"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
-    
-    <section annotations="IMS/design/Design.asta#CLASSDIAG(data)">
-      <title>IMS data modelization</title>
+    <section>
+      <title>IMS Datatype ClassDiagram</title>
+      <para>The following figure presents the links between the datatypes</para>
+      <figure>
+        <title>IMS Datatype ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Datatype_ClassDiagram.png" align="center"
+                       scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </chapter><!-- END CHAPTER 5 : CLASSES AND DATA -->
   
