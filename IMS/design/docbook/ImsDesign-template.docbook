@@ -73,6 +73,12 @@
        <listitem>
           <para>[D1.1c]: VISHNU API Detailed specifications</para>
         </listitem>
+        <listitem>
+          <para>[D1.1g]: VISHNU Technical architecture</para>
+        </listitem>
+        <listitem>
+          <para>[D1.1g-DAT]: VISHNU Dossier d'Architecture Technique</para>
+        </listitem>
       </itemizedlist></para>
     </section>
     <section>
@@ -110,8 +116,11 @@
           <listitem>
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
+           <listitem>
+            <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all processes of the VISHNU infrastructure.</para>
+          </listitem>
           <listitem>
-            <para><emphasis role="bold">Log central</emphasis>: component of the SysFera-DS middleware that provides event notifications within a SysFera-DS platform.</para>
+            <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
@@ -155,9 +164,10 @@
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS SeD</emphasis>
-	      contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
-	      There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
+            <para><emphasis role="bold">IMS Server</emphasis>
+	     provides the business logic of the IMS module on the server side. The set of classes in this component cover all the IMS objects
+             that have a proxy class that publishes services to the external API, and additionnally some classes that provide internal
+             mechanisms of the IMS module.
 	    </para>
           </listitem>
           <listitem>
@@ -175,18 +185,21 @@
     </section>
 
     <section>
-      <title> Deployment aspects of IMS</title>
+      <title>Deployment aspects of IMS</title>
        <para>
         We explain here how the IMS package will be deployed on a physical infrastructure as illustrated in figure 2.1.
         Each box in the figure represents an operating system in which a component or a set of components are running as processes.
         The IMS consists of: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeD component which gathers all IMS services published. There is one IMS SeD per machine to supervise.
+	    <para><emphasis role="bold">IMS SeD</emphasis>is the process that provides all IMS services. It uses the IMS SeD and IMS Server components.
+            The 
+            There is one IMS SeD per machine to supervise. There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
 	    </para>
 	  </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Client host </emphasis> is IMS service requester. It contains all components allowing to make a IMS service request.	  
+	    <para><emphasis role="bold">Client host</emphasis> is the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
+            It contains all the client components required to make an IMS service request.
 	    </para>
 	  </listitem>
            <listitem>
