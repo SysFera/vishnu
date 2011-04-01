@@ -161,7 +161,18 @@ JobProxy::cancelJob() {
 	return 0;
 }
 
+/**
+  * \brief Function to get job information
+  * \return The job data structure
+  */
 TMS_Data::Job
 JobProxy::getData() const{
 	return mjob;
+}
+
+/**
+  * \brief Destructor, raises an exception on error
+  */
+JobProxy::~JobProxy() {
+
 }
