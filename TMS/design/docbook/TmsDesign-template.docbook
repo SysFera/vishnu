@@ -243,7 +243,37 @@
          and owner "vishnu".
          From the VISHNU user point of view, these local identifiers and the local job owner will be hidden and replaced by the user's identifier
          and global job identifiers. For example the previous job will be visible in VISHNU as job "JOB_6767" and userId "jdupond".</para>
-       <para>This data translation is entirely transparent to the VISHNU user and simplifies job management</para>.
+       <para>This data translation is entirely transparent to the VISHNU user and simplifies job management. </para>
+
+       <section>
+       <title> Use constraints of batch scheduler API </title>
+           <para> 
+             Because the TMS server runs with a specific local system account dedicated to VISHNU, the use of the batch scheduler API causes some problems. We present below these problems.</para>
+             <itemizedlist>
+               <listitem>
+                 <para><emphasis role="bold">Binary execution</emphasis>: 
+                   If the user specifies in his job script  (file containing job characteristics) to execute some local binaries (installed only in the user local account), the execution of this script will be rejected by the underlying batch scheduler if the local account dicated to TMS has not access to the binary. The figure 2.1 illustrates an example case.
+                 </para>
+               </listitem>
+               <listitem>
+                 <para><emphasis role="bold">Access rights for files and directories</emphasis>: 
+                   If the user indicates in his job script to redirect some outputs into files or directories of his home directory, the execution of this job will be rejected by the underlying batch scheduler if the local account dicated to TMS has not access to these files or directories. Sometimes the input data arguments of some commands in the job script can be files or directories, in this case the local account dicated to TMS server must be have read access on these files and directories. The figure 2.1 illustrates an example case
+                 </para>
+               </listitem>
+             </itemizedlist>
+
+              <figure>
+          <title>Example of binary execution execution problem by TMS server</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/binary_example.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+          
+         </section>
+
      </section>
 
      <section>
