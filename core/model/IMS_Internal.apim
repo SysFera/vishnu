@@ -5,42 +5,38 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="oldSessionId" dataType="//@typeList/@types.0" description="The id of the session to export (session has ended)" shortOptionLetter="" longOptionName=""/>
       <ports name="filename" direction="INOUT" dataType="//@typeList/@types.0" description="The path of the output file containing the Vishnu shell commands" longOptionName=""/>
+      <ports name="options" dataType="//@typeList/@types.13" description="Options for the export" optional="true" shortOptionLetter=""/>
     </services>
     <services name="int_getMetricCurrentValue" description="Retrieve the current value of a metric on a machine">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter=""/>
       <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.5" description="Value of the metric"/>
+      <ports name="options" dataType="//@typeList/@types.14" description="Options" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
     </services>
     <services name="int_getMetricHistory" description="Retrieve the history of values of a metric on a machine">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="startTime" dataType="//@typeList/@types.11" description="Start time of metric history" shortOptionLetter=""/>
-      <ports name="endTime" dataType="//@typeList/@types.11" description="End time of metric history" shortOptionLetter="" longOptionName=""/>
       <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter="" longOptionName=""/>
       <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.10" description="List of metric values" longOptionName=""/>
+      <ports name="endTime" dataType="//@typeList/@types.15" description="End time of metric history" optional="true" shortOptionLetter="" longOptionName=""/>
     </services>
     <services name="int_getProcesses" description="gets the list of the processes running over a front machine" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine the user wants the running processes" shortOptionLetter=""/>
       <ports name="process" direction="OUT" dataType="//@typeList/@types.8" description="The list of the Vishnu processes on the machine" shortOptionLetter=""/>
+      <ports name="options" dataType="//@typeList/@types.16" description="The id of the machine the user wants the running processes" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="int_setSystemInfo" description="updates the system information of a machine" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter="" longOptionName=""/>
       <ports name="systemInfo" dataType="//@typeList/@types.12" description="Contains system information to store in Vishnu database" shortOptionLetter=""/>
     </services>
     <services name="int_setSystemThreshold" description="sets a threshold on a machine of a system" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="thresholdType" dataType="//@typeList/@types.4" description="The type of the metric to set" shortOptionLetter="" longOptionName=""/>
-      <ports name="value" dataType="//@typeList/@types.3" description="The threshold value" shortOptionLetter="" longOptionName=""/>
+      <ports name="threshold" dataType="//@typeList/@types.17" description="The type of the metric to set" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
     </services>
     <services name="int_getSystemThreshold" description="gets a System threshold on a machine" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="type" dataType="//@typeList/@types.4" description="The threshold type desired" shortOptionLetter="" longOptionName=""/>
-      <ports name="value" direction="OUT" dataType="//@typeList/@types.3" description="The threshold value" longOptionName=""/>
+      <ports name="options" dataType="//@typeList/@types.19" description="The options for the threshold" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
+      <ports name="value" direction="OUT" dataType="//@typeList/@types.18" description="The threshold values" longOptionName=""/>
     </services>
     <services name="int_defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
@@ -73,10 +69,18 @@
     </services>
     <services name="int_restart" description="restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted" adminOnly="true" isFunction="false">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="type" dataType="//@typeList/@types.6" description="The type of restart" shortOptionLetter=""/>
-      <ports name="componentName" dataType="//@typeList/@types.0" description="If not restarting all, the name of the component to restart" optional="true" shortOptionLetter="n"/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where the component is to be relaunched" optional="true" shortOptionLetter="m" longOptionName=""/>
-      <ports name="file" dataType="//@typeList/@types.0" description="The config file to use to restart" optional="true" shortOptionLetter="f" longOptionName=""/>
+      <ports name="type" dataType="//@typeList/@types.6" description="The type of restart" shortOptionLetter=""/>
+      <ports name="options" dataType="//@typeList/@types.20" description="The options to restart" optional="true" shortOptionLetter="" longOptionName=""/>
+    </services>
+    <services name="int_stop" description="To stop a sed">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="process" dataType="//@typeList/@types.21" description="The process to stop"/>
+    </services>
+    <services name="int_getSystemInfo" description="To get system info">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="res" direction="OUT" dataType="//@typeList/@types.22" description="The set of system information" defaultValueLiteral=""/>
+      <ports name="options" dataType="//@typeList/@types.23" description="Options for the sysinfo" optional="true" longOptionName="" defaultValueLiteral=""/>
     </services>
     <resultCodeList/>
   </modules>
@@ -117,6 +121,39 @@
     </types>
     <types name="SystemInfo" description="Contains the system informations of a machine">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SystemInfo"/>
+    </types>
+    <types name="ExportOp" description="Option for the export">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ExportOp"/>
+    </types>
+    <types name="CurMetricOp" description="The option for the current metric">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//CurMetricOp"/>
+    </types>
+    <types name="MetricHistOp" description="Options for the metric history">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//MetricHistOp"/>
+    </types>
+    <types name="ProcessOp" description="Option to get the processes">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ProcessOp"/>
+    </types>
+    <types name="Threshold" description="A threshold">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//Threshold"/>
+    </types>
+    <types name="ListThreshold" description="A set of threshold">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ListThreshold"/>
+    </types>
+    <types name="ThresholdOp" description="Option for the threshold">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ThresholdOp"/>
+    </types>
+    <types name="RestartOp" description="The option to restart">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//RestartOp"/>
+    </types>
+    <types name="Process" description="A process">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//Process"/>
+    </types>
+    <types name="ListSysInfo" description="A set of system info">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//ListSysInfo"/>
+    </types>
+    <types name="SysInfoOp" description="Options for the sysinfo">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SysInfoOp"/>
     </types>
   </typeList>
 </API>
