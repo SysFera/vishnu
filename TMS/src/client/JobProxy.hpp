@@ -1,9 +1,9 @@
 /**
- * \file JobProxy.cpp
- * \brief This file contains the VISHNU JobProxy class.
- * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date March 2011
- */
+  * \file JobProxy.cpp
+  * \brief This file contains the VISHNU JobProxy class.
+  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+  * \date March 2011
+  */
 
 #ifndef _JOB_PROXY_H
 #define _JOB_PROXY_H
@@ -49,6 +49,11 @@ class JobProxy {
   */
   TMS_Data::Job
   getData() const;
+
+  /**
+    * \brief Destructor, raises an exception on error
+    */
+  ~JobProxy();
 
   private:
 
