@@ -88,6 +88,12 @@
           <listitem>
             <para>[D1.1c]: VISHNU API Detailed specifications</para>
           </listitem>
+          <listitem>
+            <para>[D1.1g]: VISHNU Technical architecture</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1g-DAT]: VISHNU Dossier d'Architecture Technique</para>
+          </listitem>
         </itemizedlist></para>
     </section>
     <section>
@@ -126,7 +132,10 @@
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Log central</emphasis>: component of the SysFera-DS middleware that provides event notifications within a SysFera-DS platform.</para>
+            <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all processes of the VISHNU infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
@@ -169,9 +178,10 @@
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS SeD</emphasis>
-	      contains all classes implementing business objects by encapsulating the processing provided through the internal API. 
-	      There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
+            <para><emphasis role="bold">IMS Server</emphasis>
+	     provides the business logic of the IMS module on the server side. The set of classes in this component cover all the IMS objects
+             that have a proxy class that publishes services to the external API, and additionnally some classes that provide internal
+             mechanisms of the IMS module.
 	    </para>
           </listitem>
           <listitem>
@@ -188,19 +198,108 @@
       </para>
     </section>
     <section>
-      <title> Deployment aspects of IMS</title>
+      <title>IMS package dependencies</title>
+      <para>In order to install the IMS service on the infrastructure, the following tables list all the packages that must be
+        installed on the IMS client and on the IMS server hosts:</para>
+      <section>
+        <title>IMS Client host</title>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Package Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>SysFera-DS/DIET</para></entry>
+                <entry><para>Middleware</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU UMS</para></entry>
+                <entry><para>VISHNU Package for user and session management</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU TMS</para></entry>
+                <entry><para>VISHNU Package for tasks management</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU FMS</para></entry>
+                <entry><para>VISHNU Package for files management</para></entry>
+              </row>
+              <row>
+                <entry><para>Python (optional)</para></entry>
+                <entry><para>Python language, required to use the VISHNU Python API</para></entry>
+              </row>
+              <row>
+                <entry><para>Java 1.6 (optional)</para></entry>
+                <entry><para>Java environment, required to use the VISHNU WS API</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IMS Server host</title>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Package Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>SysFera-DS/DIET</para></entry>
+                <entry><para>Middleware</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU UMS</para></entry>
+                <entry><para>VISHNU Package for user and session management</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU TMS</para></entry>
+                <entry><para>VISHNU Package for tasks management</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU FMS</para></entry>
+                <entry><para>VISHNU Package for files management</para></entry>
+              </row>
+              <row>
+                <entry><para>PostgreSQL client (or Oracle client)</para></entry>
+                <entry><para>Database client</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Deployment aspects of IMS</title>
       <para>
         We explain here how the IMS package will be deployed on a physical infrastructure as illustrated in figure 2.1.
         Each box in the figure represents an operating system in which a component or a set of components are running as processes.
         The IMS consists of: 
 	<itemizedlist>
           <listitem>
-            <para><emphasis role="bold">IMS SeD </emphasis>is the provider of all IMS services. It consists of the IMS SeD component which gathers all IMS services published. There is one IMS SeD per machine to supervise.
+            <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services. It uses the IMS SeD and IMS Server components.
+            This process is required on any host of the VISHNU infrastructure where VISHNU processes have to be monitored. Without an IMS process running on the 
+            host it won't be possible to use IMS services on that host, i.e. restart processes, get system information, do loadshedding, etc.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Client host</emphasis> is the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
+            It contains all the client components required to make an IMS service request.
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Client host </emphasis> is IMS service requester. It contains all components allowing to make a IMS service request.	  
-	    </para>
+            <para><emphasis role="bold">LogCentral</emphasis> TODO.
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts.
@@ -256,7 +355,7 @@
       </section>
       <section>
         <title>SysFera-DS Bus Details</title>
-        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all IMS SeD connect to the same database.  The diagram shows here the communication paths. The IMS client can be client to the FMS or TMS SeD so they are presented on the diagram. Nevertheless, this call may only happen if a specific to load shed the machine where the FMS or TMS SeD are.</para>
+        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all IMS SeD connect to the same database.  The diagram shows here the communication paths. The IMS client can be client to the FMS or TMS SeD so they are presented on the diagram. Nevertheless, this call may only happen if a specific call to the load shed service happens on the machine where the FMS and/or TMS SeD are.</para>
         <figure>
           <title>SysFera-DS Bus Details</title>
           <mediaobject>
@@ -310,7 +409,7 @@
             <para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot be the IMS SeD that restart it automatically but GoDIET will make it. Reference: A+C</para>
           </listitem>
           <listitem>
-            <para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Reference: F+D</para>
+            <para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Only VISHNU SeD can be relaunched throught the API. Reference: F+D</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -449,6 +548,13 @@
                 <entry><para>The path of the output file containing the Vishnu shell commands</para></entry>
                 <entry><para>INOUT</para></entry>
               </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ExportOp">ExportOp</link></para></entry>
+                <entry><para>Options for the export</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -511,18 +617,18 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>metricType</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>Type of metric</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
                 <entry><para>metricValue</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="Metric">Metric</link></para></entry>
                 <entry><para>Value of the metric</para></entry>
                 <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="CurMetricOp">CurMetricOp</link></para></entry>
+                <entry><para>Options</para></entry>
+                <entry><para>IN</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -586,20 +692,6 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>startTime</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>Start time of metric history</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>endTime</para></entry>
-                <entry><para>long</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>End time of metric history</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
                 <entry><para>metricType</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="MetricType">MetricType</link></para></entry>
@@ -612,6 +704,13 @@
                 <entry><para><link linkend="ListMetric">ListMetric</link></para></entry>
                 <entry><para>List of metric values</para></entry>
                 <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>endTime</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="MetricHistOp">MetricHistOp</link></para></entry>
+                <entry><para>End time of metric history</para></entry>
+                <entry><para>IN</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -668,18 +767,18 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The id of the machine the user wants the running processes</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
                 <entry><para>process</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="ListProcesses">ListProcesses</link></para></entry>
                 <entry><para>The list of the Vishnu processes on the machine</para></entry>
                 <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ProcessOp">ProcessOp</link></para></entry>
+                <entry><para>The id of the machine the user wants the running processes</para></entry>
+                <entry><para>IN</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -733,13 +832,6 @@
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
                 <entry><para>The session key</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The id of the machine</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -804,24 +896,10 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>threshold</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>thresholdType</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry><para><link linkend="Threshold">Threshold</link></para></entry>
                 <entry><para>The type of the metric to set</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The threshold value</para></entry>
                 <entry><para>IN</para></entry>
               </row>
             </tbody>
@@ -879,24 +957,17 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>IN</para></entry>
-              </row>
-              <row>
-                <entry><para>type</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>The threshold type desired</para></entry>
+                <entry><para><link linkend="ThresholdOp">ThresholdOp</link></para></entry>
+                <entry><para>The options for the threshold</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>n/a</para></entry>
-                <entry><para>The threshold value</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListThreshold">ListThreshold</link></para></entry>
+                <entry><para>The threshold values</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
             </tbody>
@@ -1338,6 +1409,135 @@
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The int_getUpdateFrequency() function gets the update frequency of the IMS database</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_stop</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>process</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Process">Process</link></para></entry>
+                <entry><para>The process to stop</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_stop() function to stop a sed</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getSystemInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>res</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListSysInfo">ListSysInfo</link></para></entry>
+                <entry><para>The set of system information</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="SysInfoOp">SysInfoOp</link></para></entry>
+                <entry><para>Options for the sysinfo</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getSystemInfo() function to get system info</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
