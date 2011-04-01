@@ -183,6 +183,91 @@
         </itemizedlist>
       </para>
     </section>
+    
+    <section>
+      <title>IMS package dependencies</title>
+      <para>In order to install the IMS service on the infrastructure, the following tables list all the packages that must be
+        installed on the IMS client and on the IMS server hosts:</para>
+        <section>
+          <title>IMS Client host</title>
+          <informaltable>
+            <tgroup cols="2">
+              <colspec colwidth="8.5cm"/>
+              <colspec colwidth="9cm"/>
+              <thead>
+                <row>
+                  <entry>Package Name</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><para>SysFera-DS/DIET</para></entry>
+                  <entry><para>Middleware</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU UMS</para></entry>
+                  <entry><para>VISHNU Package for user and session management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU TMS</para></entry>
+                  <entry><para>VISHNU Package for tasks management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU FMS</para></entry>
+                  <entry><para>VISHNU Package for files management</para></entry>
+                </row>
+                <row>
+                  <entry><para>Python (optional)</para></entry>
+                  <entry><para>Python language, required to use the VISHNU Python API</para></entry>
+                </row>
+                <row>
+                  <entry><para>Java 1.6 (optional)</para></entry>
+                  <entry><para>Java environment, required to use the VISHNU WS API</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+        
+        <section>
+          <title>IMS Server host</title>
+          <informaltable>
+            <tgroup cols="2">
+              <colspec colwidth="8.5cm"/>
+              <colspec colwidth="9cm"/>
+              <thead>
+                <row>
+                  <entry>Package Name</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><para>SysFera-DS/DIET</para></entry>
+                  <entry><para>Middleware</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU UMS</para></entry>
+                  <entry><para>VISHNU Package for user and session management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU TMS</para></entry>
+                  <entry><para>VISHNU Package for tasks management</para></entry>
+                </row>
+                <row>
+                  <entry><para>VISHNU FMS</para></entry>
+                  <entry><para>VISHNU Package for files management</para></entry>
+                </row>
+                <row>
+                  <entry><para>PostgreSQL client (or Oracle client)</para></entry>
+                  <entry><para>Database client</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </section>
+    </section>
 
     <section>
       <title>Deployment aspects of IMS</title>
@@ -192,16 +277,19 @@
         The IMS consists of: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">IMS SeD</emphasis>is the process that provides all IMS services. It uses the IMS SeD and IMS Server components.
-            The 
-            There is one IMS SeD per machine to supervise. There must be an IMS SeD on each machine to monitor. A machine without IMS SeD cannot be monitored.
-	    </para>
+	    <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services. It uses the IMS SeD and IMS Server components.
+            This process is required on any host of the VISHNU infrastructure where VISHNU processes have to be monitored. Without an IMS process running on the 
+            host it won't be possible to use IMS services on that host, i.e. restart processes, get system information, do loadshedding, etc.</para>
 	  </listitem>
 	  <listitem>
 	    <para><emphasis role="bold">Client host</emphasis> is the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
             It contains all the client components required to make an IMS service request.
 	    </para>
 	  </listitem>
+          <listitem>
+            <para><emphasis role="bold">LogCentral</emphasis> TODO.
+            </para>
+          </listitem>
            <listitem>
             <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts.
             </para>
