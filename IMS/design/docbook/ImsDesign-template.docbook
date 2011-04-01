@@ -329,7 +329,7 @@
 	  <listitem><para>The delayed monitor : It means getting past states of a machine and automatically record the states of the machine with the time passing. Reference: A+B</para></listitem>
 	  <listitem><para>The notification monitor : It means to notify automatically the administrator of an abnormal behaviour of the VISHNU system. Reference: B</para></listitem>
 	  <listitem><para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot be the IMS SeD that restart it automatically but GoDIET will make it. Reference: A+C</para></listitem>
-	  <listitem><para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Reference: F+D</para></listitem>
+	  <listitem><para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Only VISHNU SeD can be relaunched throught the API. Reference: F+D</para></listitem>
 	</itemizedlist>
       </para>
     </section>
