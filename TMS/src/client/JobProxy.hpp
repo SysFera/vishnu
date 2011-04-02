@@ -23,20 +23,26 @@ class JobProxy {
   /**
   * \param session The object which encapsulates the session information
   * \param machine The object which encapsulates the machine information
-  * \param job The job data structure
-  * \param options the options to submit job
   * \brief Constructor, raises an exception on error
   */
-  explicit JobProxy(SessionProxy session,
-                    MachineProxy machine,
-                    TMS_Data::Job job,
-                    TMS_Data::SubmitOptions options);
+  explicit JobProxy(const SessionProxy& session,
+                    const MachineProxy& machine);
+  /**
+  * \param session The object which encapsulates the session information
+  * \param machine The object which encapsulates the machine information
+  * \param job The job data structure
+  * \brief Constructor, raises an exception on error
+  */
+  explicit JobProxy(const SessionProxy& session,
+                    const MachineProxy& machine,
+                    TMS_Data::Job& job);
   /**
   * \brief Function to submit job
+  * \param options the options to submit job
   * \return raises an exception on error
   */
   int
-  submitJob();
+  submitJob(const TMS_Data::SubmitOptions& options);
   /**
   * \brief Function to cancel job
   * \return raises an exception on error
@@ -73,9 +79,6 @@ class JobProxy {
   * \brief The job data structure
   */
   TMS_Data::Job mjob;
-  /**
-  * \brief The options data structure to submit job
-  */
-  TMS_Data::SubmitOptions msubmitOptions;
+
 };
 #endif //_JOB_PROXY_H

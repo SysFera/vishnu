@@ -5,6 +5,19 @@
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 
+
+/**
+* \param session The object which encapsulates the session information
+* \param machine The object which encapsulates the machine information
+* \param options the options to submit job
+* \brief Constructor, raises an exception on error
+*/
+JobProxy::JobProxy(const SessionProxy& session,
+                   const MachineProxy& machine)
+  :msessionProxy(session), mmachineProxy(machine) {
+
+}
+
 /**
 * \param session The object which encapsulates the session information
 * \param machine The object which encapsulates the machine information
@@ -12,20 +25,20 @@
 * \param options the options to submit job
 * \brief Constructor, raises an exception on error
 */
-JobProxy::JobProxy(SessionProxy session,
-                  MachineProxy machine,
-                  TMS_Data::Job job,
-                  TMS_Data::SubmitOptions options)
-  :msessionProxy(session), mmachineProxy(machine), mjob(job), msubmitOptions(options) {
+JobProxy::JobProxy(const SessionProxy& session,
+                   const MachineProxy& machine,
+                   TMS_Data::Job& job)
+  :msessionProxy(session), mmachineProxy(machine), mjob(job) {
 
 }
 
 /**
 * \brief Function to submit job
+* \param options the options to submit job
 * \return raises an exception on error
 */
 int
-JobProxy::submitJob() {
+JobProxy::submitJob(const TMS_Data::SubmitOptions& options) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
@@ -55,7 +68,7 @@ JobProxy::submitJob() {
   const char* name = "submit";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&msubmitOptions)).c_str());
+  optionsToString =  strdup(_ser.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), optionsToString, DIET_VOLATILE)) {
     msg += "with optionsInString parameter "+std::string(optionsToString);
