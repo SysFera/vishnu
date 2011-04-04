@@ -85,10 +85,11 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Queue.hpp DESTINATION include
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp DESTINATION include/emf4cpp/TMS_Data)
    
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} /opt/emf4cpp-0.0.2/bin/../include/emf4cpp /opt/emf4cpp-0.0.2/bin/../include/emf4cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 
-add_library(emf4cpp-TMS_Data SHARED ${TMS_Data_HEADERS} ${TMS_Data_SOURCES})
+add_library(emf4cpp-TMS_Data STATIC ${TMS_Data_HEADERS} ${TMS_Data_SOURCES})
+set_target_properties(emf4cpp-TMS_Data PROPERTIES COMPILE_FLAGS "-fPIC")
+target_link_libraries(emf4cpp-TMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-TMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
-install(TARGETS emf4cpp-TMS_Data DESTINATION lib)
-
+#install(TARGETS emf4cpp-TMS_Data DESTINATION lib)
