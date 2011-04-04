@@ -50,7 +50,7 @@
       <title>Document objectives</title>
       <para>
 	This document presents the detailed internal design of the Information Management Service (IMS) package. The purpose
-	of this package is to handle all aspects of information management within the VISHNU system. The functionnal and
+	of this package is to handle all aspects of information management within the VISHNU system. The functional and
 	non-functional requirements for this package are those described in the referenced specification documents. The current
 	document is part of the design phase of the software and therefore its main goal is to define the main components of the
 	system architecture and their relationships.
@@ -154,7 +154,7 @@
       <para>We present in this section a description of the IMS package in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
         We present the different software layers from services (provided directly to the user) to the database (used by the server). 
-	The IMS client server package has been split into eight different interrelated components. The diagrams shown in section 2.3 describe
+	The IMS client server package has been split into seven different interrelated components. The diagrams shown in section 2.3 describe
         the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
@@ -288,7 +288,7 @@
         The IMS consists of: 
 	<itemizedlist>
           <listitem>
-            <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services. It uses the IMS SeD and IMS Server components.
+            <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services.
             This process is required on any host of the VISHNU infrastructure where VISHNU processes have to be monitored. Without an IMS process running on the 
             host it won't be possible to use IMS services on that host, i.e. restart processes, get system information, do loadshedding, etc.</para>
           </listitem>
@@ -298,7 +298,8 @@
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">LogCentral</emphasis> TODO.
+            <para><emphasis role="bold">LogCentral</emphasis> is a process that is necessary to monitor the DIET platform. This process is part of DIET
+	      in the SysFera-DS package. It should be running on the same machine as the omninames and the master agent.
             </para>
           </listitem>
           <listitem>
@@ -1409,6 +1410,81 @@
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The int_getUpdateFrequency() function gets the update frequency of the IMS database</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_restart</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The id of the machine where the component is to be relaunched</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="RestartType">RestartType</link></para></entry>
+                <entry><para>The type of restart</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="RestartOp">RestartOp</link></para></entry>
+                <entry><para>The options to restart</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_restart() function restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
