@@ -218,6 +218,5 @@
     </eAnnotations>
     <eLiterals name="UNDEFINED"/>
     <eLiterals name="SED" value="1"/>
-    <eLiterals name="AGENT" value="2"/>
   </eClassifiers>
 </ecore:EPackage>
