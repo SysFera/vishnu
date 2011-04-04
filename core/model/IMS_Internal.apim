@@ -67,7 +67,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
     </services>
-    <services name="int_restart" description="restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted" adminOnly="true" isFunction="false">
+    <services name="int_restart" description="restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted" adminOnly="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where the component is to be relaunched" optional="true" shortOptionLetter="m" longOptionName=""/>
       <ports name="type" dataType="//@typeList/@types.6" description="The type of restart" shortOptionLetter=""/>
