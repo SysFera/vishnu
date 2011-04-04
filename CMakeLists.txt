@@ -15,6 +15,8 @@ option(CLIENT_ONLY OFF "only compile the client side")
 option(ENABLE_PYTHON OFF "compile the python api")
 option(ENABLE_JAVA OFF "compile the java api")
 option(ENABLE_ORACLE OFF "compile with the oracle support. Deprecated")
+option(COMPILE_UMS ON "compile the module UMS")
+option(COMPILE_TMS OFF "compile the module TMS")
 
 find_package(DIET)
 if (DIET_FOUND)
@@ -83,6 +85,14 @@ set(SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
 set(REGISTRY_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/registry)
 set(UTILVISHNU_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/utils)
 
+set(TMS_EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/utils/emfdata)
+set(TMS_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/utils/emfdata/TMS_Data)
+set(TMS_CLIENT_PROXY_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/client)
+set(TMS_SERVER_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/server)
+set(TMS_API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/api)
+set(TMS_CLI_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/cli)
+set(TMS_SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
+
 
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
@@ -95,9 +105,16 @@ set (TEST_SQL "${UMS_TEST_DIR}")
 
 add_subdirectory(core/src)
 add_subdirectory(core/deps/emf4cpp)
-add_subdirectory(UMS/src)
-add_subdirectory(UMS/doc/man)
+
+if(COMPILE_UMS)
+  add_subdirectory(UMS/src)
+  add_subdirectory(UMS/doc/man)
+endif (COMPILE_UMS)
 # macros used to setup test environment
 #include(UMSTestingMacros)
 #ums_test_setup()
 #add_subdirectory(UMS/test/src)
+
+if(COMPILE_TMS)
+  add_subdirectory(TMS/src)
+endif (COMPILE_TMS)
