@@ -97,9 +97,6 @@
           <listitem>
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
-          <listitem>
-            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
-          </listitem>
 	  <listitem>
 	    <para><emphasis role="bold">IMS</emphasis>: Information Management Services</para>
 	  </listitem>
@@ -123,10 +120,16 @@
             <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Process</emphasis>: a process running permanently that provides VISHNU services. This is a sub-class of SeD.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -189,7 +192,7 @@
       <para>In order to install the IMS service on the infrastructure, the following tables list all the packages that must be
         installed on the IMS client and on the IMS server hosts:</para>
         <section>
-          <title>IMS Client host</title>
+          <title>IMS Client required packages</title>
           <informaltable>
             <tgroup cols="2">
               <colspec colwidth="8.5cm"/>
@@ -231,7 +234,7 @@
         </section>
         
         <section>
-          <title>IMS Server host</title>
+          <title>IMS Server required packages</title>
           <informaltable>
             <tgroup cols="2">
               <colspec colwidth="8.5cm"/>
@@ -248,16 +251,12 @@
                   <entry><para>Middleware</para></entry>
                 </row>
                 <row>
+                  <entry><para>SysFera-DS/LogService</para></entry>
+                  <entry><para>Middleware component for monitoring</para></entry>
+                </row>
+                <row>
                   <entry><para>VISHNU UMS</para></entry>
                   <entry><para>VISHNU Package for user and session management</para></entry>
-                </row>
-                <row>
-                  <entry><para>VISHNU TMS</para></entry>
-                  <entry><para>VISHNU Package for tasks management</para></entry>
-                </row>
-                <row>
-                  <entry><para>VISHNU FMS</para></entry>
-                  <entry><para>VISHNU Package for files management</para></entry>
                 </row>
                 <row>
                   <entry><para>PostgreSQL client (or Oracle client)</para></entry>
@@ -288,7 +287,8 @@
 	  </listitem>
           <listitem>
             <para><emphasis role="bold">LogCentral</emphasis> is a process that is necessary to monitor the DIET platform. This process is part of DIET
-	      in the SysFera-DS package. It should be running on the same machine as the omninames and the master agent.
+	      in the SysFera-DS package. It can be deployed on any host that can connect through CORBA to the omniNames and DIET MasterAgent.
+              To simplify the deployment, it can be running on the same machine as these processes.
             </para>
           </listitem>
            <listitem>
