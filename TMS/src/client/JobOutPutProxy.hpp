@@ -25,6 +25,12 @@ class JobOutPutProxy {
 public:
 
   /**
+  * \brief Constructor, raises an exception on error
+  */
+  explicit
+  JobOutPutProxy();
+
+  /**
   * \param session The object which encapsulates the session information
   * \param machine The object which encapsulates the machine information
   * \param jobResult The job results data structure
