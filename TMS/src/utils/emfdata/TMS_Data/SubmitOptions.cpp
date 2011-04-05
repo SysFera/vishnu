@@ -30,7 +30,9 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-SubmitOptions::SubmitOptions()
+SubmitOptions::SubmitOptions() :
+    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_nbNodesAndCpuPerNode(-1),
+            m_outPutPath()
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -70,32 +72,6 @@ void SubmitOptions::setName(::ecore::EString const& _name)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__name(),
                 _old_name,
                 m_name
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::TMS_Data::JobPriority SubmitOptions::getPriority() const
-{
-    return m_priority;
-}
-
-void SubmitOptions::setPriority(::TMS_Data::JobPriority _priority)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::TMS_Data::JobPriority _old_priority = m_priority;
-#endif
-    m_priority = _priority;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__priority(),
-                _old_priority,
-                m_priority
         );
         eNotify(&notification);
     }

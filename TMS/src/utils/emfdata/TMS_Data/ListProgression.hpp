@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListProgression.hpp
+ * \brief The ListProgression class
+ * \author Generated file
+ * \date 31/03/2011
+ */
+
 #ifndef TMS_DATA_LISTPROGRESSION_HPP
 #define TMS_DATA_LISTPROGRESSION_HPP
 
@@ -35,24 +42,48 @@
 namespace TMS_Data
 {
 
+    /**
+     * \class ListProgression
+     * \brief Implementation of the ListProgression class
+     */
     class ListProgression: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListProgression
+         */
         ListProgression();
-
+        /**
+         * \brief The destructor for ListProgression
+         */
         virtual ~ListProgression();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the nbJobs
+         * \return The nbJobs attribute value
+         **/
         ::ecore::EInt getNbJobs() const;
+        /**
+         * \brief To set the nbJobs
+         * \param _nbJobs The nbJobs value
+         **/
         void setNbJobs(::ecore::EInt _nbJobs);
 
         // References
+        /**
+         * \brief To get the list of Progressions
+         * \return A reference to a list of Progressions
+         **/
         ::ecorecpp::mapping::EList< ::TMS_Data::Progression >& getProgress();
 
         /*PROTECTED REGION ID(ListProgression) START*/
