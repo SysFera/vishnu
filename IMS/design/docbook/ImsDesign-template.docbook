@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>D4.1a - VISHNU Information Management System Package Design</title>
+      <title>D4.1a - VISHNU Information Management Services Module Design</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -20,7 +20,7 @@
       <revhistory>
         <revision>
         <revnumber>1</revnumber>
-        <date>29/03/2011</date>
+        <date>06/04/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
@@ -33,9 +33,9 @@
     <section>
       <title>Document objectives</title>
       <para>
-	This document presents the detailed internal design of the Information Management Service (IMS) package. The purpose
-	of this package is to handle all aspects of information management within the VISHNU system. The functional and
-	non-functional requirements for this package are those described in the referenced specification documents. The current
+	This document presents the detailed internal design of the Information Management Services (IMS) module. The purpose
+	of this module is to handle all aspects of information management within the VISHNU system. The functional and
+	non-functional requirements for this module are those described in the referenced specification documents. The current
 	document is part of the design phase of the software and therefore its main goal is to define the main components of the
 	system architecture and their relationships.
       </para>
@@ -144,11 +144,11 @@
     <title>IMS System Architecture</title>
     <section>
       <title>IMS software components</title>
-      <para>We present in this section a description of the IMS package in terms of software components.
+      <para>We present in this section a description of the IMS module in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
         We present the different software layers from services (provided directly to the user) to the database (used by the server). 
-	The IMS client server package has been split into seven different interrelated components. The diagrams shown in section 2.3 describe
-        the relationships between these components. The definitions of the components are the following:
+	The IMS client and server packages have been split into seven different interrelated components. The diagrams shown in sections 2.1.1
+        and 2.1.2 describe the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
         <itemizedlist>
@@ -300,9 +300,10 @@
     <section>
       <title>Deployment aspects of IMS</title>
        <para>
-        We explain here how the IMS package will be deployed on a physical infrastructure as illustrated in figure 2.1.
-        Each box in the figure represents an operating system in which a component or a set of components are running as processes.
-        The IMS consists of: 
+        We explain here how the VISHNU IMS module will be deployed on a physical infrastructure as illustrated in figures 2.3 and 2.4.
+        Each box in the figures represents an operating system in which a component or a set of components are running as processes.
+        For an overview of all components of the VISHNU infrastructure, please refer to document [D1.1g].
+        The IMS module components are the following: 
 	<itemizedlist>
 	  <listitem>
 	    <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services.
