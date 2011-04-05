@@ -9,20 +9,7 @@
 /**
 * \param session The object which encapsulates the session information
 * \param machine The object which encapsulates the machine information
-* \param options the options to submit job
-* \brief Constructor, raises an exception on error
-*/
-JobProxy::JobProxy(const SessionProxy& session,
-                   const MachineProxy& machine)
-  :msessionProxy(session), mmachineProxy(machine) {
-
-}
-
-/**
-* \param session The object which encapsulates the session information
-* \param machine The object which encapsulates the machine information
 * \param job The job data structure
-* \param options the options to submit job
 * \brief Constructor, raises an exception on error
 */
 JobProxy::JobProxy(const SessionProxy& session,
@@ -187,5 +174,4 @@ JobProxy::getData() const{
   * \brief Destructor, raises an exception on error
   */
 JobProxy::~JobProxy() {
-
 }
