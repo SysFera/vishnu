@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
     <info>
-      <title>D4.1a - VISHNU Information Management System Package Design</title>
+      <title>D4.1a - VISHNU Information Management Services Module Design</title>
       <author>
         <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
       </author>
@@ -20,7 +20,7 @@
       <revhistory>
         <revision>
         <revnumber>1</revnumber>
-        <date>29/03/2011</date>
+        <date>06/04/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
@@ -33,9 +33,9 @@
     <section>
       <title>Document objectives</title>
       <para>
-	This document presents the detailed internal design of the Information Management Service (IMS) package. The purpose
-	of this package is to handle all aspects of information management within the VISHNU system. The functional and
-	non-functional requirements for this package are those described in the referenced specification documents. The current
+	This document presents the detailed internal design of the Information Management Services (IMS) module. The purpose
+	of this module is to handle all aspects of information management within the VISHNU system. The functional and
+	non-functional requirements for this module are those described in the referenced specification documents. The current
 	document is part of the design phase of the software and therefore its main goal is to define the main components of the
 	system architecture and their relationships.
       </para>
@@ -113,7 +113,10 @@
           <listitem>
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
-           <listitem>
+          <listitem>
+            <para><emphasis role="bold">DIET</emphasis>: component of the SysFera-DS solution that provides the communication layer between agents that are part of the VISHNU infrastructure.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all processes of the VISHNU infrastructure.</para>
           </listitem>
           <listitem>
@@ -137,15 +140,15 @@
   </chapter>
 
   <!-- CHAPTER 2 : ARCHITECTURE -->
-  <chapter annotations="IMS/design/Archi.asta#ARCHIDIAG(architecture)">
+  <chapter>
     <title>IMS System Architecture</title>
     <section>
       <title>IMS software components</title>
-      <para>We present in this section a description of the IMS package in terms of software components.
+      <para>We present in this section a description of the IMS module in terms of software components.
 	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
         We present the different software layers from services (provided directly to the user) to the database (used by the server). 
-	The IMS client server package has been split into seven different interrelated components. The diagrams shown in section 2.3 describe
-        the relationships between these components. The definitions of the components are the following:
+	The IMS client and server packages have been split into seven different interrelated components. The diagrams shown in sections 2.1.1
+        and 2.1.2 describe the relationships between these components. The definitions of the components are the following:
        </para>
       <para>
         <itemizedlist>
@@ -185,6 +188,32 @@
 	  </listitem>
         </itemizedlist>
       </para>
+      <section>
+        <title>IMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the VISHNU IMS system and their interfaces. All the interfaces of the IMS Client component are shown (CLI, WS, python, C++).</para>
+        <figure>
+          <title>IMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_client-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>IMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the VISHNU IMS system and their interfaces. All the interfaces of the IMS SeD component are shown.</para>
+        <figure>
+          <title>IMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_server-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
     </section>
     
     <section>
@@ -271,9 +300,10 @@
     <section>
       <title>Deployment aspects of IMS</title>
        <para>
-        We explain here how the IMS package will be deployed on a physical infrastructure as illustrated in figure 2.1.
-        Each box in the figure represents an operating system in which a component or a set of components are running as processes.
-        The IMS consists of: 
+        We explain here how the VISHNU IMS module will be deployed on a physical infrastructure as illustrated in figures 2.3 and 2.4.
+        Each box in the figures represents an operating system in which a component or a set of components are running as processes.
+        For an overview of all components of the VISHNU infrastructure, please refer to document [D1.1g].
+        The IMS module components are the following: 
 	<itemizedlist>
 	  <listitem>
 	    <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services.
@@ -286,7 +316,7 @@
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">LogCentral</emphasis> is a process that is necessary to monitor the DIET platform. This process is part of DIET
+            <para><emphasis role="bold">LogCentral</emphasis> is a SysFera-DS process that is necessary to monitor the DIET platform. This process is part of DIET
 	      in the SysFera-DS package. It can be deployed on any host that can connect through CORBA to the omniNames and DIET MasterAgent.
               To simplify the deployment, it can be running on the same machine as these processes.
             </para>
@@ -301,7 +331,62 @@
           </listitem>
 	 </itemizedlist>
        </para>
-    </section>
+       <section>
+        <title>IMS deployment overview</title>
+        <para>The following diagram shows an example of VISHNU infrastructure with one instance of FMS Server and one instance
+          of TMS Server. All components of the infrastructure are shown including SysFera-DS processes, the JBoss web server used
+          to deploy the web services API, and the database server. The VISHNU Admin system is hosting the SysFera-DS/GoDIET
+          application that is used to launch all processes of the VISHNU infrastructure using ssh connections (red arrows). The
+          SysFera-DS LogCentral process is used to publish events when VISHNU elements are connected to or disconnected from the
+          VISHNU infrastructure. These events are sent to VISHNU IMS Servers that are subscribers to the LogCentral event flow.</para>
+        <figure>
+          <title>IMS deployment overview</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS Deployment Overview.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+       </section>
+       <section>
+        <title>IMS deployment diagram</title>
+        <para>This diagram shows the generic deployment pattern of VISHNU processes.
+          All IMS SeD processes must connect to the same VISHNU database.
+          The TMS and FMS SeD are optional and if present they can be used to fulfill some IMS services (e.g. load shedding).
+        </para>
+        <figure>
+          <title>IMS deployment diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_Deployment_Diagram.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+       </section>
+       <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus.
+          The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD.
+          All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and
+          the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice
+          of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all
+          IMS SeD connect to the same database.  The diagram shows here the communication paths. 
+          The IMS client can be client to the FMS or TMS SeD so they are presented on the diagram. 
+          Nevertheless, this call may only happen if a specific call to the load shed service happens on the machine 
+          where the FMS and/or TMS SeD are running.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+       </section>
+     </section>
   </chapter><!-- CHAPTER 2 : ARCHITECTURE -->
   
   <chapter><!-- CHAPTER 3 : MODELIZATION -->
