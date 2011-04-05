@@ -113,9 +113,6 @@
             <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
-          </listitem>
-          <listitem>
             <para><emphasis role="bold">IMS</emphasis>: Information Management Services</para>
           </listitem>
           <listitem>
@@ -138,10 +135,16 @@
             <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Process</emphasis>: a process running permanently that provides VISHNU services. This is a sub-class of SeD.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -202,7 +205,7 @@
       <para>In order to install the IMS service on the infrastructure, the following tables list all the packages that must be
         installed on the IMS client and on the IMS server hosts:</para>
       <section>
-        <title>IMS Client host</title>
+        <title>IMS Client required packages</title>
         <informaltable>
           <tgroup cols="2">
             <colspec colwidth="8.5cm"/>
@@ -219,16 +222,16 @@
                 <entry><para>Middleware</para></entry>
               </row>
               <row>
-                <entry><para>VISHNU UMS</para></entry>
-                <entry><para>VISHNU Package for user and session management</para></entry>
+                <entry><para>VISHNU UMS client</para></entry>
+                <entry><para>VISHNU Client Package for user and session management</para></entry>
               </row>
               <row>
-                <entry><para>VISHNU TMS</para></entry>
-                <entry><para>VISHNU Package for tasks management</para></entry>
+                <entry><para>VISHNU TMS client</para></entry>
+                <entry><para>VISHNU Client Package for tasks management</para></entry>
               </row>
               <row>
-                <entry><para>VISHNU FMS</para></entry>
-                <entry><para>VISHNU Package for files management</para></entry>
+                <entry><para>VISHNU FMS client</para></entry>
+                <entry><para>VISHNU Client Package for files management</para></entry>
               </row>
               <row>
                 <entry><para>Python (optional)</para></entry>
@@ -243,7 +246,7 @@
         </informaltable>
       </section>
       <section>
-        <title>IMS Server host</title>
+        <title>IMS Server required packages</title>
         <informaltable>
           <tgroup cols="2">
             <colspec colwidth="8.5cm"/>
@@ -260,16 +263,12 @@
                 <entry><para>Middleware</para></entry>
               </row>
               <row>
+                <entry><para>SysFera-DS/LogService</para></entry>
+                <entry><para>Middleware component for monitoring</para></entry>
+              </row>
+              <row>
                 <entry><para>VISHNU UMS</para></entry>
                 <entry><para>VISHNU Package for user and session management</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU TMS</para></entry>
-                <entry><para>VISHNU Package for tasks management</para></entry>
-              </row>
-              <row>
-                <entry><para>VISHNU FMS</para></entry>
-                <entry><para>VISHNU Package for files management</para></entry>
               </row>
               <row>
                 <entry><para>PostgreSQL client (or Oracle client)</para></entry>
@@ -299,7 +298,8 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">LogCentral</emphasis> is a process that is necessary to monitor the DIET platform. This process is part of DIET
-	      in the SysFera-DS package. It should be running on the same machine as the omninames and the master agent.
+	      in the SysFera-DS package. It can be deployed on any host that can connect through CORBA to the omniNames and DIET MasterAgent.
+              To simplify the deployment, it can be running on the same machine as these processes.
             </para>
           </listitem>
           <listitem>
@@ -382,6 +382,29 @@
           </imageobject>
         </mediaobject>
       </figure>
+      <para>
+	The meaning of the roles (using the references)
+	<itemizedlist>
+          <listitem>
+            <para>A: The external API corresponds to the functionnalities that are to be called from the IMS client</para>
+          </listitem>
+          <listitem>
+            <para>B: The history maker and notification corresponds to the function of getting the state of the machine and saving it in the database automatically. Moreover it notifies the admin if the state has reached a threshold for the machine.</para>
+          </listitem>
+          <listitem>
+            <para>C: LogTool corresponds to the part of the SeD that will be linked to the log central in the publisher/subscriber way and that gets the information of a new sed or a disconnexion on the machine the IMS SeD is over.</para>
+          </listitem>
+          <listitem>
+            <para>D: Process Manager is responsible for relaunching a dead SeD, stopping a SeD or making the load shedding.</para>
+          </listitem>
+          <listitem>
+            <para>E: Client TMS or FMS that will have new functionalities to call the TMS/FMS SeD</para>
+          </listitem>
+          <listitem>
+            <para>F: Modification of the SeD to hava them save their parameters when launched, it enables to restart the SeD with the same parameters.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </section>
     <section>
       <title>Roles description</title>
