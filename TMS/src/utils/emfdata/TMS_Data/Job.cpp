@@ -260,6 +260,32 @@ void Job::setErrorPath(::ecore::EString const& _errorPath)
 #endif
 }
 
+::ecore::EString const& Job::getScriptContent() const
+{
+    return m_scriptContent;
+}
+
+void Job::setScriptContent(::ecore::EString const& _scriptContent)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_scriptContent = m_scriptContent;
+#endif
+    m_scriptContent = _scriptContent;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__scriptContent(),
+                _old_scriptContent,
+                m_scriptContent
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 ::TMS_Data::JobPriority Job::getJobPrio() const
 {
     return m_jobPrio;
@@ -598,15 +624,15 @@ void Job::setNbNodes(::ecore::EInt _nbNodes)
 #endif
 }
 
-::ecore::EString const& Job::getNbNodesAndCpuPerNode() const
+::ecore::EInt Job::getNbNodesAndCpuPerNode() const
 {
     return m_nbNodesAndCpuPerNode;
 }
 
-void Job::setNbNodesAndCpuPerNode(::ecore::EString const& _nbNodesAndCpuPerNode)
+void Job::setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
+    ::ecore::EInt _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
 #endif
     m_nbNodesAndCpuPerNode = _nbNodesAndCpuPerNode;
 #ifdef ECORECPP_NOTIFICATION_API

@@ -26,7 +26,9 @@ std::auto_ptr< ::TMS_Data::TMS_DataFactory > TMS_DataFactory::s_instance;
 ::TMS_Data::TMS_DataFactory_ptr TMS_DataFactory::_instance()
 {
     if (!s_instance.get())
+    {
         new TMS_DataFactory();
+    }
     return s_instance.get();
 }
 

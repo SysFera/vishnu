@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file JobResult.hpp
+ * \brief The JobResult class
+ * \author Generated file
+ * \date 31/03/2011
+ */
+
 #ifndef TMS_DATA_JOBRESULT_HPP
 #define TMS_DATA_JOBRESULT_HPP
 
@@ -36,27 +43,63 @@
 namespace TMS_Data
 {
 
+    /**
+     * \class JobResult
+     * \brief Implementation of the JobResult class
+     */
     class JobResult: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for JobResult
+         */
         JobResult();
-
+        /**
+         * \brief The destructor for JobResult
+         */
         virtual ~JobResult();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the jobId
+         * \return The jobId attribute value
+         **/
         ::ecore::EString const& getJobId() const;
+        /**
+         * \brief To set the jobId
+         * \param _jobId The jobId value
+         **/
         void setJobId(::ecore::EString const& _jobId);
 
+        /**
+         * \brief To get the outputPath
+         * \return The outputPath attribute value
+         **/
         ::ecore::EString const& getOutputPath() const;
+        /**
+         * \brief To set the outputPath
+         * \param _outputPath The outputPath value
+         **/
         void setOutputPath(::ecore::EString const& _outputPath);
 
+        /**
+         * \brief To get the errorPath
+         * \return The errorPath attribute value
+         **/
         ::ecore::EString const& getErrorPath() const;
+        /**
+         * \brief To set the errorPath
+         * \param _errorPath The errorPath value
+         **/
         void setErrorPath(::ecore::EString const& _errorPath);
 
         // References
