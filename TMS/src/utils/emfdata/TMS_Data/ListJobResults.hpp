@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListJobResults.hpp
+ * \brief The ListJobResults class
+ * \author Generated file
+ * \date 31/03/2011
+ */
+
 #ifndef TMS_DATA_LISTJOBRESULTS_HPP
 #define TMS_DATA_LISTJOBRESULTS_HPP
 
@@ -35,24 +42,48 @@
 namespace TMS_Data
 {
 
+    /**
+     * \class ListJobResults
+     * \brief Implementation of the ListJobResults class
+     */
     class ListJobResults: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListJobResults
+         */
         ListJobResults();
-
+        /**
+         * \brief The destructor for ListJobResults
+         */
         virtual ~ListJobResults();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the nbJobs
+         * \return The nbJobs attribute value
+         **/
         ::ecore::EString const& getNbJobs() const;
+        /**
+         * \brief To set the nbJobs
+         * \param _nbJobs The nbJobs value
+         **/
         void setNbJobs(::ecore::EString const& _nbJobs);
 
         // References
+        /**
+         * \brief To get the list of JobResults
+         * \return A reference to a list of JobResults
+         **/
         ::ecorecpp::mapping::EList< ::TMS_Data::JobResult >& getResults();
 
         /*PROTECTED REGION ID(ListJobResults) START*/

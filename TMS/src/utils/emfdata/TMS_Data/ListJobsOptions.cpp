@@ -30,7 +30,9 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-ListJobsOptions::ListJobsOptions()
+ListJobsOptions::ListJobsOptions() :
+    m_nbCpu(-1), m_fromSubmitDate(-1), m_toSubmitDate(-1), m_status(-1),
+            m_priority(-1)
 {
 
     /*PROTECTED REGION ID(ListJobsOptionsImpl__ListJobsOptionsImpl) START*/

@@ -26,7 +26,9 @@ std::auto_ptr< ::TMS_Data::TMS_DataPackage > TMS_DataPackage::s_instance;
 ::TMS_Data::TMS_DataPackage_ptr TMS_DataPackage::_instance()
 {
     if (!s_instance.get())
+    {
         new TMS_DataPackage();
+    }
     return s_instance.get();
 }
 

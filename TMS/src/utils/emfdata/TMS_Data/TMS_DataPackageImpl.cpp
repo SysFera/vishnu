@@ -80,6 +80,10 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__errorPath = new ::ecore::EAttribute();
     m_Job__errorPath->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__ERRORPATH);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__errorPath);
+    m_Job__scriptContent = new ::ecore::EAttribute();
+    m_Job__scriptContent->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOB__SCRIPTCONTENT);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__scriptContent);
     m_Job__jobPrio = new ::ecore::EAttribute();
     m_Job__jobPrio->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__JOBPRIO);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__jobPrio);
@@ -161,11 +165,6 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NAME);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__name);
-    m_SubmitOptions__priority = new ::ecore::EAttribute();
-    m_SubmitOptions__priority->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__PRIORITY);
-    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__priority);
     m_SubmitOptions__queue = new ::ecore::EAttribute();
     m_SubmitOptions__queue->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__QUEUE);
@@ -580,6 +579,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__errorPath->setUnique(true);
     m_Job__errorPath->setDerived(false);
     m_Job__errorPath->setOrdered(true);
+    m_Job__scriptContent->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__scriptContent->setName("scriptContent");
+    m_Job__scriptContent->setDefaultValueLiteral("");
+    m_Job__scriptContent->setLowerBound(0);
+    m_Job__scriptContent->setUpperBound(1);
+    m_Job__scriptContent->setTransient(false);
+    m_Job__scriptContent->setVolatile(false);
+    m_Job__scriptContent->setChangeable(true);
+    m_Job__scriptContent->setUnsettable(false);
+    m_Job__scriptContent->setID(false);
+    m_Job__scriptContent->setUnique(true);
+    m_Job__scriptContent->setDerived(false);
+    m_Job__scriptContent->setOrdered(true);
     m_Job__jobPrio->setEType(m_JobPriorityEEnum);
     m_Job__jobPrio->setName("jobPrio");
     m_Job__jobPrio->setDefaultValueLiteral("-1");
@@ -761,7 +774,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__nbNodes->setDerived(false);
     m_Job__nbNodes->setOrdered(true);
     m_Job__nbNodesAndCpuPerNode->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Job__nbNodesAndCpuPerNode->setName("nbNodesAndCpuPerNode");
     m_Job__nbNodesAndCpuPerNode->setDefaultValueLiteral("");
     m_Job__nbNodesAndCpuPerNode->setLowerBound(0);
@@ -851,19 +864,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__name->setUnique(true);
     m_SubmitOptions__name->setDerived(false);
     m_SubmitOptions__name->setOrdered(true);
-    m_SubmitOptions__priority->setEType(m_JobPriorityEEnum);
-    m_SubmitOptions__priority->setName("priority");
-    m_SubmitOptions__priority->setDefaultValueLiteral("");
-    m_SubmitOptions__priority->setLowerBound(0);
-    m_SubmitOptions__priority->setUpperBound(1);
-    m_SubmitOptions__priority->setTransient(false);
-    m_SubmitOptions__priority->setVolatile(false);
-    m_SubmitOptions__priority->setChangeable(true);
-    m_SubmitOptions__priority->setUnsettable(false);
-    m_SubmitOptions__priority->setID(false);
-    m_SubmitOptions__priority->setUnique(true);
-    m_SubmitOptions__priority->setDerived(false);
-    m_SubmitOptions__priority->setOrdered(true);
     m_SubmitOptions__queue->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SubmitOptions__queue->setName("queue");
@@ -881,7 +881,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__wallTime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_SubmitOptions__wallTime->setName("wallTime");
-    m_SubmitOptions__wallTime->setDefaultValueLiteral("");
+    m_SubmitOptions__wallTime->setDefaultValueLiteral("-1");
     m_SubmitOptions__wallTime->setLowerBound(0);
     m_SubmitOptions__wallTime->setUpperBound(1);
     m_SubmitOptions__wallTime->setTransient(false);
@@ -895,7 +895,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__memory->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_SubmitOptions__memory->setName("memory");
-    m_SubmitOptions__memory->setDefaultValueLiteral("");
+    m_SubmitOptions__memory->setDefaultValueLiteral("-1");
     m_SubmitOptions__memory->setLowerBound(0);
     m_SubmitOptions__memory->setUpperBound(1);
     m_SubmitOptions__memory->setTransient(false);
@@ -909,7 +909,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__nbCpu->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_SubmitOptions__nbCpu->setName("nbCpu");
-    m_SubmitOptions__nbCpu->setDefaultValueLiteral("");
+    m_SubmitOptions__nbCpu->setDefaultValueLiteral("-1");
     m_SubmitOptions__nbCpu->setLowerBound(0);
     m_SubmitOptions__nbCpu->setUpperBound(1);
     m_SubmitOptions__nbCpu->setTransient(false);
@@ -923,7 +923,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__nbNodesAndCpuPerNode->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SubmitOptions__nbNodesAndCpuPerNode->setName("nbNodesAndCpuPerNode");
-    m_SubmitOptions__nbNodesAndCpuPerNode->setDefaultValueLiteral("");
+    m_SubmitOptions__nbNodesAndCpuPerNode->setDefaultValueLiteral("-1");
     m_SubmitOptions__nbNodesAndCpuPerNode->setLowerBound(0);
     m_SubmitOptions__nbNodesAndCpuPerNode->setUpperBound(1);
     m_SubmitOptions__nbNodesAndCpuPerNode->setTransient(false);
@@ -983,7 +983,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__nbCpu->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_ListJobsOptions__nbCpu->setName("nbCpu");
-    m_ListJobsOptions__nbCpu->setDefaultValueLiteral("");
+    m_ListJobsOptions__nbCpu->setDefaultValueLiteral("-1");
     m_ListJobsOptions__nbCpu->setLowerBound(0);
     m_ListJobsOptions__nbCpu->setUpperBound(1);
     m_ListJobsOptions__nbCpu->setTransient(false);
@@ -997,7 +997,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__fromSubmitDate->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_ListJobsOptions__fromSubmitDate->setName("fromSubmitDate");
-    m_ListJobsOptions__fromSubmitDate->setDefaultValueLiteral("");
+    m_ListJobsOptions__fromSubmitDate->setDefaultValueLiteral("-1");
     m_ListJobsOptions__fromSubmitDate->setLowerBound(0);
     m_ListJobsOptions__fromSubmitDate->setUpperBound(1);
     m_ListJobsOptions__fromSubmitDate->setTransient(false);
@@ -1011,7 +1011,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__toSubmitDate->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_ListJobsOptions__toSubmitDate->setName("toSubmitDate");
-    m_ListJobsOptions__toSubmitDate->setDefaultValueLiteral("");
+    m_ListJobsOptions__toSubmitDate->setDefaultValueLiteral("-1");
     m_ListJobsOptions__toSubmitDate->setLowerBound(0);
     m_ListJobsOptions__toSubmitDate->setUpperBound(1);
     m_ListJobsOptions__toSubmitDate->setTransient(false);
@@ -1038,7 +1038,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__owner->setOrdered(true);
     m_ListJobsOptions__status->setEType(m_JobStatusEEnum);
     m_ListJobsOptions__status->setName("status");
-    m_ListJobsOptions__status->setDefaultValueLiteral("");
+    m_ListJobsOptions__status->setDefaultValueLiteral("-1");
     m_ListJobsOptions__status->setLowerBound(0);
     m_ListJobsOptions__status->setUpperBound(1);
     m_ListJobsOptions__status->setTransient(false);
@@ -1051,7 +1051,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__status->setOrdered(true);
     m_ListJobsOptions__priority->setEType(m_JobPriorityEEnum);
     m_ListJobsOptions__priority->setName("priority");
-    m_ListJobsOptions__priority->setDefaultValueLiteral("");
+    m_ListJobsOptions__priority->setDefaultValueLiteral("-1");
     m_ListJobsOptions__priority->setLowerBound(0);
     m_ListJobsOptions__priority->setUpperBound(1);
     m_ListJobsOptions__priority->setTransient(false);
@@ -1542,9 +1542,19 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_JobPriorityEEnum);
+        m_JobPriorityEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // VERY_LOW
         _el->setName("VERY_LOW");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("VERY_LOW");
         _el->setEEnum(m_JobPriorityEEnum);
         m_JobPriorityEEnum->getELiterals().push_back(_el);
@@ -1554,7 +1564,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // LOW
         _el->setName("LOW");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("LOW");
         _el->setEEnum(m_JobPriorityEEnum);
         m_JobPriorityEEnum->getELiterals().push_back(_el);
@@ -1564,7 +1574,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // NORMAL
         _el->setName("NORMAL");
-        _el->setValue(2);
+        _el->setValue(3);
         _el->setLiteral("NORMAL");
         _el->setEEnum(m_JobPriorityEEnum);
         m_JobPriorityEEnum->getELiterals().push_back(_el);
@@ -1574,7 +1584,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // HIGH
         _el->setName("HIGH");
-        _el->setValue(3);
+        _el->setValue(4);
         _el->setLiteral("HIGH");
         _el->setEEnum(m_JobPriorityEEnum);
         m_JobPriorityEEnum->getELiterals().push_back(_el);
@@ -1584,7 +1594,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // VERY_HIGH
         _el->setName("VERY_HIGH");
-        _el->setValue(4);
+        _el->setValue(5);
         _el->setLiteral("VERY_HIGH");
         _el->setEEnum(m_JobPriorityEEnum);
         m_JobPriorityEEnum->getELiterals().push_back(_el);
@@ -1868,6 +1878,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_Job__errorPath;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__scriptContent()
+{
+    return m_Job__scriptContent;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__jobPrio()
 {
     return m_Job__jobPrio;
@@ -1943,10 +1957,6 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__name()
 {
     return m_SubmitOptions__name;
-}
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__priority()
-{
-    return m_SubmitOptions__priority;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__queue()
 {
