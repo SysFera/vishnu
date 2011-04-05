@@ -60,12 +60,6 @@ void SubmitOptions::_initialize()
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_name);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__PRIORITY:
-    {
-        ::ecorecpp::mapping::any_traits< ::TMS_Data::JobPriority >::toAny(_any,
-                m_priority);
-    }
-        return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__QUEUE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
@@ -122,12 +116,6 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_name);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__PRIORITY:
-    {
-        ::ecorecpp::mapping::any_traits< ::TMS_Data::JobPriority >::fromAny(
-                _newValue, m_priority);
-    }
-        return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__QUEUE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
@@ -182,26 +170,19 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NAME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_name);
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__PRIORITY:
-        return ::ecorecpp::mapping::set_traits< ::TMS_Data::JobPriority >::is_set(
-                m_priority);
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__QUEUE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_queue);
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WALLTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_wallTime);
+        return m_wallTime != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MEMORY:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_memory);
+        return m_memory != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBCPU:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_nbCpu);
+        return m_nbCpu != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_nbNodesAndCpuPerNode);
+        return m_nbNodesAndCpuPerNode != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_outPutPath);
+    return m_outPutPath !=;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorPath);
