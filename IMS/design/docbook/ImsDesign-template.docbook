@@ -209,16 +209,16 @@
                   <entry><para>Middleware</para></entry>
                 </row>
                 <row>
-                  <entry><para>VISHNU UMS</para></entry>
-                  <entry><para>VISHNU Package for user and session management</para></entry>
+                  <entry><para>VISHNU UMS client</para></entry>
+                  <entry><para>VISHNU Client Package for user and session management</para></entry>
                 </row>
                 <row>
-                  <entry><para>VISHNU TMS</para></entry>
-                  <entry><para>VISHNU Package for tasks management</para></entry>
+                  <entry><para>VISHNU TMS client</para></entry>
+                  <entry><para>VISHNU Client Package for tasks management</para></entry>
                 </row>
                 <row>
-                  <entry><para>VISHNU FMS</para></entry>
-                  <entry><para>VISHNU Package for files management</para></entry>
+                  <entry><para>VISHNU FMS client</para></entry>
+                  <entry><para>VISHNU Client Package for files management</para></entry>
                 </row>
                 <row>
                   <entry><para>Python (optional)</para></entry>
@@ -316,7 +316,18 @@
             <imagedata fileref="images/png/role.png" align="center" scale="40"/>
           </imageobject>
         </mediaobject>
-          </figure>
+      </figure>
+      <para>
+	The meaning of the roles (using the references)
+	<itemizedlist>
+	  <listitem><para>A: The external API corresponds to the functionnalities that are to be called from the IMS client</para></listitem>
+	  <listitem><para>B: The history maker and notification corresponds to the function of getting the state of the machine and saving it in the database automatically. Moreover it notifies the admin if the state has reached a threshold for the machine.</para></listitem>
+	  <listitem><para>C: LogTool corresponds to the part of the SeD that will be linked to the log central in the publisher/subscriber way and that gets the information of a new sed or a disconnexion on the machine the IMS SeD is over.</para></listitem>
+	  <listitem><para>D: Process Manager is responsible for relaunching a dead SeD, stopping a SeD or making the load shedding.</para></listitem>
+	  <listitem><para>E: Client TMS or FMS that will have new functionalities to call the TMS/FMS SeD</para></listitem>
+	  <listitem><para>F: Modification of the SeD to hava them save their parameters when launched, it enables to restart the SeD with the same parameters.</para></listitem>
+	</itemizedlist>
+      </para>
     </section>
     <section>
       <title>Roles description</title>
