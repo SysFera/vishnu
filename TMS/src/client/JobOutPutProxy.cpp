@@ -6,10 +6,9 @@
 /**
   * \brief Constructor, raises an exception on error
   */
-explicit
-JobOutPutProxy::JobOutPutProxy() {
+/*JobOutPutProxy::JobOutPutProxy() {
   mlistJobResults = NULL;
-}
+}*/
 
 
 /**
@@ -19,12 +18,11 @@ JobOutPutProxy::JobOutPutProxy() {
   * \param listJobResults the list of job results data structure
   * \brief Constructor, raises an exception on error
   */
-explicit
 JobOutPutProxy::JobOutPutProxy( SessionProxy session,
                 MachineProxy machine,
                 TMS_Data::JobResult result,
                 TMS_Data::ListJobResults* listJobResults)
-:msessionProxy(session), mmachineProxy(machine), mjobResult(result), mlistJobResults(&listJobResults)
+:msessionProxy(session), mmachineProxy(machine), mjobResult(result), mlistJobResults(listJobResults)
 {
 }
 
