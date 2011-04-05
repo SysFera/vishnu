@@ -28,8 +28,8 @@
 #include "ListUsers.hpp"
 
 /**
- * \class QueryProxy 
- * \brief QueryProxy class implementation 
+ * \class QueryProxy
+ * \brief QueryProxy class implementation
  */
 template <class QueryParameters, class ListObject>
 class QueryProxy
@@ -41,26 +41,59 @@ class QueryProxy
      * \fn QueryProxy(const QueryParameters& params,
      *                const SessionProxy& session,
      *                const std::string& serviceName)
-     * \param params The object which encapsulates the information of queryProxy options 
+     * \param params The object which encapsulates the information of queryProxy options
      * \param session The object which encapsulates the session information (ex: identifier of the session)
      * \param serviceName The name of the service to call
      * \brief Constructor, raises an exception on error
      */
-    QueryProxy(const QueryParameters& params, const SessionProxy& session, const std::string& serviceName);
+    QueryProxy(const QueryParameters& params,
+               const SessionProxy& session,
+               const std::string& serviceName);
     /**
-     * \brief Function to list QueryProxy information 
+     * \fn QueryProxy(const QueryParameters& params,
+     *                const SessionProxy& session,
+     *                const std::string& serviceName)
+     * \param params The object which encapsulates the information of queryProxy options
+     * \param session The object which encapsulates the session information (ex: identifier of the session)
+     * \param serviceName The name of the service to call
+     * \param machineId The identifier of the machine in which the query will be done
+     * \brief Constructor, raises an exception on error
+     */
+    QueryProxy(const QueryParameters& params,
+               const SessionProxy& session,
+               const std::string& serviceName,
+               const std::string& machineId);
+
+    /**
+     * \brief Function to change or reset the machineId
+     * \param the id of the machine used by the query
+     */
+    void
+    setMachineId(const std::string& machineId);
+
+    /**
+     * \brief Function to get the machineId used by the query
+     * \return the id of the machine used by the query
+     */
+    std::string
+    getMachineId() const;
+
+    /**
+     * \brief Function to list QueryProxy information
      * \fn  ListObject* list()
      * \return The pointer to the ListOject containing list information
      * \return raises an exception on error
      */
-    ListObject* list();
+    ListObject*
+    list();
     /**
-     * \brief Function to list QueryProxy information where QueryParameters type is string 
+     * \brief Function to list QueryProxy information where QueryParameters type is string
      * \fn  ListObject* listWithParamsString()
      * \return The pointer to the ListOject containing list information
      * \return raises an exception on error
      */
-    ListObject* listWithParamsString();
+    ListObject*
+    listWithParamsString();
     /**
      * \fn ~QueryProxy()
      * \brief Destructor, raises an exception on error
@@ -82,11 +115,11 @@ class QueryProxy
     /////////////////////////////////
 
     /**
-     * \brief The QueryParameters information 
+     * \brief The QueryParameters information
      */
     QueryParameters mparameters;
     /**
-     * \brief The name of the service 
+     * \brief The name of the service
      */
     std::string mserviceName;
     /**
@@ -95,31 +128,75 @@ class QueryProxy
      */
     SessionProxy msessionProxy;
     /**
-     * \brief The Object containing query information 
+     * \brief The Object containing query information
      */
     ListObject* mlistObject;
-
+    /**
+     * \brief The id of the machine used by the query
+     */
+    std::string mmachineId;
 };
 
 /**
  * \fn QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params,
  *                const SessionProxy& session,
  const std::string& serviceName)
- * \param params The object which encapsulates the information of queryProxy options 
+ * \param params The object which encapsulates the information of queryProxy options
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \param serviceName The name of the service to call
  * \brief Constructor, raises an exception on error
  */
 template <class QueryParameters, class ListObject>
-QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session, 
+QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session,
     const std::string& serviceName):
   mparameters(params), mserviceName(serviceName), msessionProxy(session)
 {
   mlistObject = NULL;
+  mmachineId = "";
 }
 
 /**
- * \brief Function to list QueryProxy information 
+* \fn QueryProxy(const QueryParameters& params,
+*                const SessionProxy& session,
+*                const std::string& serviceName)
+* \param params The object which encapsulates the information of queryProxy options
+* \param session The object which encapsulates the session information (ex: identifier of the session)
+* \param serviceName The name of the service to call
+* \param machineId The identifier of the machine in which the query will be done
+* \brief Constructor, raises an exception on error
+*/
+
+template <class QueryParameters, class ListObject>
+QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session,
+    const std::string& serviceName, const std::string& machineId):
+  mparameters(params), mserviceName(serviceName), msessionProxy(session), mmachineId (machineId)
+{
+  mlistObject = NULL;
+}
+
+
+/**
+* \brief Function to reset the machineId
+*/
+template <class QueryParameters, class ListObject>
+void
+QueryProxy<QueryParameters, ListObject>::setMachineId(const std::string& machineId) {
+  mmachineId = machineId;
+}
+
+
+ /**
+* \brief Function to get the machineId used by the query
+* \return the id of the machine used by the query
+*/
+template <class QueryParameters, class ListObject>
+std::string
+QueryProxy<QueryParameters, ListObject>::getMachineId() const {
+  return mmachineId;
+}
+
+/**
+ * \brief Function to list QueryProxy information
  * \fn  ListObject* QueryProxy<QueryParameters, ListObject>::list()
  * \return The pointer to the ListOject containing list information
  * \return raises an exception on error
@@ -134,43 +211,87 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+  //If the query uses the machineId (machineId not null)
+  if (mmachineId.size() != 0) {
+    profile = diet_profile_alloc(mserviceName.c_str(), 2, 2, 4);
+  }
+  else {
+    profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+  }
+
   sessionKey = msessionProxy.getSessionKey();
 
   const char* name = mserviceName.c_str();
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the mparameters object in to queryParmetersToString 
+  //To serialize the mparameters object in to queryParmetersToString
   queryParmetersToString =  _ser.serialize(const_cast<QueryParameters_ptr>(&mparameters));
   //IN Parameters
+
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
-  }
-  if(diet_string_set(diet_parameter(profile,1), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
-    msg += "with queryParmetersToString parameter "+queryParmetersToString;
-    raiseDietMsgException(msg);
-  }
-
-  //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
-      msg += "by receiving listObjectInString message";
+      msg += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
-      msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg); 
+
+  //If the query uses the machineId (machineId not null)
+  if (mmachineId.size() != 0) {
+
+    if(diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+      msg += "with machineId parameter "+mmachineId;
+      raiseDietMsgException(msg);
+    }
+
+    if(diet_string_set(diet_parameter(profile,2), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
+      msg += "with queryParmetersToString parameter "+queryParmetersToString;
+      raiseDietMsgException(msg);
+    }
+
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,3), &listObjectInString, NULL)){
+        msg += "by receiving listObjectInString message";
+        raiseDietMsgException(msg);
+      }
+      if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
     }
   }
   else {
-    raiseDietMsgException("DIET call failure"); 
+
+    if(diet_string_set(diet_parameter(profile,1), strdup(queryParmetersToString.c_str()), DIET_VOLATILE)) {
+      msg += "with queryParmetersToString parameter "+queryParmetersToString;
+      raiseDietMsgException(msg);
+    }
+
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
+        msg += "by receiving listObjectInString message";
+        raiseDietMsgException(msg);
+      }
+      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
+    }
   }
 
+
   /*To check the receiving message error*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);   
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse List object serialized
   parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving List object serialized");
@@ -179,7 +300,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 }
 
 /**
- * \brief Function to list QueryProxy information where QueryParameters type is string 
+ * \brief Function to list QueryProxy information where QueryParameters type is string
  * \fn  ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
  * \return The pointer to the ListOject containing list information
  * \return raises an exception on error
@@ -227,7 +348,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
 
   //To parse ListUsers object serialized
   parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving ListUsers object serialized");
- 
+
   return mlistObject;
 
 }
