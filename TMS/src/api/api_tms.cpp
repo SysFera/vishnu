@@ -28,8 +28,11 @@ throw(UserException, SystemException) {
   jobInfo.setJobPath(scriptFilePath);
   SessionProxy sessionProxy(sessionKey);
 
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
+
   JobProxy jobProxy(sessionProxy,
-                    MachineProxy(machineId, sessionProxy),
+                    MachineProxy(machine, sessionProxy),
                     jobInfo);
 
   int ret = jobProxy.submitJob(options);
@@ -59,9 +62,11 @@ throw(UserException, SystemException) {
   TMS_Data::Job job;
   job.setJobId(jobId);
 
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
 
   return JobProxy(sessionProxy,
-                  MachineProxy(machineId, sessionProxy),
+                  MachineProxy(machine, sessionProxy),
                   job).cancelJob();
 
 }
@@ -76,24 +81,35 @@ throw(UserException, SystemException) {
 * \param jobInfos : The resulting information on the job
 * \return int : an error code
 */
+
 int
 getJobInfo(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& jobId,
-            Job& jobInfos)
+            Job_ptr& jobInfos)
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  MachineProxy machineProxy(machineId, sessionProxy);
+
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
+  MachineProxy machineProxy(machine, sessionProxy);
 
   std::string serviceName = "getListOfJobs_";
   serviceName.append(machineProxy.getData().getMachineId());
 
+  TMS_Data::ListJobsOptions listJobsOptions;
+  listJobsOptions.setJobId(jobId);
+
   QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-  query(jobId, sessionProxy, serviceName);
+  query(listJobsOptions, sessionProxy, serviceName, machineProxy.getData().getMachineId());
 
-  jobInfos = query.listWithParamsString();
+  TMS_Data::ListJobs* listJobs_ptr = query.list();
 
+  if(listJobs_ptr != NULL) {
+    jobInfos = listJobs_ptr->getJobs().get(0);
+  }
+  delete listJobs_ptr;
   return 0;
 }
 
@@ -114,13 +130,16 @@ listJobs(const std::string& sessionKey,
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  MachineProxy machineProxy(machineId, sessionProxy);
+
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
+  MachineProxy machineProxy(machine, sessionProxy);
 
   std::string serviceName = "getListOfJobs_";
   serviceName.append(machineProxy.getData().getMachineId());
 
   QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-  query(options, sessionProxy, serviceName);
+  query(options, sessionProxy, serviceName, machineProxy.getData().getMachineId());
 
   TMS_Data::ListJobs* listJobs_ptr = query.list();
 
@@ -152,20 +171,23 @@ getJobProgress(const std::string& sessionKey,
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  MachineProxy machineProxy(machineId, sessionProxy);
+
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
+  MachineProxy machineProxy(machine, sessionProxy);
 
   std::string serviceName = "getJobsProgression_";
   serviceName.append(machineProxy.getData().getMachineId());
 
   QueryProxy<TMS_Data::ProgressOptions, TMS_Data::ListProgression>
-  query(options, sessionProxy, serviceName);
+  query(options, sessionProxy, serviceName, machineProxy.getData().getMachineId());
 
   TMS_Data::ListProgression* listProgression_ptr = query.list();
 
   if(listProgression_ptr != NULL) {
     TMS_Data::Progression_ptr progression;
     for(unsigned int i = 0; i < listProgression_ptr->getProgress().size(); i++) {
-      progression = listProgression_ptr->getProgress.get(i);
+      progression = listProgression_ptr->getProgress().get(i);
       listOfProgress.getProgress().push_back(progression);
     }
   }
