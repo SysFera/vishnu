@@ -190,11 +190,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__nbNodesAndCpuPerNode);
-    m_SubmitOptions__outPutPath = new ::ecore::EAttribute();
-    m_SubmitOptions__outPutPath->setFeatureID(
+    m_SubmitOptions__outputPath = new ::ecore::EAttribute();
+    m_SubmitOptions__outputPath->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__outPutPath);
+            m_SubmitOptions__outputPath);
     m_SubmitOptions__errorPath = new ::ecore::EAttribute();
     m_SubmitOptions__errorPath->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH);
@@ -921,7 +921,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__nbCpu->setDerived(false);
     m_SubmitOptions__nbCpu->setOrdered(true);
     m_SubmitOptions__nbNodesAndCpuPerNode->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_SubmitOptions__nbNodesAndCpuPerNode->setName("nbNodesAndCpuPerNode");
     m_SubmitOptions__nbNodesAndCpuPerNode->setDefaultValueLiteral("-1");
     m_SubmitOptions__nbNodesAndCpuPerNode->setLowerBound(0);
@@ -934,20 +934,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__nbNodesAndCpuPerNode->setUnique(true);
     m_SubmitOptions__nbNodesAndCpuPerNode->setDerived(false);
     m_SubmitOptions__nbNodesAndCpuPerNode->setOrdered(true);
-    m_SubmitOptions__outPutPath->setEType(
+    m_SubmitOptions__outputPath->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__outPutPath->setName("outPutPath");
-    m_SubmitOptions__outPutPath->setDefaultValueLiteral("");
-    m_SubmitOptions__outPutPath->setLowerBound(0);
-    m_SubmitOptions__outPutPath->setUpperBound(1);
-    m_SubmitOptions__outPutPath->setTransient(false);
-    m_SubmitOptions__outPutPath->setVolatile(false);
-    m_SubmitOptions__outPutPath->setChangeable(true);
-    m_SubmitOptions__outPutPath->setUnsettable(false);
-    m_SubmitOptions__outPutPath->setID(false);
-    m_SubmitOptions__outPutPath->setUnique(true);
-    m_SubmitOptions__outPutPath->setDerived(false);
-    m_SubmitOptions__outPutPath->setOrdered(true);
+    m_SubmitOptions__outputPath->setName("outputPath");
+    m_SubmitOptions__outputPath->setDefaultValueLiteral("");
+    m_SubmitOptions__outputPath->setLowerBound(0);
+    m_SubmitOptions__outputPath->setUpperBound(1);
+    m_SubmitOptions__outputPath->setTransient(false);
+    m_SubmitOptions__outputPath->setVolatile(false);
+    m_SubmitOptions__outputPath->setChangeable(true);
+    m_SubmitOptions__outputPath->setUnsettable(false);
+    m_SubmitOptions__outputPath->setID(false);
+    m_SubmitOptions__outputPath->setUnique(true);
+    m_SubmitOptions__outputPath->setDerived(false);
+    m_SubmitOptions__outputPath->setOrdered(true);
     m_SubmitOptions__errorPath->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SubmitOptions__errorPath->setName("errorPath");
@@ -1978,9 +1978,9 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__nbNodesAndCpuPerNode;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__outPutPath()
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__outputPath()
 {
-    return m_SubmitOptions__outPutPath;
+    return m_SubmitOptions__outputPath;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__errorPath()
 {
