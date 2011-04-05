@@ -13,16 +13,11 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   )
 
-#add_library(ums-client-proxy STATIC
-#   SessionProxy.cpp
-#   UserProxy.cpp
-#   MachineProxy.cpp
-#   LocalAccountProxy.cpp
-#   ConfigurationProxy.cpp
-#   OptionValueProxy.cpp
-#   utilsClient.cpp
-#   UtilsProxy.cpp
-#)
+add_library(ums-client-proxy STATIC
+JobProxy
+JobOutPutProxy
+)
+
 SET_TARGET_PROPERTIES(tms-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
 
 target_link_libraries(tms-client-proxy
