@@ -197,22 +197,18 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_jobId);
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__NBCPU:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_nbCpu);
+        return m_nbCpu != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__FROMSUBMITDATE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_fromSubmitDate);
+        return m_fromSubmitDate != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__TOSUBMITDATE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_toSubmitDate);
+        return m_toSubmitDate != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__OWNER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_owner);
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__STATUS:
-        return ::ecorecpp::mapping::set_traits< ::TMS_Data::JobStatus >::is_set(
-                m_status);
+        return m_status != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__PRIORITY:
-        return ::ecorecpp::mapping::set_traits< ::TMS_Data::JobPriority >::is_set(
-                m_priority);
+        return m_priority != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__OUTPUTPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_outPutPath);

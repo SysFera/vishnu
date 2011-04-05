@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListQueues.hpp
+ * \brief The ListQueues class
+ * \author Generated file
+ * \date 31/03/2011
+ */
+
 #ifndef TMS_DATA_LISTQUEUES_HPP
 #define TMS_DATA_LISTQUEUES_HPP
 
@@ -35,24 +42,48 @@
 namespace TMS_Data
 {
 
+    /**
+     * \class ListQueues
+     * \brief Implementation of the ListQueues class
+     */
     class ListQueues: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListQueues
+         */
         ListQueues();
-
+        /**
+         * \brief The destructor for ListQueues
+         */
         virtual ~ListQueues();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the nbQueues
+         * \return The nbQueues attribute value
+         **/
         ::ecore::EInt getNbQueues() const;
+        /**
+         * \brief To set the nbQueues
+         * \param _nbQueues The nbQueues value
+         **/
         void setNbQueues(::ecore::EInt _nbQueues);
 
         // References
+        /**
+         * \brief To get the list of Queues
+         * \return A reference to a list of Queues
+         **/
         ::ecorecpp::mapping::EList< ::TMS_Data::Queue >& getQueues();
 
         /*PROTECTED REGION ID(ListQueues) START*/

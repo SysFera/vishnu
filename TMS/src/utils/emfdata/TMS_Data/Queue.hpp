@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file Queue.hpp
+ * \brief The Queue class
+ * \author Generated file
+ * \date 31/03/2011
+ */
+
 #ifndef TMS_DATA_QUEUE_HPP
 #define TMS_DATA_QUEUE_HPP
 
@@ -35,51 +42,151 @@
 namespace TMS_Data
 {
 
+    /**
+     * \class Queue
+     * \brief Implementation of the Queue class
+     */
     class Queue: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for Queue
+         */
         Queue();
-
+        /**
+         * \brief The destructor for Queue
+         */
         virtual ~Queue();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the name
+         * \return The name attribute value
+         **/
         ::ecore::EString const& getName() const;
+        /**
+         * \brief To set the name
+         * \param _name The name value
+         **/
         void setName(::ecore::EString const& _name);
 
+        /**
+         * \brief To get the maxJobCpu
+         * \return The maxJobCpu attribute value
+         **/
         ::ecore::EInt getMaxJobCpu() const;
+        /**
+         * \brief To set the maxJobCpu
+         * \param _maxJobCpu The maxJobCpu value
+         **/
         void setMaxJobCpu(::ecore::EInt _maxJobCpu);
 
+        /**
+         * \brief To get the maxProcCpu
+         * \return The maxProcCpu attribute value
+         **/
         ::ecore::EInt getMaxProcCpu() const;
+        /**
+         * \brief To set the maxProcCpu
+         * \param _maxProcCpu The maxProcCpu value
+         **/
         void setMaxProcCpu(::ecore::EInt _maxProcCpu);
 
+        /**
+         * \brief To get the memory
+         * \return The memory attribute value
+         **/
         ::ecore::EInt getMemory() const;
+        /**
+         * \brief To set the memory
+         * \param _memory The memory value
+         **/
         void setMemory(::ecore::EInt _memory);
 
+        /**
+         * \brief To get the wallTime
+         * \return The wallTime attribute value
+         **/
         ::ecore::ELong getWallTime() const;
+        /**
+         * \brief To set the wallTime
+         * \param _wallTime The wallTime value
+         **/
         void setWallTime(::ecore::ELong _wallTime);
 
+        /**
+         * \brief To get the node
+         * \return The node attribute value
+         **/
         ::ecore::EInt getNode() const;
+        /**
+         * \brief To set the node
+         * \param _node The node value
+         **/
         void setNode(::ecore::EInt _node);
 
+        /**
+         * \brief To get the nbRunningJobs
+         * \return The nbRunningJobs attribute value
+         **/
         ::ecore::EInt getNbRunningJobs() const;
+        /**
+         * \brief To set the nbRunningJobs
+         * \param _nbRunningJobs The nbRunningJobs value
+         **/
         void setNbRunningJobs(::ecore::EInt _nbRunningJobs);
 
+        /**
+         * \brief To get the nbJobsInQueue
+         * \return The nbJobsInQueue attribute value
+         **/
         ::ecore::EInt getNbJobsInQueue() const;
+        /**
+         * \brief To set the nbJobsInQueue
+         * \param _nbJobsInQueue The nbJobsInQueue value
+         **/
         void setNbJobsInQueue(::ecore::EInt _nbJobsInQueue);
 
+        /**
+         * \brief To get the state
+         * \return The state attribute value
+         **/
         ::TMS_Data::QueueStatus getState() const;
+        /**
+         * \brief To set the state
+         * \param _state The state value
+         **/
         void setState(::TMS_Data::QueueStatus _state);
 
+        /**
+         * \brief To get the priority
+         * \return The priority attribute value
+         **/
         ::TMS_Data::QueuePriority getPriority() const;
+        /**
+         * \brief To set the priority
+         * \param _priority The priority value
+         **/
         void setPriority(::TMS_Data::QueuePriority _priority);
 
+        /**
+         * \brief To get the description
+         * \return The description attribute value
+         **/
         ::ecore::EString const& getDescription() const;
+        /**
+         * \brief To set the description
+         * \param _description The description value
+         **/
         void setDescription(::ecore::EString const& _description);
 
         // References
