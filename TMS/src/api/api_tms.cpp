@@ -42,7 +42,7 @@ throw(UserException, SystemException) {
 * \brief The cancelJob function cancels a job from its id
 * \fn int cancelJob(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, std::string& infoMsg)
 * \param sessionKey : The session key
-* \param machineId : Machine hash key
+* \param machineId : The id of the machine
 * \param jobId : The Id of the job
 * \param infoMsg : The information message
 * \return int : an error code
@@ -71,7 +71,7 @@ throw(UserException, SystemException) {
 * \brief The getJobInfo function gets information on a job from its id
 * \fn int getJobInfo(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, Job& jobInfos)
 * \param sessionKey : The session key
-* \param machineId : Machine hash key
+* \param machineId : The id of the machine
 * \param jobId : The id of the job
 * \param jobInfos : The resulting information on the job
 * \return int : an error code
@@ -101,7 +101,7 @@ throw(UserException, SystemException) {
 * \brief The listJobs function gets a list of all submitted jobs
 * \fn int listJobs(const std::string& sessionKey, const std::string& machineId, ListJobs& listOfJobs, const ListJobsOptions& options)
 * \param sessionKey : The session key
-* \param machineId : Machine hash key
+* \param machineId : The id of the machine
 * \param listOfJobs : The constructed object list of jobs
 * \param options : Additional options for jobs listing
 * \return int : an error code
@@ -132,5 +132,43 @@ throw(UserException, SystemException) {
     }
   }
   delete listJobs_ptr;
+  return 0;
+}
+
+/**
+* \brief The getJobProgress function gets the progression status of jobs
+* \fn int getJobProgress(const std::string& sessionKey, const std::string& machineId, Progression& progress, const ProgressOptions& options)
+* \param sessionKey : The session key
+* \param machineId : Is the id of the machine to get the jobs progression.
+* \param listOfProgress : Is the object containing jobs progression information
+* \param options : Is an object containing the available options jobs for progression .
+* \return int : an error code
+*/
+int
+getJobProgress(const std::string& sessionKey,
+              const std::string& machineId,
+              ListProgression& listOfProgress,
+              const ProgressOptions& options)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machineId, sessionProxy);
+
+  std::string serviceName = "getJobsProgression_";
+  serviceName.append(machineProxy.getData().getMachineId());
+
+  QueryProxy<TMS_Data::ProgressOptions, TMS_Data::ListProgression>
+  query(options, sessionProxy, serviceName);
+
+  TMS_Data::ListProgression* listProgression_ptr = query.list();
+
+  if(listProgression_ptr != NULL) {
+    TMS_Data::Progression_ptr progression;
+    for(unsigned int i = 0; i < listProgression_ptr->getProgress().size(); i++) {
+      progression = listProgression_ptr->getProgress.get(i);
+      listOfProgress.getProgress().push_back(progression);
+    }
+  }
+  delete listProgression_ptr;
   return 0;
 }
