@@ -1,4 +1,5 @@
 #include <csignal>
+#include <sys/wait.h>
 #include <fstream>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
@@ -35,6 +36,26 @@ usage(char* cmd) {
   return 1;
 }
 
+
+/**
+ * \brief To catch a signal
+ * \param signum is the signal to catch
+ */
+void
+controlSignal (int signum) {
+  int res;
+  switch (signum) {
+    case SIGCHLD:
+      res = waitpid (-1, NULL, WNOHANG);
+      while (res > 0) {
+        res = waitpid (-1, NULL, WNOHANG);
+      }
+      break;
+    default:
+     break;
+  }
+}
+
 /**
  * \brief The main function
  * \fn int main(int argc, char* argv[], char* envp[])
@@ -53,6 +74,7 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string dbUsername;
   std::string dbPassword;
   std::string sendmailScriptPath;
+  struct sigaction action;
 
   if (argc < 8) {
     return usage(argv[0]);
@@ -91,9 +113,16 @@ int main(int argc, char* argv[], char* envp[]) {
   pid = fork();
 
   if (pid > 0) {
-    // Initialize the UMS Server (Opens a connection to the database)
+    //Initialize the UMS Server (Opens a connection to the database)
     ServerUMS* server = ServerUMS::getInstance();
     res = server->init(vishnuid, dbType, dbHost, dbUsername, dbPassword, sendmailScriptPath);
+
+    //Declaration of signal handler
+    action.sa_handler = controlSignal;
+    sigemptyset (&(action.sa_mask));
+    action.sa_flags = 0;
+    sigaction (SIGCHLD, &action, NULL);
+
     // Initialize the DIET SeD
     if (!res) {
       diet_print_service_table();

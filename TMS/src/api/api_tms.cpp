@@ -5,9 +5,7 @@
  * \date March 2011
  */
 
-
 #include "api_tms.hpp"
-
 
 /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
@@ -27,8 +25,12 @@ submitJob(const std::string& sessionKey,
           const SubmitOptions& options)
 throw(UserException, SystemException) {
 
+  jobInfo.setJobPath(scriptFilePath);
   SessionProxy sessionProxy(sessionKey);
-  JobProxy jobProxy(sessionProxy, MachineProxy(machineId, sessionProxy));
+
+  JobProxy jobProxy(sessionProxy,
+                    MachineProxy(machineId, sessionProxy),
+                    jobInfo);
 
   int ret = jobProxy.submitJob(options);
   jobInfo = jobProxy.getData();
@@ -62,4 +64,73 @@ throw(UserException, SystemException) {
                   MachineProxy(machineId, sessionProxy),
                   job).cancelJob();
 
+}
+
+
+/**
+* \brief The getJobInfo function gets information on a job from its id
+* \fn int getJobInfo(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, Job& jobInfos)
+* \param sessionKey : The session key
+* \param machineId : Machine hash key
+* \param jobId : The id of the job
+* \param jobInfos : The resulting information on the job
+* \return int : an error code
+*/
+int
+getJobInfo(const std::string& sessionKey,
+            const std::string& machineId,
+            const std::string& jobId,
+            Job& jobInfos)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machineId, sessionProxy);
+
+  std::string serviceName = "getListOfJobs_";
+  serviceName.append(machineProxy.getData().getMachineId());
+
+  QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
+  query(jobId, sessionProxy, serviceName);
+
+  jobInfos = query.listWithParamsString();
+
+  return 0;
+}
+
+/**
+* \brief The listJobs function gets a list of all submitted jobs
+* \fn int listJobs(const std::string& sessionKey, const std::string& machineId, ListJobs& listOfJobs, const ListJobsOptions& options)
+* \param sessionKey : The session key
+* \param machineId : Machine hash key
+* \param listOfJobs : The constructed object list of jobs
+* \param options : Additional options for jobs listing
+* \return int : an error code
+*/
+int
+listJobs(const std::string& sessionKey,
+          const std::string& machineId,
+          ListJobs& listOfJobs,
+          const ListJobsOptions& options)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machineId, sessionProxy);
+
+  std::string serviceName = "getListOfJobs_";
+  serviceName.append(machineProxy.getData().getMachineId());
+
+  QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
+  query(options, sessionProxy, serviceName);
+
+  TMS_Data::ListJobs* listJobs_ptr = query.list();
+
+  if(listJobs_ptr != NULL) {
+    TMS_Data::Job_ptr job;
+    for(unsigned int i = 0; i < listJobs_ptr->getJobs().size(); i++) {
+      job = listJobs_ptr->getJobs().get(i);
+      listOfJobs.getJobs().push_back(job);
+    }
+  }
+  delete listJobs_ptr;
+  return 0;
 }
