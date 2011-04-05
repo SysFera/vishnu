@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file ListJobs.hpp
+ * \brief The ListJobs class
+ * \author Generated file
+ * \date 31/03/2011
+ */
+
 #ifndef TMS_DATA_LISTJOBS_HPP
 #define TMS_DATA_LISTJOBS_HPP
 
@@ -35,30 +42,70 @@
 namespace TMS_Data
 {
 
+    /**
+     * \class ListJobs
+     * \brief Implementation of the ListJobs class
+     */
     class ListJobs: public virtual ::ecore::EObject
 
     {
     public:
+        /**
+         * \brief The default constructor for ListJobs
+         */
         ListJobs();
-
+        /**
+         * \brief The destructor for ListJobs
+         */
         virtual ~ListJobs();
 
+        /**
+         * \brief Internal method
+         */
         virtual void _initialize();
 
         // Operations
 
 
         // Attributes
+        /**
+         * \brief To get the nbJobs
+         * \return The nbJobs attribute value
+         **/
         ::ecore::ELong getNbJobs() const;
+        /**
+         * \brief To set the nbJobs
+         * \param _nbJobs The nbJobs value
+         **/
         void setNbJobs(::ecore::ELong _nbJobs);
 
+        /**
+         * \brief To get the nbRunningJobs
+         * \return The nbRunningJobs attribute value
+         **/
         ::ecore::ELong getNbRunningJobs() const;
+        /**
+         * \brief To set the nbRunningJobs
+         * \param _nbRunningJobs The nbRunningJobs value
+         **/
         void setNbRunningJobs(::ecore::ELong _nbRunningJobs);
 
+        /**
+         * \brief To get the nbWaitingJobs
+         * \return The nbWaitingJobs attribute value
+         **/
         ::ecore::ELong getNbWaitingJobs() const;
+        /**
+         * \brief To set the nbWaitingJobs
+         * \param _nbWaitingJobs The nbWaitingJobs value
+         **/
         void setNbWaitingJobs(::ecore::ELong _nbWaitingJobs);
 
         // References
+        /**
+         * \brief To get the list of Jobs
+         * \return A reference to a list of Jobs
+         **/
         ::ecorecpp::mapping::EList< ::TMS_Data::Job >& getJobs();
 
         /*PROTECTED REGION ID(ListJobs) START*/
