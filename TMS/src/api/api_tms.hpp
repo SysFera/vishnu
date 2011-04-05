@@ -75,7 +75,7 @@ namespace vishnu {
   getJobInfo(const std::string& sessionKey,
              const std::string& machineId,
              const std::string& jobId,
-             Job& jobInfos)
+             Job_ptr& jobInfos)
   throw(UserException, SystemException);
 
   /**
