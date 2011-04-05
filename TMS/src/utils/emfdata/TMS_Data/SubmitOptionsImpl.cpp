@@ -84,14 +84,14 @@ void SubmitOptions::_initialize()
         return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any,
                 m_nbNodesAndCpuPerNode);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_outPutPath);
+                m_outputPath);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH:
@@ -142,14 +142,14 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
         return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_nbNodesAndCpuPerNode);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_outPutPath);
+                m_outputPath);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH:
@@ -182,7 +182,8 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
         return m_nbNodesAndCpuPerNode != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH:
-    return m_outPutPath !=;
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_outputPath);
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__ERRORPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorPath);
