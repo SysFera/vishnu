@@ -787,10 +787,10 @@ namespace TMS_Data
                 getSubmitOptions__nbNodesAndCpuPerNode();
 
         /**
-         * \brief Returns the reflective object for feature outPutPath of class SubmitOptions
+         * \brief Returns the reflective object for feature outputPath of class SubmitOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getSubmitOptions__outPutPath();
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__outputPath();
 
         /**
          * \brief Returns the reflective object for feature errorPath of class SubmitOptions
@@ -1291,9 +1291,9 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__nbNodesAndCpuPerNode;
 
         /**
-         * \brief The instance for the feature outPutPath of class SubmitOptions
+         * \brief The instance for the feature outputPath of class SubmitOptions
          */
-        ::ecore::EAttribute_ptr m_SubmitOptions__outPutPath;
+        ::ecore::EAttribute_ptr m_SubmitOptions__outputPath;
 
         /**
          * \brief The instance for the feature errorPath of class SubmitOptions
