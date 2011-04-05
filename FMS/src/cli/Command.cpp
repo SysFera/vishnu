@@ -4,49 +4,64 @@
  * \author Ibrahima Cissé (ibrahima.cisse@sysfera.com)
  */
 
+#include "Command.hpp"
 
-    /**
-     * \brief The default constructor
-     */
-     
-    Command();
+/**
+ * \brief The default constructor
+ */
+
+Command():mname("unkown"),msignature("unknown"){}
+
+Command (const std::string name):mname(name){}
 
 
-    /**
-     * \brief To display a help message about the command
-     */
+/**
+ * \brief To get  the namr of the option
+ */
 
-    virtual void usage();
+virtual std::string name()const{return mname;};
 
-    /**
-     * \brief To parse the command line 
-     */
 
-    virtual void parse();
+/**
+ * \brief To display a help message about the command
+ */
 
-    /**
-     * \brief To run the command
-     */
+virtual void usage();
 
-    virtual void run();
+/**
+ * \brief To parse the command line 
+ */
 
-    /**
-     * \brief The default destructor
-     */
+virtual void parse(int ac, char** av);
 
-    virtual ~Command();
+/**
+ * \brief To run the command
+ */
 
-  /**
-   * \brief The signature of the command
-   */
-  std::string signature;
+virtual void run(int ac, char** av);
+
+/**
+ * \brief The default destructor
+ */
+
+virtual ~Command();
+
+/**
+ * \brief The signature of the command
+ */
+std::string signature;
+
+
 
   /**
    * \brief The options allowed by the command
    */
   boost::shared_ptr<Options> commandOpt;
 
-
+/**
+ * \brief The callbacks 
+ */
+  CallBacks callback; 
 
 };
 
