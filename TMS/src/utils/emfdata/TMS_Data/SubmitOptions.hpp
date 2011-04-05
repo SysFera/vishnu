@@ -128,24 +128,23 @@ namespace TMS_Data
          * \brief To get the nbNodesAndCpuPerNode
          * \return The nbNodesAndCpuPerNode attribute value
          **/
-        ::ecore::EString const& getNbNodesAndCpuPerNode() const;
+        ::ecore::EInt getNbNodesAndCpuPerNode() const;
         /**
          * \brief To set the nbNodesAndCpuPerNode
          * \param _nbNodesAndCpuPerNode The nbNodesAndCpuPerNode value
          **/
-        void setNbNodesAndCpuPerNode(
-                ::ecore::EString const& _nbNodesAndCpuPerNode);
+        void setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode);
 
         /**
-         * \brief To get the outPutPath
-         * \return The outPutPath attribute value
+         * \brief To get the outputPath
+         * \return The outputPath attribute value
          **/
-        ::ecore::EString const& getOutPutPath() const;
+        ::ecore::EString const& getOutputPath() const;
         /**
-         * \brief To set the outPutPath
-         * \param _outPutPath The outPutPath value
+         * \brief To set the outputPath
+         * \param _outputPath The outputPath value
          **/
-        void setOutPutPath(::ecore::EString const& _outPutPath);
+        void setOutputPath(::ecore::EString const& _outputPath);
 
         /**
          * \brief To get the errorPath
@@ -193,9 +192,9 @@ namespace TMS_Data
 
         ::ecore::EInt m_nbCpu;
 
-        ::ecore::EString m_nbNodesAndCpuPerNode;
+        ::ecore::EInt m_nbNodesAndCpuPerNode;
 
-        ::ecore::EString m_outPutPath;
+        ::ecore::EString m_outputPath;
 
         ::ecore::EString m_errorPath;
 
