@@ -3,6 +3,14 @@
 
 #include "JobOutPutProxy.hpp"
 
+/**
+  * \brief Constructor, raises an exception on error
+  */
+explicit
+JobOutPutProxy::JobOutPutProxy() {
+  mlistJobResults = NULL;
+}
+
 
 /**
   * \param session The object which encapsulates the session information
@@ -12,7 +20,7 @@
   * \brief Constructor, raises an exception on error
   */
 explicit
-JobOutPutProxy( SessionProxy session,
+JobOutPutProxy::JobOutPutProxy( SessionProxy session,
                 MachineProxy machine,
                 TMS_Data::JobResult result,
                 TMS_Data::ListJobResults* listJobResults)
@@ -37,5 +45,5 @@ JobOutPutProxy::getAllJobsOutPut() {
   */
 
 JobOutPutProxy::~JobOutPutProxy() {
-
+  delete mlistJobResults;
 }
