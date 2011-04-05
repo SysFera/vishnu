@@ -113,7 +113,10 @@
           <listitem>
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
-           <listitem>
+          <listitem>
+            <para><emphasis role="bold">DIET</emphasis>: component of the SysFera-DS solution that provides the communication layer between agents that are part of the VISHNU infrastructure.</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all processes of the VISHNU infrastructure.</para>
           </listitem>
           <listitem>
@@ -137,7 +140,7 @@
   </chapter>
 
   <!-- CHAPTER 2 : ARCHITECTURE -->
-  <chapter annotations="IMS/design/Archi.asta#ARCHIDIAG(architecture)">
+  <chapter>
     <title>IMS System Architecture</title>
     <section>
       <title>IMS software components</title>
@@ -185,6 +188,32 @@
 	  </listitem>
         </itemizedlist>
       </para>
+      <section>
+        <title>IMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the VISHNU IMS system and their interfaces. All the interfaces of the IMS Client component are shown (CLI, WS, python, C++).</para>
+        <figure>
+          <title>IMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_client-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>IMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the VISHNU IMS system and their interfaces. All the interfaces of the IMS SeD component are shown.</para>
+        <figure>
+          <title>IMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_server-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
     </section>
     
     <section>
@@ -286,7 +315,7 @@
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">LogCentral</emphasis> is a process that is necessary to monitor the DIET platform. This process is part of DIET
+            <para><emphasis role="bold">LogCentral</emphasis> is a SysFera-DS process that is necessary to monitor the DIET platform. This process is part of DIET
 	      in the SysFera-DS package. It can be deployed on any host that can connect through CORBA to the omniNames and DIET MasterAgent.
               To simplify the deployment, it can be running on the same machine as these processes.
             </para>
@@ -301,7 +330,62 @@
           </listitem>
 	 </itemizedlist>
        </para>
-    </section>
+       <section>
+        <title>IMS deployment overview</title>
+        <para>The following diagram shows an example of VISHNU infrastructure with one instance of FMS Server and one instance
+          of TMS Server. All components of the infrastructure are shown including SysFera-DS processes, the JBoss web server used
+          to deploy the web services API, and the database server. The VISHNU Admin system is hosting the SysFera-DS/GoDIET
+          application that is used to launch all processes of the VISHNU infrastructure using ssh connections (red arrows). The
+          SysFera-DS LogCentral process is used to publish events when VISHNU elements are connected to or disconnected from the
+          VISHNU infrastructure. These events are sent to VISHNU IMS Servers that are subscribers to the LogCentral event flow.</para>
+        <figure>
+          <title>IMS deployment overview</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS Deployment Overview.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+       </section>
+       <section>
+        <title>IMS deployment diagram</title>
+        <para>This diagram shows the generic deployment pattern of VISHNU processes.
+          All IMS SeD processes must connect to the same VISHNU database.
+          The TMS and FMS SeD are optional and if present they can be used to fulfill some IMS services (e.g. load shedding).
+        </para>
+        <figure>
+          <title>IMS deployment diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_Deployment_Diagram.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+       </section>
+       <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus.
+          The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD.
+          All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and
+          the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice
+          of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all
+          IMS SeD connect to the same database.  The diagram shows here the communication paths. 
+          The IMS client can be client to the FMS or TMS SeD so they are presented on the diagram. 
+          Nevertheless, this call may only happen if a specific call to the load shed service happens on the machine 
+          where the FMS and/or TMS SeD are running.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+       </section>
+     </section>
   </chapter><!-- CHAPTER 2 : ARCHITECTURE -->
   
   <chapter><!-- CHAPTER 3 : MODELIZATION -->
