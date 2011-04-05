@@ -23,13 +23,6 @@ class JobProxy {
   /**
   * \param session The object which encapsulates the session information
   * \param machine The object which encapsulates the machine information
-  * \brief Constructor, raises an exception on error
-  */
-  explicit JobProxy(const SessionProxy& session,
-                    const MachineProxy& machine);
-  /**
-  * \param session The object which encapsulates the session information
-  * \param machine The object which encapsulates the machine information
   * \param job The job data structure
   * \brief Constructor, raises an exception on error
   */
