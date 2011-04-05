@@ -79,6 +79,22 @@ namespace vishnu {
   throw(UserException, SystemException);
 
   /**
+  * \brief The listJobs function gets a list of all submitted jobs
+  * \fn int listJobs(const std::string& sessionKey, const std::string& machineId, ListJobs& listOfJobs, const ListJobsOptions& options)
+  * \param sessionKey : The session key
+  * \param machineId : Machine hash key
+  * \param listOfJobs : The constructed object list of jobs
+  * \param options : Additional options for jobs listing
+  * \return int : an error code
+  */
+  int
+  listJobs(const std::string& sessionKey,
+           const std::string& machineId,
+           ListJobs& listOfJobs,
+           const ListJobsOptions& options)
+  throw(UserException, SystemException);
+
+  /**
   * \brief The getJobProgress function gets the progression status of jobs
   * \fn int getJobProgress(const std::string& sessionKey, const std::string& machineId, Progression& progress, const ProgressOptions& options)
   * \param sessionKey : The session key
@@ -106,22 +122,6 @@ namespace vishnu {
   listQueues(const std::string& sessionKey,
              const std::string& machineId,
              ListQueues& listofQueues)
-  throw(UserException, SystemException);
-
-  /**
-  * \brief The listJobs function gets a list of all submitted jobs
-  * \fn int listJobs(const std::string& sessionKey, const std::string& machineId, ListJobs& listOfJobs, const ListJobsOptions& options)
-  * \param sessionKey : The session key
-  * \param machineId : Machine hash key
-  * \param listOfJobs : The constructed object list of jobs
-  * \param options : Additional options for jobs listing
-  * \return int : an error code
-  */
-  int
-  listJobs(const std::string& sessionKey,
-           const std::string& machineId,
-           ListJobs& listOfJobs,
-           const ListJobsOptions& options)
   throw(UserException, SystemException);
 
   /**
