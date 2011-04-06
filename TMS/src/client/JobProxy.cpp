@@ -4,18 +4,18 @@
 #include "JobProxy.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
-
+#include "emfTMSUtils.hpp"
 
 /**
 * \param session The object which encapsulates the session information
-* \param machine The object which encapsulates the machine information
+* \param machineId The id of the machine
 * \param job The job data structure
 * \brief Constructor, raises an exception on error
 */
 JobProxy::JobProxy(const SessionProxy& session,
-                   const MachineProxy& machine,
+                   const std::string & machineId,
                    TMS_Data::Job& job)
-  :msessionProxy(session), mmachineProxy(machine), mjob(job) {
+  :msessionProxy(session), mmachineId(machineId), mjob(job) {
 
 }
 
@@ -34,7 +34,7 @@ JobProxy::submitJob(const TMS_Data::SubmitOptions& options) {
   char* jobInString;
   char* errorInfo;
   std::string serviceName = "jobSubmit_";
-  serviceName.append(mmachineProxy.getData().getMachineId());
+  serviceName.append(mmachineId);
 
   std::string msg = "call of function diet_string_set is rejected ";
 
@@ -47,8 +47,8 @@ JobProxy::submitJob(const TMS_Data::SubmitOptions& options) {
     raiseDietMsgException(msg);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineProxy.getData().getMachineId().c_str()), DIET_VOLATILE)) {
-    msg += "with machineId parameter "+mmachineProxy.getData().getMachineId();
+  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+    msg += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msg);
   }
 
@@ -95,8 +95,12 @@ JobProxy::submitJob(const TMS_Data::SubmitOptions& options) {
 
   TMS_Data::Job_ptr job_ptr;
 
+
   //To parse User object serialized
-  parseEmfObject(std::string(jobInString), job_ptr, "Error by receiving Job object serialized");
+  if (!vishnu::parseTMSEmfObject(std::string(jobInString), job_ptr, "Error by receiving Job object serialized")) {
+    throw UserException(ERRCODE_INVALID_PARAM);
+  }
+
   mjob = *job_ptr;
 
   return 0;
@@ -114,7 +118,7 @@ JobProxy::cancelJob() {
   char* jobToString;
   char* errorInfo;
   std::string serviceName = "jobCancel_";
-  serviceName.append(mmachineProxy.getData().getMachineId());
+  serviceName.append(mmachineId);
 
   std::string msg = "call of function diet_string_set is rejected ";
 
@@ -127,8 +131,8 @@ JobProxy::cancelJob() {
     raiseDietMsgException(msg);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineProxy.getData().getMachineId().c_str()), DIET_VOLATILE)) {
-    msg += "with machineId parameter "+mmachineProxy.getData().getMachineId();
+  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+    msg += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msg);
   }
 

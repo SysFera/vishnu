@@ -44,13 +44,13 @@
       <title>Document structure</title>
       <para><itemizedlist>
         <listitem>
-          <para>Chapter 1 contains a brief overview of the document content.</para>
+          <para>Chapter 1 contains a brief overview of the document's content.</para>
         </listitem>
         <listitem>
-          <para>Chapter 2 contains a description of the IMS system architecture.</para>
+          <para>Chapter 2 contains a description of the IMS module's architecture.</para>
         </listitem>
         <listitem>
-          <para>Chapter 3 contains an overview of the IMS system modelization.</para>
+          <para>Chapter 3 contains an overview of the IMS module's modelization.</para>
         </listitem>
         <listitem>
           <para>Chapter 4 describes the internal API used for remote procedure calls through SysFera-DS.</para>
@@ -89,7 +89,7 @@
             <para><emphasis role="bold">API</emphasis>: Application Programming Interface</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
+            <para><emphasis role="bold">CLI</emphasis>: Command Line Interface</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">DB</emphasis>: Database</para>
@@ -114,25 +114,31 @@
             <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">DIET</emphasis>: component of the SysFera-DS solution that provides the communication layer between agents that are part of the VISHNU infrastructure.</para>
+            <para><emphasis role="bold">DIET</emphasis>: component of the SysFera-DS solution that provides the communication layer between the agents that are part of the VISHNU infrastructure.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all processes of the VISHNU infrastructure.</para>
+            <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all the processes of the VISHNU infrastructure.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+            <para><emphasis role="bold">MasterAgent</emphasis>: DIET process, linking the client and the server</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
+            <para><emphasis role="bold">omniNames</emphasis>: CORBA process, needed by DIET</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon, a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: class of data (C++ Class) whose instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU Process</emphasis>: a process running permanently that provides VISHNU services. This is a sub-class of SeD.</para>
+            <para><emphasis role="bold">VISHNU Process</emphasis>: process, running permanently, that provides VISHNU services. This is a sub-class of SeD.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -143,47 +149,46 @@
   <chapter>
     <title>IMS System Architecture</title>
     <section>
-      <title>IMS software components</title>
-      <para>We present in this section a description of the IMS module in terms of software components.
-	In addition we show the dependencies between components to highlight their reuse. These components follow a client/server model.
-        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
+      <title>IMS software Components</title>
+      <para>In this section, we present a description of the IMS module's software components.
+	In addition we detail the dependencies between the components to show how to reuse them. These components follow a client/server model.
+        We present the different software layers, from services (provided directly to the user) to the database (used by the server). 
 	The IMS client and server packages have been split into seven different interrelated components. The diagrams shown in sections 2.1.1
-        and 2.1.2 describe the relationships between these components. The definitions of the components are the following:
+        and 2.1.2 describe the relationships between these components. The definitions of the components are as follows:
        </para>
       <para>
         <itemizedlist>
           <listitem>
-            <para><emphasis role="bold">External API</emphasis>
-	     contains precisely the services provided to the user as defined in the detailed specifications.
-	     We're on the client side.
+            <para>the <emphasis role="bold">External API</emphasis>
+	     contains the services provided to the user, as defined in the detailed specifications.
+	     It is used client-side.
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Internal API</emphasis>
-	     is the interface of the server side, used by the IMS Client components. It provides a set of services that are remotely accessible
-             through the SysFera-DS middleware. This layer does not contain any business logic and uses directly the IMS SeD for service implementation.
+            <para>the <emphasis role="bold">Internal API</emphasis>
+	     is the server-side interface used by the IMS Client components. It provides a set of services that are remotely accessible
+             through the SysFera-DS middleware. This layer does not contain any business logic and uses the IMS SeD to implement the service.
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS Client</emphasis>
-	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis role="bold">IMS SeD</emphasis>.
+            <para>the <emphasis role="bold">IMS Client</emphasis>
+	    contains intermediate (proxy) classes providing remote access to the business objects of the <emphasis role="bold">IMS SeD</emphasis>.
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS Server</emphasis>
-	     provides the business logic of the IMS module on the server side. The set of classes in this component cover all the IMS objects
-             that have a proxy class that publishes services to the external API, and additionnally some classes that provide internal
-             mechanisms of the IMS module.
+            <para>the <emphasis role="bold">IMS Server</emphasis>
+	     provides the business logic of the IMS module on the server's side. The set of classes in this component cover all the IMS objects
+             that have a proxy class that publishes services to the external API, in addition to some classes that provide the IMS module's internal mechanisms.
 	    </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
+            <para>the <emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
+            <para>the <emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
           </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">VISHNU Database</emphasis> stores all data handled by the IMS SeD.
+	    <para>the <emphasis role="bold">VISHNU Database</emphasis> stores all data handled by the IMS SeD.
 	    </para>
 	  </listitem>
         </itemizedlist>
@@ -218,10 +223,10 @@
     
     <section>
       <title>IMS package dependencies</title>
-      <para>In order to install the IMS service on the infrastructure, the following tables list all the packages that must be
+      <para>In order to install the IMS service on the infrastructure, some packages are required. The following tables list all the packages that must be
         installed on the IMS client and on the IMS server hosts:</para>
         <section>
-          <title>IMS Client required packages</title>
+          <title>IMS Client - required packages</title>
           <informaltable>
             <tgroup cols="2">
               <colspec colwidth="8.5cm"/>
@@ -243,11 +248,11 @@
                 </row>
                 <row>
                   <entry><para>VISHNU TMS client</para></entry>
-                  <entry><para>VISHNU Client Package for tasks management</para></entry>
+                  <entry><para>VISHNU Client Package for task management</para></entry>
                 </row>
                 <row>
                   <entry><para>VISHNU FMS client</para></entry>
-                  <entry><para>VISHNU Client Package for files management</para></entry>
+                  <entry><para>VISHNU Client Package for file management</para></entry>
                 </row>
                 <row>
                   <entry><para>Python (optional)</para></entry>
@@ -263,7 +268,7 @@
         </section>
         
         <section>
-          <title>IMS Server required packages</title>
+          <title>IMS Server - required packages</title>
           <informaltable>
             <tgroup cols="2">
               <colspec colwidth="8.5cm"/>
@@ -298,44 +303,44 @@
     </section>
 
     <section>
-      <title>Deployment aspects of IMS</title>
+      <title>IMS Deployment</title>
        <para>
-        We explain here how the VISHNU IMS module will be deployed on a physical infrastructure as illustrated in figures 2.3 and 2.4.
+        This section explains how the VISHNU IMS module will be deployed on a physical infrastructure, as illustrated in figures 2.3 and 2.4.
         Each box in the figures represents an operating system in which a component or a set of components are running as processes.
-        For an overview of all components of the VISHNU infrastructure, please refer to document [D1.1g].
-        The IMS module components are the following: 
+        For an overview of all the components of the VISHNU infrastructure, please refer to document [D1.1g].
+        The IMS module components are: 
 	<itemizedlist>
 	  <listitem>
-	    <para><emphasis role="bold">IMS SeD</emphasis> is the process that provides all IMS internal services.
+	    <para><emphasis role="bold">IMS SeD</emphasis>, the process that provides all IMS internal services.
             This process is required on any host of the VISHNU infrastructure where VISHNU processes have to be monitored. Without an IMS process running on the 
-            host it won't be possible to use IMS services on that host, i.e. restart processes, get system information, do loadshedding, etc.</para>
+            host, IMS services (e.g., restart processes, get system information, do load shedding) will not be available on that host.</para>
 	  </listitem>
 	  <listitem>
-	    <para><emphasis role="bold">Client host</emphasis> is the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
+	    <para><emphasis role="bold">Client host</emphasis>, the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
             It contains all the client components required to make an IMS service request.
 	    </para>
 	  </listitem>
           <listitem>
-            <para><emphasis role="bold">LogCentral</emphasis> is a SysFera-DS process that is necessary to monitor the DIET platform. This process is part of DIET
-	      in the SysFera-DS package. It can be deployed on any host that can connect through CORBA to the omniNames and DIET MasterAgent.
-              To simplify the deployment, it can be running on the same machine as these processes.
+            <para><emphasis role="bold">LogCentral</emphasis>, a SysFera-DS process that is necessary to monitor the DIET platform. This process is part of DIET
+	      in the SysFera-DS package. It can be deployed on any host that can connect to the omniNames and to the DIET MasterAgent using CORBA.
+              To simplify the deployment, it can be run on the same machine as these processes.
             </para>
           </listitem>
            <listitem>
-            <para><emphasis role="bold">SysFera-DS Bus </emphasis> is the specific software layer that ensures the communication between client hosts and server hosts.
+            <para><emphasis role="bold">SysFera-DS Bus </emphasis>, the specific software layer that ensures the communication between client hosts and server hosts.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">VISHNU database</emphasis>: this component represents a unique instance of an Oracle or PostgreSQL database.
+            <para><emphasis role="bold">VISHNU database</emphasis>, this component represents a unique instance of an Oracle or PostgreSQL database.
             </para>
           </listitem>
 	 </itemizedlist>
        </para>
        <section>
         <title>IMS deployment overview</title>
-        <para>The following diagram shows an example of VISHNU infrastructure with one instance of FMS Server and one instance
-          of TMS Server. All components of the infrastructure are shown including SysFera-DS processes, the JBoss web server used
-          to deploy the web services API, and the database server. The VISHNU Admin system is hosting the SysFera-DS/GoDIET
+        <para>The following diagram shows an example of the VISHNU infrastructure with one instance of FMS Server and one instance
+          of TMS Server. All components of the infrastructure are shown including the SysFera-DS processes, the JBoss web server used
+          to deploy the web services API, and the database server. The VISHNU Admin system hosts the SysFera-DS/GoDIET
           application that is used to launch all processes of the VISHNU infrastructure using ssh connections (red arrows). The
           SysFera-DS LogCentral process is used to publish events when VISHNU elements are connected to or disconnected from the
           VISHNU infrastructure. These events are sent to VISHNU IMS Servers that are subscribers to the LogCentral event flow.</para>
@@ -353,7 +358,7 @@
         <title>IMS deployment diagram</title>
         <para>This diagram shows the generic deployment pattern of VISHNU processes.
           All IMS SeD processes must connect to the same VISHNU database.
-          The TMS and FMS SeD are optional and if present they can be used to fulfill some IMS services (e.g. load shedding).
+          The TMS and FMS SeD are optional; if present, they can be used to fulfill some IMS services (e.g. load shedding).
         </para>
         <figure>
           <title>IMS deployment diagram</title>
@@ -371,10 +376,10 @@
           The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD.
           All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and
           the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice
-          of one IMS SeD in the case of  several available IMS SeD. The choice will be transparent to the user as all
-          IMS SeD connect to the same database.  The diagram shows here the communication paths. 
-          The IMS client can be client to the FMS or TMS SeD so they are presented on the diagram. 
-          Nevertheless, this call may only happen if a specific call to the load shed service happens on the machine 
+          of one IMS SeD in the case of several available IMS SeD. The choice will be transparent to the user as all
+          IMS SeD connect to the same database.
+          The IMS client can be client of the FMS or TMS SeD so they are presented on the diagram. 
+          However, this call may only happen if a specific call to the load-shedding service is made on the machine 
           where the FMS and/or TMS SeD are running.</para>
         <figure>
           <title>SysFera-DS Bus Details</title>
@@ -403,36 +408,36 @@
         </mediaobject>
       </figure>
       <para>
-	The meaning of the roles (using the references)
+	Meaning of the roles presented in the diagram:
 	<itemizedlist>
-	  <listitem><para>A: The external API corresponds to the functionnalities that are to be called from the IMS client</para></listitem>
-	  <listitem><para>B: The history maker and notification corresponds to the function of getting the state of the machine and saving it in the database automatically. Moreover it notifies the admin if the state has reached a threshold for the machine.</para></listitem>
-	  <listitem><para>C: LogTool corresponds to the part of the SeD that will be linked to the log central in the publisher/subscriber way and that gets the information of a new sed or a disconnexion on the machine the IMS SeD is over.</para></listitem>
-	  <listitem><para>D: Process Manager is responsible for relaunching a dead SeD, stopping a SeD or making the load shedding.</para></listitem>
-	  <listitem><para>E: Client TMS or FMS that will have new functionalities to call the TMS/FMS SeD</para></listitem>
-	  <listitem><para>F: Modification of the SeD to hava them save their parameters when launched, it enables to restart the SeD with the same parameters.</para></listitem>
+	  <listitem><para>A: The external API corresponds to the functionalities that called by the IMS client</para></listitem>
+	  <listitem><para>B: The function of HistoryMaker is to get the state of the machine and to automatically save it in the database. The admin is then notified if the state has reached a threshold for the machine.</para></listitem>
+	  <listitem><para>C: LogTool corresponds to the part of the SeD that will be linked to LogCentral, following the publisher/subscriber model. It receives information when a SeD connects to or disconnects from the machine on which the IMS SeD is running.</para></listitem>
+	  <listitem><para>D: ProcessManager is responsible for relaunching a dead SeD, stopping a SeD or making the load shedding.</para></listitem>
+	  <listitem><para>E: new functionalities must be added to the TMS/FMS client to allow sending commands to the TMS/FMS SeD.</para></listitem>
+	  <listitem><para>F: modification of the SeD to hava them save their parameters when launched, it enables to restart the SeD with the same parameters.</para></listitem>
 	</itemizedlist>
       </para>
     </section>
     <section>
-      <title>Roles description</title>
+      <title>Role description</title>
       <para>
 	The IMS module can play eight different roles. For each role, there is a reference to the above functional figure with the letter corresponding to the functional element.
 	<itemizedlist>
-	  <listitem><para>The hard load shedding : It means the death of all the VISHNU processes on a machine. These processes will not be automatically relauched. Only the GoDiet tool, made to launch the processes can make it. Reference: D.</para></listitem>
-	  <listitem><para>The soft load shedding : It means the end of the current jobs (submitted using TMS) and file transfers (made with FMS) on a machine. The stopped commands are set to fail in the database. Reference: E+D</para></listitem>
-	  <listitem><para>The export of the commands in a format : It generates a shell script containing all the recorded commands made during a session. Commands such as connect or change password cannot be exported. Because the server does not know the user password, the script cannot be automatically executed, a connect call must be added. Reference: A</para></listitem>
-	  <listitem><para>The live monitor : It means getting the current state of the machines. Reference: A</para></listitem>
-	  <listitem><para>The delayed monitor : It means getting past states of a machine and automatically record the states of the machine with the time passing. Reference: A+B</para></listitem>
-	  <listitem><para>The notification monitor : It means to notify automatically the administrator of an abnormal behaviour of the VISHNU system. Reference: B</para></listitem>
-	  <listitem><para>The automatic restart : Once a SeD is down, the IMS SeD is informed of it and it tries to relaunch it. If an agent is down, it cannot be the IMS SeD that restart it automatically but GoDIET will make it. Reference: A+C</para></listitem>
-	  <listitem><para>The manual restart : It can be made using GoDIET, but it is also available throught the IMS API. Only VISHNU SeD can be relaunched throught the API. Reference: F+D</para></listitem>
+	  <listitem><para>Hard load shedding: all the VISHNU processes on a machine are killed. These processes will not be automatically relauched. Only the GoDiet tool can relaunch them. Reference: D.</para></listitem>
+	  <listitem><para>The soft load shedding: the current jobs (submitted using TMS) and file transfers (made with FMS) on a machine are ended. The stopped commands are flagged as failed, in the database. Reference: E+D</para></listitem>
+	  <listitem><para>Export of the commands in a given format: it generates a shell script containing all commands executed during a session. Commands such as connect or change password cannot be exported: because the server does not know the user's password, the script cannot be executed automatically, so a connect call must be added. Reference: A</para></listitem>
+	  <listitem><para>Live monitoring: getting the current state of the machines. Reference: A</para></listitem>
+	  <listitem><para>Delayed monitor: getting past states of a machine and automatically recording the states of the machine as time passes. Reference: A + B</para></listitem>
+	  <listitem><para>Notification during monitoring: automatically notifying the administrator about an abnormal behaviour of the VISHNU system. Reference: B</para></listitem>
+	  <listitem><para>Automatic restart: Once a SeD is down, the IMS SeD is informed and tries to relaunch it. If an agent is down, it cannot be restarted by the IMS SeD; GoDIET will do it. Reference: A + C</para></listitem>
+	  <listitem><para>Manual restart: can be made using GoDIET, but it is also available throught the IMS API. Only a VISHNU SeD can be relaunched throught the API. Reference: F + D</para></listitem>
 	</itemizedlist>
       </para>
     </section>
     <section>
       <title>Classes and roles</title>
-      <para>The following figure presents the links between the functional roles and the classes corresponding. There are two main groups of classes. The DATA, that correspond to the external API and that deal with the database, and the CONTROLER that only interact with the DATA classes</para>
+      <para>The following figure presents the links between the functional roles and corresponding classes. There are two main groups of classes. The DATA classes, that correspond to the external API and deal with the database, and the CONTROLER classes that only interact with the DATA classes</para>
       <figure>
         <title>Classes implementing the roles</title>
         <mediaobject>
@@ -527,7 +532,7 @@
     <title>Internal class and data structures</title>
     <section>
       <title>Introduction</title>
-      <para>This chapter introduces the details of the implementation of the different components described in chapter 2.
+      <para>This chapter introduces the implementation of the different components described in chapter 2.
         It is composed of three sections:
       </para>
       <para>
@@ -549,7 +554,7 @@
     </section>
     <section>
       <title>IMS Proxy ClassDiagram</title>
-      <para>The following figure presents the class diagram on the client side</para>
+      <para>The following figure presents the class diagram on the client's side</para>
       <figure>
         <title>IMS Proxy ClassDiagram</title>
         <mediaobject>
@@ -562,7 +567,7 @@
     </section>
     <section>
       <title>IMS Server ClassDiagram</title>
-      <para>The following figure presents the class diagram on the server side</para>
+      <para>The following figure presents the class diagram on the server's side</para>
       <figure>
         <title>IMS Server ClassDiagram</title>
         <mediaobject>
@@ -575,7 +580,7 @@
     </section>
     <section>
       <title>IMS Datatype ClassDiagram</title>
-      <para>The following figure presents the links between the datatypes</para>
+      <para>The following figure presents the links between the datatypes.</para>
       <figure>
         <title>IMS Datatype ClassDiagram</title>
         <mediaobject>
@@ -587,6 +592,5 @@
       </figure>
     </section>
   </chapter><!-- END CHAPTER 5 : CLASSES AND DATA -->
-  
 </book>
   
