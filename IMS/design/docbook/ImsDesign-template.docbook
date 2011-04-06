@@ -123,6 +123,12 @@
             <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">MasterAgent</emphasis>: DIET process, linking the client and the server</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">omniNames</emphasis>: CORBA process, needed by DIET</para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">SeD</emphasis>: A Server Daemon, a SysFera-DS agent that provides services through the SysFera-DS API.</para>
           </listitem>
           <listitem>
