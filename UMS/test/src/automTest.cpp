@@ -7,12 +7,12 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include <iostream>
-//#include "fixtures.hpp"
+#include "UMS_fixtures.hpp"
 #include "api_ums.hpp"
 #include "config.h"
 
-BOOST_AUTO_TEST_SUITE( test_suite )
-//BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
+//BOOST_AUTO_TEST_SUITE( test_suite )
+BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
 using namespace std;
 using namespace UMS_Data;
 using namespace vishnu;
