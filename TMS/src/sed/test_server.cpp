@@ -11,7 +11,7 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 
 #include "TMS_Data.hpp"
-
+#include "emfTMSUtils.hpp"
 
 #include "DIET_server.h"
 
@@ -43,7 +43,7 @@ operator<<(std::ostream& os, const TMS_Data::SubmitOptions_ptr& options) {
     os << "==============SubmitOptions content ================" << endl;
     if(name.size()!=0) os << setw(25) << right << "name: " << name  << endl;
     if(queuename.size()!=0) os << setw(25) << right << "queuename: " << queuename  << endl;
-    if(wallTime!=0) os << setw(25) << right << "wallTime: " << wallTime  << endl;
+    if(wallTime!=-1) os << setw(25) << right << "wallTime: " << wallTime  << endl;
     if(nbCpu!=-1) os << setw(25) << right << "nbCpu: " << nbCpu  << endl;
     if(nbNodesAndCpuPerNode!=-1) os << setw(25) << right << "nbNodesAndCpuPerNode: " << nbNodesAndCpuPerNode  << endl;
     if(outputPath.size()!=0) os << setw(25) << right << "outputPath: " << outputPath  << endl;
@@ -96,7 +96,8 @@ solve_submitJob(diet_profile_t* pb)
 
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
   //To parse the object serialized
-  if(!parseTMSDataObject(std::string(options), submitOptions)) {
+
+  if(!parseTMSEmfObject(std::string(options), submitOptions)) {
      cout << "parseEmfObject returns NULL...." << endl;
      return 1;
   }

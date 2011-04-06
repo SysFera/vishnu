@@ -18,6 +18,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${TMS_UTILS_DIR}
 )
 
 #add_executable(tmssed
