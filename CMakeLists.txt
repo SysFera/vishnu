@@ -119,3 +119,7 @@ endif (COMPILE_UMS)
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
 endif (COMPILE_TMS)
+
+if (BUILD_TEST)
+  add_subdirectory(core/test)
+endif (BUILD_TEST)
