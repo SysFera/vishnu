@@ -16,19 +16,13 @@ include_directories(
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${SED_SOURCE_DIR}
+  ${TORQUE_INCLUDE_DIR}
 )
 
 
 add_library(tms-server STATIC
-  #SessionServer.cpp
-  # UserServer.cpp
-  # MachineClientServer.cpp
-  # OptionValueServer.cpp
-  # MachineServer.cpp
-  # LocalAccountServer.cpp
-  # ConfigurationServer.cpp
-  # CommandServer.cpp
-  # ListUsersServer.cpp
+   BatchServer
+   TorqueServer
 )
 
 target_link_libraries(tms-server
@@ -36,6 +30,7 @@ target_link_libraries(tms-server
   ${DIET_SERVER_LIB}
   ${Boost_LIBRARIES}
   ${LIBCRYPT_LIB}
+  ${TORQUE_LIB}
   emf4cpp-TMS_Data
   database-vishnu
   exception-vishnu
