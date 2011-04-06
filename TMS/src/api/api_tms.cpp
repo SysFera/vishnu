@@ -18,7 +18,7 @@
   * \return int : an error code
   */
 int
-submitJob(const std::string& sessionKey,
+vishnu::submitJob(const std::string& sessionKey,
           const std::string& machineId,
           const std::string& scriptFilePath,
           Job& jobInfo,
@@ -48,7 +48,7 @@ throw(UserException, SystemException) {
 * \return int : an error code
 */
 int
-cancelJob(const std::string& sessionKey,
+vishnu::cancelJob(const std::string& sessionKey,
           const std::string& machineId,
           const std::string& jobId,
           std::string& infoMsg)
@@ -77,7 +77,7 @@ throw(UserException, SystemException) {
 */
 
 int
-getJobInfo(const std::string& sessionKey,
+vishnu::getJobInfo(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& jobId,
             Job_ptr& jobInfos)
@@ -113,7 +113,7 @@ throw(UserException, SystemException) {
 * \return int : an error code
 */
 int
-listJobs(const std::string& sessionKey,
+vishnu::listJobs(const std::string& sessionKey,
           const std::string& machineId,
           ListJobs& listOfJobs,
           const ListJobsOptions& options)

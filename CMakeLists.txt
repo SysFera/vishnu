@@ -88,10 +88,11 @@ set(UTILVISHNU_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/core/src/utils)
 set(TMS_EMF_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/utils/emfdata)
 set(TMS_DATA_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/utils/emfdata/TMS_Data)
 set(TMS_CLIENT_PROXY_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/client)
-set(TMS_SERVER_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/server)
-set(TMS_API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/api)
-set(TMS_CLI_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/cli)
-set(TMS_SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/UMS/src/sed)
+set(TMS_SERVER_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/server)
+set(TMS_API_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/api)
+set(TMS_CLI_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/cli)
+set(TMS_SED_SOURCE_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/sed)
+set(TMS_UTILS_DIR ${UserManagementSystem_SOURCE_DIR}/TMS/src/utils/)
 
 
 # gather executables and libraries under one roof
