@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title></title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="fr-FR" class="article" lang="fr-FR"><div class="titlepage"><hr /></div><div class="toc"><p><b>Table des matières</b></p><dl><dt><span class="sect1"><a href="#id2511158">        Présentation du document</a></span></dt><dd><dl><dt><span class="sect2"><a href="#id2511161">        Objectifs du document</a></span></dt><dt><span class="sect2"><a href="#id2511213">        Structure du document</a></span></dt><dt><span class="sect2"><a href="#id2510413">        Glossaire, abréviations et acronymes</a></span></dt></dl></dd><dt><span class="sect1"><a href="#id2510543">  Environnements et outils de tests</a></span></dt><dd><dl><dt><span class="sect2"><a href="#id2510546"> Environnements de tests</a></span></dt><dt><span class="sect2"><a href="#id2510632"> Outils de tests </a></span></dt></dl></dd><dt><span class="sect1"><a href="#id2515335">  Cycle de vie du test</a></span></dt><dt><span class="sect1"><a href="#id2515355"> Liste des tests</a></span></dt><dd><dl><dt><span class="sect2"><a href="#id2515358">        Tests fonctionnels</a></span></dt><dt><span class="sect2"><a href="#id2562588"> Tests de stress        </a></span></dt><dt><span class="sect2"><a href="#id2562795"> Contrôle des performances</a></span></dt><dt><span class="sect2"><a href="#id2563087"> Tests de charge</a></span></dt><dt><span class="sect2"><a href="#id2563237"> Contrôle de la qualité du code</a></span></dt><dt><span class="sect2"><a href="#id2563484">  Tests de compilation et d'installation</a></span></dt><dt><span class="sect2"><a href="#id2563734"></a></span></dt><dt><span class="sect2"><a href="#id2563736"> Contrôle de la documentation utilisateur</a></span></dt></dl></dd></dl></div><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
+               <p>VISHNU_D5_1b-IMS-PlanTests<img src="embedded:images1" />
+               </p>
+            </td><td>
+               <p>Politique de tests du module IMS</p>
+            </td></tr></tbody></table></div><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>PROJET VISHNU</p><p></p><p>DOCUMENTS DE REFERENCE</p><p></p><p></p><p></p><p></p><p>PLAN</p><p>DE</p><p></p><p>TESTS</p><p></p><p></p><p></p><p></p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
+               <p>Ref. document</p>
+            </td><td>
+               <p>VISHNU_D5_1b-IMS-PlanTests</p>
+            </td></tr><tr><td>
+               <p>Objet du document</p>
+            </td><td>
+               <p>Référentiel du plan de tests du module IMS du projet Vishnu</p>
+            </td></tr><tr><td>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr></tbody></table></div><p></p><p>TABLE DES REVISIONS</p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Version</p>
+            </td><td>
+               <p>Date</p>
+            </td><td>
+               <p>Modifications</p>
+            </td><td>
+               <p>Auteur</p>
+            </td></tr><tr><td>
+               <p>V1.0</p>
+            </td><td>
+               <p>06/04/11</p>
+            </td><td>
+               <p>Version initiale</p>
+            </td><td>
+               <p>Ibrahima Cissé, Daouda Traoré, Benjamin Isnard,  Eugène Pamba Capo-Chichi</p>
+            </td></tr></tbody></table></div><p></p><p>VALIDATION DU DOCUMENT</p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
+               <p>Date</p>
+            </td><td>
+               <p>Personne</p>
+            </td></tr><tr><td>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr></tbody></table></div><p></p><p>REFERENCES</p><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /></colgroup><tbody><tr><td>
+               <p>Ref. document</p>
+            </td><td>
+               <p>Description</p>
+            </td></tr><tr><td>
+               <p>VISHNU_D1_1e-POL-TESTS</p>
+            </td><td>
+               <p>Politique de tests du projet VISHNU </p>
+            </td></tr><tr><td>
+               <p>VISHNU_D1_1a-SPECSGEN</p>
+            </td><td>
+               <p>Spécifications générales du projet VISHNU</p>
+            </td></tr><tr><td>
+               <p>VISHNU_D1_1b-STB</p>
+            </td><td>
+               <p>Spécifications Techniques des besoins</p>
+            </td></tr><tr><td>
+               <p>VISHNU_D1_1g-ARCH</p>
+            </td><td>
+               <p>VISHNU Technical  Architecture</p>
+            </td></tr></tbody></table></div><p></p><div class="sect1" title="        Présentation du document"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2511158"></a>        Présentation du document</h2></div></div></div><div class="sect2" title="        Objectifs du document"><div class="titlepage"><div><div><h3 class="title"><a id="id2511161"></a>        Objectifs du document</h3></div></div></div><p>Les objectifs de ce document sont les suivants :</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Présenter les fonctionnalités du module IMS à tester.</p></li><li class="listitem"><p>Présenter les différents types de tests  permettant  de valider les cas d'utilisation de chaque fonctionnalité du module IMS.</p></li><li class="listitem"><p>Présenter les méthodes et outils utilisés pour ces tests.</p></li><li class="listitem"><p>Donner des détails de l'environnement de test</p></li></ol></div></div><div class="sect2" title="        Structure du document"><div class="titlepage"><div><div><h3 class="title"><a id="id2511213"></a>        Structure du document</h3></div></div></div><p>Le chapitre 1 présente le document.</p><p>Le chapitre 2 présente les environnements et outils de tests.</p><p>La chapitre 3 décrit la liste des tests qui s'appliquent aux fonctionnalités à tester.</p><p>La chapitre 4 présente les outils utilisés pour ces tests.</p></div><div class="sect2" title="        Glossaire, abréviations et acronymes"><div class="titlepage"><div><div><h3 class="title"><a id="id2510413"></a>        Glossaire, abréviations et acronymes</h3></div></div></div><div class="sect3" title="        Glossaire"><div class="titlepage"><div><div><h4 class="title"><a id="id2510418"></a>        Glossaire</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Script de test : c'est un programme qui contient les instructions permettant de réaliser les tests.</p></li><li class="listitem"><p>Certificat : correspond à la « session key » définie dans [SPECSGEN].</p></li></ol></div></div><div class="sect3" title="        Acronymes"><div class="titlepage"><div><div><h4 class="title"><a id="id2510447"></a>        Acronymes</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>STB : Spécification Technique des Besoins</p></li><li class="listitem"><p>DSG : Document de Spécification générale</p></li><li class="listitem"><p>DSD : Document de Spécification Détaillées</p></li><li class="listitem"><p>API : Application Programming Interface (Interface de programmation d'applications)</p></li><li class="listitem"><p>MPI : Message Passing Interface</p><p> </p></li></ol></div></div><div class="sect3" title="        Abréviations"><div class="titlepage"><div><div><h4 class="title"><a id="id2510501"></a>        Abréviations</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Id.         Identifiant</p></li><li class="listitem"><p>Réf.        Référence</p></li><li class="listitem"><p>Rel.#        Numéro de release/version</p></li><li class="listitem"><p>Resp.        Responsable(s)</p></li></ol></div></div></div></div><div class="sect1" title="  Environnements et outils de tests"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2510543"></a>  Environnements et outils de tests</h2></div></div></div><div class="sect2" title=" Environnements de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id2510546"></a> Environnements de tests</h3></div></div></div><p>Pour ces tests, nous allons utiliser l'environnement de tests suivants avec des systèmes dédiés aux tests:</p><p></p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Système d'exploitation : c'est le système Linux décrit dans [STB] qui sera installé sur toutes les machines clientes et serveurs.</p></li><li class="listitem"><p>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</p></li><li class="listitem"><p> Nombre de machines serveurs : deux serveurs IMS décrit dans [ARCH] .</p></li><li class="listitem"><p>Un serveur SysFera-DS dédié décrit dans [ARCH].</p></li><li class="listitem"><p>Un serveur UMS décrit dans [ARCH].</p></li><li class="listitem"><p>Un serveur TMS et FMS décrit dans [ARCH]</p></li><li class="listitem"><p>Le module LogService de SysFera-DS décrit dans [STB]. </p></li></ol></div><p>       </p></div><div class="sect2" title=" Outils de tests"><div class="titlepage"><div><div><h3 class="title"><a id="id2510632"></a> Outils de tests </h3></div></div></div><p>Les outils suivants seront utilisés pour les tests :</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Hudson (serveur d'intégration)  sera utilisé pour les tests d'intégration continue (compilation, installation).</p></li><li class="listitem"><p>La librairie Boost test sera utilisée pour la réalisation des tests unitaires en C++.</p></li><li class="listitem"><p>Le framework JUnit sera utilisé pour  la réalisation des tests unitaires en JAVA.</p></li><li class="listitem"><p>Des scripts Python seront utilisés pour la réalisation des tests unitaires en Python.</p></li><li class="listitem"><p>Des scripts SHELL BASH seront utilisés pour la réalisation des tests unitaires de la ligne de commande.</p></li><li class="listitem"><p>Squore et Logiscope seront utilisés pour la qualité du code.</p></li><li class="listitem"><p>Valgrind sera utilisé pour la détection de fuite mémoire.</p></li></ol></div></div></div><div class="sect1" title="  Cycle de vie du test"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2515335"></a>  Cycle de vie du test</h2></div></div></div><p>Le schéma suivant donne une vue du plan de test sur un test à réaliser jusqu'à la réalisation du  </p><p>rapport de test :</p><p></p><p></p><p></p></div><div class="sect1" title=" Liste des tests"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2515355"></a> Liste des tests</h2></div></div></div><div class="sect2" title="        Tests fonctionnels"><div class="titlepage"><div><div><h3 class="title"><a id="id2515358"></a>        Tests fonctionnels</h3></div></div></div><p>Les tests fonctionnels ou tests de boites noires permettent à partir des données en entrée d'observer les réactions du logiciel à tester.</p><p>Les fonctionnalités sont classées par catégories de tests :</p><p></p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Catégorie 1 : comprend la fonctionnalité permettant d'exporter toutes les commandes ayant été exécutées durant une session: exportCommands.</p></li><li class="listitem"><p>Catégorie 2 : regroupe les fonctionnalités permettant d'agir physiquement sur un composant : </p><p>loadShed, stop, restart. </p></li><li class="listitem"><p>Catégorie 3 : comprend le service permettant de consulter l'ensemble des processus VISHNU : getProcesses.</p></li><li class="listitem"><p>Catégorie 4 :  regroupe les fonctionnalités permettant la consultation et modification des informations système : getMetricCurrentValue, getMetricHistory, getSystemThreshold, setSystemThreshold, getUpdateFrequency, setUpdateFrequency, defineUserIdentifier, defineMachineIdentifier, setSystemInfo,  getSystemInfo, defineJobIdentifier, defineTransferIdentifier.</p></li></ol></div><p>Chaque test fonctionnel sera réalisé en utilisant chacune des interfaces d'accès suivantes : fonctions API/C++ et API/Python, ligne de commande utilisateur et API web services.</p><p>Nous allons dans cette section présenter les différentes stratégies de tests en utilisant des programmes exécutables ou des fonctions de l'API IMS puis en observant les résultats obtenus. Les deux conditions à vérifier sont :</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Est ce que le programme réalise les fonctions attendues en accord avec les spécifications?</p></li><li class="listitem"><p>Est ce que le programme fonctionne correctement ?</p></li></ol></div><div class="sect3" title=" Identifiant de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2515482"></a> Identifiant de tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: &lt;ID DSG&gt;-[B|E]:&lt;NOM_TEST&gt;-&lt;INTERFACE&gt; où 'ID DSG' est l'identifiant du cas d'utilisation dans le document [SDG] , 'B' la séquence de base (exécution du cas d'utilisation avec des paramètres valides), 'E' la séquence d'exception (comportement du cas d'utilisation en cas d'erreurs),  'NOM_TEST' le nom du test décrit dans [SDG] et 'INTERFACE' les différents codes des interfaces utilisées par VISHNU : fonctions API/C++(CPP), API/Python (PY), ligne de commande utilisateur (CLI) et API web services  (WS).  L'absence du code de l'interface signifie que le test s'applique à toutes les interfaces précédentes.</p><p>Il faut noter que les tests avec des paramètres corrects sont effectués dans une session active avec un mode de fermeture à la déconnexion (CLOSE_ON_DISCONNECT) et un certificat de session valide.</p></div><div class="sect3" title="   Tests de la Catégorie 1"><div class="titlepage"><div><div><h4 class="title"><a id="id2515512"></a>   Tests de la Catégorie 1</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Actions</p>
+            </td><td>
+               <p>Résultats</p>
+            </td><td>
+               <p>Considérations particulières</p>
+            </td></tr><tr><td>
+               <p>I3-B: export and replay commands</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : Les paramètres sont corrects </p></li><li class="listitem"><p>Ouvrir une session à l'aide de la commande vishnu_connect et enregistrer l'identifiant de la session.</p></li><li class="listitem"><p>Lancer deux commandes VISHNU.</p></li><li class="listitem"><p>Lancer la commande vishnu_list_history_cmd et enregistrer les commandes retournées.</p></li><li class="listitem"><p>Fermer la session</p></li><li class="listitem"><p>Ouvrir une nouvelle session</p></li><li class="listitem"><p>Lancer la commande vishnu_export_commands avec comme paramètre le nom du fichier dans lequel les commandes seront exportées sous le format  SHELL et en utilisant l'identifiant de session de l'étape 2</p></li><li class="listitem"><p>Vérifier que le fichier contient les deux commandes lancées (ceci est valable si les commandes sont ni connect, ni changePassword, ni resetPassword de UMS)</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>I3-E1: export and replay commands</p>
+               <p></p>
+               <p>I3-E2: export and replay commands</p>
+               <p></p>
+               <p>I3-E3: export and replay commands</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : paramètres sont incorrects</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Test du cas E1 et E2 :</p></li><li class="listitem"><p>Test du cas E3 :  </p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr></tbody></table></div></div><div class="sect3" title="  Tests de la catégorie 2"><div class="titlepage"><div><div><h4 class="title"><a id="id2559879"></a>  Tests de la catégorie 2</h4></div></div></div><p>            </p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Actions</p>
+            </td><td>
+               <p>Résultats</p>
+            </td><td>
+               <p>Considérations particulières</p>
+            </td></tr><tr><td>
+               <p>IA4.1-B :  Hard load schedding</p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects et l'utilisateur est un administrateur</p></li><li class="listitem"><p>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</p><p></p></li><li class="listitem"><p>Lancer  la commande vishnu_load_sched  avec comme option HARD et l'identifiant de la machine sur laquelle les processus seront stoppés.</p></li><li class="listitem"><p>Lancer la commande   vishnu_get_processes et vérifier qu'aucun processus VISHNU n'est en cours d'exécution sur la machine cible.</p><p></p></li></ol></div>
+            </td><td>
+               <p>- Les processus en cours d'exécution sur la machine donnée ont été arrêtés et ne peuvent plus être redémarrés.</p>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur</p>
+            </td></tr><tr><td>
+               <p>IA4.1-E1:  Hard load schedding</p>
+               <p></p>
+               <p>IA4.1-E2:  Hard load schedding</p>
+               <p></p>
+               <p>IA4.1-E3:  Hard load schedding</p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : paramètres sont incorrects</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer  la commande vishnu_load_sched pour les cas E1, E2 et E3.</p></li><li class="listitem"><p> Vérifier que son exécution échoue avec le message d'erreur renvoyé.</p></li></ol></div>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur</p>
+            </td></tr><tr><td>
+               <p>IA4.1-B :  Soft load schedding</p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects et l'utilisateur est un administrateur.</p></li><li class="listitem"><p>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</p></li><li class="listitem"><p>Soumettre deux jobs à l'aide de la commade vishnu_submit_job sur la machine MA_3</p></li><li class="listitem"><p>Lancer  la commande vishnu_load_sched  avec comme option SOFT et l'identifiant de la machine sur laquelle les processus seront stoppés.</p></li><li class="listitem"><p>Lancer la commande  vishnu_list_jobs et vérifier que le serveur TMS ne trouve pas les jobs précédents.</p></li></ol></div>
+            </td><td>
+               <p>- Les processus en cours d'exécution sur la machine donnée deviennent inactifs.</p>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur</p>
+            </td></tr><tr><td>
+               <p>IA4.1-E1:  Soft load schedding</p>
+               <p></p>
+               <p>IA4.1-E2:  Soft load schedding</p>
+               <p></p>
+               <p>IA4.1-E3:  Soft load schedding</p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : paramètres incorrects</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer  la commande vishnu_load_sched  avec  les cas de test E1, E2 E3 et l'identifiant de la machine sur laquelle les processus seront stoppés.</p></li><li class="listitem"><p> Vérifier que son exécution échoue avec le message d'erreur renvoyé.</p></li></ol></div>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur</p>
+            </td></tr><tr><td>
+               <p>Stop IA9 B</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la plateforme VISHNU avec un sed IMS</p></li><li class="listitem"><p>Appeller la fonction stop pour arreter un process sur une machine</p></li><li class="listitem"><p>Attendre 10 seconde et vérifier que le processus n'a pas été relancé et est arreté</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p>administrateur</p>
+            </td></tr><tr><td>
+               <p>Stop IA9 E</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>L'id de la machine est invalide,</p></li><li class="listitem"><p>Le processus n'existe pas sur la machine</p></li><li class="listitem"><p>L'appel est fait par un utilisateur est pas un administrateur</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p> Une exception paramètre invalide est retournée</p></li><li class="listitem"><p> Une exception processus non valide est retournée</p></li><li class="listitem"><p> Une exception est renvoyée</p></li></ol></div>
+            </td><td>
+               <p>administrateur</p>
+            </td></tr><tr><td>
+               <p>Restart IA9 B</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer une plateforme VISHNU avec un sed IMS</p></li><li class="listitem"><p>Arrêter (sans utiliser la fonction stop) le sed UMS</p></li><li class="listitem"><p>Vérifier que UMS tourne de nouveau, en faisant un vishnu_connect par exemple</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p>administrateur</p>
+            </td></tr></tbody></table></div></div><div class="sect3" title=" Tests de la catégorie 3"><div class="titlepage"><div><div><h4 class="title"><a id="id2560574"></a> Tests de la catégorie 3</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Actions</p>
+            </td><td>
+               <p>Résultats</p>
+            </td><td>
+               <p>Considérations particulières</p>
+            </td></tr><tr><td>
+               <p>IA1-B: Get the running processes</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : Les paramètres sont corrects et l'utilisateur est un administrateur</p></li><li class="listitem"><p>Si aucun serveur VISHNU n'a été lancé sur aucune machine se connecter sur les différentes machines et les lancer. Supposons les cas suivantes :</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_get_processes  avec les paramètres correspondants (MA_2, MA_3).</p></li><li class="listitem"><p>Vérifier sur chaque machine (MA_2, MA_3) que les processus VISHNU affichés correspondent bien aux processus VISHNU lancés sur ces machines.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur</p>
+            </td></tr><tr><td>
+               <p>IA1-E1: Get the running processes</p>
+               <p></p>
+               <p>IA1-E2: Get the running processes</p>
+               <p></p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : paramètres incorrects</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer la commande vishnu_get_processes avec le cas correspondant</p></li><li class="listitem"><p> Vérifier que son exécution échoue avec le message d'erreur renvoyé.</p></li></ol></div>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr></tbody></table></div></div><div class="sect3" title="  Tests de catégorie 4"><div class="titlepage"><div><div><h4 class="title"><a id="id2560838"></a>  Tests de catégorie 4 </h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Actions</p>
+            </td><td>
+               <p>Résultats</p>
+            </td><td>
+               <p>Considérations particulières</p>
+            </td></tr><tr><td>
+               <p>I2 – B: Get metric data </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects, la fréquence de mise à jour de la base de données est fixée à 10 secondes et aucun enregistrement concernant la métrique MEMORY n'est dans la base de données.</p><p></p></li><li class="listitem"><p>Après une minute, lancer la commande vishnu_get_metric_history avec l'identifiant de la machine sur laquelle la métrique sera récupérée  et la métrique MEMORY et vérifier que 6 enregistrements sont retournés.</p><p></p></li></ol></div>
+            </td><td>
+               <p>L'historique de la métrique est retourné.</p>
+            </td><td>
+               <p>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 10 secondes.</p>
+               <p> </p>
+               <p>Aucun enregistrement concernant la métrique MEMORY n'est  enregistré dans la base de données.</p>
+            </td></tr><tr><td>
+               <p>I2 – E1: Get metric data </p>
+               <p></p>
+               <p>I2 – E2: Get metric data </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_get_metric_history avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>I4 – B: Get data on the infrastructure </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects. </p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_get_metric_current_value avec l'identifiant de la machine sur laquelle la métrique sera récupérée  et la valeur ALL pour la métrique et vérifier que les valeurs suivantes sont retournées: le pourcentage d'utilisation de CPU, le nombre de CPU,  l'espace disque total, l'espace disque disponible, la mémoire RAM totale et l'espace RAM non utilisée .</p><p></p></li></ol></div>
+            </td><td>
+               <p>Les valeurs suivantes sont retournées :le pourcentage d'utilisation de CPU, le nombre de CPU,  l'espace disque total, l'espace disque disponible, la mémoire RAM totale et l'espace RAM non utilisée.</p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>I4 – E1: Get data on the infrastructure </p>
+               <p></p>
+               <p>I4 – E2: Get data on the infrastructure </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_get_metric_current_value avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>IA2.1 – B : Get a system load threshold </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects et la base de données a un seuil fixé à 2x1010 octets pour l'espace disque disponible sur la machine MA_1. </p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur retournée est 2x1010.</p><p></p></li><li class="listitem"><p>Modifier le  seuil pour  l'espace disque disponible à 1010  dans la base de données. </p><p> </p></li><li class="listitem"><p>Lancer la commande vishnu_get_system_threshold sur MA_1 avec pour métrique DISKSPACE et vérifier que la valeur  retournée est 1010. </p></li></ol></div>
+            </td><td>
+               <p>Le seuil correspondant est retourné.</p>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur.</p>
+            </td></tr><tr><td>
+               <p>IA2.1 – E1 : Get a system load threshold </p>
+               <p>IA2.1 – E2 : Get a system load threshold </p>
+               <p></p>
+               <p>IA2.1 – E3 : Get a system load threshold </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_get_system_threshold avec le cas de test correspondant (E1, E2 ou E3) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>IA2 – B1 : Define a system load threshold</p>
+               <p></p>
+               <p>IA2 – B2 : Define a system load threshold</p>
+               <p></p>
+               <p>IA2 – B3 : Define a system load  threshold</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects et les seuils concernant l'espace disponible, la mémoire RAM non utilisée et le pourcentage d'utilisation de la machine MA_1 sont différents des valeurs définies dans les cas qui suivent. </p><p></p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p></p></li><li class="listitem"><p>Lancer la commande vishnu_set_system_threshold sur MA_1 avec les métriques DISKPACE, FREEMORY et CPUUSE puis vérifier que les valeurs retournées sont respectivement 2x1010, 2000 et 30.</p><p> </p></li><li class="listitem"><p>Provoquer un dépassement des seuils pour  les trois cas de l'étape 1 respectivement :</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p></p></li><li class="listitem"><p>Vérifier qu'un mail est envoyé pour chacun des dépassement des seuils précédents.</p></li></ol></div>
+               <p></p>
+            </td><td>
+               <p>Le seuil correspondant est retourné.</p>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur.</p>
+            </td></tr><tr><td>
+               <p>IA2 – E1 : Define a system load threshold</p>
+               <p></p>
+               <p>IA2 – E2: Define a system load threshold</p>
+               <p></p>
+               <p>IA2 – E3 : Define a system load threshold</p>
+               <p></p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer la commande vishnu_set_system_threshold avec le cas de test correspondant (E1, E2 ou E3) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>I1– B : Get the update frequency </p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects et la fréquence de mise à jour de la base de donnée est fixée à 60 secondes.</p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_get_update_frequency et  vérifier que la valeur retournée est 60.</p><p></p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p>la fréquence de mise à jour de la base de donnée doit être au préalable enregistrée dans la base de données et fixée à 60 secondes.</p>
+            </td></tr><tr><td>
+               <p>IA6– B : Set the update frequency </p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_set_update_frequency  avec la valeur 10.</p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_get_update_frequency et vérifier que la valeur retournée est 10.</p><p></p><p></p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p>L'utilisateur doit être un administrateur.</p>
+               <p></p>
+               <p>La valeur de fréquence de mise à jour avant le lancement du test doit être différente de 10 secondes.</p>
+            </td></tr><tr><td>
+               <p>IA6– E1 : Set the update frequency</p>
+               <p></p>
+               <p>IA6– E2 : Set the update frequency </p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li><li class="listitem"><p>Lancer la commande vishnu_set_update_frequency avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>IA3-B: Define the identifier : define User/Machine/Job/FileTransfer identifier</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+                        <a id="__DdeLink__3446_1533183960"></a>Cas de test : les paramètres sont corrects.</p><p> </p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p></p></li><li class="listitem"><p>Lancer les différentes commandes vishnu_ defineUserIdentifier, vishnu_ defineMachineIdentifier,  defineJobIdentifier, vishnu_ defineFileTransferIdentifier avec les formats définis respectivement dans cas de test correspondant (cas1, cas2, cas3 et cas4) . </p><p></p></li><li class="listitem"><p>Lancer un certain nombre de fois les commandes d'ajout suivantes vishnu_addUser, vishnu_submitJob, vishnu_addMachine, vishnu_ copyFile et vérifier que les identifiants générés correspondent bien aux formats attendus.</p><p></p></li><li class="listitem"><p>L'exécution de la commande est ainsi validée.</p></li></ol></div>
+            </td><td>
+               <p>Le format d'identifiant demandé est généré.</p>
+            </td><td>
+               <p>Ces différentes commandes sont réservées aux administrateurs VISHNU</p>
+            </td></tr><tr><td>
+               <p>IA3-E1: Define User/Machine/Job/FileTransfer identifier</p>
+               <p></p>
+               <p>IA3-E2: Define User/Machine/Job/FileTransfer identifier</p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer les différentes commandes  avec le cas de test correspondant (E1 ou E2 ou E3) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>IA5: Set system info</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p><p>Mise à jour des données système de la machine MA_1 enregistré dans VISHNU.</p></li></ol></div>
+               <p></p>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_setSystemInfo en lui fournissant MA_1 et les informations à mettre à jour.</p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_getSystemInfo avec comme paramètre MA_1 et vérifier que les données ont bien été mise à jour.</p><p></p></li><li class="listitem"><p>L'exécution de la commande est ainsi validée.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p>Cette  commande est réservée aux administrateurs VISHNU</p>
+            </td></tr><tr><td>
+               <p>IA5-E1: set system info</p>
+               <p></p>
+               <p>IA5-E2: set system info</p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_setSystemInfo  avec le cas de test correspondant (E1 ou E2) et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>I5-B: Get system info</p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont corrects.</p><p>Consultation des données système  de la machine MA_1 enregistré dans VISHNU.</p><p></p></li><li class="listitem"><p>Lancer la commande vishnu_getSystemInfo en lui fournissant MA_1.</p><p></p></li><li class="listitem"><p>Vérifier dans le fichier /proc/meminfo  de  la machine d'identifiant MA_1</p><p></p></li><li class="listitem"><p>L'exécution de la commande est ainsi validée.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+            </td><td>
+               <p></p>
+            </td></tr><tr><td>
+               <p>I5-E1: Get system info</p>
+               <p></p>
+               <p></p>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Cas de test : les paramètres sont incorrects.</p></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Lancer la commande vishnu_getSystemInfo  avec le cas de test E1  et vérifier que son exécution échoue.</p></li></ol></div>
+            </td><td>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"></li></ol></div>
+               <p></p>
+            </td><td>
+               <p></p>
+            </td></tr></tbody></table></div><p></p></div></div><div class="sect2" title=" Tests de stress       "><div class="titlepage"><div><div><h3 class="title"><a id="id2562588"></a> Tests de stress        </h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id2562592"></a> Présentation</h4></div></div></div><p>Ces tests permettent de vérifier que la cible de test peut réussir à basculer et à récupérer pour différents dysfonctionnements matériels, logiciels ou réseaux sans qu'il y ait perte de données. Ils vérifient que lorsqu'une défaillance survient un système alternatif ou un système de sauvegarde prends le relai correctement sans perte de données ou de transactions.</p></div><div class="sect3" title=" Environnement des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2562609"></a> Environnement des tests</h4></div></div></div><p>Nous utiliserons l'environnement de test 1.</p></div><div class="sect3" title=" Identifiants de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2562616"></a> Identifiants de tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: STR-&lt;Element stressé&gt;-&lt;Type de stress&gt;.</p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2562624"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Technique</p>
+            </td><td>
+               <p>Critère de complétion</p>
+            </td></tr><tr><td>
+               <p>STR-SERV-DOWN</p>
+               <p></p>
+            </td><td>
+               <p>- Lancer la commande  vishnu_set_update_frequency avec une valeur de fréquence de 30 secondes</p>
+               <p>- Arrêter le serveur IMS après l'exécution de la commande</p>
+               <p>- Redémarrer le serveur IMS</p>
+               <p>- Lancer la commande  vishnu_get_update_frequency </p>
+               <p></p>
+            </td><td>
+               <p>- Terminaison normale de la commande  vishnu_get_update_frequency avec la valeur 30.</p>
+            </td></tr><tr><td>
+               <p>STR-AGENT-DOWN</p>
+               <p></p>
+            </td><td>
+               <p>- Lancer la commande vishnu_set_update_frequency avec une valeur de fréquence de 30 secondes</p>
+               <p>- Arrêter l'agent SysFera-DS après l'exécution de la commande</p>
+               <p>- Redémarrer l'agent SysFera-DS</p>
+               <p>- Lancer la commande  vishnu_get_update_frequency </p>
+            </td><td>
+               <p>- Terminaison normale de la commande vishnu_get_update_frequency avec la valeur 30.</p>
+               <p></p>
+            </td></tr><tr><td>
+               <p>STR-DB-DOWN</p>
+            </td><td>
+               <p>- Se connecter</p>
+               <p>- Couper la base de données</p>
+               <p>- Redémarrer la base de données</p>
+               <p>- Faire appel à vishnu_get_update_frequency</p>
+            </td><td>
+               <p>- Terminaison normale de la commande</p>
+            </td></tr></tbody></table></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a id="id2562793"></a></h5></div></div></div></div></div></div><div class="sect2" title=" Contrôle des performances"><div class="titlepage"><div><div><h3 class="title"><a id="id2562795"></a> Contrôle des performances</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id2562799"></a> Présentation</h4></div></div></div><p>Ces tests ont pour objectif de vérifier que les exigences de performance quantifiées sont effectivement satisfaites. </p></div><div class="sect3" title=" Environnement de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2562809"></a> Environnement de tests</h4></div></div></div><p>Nous utiliserons l'environnement de test 1.</p></div><div class="sect3" title=" Identifiants des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2562816"></a> Identifiants des tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: CDP-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB] au paragraphe « performances, fiabilité et robustesse ». </p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2562831"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Technique</p>
+            </td><td>
+               <p> Critère de completion</p>
+            </td></tr><tr><td>
+               <p>CDP-3.1-get_metric_current_value</p>
+            </td><td>
+               <p>- Lancer la commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse (temps de référence)</p>
+               <p>- Lancer la commande 'vishnu_ get_metric_current_value &lt;machineId&gt;' en mesurant le temps de réponse</p>
+            </td><td>
+               <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
+            </td></tr><tr><td>
+               <p>CDP-3.1-get_metric_history</p>
+            </td><td>
+               <p>- Lancer une commande 'ssh &lt;host&gt; ps -efl' sur une machine serveur en mesurant le temps de réponse  (temps de référence).</p>
+               <p>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt; &lt;currentDay&gt; &lt;currentDay&gt; 5' en mesurant le temps de réponse</p>
+            </td><td>
+               <p>temps inférieur au temps de référence (valeur moyenne sur 10 itérations)</p>
+            </td></tr><tr><td>
+               <p>CDP-3.2.1-get_metric_current_value</p>
+            </td><td>
+               <p>- Lancer la commande 'vishnu_get_metric_current_value &lt;machineId&gt;' 100 fois </p>
+            </td><td>
+               <p>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</p>
+            </td></tr><tr><td>
+               <p>CDP-3.2.1-get_metric_history</p>
+            </td><td>
+               <p>- Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt; &lt;jour_courant&gt; &lt;jour_courant&gt; 5' 100 fois </p>
+            </td><td>
+               <p>Consommation en mémoire virtuelle sur le serveur IMS inférieure à 500 Mégaoctets.</p>
+            </td></tr><tr><td>
+               <p>CDP-3.2.2-get_metric_current_value</p>
+            </td><td>
+               <p>-  Lancer la commande 'vishnu_get_metric_current_value &lt;machineId&gt;'</p>
+            </td><td>
+               <p>Consommation CPU inférieure à 10%.</p>
+            </td></tr><tr><td>
+               <p>CDP-3.2.2-get_metric_history</p>
+            </td><td>
+               <p>-  Lancer la commande 'vishnu_get_metric_history &lt;machineId&gt; &lt;jour_courant&gt; &lt;jour_courant&gt; 5'</p>
+            </td><td>
+               <p>Consommation CPU inférieure à 10%.</p>
+            </td></tr><tr><td>
+               <p>CDP-MemServer</p>
+            </td><td>
+               <p>- Lancer le serveur IMS</p>
+               <p>- Laisser le serveur fonctionner sans utiliser les services pendant 24h</p>
+               <p>- Vérifier que l'espace mémoire consommé par le processus serveur n'a pas augmenté.</p>
+            </td><td>
+               <p>Consommation mémoire constante.</p>
+            </td></tr></tbody></table></div><p></p></div></div><div class="sect2" title=" Tests de charge"><div class="titlepage"><div><div><h3 class="title"><a id="id2563087"></a> Tests de charge</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id2563090"></a> Présentation</h4></div></div></div><p>Les tests de charge ont pour objectif de vérifier que les exigences de capacité du système sont vérifiées.</p></div><div class="sect3" title=" Environnement de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563100"></a> Environnement de tests</h4></div></div></div><p></p><p>Nous utiliserons l'environnement de test 1 avec un nombre de clients ou de serveurs tels que spécifié dans le cas de tests. Ces clients ou serveurs seront simulés sur une seule machine.</p><p></p><p>Par ailleurs, les requêtes envoyées en simultané seront en fait envoyées par une seule machine cliente avec un programme de synchronisation (MPI).</p></div><div class="sect3" title=" Identifiants de tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563126"></a> Identifiants de tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: LOAD-&lt;ID STB&gt;-[NomdeCommande|IdentifiantDeTest] où 'ID STB' est l'identifiant de l'exigence spécifiée dans le document [STB]. </p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563138"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Technique</p>
+            </td><td>
+               <p>Résultats attendus</p>
+            </td></tr><tr><td>
+               <p>LOAD-2.1-get_metric_current_value</p>
+            </td><td>
+               <p>- Lancer  100 commandes 'vishnu_get_metric_current_value &lt;machineId&gt;'  simultanées</p>
+            </td><td>
+               <p>- Terminaison normale de toutes les commandes</p>
+               <p>- Etat normal du serveur IMS</p>
+            </td></tr><tr><td>
+               <p>LOAD-2.1-get_metric_history</p>
+            </td><td>
+               <p>- Lancer 100 commandes 'vishnu_get_metric_history &lt;machineId&gt; &lt;jour_courant&gt; &lt;jour_courant&gt; 5' simultanées</p>
+            </td><td>
+               <p>- Terminaison normale de toutes les commandes</p>
+               <p>- Etat normal du serveur IMS</p>
+            </td></tr></tbody></table></div></div></div><div class="sect2" title=" Contrôle de la qualité du code"><div class="titlepage"><div><div><h3 class="title"><a id="id2563237"></a> Contrôle de la qualité du code</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id2563241"></a> Présentation</h4></div></div></div><p>L'objectif de ces tests est de vérifier que le code source (C/C++ ou Java) respecte les contraintes de qualité logiciel fixées dans les spécifications et le cahier des charges.</p></div><div class="sect3" title=" Identifiants des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563254"></a> Identifiants des tests</h4></div></div></div><p>Les identifiants des tests sont de la forme: [IdentifiantDeTest]-[IdentifiantDesModules] où les identifiants sont les suivants:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Identifiants de tests</p></li><li class="listitem"><p>Identifiants de modules</p></li></ol></div></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563284"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Technique</p>
+            </td><td>
+               <p>Résultats attendus</p>
+            </td></tr><tr><td>
+               <p>CRP-CSC</p>
+            </td><td>
+               <p>Audit du code C/C++ avec l'outil LOGISCOPE</p>
+            </td><td>
+               <p>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </p>
+            </td></tr><tr><td>
+               <p>CRP-JSC</p>
+            </td><td>
+               <p>Audit du code Java avec l'outil LOGISCOPE</p>
+            </td><td>
+               <p>Le code respecte toutes les règles de codage de catégorie «REQUIRED » spécifiées pour le projet [SCL] sauf dérogation clairement documentée dans le code. </p>
+            </td></tr><tr><td>
+               <p>MCC-CSC</p>
+            </td><td>
+               <p>Audit du code C/C++ avec l'outil SQUORE</p>
+            </td><td>
+               <p>Pas plus de 1% de composants classés « A risque » </p>
+            </td></tr><tr><td>
+               <p>MCC-JSC</p>
+            </td><td>
+               <p>Audit du code Java avec l'outil SQUORE</p>
+            </td><td>
+               <p>Pas plus de 1% de composants classés « A risque » </p>
+            </td></tr><tr><td>
+               <p>DDC-CSC</p>
+            </td><td>
+               <p>Audit du code C/C++ avec l'outil  SQUORE</p>
+            </td><td>
+               <p>Moins de 10% de code dupliqué. </p>
+            </td></tr><tr><td>
+               <p>DDC-JSC</p>
+            </td><td>
+               <p>Audit du code Java avec l'outil SQUORE</p>
+            </td><td>
+               <p>Moins de 10% de code dupliqué. </p>
+            </td></tr></tbody></table></div><p></p><p></p></div></div><div class="sect2" title="  Tests de compilation et d'installation"><div class="titlepage"><div><div><h3 class="title"><a id="id2563484"></a>  Tests de compilation et d'installation</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id2563488"></a> Présentation</h4></div></div></div><p>La compilation des différents exécutables et librairies composant le module UMS sera réalisée par un serveur d'intégration continue (du type HUDSON).</p><p>Par ailleurs les tests d'installation ont pour objectif de valider la procédure d'installation de l'ensemble des différents composants d'une plateforme VISHNU (clients, serveurs, agents SysFera-DS).</p></div><div class="sect3" title=" Environnement des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563509"></a> Environnement des tests</h4></div></div></div><p>Nous utiliserons l'environnement de test 1.</p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563517"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Technique</p>
+            </td><td>
+               <p>Résultats attendus</p>
+            </td></tr><tr><td>
+               <p>COMP-CSC</p>
+            </td><td>
+               <p>Compilation du code C/C++ avec l'outil GCC/CMake</p>
+            </td><td>
+               <p>Compilation correcte de tous les exécutables</p>
+            </td></tr><tr><td>
+               <p>INS-SERVER-PGSQL</p>
+               <p>INS-SERVER-ORACLE</p>
+            </td><td>
+               <p>Installation des différents éléments serveur de la plateforme VISHNU</p>
+               <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>serveur de calcul</p></li><li class="listitem"><p>serveur de stockage</p></li><li class="listitem"><p>serveur dédié VISHNU</p></li><li class="listitem"><p>serveur de base de données</p></li></ol></div>
+            </td><td>
+               <p>- Tous les processus démarrés et operationnels</p>
+               <p>- Documentation disponible (pages man)</p>
+            </td></tr><tr><td>
+               <p>INS-CLI</p>
+            </td><td>
+               <p>Installation du client VISHNU en ligne de commande</p>
+            </td><td>
+               <p>- Toutes les commandes installées</p>
+               <p>- Documentation disponible (pages man)</p>
+            </td></tr><tr><td>
+               <p>INS-PGAPI</p>
+            </td><td>
+               <p>Installation des librairies API VISHNU (C++ et Python)</p>
+            </td><td>
+               <p>- Librairie C++ installée</p>
+               <p>- Librairie Python installée et pouvant être chargée dans l'interpréteur Python 2.x</p>
+            </td></tr><tr><td>
+               <p>INS-WSAPI</p>
+            </td><td>
+               <p>Installation des services web VISHNU sur le serveur JBoss</p>
+            </td><td>
+               <p>- Services operationnels (contrôle via la console webservices de JBoss)</p>
+            </td></tr></tbody></table></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="id2563734"></a></h3></div></div></div></div><div class="sect2" title=" Contrôle de la documentation utilisateur"><div class="titlepage"><div><div><h3 class="title"><a id="id2563736"></a> Contrôle de la documentation utilisateur</h3></div></div></div><div class="sect3" title=" Présentation"><div class="titlepage"><div><div><h4 class="title"><a id="id2563740"></a> Présentation</h4></div></div></div><p>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</p></div><div class="sect3" title=" Liste des tests"><div class="titlepage"><div><div><h4 class="title"><a id="id2563751"></a> Liste des tests</h4></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>Identifiant de tests</p>
+            </td><td>
+               <p>Technique</p>
+            </td><td>
+               <p>Résultats attendus</p>
+            </td></tr><tr><td>
+               <p>CDU-MAN</p>
+            </td><td>
+               <p>Vérifier les pages de manuel attachées à chaque commande</p>
+            </td><td>
+               <p>Toutes les pages de manuel contiennent toutes les informations nécessaires à l'utilisateur pour utiliser les commandes.</p>
+            </td></tr><tr><td>
+               <p>CDU-USERGUIDE</p>
+            </td><td>
+               <p>Suivre le guide de l'utilisateur </p>
+            </td><td>
+               <p>Le guide permet une prise en main rapide des fonctions du logiciel</p>
+            </td></tr></tbody></table></div><p></p></div></div></div><p></p><div class="informaltable"><table border="1"><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td>
+               <p>SysFera</p>
+               <p>13 av. Einstein</p>
+               <p>69100 Villeurbanne</p>
+            </td><td>
+               <p></p>
+            </td><td>
+               <p>Tel. + 33 (0)4 72 72 88 50</p>
+               <p>Fax + 33 (0)4 72 72 80 80</p>
+               <p>contact@sysfera.com</p>
+               <p>www.sysfera.com</p>
+            </td><td>
+               <p>1|19</p>
+            </td></tr></tbody></table></div><p></p></div></body></html>

@@ -1,0 +1,1762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cissé</surname>
+      </personname>
+    </author>
+    <title>D4.1a - VISHNU Information Management Services Module Design</title>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>06/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Deliverable version</para></revdescription>
+      </revision>
+    </revhistory>
+  </info>
+  <chapter>
+    <title>Document presentation</title>
+    <section>
+      <title>Document objectives</title>
+      <para>
+	This document presents the detailed internal design of the Information Management Services (IMS) module. The purpose
+	of this module is to handle all aspects of information management within the VISHNU system. The functional and
+	non-functional requirements for this module are those described in the referenced specification documents. The current
+	document is part of the design phase of the software and therefore its main goal is to define the main components of the
+	system architecture and their relationships.
+      </para>
+    </section>
+    <section>
+      <title>Document structure</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>Chapter 1 contains a brief overview of the document's content.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 2 contains a description of the IMS module's architecture.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 3 contains an overview of the IMS module's modelization.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 4 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 5 describes the internal classes and data structures</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>References</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>[D1.1a]: VISHNU General specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1c]: VISHNU API Detailed specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1g]: VISHNU Technical architecture</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1g-DAT]: VISHNU Dossier d'Architecture Technique</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>Acronyms</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">API</emphasis>: Application Programming Interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">CLI</emphasis>: Command Line Interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">DB</emphasis>: Database</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Applicable</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">IMS</emphasis>: Information Management Services</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web Services</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Glossary</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">DIET</emphasis>: component of the SysFera-DS solution that provides the communication layer between the agents that are part of the VISHNU infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">GoDIET</emphasis>: component of the SysFera-DS solution that provides a launcher for all the processes of the VISHNU infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">LogCentral</emphasis>: component of the SysFera-DS solution that provides event notifications within a SysFera-DS platform.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">MasterAgent</emphasis>: DIET process, linking the client and the server</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">omniNames</emphasis>: CORBA process, needed by DIET</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon, a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: class of data (C++ Class) whose instances can be serialized in a XML string before being sent over a communication channel (CORBA for example).</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU Process</emphasis>: process, running permanently, that provides VISHNU services. This is a sub-class of SeD.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </chapter>
+  <chapter>
+    <title>IMS System Architecture</title>
+    <section>
+      <title>IMS software Components</title>
+      <para>In this section, we present a description of the IMS module's software components.
+	In addition we detail the dependencies between the components to show how to reuse them. These components follow a client/server model.
+        We present the different software layers, from services (provided directly to the user) to the database (used by the server). 
+	The IMS client and server packages have been split into seven different interrelated components. The diagrams shown in sections 2.1.1
+        and 2.1.2 describe the relationships between these components. The definitions of the components are as follows:
+       </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>the <emphasis role="bold">External API</emphasis>
+	     contains the services provided to the user, as defined in the detailed specifications.
+	     It is used client-side.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>the <emphasis role="bold">Internal API</emphasis>
+	     is the server-side interface used by the IMS Client components. It provides a set of services that are remotely accessible
+             through the SysFera-DS middleware. This layer does not contain any business logic and uses the IMS SeD to implement the service.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>the <emphasis role="bold">IMS Client</emphasis>
+	    contains intermediate (proxy) classes providing remote access to the business objects of the <emphasis
+                  role="bold">IMS SeD</emphasis>.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>the <emphasis role="bold">IMS Server</emphasis>
+	     provides the business logic of the IMS module on the server's side. The set of classes in this component cover all the IMS objects
+             that have a proxy class that publishes services to the external API, in addition to some classes that provide the IMS module's internal mechanisms.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>the <emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para>the <emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para>the <emphasis role="bold">VISHNU Database</emphasis> stores all data handled by the IMS SeD.
+	    </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <section>
+        <title>IMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the VISHNU IMS system and their interfaces. All the interfaces of the IMS Client component are shown (CLI, WS, python, C++).</para>
+        <figure>
+          <title>IMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_client-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>IMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the VISHNU IMS system and their interfaces. All the interfaces of the IMS SeD component are shown.</para>
+        <figure>
+          <title>IMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_server-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
+    <section>
+      <title>IMS package dependencies</title>
+      <para>In order to install the IMS service on the infrastructure, some packages are required. The following tables list all the packages that must be
+        installed on the IMS client and on the IMS server hosts:</para>
+      <section>
+        <title>IMS Client - required packages</title>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Package Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>SysFera-DS/DIET</para></entry>
+                <entry><para>Middleware</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU UMS client</para></entry>
+                <entry><para>VISHNU Client Package for user and session management</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU TMS client</para></entry>
+                <entry><para>VISHNU Client Package for task management</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU FMS client</para></entry>
+                <entry><para>VISHNU Client Package for file management</para></entry>
+              </row>
+              <row>
+                <entry><para>Python (optional)</para></entry>
+                <entry><para>Python language, required to use the VISHNU Python API</para></entry>
+              </row>
+              <row>
+                <entry><para>Java 1.6 (optional)</para></entry>
+                <entry><para>Java environment, required to use the VISHNU WS API</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>IMS Server - required packages</title>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Package Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>SysFera-DS/DIET</para></entry>
+                <entry><para>Middleware</para></entry>
+              </row>
+              <row>
+                <entry><para>SysFera-DS/LogService</para></entry>
+                <entry><para>Middleware component for monitoring</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU UMS</para></entry>
+                <entry><para>VISHNU Package for user and session management</para></entry>
+              </row>
+              <row>
+                <entry><para>PostgreSQL client (or Oracle client)</para></entry>
+                <entry><para>Database client</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>IMS Deployment</title>
+      <para>
+        This section explains how the VISHNU IMS module will be deployed on a physical infrastructure, as illustrated in figures 2.3 and 2.4.
+        Each box in the figures represents an operating system in which a component or a set of components are running as processes.
+        For an overview of all the components of the VISHNU infrastructure, please refer to document [D1.1g].
+        The IMS module components are: 
+	<itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">IMS SeD</emphasis>, the process that provides all IMS internal services.
+            This process is required on any host of the VISHNU infrastructure where VISHNU processes have to be monitored. Without an IMS process running on the 
+            host, IMS services (e.g., restart processes, get system information, do load shedding) will not be available on that host.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Client host</emphasis>, the host used by the user to launch IMS requests through one of the VISHNU user interfaces.
+            It contains all the client components required to make an IMS service request.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">LogCentral</emphasis>, a SysFera-DS process that is necessary to monitor the DIET platform. This process is part of DIET
+	      in the SysFera-DS package. It can be deployed on any host that can connect to the omniNames and to the DIET MasterAgent using CORBA.
+              To simplify the deployment, it can be run on the same machine as these processes.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS Bus </emphasis>, the specific software layer that ensures the communication between client hosts and server hosts.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">VISHNU database</emphasis>, this component represents a unique instance of an Oracle or PostgreSQL database.
+            </para>
+          </listitem>
+        </itemizedlist>
+       </para>
+      <section>
+        <title>IMS deployment overview</title>
+        <para>The following diagram shows an example of the VISHNU infrastructure with one instance of FMS Server and one instance
+          of TMS Server. All components of the infrastructure are shown including the SysFera-DS processes, the JBoss web server used
+          to deploy the web services API, and the database server. The VISHNU Admin system hosts the SysFera-DS/GoDIET
+          application that is used to launch all processes of the VISHNU infrastructure using ssh connections (red arrows). The
+          SysFera-DS LogCentral process is used to publish events when VISHNU elements are connected to or disconnected from the
+          VISHNU infrastructure. These events are sent to VISHNU IMS Servers that are subscribers to the LogCentral event flow.</para>
+        <figure>
+          <title>IMS deployment overview</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS Deployment Overview.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>IMS deployment diagram</title>
+        <para>This diagram shows the generic deployment pattern of VISHNU processes.
+          All IMS SeD processes must connect to the same VISHNU database.
+          The TMS and FMS SeD are optional; if present, they can be used to fulfill some IMS services (e.g. load shedding).
+        </para>
+        <figure>
+          <title>IMS deployment diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/IMS_Deployment_Diagram.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and an IMS SeD using the SysFera-DS Bus.
+          The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the IMS SeD.
+          All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and
+          the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice
+          of one IMS SeD in the case of several available IMS SeD. The choice will be transparent to the user as all
+          IMS SeD connect to the same database.
+          The IMS client can be client of the FMS or TMS SeD so they are presented on the diagram. 
+          However, this call may only happen if a specific call to the load-shedding service is made on the machine 
+          where the FMS and/or TMS SeD are running.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Overview of the IMS modelization</title>
+    <section>
+      <title>Functional view</title>
+      <para>The following diagram is functional. The IMS client can ask the IMS SeD to fill four functions. It is important to note that the IMS client can access specific TMS and FMS services. Morevover, all the SeD will have to save the command that was used to launch them.</para>
+      <figure>
+        <title>Functional roles</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/role.png" align="center" scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <para>
+	Meaning of the roles presented in the diagram:
+	<itemizedlist>
+          <listitem>
+            <para>A: The external API corresponds to the functionalities that called by the IMS client</para>
+          </listitem>
+          <listitem>
+            <para>B: The function of HistoryMaker is to get the state of the machine and to automatically save it in the database. The admin is then notified if the state has reached a threshold for the machine.</para>
+          </listitem>
+          <listitem>
+            <para>C: LogTool corresponds to the part of the SeD that will be linked to LogCentral, following the publisher/subscriber model. It receives information when a SeD connects to or disconnects from the machine on which the IMS SeD is running.</para>
+          </listitem>
+          <listitem>
+            <para>D: ProcessManager is responsible for relaunching a dead SeD, stopping a SeD or making the load shedding.</para>
+          </listitem>
+          <listitem>
+            <para>E: new functionalities must be added to the TMS/FMS client to allow sending commands to the TMS/FMS SeD.</para>
+          </listitem>
+          <listitem>
+            <para>F: modification of the SeD to hava them save their parameters when launched, it enables to restart the SeD with the same parameters.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Role description</title>
+      <para>
+	The IMS module can play eight different roles. For each role, there is a reference to the above functional figure with the letter corresponding to the functional element.
+	<itemizedlist>
+          <listitem>
+            <para>Hard load shedding: all the VISHNU processes on a machine are killed. These processes will not be automatically relauched. Only the GoDiet tool can relaunch them. Reference: D.</para>
+          </listitem>
+          <listitem>
+            <para>The soft load shedding: the current jobs (submitted using TMS) and file transfers (made with FMS) on a machine are ended. The stopped commands are flagged as failed, in the database. Reference: E+D</para>
+          </listitem>
+          <listitem>
+            <para>Export of the commands in a given format: it generates a shell script containing all commands executed during a session. Commands such as connect or change password cannot be exported: because the server does not know the user's password, the script cannot be executed automatically, so a connect call must be added. Reference: A</para>
+          </listitem>
+          <listitem>
+            <para>Live monitoring: getting the current state of the machines. Reference: A</para>
+          </listitem>
+          <listitem>
+            <para>Delayed monitor: getting past states of a machine and automatically recording the states of the machine as time passes. Reference: A + B</para>
+          </listitem>
+          <listitem>
+            <para>Notification during monitoring: automatically notifying the administrator about an abnormal behaviour of the VISHNU system. Reference: B</para>
+          </listitem>
+          <listitem>
+            <para>Automatic restart: Once a SeD is down, the IMS SeD is informed and tries to relaunch it. If an agent is down, it cannot be restarted by the IMS SeD; GoDIET will do it. Reference: A + C</para>
+          </listitem>
+          <listitem>
+            <para>Manual restart: can be made using GoDIET, but it is also available throught the IMS API. Only a VISHNU SeD can be relaunched throught the API. Reference: F + D</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Classes and roles</title>
+      <para>The following figure presents the links between the functional roles and corresponding classes. There are two main groups of classes. The DATA classes, that correspond to the external API and deal with the database, and the CONTROLER classes that only interact with the DATA classes</para>
+      <figure>
+        <title>Classes implementing the roles</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/classes.png" align="center" scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+  </chapter>
+  <chapter annotations="core/model/IMS_Internal.apim#SERVICES">
+    <title>Internal API specification</title>
+    <section>
+      <title>Generic definition formats presentation</title>
+      <para>This section presents the formats used in this chapter to describe the services provided
+            by the internal API.</para>
+      <section>
+        <title>Service definition format</title>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>This is an example of a required string input parameter</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfJobs</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>ListJobs</para></entry>
+                <entry><para>This is an example of an object output parameter that is serialized as a string</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>Here is detailed the purpose of the service 'myService'</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>Here are detailed the different return codes provided by the service.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed successfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>This shows the list of functions from the external Vishnu API (see [D1_1c]) that use this service.</para>
+      </section>
+    </section>
+    <section>
+      <title>Definition of the services of the package</title>
+      <section>
+        <title>Service int_exportCommands</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>oldSessionId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The id of the session to export (session has ended)</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>filename</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The path of the output file containing the Vishnu shell commands</para></entry>
+                <entry><para>INOUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ExportOp">ExportOp</link></para></entry>
+                <entry><para>Options for the export</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_exportCommands() function exports all the commands made by a user during a session</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getMetricCurrentValue</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The id of the machine</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>metricValue</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Metric">Metric</link></para></entry>
+                <entry><para>Value of the metric</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="CurMetricOp">CurMetricOp</link></para></entry>
+                <entry><para>Options</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getMetricCurrentValue() function retrieve the current value of a metric on a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getMetricHistory</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The id of the machine</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>metricType</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry><para>Type of metric</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>metricValues</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListMetric">ListMetric</link></para></entry>
+                <entry><para>List of metric values</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>endTime</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="MetricHistOp">MetricHistOp</link></para></entry>
+                <entry><para>End time of metric history</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getMetricHistory() function retrieve the history of values of a metric on a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getProcesses</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>process</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListProcesses">ListProcesses</link></para></entry>
+                <entry><para>The list of the Vishnu processes on the machine</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ProcessOp">ProcessOp</link></para></entry>
+                <entry><para>The id of the machine the user wants the running processes</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getProcesses() function gets the list of the processes running over a front machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_setSystemInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>systemInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="SystemInfo">SystemInfo</link></para></entry>
+                <entry><para>Contains system information to store in Vishnu database</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_setSystemInfo() function updates the system information of a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_setSystemThreshold</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>threshold</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Threshold">Threshold</link></para></entry>
+                <entry><para>The type of the metric to set</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_setSystemThreshold() function sets a threshold on a machine of a system</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getSystemThreshold</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ThresholdOp">ThresholdOp</link></para></entry>
+                <entry><para>The options for the threshold</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>value</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListThreshold">ListThreshold</link></para></entry>
+                <entry><para>The threshold values</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getSystemThreshold() function gets a System threshold on a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_defineUserIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_defineUserIdentifier() function defines the shape of the identifiers automatically generated for the users</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_defineMachineIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_defineMachineIdentifier() function defines the shape of the identifiers automatically generated for the machines</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_defineJobIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_defineJobIdentifier() function defines the shape of the identifiers automatically generated for the jobs</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_defineTransferIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_defineTransferIdentifier() function defines the shape of the identifiers automatically generated for the file transfers</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_loadShed</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The id of the machine to stop</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>loadShedType</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="LoadShedType">LoadShedType</link></para></entry>
+                <entry><para>Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_loadShed() function load sheds a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_setUpdateFrequency</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>freq</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Frequency the data are updated, in second</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_setUpdateFrequency() function sets the update frequency of the IMS tables</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getUpdateFrequency</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>freq</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Frequency the data are updated, in second</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getUpdateFrequency() function gets the update frequency of the IMS database</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_restart</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The id of the machine where the component is to be relaunched</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="RestartType">RestartType</link></para></entry>
+                <entry><para>The type of restart</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="RestartOp">RestartOp</link></para></entry>
+                <entry><para>The options to restart</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_restart() function restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_stop</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>process</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Process">Process</link></para></entry>
+                <entry><para>The process to stop</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_stop() function to stop a sed</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+      <section>
+        <title>Service int_getSystemInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>res</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="ListSysInfo">ListSysInfo</link></para></entry>
+                <entry><para>The set of system information</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="SysInfoOp">SysInfoOp</link></para></entry>
+                <entry><para>Options for the sysinfo</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The int_getSystemInfo() function to get system info</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody/>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>None</para>
+      </section>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Internal class and data structures</title>
+    <section>
+      <title>Introduction</title>
+      <para>This chapter introduces the implementation of the different components described in chapter 2.
+        It is composed of three sections:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Client modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">IMS Client</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">IMS SeD</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
+              <emphasis role="it">IMS Client</emphasis> component and the <emphasis
+                  role="it">IMS SeD</emphasis> component.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>IMS Proxy ClassDiagram</title>
+      <para>The following figure presents the class diagram on the client's side</para>
+      <figure>
+        <title>IMS Proxy ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Proxy_ClassDiagram.png" align="center"
+                scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+    <section>
+      <title>IMS Server ClassDiagram</title>
+      <para>The following figure presents the class diagram on the server's side</para>
+      <figure>
+        <title>IMS Server ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Server_ClassDiagram.png" align="center"
+                scale="39"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+    <section>
+      <title>IMS Datatype ClassDiagram</title>
+      <para>The following figure presents the links between the datatypes.</para>
+      <figure>
+        <title>IMS Datatype ClassDiagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/png/IMS_Datatype_ClassDiagram.png" align="center"
+                scale="40"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+  </chapter>
+</book>
