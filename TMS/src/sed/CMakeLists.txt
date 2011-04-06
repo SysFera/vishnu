@@ -19,6 +19,7 @@ include_directories(
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${TMS_UTILS_DIR}
+  ${TORQUE_INCLUDE_DIR}
 )
 
 #add_executable(tmssed
@@ -48,11 +49,12 @@ add_executable(test_server
 target_link_libraries(test_server
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
+  ${TORQUE_LIB}
   emf4cpp-TMS_Data
   register-vishnu
   exception-vishnu
   database-vishnu
   utils-vishnu
   utils-server
-  #tms-server
+  tms-server
 )
