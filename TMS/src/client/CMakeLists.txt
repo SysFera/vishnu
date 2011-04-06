@@ -15,6 +15,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${TMS_CLIENT_PROXY_SOURCE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
+  ${TMS_UTILS_DIR}
   )
 
 add_library(tms-client-proxy STATIC

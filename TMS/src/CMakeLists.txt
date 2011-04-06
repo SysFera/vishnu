@@ -3,6 +3,7 @@ if (NOT CLIENT_ONLY)
   #add_subdirectory(server)
 endif (NOT CLIENT_ONLY)
 
+add_subdirectory(utils)
 add_subdirectory(utils/emfdata)
 add_subdirectory(api)
 add_subdirectory(client)

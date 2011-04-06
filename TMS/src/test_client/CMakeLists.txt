@@ -18,6 +18,9 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${TMS_API_SOURCE_DIR}
+  ${TMS_CLIENT_PROXY_SOURCE_DIR}
+  ${CLIENT_PROXY_SOURCE_DIR}
 )
 
 
@@ -28,9 +31,13 @@ add_executable(test_client
 target_link_libraries(test_client
   ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
+  emf4cpp-UMS_Data
   emf4cpp-TMS_Data
   register-vishnu
   exception-vishnu
   database-vishnu
   utils-vishnu
+  vishnu-tms-api
+  ums-client-proxy
+  tms-client-proxy
 )

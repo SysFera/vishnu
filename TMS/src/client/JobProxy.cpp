@@ -4,7 +4,7 @@
 #include "JobProxy.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
-
+#include "emfTMSUtils.hpp"
 
 /**
 * \param session The object which encapsulates the session information
@@ -95,8 +95,12 @@ JobProxy::submitJob(const TMS_Data::SubmitOptions& options) {
 
   TMS_Data::Job_ptr job_ptr;
 
+
   //To parse User object serialized
-  parseEmfObject(std::string(jobInString), job_ptr, "Error by receiving Job object serialized");
+  if (!vishnu::parseTMSEmfObject(std::string(jobInString), job_ptr, "Error by receiving Job object serialized")) {
+    throw UserException(ERRCODE_INVALID_PARAM);
+  }
+
   mjob = *job_ptr;
 
   return 0;
