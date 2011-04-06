@@ -31,8 +31,7 @@ using namespace ::TMS_Data;
 
 // Default constructor
 SubmitOptions::SubmitOptions() :
-    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_nbNodesAndCpuPerNode(-1),
-            m_outPutPath()
+    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_nbNodesAndCpuPerNode(-1)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -182,16 +181,15 @@ void SubmitOptions::setNbCpu(::ecore::EInt _nbCpu)
 #endif
 }
 
-::ecore::EString const& SubmitOptions::getNbNodesAndCpuPerNode() const
+::ecore::EInt SubmitOptions::getNbNodesAndCpuPerNode() const
 {
     return m_nbNodesAndCpuPerNode;
 }
 
-void SubmitOptions::setNbNodesAndCpuPerNode(
-        ::ecore::EString const& _nbNodesAndCpuPerNode)
+void SubmitOptions::setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
+    ::ecore::EInt _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
 #endif
     m_nbNodesAndCpuPerNode = _nbNodesAndCpuPerNode;
 #ifdef ECORECPP_NOTIFICATION_API
@@ -209,26 +207,26 @@ void SubmitOptions::setNbNodesAndCpuPerNode(
 #endif
 }
 
-::ecore::EString const& SubmitOptions::getOutPutPath() const
+::ecore::EString const& SubmitOptions::getOutputPath() const
 {
-    return m_outPutPath;
+    return m_outputPath;
 }
 
-void SubmitOptions::setOutPutPath(::ecore::EString const& _outPutPath)
+void SubmitOptions::setOutputPath(::ecore::EString const& _outputPath)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_outPutPath = m_outPutPath;
+    ::ecore::EString _old_outputPath = m_outputPath;
 #endif
-    m_outPutPath = _outPutPath;
+    m_outputPath = _outputPath;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__outPutPath(),
-                _old_outPutPath,
-                m_outPutPath
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__outputPath(),
+                _old_outputPath,
+                m_outputPath
         );
         eNotify(&notification);
     }
