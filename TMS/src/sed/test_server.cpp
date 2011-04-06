@@ -16,6 +16,8 @@
 #include "DIET_server.h"
 
 #include "utilServer.hpp"
+#include "BatchServer.hpp"
+#include "TorqueServer.hpp"
 
 // definition of the number of available services and their names
 #define NB_SERVICES 1
@@ -68,6 +70,11 @@ operator<<(std::ostream& os, const TMS_Data::Job_ptr& job) {
   return os;
 }
 
+int jobSubmit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job,
+                  BatchServer* batchServer) {
+    return batchServer->submit(scriptPath, options, job);
+}
+
 /*
  * SOLVE FUNCTIONS
  */
@@ -82,6 +89,7 @@ solve_submitJob(diet_profile_t* pb)
   char* options  = NULL;
   char* jobSerialized = NULL;
   char* updateJobSerialized = NULL;
+  std::string scriptPath = std::string(getenv("HOME"))+"/submit.pbs";
 
   cout << "Solve submitJob " << endl;
 
@@ -104,13 +112,26 @@ solve_submitJob(diet_profile_t* pb)
 
   cout << submitOptions << endl;;
 
-  TMS_Data::Job job;
-  job.setJobId("JOB_1");
-  job.setJobPath("/home/blala/toto.job");
+  TMS_Data::Job_ptr job = NULL;
+  if(!parseTMSEmfObject(std::string(jobSerialized), job)) {
+     cout << "parseEmfObject returns NULL...." << endl;
+     return 1;
+  }
+
+  std::ofstream ofile(scriptPath.c_str());
+  cout << "**************content of script *********" << endl;
+  cout << job->getJobPath() << endl;
+  cout << "******************************************" << endl;
+  ofile << job->getJobPath();
+  ofile.close();
+
+  TorqueServer* torqueServer = new TorqueServer();
+  jobSubmit(scriptPath.c_str(),  *submitOptions, *job, torqueServer);
+
   //To serialize the user object
   const char* name = "solveSubmitJob";
   ::ecorecpp::serializer::serializer _ser(name);
-  updateJobSerialized = strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&job)).c_str());
+  updateJobSerialized = strdup(_ser.serialize(job).c_str());
   if (diet_string_set(diet_parameter(pb,4), updateJobSerialized, DIET_VOLATILE)) {
        cerr << "diet_string_set error" << endl;
        delete submitOptions;
@@ -125,6 +146,8 @@ solve_submitJob(diet_profile_t* pb)
   }
 
   delete submitOptions;
+  delete torqueServer;
+  delete job;
   cout << " done" << endl;
  return 0;
 }

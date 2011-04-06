@@ -19,7 +19,9 @@
     <services name="getJobProgress" description="gets the progression status of jobs" resultCodes="ERRCODE_VISHNU_OK ERRCODE_INVALID_REQUEST ERRCODE_UNKNOWN_MACHINE ERRCODE_NOT_FOUND DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine to get the jobs progression."/>
-      <ports name="progress" direction="OUT" dataType="//@modules.0/@typeList/@types.5" description="Is the object containing jobs progression information"/>
+      <ports name="listProgress" direction="OUT" description="Is the object containing jobs progression information">
+        <dataType href="TMS_Internal.apim#//@modules.0/@typeList/@types.8"/>
+      </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.4" description="Is an object containing the available options jobs for progression ." optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.6"/>
     </services>
