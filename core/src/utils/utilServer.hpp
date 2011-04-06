@@ -60,34 +60,6 @@ namespace vishnu {
     }
     return true;
   }
-
-
-   /**
-   * \brief Function to parse the TMS Data object
-   * \param objectSerialized the EMF object serialized
-   * \param object_ptr the object build with the objectSerialized
-   * \param msgComp an exception message
-   * \return  true if success else false
-   */
-  template<class T> 
-  bool parseTMSDataObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) { 
-
-    object_ptr = NULL;
-    try {
-      //CREATE DATA MODEL
-      /*TMS_Data::TMS_DataPackage_ptr ecorePackage = TMS_Data::TMS_DataPackage::_instance();
-      ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-      //Parse the model
-      ecorecpp::parser::parser parser;
-      object_ptr = parser.load(objectSerialized)->as< T >();*/
-    }
-    catch (std::exception& e) {
-      return false;
-    }
-    return true;
-  }
-
 }
 
 #endif //_UTILSERVER_H_

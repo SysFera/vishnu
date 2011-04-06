@@ -22,12 +22,12 @@ class JobProxy {
 
   /**
   * \param session The object which encapsulates the session information
-  * \param machine The object which encapsulates the machine information
+  * \param machineId The id of the machine
   * \param job The job data structure
   * \brief Constructor, raises an exception on error
   */
   explicit JobProxy(const SessionProxy& session,
-                    const MachineProxy& machine,
+                    const std::string& machineId,
                     TMS_Data::Job& job);
   /**
   * \brief Function to submit job
@@ -65,9 +65,9 @@ class JobProxy {
   */
   SessionProxy msessionProxy;
   /**
-  * \brief The object to manipulate the machine data
+  * \brief The id of the machine
   */
-  MachineProxy mmachineProxy;
+  std::string mmachineId;
   /**
   * \brief The job data structure
   */
