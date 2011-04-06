@@ -183,15 +183,14 @@
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The number of nodes and processors per node."/>
         <details key="shortOption" value="N"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outPutPath" eType="ecore:EDataType Ecore.ecore#//EString"
-        defaultValueLiteral="">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputPath" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Assigns the path and file for job output."/>
         <details key="shortOption" value="o"/>
