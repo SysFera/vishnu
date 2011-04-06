@@ -1,0 +1,8 @@
+parentName=LA1
+traceLevel=10
+name=SeD1
+storageDirectory=@SED_DAGDA_DIR_NATIVE_PATH@
+
+useLogService = 1
+lsOutbuffersize = 0
+lsFlushinterval = 10000
