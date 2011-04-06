@@ -4,6 +4,7 @@
 #include "JobProxy.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
+#include "utilsTMSClient.hpp"
 #include "emfTMSUtils.hpp"
 
 /**
@@ -91,7 +92,7 @@ JobProxy::submitJob(const TMS_Data::SubmitOptions& options) {
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
   TMS_Data::Job_ptr job_ptr;
 

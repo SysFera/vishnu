@@ -21,6 +21,7 @@
 #include "UtilsProxy.hpp"
 #include "UserException.hpp"
 #include "utilVishnu.hpp"
+#include "utilsTMSClient.hpp"
 
 //TMS include
 #include "JobProxy.hpp"
