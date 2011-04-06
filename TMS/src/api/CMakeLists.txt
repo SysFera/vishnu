@@ -6,16 +6,22 @@ LINK_DIRECTORIES(
 INCLUDE_DIRECTORIES(
   .
   ${DIET_INCLUDE_DIR}
+  ${EMF_DATA_DIR}
+  ${UMS_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${TMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${CLIENT_PROXY_SOURCE_DIR}
   ${TMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
+
 )
 
-#ADD_LIBRARY(vishnu-tms-api api_tms.cpp)
+ADD_LIBRARY(
+vishnu-tms-api api_tms.cpp
+)
 SET_TARGET_PROPERTIES(vishnu-tms-api PROPERTIES COMPILE_FLAGS "-fPIC")
 
 TARGET_LINK_LIBRARIES(vishnu-tms-api
@@ -23,6 +29,7 @@ TARGET_LINK_LIBRARIES(vishnu-tms-api
   ${Boost_LIBRARIES}
   emf4cpp-UMS_Data
   exception-vishnu
+  ums-client-proxy
   tms-client-proxy
   utils-vishnu
 )
