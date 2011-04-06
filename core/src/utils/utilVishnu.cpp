@@ -302,7 +302,7 @@ vishnu::string_to_time_t(const std::string& ts){
 }
 
 /**
-   * \brief Simple function to read the content of file
+   * \brief Simple function to read the content of the regular file
    * \param filePath: the path to the file
    * \return The content of the file
    */
@@ -311,10 +311,9 @@ vishnu::string_to_time_t(const std::string& ts){
 
    bfs::path file (filePath);
 
-   // Check existence of the file
+   // Check the existence of file
 
-
-   if ((false==bfs::exists(file)) || (true==bfs::is_empty(file)) ){
+   if (((false==bfs::exists(file)) || (true==bfs::is_empty(file))) || (false==bfs::is_regular_file(file))) {
      throw std::runtime_error("can not read the file: " + filePath);
    }
 
