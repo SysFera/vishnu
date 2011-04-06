@@ -150,9 +150,9 @@ if(COMPILE_UMS)
   add_subdirectory(UMS/doc/man)
 endif (COMPILE_UMS)
 # macros used to setup test environment
-#include(UMSTestingMacros)
-#ums_test_setup()
-#add_subdirectory(UMS/test/src)
+include(UMSTestingMacros)
+ums_test_setup()
+add_subdirectory(UMS/test/src)
 
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
