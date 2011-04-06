@@ -26,7 +26,9 @@ vishnu::submitJob(const std::string& sessionKey,
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  jobInfo.setJobPath(scriptFilePath);
+
+  std::string script_content = TMSUtils::getFileContent(scriptFilePath);
+  jobInfo.setJobPath(script_content);
 
   JobProxy jobProxy(sessionProxy,
                     machineId,
