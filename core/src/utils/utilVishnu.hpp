@@ -45,7 +45,7 @@ public :
    * \brief The position of the last character of the variable
    */
   int end;
-  
+
   /**
    * \brief The value of the variable
    */
@@ -215,7 +215,7 @@ namespace vishnu {
   takePassword(const std::string& prompt);
 
   /**
-   * \brief Simple function to convert time 
+   * \brief Simple function to convert time
    * from string format (YYYY-MM-DD H:mm:ss) to
    * long integer format in seconds
    * \param ts: the time in string format
@@ -225,7 +225,7 @@ namespace vishnu {
   string_to_time_t(const std::string& ts);
 
   /**
-   * \brief Simple function to read the content of file 
+   * \brief Simple function to read the content of a regular file
    * \param filePath: the path to the file
    * \return The content of the file
    */
