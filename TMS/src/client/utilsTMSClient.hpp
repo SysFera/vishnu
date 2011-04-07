@@ -21,7 +21,6 @@
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
 
-
 namespace TMSUtils {
 
   /**

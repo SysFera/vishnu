@@ -1,47 +1,165 @@
 #include <string>
 #include <iostream>
-
 #include "JobOutPutProxy.hpp"
+#include "utilsClient.hpp"
+#include "utilsTMSClient.hpp"
+#include "emfTMSUtils.hpp"
+
+
+using namespace vishnu;
 
 /**
-  * \brief Constructor, raises an exception on error
-  */
-/*JobOutPutProxy::JobOutPutProxy() {
-  mlistJobResults = NULL;
-}*/
-
-
-/**
-  * \param session The object which encapsulates the session information
-  * \param machine The object which encapsulates the machine information
-  * \param jobResult The job results data structure
-  * \param listJobResults the list of job results data structure
-  * \brief Constructor, raises an exception on error
-  */
-JobOutPutProxy::JobOutPutProxy( SessionProxy session,
-                MachineProxy machine,
-                TMS_Data::JobResult result,
-                TMS_Data::ListJobResults* listJobResults)
-:msessionProxy(session), mmachineProxy(machine), mjobResult(result), mlistJobResults(listJobResults)
-{
-}
-
-
-TMS_Data::JobResult
-JobOutPutProxy::getJobOutPut(std::string jobId)
-{
-	return mjobResult;
-}
-
-TMS_Data::ListJobResults*
-JobOutPutProxy::getAllJobsOutPut() {
-	return mlistJobResults;
+* \param session The object which encapsulates the session information
+* \param machine The object which encapsulates the machine information
+* \param jobResult The job results data structure
+* \param listJobResults the list of job results data structure
+* \brief Constructor
+*/
+JobOutPutProxy::JobOutPutProxy( const SessionProxy& session,
+                  const std::string& machineId)
+:msessionProxy(session), mmachineId(machineId) {
 }
 
 /**
-  * \brief Destructor, raises an exception on error
-  */
+* \brief Function to get the job results
+* \param jobResult The job results data structure
+* \return raises an exception on error
+*/
+int
+JobOutPutProxy::getJobOutPut(const std::string& jobId, TMS_Data::JobResult_ptr& outJobResult) {
+
+  diet_profile_t* profile = NULL;
+  std::string sessionKey;
+  char* jobResultToString;
+  char* jobResultInString;
+  char* errorInfo;
+
+  TMS_Data::JobResult jobResult;
+  jobResult.setJobId(jobId);
+
+  std::string serviceName = "jobOutPutGetResult_";
+  serviceName.append(mmachineId);
+
+  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
+  sessionKey = msessionProxy.getSessionKey();
+
+  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
+   //IN Parameters
+  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msgErrorDiet += "with sessionKey parameter "+sessionKey;
+    raiseDietMsgException(msgErrorDiet);
+  }
+
+  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+    msgErrorDiet += "with machineId parameter "+mmachineId;
+    raiseDietMsgException(msgErrorDiet);
+  }
+
+   const char* name = "getJobOutPut";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the options object in to optionsInString
+  jobResultToString =  strdup(_ser.serialize(const_cast<TMS_Data::JobResult_ptr>(&jobResult)).c_str());
+
+  if (diet_string_set(diet_parameter(profile,2), jobResultToString, DIET_VOLATILE)) {
+    msgErrorDiet += "with the job result parameter "+std::string(jobResultToString);
+    raiseDietMsgException(msgErrorDiet);
+  }
+
+   //OUT Parameters
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,3), &jobResultInString, NULL)){
+      msgErrorDiet += " by receiving User serialized  message";
+      raiseDietMsgException(msgErrorDiet);
+    }
+    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+      msgErrorDiet += " by receiving errorInfo message";
+      raiseDietMsgException(msgErrorDiet);
+    }
+  }
+  else {
+    raiseDietMsgException("DIET call failure");
+  }
+
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+
+  //To parse JobResult object serialized
+  if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult, "Error when receiving JobResult object serialized")) {
+    throw UserException(ERRCODE_INVALID_PARAM);
+  }
+
+  return 0;
+}
+
+int
+JobOutPutProxy::getAllJobsOutPut(TMS_Data::ListJobResults& listJobResults) {
+  diet_profile_t* profile = NULL;
+  std::string sessionKey;
+  char* listJobResultInString;
+  char* errorInfo;
+  TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
+
+  std::string serviceName = "jobOutPutGetAllResult_";
+  serviceName.append(mmachineId);
+
+  profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 3);
+  sessionKey = msessionProxy.getSessionKey();
+
+  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
+   //IN Parameters
+  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    msgErrorDiet += "with sessionKey parameter "+sessionKey;
+    raiseDietMsgException(msgErrorDiet);
+  }
+
+  if (diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+    msgErrorDiet += "with machineId parameter "+mmachineId;
+    raiseDietMsgException(msgErrorDiet);
+  }
+
+   //OUT Parameters
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+
+  if(!diet_call(profile)) {
+    if(diet_string_get(diet_parameter(profile,3), &listJobResultInString, NULL)){
+      msgErrorDiet += " by receiving User serialized  message";
+      raiseDietMsgException(msgErrorDiet);
+    }
+    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+      msgErrorDiet += " by receiving errorInfo message";
+      raiseDietMsgException(msgErrorDiet);
+    }
+  }
+  else {
+    raiseDietMsgException("DIET call failure");
+  }
+
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+
+  //To parse ListJobResult object serialized
+  if (!vishnu::parseTMSEmfObject(std::string(listJobResultInString), listJobResults_ptr, "Error when receiving ListJobResult object serialized")) {
+    throw UserException(ERRCODE_INVALID_PARAM);
+  }
+
+  if(listJobResults_ptr != NULL) {
+    TMS_Data::JobResult_ptr jobResult;
+    for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
+      jobResult = listJobResults_ptr->getResults().get(i);
+      listJobResults.getResults().push_back(jobResult);
+    }
+  }
+  delete listJobResults_ptr;
+  return 0;
+}
+
+/**
+* \brief Destructor
+*/
 
 JobOutPutProxy::~JobOutPutProxy() {
-  delete mlistJobResults;
 }
