@@ -25,7 +25,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/thread.hpp>
 #include "config_tests.h"
-//#include "utils.hpp"
+#include "utils.hpp"
 
 namespace ba = boost::assign;
 namespace bf = boost::filesystem;

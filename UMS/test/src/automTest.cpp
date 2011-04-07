@@ -9,7 +9,6 @@
 #include <iostream>
 #include "UMS_fixtures.hpp"
 #include "api_ums.hpp"
-#include "config.h"
 
 //BOOST_AUTO_TEST_SUITE( test_suite )
 BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
@@ -20,7 +19,7 @@ using namespace vishnu;
 
 BOOST_AUTO_TEST_CASE( my_test )
 {
-
+BOOST_TEST_MESSAGE("DEBUG my_test 1");
   int argc = 2;
   char* argv[argc];
   argv[0]= (char*)"./automTest";
