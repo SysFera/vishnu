@@ -21,6 +21,9 @@ if( BUILD_TEST )
 
   file( MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/log )
 
+  #Boost::process is required
+  include_directories(third-party)
+
   # test setup
   # for the moment, we only support in-place testing
   set( BIN_DIR ${PROJECT_BINARY_DIR}/bin )
