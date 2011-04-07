@@ -25,6 +25,8 @@
 
 //TMS include
 #include "JobProxy.hpp"
+#include "TMSMachineProxy.hpp"
+#include "JobOutPutProxy.hpp"
 
 using namespace TMS_Data;
 
@@ -59,8 +61,7 @@ namespace vishnu {
   int
   cancelJob(const std::string& sessionKey,
             const std::string& machineId,
-            const std::string& jobId,
-            std::string& infoMsg)
+            const std::string& jobId)
   throw(UserException, SystemException);
 
   /**
@@ -126,38 +127,6 @@ namespace vishnu {
   throw(UserException, SystemException);
 
   /**
-  * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
-  * \fn int getJobOutput(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, JobResult& outputInfo, std::string& infoMsg)
-  * \param sessionKey : The session key
-  * \param machineId : The id of the machine
-  * \param jobId : The Id of the job
-  * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
-  * \param infoMsg : The information message
-  * \return int : an error code
-  */
-  int
-  getJobOutput(const std::string& sessionKey,
-               const std::string& machineId,
-               const std::string& jobId,
-               JobResult& outputInfo,
-               std::string& infoMsg)
-  throw(UserException, SystemException);
-
-  /**
-  * \brief The getAllJobsOutput function dynamically gets outputPath and errorPath of completed jobs
-  * \fn int getAllJobsOutput(const std::string& sessionKey, const std::string& machineId, ListJobResults& listOfResults)
-  * \param sessionKey : The session key
-  * \param machineId : The id of the machine
-  * \param listOfResults : Is the list of jobs results
-  * \return int : an error code
-  */
-  int
-  getAllJobsOutput(const std::string& sessionKey,
-                   const std::string& machineId,
-                   ListJobResults& listOfResults)
-  throw(UserException, SystemException);
-
-  /**
   * \brief The setMachineRefreshPeriod function sets the refresh period of output and error files contents
   * \fn int setMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId, const int& value)
   * \param sessionKey : The session key
@@ -176,11 +145,42 @@ namespace vishnu {
   * \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
   * \param sessionKey : The session key
   * \param machineId : Represents the machine id
-  * \return int : an error code
+  * \return the value of the refresh period
   */
   int
   getMachineRefreshPeriod(const std::string& sessionKey,
                           const std::string& machineId)
+  throw(UserException, SystemException);
+
+  /**
+  * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
+  * \fn int getJobOutput(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, JobResult& outputInfo, std::string& infoMsg)
+  * \param sessionKey : The session key
+  * \param machineId : The id of the machine
+  * \param jobId : The Id of the job
+  * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
+  * \param infoMsg : The information message
+  * \return int : an error code
+  */
+  int
+  getJobOutput(const std::string& sessionKey,
+               const std::string& machineId,
+               const std::string& jobId,
+               JobResult_ptr& outputInfos)
+  throw(UserException, SystemException);
+
+  /**
+  * \brief The getAllJobsOutput function dynamically gets outputPath and errorPath of completed jobs
+  * \fn int getAllJobsOutput(const std::string& sessionKey, const std::string& machineId, ListJobResults& listOfResults)
+  * \param sessionKey : The session key
+  * \param machineId : The id of the machine
+  * \param listOfResults : Is the list of jobs results
+  * \return int : an error code
+  */
+  int
+  getAllJobsOutput(const std::string& sessionKey,
+                   const std::string& machineId,
+                   ListJobResults& listOfResults)
   throw(UserException, SystemException);
 
 }//END namespace vishnu
