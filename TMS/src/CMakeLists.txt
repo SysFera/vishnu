@@ -1,6 +1,7 @@
 if (NOT CLIENT_ONLY)
   add_subdirectory(sed)
   add_subdirectory(server)
+  add_subdirectory(slave)
 endif (NOT CLIENT_ONLY)
 
 add_subdirectory(utils)
