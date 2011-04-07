@@ -129,15 +129,15 @@ set(TMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/sed)
 set(TMS_UTILS_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/)
 set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
 
+
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
+
 set( UMS_TEST_DIR ${VISHNU_SOURCE_DIR}/UMS/test/src/sql )
 set( TMS_TEST_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/sql )
 
-set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
-set (TEST_SQL "${UMS_TEST_DIR}")
 
 set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
 set (TEST_TMS_SQL "${TMS_TEST_DIR}") 
@@ -148,11 +148,8 @@ add_subdirectory(core/deps/emf4cpp)
 if(COMPILE_UMS)
   add_subdirectory(UMS/src)
   add_subdirectory(UMS/doc/man)
+  add_subdirectory(UMS/test/src)
 endif (COMPILE_UMS)
-# macros used to setup test environment
-include(UMSTestingMacros)
-ums_test_setup()
-add_subdirectory(UMS/test/src)
 
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
