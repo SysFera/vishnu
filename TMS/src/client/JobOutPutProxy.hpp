@@ -12,9 +12,6 @@
 #include "SessionProxy.hpp"
 #include "MachineProxy.hpp"
 
-#include "TMS_Data/ListJobResults.hpp"
-#include "TMS_Data/JobResult.hpp"
-
 /**
  * \class JobOutPutProxy
  * \brief JobOutPutProxy class implementation
@@ -25,12 +22,6 @@ class JobOutPutProxy {
 public:
 
   /**
-  * \brief Constructor, raises an exception on error
-  */
-  /*explicit
-  JobOutPutProxy();
-  */
-  /**
   * \param session The object which encapsulates the session information
   * \param machine The object which encapsulates the machine information
   * \param jobResult The job results data structure
@@ -38,24 +29,23 @@ public:
   * \brief Constructor, raises an exception on error
   */
 	explicit
-	JobOutPutProxy( SessionProxy session,
-                  MachineProxy machine,
-                  TMS_Data::JobResult result,
-                  TMS_Data::ListJobResults* listJobResults);
+	JobOutPutProxy( const SessionProxy& session,
+                  const std::string& machineId);
 
   /**
   * \brief Function to get the job results
-  * \param jobId The identifier of a job
+  * \param outJobResult The job results data structure
   * \return raises an exception on error
   */
-	TMS_Data::JobResult
-	getJobOutPut(std::string jobId);
+  int
+	getJobOutPut(const std::string& jobId, TMS_Data::JobResult_ptr& outJobResult);
   /**
   * \brief Function to get the results of all job submitted
+  * \param listJobResults_ptr The list of job results
   * \return raises an exception on error
   */
-	TMS_Data::ListJobResults*
-	getAllJobsOutPut();
+	int
+	getAllJobsOutPut(TMS_Data::ListJobResults& listJobResults);
   /**
   * \brief Destructor, raises an exception on error
   */
@@ -72,17 +62,9 @@ private:
   */
   SessionProxy msessionProxy;
   /**
-  * \brief The object to manipulate the machine data
+  * \brief The id of the machine
   */
-  MachineProxy mmachineProxy;
-  /**
-  * \brief The Job results data structure
-  */
-  TMS_Data::JobResult mjobResult;
-  /**
-  * \brief the list of job results data structure
-  */
-  TMS_Data::ListJobResults* mlistJobResults;
+  std::string mmachineId;
 };
 
 #endif
