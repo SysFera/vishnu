@@ -27,14 +27,14 @@ throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
 
-  std::string script_content = TMSUtils::getFileContent(scriptFilePath);
-  jobInfo.setJobPath(script_content);
+  jobInfo.setJobPath(scriptFilePath);
+  std::string scriptContent = TMSUtils::getFileContent(scriptFilePath);
 
   JobProxy jobProxy(sessionProxy,
                     machineId,
                     jobInfo);
 
-  int ret = jobProxy.submitJob(options);
+  int ret = jobProxy.submitJob(scriptContent, options);
   jobInfo = jobProxy.getData();
 
   return ret;
@@ -52,8 +52,7 @@ throw(UserException, SystemException) {
 int
 vishnu::cancelJob(const std::string& sessionKey,
           const std::string& machineId,
-          const std::string& jobId,
-          std::string& infoMsg)
+          const std::string& jobId)
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
@@ -152,7 +151,7 @@ throw(UserException, SystemException) {
 * \return int : an error code
 */
 int
-getJobProgress(const std::string& sessionKey,
+vishnu::getJobProgress(const std::string& sessionKey,
               const std::string& machineId,
               ListProgression& listOfProgress,
               const ProgressOptions& options)
@@ -177,4 +176,118 @@ throw(UserException, SystemException) {
   }
   delete listProgression_ptr;
   return 0;
+}
+
+/**
+* \brief The listQueues function gets queues information
+* \fn int listQueues(const std::string& sessionKey, const std::string& machineId, ListQueues& listofQueues)
+* \param sessionKey : The session key
+* \param machineId : The id of the machine
+* \param listofQueues : The list of queues
+* \return int : an error code
+*/
+int
+vishnu::listQueues(const std::string& sessionKey,
+            const std::string& machineId,
+            ListQueues& listofQueues)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
+
+  TMS_Data::ListQueues_ptr listQueues_ptr = tmsMachineProxy.getMachineQueues();
+
+  if(listQueues_ptr != NULL) {
+    TMS_Data::Queue_ptr queue;
+    for(unsigned int i = 0; i < listQueues_ptr->getQueues().size(); i++) {
+      queue = listQueues_ptr->getQueues().get(i);
+      listofQueues.getQueues().push_back(queue);
+    }
+  }
+  delete listQueues_ptr;
+  return 0;
+}
+
+
+/**
+* \brief The setMachineRefreshPeriod function sets the refresh period of output and error files contents
+* \fn int setMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId, const int& value)
+* \param sessionKey : The session key
+* \param machineId : The id of the machine
+* \param value : Is the refresh interval value (in seconds)
+* \return int : an error code
+*/
+int
+vishnu::setMachineRefreshPeriod(const std::string& sessionKey,
+                        const std::string& machineId,
+                        const int& value)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
+  tmsMachineProxy.setMachineRefreshPeriod(value);
+
+  return 0;
+}
+
+/**
+* \brief The getMachineRefreshPeriod function gets the refresh period of output and error files contents
+* \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
+* \param sessionKey : The session key
+* \param machineId : Represents the machine id
+* \return the value of the refresh period
+*/
+int
+vishnu::getMachineRefreshPeriod(const std::string& sessionKey,
+                        const std::string& machineId)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
+
+  return tmsMachineProxy.getMachineRefreshPeriod();
+}
+
+
+/**
+* \brief The getJobOutput function gets outputPath and errorPath of a job from its id
+* \fn int getJobOutput(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, JobResult& outputInfo, std::string& infoMsg)
+* \param sessionKey : The session key
+* \param machineId : The Id of the machine
+* \param jobId : The Id of the job
+* \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
+* \param infoMsg : The information message
+* \return int : an error code
+*/
+int
+vishnu::getJobOutput(const std::string& sessionKey,
+              const std::string& machineId,
+              const std::string& jobId,
+              JobResult_ptr& outputInfos)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
+
+  return jobOutPutProxy.getJobOutPut(jobId, outputInfos);
+}
+
+/**
+* \brief The getAllJobsOutput function dynamically gets outputPath and errorPath of completed jobs
+* \fn int getAllJobsOutput(const std::string& sessionKey, const std::string& machineId, ListJobResults& listOfResults)
+* \param sessionKey : The session key
+* \param machineId : The id of the machine
+* \param listOfResults : Is the list of jobs results
+* \return int : an error code
+*/
+int
+vishnu::getAllJobsOutput(const std::string& sessionKey,
+                  const std::string& machineId,
+                  ListJobResults& listOfResults)
+throw(UserException, SystemException) {
+
+  SessionProxy sessionProxy(sessionKey);
+  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
+
+  return jobOutPutProxy.getAllJobsOutPut(listOfResults);
 }
