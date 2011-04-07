@@ -1,5 +1,5 @@
 /**
-  * \file JobProxy.cpp
+  * \file JobProxy.hpp
   * \brief This file contains the VISHNU JobProxy class.
   * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
   * \date March 2011
@@ -24,18 +24,20 @@ class JobProxy {
   * \param session The object which encapsulates the session information
   * \param machineId The id of the machine
   * \param job The job data structure
-  * \brief Constructor, raises an exception on error
+  * \brief Constructor
   */
   explicit JobProxy(const SessionProxy& session,
                     const std::string& machineId,
                     TMS_Data::Job& job);
   /**
   * \brief Function to submit job
+  * \param scriptContent the content of the script
   * \param options the options to submit job
   * \return raises an exception on error
   */
   int
-  submitJob(const TMS_Data::SubmitOptions& options);
+  submitJob(const std::string scriptContent,
+            const TMS_Data::SubmitOptions& options);
   /**
   * \brief Function to cancel job
   * \return raises an exception on error
@@ -50,7 +52,7 @@ class JobProxy {
   getData() const;
 
   /**
-    * \brief Destructor, raises an exception on error
+    * \brief Destructor
     */
   ~JobProxy();
 
