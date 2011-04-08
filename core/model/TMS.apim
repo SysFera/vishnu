@@ -11,14 +11,14 @@
     </services>
     <services name="getJobInfo" description="gets information on a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_REQUEST ERRCODE_INVALID_RESPONSE ERRCODE_NOT_FOUND ERRCODE_PERMISSION_DENIED ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which  the job is running"/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The id of the job "/>
       <ports name="jobInfos" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The resulting information on the job"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.2"/>
     </services>
     <services name="getJobProgress" description="gets the progression status of jobs" resultCodes="ERRCODE_VISHNU_OK ERRCODE_INVALID_REQUEST ERRCODE_UNKNOWN_MACHINE ERRCODE_NOT_FOUND DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine to get the jobs progression."/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine to get the jobs progression"/>
       <ports name="listProgress" direction="OUT" description="Is the object containing jobs progression information">
         <dataType href="TMS_Internal.apim#//@modules.0/@typeList/@types.8"/>
       </ports>
@@ -27,48 +27,47 @@
     </services>
     <services name="listQueues" description="gets queues information" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_PERMISSION_DENIED ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine that the user wants to list queues"/>
       <ports name="listofQueues" direction="OUT" dataType="//@modules.0/@typeList/@types.6" description="The list of queues"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.8"/>
     </services>
     <services name="listJobs" description="gets a list of all submitted jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_PERMISSION_DENIED ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which  the jobs are running"/>
       <ports name="listOfJobs" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The constructed object list of jobs"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.2" description="Additional options for jobs listing" optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.3"/>
     </services>
     <services name="getJobOutput" description="gets outputPath and errorPath of a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="gets outputPath and errorPath of a job from its id"/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
       <ports name="outputInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.8" description="The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit"/>
-      <ports name="infoMsg" direction="OUT" dataType="//@typeList/@types.0" description="The information message"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.7"/>
     </services>
     <services name="getAllJobsOutput" description="dynamically gets outputPath and errorPath of completed jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which  the jobs are been submitted"/>
       <ports name="listOfResults" direction="OUT" dataType="//@modules.0/@typeList/@types.7" description="Is the list of jobs results"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.4"/>
     </services>
     <services name="cancelJob" description="cancels a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_RESPONSE ERRCODE_INVALID_REQUEST ERRCODE_NOT_FOUND ERRCODE_PERMISSION_DENIED ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE DB_ERROR">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Machine hash key"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which  the job is running"/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
-      <ports name="infoMsg" direction="OUT" dataType="//@typeList/@types.0" description="The information message"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.1"/>
     </services>
     <services name="setMachineRefreshPeriod" description="sets the refresh period of output and error files contents" adminOnly="true" resultCodes="ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_MACHINE">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine that the user wants to set refresh period"/>
       <ports name="value" dataType="//@typeList/@types.1" description="Is the refresh interval value (in seconds)"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
     </services>
     <services name="getMachineRefreshPeriod" description="gets the refresh period of output and error files contents" adminOnly="true" resultCodes="ERRCODE_VISHNU_OK ERRCODE_UNKNOWN_MACHINE">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="machineId" dataType="//@typeList/@types.0" description="Represents the machine id"/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine that the user wants to get refresh period"/>
+      <ports name="value" direction="OUT" dataType="//@typeList/@types.1" description="Is the refresh interval value (in seconds)"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.6"/>
     </services>
     <typeList>
