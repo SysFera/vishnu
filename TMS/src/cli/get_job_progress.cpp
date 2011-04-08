@@ -13,21 +13,12 @@
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-/**
- * \brief To display the job info
- * \fn void displayJobProgress(Progression& p)
- * \param j: The progression to display the info
- */
-void 
-displayJobProgress(ListProgression& j){
-  // TODO
-}
 
 
 /**

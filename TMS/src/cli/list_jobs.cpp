@@ -13,22 +13,12 @@
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-
-/**
- * \brief To display the list of jobs
- * \fn void displayListJobs(ListJobs& p)
- * \param j: The list of job to display 
- */
-void 
-displayListJobs(ListJobs& j){
-  // TODO
-}
 
 /**
  * \brief To build options for the VISHNU submit job command

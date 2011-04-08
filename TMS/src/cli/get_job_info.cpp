@@ -93,7 +93,7 @@ main (int argc, char* argv[]){
       getJobInfo(sessionKey, machineId, jobId, job);
     }
 
-    displayJob(job);
+    displayJob(*job);
 
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
