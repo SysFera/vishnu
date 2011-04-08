@@ -38,17 +38,17 @@ using namespace vishnu;
  */
 boost::shared_ptr<Options>
 makeListJobOp(string pgName, 
-	     boost::function1<void, string> fjid,
-	     boost::function1<void, int> fnbCpu,
-	     boost::function1<void, long> fstart, 
-	     boost::function1<void, long> fend, 
-	     boost::function1<void, string> fowner,
-	     boost::function1<void, JobStatus> fstatus,
-	     boost::function1<void, JobPriority> fpriority,
-	     boost::function1<void, string> foutput,
-	     boost::function1<void, string> ferr,
-	     boost::function1<void, string> fqueue,
-	     string dietConfig){
+	      boost::function1<void, string>& fjid,
+	      boost::function1<void, int>& fnbCpu,
+	      boost::function1<void, long>& fstart, 
+	      boost::function1<void, long>& fend, 
+	      boost::function1<void, string>& fowner,
+	      boost::function1<void, JobStatus>& fstatus,
+	      boost::function1<void, JobPriority>& fpriority,
+	      boost::function1<void, string>& foutput,
+	      boost::function1<void, string>& ferr,
+	      boost::function1<void, string>& fqueue,
+	      string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
