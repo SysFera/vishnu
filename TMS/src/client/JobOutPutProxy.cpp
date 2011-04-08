@@ -32,7 +32,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId, TMS_Data::JobResult_ptr& 
   std::string sessionKey;
   char* jobResultToString;
   char* jobResultInString;
-  char* errorInfo;
+  char* errorInfo = NULL;
 
   TMS_Data::JobResult jobResult;
   jobResult.setJobId(jobId);
@@ -98,8 +98,8 @@ int
 JobOutPutProxy::getAllJobsOutPut(TMS_Data::ListJobResults& listJobResults) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* listJobResultInString;
-  char* errorInfo;
+  char* listJobResultInString = NULL;
+  char* errorInfo = NULL;
   TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
 
   std::string serviceName = "jobOutPutGetAllResult_";
