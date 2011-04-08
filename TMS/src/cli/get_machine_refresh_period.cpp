@@ -46,11 +46,12 @@ int main (int argc, char* argv[]){
            ENV,
            dietConfig);
 
-  opt->setPosition("machineId",1);
+  // All cli obligatory parameters
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
