@@ -13,6 +13,7 @@ static const int CLI_ERROR_INVALID_PARAMETER = 12;
 static const int CLI_ERROR_MISSING_PARAMETER = 13;
 static const int CLI_ERROR_DIET = 14;
 static const int CLI_ERROR_RUNTIME = 15;
+static const int CLI_SUCCESS = 0;
 
 
 #endif
