@@ -1,7 +1,10 @@
 
 link_directories(${Boost_LIBRARY_DIRS}
                   ${TMS_CLI_SOURCE_DIR}
+                  ${CLI_SOURCE_DIR}
+		  ${LIBRARY_OUTPUT_PATH}
                 )
+
 include_directories(${Boost_INCLUDE_DIRS}
                     ${DIET_INCLUDE_DIR}
                     ${TMS_EMF_DATA_DIR}
@@ -12,29 +15,24 @@ include_directories(${Boost_INCLUDE_DIRS}
                     ${VISHNU_EXCEPTION_INCLUDE_DIR}
                     ${TMS_CLI_SOURCE_DIR}
                     ${UTILVISHNU_SOURCE_DIR}
+		    ${API_SOURCE_DIR}
+		    ${CLIENT_PROXY_SOURCE_DIR}
+		    ${EMF_DATA_DIR}
+		    ${UMS_DATA_DIR}
                   )
 
-#add_library(utils-cli
- #         utils
- #         daemon_cleaner
- #         configureOptionUtils
- #         localAccountUtils
- #         userUtils
- #         machineUtils
- #         listMachineUtils
- #         listHistoryCmdUtils
- #         )
+add_library(tms-utils-cli
+            utils
+ )
 #declare all command lines provided
 
-#set(ALLCLI connect reconnect close
-#    add_user update_user delete_user
-#    change_password reset_password
-#    add_local_account update_local_account delete_local_account
-#    save_configuration restore_configuration
-#    add_machine update_machine delete_machine
-#    configure_default_option configure_option
-#    list_local_accounts list_machines list_history_cmd list_options list_users list_sessions
-#    )
+set(ALLCLI 
+  cancel_job get_job_info get_job_progress
+  list_jobs set_machine_refresh_period
+  get_machine_refresh_period
+  get_all_job_output get_job_output
+  list_queues submit_job
+  )
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)
@@ -57,9 +55,10 @@ macro(genCli NAME )
   target_link_libraries(${CMDNAME}
                         ${Boost_LIBRARIES}
                         ${VISHNU_EXCEPTION_LIB}
-                        utils-cli
+                        tms-utils-cli
                         utils-vishnu
                         vishnu-tms-api
+                        vishnu-ums-api
                         crypt
                         -pthread
                         )
@@ -77,5 +76,5 @@ genCli(${cli})
 
 endforeach(cli)
 
-install( TARGETS utils-cli DESTINATION lib )
+install( TARGETS tms-utils-cli DESTINATION lib )
 
