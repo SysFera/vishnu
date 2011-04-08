@@ -38,17 +38,24 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt (new Options(argv[0]));
 
-  opt->setPosition("machineId",1);
+  // Environement option
+  opt->add("dietConfig,c",
+           "The diet config file",
+           ENV,
+           dietConfig);
+
+  // All cli obligatory parameters
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
-  opt->setPosition("jobId",1);
   opt->add("jobId,j",
 	   "represents the id of the job",
 	   HIDDEN,
 	   jobId,1);
+  opt->setPosition("jobId",1);
  
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 

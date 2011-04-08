@@ -45,6 +45,7 @@ main (int argc, char* argv[]){
            ENV,
            dietConfig);
 
+  // All cli obligatory parameters
   opt->setPosition("machineId",1);
   opt->add("machineId,m",
 	   "represents the id of the machine",
