@@ -131,7 +131,7 @@ int main (int argc, char* argv[]){
   opt->add("scriptPath,p",
 	   "represents the script of submission",
 	   HIDDEN,
-	   machineId,1);
+	   scriptPath,1);
   opt->setPosition("scriptPath",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
