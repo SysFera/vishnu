@@ -12,24 +12,12 @@
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-/**
- * \brief To display the output of a job
- * \fn void displayJobProgress(TMS_Data::JobResult_ptr j)
- * \param out: the outputpath of the job
- * \param err: the errorpath of the job
- */
-void 
-displayJobOutput(TMS_Data::JobResult_ptr j){
-  // TODO
-}
-
-
 
 
 int main (int argc, char* argv[]){
