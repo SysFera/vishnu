@@ -44,10 +44,11 @@ class TMSMachineProxy {
 
   /**
   * \brief Function to get the refresh period
-  * \return the refresh period value
+  * \param value The new refresh period value
+  * \return raises an exception on error
   */
   int
-  getMachineRefreshPeriod();
+  getMachineRefreshPeriod(int& value);
 
   /**
     * \brief Destructor, raises an exception on error
