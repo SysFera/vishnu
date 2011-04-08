@@ -31,9 +31,9 @@ using namespace vishnu;
  */
 boost::shared_ptr<Options>
 makeGetJobProgOp(string pgName, 
-		 boost::function1<void, string> fjid,
-		 boost::function1<void, string> fown,
-		 string dietConfig){
+		 boost::function1<void, string>& fjid,
+		 boost::function1<void, string>& fown,
+		 string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
