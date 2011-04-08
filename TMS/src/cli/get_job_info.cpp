@@ -12,21 +12,12 @@
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-/**
- * \brief To display the job info
- * \fn void displayJob(Job& j)
- * \param j: The job to display the info
- */
-void 
-displayJob(TMS_Data::Job_ptr& j){
-  // TODO
-}
 
 
 int 
