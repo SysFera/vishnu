@@ -16,6 +16,8 @@ using namespace vishnu;
 TMSMachineProxy::TMSMachineProxy( const SessionProxy& session,
                           const std::string& machineId)
   :msessionProxy(session), mmachineId(machineId) {
+
+    mrefreshPeriod = 0;
 }
 
 /**
@@ -29,8 +31,8 @@ TMSMachineProxy::getMachineQueues() {
   std::string sessionKey;
 
   char* listQueuesInString;
-  char* errorInfo;
-  TMS_Data::ListQueues_ptr listQueues;
+  char* errorInfo = NULL;
+  TMS_Data::ListQueues_ptr listQueues = NULL;
 
   std::string serviceName = "TMSMachineGetListOfQueues_";
   serviceName.append(mmachineId);
@@ -90,7 +92,7 @@ TMSMachineProxy::setMachineRefreshPeriod(int refreshPeriod) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* errorInfo;
+  char* errorInfo = NULL;
 
   std::string serviceName = "TMSMachineRefreshPeriodSet_";
   serviceName.append(mmachineId);
@@ -137,17 +139,16 @@ TMSMachineProxy::setMachineRefreshPeriod(int refreshPeriod) {
 
 /**
 * \brief Function to get the refresh period
-* \param value The new refresh period value
-* \return raises an exception on error
+* \return The refresh period value
 */
 
 int
-TMSMachineProxy::getMachineRefreshPeriod(int& value) {
+TMSMachineProxy::getMachineRefreshPeriod() {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* errorInfo;
-  std::string refreshPeriod;
+  char* errorInfo = NULL;
+  char* refreshPeriod =  NULL;
 
   std::string serviceName = "TMSMachineRefreshPeriodGet_";
   serviceName.append(mmachineId);
@@ -187,10 +188,11 @@ TMSMachineProxy::getMachineRefreshPeriod(int& value) {
     raiseDietMsgException("DIET call failure");
   }
 
-  mrefreshPeriod = vishnu::convertToInt(refreshPeriod);
-  value = mrefreshPeriod;
+  /*To raise a vishnu exception if the receiving message is not empty*/
+  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
-  return 0;
+  mrefreshPeriod = vishnu::convertToInt(std::string(refreshPeriod));
+  return mrefreshPeriod;
 }
 
 

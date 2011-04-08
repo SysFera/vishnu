@@ -237,19 +237,20 @@ throw(UserException, SystemException) {
 * \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
 * \param sessionKey : The session key
 * \param machineId : Represents the machine id
-* \param value The new refresh period value
+* \param value The refresh period value
 * \return the value of the refresh period
 */
 int
 vishnu::getMachineRefreshPeriod(const std::string& sessionKey,
-                        const std::string& machineId,
-                        int& value)
+                                const std::string& machineId,
+                                int& value)
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
 
-  return tmsMachineProxy.getMachineRefreshPeriod(value);
+   value = tmsMachineProxy.getMachineRefreshPeriod();
+   return 0;
 }
 
 
