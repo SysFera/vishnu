@@ -12,22 +12,12 @@
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-/**
- * \brief To display the job info
- * \fn void displayQueues(ListQueues& j)
- * \param j: The list of queues to display the info
- */
-void 
-displayQueues(ListQueues& j){
-  // TODO
-}
-
 
 int 
 main (int argc, char* argv[]){
