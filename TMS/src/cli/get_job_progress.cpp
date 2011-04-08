@@ -79,11 +79,11 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeGetJobProgOp(argv[0], fjid, fown, dietConfig);
 
-  opt->setPosition("machineId",1);
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 

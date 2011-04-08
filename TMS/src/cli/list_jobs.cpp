@@ -57,7 +57,7 @@ makeListJobOp(string pgName,
            ENV,
            dietConfig);
 
-  // All cli options
+  // All cli obligatory parameters
   opt->add("jobId,i",
 	   "The id of the job",
 	   CONFIG,
@@ -145,11 +145,11 @@ int main (int argc, char* argv[]){
 					       fqueue,
 					       dietConfig);
 
-  opt->setPosition("machineId",1);
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
