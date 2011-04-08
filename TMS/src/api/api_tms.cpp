@@ -77,6 +77,7 @@ throw(UserException, SystemException) {
 * \return int : an error code
 */
 
+//TODO: fonction api externe à enlever car identique à liste job
 int
 vishnu::getJobInfo(const std::string& sessionKey,
             const std::string& machineId,
@@ -130,6 +131,7 @@ throw(UserException, SystemException) {
 
   TMS_Data::ListJobs* listJobs_ptr = query.list();
 
+  //TODO faire une template qui parcours la liste et remplit l'objet en out
   if(listJobs_ptr != NULL) {
     TMS_Data::Job_ptr job;
     for(unsigned int i = 0; i < listJobs_ptr->getJobs().size(); i++) {
@@ -235,17 +237,19 @@ throw(UserException, SystemException) {
 * \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
 * \param sessionKey : The session key
 * \param machineId : Represents the machine id
+* \param value The new refresh period value
 * \return the value of the refresh period
 */
 int
 vishnu::getMachineRefreshPeriod(const std::string& sessionKey,
-                        const std::string& machineId)
+                        const std::string& machineId,
+                        int& value)
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
 
-  return tmsMachineProxy.getMachineRefreshPeriod();
+  return tmsMachineProxy.getMachineRefreshPeriod(value);
 }
 
 
