@@ -47,7 +47,7 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
         }
       }
     } else {
-      throw UMSVishnuException(-1, msg);
+      throw SystemException(ERRCODE_INVEXCEP, msg);
     }
   }
 
