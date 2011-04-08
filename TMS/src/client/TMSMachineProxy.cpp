@@ -137,10 +137,12 @@ TMSMachineProxy::setMachineRefreshPeriod(int refreshPeriod) {
 
 /**
 * \brief Function to get the refresh period
-* \return the refresh period value
+* \param value The new refresh period value
+* \return raises an exception on error
 */
+
 int
-TMSMachineProxy::getMachineRefreshPeriod() {
+TMSMachineProxy::getMachineRefreshPeriod(int& value) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
@@ -186,7 +188,9 @@ TMSMachineProxy::getMachineRefreshPeriod() {
   }
 
   mrefreshPeriod = vishnu::convertToInt(refreshPeriod);
-  return mrefreshPeriod;
+  value = mrefreshPeriod;
+
+  return 0;
 }
 
 
