@@ -274,7 +274,9 @@ throw(UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
 
-  return jobOutPutProxy.getJobOutPut(jobId, outputInfos);
+  outputInfos = jobOutPutProxy.getJobOutPut(jobId);
+
+  return 0;
 }
 
 /**
@@ -294,5 +296,14 @@ throw(UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
 
-  return jobOutPutProxy.getAllJobsOutPut(listOfResults);
+  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutPutProxy.getAllJobsOutPut();
+
+  if(listJobResults_ptr != NULL) {
+    TMS_Data::JobResult_ptr jobResult;
+    for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
+      jobResult = listJobResults_ptr->getResults().get(i);
+      listOfResults.getResults().push_back(jobResult);
+  }
+  delete listJobResults_ptr;
+  return 0;
 }
