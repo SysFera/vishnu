@@ -34,18 +34,19 @@ public:
 
   /**
   * \brief Function to get the job results
-  * \param outJobResult The job results data structure
-  * \return raises an exception on error
+  * \param jobId The Id of the
+  * \return The job results data structure
   */
-  int
-	getJobOutPut(const std::string& jobId, TMS_Data::JobResult_ptr& outJobResult);
+  TMS_Data::JobResult_ptr
+	getJobOutPut(const std::string& jobId);
+
   /**
   * \brief Function to get the results of all job submitted
-  * \param listJobResults_ptr The list of job results
-  * \return raises an exception on error
+  * \return The list of the job results
   */
-	int
-	getAllJobsOutPut(TMS_Data::ListJobResults& listJobResults);
+	TMS_Data::ListJobResults_ptr
+	getAllJobsOutPut();
+
   /**
   * \brief Destructor, raises an exception on error
   */
