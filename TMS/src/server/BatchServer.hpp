@@ -16,8 +16,8 @@ public:
 
   BatchServer();
    
-  virtual int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job)=0;
-	virtual int cancel()=0;
+  virtual int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp=NULL)=0;
+	virtual int cancel(const char* jobId)=0;
 	virtual TMS_Data::Job getJob()=0;
 	virtual TMS_Data::ListJobs* listJobs()=0;
 	virtual TMS_Data::JobResult getJobResults()=0;

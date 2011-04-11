@@ -169,46 +169,6 @@ main(int argc, char* argv[], char* envp[])
     }
 
     TMS_Data::Job job;
-    /*job.setJobPath(scriptPath);
-    job.setSubmitMachineId(machineId);
-    //To set the script content
-    std::string script_content = get_file_content(scriptPath);
-    job.setJobPath(script_content);
-
-    const char* name = "jobSumit";
-    ::ecorecpp::serializer::serializer _ser(name);
-    jobToString =  strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(&job)).c_str());
-    ::ecorecpp::serializer::serializer _ser2(name);
-    submitOptionsToString =  strdup(_ser2.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&submitOptions)).c_str());
-
-    profile = diet_profile_alloc(("jobSubmit_"+std::string(machineId)).c_str(), 3, 3, 5);
-
-    diet_string_set(diet_parameter(profile,0), sessionKey, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile,1), machineId, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile,2), submitOptionsToString, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile,3), jobToString, DIET_VOLATILE);
-
-    //OUT Parameters
-    diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
-
-    if(!diet_call(profile)) {
-      diet_string_get(diet_parameter(profile,4), &jobInString, NULL);
-      diet_string_get(diet_parameter(profile,5), &errorInfo, NULL);
-    } else {
-      cerr << "Error in diet_call...." << endl;
-      exit(EXIT_FAILURE);
-    }
-
-
-    TMS_Data::TMS_DataPackage_ptr ecorePackage = TMS_Data::TMS_DataPackage::_instance();
-    ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
-
-    //Parse the model
-    ecorecpp::parser::parser parser;
-    job = *(parser.load(jobInString)->as<TMS_Data::Job>());
-    */
-
 
     submitJob(sessionKey,
               machineId,
@@ -216,6 +176,9 @@ main(int argc, char* argv[], char* envp[])
               job,
               submitOptions);
     std::cout << "***************job.getJobId()=" << job.getJobId() << std::endl;
+  }  catch (VishnuException& e) {
+       std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]"; 
+       std::cerr << "test_client: " << msg << endl; 
   }
   catch (std::exception& e) {
     std::cerr << e.what() << std::endl;

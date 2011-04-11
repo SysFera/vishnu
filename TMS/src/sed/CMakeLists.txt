@@ -20,30 +20,34 @@ include_directories(
   ${UTILVISHNU_SOURCE_DIR}
   ${TMS_UTILS_DIR}
   ${TORQUE_INCLUDE_DIR}
+  ${UTILS_TORQUE_DIR}
 )
 
-#add_executable(tmssed
-  #tmssed.cpp
-  #ServerUMS.cpp
-  #internalApi.cpp
-  #MonitorUMS.cpp
-  #)
+add_executable(tmssed
+  tmssed
+  TMSServer
+  internalTMSAPI
+)
 
-#target_link_libraries(tmssed
-#  ${DIET_SERVER_LIBRARIES}
-#  ${Boost_LIBRARIES}
-#  register-vishnu
-#  exception-vishnu
-#  database-vishnu
-#  tms-server
-#)
+target_link_libraries(tmssed
+  ${DIET_SERVER_LIBRARIES}
+  ${Boost_LIBRARIES}
+  ${TORQUE_LIB}
+  emf4cpp-TMS_Data
+  register-vishnu
+  exception-vishnu
+  database-vishnu
+  utils-vishnu
+  utils-server
+  tms-server
+)
 
-#install_targets(/sbin/
-# tmssed
-#)
+install_targets(/sbin/
+  tmssed
+)
 
 add_executable(test_server
-  test_server.cpp
+  test_server
 )
 
 target_link_libraries(test_server
