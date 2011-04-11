@@ -34,10 +34,10 @@ JobProxy::submitJob(const std::string scriptContent,
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* optionsToString;
-  char* jobToString;
-  char* jobInString;
-  char* errorInfo;
+  char* optionsToString = NULL;
+  char* jobToString = NULL;
+  char* jobInString = NULL;
+  char* errorInfo = NULL;
   std::string serviceName = "jobSubmit_";
   serviceName.append(mmachineId);
 
@@ -123,8 +123,8 @@ JobProxy::cancelJob() {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* jobToString;
-  char* errorInfo;
+  char* jobToString = NULL;
+  char* errorInfo = NULL;
   std::string serviceName = "jobCancel_";
   serviceName.append(mmachineId);
 

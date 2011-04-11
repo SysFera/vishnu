@@ -35,15 +35,15 @@ using namespace vishnu;
  */
 boost::shared_ptr<Options>
 makeSubJobOp(string pgName, 
-	     boost::function1<void, string> fname,
-	     boost::function1<void, string> fqueue,
-	     boost::function1<void, int> fwallTime, 
-	     boost::function1<void, int> fmemory, 
-	     boost::function1<void, int> fnbCpu,
-	     boost::function1<void, int> fnbNodeAndCpu,
-	     boost::function1<void, string> foutput,
-	     boost::function1<void, string> ferr,
-	     string dietConfig){
+	     boost::function1<void, string>& fname,
+	     boost::function1<void, string>& fqueue,
+	     boost::function1<void, int>& fwallTime, 
+	     boost::function1<void, int>& fmemory, 
+	     boost::function1<void, int>& fnbCpu,
+	     boost::function1<void, int>& fnbNodeAndCpu,
+	     boost::function1<void, string>& foutput,
+	     boost::function1<void, string>& ferr,
+	     string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -122,17 +122,17 @@ int main (int argc, char* argv[]){
 					      fmemory, fnbCpu, fnbNodeAndCpu,
 					      foutput, ferr, dietConfig);
 
-  opt->setPosition("machineId",1);
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
-  opt->setPosition("scriptPath",1);
   opt->add("scriptPath,p",
 	   "represents the script of submission",
 	   HIDDEN,
-	   machineId,1);
+	   scriptPath,1);
+  opt->setPosition("scriptPath",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
