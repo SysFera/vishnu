@@ -135,12 +135,11 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 
-set( UMS_TEST_DIR ${VISHNU_SOURCE_DIR}/UMS/test/src/sql )
-set( TMS_TEST_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/sql )
-
+# for testing
+set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
 
 set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
-set (TEST_TMS_SQL "${TMS_TEST_DIR}") 
+set (TEST_TMS_SQL "${TMS_TEST_DIR}")
 
 add_subdirectory(core/src)
 add_subdirectory(core/deps/emf4cpp)
@@ -153,10 +152,20 @@ endif (COMPILE_UMS)
 
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
+  add_subdirectory(TMS/test/src)
 endif (COMPILE_TMS)
 
-if (BUILD_TEST)
-  include(TMSTestingMacros)             
-  tms_test_setup()                
-  add_subdirectory(TMS/test/src)      
-endif (BUILD_TEST)
+if (BUILD_TESTING)
+  set( TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
+  set( TEST_DB_HOST "localhost" CACHE STRING "Hostname of the test database server")
+  set( TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")
+  set( TEST_DB_LOGIN "vishnu" CACHE STRING "Login for the test database")
+  set( TEST_DB_PASSWORD "vishnu" CACHE STRING "Password for the test database")
+  mark_as_advanced(TEST_DB_TYPE)
+  mark_as_advanced(TEST_DB_HOST)
+  mark_as_advanced(TEST_DB_NAME)
+  mark_as_advanced(TEST_DB_LOGIN)
+  mark_as_advanced(TEST_DB_PASSWORD)
+
+  add_subdirectory(core/test)
+endif (BUILD_TESTING)
