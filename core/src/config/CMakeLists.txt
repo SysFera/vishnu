@@ -1,3 +1,8 @@
+include_directories(
+  ../exception
+  ../utils
+)
+
 # internal configuration parsers
 set( config_SRCS
 #   CmdParser.cc

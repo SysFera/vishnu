@@ -125,12 +125,12 @@ public :
    */
   virtual std::string
   getMsg() const {return "";}
-  
+
   /**
    * \brief To get the complementary message
    * \return Returns the message
    */
-  virtual std::string 
+  virtual std::string
   getMsgComp() const {return mmsgc;}
   /**
    * \brief Function to set the type of the exception
