@@ -61,6 +61,19 @@
           <para>Modified signature FMS::listDir and FMS::ListFileTransfers. Removed FMS::ListFileFileTransferStatus. Added data type FMS::FileTransfer, FMS::FileTransferList, FMS::FileStatList.</para>
         </revdescription>
         </revision>
+        <revision>
+        <revnumber>5</revnumber>
+        <date>08/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+	    IMS update :
+	    Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
+	    Add services stop and getSystemInfo
+	    Add corresponding datatypes (option) plus list of system info and processes
+	  </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>

@@ -56,6 +56,18 @@
             <para>Removed the VISHNU_SESSION_KEY environment variable on all commands.</para>
           </revdescription>
         </revision>
+        <revision>
+        <revnumber>4</revnumber>
+        <date>08/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+	    IMS update :
+	    Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
+	    Add services stop and getSystemInfo
+	  </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>

@@ -13,21 +13,12 @@
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-/**
- * \brief To display the refresh period
- * \fn void displayRefreshPeriod(int& j)
- * \param j: The refresh period
- */
-void 
-displayRefreshPeriod(int& j){
-  // TODO
-}
 
 
 int main (int argc, char* argv[]){
@@ -55,11 +46,12 @@ int main (int argc, char* argv[]){
            ENV,
            dietConfig);
 
-  opt->setPosition("machineId",1);
+  // All cli obligatory parameters
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
