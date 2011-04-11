@@ -4,8 +4,8 @@ set( config_SRCS
   CommonParser.cpp
 #   EnvParser.cc
   FileParser.cpp
-#   constants.cc
-#   configuration.cc
+  constants.cpp
+  configuration.cpp
 )
 
 # static because we don't ship this
