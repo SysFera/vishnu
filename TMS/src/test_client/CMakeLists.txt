@@ -41,3 +41,39 @@ target_link_libraries(test_client
   ums-client-proxy
   tms-client-proxy
 )
+
+add_executable(test_submit
+  test_submit.cpp
+)
+
+target_link_libraries(test_submit
+  ${DIET_CLIENT_LIBRARIES}
+  ${Boost_LIBRARIES}
+  emf4cpp-UMS_Data
+  emf4cpp-TMS_Data
+  register-vishnu
+  exception-vishnu
+  database-vishnu
+  utils-vishnu
+  vishnu-tms-api
+  ums-client-proxy
+  tms-client-proxy
+)
+
+add_executable(test_cancel
+  test_cancel.cpp
+)
+
+target_link_libraries(test_cancel
+  ${DIET_CLIENT_LIBRARIES}
+  ${Boost_LIBRARIES}
+  emf4cpp-UMS_Data
+  emf4cpp-TMS_Data
+  register-vishnu
+  exception-vishnu
+  database-vishnu
+  utils-vishnu
+  vishnu-tms-api
+  ums-client-proxy
+  tms-client-proxy
+)

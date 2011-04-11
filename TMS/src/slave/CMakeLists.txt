@@ -20,14 +20,15 @@ include_directories(
   ${UTILVISHNU_SOURCE_DIR}
   ${TMS_UTILS_DIR}
   ${TORQUE_INCLUDE_DIR}
+  ${UTILS_TORQUE_DIR}
 )
 
 
-add_executable(slave
+add_executable(tmsSlave
   slave.cpp
 )
 
-target_link_libraries(slave
+target_link_libraries(tmsSlave
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
   ${TORQUE_LIB}
@@ -38,4 +39,8 @@ target_link_libraries(slave
   utils-vishnu
   utils-server
   tms-server
+)
+
+install_targets(/tmp
+ tmsSlave 
 )
