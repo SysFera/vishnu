@@ -303,6 +303,7 @@ throw(UserException, SystemException) {
     for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
       jobResult = listJobResults_ptr->getResults().get(i);
       listOfResults.getResults().push_back(jobResult);
+    }
   }
   delete listJobResults_ptr;
   return 0;
