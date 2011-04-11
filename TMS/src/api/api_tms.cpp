@@ -237,19 +237,20 @@ throw(UserException, SystemException) {
 * \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
 * \param sessionKey : The session key
 * \param machineId : Represents the machine id
-* \param value The new refresh period value
+* \param value The refresh period value
 * \return the value of the refresh period
 */
 int
 vishnu::getMachineRefreshPeriod(const std::string& sessionKey,
-                        const std::string& machineId,
-                        int& value)
+                                const std::string& machineId,
+                                int& value)
 throw(UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
 
-  return tmsMachineProxy.getMachineRefreshPeriod(value);
+   value = tmsMachineProxy.getMachineRefreshPeriod();
+   return 0;
 }
 
 
@@ -273,7 +274,9 @@ throw(UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
 
-  return jobOutPutProxy.getJobOutPut(jobId, outputInfos);
+  outputInfos = jobOutPutProxy.getJobOutPut(jobId);
+
+  return 0;
 }
 
 /**
@@ -293,5 +296,14 @@ throw(UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
 
-  return jobOutPutProxy.getAllJobsOutPut(listOfResults);
+  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutPutProxy.getAllJobsOutPut();
+
+  if(listJobResults_ptr != NULL) {
+    TMS_Data::JobResult_ptr jobResult;
+    for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
+      jobResult = listJobResults_ptr->getResults().get(i);
+      listOfResults.getResults().push_back(jobResult);
+  }
+  delete listJobResults_ptr;
+  return 0;
 }

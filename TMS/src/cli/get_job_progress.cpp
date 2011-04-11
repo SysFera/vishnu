@@ -13,21 +13,12 @@
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-/**
- * \brief To display the job info
- * \fn void displayJobProgress(Progression& p)
- * \param j: The progression to display the info
- */
-void 
-displayJobProgress(ListProgression& j){
-  // TODO
-}
 
 
 /**
@@ -40,9 +31,9 @@ displayJobProgress(ListProgression& j){
  */
 boost::shared_ptr<Options>
 makeGetJobProgOp(string pgName, 
-		 boost::function1<void, string> fjid,
-		 boost::function1<void, string> fown,
-		 string dietConfig){
+		 boost::function1<void, string>& fjid,
+		 boost::function1<void, string>& fown,
+		 string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -88,11 +79,11 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeGetJobProgOp(argv[0], fjid, fown, dietConfig);
 
-  opt->setPosition("machineId",1);
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 

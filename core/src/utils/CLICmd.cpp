@@ -20,6 +20,7 @@ CLICmd::parse(const func1 & s, string proto){
     usage(proto);
     return CLI_ERROR_INVALID_PARAMETER;
   }
+  return CLI_SUCCESS;
 }
 
 
