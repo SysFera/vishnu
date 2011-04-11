@@ -16,6 +16,8 @@ class SSHJobExec {
 
   public:
 
+    SSHJobExec();
+
     SSHJobExec(char* script_path, 
                const std::string& jobSerialized, 
                const std::string& submitOptionsSerialized,
@@ -26,13 +28,13 @@ class SSHJobExec {
     std::string getErrorInfo(); //Temporaire
 
     int sshexec(const std::string& cmd);
+    void createTmpFile(char* outputFilePath, const std::string& file_content);
+    void createTmpFile(char* fileName);
+    int deleteFile(const char* fileName);
 
     ~SSHJobExec();
 
   private:
-    void createTmpFile(char* outputFilePath, const std::string& file_content);
-    void createTmpFile(char* fileName);
-
     char*  mscript_path;
     std::string mjobSerialized;
     std::string msubmitOptionsSerialized;
