@@ -4,7 +4,7 @@
  * Author : bisnard
  */
 
-#include "vishnu_fixtures.hpp"
+#include "diet_fixtures.hpp"
 #include "testconfig.h"
 
 // must not be static
@@ -13,4 +13,4 @@ char UMSSeD[] = "umssed";
 char ConfigUMSSeD[] = UMSSEDCONF;
 char BinDirUMSSeD[] = UMSSEDBINDIR;
 
-typedef VishnuSeDFixture<UMSSeD, BinDirUMSSeD, ConfigUMSSeD, DietMAFixture> UMSSeDFixture;
+typedef DietSeDFixture<UMSSeD, BinDirUMSSeD, ConfigUMSSeD, DietMAFixture> UMSSeDFixture;

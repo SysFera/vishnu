@@ -24,7 +24,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/thread.hpp>
-#include "config_tests.h"
+#include "diet_config_tests.h"
 #include "utils.hpp"
 
 namespace ba = boost::assign;
