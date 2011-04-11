@@ -22,11 +22,11 @@ class JobServer
 public:
 	/**
   * \param session The object which encapsulates the session information
-  * \param machine The object which encapsulates the machine information 
+  * \param machineid The machine identifier 
   * \param job The job data structure
   * \brief Constructor
   */
-  explicit JobServer(const SessionServer& session,
+  explicit JobServer(const SessionServer& sessionServer,
                      const std::string& machineId,
                      const TMS_Data::Job& job,
                      const BatchType& batchType);
@@ -57,9 +57,12 @@ public:
   
 
   private:
+
+  void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
+
   TMS_Data::Job mjob;
   SessionServer msessionServer;
-  std::string machineId;
+  std::string mmachineId;
   BatchType mbatchType;
 };
 
