@@ -125,4 +125,5 @@
 %include "VishnuException.hpp"
 %include "UserException.hpp"
 %include "SystemException.hpp"
+%include "UMSVishnuException.hpp"
 #endif
