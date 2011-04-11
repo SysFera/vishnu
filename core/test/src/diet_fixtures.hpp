@@ -1,12 +1,12 @@
 /*
- * fixtures.hpp
+ * diet_fixtures.hpp
  *
  * Author: hguemar
  *
  */
 
-#ifndef FIXTURES_HPP_
-#define FIXTURES_HPP_
+#ifndef DIET_FIXTURES_HPP_
+#define DIET_FIXTURES_HPP_
 
 #include <iostream>
 #include <sstream>
@@ -507,4 +507,4 @@ typedef DietSeDFixture <GRPCAddSeD, GRPCBinDir, ConfigSimpleAddSeDLA, DietLAFixt
 #endif // USE_LOG_SERVICE
 
 
-#endif /* FIXTURES_HPP_ */
+#endif /* DIET_FIXTURES_HPP_ */
