@@ -9,7 +9,11 @@
 #include "UserException.hpp"
 
 // Definitions of TMS specific error codes
-
+static const int ERRCODE_UNKNOWN_BATCH_SCHEDULER = 101;
+static const int ERRCODE_BATCH_SCHEDULER_ERROR = 102;
+static const int ERRCODE_UNKNOWN_JOBID = 103;
+static const int ERRCODE_CANT_CANCEL = 104;
+static const int ERRCODE_TMS_NOT_ADMIN = 105;
 
 
 
