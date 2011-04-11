@@ -22,6 +22,7 @@ set (TEST_SQL "${UMS_TEST_DIR}/src/sql")
 file( TO_NATIVE_PATH ${TEST_SQL} TESTF )
 set (TEST_UMS_SED_CONFIG "${PROJECT_BINARY_DIR}/etc/SeD_testing.cfg")
 file( TO_NATIVE_PATH ${TEST_UMS_SED_CONFIG} UMSSEDCONF)
+file( TO_NATIVE_PATH "${PROJECT_BINARY_DIR}/bin" UMSSEDBINDIR)
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/testconfig.h.in
   ${PROJECT_BINARY_DIR}/include/testconfig.h )
