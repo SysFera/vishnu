@@ -2,7 +2,7 @@
 # Author: B.Isnard
 # Date: April 2011
 
-if( BUILD_TEST )
+if( BUILD_TESTING )
 
   #OmniORB is mandatory for running tests
   find_package(OmniORB)
@@ -31,7 +31,13 @@ if( BUILD_TEST )
   set( EXECUTABLE_OUTPUT_PATH ${BIN_DIR} )
   set( GENERATED_LOG_TESTS_DIR ${PROJECT_BINARY_DIR}/generated_test_logs )
 
+  #temporary directories for Dagda
+  file( TO_NATIVE_PATH "/tmp/MA_test"     MA_DAGDA_DIR_NATIVE_PATH )
+  file( TO_NATIVE_PATH "/tmp/LA_test"     LA_DAGDA_DIR_NATIVE_PATH )
+  file( TO_NATIVE_PATH "/tmp/SeD_test"    SED_DAGDA_DIR_NATIVE_PATH )
+  file( TO_NATIVE_PATH "/tmp/Client_test" CLIENT_DAGDA_DIR_NATIVE_PATH )
+
   add_subdirectory(cfgs)
   add_subdirectory(src)
 
-endif( BUILD_TEST )
+endif( BUILD_TESTING )

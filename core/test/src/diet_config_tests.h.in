@@ -1,7 +1,7 @@
-// config_tests.h.in
+// diet_config_tests.h.in
 
-#ifndef _CONFIG_H_IN_
-#define _CONFIG_H_IN_
+#ifndef _DIET_CONFIG_H_IN_
+#define _DIET_CONFIG_H_IN_
 
 #define BIN_DIR "@BIN_DIR_NATIVE_PATH@"
 #define CONFIG_DIR "@CONFIG_DIR_NATIVE_PATH@"
@@ -12,7 +12,7 @@
 #define ENV_LIBRARY_PATH "@TESTENV_LIBRARY_PATH@"
 
 // Sleep time in milliseconds
-#define SLEEP_TIME 500
+#define SLEEP_TIME 1000
 
 // omniNames specific options
 #define LOCAL_TEST_PORT "@LOCAL_TEST_PORT@"
@@ -55,5 +55,5 @@
 // Workflows
 #define WF_DIRECTORY "@TEST_WORKFLOW_DIR_NATIVE_PATH@"
 
-#endif /* _CONFIG_H_IN_ */
+#endif /* _DIET_CONFIG_H_IN_ */
 

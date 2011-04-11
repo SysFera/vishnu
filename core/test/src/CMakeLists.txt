@@ -26,8 +26,8 @@ else (APPLE)
   SET(TESTENV_LIBRARY_PATH_NAME "LD_LIBRARY_PATH")
 endif (APPLE)
 
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config_tests.h.in
-  ${PROJECT_BINARY_DIR}/include/config_tests.h )
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/diet_config_tests.h.in
+  ${PROJECT_BINARY_DIR}/include/diet_config_tests.h )
 
 include_directories( ${PROJECT_BINARY_DIR}/include/ )
 
