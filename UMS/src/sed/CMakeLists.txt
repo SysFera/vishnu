@@ -34,6 +34,20 @@ target_link_libraries(umssed
   ums-server
 )
 
+add_library(ums-sed
+  ServerUMS.cpp
+  internalApi.cpp
+)
+
+target_link_libraries(ums-sed
+  ${DIET_SERVER_LIBRARIES}
+  ${Boost_LIBRARIES}
+  register-vishnu
+  exception-vishnu
+  database-vishnu
+  ums-server
+)
+
 install_targets(/sbin/
  umssed
 )
