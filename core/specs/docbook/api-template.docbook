@@ -53,6 +53,14 @@
             <para>Updated error codes.</para>
           </revdescription>
         </revision>
+        <revision>
+        <revnumber>4</revnumber>
+        <date>30/03/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Modified signature FMS::listDir and FMS::ListFileTransfers. Removed FMS::ListFileFileTransferStatus. Added data type FMS::FileTransfer, FMS::FileTransferList, FMS::FileStatList.</para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
