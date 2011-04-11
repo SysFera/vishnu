@@ -32,6 +32,16 @@ typedef enum{
 } IdType;
 
 /**
+* \enum CmdType
+* \brief The type of the command
+*/
+typedef enum {
+  TORQUE = 0,/*!< For TORQUE batch type */
+  LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
+  UNDEFINED = 2 /*!< IF batch type is not defined*/
+} BatchType;
+
+/**
 * \class Format_t
 * \brief The class used to get the variables of the string to parse
 */

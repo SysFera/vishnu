@@ -21,6 +21,7 @@
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
 #include "TorqueServer.hpp"
+#include "VishnuException.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 using namespace std;
@@ -70,32 +71,17 @@ operator<<(std::ostream& os, const TMS_Data::Job_ptr& job) {
   return os;
 }
 
-std::string get_file_content(const std::string& filePath) {
-
-  bfs::path file (filePath);
-  // Check existence of the file
-  if ((false==bfs::exists(file)) || (true==bfs::is_empty(file)) ){
-    cerr << "can not read the file: " + filePath << endl;;
-    exit(EXIT_FAILURE);
-  }
-
-  bfs::ifstream ifs (file);
-
-  // Read the whole file into string
-  std::stringstream ss;
-  ss << ifs.rdbuf();
-
-  return ss.str();
-
-}
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-int jobSubmit(TMS_Data::Job& job,
+int jobSubmit(TMS_Data::Job& job, char* jobScriptPath,
               const TMS_Data::SubmitOptions& options, 
-              BatchServer* batchServer) {
-      return batchServer->submit(job.getJobPath().c_str(), options, job);
+              BatchServer* batchServer, char **envp) {
+      return batchServer->submit(jobScriptPath, options, job, envp);
 }
 
+int jobCancel(TMS_Data::Job& job, BatchServer* batchServer) {
+        return batchServer->cancel(job.getJobId().c_str());
+}
 
 /*
  * MAIN
@@ -108,57 +94,101 @@ int jobSubmit(TMS_Data::Job& job,
 int
 main(int argc, char* argv[], char* envp[])
 {
+  std::string action;
+  char* jobSerializedPath = NULL;
+  char* optionsPath = NULL;
+  char* slaveJobFile = NULL;
+  char* slaveErrorPath = NULL;
+  char* jobScriptPath = NULL;
 
-  if (argc < 5) {
-    cerr << "Usage: " << argv[0] << " <JobSerializedPath> <Options> <slaveJobFile> <slaveOptionsPath>" << endl;
+  if(argc < 2) {
+    cerr << "Usage: " << argv[0] << " ACTION[SUBMIT|CANCEL] <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>  <SubmitOptionsSerializedPath>" << endl;    
+    cerr << " <job_script_path>" << endl;
+    exit(EXIT_FAILURE);
+  }
+  action = std::string(argv[1]);
+
+  if(action.compare("SUBMIT")==0) {
+    if(argc < 6) {
+      cerr << "Usage: " << argv[0] << " <SUBMIT> <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath> <SubmitOptionsSerializedPath>" << endl;
+      cerr << " <JobScriptPath>" << endl;
+      exit(EXIT_FAILURE);
+    }
+    slaveJobFile = argv[4];
+    optionsPath = argv[5];
+    jobScriptPath = argv[6];
+  }
+  else if(action.compare("CANCEL")==0) {
+    if(argc < 4) {
+      cerr << "Usage: " << argv[0] << " <CANCEL> <JobSerializedPath>  <SlaveErrorPath>" << endl;
+      exit(EXIT_FAILURE);
+    }
+  } else {
+    cerr << "Unknown ACTION, it must be SUBMIT or CANCEL..." << endl;
+    cerr << "Usage: " << argv[0] << " ACTION[SUBMIT|CANCEL] <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>  <SubmitOptionsSerializedPath>" << endl;
     exit(EXIT_FAILURE);
   }
  
-  char* jobSerializedPath = argv[1];
-  char* optionsPath = argv[2];
-  char* slaveJobFile = argv[3];
-  char* slaveOptionsPath = argv[4];
+  jobSerializedPath = argv[2];
+  slaveErrorPath = argv[3];
 
-  std::string jobSerialized = get_file_content(jobSerializedPath);
-  TMS_Data::Job_ptr job = NULL;
-  if(!parseTMSEmfObject(std::string(jobSerialized), job)) {
-     cout << "parseEmfObject returns NULL...." << endl;
-     return 1;
+  try {
+   
+    std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
+    TMS_Data::Job_ptr job = NULL;
+    if(!parseTMSEmfObject(std::string(jobSerialized), job)) {
+      cout << "parseEmfObject returns NULL...." << endl;
+      return 1;
+    }
+
+    cout << job << endl;
+    TorqueServer* torqueServer = new TorqueServer();
+    if(action.compare("SUBMIT")==0) {
+      std::string options  = vishnu::get_file_content(optionsPath);
+      TMS_Data::SubmitOptions_ptr submitOptions = NULL;
+      if(!parseTMSEmfObject(std::string(options), submitOptions)) {
+        cout << "parseEmfObject returns NULL...." << endl;
+        return 1;
+      }
+
+      cout << submitOptions << endl;
+
+      jobSubmit(*job, jobScriptPath, *submitOptions, torqueServer, envp);
+
+      //To serialize the user object
+      const char* name = "Job";
+      ::ecorecpp::serializer::serializer _ser(name);
+      std::string slaveJob = strdup(_ser.serialize(job).c_str());
+
+      ::ecorecpp::serializer::serializer _ser2(name);
+      std::string slaveOptions = strdup(_ser2.serialize(submitOptions).c_str());
+
+      std::ofstream os_slaveJobFile(slaveJobFile);
+      os_slaveJobFile << slaveJob;
+      os_slaveJobFile.close();
+
+      delete submitOptions;
+    } else if(action.compare("CANCEL")==0) {
+
+      jobCancel(*job, torqueServer);
+
+    }
+    delete job;
+    delete torqueServer;
+  } catch (VishnuException& ve) {
+    std::string errorInfo =  ve.buildExceptionString();
+    std::ofstream os_error(slaveErrorPath);
+    os_error << errorInfo;
+    os_error.close();
+    std::cout << errorInfo << std::endl;
+  } catch (std::exception& e) {
+    std::string errorInfo = e.what();
+    std::cout << errorInfo << std::endl;
+    //os_error << errorInfo;
+    //os_error.close();
   }
+
  
-  cout << job << endl;
-
-  std::string options  = get_file_content(optionsPath);
-  TMS_Data::SubmitOptions_ptr submitOptions = NULL;
-  if(!parseTMSEmfObject(std::string(options), submitOptions)) {
-     cout << "parseEmfObject returns NULL...." << endl;
-     return 1;
-  }
-
-  cout << submitOptions << endl;
- 
-  TorqueServer* torqueServer = new TorqueServer();
-  int res = jobSubmit(*job, *submitOptions, torqueServer);
-  cout << "After Job Submission..." << endl;
-  cout << job << endl;
-  if(res) exit(EXIT_FAILURE);// temporaire
-
-  //To serialize the user object
-  const char* name = "Job";
-  ::ecorecpp::serializer::serializer _ser(name);
-  std::string slaveJob = strdup(_ser.serialize(job).c_str());
-
-  ::ecorecpp::serializer::serializer _ser2(name);
-  std::string slaveOptions = strdup(_ser2.serialize(submitOptions).c_str());
-
-  std::ofstream ofile1(slaveJobFile);
-  ofile1 << slaveJob;
-  ofile1.close();
-
-  std::ofstream ofile2(slaveOptionsPath);
-  ofile2 << slaveOptions;
-  ofile2.close();
-
   return 0;
 }
 

@@ -13,8 +13,8 @@ class LLServer : public BatchServer
 {
 
   LLServer();
-  int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job);
-  int cancel() { };
+  int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp=NULL);
+  int cancel(const char* jobId) { };
   TMS_Data::Job getJob() { };
   TMS_Data::ListJobs* listJobs() { };
   TMS_Data::JobResult getJobResults() { };
