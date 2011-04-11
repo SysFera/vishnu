@@ -78,6 +78,7 @@ TMSMachineProxy::getMachineQueues() {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
+  diet_profile_free(profile);
   return listQueues;
 }
 
@@ -134,7 +135,7 @@ TMSMachineProxy::setMachineRefreshPeriod(int refreshPeriod) {
   TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
   mrefreshPeriod = refreshPeriod;
-
+  diet_profile_free(profile);
 }
 
 /**
@@ -192,6 +193,8 @@ TMSMachineProxy::getMachineRefreshPeriod() {
   TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
   mrefreshPeriod = vishnu::convertToInt(std::string(refreshPeriod));
+  diet_profile_free(profile);
+
   return mrefreshPeriod;
 }
 
