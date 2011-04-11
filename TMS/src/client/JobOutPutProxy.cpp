@@ -91,6 +91,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
+  diet_profile_free(profile);
   return outJobResult;
 }
 
@@ -126,15 +127,15 @@ JobOutPutProxy::getAllJobsOutPut() {
   }
 
    //OUT Parameters
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &listJobResultInString, NULL)){
+    if(diet_string_get(diet_parameter(profile,2), &listJobResultInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -151,6 +152,7 @@ JobOutPutProxy::getAllJobsOutPut() {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
+  diet_profile_free(profile);
   return listJobResults_ptr;
 }
 
