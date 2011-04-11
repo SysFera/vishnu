@@ -13,22 +13,12 @@
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
+#include "displayer.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
-
-
-/**
- * \brief To display the list of jobs
- * \fn void displayListJobs(ListJobs& p)
- * \param j: The list of job to display 
- */
-void 
-displayListJobs(ListJobs& j){
-  // TODO
-}
 
 /**
  * \brief To build options for the VISHNU submit job command
@@ -48,17 +38,17 @@ displayListJobs(ListJobs& j){
  */
 boost::shared_ptr<Options>
 makeListJobOp(string pgName, 
-	     boost::function1<void, string> fjid,
-	     boost::function1<void, int> fnbCpu,
-	     boost::function1<void, long> fstart, 
-	     boost::function1<void, long> fend, 
-	     boost::function1<void, string> fowner,
-	     boost::function1<void, JobStatus> fstatus,
-	     boost::function1<void, JobPriority> fpriority,
-	     boost::function1<void, string> foutput,
-	     boost::function1<void, string> ferr,
-	     boost::function1<void, string> fqueue,
-	     string dietConfig){
+	      boost::function1<void, string>& fjid,
+	      boost::function1<void, int>& fnbCpu,
+	      boost::function1<void, long>& fstart, 
+	      boost::function1<void, long>& fend, 
+	      boost::function1<void, string>& fowner,
+	      boost::function1<void, JobStatus>& fstatus,
+	      boost::function1<void, JobPriority>& fpriority,
+	      boost::function1<void, string>& foutput,
+	      boost::function1<void, string>& ferr,
+	      boost::function1<void, string>& fqueue,
+	      string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -67,7 +57,7 @@ makeListJobOp(string pgName,
            ENV,
            dietConfig);
 
-  // All cli options
+  // All cli obligatory parameters
   opt->add("jobId,i",
 	   "The id of the job",
 	   CONFIG,
@@ -155,11 +145,11 @@ int main (int argc, char* argv[]){
 					       fqueue,
 					       dietConfig);
 
-  opt->setPosition("machineId",1);
   opt->add("machineId,m",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
+  opt->setPosition("machineId",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
