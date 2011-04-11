@@ -3,6 +3,7 @@
 #include <fstream>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
+#include "configuration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
@@ -32,7 +33,7 @@ using namespace vishnu;
  */
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s <diet_config.cfg> vishnuid [ora|pg] db_host db_username db_password sendmail_script_path\n"+ std::string(cmd);
+  std::cout << "Usage: %s vishnu_config.cfg\n"+ std::string(cmd);
   return 1;
 }
 
@@ -69,6 +70,8 @@ int main(int argc, char* argv[], char* envp[]) {
   int res = 0;
   int dbType = 0;
   int vishnuid = 0;
+  std::string vishnuConfigFile;
+  std::string dietConfigFile;
   std::string dbTypeStr;
   std::string dbHost;
   std::string dbUsername;
@@ -76,15 +79,36 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string sendmailScriptPath;
   struct sigaction action;
 
-  if (argc < 8) {
+  if (argc != 2) {
     return usage(argv[0]);
   }
 
-  // Check DIET Configuration file
+  // Check VISHNU Configuration file
   if(!boost::filesystem::is_regular_file(argv[1])) {
+    std::cerr << "Error: cannot open VISHNU configuration file" << std::endl;
+    exit(1);
+  }
+  vishnuConfigFile = argv[1];
+
+  // Load Configuration file
+  FileParser fileParser;
+  try {
+    fileParser.parseFile(vishnuConfigFile);
+  } catch (...) {
+    throw SystemException(0, "while parsing " + vishnuConfigFile);
+  }
+  CONFIGMAP = fileParser.getConfiguration();
+
+  // Check DIET Configuration file
+  std::string tmpString;
+  if (!CONFIG_STRING(vishnu::DIETCONFIGFILE, tmpString)) {
+    throw UserException(ERRCODE_CONFIGNOTFOUND, "dietConfigFile");
+  }
+  if(!boost::filesystem::is_regular_file(tmpString)) {
     std::cerr << "Error: cannot open DIET configuration file" << std::endl;
     exit(1);
   }
+  dietConfigFile = tmpString;
 
   // Check the script path for sending mail
   if(!boost::filesystem::is_regular_file(argv[7])) {
