@@ -105,6 +105,12 @@ cd $path
 
 rm tmp.txt
 
+# Remove .project
+rm UMS/src/utils/emfdata/UMS_Data/.project
+rm UMS/src/utils/emfdata/UMS_Data/.cproject
+rm core/deps/emf4cpp/.project
+rm core/deps/emf4cpp/.cproject
+
 # remove all ~ files
 for i in  $(find . -name "*~") ; do rm $i;  done ;
 

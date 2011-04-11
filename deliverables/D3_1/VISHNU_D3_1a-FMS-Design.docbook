@@ -1,0 +1,2317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cissé</surname>
+      </personname>
+    </author>
+    <title>D4.1a - VISHNU File Management Services Package Design</title>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>25/03/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Deliverable version</para></revdescription>
+      </revision>
+    </revhistory>
+  </info>
+  <chapter>
+    <title>Document presentation</title>
+    <section>
+      <title>Document objectives</title>
+      <para>This document presents the detailed internal design of the File Management Services (FMS) module. The purpose of this
+        package is to handle all aspects of file transfer and file property modification within the VISHNU system. The functional
+        and non-functional requirements for this module are those described in the [D1.1a] and [D1.1c] document (see References). The current
+        document is part of the design phase of the software and therefore its main goal is to define the main class used in the FMS software and their relationships.
+      </para>
+    </section>
+    <section>
+      <title>Document structure</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>Chapter 1 contains a brief overview of the document content.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 2 contains a high-level overview of the system architecture except the deployment aspect which
+            is well discribed in the architecture document (see [D1.1g]).</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+          </listitem>
+          <listitem>
+            <para>Chapter 4 describes the internal classes and data structures except the Vishnu core functions modelization which is
+          included in the VISHNU Users Management Service Design document (see[D2.1a]).</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>References</title>
+      <para><itemizedlist>
+          <listitem>
+            <para>[D1.1a]: VISHNU General specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1b]: VISHNU Spécifications techniques des besoins</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1c]: VISHNU API Detailed specifications</para>
+          </listitem>
+          <listitem>
+            <para>[D1.1g]: VISHNU technical architecture</para>
+          </listitem>
+          <listitem>
+            <para>[D2.1a]: VISHNU users management services package design</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+    <section>
+      <title>Acronyms</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">API</emphasis>: Application programming interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">CLI</emphasis>: Command line interface</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">DB</emphasis>: DataBase</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">n/a</emphasis>: Not Appliable (used for serializable capability in function descriptions)</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon is a SysFera-DS agent that provides services through the SysFera-DS API.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">FMS</emphasis>: File management services</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">WS</emphasis>: Web services</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Glossary</title>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Components</emphasis>: the software components represents a library or an executable program that provides a given interface to other components or to end-users.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </chapter>
+  <chapter>
+    <title>System Architecture</title>
+    <section>
+      <title>Introduction</title>
+      <para> The purpose of this section is to precise the role of the FMS as VISHNU module. As indicated in [D1.1g], FMS is the part of VISHNU
+        architecture which handles the file transfers between storage resources.
+        Futhermore, FMS provides several other services to manipulate a property of a file, like changing its owner, changing its access permissions, get its
+        complete or partial content, see the section for exhaustive list of
+        providesd services. 
+      </para>
+    </section>
+    <section>
+      <title>Overview of the FMS software infrastructure</title>
+      <para>We present in this section a detailed description of the FMS package architecture in terms of software components.
+        In addition we show the dependencies between components to highlight their reuse. These components follow a SOA model where each
+        server publishes a set of services that can be used by the clients.
+        We present the different software layers from services (provided directly to the user) to the database (used by the server). 
+        The FMS client server package has been split into seven different interrelated components. The deployment aspects have already been described
+        in the technical architecture document (cf [D1.1g]). The diagrams shown in section 2.2 describe
+        the relationships between these components. The definitions of the components are the following:
+       </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">External API</emphasis>
+	     contains precisely the services provided to the user as defined in the detailed specifications.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Internal API</emphasis>
+	     publishes the services provided by the servers. The services of the external API are implemented using requests sent through
+       the SysFera-DS middleware to this API.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">FMS Client</emphasis>
+	    contains intermediate (proxy) classes providing remote access to the business objects of <emphasis
+                  role="bold">FMS Server</emphasis>.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">FMS Server</emphasis>
+	     contains all classes implementing business objects by encapsulating the processing provided through the internal API.
+	    </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu Database</emphasis> has been already described in [D2.1a]. As we could see, it stores the file transfer
+       data used by the FMS Server.
+	    </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Installation prerequisites</title>
+      <section>
+        <title>Client side</title>
+        <para>The installation of FMS module on the client needs the following libraries </para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification.
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries </para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Client libraries </para>
+          </listitem>
+          <listitem>
+            <para>A SSH Server to perform a remote to local transfer file.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Server side</title>
+        <para>The installation of FMS module on the server side needs the following libraries:</para>
+        <itemizedlist>
+          <listitem>
+            <para>VISHNU UMS libraries: the VISHNU User Management Service that allow the session creation and user authentification
+            </para>
+          </listitem>
+          <listitem>
+            <para>C++ and Boost-C++ libraries</para>
+          </listitem>
+          <listitem>
+            <para>Sysfera-DS Server libraries</para>
+          </listitem>
+          <listitem>
+            <para>A SSH Server</para>
+          </listitem>
+          <listitem>
+            <para>The Rsync Debian package </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>Architecture diagrams</title>
+      <section>
+        <title>FMS client-side components</title>
+        <para>This diagram shows the components that compose the client side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS external API (cf [D1.1c]) are shown here for example. These services are consumed by several user interfaces: command-line, web services and Python. All the interfaces of the FMS Client component are shown. We can note that the FMS External API uses the UMS Client Lib to handle user and machines authentication.</para>
+        <figure>
+          <title>FMS client-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS_client-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>FMS server-side components</title>
+        <para>This diagram shows the components that compose the server side of the Vishnu FMS system and their interfaces. Two services among all the services of the FMS internal API are shown here for example. These services are published by the FMS Sed and are consumed by the FMS Client component through the SysFera-DS API. All the interfaces of the FMS Server component are shown.</para>
+        <figure>
+          <title>FMS server-side components</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/FMS_server-side_components.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+      <section>
+        <title>SysFera-DS Bus Details</title>
+        <para>This diagram shows the communication paths between the Client host and two FMS  server using the SysFera-DS Bus. The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the FMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of one FMS Server in the case of  several available FMS servers. The choice will be transparent to the user as all FMS Servers connect to the same database.  The diagram shows here all the communication paths in the case where one FMS Server (FMS Server 1) is chosen by the MasterAgent.</para>
+        <figure>
+          <title>SysFera-DS Bus Details</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/SysFera-DS_Bus_Details.png" align="center"
+                  scale="40"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </section>
+    </section>
+  </chapter>
+  <chapter annotations="core/model/FMS_Internal.apim#SERVICES">
+    <title>Internal API specification</title>
+    <section>
+      <title>Generic definition formats presentation</title>
+      <para>This section presents the formats used in this chapter to describe the services provided
+            by the internal API.</para>
+      <section>
+        <title>Service definition format</title>
+        <para><emphasis role="bold">Access </emphasis></para>
+        <para>Here is detailed the access level of the service 'myService' (i.e. the privilege required to use it)</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>The following table contains all the input and output parameters of the service, along with their type and description.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>This is an example of a required string input parameter</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>listOfJobs</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>ListJobs</para></entry>
+                <entry><para>This is an example of an object output parameter that is serialized as a string</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>Here is detailed the purpose of the service 'myService'</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>Here are detailed the different return codes provided by the service.</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed successfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>TMS_UNKNOWN_MACHINE</para></entry>
+                <entry><para>This is the human-readable generic message that will be available to the user of the API.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>This shows the list of functions from the external Vishnu API (see [D1_1c]) that use this service.</para>
+      </section>
+    </section>
+    <section>
+      <title>Definition of the services of the package</title>
+      <section>
+        <title>Service fileCreate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>mode</para></entry>
+                <entry><para>mode_t</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The file access permissions in octal numeral system.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileCreate() function creates  files on  remote machines.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::createFile</para>
+      </section>
+      <section>
+        <title>Service DirCreate</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>mode</para></entry>
+                <entry><para>mode_t</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>the new directories permission access in octal numeral system.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The DirCreate() function creates directories on remote machines.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::createDir</para>
+      </section>
+      <section>
+        <title>Service fileRemove</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file to remove following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileRemove() function removes files from  remote hosts.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::removeFile</para>
+      </section>
+      <section>
+        <title>Service DirRemove</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  directory to remove following the pattern  [host:]directory path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The DirRemove() function removes  directories (and subdirectories) from  remote machines.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::removeDir</para>
+      </section>
+      <section>
+        <title>Service grpChange</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>group</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>the new group owner of file/directory.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The grpChange() function changes group owner of  remote files/directories. </para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::chGrp</para>
+      </section>
+      <section>
+        <title>Service modeChange</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>mode</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para> the access rigths of file/directory in octal system.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The modeChange() function changes  access rights of remote files/directories.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::chMod</para>
+      </section>
+      <section>
+        <title>Service fileHead</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>fileContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The first &quot;nLine&quot; lines of the file</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>nLine</para></entry>
+                <entry><para>size_t</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Number of lines to display.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileHead() function displays a few first lines of  files located on  remote machines.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::headOfFile</para>
+      </section>
+      <section>
+        <title>Service fileTail</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>fileContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The last &quot;nLine&quot; lines of the file.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>nLine</para></entry>
+                <entry><para>size_t</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>number of lines to display.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileTail() function displays a few last lines of  files located on remote machines</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::tailOfFile</para>
+      </section>
+      <section>
+        <title>Service fileContent</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  file to display following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>fileContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The content of the file.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileContent() function displays content  of  files located on remote machines</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::contentOfFile</para>
+      </section>
+      <section>
+        <title>Service dirList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  directory to list following the pattern  [host:]directory path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>dirContent</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="FileStatList">FileStatList</link></para></entry>
+                <entry><para>The content of the directory  (only files names with short format, all files informations with long format).</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="LsDirOptions">LsDirOptions</link></para></entry>
+                <entry><para>List of options for the listDir command.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The dirList() function displays  the content of a remote directory. </para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::listDir</para>
+      </section>
+      <section>
+        <title>Service fileCopy</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>src</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  source file to copy following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The path of the destination file.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="CopyFileOptions">CopyFileOptions</link></para></entry>
+                <entry><para>the copy options.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileCopy() function executes a synchronous copy of file.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::copyFile</para>
+      </section>
+      <section>
+        <title>Service fileAsyncCopy</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>src</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The source file to copy following the pattern  [host:]file path</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>thrId</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>A file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="CopyFileOptions">CopyFileOptions</link></para></entry>
+                <entry><para>the copy options</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileAsyncCopy() function executes an asynchronous copy of file.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::copyAsyncFile</para>
+      </section>
+      <section>
+        <title>Service fileMove</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>src</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The  source file to move following the pattern  [host:]file path</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The path of the destination file</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="MvFileOptions">MvFileOptions</link></para></entry>
+                <entry><para>The move command options</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileMove() function executes a synchronous move of file.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::moveFile</para>
+      </section>
+      <section>
+        <title>Service fileAsyncMove</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>src</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The source file to move following the pattern  [host:]file path.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>dest</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The path of the destination file.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>thrId</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it).</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="MvFileOptions">MvFileOptions</link></para></entry>
+                <entry><para>The mv command options</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileAsyncMove() function executes an asynchronous move of file.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::moveAsyncFile</para>
+      </section>
+      <section>
+        <title>Service FileTransferCancel</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="StopTransferOptions">StopTransferOptions</link></para></entry>
+                <entry><para>The stop file transfer command options</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The FileTransferCancel() function stops an execution of a set of file transfers.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::stopFileTransfer</para>
+      </section>
+      <section>
+        <title>Service fileTransfersList</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>fileTransferList</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="FileTransferList">FileTransferList</link></para></entry>
+                <entry><para>The file transfer container.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="LsTransferOptions">LsTransferOptions</link></para></entry>
+                <entry><para>The filter options .</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The fileTransfersList() function displays the history of all file transfers submitted by User.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::listFileTransfers</para>
+      </section>
+      <section>
+        <title>Service FilesInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This service can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="1cm"/>
+            <thead>
+              <row>
+                <entry>Parameter</entry>
+                <entry>Type</entry>
+                <entry>Serialized type</entry>
+                <entry>Description</entry>
+                <entry>Mode</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The session key.</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>The file whose inode information will be displayed</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>filesinfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="FileStat">FileStat</link></para></entry>
+                <entry><para>The  inode information.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+              <row>
+                <entry><para>errorInfo</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n/a</para></entry>
+                <entry><para>Additional information provided when an error code is returned.</para></entry>
+                <entry><para>OUT</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The FilesInfo() function displays the information  of  files.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the service</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_DB_ERROR</para></entry>
+                <entry><para>A problem occurs with the database.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>User does not have permission access.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
+                <entry><para>Invalid provided machine identifier.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized.</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
+        <para>FMS::getFilesInfo</para>
+      </section>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Internal class and data structures</title>
+    <section>
+      <title>Introduction</title>
+      <para>This chapter introduces the details of the implementation of the different components described in chapter 2 (Architecture).
+        It is composed of three sections:
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Client modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">FMS Client</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Server modelization</emphasis>: describes the classes used to implement the 
+              <emphasis role="it">FMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Data modelization</emphasis>: describes the data structure used to implement the 
+              <emphasis role="it">FMS Client</emphasis> component and the <emphasis
+                  role="it">FMS Server</emphasis> component.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Vishnu core functions modelization</emphasis>: describes the classes and data structures used to implement the 
+              the VISHNU cross-modules components (components that are used by FMS and other VISHNU modules).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section annotations="FMS/design/Design.asta#CLASSDIAG(client)">
+      <title>FMS client modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>FMS Client Class Diagram</title>
+          <para>This diagram describes all classes used to communicate with VISHNU System. Each class proxy contains the corresponding data class illustrated on the FMS Data modelization section and the methods usable by the FMS Client component. A QueryProxy class implements a generic model to list objects of VISHNU.</para>
+          <figure>
+            <title>FMS Client Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/FMS_Client_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section annotations="FMS/design/Design.asta#CLASSDIAG(server)">
+      <title>FMS server modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>FMS Server Class Diagram</title>
+          <para>This diagram presents the main objects used by FMS server component to process the FMS Client component requests. The relationships between objects (simple dependancies, compositions, aggregations, and generalizations) are highlighted.The Query server performs the list operation. </para>
+          <figure>
+            <title>FMS Server Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/FMS_Server_Class_Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+    <section annotations="FMS/design/Design.asta#CLASSDIAG(data)">
+      <title>FMS data modelization</title>
+      <section>
+        <title>Class diagrams</title>
+        <section>
+          <title>FMS Data Class Diagram</title>
+          <para>This diagram illustrates the structure and the relationship between data manipulated by the components Client and Server. </para>
+          <figure>
+            <title>FMS Data Class Diagram</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/png/FMS_Data Class Diagram.png" align="center"
+                    scale="40"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </section>
+      </section>
+    </section>
+  </chapter>
+</book>

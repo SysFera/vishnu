@@ -62,7 +62,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//JobStatus"
-        defaultValueLiteral="NOT_SUBMITTED">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The current status of the job."/>
       </eAnnotations>
@@ -115,7 +115,7 @@
         <details key="content" value="Is the total number of nodes used by the job."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EInt">
       <eAnnotations source="Description">
         <details key="content" value="Is the number of nodes and processors per node used by the job."/>
       </eAnnotations>
@@ -270,6 +270,7 @@
     <eLiterals name="VERY_HIGH" value="500"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobStatus" instanceTypeName="JobStatus">
+    <eLiterals name="NOT_SUBMITTED" value="-1"/>
     <eLiterals name="RUNNING"/>
     <eLiterals name="WAITING" value="1"/>
     <eLiterals name="COMPLETED" value="2"/>
@@ -277,7 +278,6 @@
     <eLiterals name="HELD" value="4"/>
     <eLiterals name="QUEUED" value="5"/>
     <eLiterals name="FAILED" value="6"/>
-    <eLiterals name="NOT_SUBMITTED" value="7"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProgressOptions" instanceTypeName="ProgressOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
