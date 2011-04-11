@@ -1,5 +1,5 @@
 /**
- * @file   CommonParser.hh
+ * @file   CommonParser.hpp
  * @author hguemar <hguemar@sysfera.com>
  * @date   Mon Jan 31 11:48:12 2011
  *
@@ -78,4 +78,4 @@ public:
     std::string& operator() ();
 };
 
-#endif /* _COMMON_PARSER_HH_ */
+#endif /* _COMMON_PARSER_HPP_ */

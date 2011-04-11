@@ -27,7 +27,7 @@ FileParser::parseFile(const std::string& path) {
   unsigned int l = 0;
 
   if (!file.is_open()) {
-    throw FileOpenError(path);
+    throw UserException(ERRCODE_FILENOTFOUND, path);
   }
 
   Splitter split('=');
