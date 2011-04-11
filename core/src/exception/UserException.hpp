@@ -11,6 +11,7 @@
 // RESERVED CODES FROM 10 TO 19
 static const int ERRCODE_INVALID_PARAM = 10;
 static const int ERRCODE_FILENOTFOUND = 11;
+static const int ERRCODE_CONFIGNOTFOUND = 12;
 
 /**
  * \brief This class represents the exception due to a user misuse
