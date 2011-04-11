@@ -586,6 +586,9 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
     freopen("dev/null", "w", stderr);
 
     if (execv(argv[0], argv) == -1) {
+      for (unsigned int i=0; i<tokens.size()+5; ++i) {
+      free(argv[i]);
+      }
       exit(1);
     }
   }

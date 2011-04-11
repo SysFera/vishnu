@@ -1,0 +1,81 @@
+
+link_directories(${Boost_LIBRARY_DIRS}
+                  ${TMS_CLI_SOURCE_DIR}
+                )
+include_directories(${Boost_INCLUDE_DIRS}
+                    ${DIET_INCLUDE_DIR}
+                    ${TMS_EMF_DATA_DIR}
+                    ${TMS_DATA_DIR}
+                    ${EMF4CPP_INCLUDE_DIR}
+                    ${TMS_API_SOURCE_DIR}
+                    ${TMS_CLIENT_PROXY_SOURCE_DIR}
+                    ${VISHNU_EXCEPTION_INCLUDE_DIR}
+                    ${TMS_CLI_SOURCE_DIR}
+                    ${UTILVISHNU_SOURCE_DIR}
+                  )
+
+#add_library(utils-cli
+ #         utils
+ #         daemon_cleaner
+ #         configureOptionUtils
+ #         localAccountUtils
+ #         userUtils
+ #         machineUtils
+ #         listMachineUtils
+ #         listHistoryCmdUtils
+ #         )
+#declare all command lines provided
+
+#set(ALLCLI connect reconnect close
+#    add_user update_user delete_user
+#    change_password reset_password
+#    add_local_account update_local_account delete_local_account
+#    save_configuration restore_configuration
+#    add_machine update_machine delete_machine
+#    configure_default_option configure_option
+#    list_local_accounts list_machines list_history_cmd list_options list_users list_sessions
+#    )
+
+#set the prefix of command
+set (CMDPREFIX vishnu_)
+
+# macro to generate all command lines
+
+macro(genCli NAME )
+
+  set(source_files ${NAME}
+      )
+
+  set(CMDNAME ${CMDPREFIX}${NAME})
+
+  #Configuration de l'executable
+  add_executable (${CMDNAME}
+                  ${source_files}
+                  )
+
+  #Configuration de l'edition de liens
+  target_link_libraries(${CMDNAME}
+                        ${Boost_LIBRARIES}
+                        ${VISHNU_EXCEPTION_LIB}
+                        utils-cli
+                        utils-vishnu
+                        vishnu-tms-api
+                        crypt
+                        -pthread
+                        )
+  install_targets(/bin/
+                  ${CMDNAME}
+                )
+
+endmacro(genCli)
+
+#Loop over all command lines to generate them
+
+foreach(cli ${ALLCLI})
+
+genCli(${cli})
+
+endforeach(cli)
+
+install( TARGETS utils-cli DESTINATION lib )
+
