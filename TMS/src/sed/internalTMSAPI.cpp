@@ -141,12 +141,6 @@ solve_cancelJob(diet_profile_t* pb)
     JobServer jobServer(sessionServer, machineId, *job, TMSServer::getBatchType());
     jobServer.cancelJob();
 
-    /*SSHJobExec sshJobExec(NULL, jobSerialized, "", TMSServer::getBatchType());
-    sshJobExec.sshexec("CANCEL");
-    errorInfo = sshJobExec.getErrorInfo();
-    std::cout << "errorInfo=" << errorInfo << std::endl;*/
-
-
     if(diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE)) {
       cerr << "diet_string_set error" << endl;
       return 1;

@@ -29,14 +29,14 @@ JobServer::JobServer(const SessionServer& sessionServer,
  */ 
 int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::SubmitOptions& options)
 {
-  char* scriptPath = NULL;
   std::string jobSerialized ;
   std::string submitOptionsSerialized; 
+  char* scriptPath = NULL;
   const char* name = "submit";
   ::ecorecpp::serializer::serializer optSer(name);
   ::ecorecpp::serializer::serializer jobSer(name);
 
-  scriptPath = const_cast<char*>((std::string(getenv("HOME"))+"/job_script").c_str());
+  scriptPath = strdup((std::string(getenv("HOME"))+"/job_scriptXXXXXX").c_str());
   SSHJobExec().createTmpFile(scriptPath, scriptContent);
 
   std::ofstream ofile(scriptPath);
@@ -46,9 +46,11 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   submitOptionsSerialized = optSer.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
  
-  SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, mbatchType);
+  SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, "", "", "", mbatchType);
   sshJobExec.sshexec("SUBMIT");
 
+  //SSHJobExec().deleteFile(scriptPath);
+  
   std::string errorInfo = sshJobExec.getErrorInfo();
 
   if(errorInfo.size()!=0) {
@@ -83,7 +85,7 @@ int JobServer::cancelJob()
 
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-  SSHJobExec sshJobExec(NULL, jobSerialized, "", mbatchType);
+  SSHJobExec sshJobExec(NULL, jobSerialized, "", "", "", "", mbatchType);
   sshJobExec.sshexec("CANCEL");
   
   std::string errorInfo = sshJobExec.getErrorInfo();
