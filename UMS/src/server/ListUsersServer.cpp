@@ -14,6 +14,8 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 
 #include "ListUsersServer.hpp"
+#include "DbFactory.hpp"
+
 
 /**
  * \fn ListUsersServer(const SessionServer session)

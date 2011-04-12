@@ -52,19 +52,13 @@ ServerUMS::ServerUMS() : mprofile(NULL) {
 * \brief To initialize the UMS server with individual parameters
 * \fn int init(std::string vishnuid)
 * \param vishnuId The id of the vishnu configuration registered in the database
-* \param dbType   The type of the database (POSTGREDB|ORACLEDB)
-* \param dbHost   The host of the database server
-* \param dbUsername The name of the database user on the server
-* \param dbPassword The password of the database user on the server
+* \param dbConfig  The configuration of the database
 * \param sendmailScriptPath The path to the script for sending emails
 * \return an error code (0 if success and 1 if an error occurs)
 */
 int
 ServerUMS::init(int vishnuId,
-                int dbType,
-                std::string dbHost,
-                std::string dbUsername,
-                std::string dbPassword,
+                DbConfiguration dbConfig,
                 std::string sendmailScriptPath) {
 
   msendmailScriptPath = sendmailScriptPath;
@@ -72,12 +66,7 @@ ServerUMS::init(int vishnuId,
   DbFactory factory;
 
   try {
-    //To get database instance
-    mdatabaseVishnu = factory.getDatabaseInstance(dbType,
-                                                  dbHost,
-                                                  dbUsername,
-                                                  dbPassword,
-                                                  DATABASENAME);
+    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
     mvishnuId = vishnuId;
 

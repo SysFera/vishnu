@@ -4,6 +4,7 @@
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
 #include "ExecConfiguration.hpp"
+#include "DbConfiguration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
@@ -71,11 +72,8 @@ int main(int argc, char* argv[], char* envp[]) {
   int dbType = 0;
   int vishnuId = 0;
   ExecConfiguration config;
+  DbConfiguration dbConfig(config);
   std::string dietConfigFile;
-  std::string dbTypeStr;
-  std::string dbHost;
-  std::string dbUsername;
-  std::string dbPassword;
   std::string sendmailScriptPath;
   struct sigaction action;
 
@@ -88,25 +86,14 @@ int main(int argc, char* argv[], char* envp[]) {
     config.initFromFile(argv[1]);
     config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
-    config.getRequiredConfigValue<std::string>(vishnu::DBTYPE, dbTypeStr);
-    if (dbTypeStr == "ora") {
-      dbType = ORACLEDB;
-    } else if (dbTypeStr == "pg") {
-      dbType = POSTGREDB;
-    } else {
-      std::cerr << "Error: invalid value for database type parameter (must be 'ora' or 'pg')" << std::endl;
-      exit(1);
-    }
-    config.getRequiredConfigValue<std::string>(vishnu::DBHOST, dbHost);
-    config.getRequiredConfigValue<std::string>(vishnu::DBUSERNAME, dbUsername);
-    config.getRequiredConfigValue<std::string>(vishnu::DBPASSWORD, dbPassword);
+    dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email" << std::endl;
       exit(1);
     }
   } catch (UserException& e) {
-    std::cerr << e.what();
+    std::cerr << e.what() << std::endl;
     exit(1);
   }
 
@@ -118,7 +105,7 @@ int main(int argc, char* argv[], char* envp[]) {
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
     ServerUMS* server = ServerUMS::getInstance();
-    res = server->init(vishnuId, dbType, dbHost, dbUsername, dbPassword, sendmailScriptPath);
+    res = server->init(vishnuId, dbConfig, sendmailScriptPath);
 
     //Declaration of signal handler
     action.sa_handler = controlSignal;
@@ -141,7 +128,7 @@ int main(int argc, char* argv[], char* envp[]) {
   else if (pid == 0) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
-    monitor.init(vishnuId, dbType, dbHost, dbUsername, dbPassword);
+    monitor.init(vishnuId, dbConfig);
     ppid = getppid();
 
     while(kill(ppid,0) == 0) {

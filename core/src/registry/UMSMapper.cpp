@@ -15,6 +15,7 @@
 #include "ConfigurationServer.hpp"
 #include "QueryServer.hpp"
 #include "CommandServer.hpp"
+#include "utilServer.hpp"
 
 using namespace vishnu;
 
