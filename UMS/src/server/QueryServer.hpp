@@ -15,6 +15,7 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 
 #include "SessionServer.hpp"
+#include "DbFactory.hpp"
 
 /**
  * \class QueryServer

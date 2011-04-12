@@ -7,6 +7,8 @@
 
 #include "SessionServer.hpp"
 #include "CommandServer.hpp"
+#include "DbFactory.hpp"
+
 /**
 * \brief Constructor
 * \fn SessionServer()

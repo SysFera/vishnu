@@ -34,7 +34,7 @@ void ExecConfiguration::initFromFile(std::string filePath) throw (UserException)
  */
 template<>
 bool
-ExecConfiguration::getConfigValue(vishnu::param_type_t param, std::string& value)
+ExecConfiguration::getConfigValue(vishnu::param_type_t param, std::string& value) const
 {
   const std::string& key = (vishnu::params)[param].value;
   ConfigMap::const_iterator it = mconfig.find(key);

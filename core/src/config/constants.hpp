@@ -19,6 +19,8 @@ namespace vishnu {
     VISHNUID,
     DBTYPE,
     DBHOST,
+    DBPORT,
+    DBNAME,
     DBUSERNAME,
     DBPASSWORD,
     SENDMAILSCRIPT

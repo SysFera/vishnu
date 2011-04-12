@@ -13,18 +13,11 @@
 #include <list>
 #include <iostream>
 #include <exception>
-#include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
+#include "Database.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "POSTGREDatabase.hpp"
-#include "DbFactory.hpp"
-#include "DatabaseResult.hpp"
 #include "SessionServer.hpp"
-#include "utilVishnu.hpp"
-#include "utilServer.hpp"
-
-using namespace vishnu;
 
 class SessionServer;
 
