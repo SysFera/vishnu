@@ -2,7 +2,7 @@
 * \file TMSServer.cpp
 * \brief This file presents the implementation of the TMS server.
 * \author Daouda Traore (daouda.traore@sysfera.com)
-* \date April 
+* \date April
 */
 
 #include "TMSServer.hpp"
@@ -25,7 +25,7 @@ TMSServer::getInstance() {
 
 /**
   * \brief To get the batchType
-  * \return the id of the underlying batch scheduler 
+  * \return the id of the underlying batch scheduler
   */
 BatchType
 TMSServer::getBatchType()  {
@@ -33,8 +33,8 @@ TMSServer::getBatchType()  {
 }
 
 /**
-  * \brief To get the machine id of the TMS server 
-  * \return the machine id  
+  * \brief To get the machine id of the TMS server
+  * \return the machine id
   */
 std::string
 TMSServer::getMachineId() {
@@ -50,11 +50,13 @@ TMSServer::TMSServer() : mprofile(NULL) {
 
 /**
  * \brief To initialize the TMS Server class
- * \param bachType the type of batch scheduler 
- * \param machineId the id of the machine 
+ * \param vishnuId The identifier of the vishnu instance
+ * \param dbConfig  The configuration of the database
+ * \param machineId the id of the machine
+ * \param batchType the type of batch scheduler
  */
 int
-TMSServer::init(BatchType batchType, std::string machineId)
+TMSServer::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType)
 {
 
   //initialization of the batchType
