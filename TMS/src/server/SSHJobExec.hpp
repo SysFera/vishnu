@@ -9,7 +9,6 @@
 #define _SSHJobExec_H_
 
 #include <string>
-
 #include "utilVishnu.hpp"
 
 class SSHJobExec {
@@ -21,6 +20,9 @@ class SSHJobExec {
     SSHJobExec(char* script_path, 
                const std::string& jobSerialized, 
                const std::string& submitOptionsSerialized,
+               const std::string& user, 
+               const std::string& key,
+               const std::string& hostname,
                BatchType batchType);
      
     std::string getJobSerialized();
@@ -35,11 +37,15 @@ class SSHJobExec {
     ~SSHJobExec();
 
   private:
+    std::string convertBatchTypeToString(BatchType batchType);
     char*  mscript_path;
     std::string mjobSerialized;
     std::string msubmitOptionsSerialized;
     BatchType mbatchType;
     std::string merrorInfo;
+    std::string muser;
+    std::string msshKey;
+    std::string mhostname;
 };
 
 #endif

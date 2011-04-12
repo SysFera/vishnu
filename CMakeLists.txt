@@ -82,6 +82,20 @@ if (VISHNU_USE_TORQUE)
   endif(TORQUE_FOUND)
 endif (VISHNU_USE_TORQUE)
 
+if (VISHNU_USE_LOADLEVELER)
+  add_definitions(-DHAVE_LOADLEVELER)
+
+  find_package(LOADLEVELER)
+  if (LOADLEVELER_FOUND)
+  else (LOADLEVELER_FOUND)
+    message("LOADLEVELER installation was not found. Define the LOADLEVELER_DIR variable to continue.")
+    message("     - You can define a LOADLEVELER_DIR environment variable")
+    message("     - You can pass it as argument to cmake:")
+    message("       $ cmake <source root directory> -DLOADLEVELER_DIR:PATH=/path/to/LOADLEVELER")
+    message("     - You can use the ccmake GUI")
+    set(LOADLEVELER_DIR "" cache path "LOADLEVELER installation path")
+  endif(LOADLEVELER_FOUND)
+endif (VISHNU_USE_LOADLEVELER)
 
 find_package(
         Boost
