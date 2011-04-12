@@ -10,6 +10,7 @@
 #include <boost/filesystem/fstream.hpp>
 
 #include "utilsTMSClient.hpp"
+#include "utilVishnu.hpp"
 
 /**
  * \brief Function to split the receiving message into error code and message error
