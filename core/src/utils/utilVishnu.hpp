@@ -76,7 +76,6 @@ char* crypt(const char* clef, const char* salt);
 namespace vishnu {
 
   static const std::string ROOTUSERNAME = "root";
-  static const std::string DATABASENAME = "vishnu";
   static const std::string UMSMAPPERNAME = "UMS";
   static const int PASSWORD_MAX_SIZE = 8;
   /**
