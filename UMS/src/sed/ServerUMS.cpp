@@ -87,7 +87,7 @@ ServerUMS::init(int vishnuId,
     }
 
   } catch (VishnuException& e) {
-      std::cout << e.buildExceptionString() << std::endl;
+      std::cout << e.what() << std::endl;
       exit(0);
   }
 
