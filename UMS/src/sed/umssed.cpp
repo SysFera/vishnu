@@ -34,7 +34,7 @@ using namespace vishnu;
  */
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s vishnu_config.cfg\n"+ std::string(cmd);
+  std::cout << "Usage: " << std::string(cmd) << " vishnu_config.cfg\n";
   return 1;
 }
 
