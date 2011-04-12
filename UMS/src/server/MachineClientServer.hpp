@@ -12,10 +12,7 @@
 #include <exception>
 #include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
-#include "POSTGREDatabase.hpp"
-#include "DbFactory.hpp"
-#include "DatabaseResult.hpp"
-#include "utilVishnu.hpp"
+#include "Database.hpp"
 
 /**
 * \class MachineClientServer

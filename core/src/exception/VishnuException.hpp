@@ -10,7 +10,6 @@
 #include <cstdlib>
 #include <exception>
 #include <map>
-#include "utilVishnu.hpp"
 
 /**
  * \brief This class represents the root of all the exception of the system
@@ -125,12 +124,12 @@ public :
    */
   virtual std::string
   getMsg() const {return "";}
-  
+
   /**
    * \brief To get the complementary message
    * \return Returns the message
    */
-  virtual std::string 
+  virtual std::string
   getMsgComp() const {return mmsgc;}
   /**
    * \brief Function to set the type of the exception

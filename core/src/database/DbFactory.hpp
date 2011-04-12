@@ -9,15 +9,8 @@
 #define _DBFACTORY_H_
 
 #include "Database.hpp"
+#include "DbConfiguration.hpp"
 
-/**
- * \brief Constant used for creating postgre/sql databases
- */
-static const int POSTGREDB = 2;
-/**
- * \brief Constant used for creating oracle databases
- */
-static const int ORACLEDB = 3;
 
 /**
  * \class DbFactory
@@ -37,18 +30,19 @@ public :
    */
   ~DbFactory();
   /**
-   * \brief Function to create a database. The database created depends on the type parameter
-   * \fn   Database* getDatabaseInstance(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0)
-   * \param type The type of database to create
-   * \param host Host of the database
-   * \param user User to connect to the database
-   * \param pwd Password of the user
-   * \param db The database
-   * \param port The port to connect
+   * \brief Function to create a database from a configuration
+   * \param dbConfig  the configuration of the database
    * \return A database or a nil pointer
    */
   Database*
-  getDatabaseInstance(int type = -1, std::string host = "", std::string user = "", std::string pwd = "", std::string db = "", unsigned int port = 0);
+  createDatabaseInstance(DbConfiguration dbConfig);
+
+  /**
+   * \brief Get the single instance of the database
+   * \return A database or a nil pointer
+   */
+  Database*
+  getDatabaseInstance();
 
 private :
   /**

@@ -7,6 +7,10 @@
 #include "OptionValueServer.hpp"
 #include "UserServer.hpp"
 #include "SessionServer.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
+#include "utilVishnu.hpp"
+
 /**
 * \brief Constructor
 * \fn OptionValueServer()

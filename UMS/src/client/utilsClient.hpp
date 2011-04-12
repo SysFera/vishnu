@@ -8,6 +8,7 @@
 #define  _utilsClient_H_
 
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <sstream>
 

@@ -41,6 +41,7 @@ INCLUDE_DIRECTORIES(
   ${Boost_INCLUDE_DIRS}
   ${DB_INCLUDE_DIRECTORIES}
  ../exception/
+ ../config
  ../utils
 )
 
