@@ -76,8 +76,7 @@ public :
 
    /**
    * \brief To initialize the UMS server
-   * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword, std::string sendmailScriptPath)
-   * \param vishnuId The password of the root user vishnu_user for the connection with the database
+   * \param vishnuId  The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
    * \param sendmailScriptPath The path to the script for sending emails
    * \return an error code (0 if success and 1 if an error occurs)
