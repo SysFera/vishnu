@@ -21,6 +21,8 @@ include_directories(
   ${TMS_UTILS_DIR}
   ${TORQUE_INCLUDE_DIR}
   ${UTILS_TORQUE_DIR}
+  ${SERVER_SOURCE_DIR}
+  ${SED_SOURCE_DIR}
 )
 
 add_executable(tmssed
@@ -39,6 +41,8 @@ target_link_libraries(tmssed
   database-vishnu
   utils-vishnu
   utils-server
+  ums-server
+  ums-sed
   tms-server
 )
 
