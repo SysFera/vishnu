@@ -10,7 +10,6 @@
 #include <cstdlib>
 #include <exception>
 #include <map>
-#include "utilVishnu.hpp"
 
 /**
  * \brief This class represents the root of all the exception of the system
