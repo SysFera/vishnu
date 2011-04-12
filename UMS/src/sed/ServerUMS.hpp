@@ -16,6 +16,7 @@
 #include "DIET_server.h"
 #include "UMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "DbConfiguration.hpp"
 
 class Database;
 
@@ -77,16 +78,12 @@ public :
    * \brief To initialize the UMS server
    * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword, std::string sendmailScriptPath)
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
-   * \param dbType   The type of the database (POSTGREDB|ORACLEDB)
-   * \param dbHost   The host of the database server
-   * \param dbUsername The name of the database user on the server
-   * \param dbPassword The password of the database user on the server
+   * \param dbConfig  The configuration of the database
    * \param sendmailScriptPath The path to the script for sending emails
    * \return an error code (0 if success and 1 if an error occurs)
    */
   int
-  init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword,
-       std::string sendmailScriptPath);
+  init(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath);
 
   /**
    * \brief Destructor, raises an exception on error

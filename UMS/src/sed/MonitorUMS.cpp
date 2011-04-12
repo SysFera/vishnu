@@ -34,27 +34,15 @@ MonitorUMS::~MonitorUMS() {
 * \brief To initialize the UMS monitor with individual parameters instead of configuration file
 * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
 * \param vishnuId The password of the root user vishnu_user for the connection with the database
-* \param dbType   The type of the database (POSTGREDB|ORACLEDB)
-* \param dbHost   The host of the database server
-* \param dbUsername The name of the database user on the server
-* \param dbPassword The password of the database user on the server
+* \param dbConfig The configuration of the database
 * \return raises an execption
 */
 void
-MonitorUMS::init(int vishnuId,
-                int dbType,
-                std::string dbHost,
-                std::string dbUsername,
-                std::string dbPassword) {
+MonitorUMS::init(int vishnuId, DbConfiguration dbConfig) {
 
   DbFactory factory;
 
-  //To get database instance
-  mdatabaseVishnu = factory.getDatabaseInstance(dbType,
-                                                dbHost,
-                                                dbUsername,
-                                                dbPassword,
-                                                DATABASENAME);
+  mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
 
