@@ -179,6 +179,10 @@ JobOutPutProxy::getAllJobsOutPut() {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
+  for(unsigned int i = 0; i < content.size; i++) {
+    dagda_delete_data(content.elt_ids[i]);
+  }
+  dagda_delete_data(IDContainer);
   diet_profile_free(profile);
   return listJobResults_ptr;
 }
