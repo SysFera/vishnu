@@ -14,4 +14,4 @@ set( config_SRCS
 )
 
 # static because we don't ship this
-add_library( VishnuConfig STATIC ${config_SRCS} )
+add_library( config-vishnu STATIC ${config_SRCS} )
