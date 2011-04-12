@@ -22,6 +22,7 @@
 #include "BatchServer.hpp"
 #include "TorqueServer.hpp"
 #include "VishnuException.hpp"
+#include "utilVishnu.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 using namespace std;
