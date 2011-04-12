@@ -1,10 +1,11 @@
 /**
- * \file utilsClient.hpp
+ * \file utilsClient.cpp
  * \brief This file contains client utils functions for VISHNU client Proxy classes
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date February 2011
  */
 #include "utilsClient.hpp"
+#include "utilVishnu.hpp"
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
