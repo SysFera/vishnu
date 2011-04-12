@@ -18,6 +18,14 @@
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const std::string DEFAULT_SLAVE_EXECUTABLE_DIR = "/tmp";
 
+SSHJobExec::SSHJobExec() {
+  mscript_path = NULL;
+  mjobSerialized = "";
+  msubmitOptionsSerialized = "";
+  mbatchType = UNDEFINED;
+  merrorInfo = "";
+}
+
 SSHJobExec::SSHJobExec(char* script_path, 
                        const std::string& jobSerialized, 
                        const std::string& submitOptionsSerialized,
@@ -71,6 +79,10 @@ void SSHJobExec::createTmpFile(char* fileName) {
   close(file_descriptor);
 }
 
+int SSHJobExec::deleteFile(const char* fileName) {
+  return unlink(fileName); 
+}
+
 int SSHJobExec::sshexec(const std::string& action) {
 
   std::string jobSerializedPath;
@@ -92,7 +104,8 @@ int SSHJobExec::sshexec(const std::string& action) {
     createTmpFile(const_cast<char*>(errorPath.c_str()));
 
     std::ostringstream cmd;
-    cmd << "ssh -l traore localhost ";
+    //cmd << "ssh -l traore localhost ";
+    cmd << "ssh localhost ";
     cmd << DEFAULT_SLAVE_EXECUTABLE_DIR << "/tmsSlave ";
     cmd << action << " ";
     cmd << jobSerializedPath << " " <<  errorPath << " ";
@@ -125,16 +138,16 @@ int SSHJobExec::sshexec(const std::string& action) {
       std::cout << "merrorInfo = " << merrorInfo << std::endl;
     }
 
-    unlink(jobSerializedPath.c_str());
-    unlink(submitOptionsSerializedPath.c_str());
-    unlink(jobUpdateSerializedPath.c_str());
-    unlink(errorPath.c_str());
+    deleteFile(jobSerializedPath.c_str());
+    deleteFile(submitOptionsSerializedPath.c_str());
+    deleteFile(jobUpdateSerializedPath.c_str());
+    deleteFile(errorPath.c_str());
 
   } catch(std::exception& exec) {
-    unlink(jobSerializedPath.c_str());
-    unlink(submitOptionsSerializedPath.c_str());
-    unlink(jobUpdateSerializedPath.c_str());
-    unlink(errorPath.c_str());
+    deleteFile(jobSerializedPath.c_str());
+    deleteFile(submitOptionsSerializedPath.c_str());
+    deleteFile(jobUpdateSerializedPath.c_str());
+    deleteFile(errorPath.c_str());
     std::cerr << exec.what() << std::endl;
   }
 }
