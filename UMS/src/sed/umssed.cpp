@@ -3,7 +3,7 @@
 #include <fstream>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
-#include "configuration.hpp"
+#include "ExecConfiguration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
@@ -69,8 +69,8 @@ int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
   int dbType = 0;
-  int vishnuid = 0;
-  std::string vishnuConfigFile;
+  int vishnuId = 0;
+  ExecConfiguration config;
   std::string dietConfigFile;
   std::string dbTypeStr;
   std::string dbHost;
@@ -83,55 +83,34 @@ int main(int argc, char* argv[], char* envp[]) {
     return usage(argv[0]);
   }
 
-  // Check VISHNU Configuration file
-  if(!boost::filesystem::is_regular_file(argv[1])) {
-    std::cerr << "Error: cannot open VISHNU configuration file" << std::endl;
-    exit(1);
-  }
-  vishnuConfigFile = argv[1];
-
-  // Load Configuration file
-  FileParser fileParser;
+  // Read the configuration
   try {
-    fileParser.parseFile(vishnuConfigFile);
-  } catch (...) {
-    throw SystemException(0, "while parsing " + vishnuConfigFile);
-  }
-  CONFIGMAP = fileParser.getConfiguration();
-
-  // Check DIET Configuration file
-  std::string tmpString;
-  if (!CONFIG_STRING(vishnu::DIETCONFIGFILE, tmpString)) {
-    throw UserException(ERRCODE_CONFIGNOTFOUND, "dietConfigFile");
-  }
-  if(!boost::filesystem::is_regular_file(tmpString)) {
-    std::cerr << "Error: cannot open DIET configuration file" << std::endl;
+    config.initFromFile(argv[1]);
+    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
+    config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
+    config.getRequiredConfigValue<std::string>(vishnu::DBTYPE, dbTypeStr);
+    if (dbTypeStr == "ora") {
+      dbType = ORACLEDB;
+    } else if (dbTypeStr == "pg") {
+      dbType = POSTGREDB;
+    } else {
+      std::cerr << "Error: invalid value for database type parameter (must be 'ora' or 'pg')" << std::endl;
+      exit(1);
+    }
+    config.getRequiredConfigValue<std::string>(vishnu::DBHOST, dbHost);
+    config.getRequiredConfigValue<std::string>(vishnu::DBUSERNAME, dbUsername);
+    config.getRequiredConfigValue<std::string>(vishnu::DBPASSWORD, dbPassword);
+    config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
+    if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
+      std::cerr << "Error: cannot open the script file for sending email" << std::endl;
+      exit(1);
+    }
+  } catch (UserException& e) {
+    std::cerr << e.what();
     exit(1);
   }
-  dietConfigFile = tmpString;
 
-  // Check the script path for sending mail
-  if(!boost::filesystem::is_regular_file(argv[7])) {
-    std::cerr << "Error: cannot open the script file for sending mail" << std::endl;
-    exit(1);
-  }
-
-  // Other command-line parameters
-  vishnuid = convertToInt(argv[2]);
-  dbTypeStr = argv[3];
-  if (dbTypeStr == "ora") {
-    dbType = ORACLEDB;
-  } else if (dbTypeStr == "pg") {
-    dbType = POSTGREDB;
-  } else {
-    std::cerr << "Error: invalid value for database type parameter (must be 'ora' or 'pg')" << std::endl;
-    exit(1);
-  }
-  dbHost = argv[4];
-  dbUsername = argv[5];
-  dbPassword = argv[6];
-  sendmailScriptPath = argv[7];
-
+  // Fork a child for UMS monitoring
   pid_t pid;
   pid_t ppid;
   pid = fork();
@@ -139,7 +118,7 @@ int main(int argc, char* argv[], char* envp[]) {
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
     ServerUMS* server = ServerUMS::getInstance();
-    res = server->init(vishnuid, dbType, dbHost, dbUsername, dbPassword, sendmailScriptPath);
+    res = server->init(vishnuId, dbType, dbHost, dbUsername, dbPassword, sendmailScriptPath);
 
     //Declaration of signal handler
     action.sa_handler = controlSignal;
@@ -150,7 +129,7 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       diet_print_service_table();
-      res = diet_SeD(argv[1], argc, argv);
+      res = diet_SeD(dietConfigFile.c_str(), argc, argv);
       if (server != NULL) {
         delete server;
       }
@@ -162,7 +141,7 @@ int main(int argc, char* argv[], char* envp[]) {
   else if (pid == 0) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
-    monitor.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
+    monitor.init(vishnuId, dbType, dbHost, dbUsername, dbPassword);
     ppid = getppid();
 
     while(kill(ppid,0) == 0) {
