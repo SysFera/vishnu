@@ -5,6 +5,7 @@
 #include "utilsClient.hpp"
 #include "utilsTMSClient.hpp"
 #include "emfTMSUtils.hpp"
+#include "utilVishnu.hpp"
 
 using namespace vishnu;
 
