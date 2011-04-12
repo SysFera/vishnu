@@ -7,10 +7,15 @@
 
 #include "TMSServer.hpp"
 #include "internalTMSAPI.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+#include <boost/scoped_ptr.hpp>
+#include "SystemException.hpp"
 
 TMSServer *TMSServer::minstance = NULL;
 BatchType TMSServer::mbatchType = UNDEFINED;
 std::string TMSServer::mmachineId = "";
+Database *TMSServer::mdatabaseVishnu = NULL;
 
 /**
  * \brief To get the unique instance of the server
@@ -67,6 +72,30 @@ TMSServer::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
 
   // initialization of the service table
   diet_service_table_init(NB_SRV);
+
+
+  DbFactory factory;
+
+   try {
+    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+    /*connection to the database*/
+    mdatabaseVishnu->connect();
+
+    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
+
+    /* Checking of vishnuid on the database */
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+
+    if (result->getResults().size() == 0) {
+      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+      throw e;
+    }
+
+
+  } catch (VishnuException& e) {
+      std::cout << e.what() << std::endl;
+      exit(0);
+  }
 
 
   // initialization of the service table
