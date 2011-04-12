@@ -12,6 +12,7 @@ include_directories(
   ${UMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${CONFIG_SOURCE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${TMS_SERVER_SOURCE_DIR}
@@ -39,6 +40,7 @@ target_link_libraries(tmssed
   register-vishnu
   exception-vishnu
   database-vishnu
+  config-vishnu
   utils-vishnu
   utils-server
   ums-server
