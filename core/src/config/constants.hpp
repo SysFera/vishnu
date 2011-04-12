@@ -28,7 +28,6 @@ namespace vishnu {
   {
     param_type_t key;
     const std::string value;
-    // TODO: unused today but may help get rid of "simple_cast"
     c_type_t type;
   };
 
