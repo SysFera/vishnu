@@ -4,7 +4,7 @@ include_directories(
 )
 
 
-add_library(utils-torque 
+add_library(utils-torque STATIC
   ck_job_name
   cnt2server
   cvtdate

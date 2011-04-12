@@ -50,6 +50,6 @@ target_link_libraries(ums-sed
   ums-server
 )
 
-install_targets(/sbin/
- umssed
-)
+install(TARGETS ums-sed DESTINATION lib)
+install(TARGETS umssed DESTINATION sbin)
+
