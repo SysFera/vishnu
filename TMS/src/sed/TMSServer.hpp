@@ -14,6 +14,8 @@
 #include "DbConfiguration.hpp"
 #include "utilVishnu.hpp"
 
+class Database;
+
 /**
  *  * \brief Number of service in TMS
  *   */
@@ -100,6 +102,6 @@ private :
   /**
   * \brief Instance of Database
   */
-  //static Database *mdatabaseVishnu;
+  static Database *mdatabaseVishnu;
 };
-#endif // SERVERg
+#endif // SERVER
