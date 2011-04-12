@@ -69,7 +69,6 @@ controlSignal (int signum) {
 int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
-  int dbType = 0;
   int vishnuId = 0;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
