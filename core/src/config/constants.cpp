@@ -13,7 +13,9 @@ namespace vishnu {
     /* [5]  */ {DBNAME, "databaseName", STRING_PARAMETER},
     /* [6]  */ {DBUSERNAME, "databaseUserName", STRING_PARAMETER},
     /* [7]  */ {DBPASSWORD, "databaseUserPassword", STRING_PARAMETER},
-    /* [8]  */ {SENDMAILSCRIPT, "sendmailScriptPath", STRING_PARAMETER}
+    /* [8]  */ {SENDMAILSCRIPT, "sendmailScriptPath", STRING_PARAMETER},
+    /* [9]  */ {BATCHTYPE, "batchSchedulerType", STRING_PARAMETER},
+    /* [10] */ {MACHINEID, "vishnuMachineId", STRING_PARAMETER}
   };
 }
 
