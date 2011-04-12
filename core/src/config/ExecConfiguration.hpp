@@ -2,8 +2,8 @@
  * \file ExecConfiguration.hpp
  */
 
-#ifndef _CONFIGURATION_HPP_
-#define _CONFIGURATION_HPP_
+#ifndef _EXECCONFIGURATION_HPP_
+#define _EXECCONFIGURATION_HPP_
 
 #include <cstring>
 #include <iostream>
@@ -101,4 +101,4 @@ protected:
   ConfigMap mconfig;
 };
 
-#endif /* _CONFIGURATION_HPP_ */
+#endif /* _EXECCONFIGURATION_HPP_ */
