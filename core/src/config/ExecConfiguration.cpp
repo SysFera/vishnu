@@ -1,7 +1,7 @@
 #include <regex.h>
 #include <stdexcept>
 
-#include "configuration.hpp"
+#include "ExecConfiguration.hpp"
 #include "constants.hpp"
 
 const std::string simple_cast_traits<std::string>::zero_value = "";

@@ -10,7 +10,7 @@ set( config_SRCS
 #   EnvParser.cc
   FileParser.cpp
   constants.cpp
-  configuration.cpp
+  ExecConfiguration.cpp
 )
 
 # static because we don't ship this
