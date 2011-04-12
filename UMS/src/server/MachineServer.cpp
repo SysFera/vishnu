@@ -7,6 +7,9 @@
 
 #include "MachineServer.hpp"
 #include "ServerUMS.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+#include "utilServer.hpp"
 
 /**
 * \brief Constructor

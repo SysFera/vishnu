@@ -7,6 +7,11 @@
 
 #include <boost/scoped_ptr.hpp>
 #include "MachineClientServer.hpp"
+#include "POSTGREDatabase.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
+#include "utilVishnu.hpp"
+
 /**
 * \brief Constructor
 * \fn MachineClientServer(std::string sshKey, std::string host)

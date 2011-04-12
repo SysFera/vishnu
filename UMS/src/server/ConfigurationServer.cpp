@@ -9,6 +9,7 @@
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
 #include "ServerUMS.hpp"
+#include "DbFactory.hpp"
 
 /**
  * \brief Constructor

@@ -11,7 +11,6 @@
 #include <string>
 #include <iostream>
 #include "SessionServer.hpp"
-#include "utilVishnu.hpp"
 
 /**
 * \enum CmdType

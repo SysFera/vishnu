@@ -6,6 +6,7 @@
 */
 
 #include "LocalAccountServer.hpp"
+#include "DbFactory.hpp"
 
 /**
 * \brief Constructor

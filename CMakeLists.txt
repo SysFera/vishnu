@@ -102,6 +102,7 @@ set(CLI_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/cli)
 set(SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
 set(REGISTRY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/registry)
 set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
+set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 
 set(TMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata)
 set(TMS_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata/TMS_Data)
