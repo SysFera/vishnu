@@ -23,7 +23,9 @@ namespace vishnu {
     DBNAME,
     DBUSERNAME,
     DBPASSWORD,
-    SENDMAILSCRIPT
+    SENDMAILSCRIPT,
+    BATCHTYPE,
+    MACHINEID
   } param_type_t;
 
   struct param_t
