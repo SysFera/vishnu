@@ -71,7 +71,7 @@ public:
    */
   template<typename T>
   bool
-  getConfigValue(vishnu::param_type_t param, T& value)
+  getConfigValue(vishnu::param_type_t param, T& value) const
   {
     const std::string& key = (vishnu::params)[param].value;
     ConfigMap::const_iterator it = mconfig.find(key);
@@ -90,7 +90,7 @@ public:
    */
   template<typename T>
   void
-  getRequiredConfigValue(vishnu::param_type_t param, T& value) throw (UserException)
+  getRequiredConfigValue(vishnu::param_type_t param, T& value) const throw (UserException)
   {
     if (!getConfigValue<T>(param, value)) {
       throw UserException(ERRCODE_CONFIGNOTFOUND, vishnu::params[param].value);

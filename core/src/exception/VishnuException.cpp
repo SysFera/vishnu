@@ -1,5 +1,12 @@
 #include "VishnuException.hpp"
+#include <sstream>
 
+template <class T>
+std::string convertToString(T val) {
+    std::ostringstream out;
+    out << val;
+    return out.str();
+}
 
 VishnuException::VishnuException(){
   mmsgc = "";
@@ -22,7 +29,7 @@ VishnuException::VishnuException(int msg, std::string msgComp){
 const char*
 VishnuException::what() const throw()
 {
-  mfullMsg = "VISHNU Error " + vishnu::convertToString(getMsgI());
+  mfullMsg = "VISHNU Error " + convertToString(getMsgI());
   mfullMsg += " : ";
   mfullMsg += getMsg();
   mfullMsg += " [";
@@ -51,7 +58,7 @@ VishnuException::buildExceptionString() const {
   std::string errorInfo;
 
   //To get the error code associated to the exception follows by #
-  errorInfo =  vishnu::convertToString(getMsgI())+"#";
+  errorInfo =  convertToString(getMsgI())+"#";
 
   //To get exception complementary message
   errorInfo.append(mmsgc);

@@ -6,6 +6,9 @@
 */
 
 #include "CommandServer.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+
 
 /**
 * \brief Constructor

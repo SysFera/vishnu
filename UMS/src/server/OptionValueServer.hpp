@@ -16,12 +16,7 @@
 #include "VishnuException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "POSTGREDatabase.hpp"
-#include "DbFactory.hpp"
-#include "DatabaseResult.hpp"
-#include "utilVishnu.hpp"
-
-using namespace vishnu;
+#include "Database.hpp"
 
 class SessionServer;
 

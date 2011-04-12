@@ -34,14 +34,11 @@ public :
    * \brief To initialize the UMS monitor with individual parameters instead of configuration file
    * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
-   * \param dbType   The type of the database (POSTGREDB|ORACLEDB)
-   * \param dbHost   The host of the database server
-   * \param dbUsername The name of the database user on the server
-   * \param dbPassword The password of the database user on the server
+   * \param dbConfig The configuration of the database
    * \return raises an execption
    */
   void
-  init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword);
+  init(int vishnuId, DbConfiguration dbConfig);
 
    /**
    * \brief To launch the UMS Monitor
