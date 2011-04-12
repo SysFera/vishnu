@@ -32,6 +32,7 @@ target_link_libraries(umssed
   register-vishnu
   exception-vishnu
   database-vishnu
+  config-vishnu
   ums-server
 )
 

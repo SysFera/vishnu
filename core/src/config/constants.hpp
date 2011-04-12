@@ -18,7 +18,7 @@ namespace vishnu {
     DIETCONFIGFILE=0,
     VISHNUID,
     DBTYPE,
-    DBNAME,
+    DBHOST,
     DBUSERNAME,
     DBPASSWORD,
     SENDMAILSCRIPT
