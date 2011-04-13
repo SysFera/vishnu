@@ -1,3 +1,7 @@
+/**
+ * \file ExecConfiguration.cpp
+ */
+
 #include <regex.h>
 #include <stdexcept>
 
