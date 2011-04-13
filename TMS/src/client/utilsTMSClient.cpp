@@ -10,6 +10,7 @@
 #include <boost/filesystem/fstream.hpp>
 
 #include "utilsTMSClient.hpp"
+#include "utilVishnu.hpp"
 
 /**
  * \brief Function to split the receiving message into error code and message error
@@ -37,7 +38,7 @@ TMSUtils::raiseTMSExceptionIfNotEmptyMsg(const std::string& msg) {
           throw UMSVishnuException(code, message);
         }//if the exception is an TMSVishnuException
         else if ((code >= 100) && (code < 200)) {
-          //throw TMSVishnuException(code, message);
+          throw TMSVishnuException(code, message);
         } else {
           std::string tmp = "Invalid code: ";
           tmp += vishnu::convertToString(code);
