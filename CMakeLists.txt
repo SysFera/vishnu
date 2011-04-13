@@ -105,20 +105,23 @@ find_package(
 )
 add_definitions( "-DBOOST_FILESYSTEM_VERSION=3" )
 
+#Core
 set(EMF4CPP_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp)
-set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
-set(UMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
 set(VISHNU_EXCEPTION_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/exception)
 set(DATA_BASE_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/database)
-set(CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
-set(SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/server)
-set(API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/api)
-set(CLI_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/cli)
-set(SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
 set(REGISTRY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/registry)
 set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
 set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 
+#UMS
+set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
+set(UMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
+set(CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
+set(SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/server)
+set(API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/api)
+set(SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
+
+#TMS
 set(TMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata)
 set(TMS_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata/TMS_Data)
 set(TMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/client)
@@ -138,6 +141,7 @@ set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 # for testing
 set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
 
+# FIXME to put inside TMS
 set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
 set (TEST_TMS_SQL "${TMS_TEST_DIR}")
 
