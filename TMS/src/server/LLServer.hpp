@@ -15,7 +15,7 @@ class LLServer : public BatchServer
   public:
     LLServer();
     int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp=NULL);
-    int cancel(const char* jobId) { };
+    int cancel(const char* jobId);
     TMS_Data::Job getJob() { };
     /**
      * \brief To list the jobs on the torque batch
@@ -24,7 +24,7 @@ class LLServer : public BatchServer
      * \return The list of the jobs
      */
     TMS_Data::ListJobs*
-      listJobs(TMS_Data::ListJobsOptions op);
+      listJobs(TMS_Data::ListJobsOptions op) {};
     TMS_Data::JobResult getJobResults() { };
     TMS_Data::ListQueues* listQueues() { };
     TMS_Data::ListJobResults* getAllJobsResults() { };
@@ -35,12 +35,16 @@ class LLServer : public BatchServer
      * \return The filled job
      */
     TMS_Data::Job* 
-      getJobInfo(string job);
+      getJobInfo(string job) {};
 
     TMS_Data::ListProgression* getJobProgress(TMS_Data::ProgressOptions) {};
 
+     
+
     ~LLServer() { }
 
+   private:
+    int remove_test(TMS_Data::Job& job);
 
 };
 
