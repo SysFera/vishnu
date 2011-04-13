@@ -17,6 +17,7 @@ option(ENABLE_JAVA OFF "compile the java api")
 option(ENABLE_ORACLE OFF "compile with the oracle support. Deprecated")
 option(COMPILE_UMS OFF "compile the module UMS")
 option(COMPILE_TMS OFF "compile the module TMS")
+option(BUILD_TEST OFF "compile the test")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
 
@@ -104,20 +105,23 @@ find_package(
 )
 add_definitions( "-DBOOST_FILESYSTEM_VERSION=3" )
 
+#Core
 set(EMF4CPP_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp)
-set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
-set(UMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
 set(VISHNU_EXCEPTION_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/exception)
 set(DATA_BASE_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/database)
-set(CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
-set(SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/server)
-set(API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/api)
-set(CLI_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/cli)
-set(SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
 set(REGISTRY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/registry)
 set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
 set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 
+#UMS
+set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
+set(UMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/UMS_Data)
+set(CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
+set(SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/server)
+set(API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/api)
+set(SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/sed)
+
+#TMS
 set(TMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata)
 set(TMS_DATA_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/emfdata/TMS_Data)
 set(TMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/client)
@@ -128,14 +132,18 @@ set(TMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/sed)
 set(TMS_UTILS_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/)
 set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
 
+
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
-set( UMS_TEST_DIR ${VISHNU_SOURCE_DIR}/UMS/test/src/sql )
 
-set (TEST_CONFIG_UMS "${PROJECT_BINARY_DIR}/include")
-set (TEST_SQL "${UMS_TEST_DIR}")
+# for testing
+set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
+
+# FIXME to put inside TMS
+set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
+set (TEST_TMS_SQL "${TMS_TEST_DIR}")
 
 add_subdirectory(core/src)
 add_subdirectory(core/deps/emf4cpp)
@@ -143,16 +151,25 @@ add_subdirectory(core/deps/emf4cpp)
 if(COMPILE_UMS)
   add_subdirectory(UMS/src)
   add_subdirectory(UMS/doc/man)
+  add_subdirectory(UMS/test/src)
 endif (COMPILE_UMS)
-# macros used to setup test environment
-#include(UMSTestingMacros)
-#ums_test_setup()
-#add_subdirectory(UMS/test/src)
 
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
+  add_subdirectory(TMS/test/src)
 endif (COMPILE_TMS)
 
-if (BUILD_TEST)
+if (BUILD_TESTING)
+  set( TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
+  set( TEST_DB_HOST "localhost" CACHE STRING "Hostname of the test database server")
+  set( TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")
+  set( TEST_DB_LOGIN "vishnu" CACHE STRING "Login for the test database")
+  set( TEST_DB_PASSWORD "vishnu" CACHE STRING "Password for the test database")
+  mark_as_advanced(TEST_DB_TYPE)
+  mark_as_advanced(TEST_DB_HOST)
+  mark_as_advanced(TEST_DB_NAME)
+  mark_as_advanced(TEST_DB_LOGIN)
+  mark_as_advanced(TEST_DB_PASSWORD)
+
   add_subdirectory(core/test)
-endif (BUILD_TEST)
+endif (BUILD_TESTING)

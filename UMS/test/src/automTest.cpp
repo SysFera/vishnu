@@ -7,12 +7,12 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include <iostream>
-//#include "fixtures.hpp"
+#include "UMS_fixtures.hpp"
 #include "api_ums.hpp"
-#include "config.h"
+#include "diet_config_tests.h"
 
-BOOST_AUTO_TEST_SUITE( test_suite )
-//BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
+//BOOST_AUTO_TEST_SUITE( test_suite )
+BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
 using namespace std;
 using namespace UMS_Data;
 using namespace vishnu;
@@ -20,12 +20,12 @@ using namespace vishnu;
 
 BOOST_AUTO_TEST_CASE( my_test )
 {
-
   int argc = 2;
   char* argv[argc];
+  string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
   argv[0]= (char*)"./automTest";
-  argv[1]=getenv("VISHNU_CONFIG_FILE");
-  if (diet_initialize(argv[1], argc, argv)) {
+  argv[1]= (char*) dietClientConfigPath.c_str();
+  if (diet_initialize(dietClientConfigPath.c_str(), argc, argv)) {
     BOOST_TEST_MESSAGE( "Error in diet_initialize..." );
   }
 
