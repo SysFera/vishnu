@@ -262,7 +262,6 @@ SessionServer::getSessionToclosebyTimeout() {
 
 }
 
-
 /**
 * \brief Function to make a complete checking of the session key
 * \fn int check()
@@ -276,7 +275,6 @@ SessionServer::check() {
 
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   std::vector<std::string> tmp;
-  std::vector<std::string>::iterator ii;
 
   //If the session key exists
   if (result->getNbTuples() != 0) {
@@ -310,8 +308,6 @@ SessionServer::check() {
   }
   return ret;
 }
-
-
 
 /**
 * \brief Function to generate the session key
