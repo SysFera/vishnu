@@ -28,6 +28,8 @@ else (VISHNU_USE_TORQUE AND VISHNU_USE_LOADLEVELER)
   endif (VISHNU_USE_TORQUE) 
 endif (VISHNU_USE_TORQUE AND VISHNU_USE_LOADLEVELER)
 
+set(UsedBatchServer TorqueServer LLServer)
+
 include_directories(
   ${DIET_INCLUDE_DIR}
   ${TMS_EMF_DATA_DIR}
