@@ -41,7 +41,7 @@ class LLServer : public BatchServer
 
     ~LLServer() { }
 
-
+  TMS_Data::ListJobs_ptr mjobs;
 };
 
 #endif
