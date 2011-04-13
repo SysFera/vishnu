@@ -1,8 +1,19 @@
+/**
+ * \file DbConfiguration.hpp
+ * \brief This file contains the declaration of the DbConfiguration class
+ * \author Benjamin Isnard
+ * \date April
+*/
+
 #ifndef _DBCONFIGURATION_HPP_
 #define _DBCONFIGURATION_HPP_
 
 #include "ExecConfiguration.hpp"
 
+/**
+ * \class DbConfiguration
+ * \brief Contains the configuration parameters for the Vishnu database
+ */
 class DbConfiguration {
 
 public:
@@ -49,24 +60,56 @@ public:
   const std::string& getDbName() const { return mdbName; }
 
   /**
-   * \brief Get the database user name
+   * \brief Get the database user name to connect to the database
    * \return database user name
    */
   const std::string& getDbUserName() const { return mdbUserName; }
 
    /**
-   * \brief Get the database user password
+   * \brief Get the database user password to connect to the database
    * \return database user password
    */
   const std::string& getDbUserPassword() const { return mdbPassword; }
 
 protected:
+
+  /////////////////////////////////
+  // Attributes
+  /////////////////////////////////
+
+  /**
+   * \brief Reference to the main program configuration
+   */
   const ExecConfiguration& mexecConfig;
+
+  /**
+   * \brief Attribute type of database
+   */
   db_type_t mdbType;
+
+  /**
+   * \brief Attribute host of the database
+   */
   std::string mdbHost;
+
+  /**
+   * \brief Attribute port of the database
+   */
   int mdbPort;
+
+  /**
+   * \brief Attribute name of the database
+   */
   std::string mdbName;
+
+  /**
+   * \brief Attribute user name to connect to the database
+   */
   std::string mdbUserName;
+
+  /**
+   * \brief Attribute user password to connect to the database
+   */
   std::string mdbPassword;
 };
 
