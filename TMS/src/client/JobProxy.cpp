@@ -111,6 +111,7 @@ JobProxy::submitJob(const std::string scriptContent,
 
   mjob = *job_ptr;
 
+  diet_profile_free(profile);
   return 0;
 }
 
@@ -167,8 +168,9 @@ JobProxy::cancelJob() {
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
+  diet_profile_free(profile);
 	return 0;
 }
 

@@ -7,10 +7,10 @@
 
 #include <boost/scoped_ptr.hpp>
 #include "POSTGREDatabase.hpp"
-#include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
 #include "utilServer.hpp"
 #include "utilVishnu.hpp"
+#include "DbFactory.hpp"
 
 /**
  * \brief Function to get information from the table vishnu

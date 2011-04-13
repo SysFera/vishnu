@@ -4,8 +4,11 @@
 #include "utilsClient.hpp"
 #include "utilsTMSClient.hpp"
 #include "emfTMSUtils.hpp"
+#include "DIET_Dagda.h"
+#include <boost/filesystem.hpp>
 
-
+namespace bfs = boost::filesystem;
+//using namespace boost::filesystem;
 using namespace vishnu;
 
 /**
@@ -91,6 +94,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
+  diet_profile_free(profile);
   return outJobResult;
 }
 
@@ -107,10 +111,13 @@ JobOutPutProxy::getAllJobsOutPut() {
   char* errorInfo = NULL;
   TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
 
+  char* IDContainer = NULL;
+  diet_container_t content;
+
   std::string serviceName = "jobOutPutGetAllResult_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 3);
+  profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 4);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -126,14 +133,35 @@ JobOutPutProxy::getAllJobsOutPut() {
   }
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,3), DIET_PERSISTENT);
   diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &listJobResultInString, NULL)){
+
+    if(diet_string_get(diet_parameter(profile,2), &listJobResultInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
+
+    IDContainer = (profile->parameters[3]).desc.id;
+    dagda_get_container(IDContainer);
+    dagda_get_container_elements(IDContainer, &content);
+
+    std::string currentDirectory = std::string(std::string(getenv("PWD")));
+    //To get all files from the container
+    for(unsigned int i = 0; i < content.size; i++) {
+      char* path = NULL;
+      dagda_get_file(content.elt_ids[i],&path);
+
+      //To check if the current directory contains tmp or not
+      if(!bfs::exists(bfs::path(currentDirectory+"/tmp"))){
+        bfs::create_directories(bfs::path(currentDirectory+"/tmp"));
+      }
+      //To copy dagda files from /tmp to the tmp directory of the current directory
+      bfs::copy_file(bfs::path(std::string(path)), bfs::path(currentDirectory+std::string(path)));
+    }
+
     if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
@@ -151,6 +179,11 @@ JobOutPutProxy::getAllJobsOutPut() {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
+  for(unsigned int i = 0; i < content.size; i++) {
+    dagda_delete_data(content.elt_ids[i]);
+  }
+  dagda_delete_data(IDContainer);
+  diet_profile_free(profile);
   return listJobResults_ptr;
 }
 

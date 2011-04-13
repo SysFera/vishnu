@@ -3,6 +3,8 @@
 #include <fstream>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
+#include "ExecConfiguration.hpp"
+#include "DbConfiguration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
@@ -32,7 +34,7 @@ using namespace vishnu;
  */
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s <diet_config.cfg> vishnuid [ora|pg] db_host db_username db_password sendmail_script_path\n"+ std::string(cmd);
+  std::cout << "Usage: " << std::string(cmd) << " vishnu_config.cfg\n";
   return 1;
 }
 
@@ -67,47 +69,34 @@ controlSignal (int signum) {
 int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
-  int dbType = 0;
-  int vishnuid = 0;
-  std::string dbTypeStr;
-  std::string dbHost;
-  std::string dbUsername;
-  std::string dbPassword;
+  int vishnuId = 0;
+  ExecConfiguration config;
+  DbConfiguration dbConfig(config);
+  std::string dietConfigFile;
   std::string sendmailScriptPath;
   struct sigaction action;
 
-  if (argc < 8) {
+  if (argc != 2) {
     return usage(argv[0]);
   }
 
-  // Check DIET Configuration file
-  if(!boost::filesystem::is_regular_file(argv[1])) {
-    std::cerr << "Error: cannot open DIET configuration file" << std::endl;
+  // Read the configuration
+  try {
+    config.initFromFile(argv[1]);
+    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
+    config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
+    dbConfig.check();
+    config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
+    if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
+      std::cerr << "Error: cannot open the script file for sending email" << std::endl;
+      exit(1);
+    }
+  } catch (UserException& e) {
+    std::cerr << e.what() << std::endl;
     exit(1);
   }
 
-  // Check the script path for sending mail
-  if(!boost::filesystem::is_regular_file(argv[7])) {
-    std::cerr << "Error: cannot open the script file for sending mail" << std::endl;
-    exit(1);
-  }
-
-  // Other command-line parameters
-  vishnuid = convertToInt(argv[2]);
-  dbTypeStr = argv[3];
-  if (dbTypeStr == "ora") {
-    dbType = ORACLEDB;
-  } else if (dbTypeStr == "pg") {
-    dbType = POSTGREDB;
-  } else {
-    std::cerr << "Error: invalid value for database type parameter (must be 'ora' or 'pg')" << std::endl;
-    exit(1);
-  }
-  dbHost = argv[4];
-  dbUsername = argv[5];
-  dbPassword = argv[6];
-  sendmailScriptPath = argv[7];
-
+  // Fork a child for UMS monitoring
   pid_t pid;
   pid_t ppid;
   pid = fork();
@@ -115,7 +104,7 @@ int main(int argc, char* argv[], char* envp[]) {
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
     ServerUMS* server = ServerUMS::getInstance();
-    res = server->init(vishnuid, dbType, dbHost, dbUsername, dbPassword, sendmailScriptPath);
+    res = server->init(vishnuId, dbConfig, sendmailScriptPath);
 
     //Declaration of signal handler
     action.sa_handler = controlSignal;
@@ -126,7 +115,7 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       diet_print_service_table();
-      res = diet_SeD(argv[1], argc, argv);
+      res = diet_SeD(dietConfigFile.c_str(), argc, argv);
       if (server != NULL) {
         delete server;
       }
@@ -138,7 +127,7 @@ int main(int argc, char* argv[], char* envp[]) {
   else if (pid == 0) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
-    monitor.init(vishnuid, dbType, dbHost, dbUsername, dbPassword);
+    monitor.init(vishnuId, dbConfig);
     ppid = getppid();
 
     while(kill(ppid,0) == 0) {

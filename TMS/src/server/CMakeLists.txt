@@ -4,6 +4,30 @@ link_directories(
  ${Boost_LIBRARY_DIRS}
 )
 
+if (VISHNU_USE_TORQUE AND VISHNU_USE_LOADLEVELER)
+  set(UsedBatchServer TorqueServer LLServer)
+  set(USED_BATCH_INCLUDE_DIR ${TORQUE_INCLUDE_DIR} ${UTILS_TORQUE_DIR} ${LOADLEVELER_INCLUDE_DIR})
+  set(USED_BATCH_LIB ${TORQUE_LIB} ${LOADLEVELER_LIB}) 
+else (VISHNU_USE_TORQUE AND VISHNU_USE_LOADLEVELER)
+  if (VISHNU_USE_TORQUE)
+    set(UsedBatchServer TorqueServer)
+    set(USED_BATCH_INCLUDE_DIR ${TORQUE_INCLUDE_DIR} ${UTILS_TORQUE_DIR})
+    set(USED_BATCH_LIB ${TORQUE_LIB})
+  else (VISHNU_USE_TORQUE)
+    if(VISHNU_USE_LOADLEVELER)
+      set(UsedBatchServer LLServer)
+      set(USED_BATCH_INCLUDE_DIR ${LOADLEVELER_INCLUDE_DIR})
+      set(USED_BATCH_LIB ${LOADLEVELER_LIB})
+    else (VISHNU_USE_LOADLEVELER) 
+      message("TORQUE or LOADLEVELER  installation was not found. Define the TORQUE_DIR or LOADLEVELER_DIR variable to continue.")
+      message(" - You can define a TORQUE_DIR or LOADLEVELER_DIR environment variable")
+      message(" - You can pass it as argument to cmake:")
+      message("   $ cmake <source root directory> -DTORQUE_DIR:PATH=/path/to/TORQUE or -DLOADLEVELER_DIR:PATH=/path/to/LOADLEVELER")
+      message(" - You can use the ccmake GUI")
+    endif (VISHNU_USE_LOADLEVELER)
+  endif (VISHNU_USE_TORQUE) 
+endif (VISHNU_USE_TORQUE AND VISHNU_USE_LOADLEVELER)
+
 include_directories(
   ${DIET_INCLUDE_DIR}
   ${TMS_EMF_DATA_DIR}
@@ -19,16 +43,16 @@ include_directories(
   ${UTILVISHNU_SOURCE_DIR}
   ${SED_SOURCE_DIR}
   ${TMS_UTILS_DIR}
-  ${TORQUE_INCLUDE_DIR}
-  ${UTILS_TORQUE_DIR}
   ${SERVER_SOURCE_DIR}
+  ${USED_BATCH_INCLUDE_DIR}
 )
 
 add_library(tms-server STATIC
    BatchServer
-   TorqueServer
+   ${UsedBatchServer}
    SSHJobExec
    JobServer
+   BatchFactory
 )
 
 target_link_libraries(tms-server
@@ -36,7 +60,7 @@ target_link_libraries(tms-server
   ${DIET_SERVER_LIB}
   ${Boost_LIBRARIES}
   ${LIBCRYPT_LIB}
-  ${TORQUE_LIB}
+  ${USED_BATCH_LIB}
   emf4cpp-TMS_Data
   database-vishnu
   exception-vishnu
