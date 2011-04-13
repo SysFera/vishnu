@@ -6,9 +6,9 @@
 #include "emfTMSUtils.hpp"
 #include "DIET_Dagda.h"
 #include <boost/filesystem.hpp>
+#include "utilVishnu.hpp"
 
 namespace bfs = boost::filesystem;
-//using namespace boost::filesystem;
 using namespace vishnu;
 
 /**
@@ -36,13 +36,19 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   char* jobResultToString;
   char* jobResultInString;
   char* errorInfo = NULL;
+  char* IDContainer = NULL;
+  diet_container_t content;
+  char* outputPath = NULL;
+  char* errorPath = NULL;
+
+
   TMS_Data::JobResult jobResult;
   jobResult.setJobId(jobId);
 
   std::string serviceName = "jobOutPutGetResult_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
+  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -69,14 +75,21 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
    //OUT Parameters
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT);
+  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,3), &jobResultInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+
+    IDContainer = (profile->parameters[4]).desc.id;
+    dagda_get_container(IDContainer);
+    dagda_get_container_elements(IDContainer, &content);
+
+
+    if(diet_string_get(diet_parameter(profile,5), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -93,6 +106,17 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult, "Error when receiving JobResult object serialized")) {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
+
+  //To get all files from the container
+  dagda_get_file(content.elt_ids[0],&outputPath);
+  dagda_get_file(content.elt_ids[1],&errorPath);
+
+  vishnu::copyDagdaFile(std::string(outputPath), outJobResult->getOutputPath());
+  vishnu::copyDagdaFile(std::string(errorPath), outJobResult->getErrorPath());
+
+  /*dagda_delete_data(content.elt_ids[0]);
+  dagda_delete_data(content.elt_ids[1]);
+  dagda_delete_data(IDContainer);*/
 
   diet_profile_free(profile);
   return outJobResult;
@@ -179,10 +203,10 @@ JobOutPutProxy::getAllJobsOutPut() {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
-  for(unsigned int i = 0; i < content.size; i++) {
+  /*for(unsigned int i = 0; i < content.size; i++) {
     dagda_delete_data(content.elt_ids[i]);
   }
-  dagda_delete_data(IDContainer);
+  dagda_delete_data(IDContainer);*/
   diet_profile_free(profile);
   return listJobResults_ptr;
 }
