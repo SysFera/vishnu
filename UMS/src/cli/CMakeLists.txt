@@ -1,7 +1,6 @@
 
-link_directories(${Boost_LIBRARY_DIRS}
-                  ${CLI_SOURCE_DIR}
-                )
+link_directories(${Boost_LIBRARY_DIRS})
+
 include_directories(${Boost_INCLUDE_DIRS}
                     ${DIET_INCLUDE_DIR}
                     ${EMF_DATA_DIR}
@@ -10,7 +9,6 @@ include_directories(${Boost_INCLUDE_DIRS}
                     ${API_SOURCE_DIR}
                     ${CLIENT_PROXY_SOURCE_DIR}
                     ${VISHNU_EXCEPTION_INCLUDE_DIR}
-                    ${CLI_SOURCE_DIR}
                     ${UTILVISHNU_SOURCE_DIR}
                   )
 
