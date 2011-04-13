@@ -1,3 +1,10 @@
+/**
+ * \file DbConfiguration.cpp
+ * \brief This file contains the definitions of the DbConfiguration class
+ * \author Benjamin Isnard
+ * \date April
+*/
+
 #include "DbConfiguration.hpp"
 
 using namespace std;
