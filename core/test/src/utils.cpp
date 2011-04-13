@@ -10,13 +10,13 @@
 #include <boost/scoped_array.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include "config_tests.h"
+#include "diet_config_tests.h"
 
 namespace utils {
     namespace ba = boost::assign;
     namespace bf = boost::filesystem;
-    
-    bp::child *copy_child(const bp::child& c) 
+
+    bp::child *copy_child(const bp::child& c)
     {
 	std::map<bp::stream_id, bp::handle> handles;
 	ba::insert(handles)
@@ -35,11 +35,11 @@ namespace utils {
 	exec.reset(new char[len + 1]);
 	std::strncpy(exec.get(), progName.c_str(), len + 1);
 	args[0] = exec.get();
-	
+
 	/* config file path */
 	bf::path config_path(CONFIG_DIR);
 	config_path /= config;
-	
+
 	const char *tmp = config_path.c_str();
 	len = std::strlen(tmp);
 	configFile.reset(new char[len + 1]);
@@ -59,13 +59,13 @@ namespace utils {
 	    		   "argc: %2%\n"
 	    		   "argv[0]: %3%\n"
 	    		   "argv[1]: %4%\n"
-			   "argv[2]: %5%\n") 
+			   "argv[2]: %5%\n")
 	    % c.configFile.get()
 	    % c.argc()
 	    % c.args[0]
 	    % c.args[1]
 	    % (c.args[2] == 0);
     }
-    
+
 
 }
