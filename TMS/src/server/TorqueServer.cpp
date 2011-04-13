@@ -226,8 +226,8 @@ TMS_Data::ListJobs*
 TorqueServer::listJobs(TMS_Data::ListJobsOptions op){
 
   // The list
-  // TODO: Check the new, because memor leaks otherwise
-  mjobs = new TMS_Data::ListJobs();
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mjobs = ecoreFactory->createListJobs();
 
   struct attropl attr[NBFIELDLISTJOBOPT];
 
@@ -614,7 +614,8 @@ TorqueServer::fillJobProgress(TMS_Data::Progression &job, struct batch_status *p
 TMS_Data::ListProgression*
 TorqueServer::getJobProgress(TMS_Data::ProgressOptions op){
 
-  mprog = new TMS_Data::ListProgression();
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mprog = ecoreFactory->createListProgression();
 
   struct attropl attr[NBFIELDLISTJOBOPT];
 
@@ -682,7 +683,8 @@ TorqueServer::getJobInfo(string job){
 
   // The list
   // TODO: Check the new, because memor leaks otherwise
-  mjob = new TMS_Data::Job();
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mjob = ecoreFactory->createJob();
 
   char *errmsg;
   int   connect;

@@ -361,7 +361,7 @@ solve_jobOutPutGetResult(diet_profile_t* pb) {
   }
 
   std::cout << jobResult->getJobId() << std::endl;
-  jobResult->setErrorPath("Error Path: From Server");
+  jobResult->setErrorPath("/tmp/toto/");
 
   //To serialize the user object
   const char* name = "getResult";
@@ -370,7 +370,22 @@ solve_jobOutPutGetResult(diet_profile_t* pb) {
 
   //OUT Parameter
   diet_string_set(diet_parameter(pb,3), jobResultOutSerialized, DIET_VOLATILE);
-  diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+
+  char* ID2 = NULL;
+  char* ID3 = NULL;
+  std::string path = "/home/capo-chichi/tmp/test1.txt";
+  std::string path2 = "/home/capo-chichi/tmp/test2.txt";
+
+  dagda_init_container(diet_parameter(pb,4));
+
+  dagda_put_file(strdup(path.c_str()), DIET_STICKY_RETURN, &ID2);
+  dagda_put_file(strdup(path2.c_str()), DIET_STICKY_RETURN, &ID3);
+
+
+  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID2, 0);
+  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID3, 1);
+
+  diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
 
   return 0;
 }
@@ -396,15 +411,15 @@ solve_jobOutPutGetAllResult(diet_profile_t* pb) {
 
   char* ID2;
   char* ID3;
-  std::string path = "/home/capo-chichi/tmp/EDF-PlanifPaco.png";
-  std::string path2 = "/home/capo-chichi/tmp/EDF-PlanifPaco2.png";
+  std::string path = "/home/capo-chichi/tmp/test2.txt";
+  std::string path2 = "/home/capo-chichi/tmp/test1.txt";
 
   dagda_init_container(diet_parameter(pb,3));
 
   //dagda_put_scalar(l3, DIET_LONGINT, DIET_PERSISTENT, &ID2);
   //dagda_put_scalar(l4, DIET_LONGINT, DIET_PERSISTENT, &ID3);
-  dagda_put_file(strdup(path.c_str()), DIET_PERSISTENT, &ID2);
-  dagda_put_file(strdup(path2.c_str()), DIET_PERSISTENT, &ID3);
+  dagda_put_file(strdup(path.c_str()), DIET_STICKY_RETURN, &ID2);
+  dagda_put_file(strdup(path2.c_str()), DIET_STICKY_RETURN, &ID3);
 
   /*dagda_add_container_element((*diet_parameter(pb,3)).desc.id, ID2, 2);
   std::cout << "ADD1" << std::endl;
@@ -510,12 +525,13 @@ main(int argc, char* argv[], char* envp[])
   if (diet_service_table_add(profile, NULL, solve_TMSMachineRefreshPeriodGet)) return 1;
 
   /* jobOutPutGetResult */
-  profile = diet_profile_desc_alloc((SERVICES[7]+std::string(machineId)).c_str(), 2, 2, 4);
+  profile = diet_profile_desc_alloc((SERVICES[7]+std::string(machineId)).c_str(), 2, 2, 5);
   diet_generic_desc_set(diet_param_desc(profile,0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,3), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(profile,4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,4), DIET_CONTAINER, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,5), DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(profile, NULL, solve_jobOutPutGetResult)) return 1;
 
   /* jobOutPutGetAllResult */

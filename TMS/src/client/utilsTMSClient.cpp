@@ -53,26 +53,3 @@ TMSUtils::raiseTMSExceptionIfNotEmptyMsg(const std::string& msg) {
   }
 
 }
-
-/**
-* \brief Simple function to read the content of a regular file
-* \param filePath: the path to the file
-* \return The content of the file
-*/
-
-std::string
-TMSUtils::getFileContent(const std::string& filePath) {
-
-  boost::filesystem::path file (filePath);
-
-  if (((false==boost::filesystem::exists(file)) || (true==boost::filesystem::is_empty(file)))
-    || (false==boost::filesystem::is_regular_file(file))) {
-    throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
-  }
-
-  boost::filesystem::ifstream ifs (file);
-  std::stringstream ss;
-  ss << ifs.rdbuf();
-  return ss.str();
-
-}
