@@ -3,8 +3,8 @@
 #ifndef _CONFIG_H_IN_
 #define _CONFIG_H_IN_
 
-#define TESTCONF "@TEST_CONFIG_UMS@"
-#define TESTF "@TEST_SQL@"
+#define TESTCONF "@TEST_CONFIG_TMS@"
+#define TESTF "@TEST_TMS_SQL@"
 #define UMSSEDCONF "@UMSSEDCONF@"
 
 //#define OMNINAMES_LOGDIR "@OMNILOG@"

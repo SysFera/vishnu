@@ -1,0 +1,12 @@
+// config.h.in
+
+#ifndef _TESTCONFIG_H_IN_
+#define _TESTCONFIG_H_IN_
+
+#define TESTCONF "@TEST_CONFIG_UMS@"
+#define TESTF "@TEST_SQL@"
+#define UMSSEDCONF "@UMSSEDCONF@"
+#define UMSSEDBINDIR "@UMSSEDBINDIR@"
+
+#endif /* _TESTCONFIG_H_IN_ */
+
