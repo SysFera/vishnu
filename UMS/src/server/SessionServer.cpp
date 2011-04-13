@@ -262,6 +262,52 @@ SessionServer::getSessionToclosebyTimeout() {
 
 }
 
+/**
+* \brief Function to make a complete checking of the session key
+* \fn int check()
+* \return raises an exception on error
+*/
+int
+SessionServer::check() {
+  int ret = -1;
+  std::string sqlCommand = "SELECT state, status, passwordstate from users, vsession "
+  "where users.numuserid = vsession.users_numuserid and vsession.sessionkey='"+msession.getSessionKey()+"'";
+
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+  std::vector<std::string> tmp;
+
+  //If the session key exists
+  if (result->getNbTuples() != 0) {
+    tmp = result->get(0);
+    //If the session is active
+    if (convertToInt(tmp[0]) == 1) {
+      //If the user is not locked
+      if (convertToInt(tmp[1]) == 1) {
+        //If the passwordstate is active
+        if (convertToInt(tmp[2]) == 1) {
+          ret = 0;
+        }//END If the passwordstate is active
+        else {
+          UMSVishnuException e (ERRCODE_TEMPORARY_PASSWORD);
+          throw e;
+        }
+      } //END If the user is not locked
+      else {
+        UMSVishnuException e (ERRCODE_USER_LOCKED);
+        throw e;
+      }
+    } //END If the session is active
+    else {
+      UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
+      throw e;
+    }
+  } //END If the session key exists
+  else {
+    UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
+    throw e;
+  }
+  return ret;
+}
 
 /**
 * \brief Function to generate the session key
