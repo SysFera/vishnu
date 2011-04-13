@@ -10,6 +10,7 @@
 #include "utilVishnu.hpp"
 
 using namespace vishnu;
+using namespace std;
 
 LLServer::LLServer():BatchServer() {
 }
@@ -47,6 +48,110 @@ int cancel(const char* jobId) {
 
 TMS_Data::ListJobs*
 LLServer::listJobs(TMS_Data::ListJobsOptions op){
+  // Listing all jobs
+  try{
+    mjobs = listAllJobs();
+  }catch (TMSVishnuException& e){
+    throw e;
+  }
+  // If filter on the job id
+  if(op.getJobId().compare("")!=0){
+    try{
+      mjob = filterJob(op.getJobId());
+    }
+    catch(TMSVishnuException e){
+      throw e;
+    }
+    // Create a list with only the found job
+    mjobs->getJobs().clear();
+    mjobs->getJobs().push_back(mjob);
+    return mjobs;
+  }
+  // Otherwize apply filter (options) on the list
+  mjobs = filterJobs(op);
+  return mjobs;
+}
+
+TMS_Data::ListJobs*
+LLServer::filterJobs(TMS_Data::ListJobsOptions op){
+  // Copy because cannot remove from the ecore list
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  TMS_Data::ListJobs_ptr tmp;
+  tmp = TMS_Data::ListJobs_ptr(mjobs);
+
+  // Empty mjobs
+  mjobs = ecoreFactory->createListJobs();
+
+  // Fill mjobs with the rights jobs
+  for (unsigned int i = 0 ; i < mjobs->getJobs().size() ; i++) {
+    if (!notIn (mjobs->getJobs().get(i), op)) {
+      mjobs->getJobs().push_back(mjobs->getJobs().get(i));
+    }
+  }
+  return mjobs;
+}
+
+bool 
+LLServer::notIn(TMS_Data::Job_ptr it, TMS_Data::ListJobsOptions op){
+  // If filter on nb cpu and invalid number of cpu
+  if (op.getNbCpu()>0 && it->getNbCpus() != op.getNbCpu()){
+    return true;
+  }
+  // If filter on submit date and invalid submit date
+  if (op.getFromSubmitDate()>0 && it->getSubmitDate() < op.getFromSubmitDate()){
+    return true;
+  }
+  // If filter end date and invalid end date
+  if (op.getToSubmitDate()>0 && it->getSubmitDate() > op.getToSubmitDate()){
+    return true;
+  }
+  // If filter on owner and invalid owner
+  if (op.getOwner().compare("")!=0 && it->getOwner() != op.getOwner()){
+    return true;
+  }
+  // If filter on status and invalid status
+  if (op.getStatus()>0 && it->getStatus() != op.getStatus()){
+    return true;
+  }
+  // If filter on priority and invalid priority
+  if (op.getPriority()>0 && it->getJobPrio() != op.getPriority()){
+    return true;
+  }
+  // If filter on output and invalid output
+  if (op.getOutPutPath().compare("")!=0 && it->getOutputPath() != op.getOutPutPath()){
+    return true;
+  }
+  // If filter on error and invalid error
+  if (op.getErrorPath().compare("")!=0 && it->getErrorPath() != op.getErrorPath()){
+    return true;
+  }
+  // If filter on queue and invalid queue
+  if (op.getQueue().compare("")!=0 && it->getJobQueue() != op.getQueue()){
+    return true;
+  }
+  return false;
+}
+
+
+TMS_Data::Job*
+LLServer::filterJob(string jobid){
+  // For each job
+  for (unsigned int i = 0 ; i < mjobs->getJobs().size() ; i++){
+    // If its job id corresponds
+    if (mjobs->getJobs().get(i)->getJobId().compare(jobid)==0){
+      // Return it
+      mjob = mjobs->getJobs().get(i);
+      return mjob;
+    }
+  }
+  // Throw an exception if the job is not found
+  throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Job not found with the jobid: "+jobid);
+  return NULL;
+}
+
+
+TMS_Data::ListJobs*
+LLServer::listAllJobs(){
   // The list
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mjobs = ecoreFactory->createListJobs();
@@ -78,17 +183,18 @@ LLServer::listJobs(TMS_Data::ListJobsOptions op){
   if(!queryObject) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query JOBS : ll_query() return NULL.\n");
   }
-  
+
+  // Create the request  
   rc = ll_set_request(queryObject, QUERY_ALL, NULL, ALL_DATA);
   if(rc) {
     string msg = "Query Infos : ll_set_request() return code is non-zero: "+convertToString(rc)+"\n";
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
   }
-  
   if(queryObject==NULL) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "querryObject is NULL");
   }
 
+  // Calling to get the results
   queryInfos = ll_get_objs(queryObject, /*LL_SCHEDD*/LL_CM, NULL, &obj_count, &err_code);
   if(queryInfos==NULL) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query Infos : ll_get_objs() returns NULL.\n");
@@ -96,7 +202,7 @@ LLServer::listJobs(TMS_Data::ListJobsOptions op){
 
 
   int nb_jobs = obj_count;
-
+  // Transforming each result in a TMS_Data::Job
   while(queryInfos)
     {
 
@@ -124,7 +230,8 @@ LLServer::listJobs(TMS_Data::ListJobsOptions op){
       // Getting step
       rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
       if(!rc) {
-	// For each step
+
+	// For each step, a step is a job
 	while(step) {
 
 	  // Output file
@@ -222,7 +329,7 @@ LLServer::listJobs(TMS_Data::ListJobsOptions op){
 	    if (rc){
 	      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query Infos : Error getting the job class.\n");
 	    }
-
+	    // Creating the corresponding job
 	    TMS_Data::Job job;
 	    job.setJobId(id);
 	    job.setJobName(name);
@@ -243,6 +350,8 @@ LLServer::listJobs(TMS_Data::ListJobsOptions op){
 	    job.setNbNodes(node);
 	    job.setNbNodesAndCpuPerNode(cpuPcore);
 
+	    mjobs->getJobs().push_back(&job);
+
 	    // Next step
 	    ll_get_data(queryInfos, LL_JobGetNextStep, &step);
 	  }
@@ -253,5 +362,25 @@ LLServer::listJobs(TMS_Data::ListJobsOptions op){
   
   ll_free_objs(queryInfos);
   ll_deallocate(queryObject);
-  
+
+  return mjobs;
 }
+
+
+TMS_Data::Job* 
+LLServer::getJobInfo(string job){
+  // Listing all jobs
+  try{
+    mjobs = listAllJobs();
+  }catch (TMSVishnuException& e){
+    throw e;
+  }
+  try{
+    mjob = filterJob(job);
+  }
+  catch(TMSVishnuException e){
+    throw e;
+  }
+  return mjob;
+}
+
