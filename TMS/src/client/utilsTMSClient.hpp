@@ -30,14 +30,6 @@ namespace TMSUtils {
   */
   void raiseTMSExceptionIfNotEmptyMsg(const std::string& msg);
 
-  /**
-   * \brief Simple function to read the content of a regular file
-   * \param filePath: the path to the file
-   * \return The content of the file
-   */
-  std::string
-  getFileContent(const std::string& filePath);
-
 }
 
 #endif//UTILSTMSCLIENT
