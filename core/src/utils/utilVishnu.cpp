@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include "UserException.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
@@ -302,29 +303,57 @@ vishnu::string_to_time_t(const std::string& ts){
 }
 
 /**
-   * \brief Simple function to read the content of the regular file
-   * \param filePath: the path to the file
-   * \return The content of the file
-   */
-  std::string
- vishnu::get_file_content(const std::string& filePath){
+* \brief Simple function to read the content of the regular file
+* \param filePath: the path to the file
+* \return The content of the file
+*/
+std::string
+vishnu::get_file_content(const std::string& filePath){
 
-   bfs::path file (filePath);
+  bfs::path file (filePath);
 
-   // Check the existence of file
+  // Check the existence of file
 
-   if (((false==bfs::exists(file)) || (true==bfs::is_empty(file))) || (false==bfs::is_regular_file(file))) {
-     throw std::runtime_error("can not read the file: " + filePath);
-   }
+  if (((false==bfs::exists(file)) || (true==bfs::is_empty(file)))
+    || (false==bfs::is_regular_file(file))) {
+    throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
+  }
 
-   bfs::ifstream ifs (file);
+  bfs::ifstream ifs (file);
 
-   // Read the whole file into string
+  // Read the whole file into string
 
-   std::stringstream ss;
-    ss << ifs.rdbuf();
+  std::stringstream ss;
+  ss << ifs.rdbuf();
 
-    return ss.str();
+  return ss.str();
 
- }
+}
 
+/**
+* \brief Function to copy file from Dagda
+* \param src: the path of the file to copy
+* \param dest: the destination to copy file
+* \return raises an exception on error
+*/
+int
+vishnu::copyDagdaFile(std::string src, std::string dest) {
+
+  std::string currentDirectory = std::string(std::string(getenv("PWD")));
+  try {
+    //If the destination does not exist, the file is created locally on a directory tmp;
+    if(!bfs::exists(bfs::path(dest))){
+      bfs::create_directories(bfs::path(currentDirectory+"/tmp"));
+      bfs::copy_file(bfs::path(src), bfs::path(currentDirectory+std::string(src)));
+    }
+    else {
+      bfs::create_directories(bfs::path(dest+"/tmp"));
+      bfs::copy_file(bfs::path(src), bfs::path(dest+src));
+    }
+  }
+  catch(std::exception& e) {
+    throw UserException(ERRCODE_INVALID_PARAM, e.what());
+  }
+
+  return 0;
+}

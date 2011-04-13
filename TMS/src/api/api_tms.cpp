@@ -6,6 +6,7 @@
  */
 
 #include "api_tms.hpp"
+#include "utilVishnu.hpp"
 
 /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
@@ -28,7 +29,7 @@ throw(UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   jobInfo.setJobPath(scriptFilePath);
-  std::string scriptContent = TMSUtils::getFileContent(scriptFilePath);
+  std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
   JobProxy jobProxy(sessionProxy,
                     machineId,
