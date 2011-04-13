@@ -240,5 +240,14 @@ namespace vishnu {
    */
   std::string
   get_file_content(const std::string& filePath);
+
+  /**
+   * \brief Function to copy file from Dagda
+   * \param src: the path of the file to copy
+   * \param dest: the destination to copy file
+   * \return raises an exception on error
+   */
+  int
+  copyDagdaFile(std::string src, std::string dest);
 }
 #endif // _UTILVISHNU_H_
