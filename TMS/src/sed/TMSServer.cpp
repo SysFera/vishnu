@@ -2,15 +2,20 @@
 * \file TMSServer.cpp
 * \brief This file presents the implementation of the TMS server.
 * \author Daouda Traore (daouda.traore@sysfera.com)
-* \date April 
+* \date April
 */
 
 #include "TMSServer.hpp"
 #include "internalTMSAPI.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+#include <boost/scoped_ptr.hpp>
+#include "SystemException.hpp"
 
 TMSServer *TMSServer::minstance = NULL;
 BatchType TMSServer::mbatchType = UNDEFINED;
 std::string TMSServer::mmachineId = "";
+Database *TMSServer::mdatabaseVishnu = NULL;
 
 /**
  * \brief To get the unique instance of the server
@@ -25,7 +30,7 @@ TMSServer::getInstance() {
 
 /**
   * \brief To get the batchType
-  * \return the id of the underlying batch scheduler 
+  * \return the id of the underlying batch scheduler
   */
 BatchType
 TMSServer::getBatchType()  {
@@ -33,8 +38,8 @@ TMSServer::getBatchType()  {
 }
 
 /**
-  * \brief To get the machine id of the TMS server 
-  * \return the machine id  
+  * \brief To get the machine id of the TMS server
+  * \return the machine id
   */
 std::string
 TMSServer::getMachineId() {
@@ -50,11 +55,13 @@ TMSServer::TMSServer() : mprofile(NULL) {
 
 /**
  * \brief To initialize the TMS Server class
- * \param bachType the type of batch scheduler 
- * \param machineId the id of the machine 
+ * \param vishnuId The identifier of the vishnu instance
+ * \param dbConfig  The configuration of the database
+ * \param machineId the id of the machine
+ * \param batchType the type of batch scheduler
  */
 int
-TMSServer::init(BatchType batchType, std::string machineId)
+TMSServer::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType)
 {
 
   //initialization of the batchType
@@ -65,6 +72,30 @@ TMSServer::init(BatchType batchType, std::string machineId)
 
   // initialization of the service table
   diet_service_table_init(NB_SRV);
+
+
+  DbFactory factory;
+
+   try {
+    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+    /*connection to the database*/
+    mdatabaseVishnu->connect();
+
+    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
+
+    /* Checking of vishnuid on the database */
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+
+    if (result->getResults().size() == 0) {
+      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+      throw e;
+    }
+
+
+  } catch (VishnuException& e) {
+      std::cout << e.what() << std::endl;
+      exit(0);
+  }
 
 
   // initialization of the service table

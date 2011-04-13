@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "DbFactory.hpp"
+#include "SystemException.hpp"
 #include "POSTGREDatabase.hpp"
 //#include "OracleDatabase.hpp"
 
@@ -19,20 +20,33 @@ DbFactory::~DbFactory(){
 }
 
 Database*
-DbFactory::getDatabaseInstance(int type, std::string host, std::string user, std::string pwd, std::string db, unsigned int port){
-
+DbFactory::createDatabaseInstance(DbConfiguration config)
+{
   if (mdb != NULL) {
-    return mdb;
+    throw SystemException(ERRCODE_DBERR, "Database instance already initialized");
   }
-  switch (type){
-  /*  case ORACLEDB:
-      mdb = new OracleDatabase(host, user, pwd, db, port);
-      break;*/
-    case POSTGREDB :
-      mdb = new POSTGREDatabase(host, user, pwd, db, port);
+  switch (config.getDbType()){
+    case DbConfiguration::POSTGRESQL :
+      mdb = new POSTGREDatabase(config.getDbHost(),
+                                config.getDbUserName(),
+                                config.getDbUserPassword(),
+                                config.getDbName(),
+                                config.getDbPort()
+                               );
       break;
+    case DbConfiguration::ORACLE:
+    case DbConfiguration::MYSQL:
     default:
-      mdb = NULL;
+      throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
   }
   return mdb;
 }
+
+Database* DbFactory::getDatabaseInstance()
+{
+  if (mdb == NULL) {
+    throw SystemException(ERRCODE_DBERR, "Database instance not initialized");
+  }
+  return mdb;
+}
+
