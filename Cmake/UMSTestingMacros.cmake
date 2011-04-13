@@ -54,12 +54,11 @@ macro( ums_test NAME )
       ${DIET_CLIENT_LIB}
       ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
-      ${CLI_SOURCE_DIR}
       ${Boost_LIBRARIES}
-      emf4cpp-UMS_Data
       database-vishnu
       exception-vishnu
       vishnu-ums-api
+      test-utils
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-

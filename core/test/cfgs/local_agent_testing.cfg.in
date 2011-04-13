@@ -1,0 +1,9 @@
+agentType = DIET_LOCAL_AGENT
+name = LA1
+parentName = MA1
+traceLevel = 10
+storageDirectory = @LA_DAGDA_DIR_NATIVE_PATH@
+
+useLogService = 1
+lsOutbuffersize = 0
+lsFlushinterval = 10000
