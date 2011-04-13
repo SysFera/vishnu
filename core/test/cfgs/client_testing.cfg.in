@@ -1,0 +1,40 @@
+#****************************************************************************#
+#* Example of a configuration file for a DIET client                        *#
+#*  (*): compulsory parameter.                                              *#
+#*                                                                          *#
+#*  Author(s):                                                              *#
+#*    - Philippe COMBES (Philippe.Combes@ens-lyon.fr)                       *#
+#*                                                                          *#
+#* $LICENSE$                                                                *#
+#****************************************************************************#
+
+#****************************************************************************#
+# traceLevel for the DIET client library:
+#    0  DIET prints only warnings and errors on the standard error output.
+#    1  [default] DIET prints information on the main steps of a call.
+#    5  DIET prints information on all internal steps too.
+#   10  DIET prints all the communication structures too.
+#  >10  (traceLevel - 10) is given to the ORB to print CORBA messages too.
+#****************************************************************************#
+
+traceLevel = 0
+
+
+#****************************************************************************#
+# (*) MAName: the name of the Master Agent to which the client will connect.
+#   This agent must have registered at the same CORBA Naming Service that is
+#   pointed to by your ORB configuration.
+#****************************************************************************#
+
+MAName = MA1
+
+#dietPort = 2809
+#dietHostname = <hostname|IP>
+
+
+storageDirectory = @CLIENT_DAGDA_DIR_NATIVE_PATH@
+
+
+useLogService = 0
+lsOutbuffersize = 0
+lsFlushinterval = 10000
