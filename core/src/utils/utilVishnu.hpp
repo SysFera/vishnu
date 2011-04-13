@@ -20,16 +20,6 @@
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 
-/**
-* \enum IdType
-* \brief The type of id generated
-*/
-typedef enum{
-  MACHINE = 0,/*!< For the machines*/
-  USER = 1, /*!< For The users */
-  JOB = 2, /*!< For the jobs */
-  FILETRANSFERT = 3  /*!< For the file tranfers*/
-} IdType;
 
 /**
 * \enum CmdType
@@ -74,6 +64,18 @@ char* crypt(const char* clef, const char* salt);
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
+
+  /**
+   * \enum IdType
+   * \brief The type of id generated
+   */
+  typedef enum{
+    MACHINE = 0,/*!< For the machines*/
+    USER = 1, /*!< For The users */
+    JOB = 2, /*!< For the jobs */
+    FILETRANSFERT = 3  /*!< For the file tranfers*/
+  } IdType;
+
 
   static const std::string ROOTUSERNAME = "root";
   static const std::string UMSMAPPERNAME = "UMS";
