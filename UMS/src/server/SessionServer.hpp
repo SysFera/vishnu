@@ -123,6 +123,13 @@ public:
   */
   DatabaseResult*
   getSessionToclosebyTimeout();
+  /**
+  * \brief Function to make a complete checking of the session key
+  * \fn int check()
+  * \return raises an exception on error
+  */
+  int
+  check();
 
   private:
   /////////////////////////////////
