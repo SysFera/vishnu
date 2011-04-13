@@ -78,6 +78,11 @@
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
+// Exception rule for user exception
+%typemap (throws) UserException{
+    SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UserException,SWIG_POINTER_OWN), "UserException", SWIGTYPE_p_UserException); SWIG_fail;
+}
+
 #endif
 
 #ifdef SWIGJAVA
@@ -125,4 +130,5 @@
 %include "VishnuException.hpp"
 %include "UserException.hpp"
 %include "SystemException.hpp"
+%include "UMSVishnuException.hpp"
 #endif

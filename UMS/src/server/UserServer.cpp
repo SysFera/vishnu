@@ -8,6 +8,10 @@
 #include <boost/scoped_ptr.hpp>
 #include "UserServer.hpp"
 #include "ServerUMS.hpp"
+#include "DbFactory.hpp"
+#include "DatabaseResult.hpp"
+#include "utilVishnu.hpp"
+#include "utilServer.hpp"
 
 /**
 * \brief Constructor

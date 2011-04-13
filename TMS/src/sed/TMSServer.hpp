@@ -2,7 +2,7 @@
  * \file TMSServer.hpp
  * \brief This file presents the implementation of the TMS server.
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * \date April 
+ * \date April
 */
 
 #ifndef _TMS_SERVER_H_
@@ -11,13 +11,15 @@
 #include <string>
 
 #include "DIET_server.h"
-
+#include "DbConfiguration.hpp"
 #include "utilVishnu.hpp"
+
+class Database;
 
 /**
  *  * \brief Number of service in TMS
  *   */
-#define NB_SRV 2 
+#define NB_SRV 2
 
 static const char* SERVICES[NB_SRV] = {
   "jobSubmit_",
@@ -38,25 +40,27 @@ public :
 
   /**
   * \brief To get the batchType
-  * \return the type of the underlying batch scheduler 
+  * \return the type of the underlying batch scheduler
   */
-  static BatchType 
+  static BatchType
   getBatchType();
 
  /**
-  * \brief To get the machine id of the TMS server 
-  * \return the machine id  
+  * \brief To get the machine id of the TMS server
+  * \return the machine id
   */
-  static std::string 
+  static std::string
   getMachineId();
 
    /**
    * \brief To initialize the TMS Server class
-   * \param bachType the type of batch scheduler 
-   * \param machineId the id of the machine 
+   * \param vishnuId The identifier of the vishnu instance
+   * \param dbConfig  The configuration of the database
+   * \param machineId the id of the machine
+   * \param batchType the type of batch scheduler
    */
   int
-  init(BatchType batchType, std::string machineId);
+  init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -98,6 +102,6 @@ private :
   /**
   * \brief Instance of Database
   */
-  //static Database *mdatabaseVishnu;
+  static Database *mdatabaseVishnu;
 };
-#endif // SERVERg
+#endif // SERVER

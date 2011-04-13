@@ -4,10 +4,18 @@
 #include <boost/filesystem/fstream.hpp>
 
 #include "TMSServer.hpp"
+#include "ExecConfiguration.hpp"
+#include "DbConfiguration.hpp"
 
+/**
+ * \brief To show how to use the sed
+ * \fn int usage(char* cmd)
+ * \param cmd The name of the program
+ * \return Always 1
+ */
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s <diet_config.cfg> batchType [TORQUE|LOADLEVELER] <machineId>\n"+ std::string(cmd);
+  std::cout << "Usage: %s vishnu_config.cfg\n" + std::string(cmd);
   return 1;
 }
 
@@ -21,40 +29,47 @@ usage(char* cmd) {
 int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
-  BatchType bacthType ;
+  int vishnuId = 0;
+  ExecConfiguration config;
+  DbConfiguration dbConfig(config);
+  std::string dietConfigFile;
+  BatchType batchType ;
   std::string batchTypeStr;
   std::string machineId;
 
-  if (argc < 4) {
+  if (argc != 2) {
     return usage(argv[0]);
   }
 
-  // Check DIET Configuration file
-  if(!boost::filesystem::is_regular_file(argv[1])) {
-    std::cerr << "Error: cannot open DIET configuration file" << std::endl;
+  // Read the configuration
+  try {
+    config.initFromFile(argv[1]);
+    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
+    config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
+    dbConfig.check();
+    config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
+    if (batchTypeStr == "TORQUE") {
+      batchType = TORQUE;
+    } else if (batchTypeStr == "LOADLEVELER") {
+      batchType = LOADLEVELER;
+    } else {
+      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER')" << std::endl;
+      exit(1);
+    }
+    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
+  } catch (UserException& e) {
+    std::cerr << e.what() << std::endl;
     exit(1);
   }
-
-  // Other command-line parameters
-  batchTypeStr = argv[2];
-  if (batchTypeStr == "TORQUE") {
-    bacthType = TORQUE;
-  } else if (batchTypeStr == "LOADLEVELER") {
-    bacthType = LOADLEVELER;
-  } else {
-    std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER')" << std::endl;
-    exit(1);
-  }
-  machineId = argv[3];
 
   //Initialize the UMS Server (Opens a connection to the database)
   TMSServer* server = TMSServer::getInstance();
-  res = server->init(bacthType, machineId);
+  res = server->init(vishnuId, dbConfig, machineId, batchType);
 
   // Initialize the DIET SeD
   if (!res) {
     diet_print_service_table();
-    res = diet_SeD(argv[1], argc, argv);
+    res = diet_SeD(dietConfigFile.c_str(), argc, argv);
     if (server != NULL) {
       delete server;
     }
