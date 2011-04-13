@@ -1,9 +1,9 @@
 ###############################################################################
-# ums_test_setup: macro that setup our test environment
+# tms_test_setup: macro that setup our test environment
 # it add a test-xml target
 ###############################################################################
 
-macro( ums_test_setup )
+macro( tms_test_setup )
   enable_testing()
   # add a test-xml targets that allows us to generate Boost.Test xml reports
   add_custom_target( test-xml )
@@ -14,13 +14,13 @@ macro( ums_test_setup )
 endmacro()
 
 ###############################################################################
-# ums_test: macro that setup a test
+# tms_test: macro that setup a test
 # @param[in] NAME  test filename stripped from extension
 # @param[in] DISABLED (optional) when defined, remove test from master suite
 #                     and display a message to the user.
 ###############################################################################
 
-macro( ums_test NAME )
+macro( tms_test NAME )
   if( ${ARGC} MATCHES 2 )
     if( ${ARGV1} MATCHES "DISABLED" )
       message( STATUS "${ARGV0}: explicitly disabled by developer" )
@@ -37,9 +37,13 @@ macro( ums_test NAME )
     include_directories( ${Boost_INCLUDE_DIRS}
       ${DIET_INCLUDE_DIR}
       ${EMF_DATA_DIR}
+      ${TMS_EMF_DATA_DIR}
       ${UMS_DATA_DIR}
+      ${TMS_DATA_DIR}
+      ${TMS_API_SOURCE_DIR}
       ${API_SOURCE_DIR}
       ${CLIENT_PROXY_SOURCE_DIR}
+      ${TMS_CLIENT_PROXY_SOURCE_DIR}
       ${EMF4CPP_INCLUDE_DIR}
       ${VISHNU_EXCEPTION_INCLUDE_DIR}
       ${DATA_BASE_INCLUDE_DIR}
@@ -47,6 +51,7 @@ macro( ums_test NAME )
       ${Boost_INCLUDE_DIRS}
       ${PROJECT_BINARY_DIR}/include
       ${UMS_TEST_DIR}
+      ${TMS_TEST_DIR}
       )
 
     # link libraries
@@ -54,11 +59,14 @@ macro( ums_test NAME )
       ${DIET_CLIENT_LIB}
       ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
+      # ${CLI_SOURCE_DIR}
       ${Boost_LIBRARIES}
+      emf4cpp-UMS_Data
+      emf4cpp-TMS_Data
       database-vishnu
       exception-vishnu
+      vishnu-tms-api
       vishnu-ums-api
-      test-utils
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
@@ -83,4 +91,5 @@ macro( ums_test NAME )
     endif()
 endmacro()
 
-###############################################################################
+#############################################################################
+
