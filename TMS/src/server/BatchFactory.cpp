@@ -9,9 +9,9 @@
 #ifdef HAVE_TORQUE
 #include "TorqueServer.hpp"
 #endif
-//#ifdef HAVE_LOADLEVELER
+#ifdef HAVE_LOADLEVELER
 #include "LLServer.hpp"
-//#endif
+#endif
 
 
 /**
@@ -38,11 +38,11 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 #endif
       break;
     case LOADLEVELER:
-//#ifdef HAVE_LOADLEVELER
+#ifdef HAVE_LOADLEVELER
       mbatchServer = new LLServer();
-//#else
-//      mbatchServer = NULL;
-//#endif
+#else
+      mbatchServer = NULL;
+#endif
       break;
     default:
       mbatchServer = NULL;
