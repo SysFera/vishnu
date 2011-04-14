@@ -6,6 +6,7 @@
 
 #include "common.hpp"
 #include "utils.hpp"
+#include "cliUtil.hpp"
 #include "machineUtils.hpp"
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>

@@ -22,48 +22,6 @@
 
 
 /**
- * \struct env_name_mapper
- * \brief a environment variable name mapper
- *
- * For each environment variable, the name_mapper function
- * is called to obtain the option name. If it returns empty string
- * the variable is ignored.
- */
-
-
-struct env_name_mapper{
-
-/**
- * Mapper operator for environnement variable
- * \param name The environment variable name
- * \return The name used in the program
- */
-
-	std::string operator ()(std::string name){
-
-		std::string result= "";
-
-                if (name=="VISHNU_CONFIG_FILE") {
-
-                        result="dietConfig";
-                }
-
-
-		return result;
-	}
-};
-/**
- * \brief Contains a generic diet error message
- */
-const std::string dietErrorMsg="DIET initialization failed !";
-
-/**
- * \brief Contains a generic message to display the current session key
- */
-
-const std::string currentSessionKeyMsg="the current sessionkey is: ";
-
-/**
  * \brief Contains a generic error message for required parameter missed
  */
 const std::string requiredParamMsg="required parameter is missing";

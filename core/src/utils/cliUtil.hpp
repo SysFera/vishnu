@@ -1,7 +1,7 @@
 #include "Options.hpp"
 
-#ifndef CLIUTILSTMS_HPP
-#define CLIUTILSTMS_HPP
+#ifndef CORECLIUTIL_HPP
+#define CORECLIUTIL_HPP
 
 /**
  * \brief Contains a generic diet error message

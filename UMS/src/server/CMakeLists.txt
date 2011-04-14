@@ -31,6 +31,7 @@ add_library(ums-server STATIC
    CommandServer.cpp
    ListUsersServer.cpp
 )
+SET_TARGET_PROPERTIES(ums-server PROPERTIES COMPILE_FLAGS "-fPIC")
 
 target_link_libraries(ums-server
   ${DIET_CLIENT_LIB}

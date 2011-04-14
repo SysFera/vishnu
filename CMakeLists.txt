@@ -19,6 +19,9 @@ option(COMPILE_UMS OFF "compile the module UMS")
 option(COMPILE_TMS OFF "compile the module TMS")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
+# FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
+include(CMakeDependentOption)
+cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
 
 find_package(DIET)
 if (DIET_FOUND)
@@ -102,6 +105,14 @@ find_package(
 	1.45
         REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random
 )
+
+find_package( Threads )
+if( THREADS_FOUND )
+  set( THREADS_LIB ${CMAKE_THREAD_LIBS_INIT} )
+endif()
+
+set( Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB} )
+
 add_definitions( "-DBOOST_FILESYSTEM_VERSION=3" )
 
 #Core
