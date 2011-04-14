@@ -12,6 +12,7 @@
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
+#include "displayer.hpp"
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
