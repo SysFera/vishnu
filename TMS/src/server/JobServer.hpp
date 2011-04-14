@@ -59,7 +59,6 @@ public:
   private:
 
   void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
-  int getUserAccountLoginAndSshKey(std::string& aclogin, std::string& sshKey);
 
   TMS_Data::Job mjob;
   SessionServer msessionServer;
