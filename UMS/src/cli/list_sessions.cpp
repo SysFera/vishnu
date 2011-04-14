@@ -6,6 +6,7 @@
 
 
 #include "common.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include "listHistoryCmdUtils.hpp"
 #include<boost/bind.hpp>

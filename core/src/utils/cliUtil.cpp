@@ -1,4 +1,4 @@
-#include "utils.hpp"
+#include "cliUtil.hpp"
 
 using namespace std;
 /**
@@ -23,11 +23,11 @@ helpUsage (const Options& opt,const string& signature){
 void 
 errorUsage (const string & cli,const string& errMsg,const ErrorType& err){
 
-		cerr << cli<<": "<<errMsg <<endl;
+  cerr << cli<<": "<<errMsg <<endl;
 
-		if(err==PARAMERROR){
-		cerr << "To get help, try <<"<< cli << " -h >>"<< endl;
-		}
+  if(err==PARAMERROR){
+    cerr << "To get help, try <<"<< cli << " -h >>"<< endl;
+  }
 }
 
 
@@ -43,20 +43,20 @@ errorUsage (const string & cli,const string& errMsg,const ErrorType& err){
 int 
 usage (const Options & opt,const std::string& mess,const std::string& eWhat){
 
-	int res=0;
+  int res=0;
 
-	if(opt.count("help")){
+  if(opt.count("help")){
 
-		helpUsage(opt,mess);
-	}
-	else{
+    helpUsage(opt,mess);
+  }
+  else{
 
-		errorUsage(opt.getConfiguration()->getPgName(),eWhat);
+    errorUsage(opt.getConfiguration()->getPgName(),eWhat);
 
-		res=1;
-	}
+    res=1;
+  }
 
-return res;
+  return res;
 }
 
 /**
@@ -68,13 +68,8 @@ return res;
 
 void 
 checkVishnuConfig(const Options & opt){
-
-
-if (opt.count("dietConfig")==0){
-
-
-      throw runtime_error( "Set the VISHNU_CONFIG_FILE in your environment variable");
-
-    }
+  if (opt.count("dietConfig")==0){
+    throw runtime_error( "Set the VISHNU_CONFIG_FILE in your environment variable");
+  }
 
 }
