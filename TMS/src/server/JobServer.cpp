@@ -29,6 +29,9 @@ JobServer::JobServer(const SessionServer& sessionServer,
  */ 
 int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::SubmitOptions& options)
 {
+
+  msessionServer.check(); //To check the sessionKey
+
   std::string jobSerialized ;
   std::string submitOptionsSerialized; 
   char* scriptPath = NULL;
