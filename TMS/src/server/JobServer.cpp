@@ -7,7 +7,9 @@
 #include "JobServer.hpp"
 #include "emfTMSUtils.hpp"
 #include "TMSVishnuException.hpp"
-
+#include "LocalAccountServer.hpp"
+#include "UserServer.hpp"
+#include "SSHJobExec.hpp"
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The machine identifier 
@@ -82,6 +84,9 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
  */ 
 int JobServer::cancelJob()
 {
+
+  msessionServer.check(); //To check the sessionKey
+
   std::string jobSerialized;
   const char* name = "submit";
   ::ecorecpp::serializer::serializer jobSer(name);
@@ -133,6 +138,19 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
   }
 }
 
+int JobServer::getUserAccountLoginAndSshKey(std::string& aclogin, std::string& sshKey) {
+
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
+
+  std::string userId = (userServer.getData()).getUserId();
+  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
+  LocalAccountServer localAccount(account, msessionServer);
+
+  if(getAttribut("where machine_nummachineid="+machineId+" and users_numuserid="+userId).size() != 0) {
+
+  }
+}
 
 /**
  * \brief Destructor
