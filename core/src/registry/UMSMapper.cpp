@@ -127,21 +127,6 @@ UMSMapper::code(const string& cmd, unsigned int code){
 }
 
 string
-UMSMapper::finalize(int key){
-  map<int, string>::iterator it;
-  string res;
-  pthread_mutex_lock(&mutex);
-  it = mcmd.find(key);
-  if (it==mcmd.end()){
-    throw new SystemException(ERRCODE_SYSTEM, "Unknown key to finalize");
-  }
-  res = it->second;
-  mcmd.erase(it->first);
-  pthread_mutex_unlock(&mutex);
-  return res;
-}
-
-string
 UMSMapper::decode (const string& msg){
   vector<int> separatorPos;
   string      func;
@@ -240,19 +225,6 @@ UMSMapper::decode (const string& msg){
 }
 
 
-void
-UMSMapper::findSeparator(const string& s, vector<int>& vec){
-  size_t cpt = 0;
-  do{
-    cpt=s.find_first_of("#", cpt);
-    if (cpt ==string::npos){
-      return;
-    }
-    vec.push_back(cpt);
-    cpt++;
-  }
-  while ((true));
-}
 
 // %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
