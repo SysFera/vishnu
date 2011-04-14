@@ -1,4 +1,5 @@
 #include "configureOptionUtils.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 
 namespace po = boost::program_options;

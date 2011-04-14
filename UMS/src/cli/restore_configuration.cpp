@@ -6,6 +6,7 @@
 
 
 #include "common.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"
 namespace po = boost::program_options;
