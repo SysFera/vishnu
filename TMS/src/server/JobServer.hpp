@@ -11,7 +11,6 @@
 #include "TMS_Data.hpp"
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
-#include "SSHJobExec.hpp"
 /**
  * \class JobServer
  * \brief JobServer class implementation
@@ -50,6 +49,7 @@ public:
    */
   TMS_Data::Job getData();
 
+
   /**
    * \brief Destructor
    */
@@ -59,6 +59,7 @@ public:
   private:
 
   void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
+  int getUserAccountLoginAndSshKey(std::string& aclogin, std::string& sshKey);
 
   TMS_Data::Job mjob;
   SessionServer msessionServer;
