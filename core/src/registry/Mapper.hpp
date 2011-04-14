@@ -9,6 +9,7 @@
 #define __MAPPER__HH__
 
 #include <map>
+#include <vector>
 
 #include <pthread.h>
 #include "MapperRegistry.hpp"
@@ -97,7 +98,7 @@ public :
    * \return The coded value of the command
    */
   virtual string
-  finalize(int key) {return "";}
+  finalize(int key);
 
   /**
    * \brief To get, from a coded string, the CPP command that made it
@@ -109,6 +110,16 @@ public :
   decode(const string& msg) {return "";}
 
 protected:
+  /**
+   * \brief To find all the separator in the string s and fill the vector with their position in the string
+   * \fn void findSeparator(const string& s, vector<int>& vec)
+   * \param s The string to find the separator
+   * \param vec A vector containing the position of the separator in the string s (OUT)
+   * \return The cli like close command
+   */
+  void
+  findSeparator(const string& s, vector<int>& vec);
+
   /**
    * \brief The mapper registry
    */
