@@ -11,7 +11,6 @@
 #include "TMS_Data.hpp"
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
-#include "SSHJobExec.hpp"
 /**
  * \class JobServer
  * \brief JobServer class implementation
@@ -49,6 +48,7 @@ public:
    * \return The job data structure
    */
   TMS_Data::Job getData();
+
 
   /**
    * \brief Destructor
