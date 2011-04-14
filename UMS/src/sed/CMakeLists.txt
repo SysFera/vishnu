@@ -40,6 +40,7 @@ add_library(ums-sed
   ServerUMS.cpp
   internalApi.cpp
 )
+SET_TARGET_PROPERTIES(ums-sed PROPERTIES COMPILE_FLAGS "-fPIC")
 
 target_link_libraries(ums-sed
   ${DIET_SERVER_LIBRARIES}
