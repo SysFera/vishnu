@@ -321,8 +321,8 @@ public:
     ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
     // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+//     ctx.streams[bp::stdout_id] = bp::behavior::null();
+//     ctx.streams[bp::stderr_id] = bp::behavior::null();
 
 
     // setup SeD arguments
