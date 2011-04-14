@@ -5,6 +5,7 @@
  */
 
 #include "common.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include "userUtils.hpp"
 #include "sessionUtils.hpp"

@@ -22,7 +22,6 @@ include_directories(${Boost_INCLUDE_DIRS}
                   )
 
 add_library(tms-utils-cli
-            utils
 	    displayer
  )
 #declare all command lines provided

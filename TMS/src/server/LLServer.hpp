@@ -37,7 +37,7 @@ public:
   TMS_Data::Job* 
   getJobInfo(string job);
 
-  TMS_Data::ListProgression* getJobProgress(TMS_Data::ProgressOptions) {};
+  TMS_Data::ListProgression* getJobProgress(TMS_Data::ProgressOptions);
 
   ~LLServer() { }
 
@@ -81,9 +81,21 @@ private:
   TMS_Data::ListJobs*
   filterJobs(TMS_Data::ListJobsOptions op);
   /**
+   * \brief To transform a job in a progression
+   * \fn void LLServer::makeProg(TMS_Data::Progression_ptr prog, TMS_Data::Job_ptr job)
+   * \param prog: OUT, progression to fill
+   * \param job: IN, job source to convert in progression
+   */
+  void
+  makeProg(TMS_Data::Progression_ptr prog, TMS_Data::Job_ptr job);
+  /**
    * \brief List of jobs
    */  
   TMS_Data::ListJobs_ptr mjobs;
+  /**
+   * \brief List of jobs
+   */  
+  TMS_Data::ListProgression_ptr mprog;
   /**
    * \brief A job
    */  

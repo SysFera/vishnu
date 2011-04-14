@@ -13,53 +13,6 @@
 class Options;
 
 /**
- * \enum ErrorType
- * \brief a convenient type to classify error type
- */
-typedef enum{
-PARAMERROR,/*!< for any invalid parameter error */
-EXECERROR /*!<  for any runtime error */
-}ErrorType;
-
-/**
- * \brief helper function to display help about a specific command 
- * \param opt: describes all options allowed by the command
- * \param signature: defines the usage of the command 
- */
-void 
-helpUsage (const Options& opt,const std::string& signature);
-
-/**
- * \brief helper function to display error about a specific command 
- * \param cli   :The name of the command
- * \param errMsg: The error message to display 
- * \param err   : The error type 
- */
-
-void
-errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& err=PARAMERROR);
-
-/**
- * \brief Helper function to display information (error or usage) about a specific command 
- * \param opt   :describes all options allowed by the command
- * \param mess: The help usage message to display 
- * \param ewhat   : The error message to display
- * \return 0 if an help is required or 1 if an error must me displayed
- */
-
-int
-usage (const Options& opt,const std::string& mess,const std::string& ewhat);
-
-
-/**
- * \brief A helper function which check if VISHNU_CONFIG_FILE is set
- *\param opt: describes all options allowed by the command
- *\exception raise a runtime exception if the VISHNU_CONFIG_FILE is not set
- */
-void 
-checkVishnuConfig(const Options& opt);
-
-/**
  * \brief Function to print success message 
  */
 inline void printSuccessMessage() {

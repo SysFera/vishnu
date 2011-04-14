@@ -8,7 +8,7 @@
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
-#include "utils.hpp"
+#include "cliUtil.hpp"
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
@@ -137,16 +137,17 @@ int main (int argc, char* argv[]){
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper(), "vishnu_submit_job [option] machineId script");
+  ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
+    helpUsage(*opt,"[options] machineId script");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options]  ");  
+    helpUsage(*opt,"[options] machineId script");
     return 0;
   }
 

@@ -10,6 +10,7 @@
 
 //VISHNU Headers
 
+#include "cliUtil.hpp"
 #include "common.hpp"
 
 //Boost Headers
