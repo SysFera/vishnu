@@ -138,20 +138,6 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
   }
 }
 
-int JobServer::getUserAccountLoginAndSshKey(std::string& aclogin, std::string& sshKey) {
-
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-
-  std::string userId = (userServer.getData()).getUserId();
-  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
-  LocalAccountServer localAccount(account, msessionServer);
-
-  if(getAttribut("where machine_nummachineid="+machineId+" and users_numuserid="+userId).size() != 0) {
-
-  }
-}
-
 /**
  * \brief Destructor
  */
