@@ -7,6 +7,7 @@
 
 
 #include "common.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include "localAccountUtils.hpp"
 #include "sessionUtils.hpp"
