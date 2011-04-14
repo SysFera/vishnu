@@ -30,12 +30,12 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   
   job.setJobId(llJobId.str());
 
-  llfree_job_info(&llJobInfo,LL_JOB_VERSION);*/
+  llfree_job_info(&llJobInfo,LL_JOB_VERSION);
+  return 0;*/
   
   /**Test sur la machine distante blue gene*/
   return remove_test(job);
 
- return 0;
 }
 
 int LLServer::cancel(const char* jobId) { 
