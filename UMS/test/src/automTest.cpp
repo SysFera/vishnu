@@ -432,14 +432,14 @@ BOOST_AUTO_TEST_CASE( my_test )
   lacc.setSshKeyPath(ssh);
 
   // Update local account bad machine id
-  BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
-  BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
-  BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
-  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
-  lacc.setMachineId("bad");
-  BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
-  BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);
-  lacc.setMachineId(mid);
+//   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
+//   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
+//   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
+//   //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
+//   lacc.setMachineId("bad");
+//   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
+//   BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);
+//   lacc.setMachineId(mid);
 
   // Update local account bad user id
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
