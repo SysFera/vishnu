@@ -280,8 +280,15 @@ vishnu::getObjectId(int vishnuId,
   if (format.size() != 0) {
     idGenerated =
     getGeneratedName(format.c_str(), counter, type, stringforgeneration);
-  }
-  else {
+
+    if (idGenerated.size() != 0) {
+      incrementCpt(counterName, counter);
+    } else {
+      SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
+      throw e;
+    }
+
+  } else {
     SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
     throw e;
   }

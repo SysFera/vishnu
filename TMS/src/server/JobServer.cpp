@@ -7,7 +7,11 @@
 #include "JobServer.hpp"
 #include "emfTMSUtils.hpp"
 #include "TMSVishnuException.hpp"
-
+#include "LocalAccountServer.hpp"
+#include "UserServer.hpp"
+#include "SSHJobExec.hpp"
+#include "utilServer.hpp"
+#include "ServerTMS.hpp"
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The machine identifier 
@@ -70,6 +74,10 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
+  std::cout << "BatchJobId=" << mjob.getJobId() << std::endl;
+  std::cout << "ServerTMS::getInstance()->getVishnuId()=" << ServerTMS::getInstance()->getVishnuId() << std::endl;
+  std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
+  std::cout << "vishnuJobId = " << vishnuJobId << std::endl;
   SSHJobExec().deleteFile(scriptPath);
   delete job;
 
@@ -82,6 +90,9 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
  */ 
 int JobServer::cancelJob()
 {
+
+  msessionServer.check(); //To check the sessionKey
+
   std::string jobSerialized;
   const char* name = "submit";
   ::ecorecpp::serializer::serializer jobSer(name);
@@ -132,7 +143,6 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
     }
   }
 }
-
 
 /**
  * \brief Destructor

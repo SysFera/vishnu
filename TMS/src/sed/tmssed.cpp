@@ -3,7 +3,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
-#include "TMSServer.hpp"
+#include "MachineServer.hpp"
+#include "ServerTMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
 
@@ -71,8 +72,26 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   //Initialize the TMS Server 
-  TMSServer* server = TMSServer::getInstance();
+  ServerTMS* server = ServerTMS::getInstance();
   res = server->init(vishnuId, dbConfig, machineId, batchType);
+
+  //A remettre dans le fichier util server
+  {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+    machine->setMachineId(machineId);
+    MachineServer machineServer(machine);
+    if(machineServer.getAttribut("where machineid='"+machineId+"'").size()==0){
+      delete machine;
+      std::cerr << "Error: The machine of id " << machineId << " does not exist among the defined machines by VISHNU System" << std::endl;
+      exit(1);
+    }
+    if(machineServer.getAttribut("where status=1 and  machineid='"+machineId+"'").size() == 0) {
+      delete machine;
+      std::cerr << "Error: The machine of id " << machineId << " is locked" << std::endl;
+      exit(1);
+    }
+  }
 
   // Initialize the DIET SeD
   if (!res) {

@@ -73,3 +73,10 @@ displayQueues(ListQueues& j);
  */
 void
 displayQueue(Queue& j);
+/**
+ * \brief To display some basic job info after submit
+ * \fn void displaySubmit(TMS_Data::Job job)
+ * \param job: The job to submit data
+ */
+void
+displaySubmit(TMS_Data::Job job);
