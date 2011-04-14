@@ -41,7 +41,7 @@ public:
    * \param s: The environment
    * \retrun An error code depending on the success of the call
    */
-  int parse(const func1 & s, string msg);
+  int parse(const func1 & s);
   /**
    * \brief Constructor
    * \fn CLICmd(int argc, char** argv, boost::shared_ptr<Options> op, string dietConfig)
@@ -56,12 +56,5 @@ public:
    * \fn ~CLICmd()
    */
   ~CLICmd();
-  /**
-   * \brief To display the prototype with a missing parameter
-   * \fn void usage(string msg)
-   * \param msg: The 'prototype' of command line
-   */
-  void
-  usage(string msg);
 };
 #endif
