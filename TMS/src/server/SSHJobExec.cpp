@@ -104,6 +104,7 @@ int SSHJobExec::sshexec(const std::string& action) {
   std::string jobUpdateSerializedPath;
   std::string errorPath;
   std::string llErrorPath;
+  bool wellSubmitted = false;
 
   jobSerializedPath = TMS_SERVER_FILES_DIR+"/jobSerializedXXXXXX";
   createTmpFile(const_cast<char*>(jobSerializedPath.c_str()), mjobSerialized);
@@ -163,6 +164,7 @@ int SSHJobExec::sshexec(const std::string& action) {
     }
     ::ecorecpp::serializer::serializer _ser("job");
     mjobSerialized = strdup(_ser.serialize(job).c_str());
+    wellSubmitted = true;
     delete job;
   }
 
@@ -173,11 +175,11 @@ int SSHJobExec::sshexec(const std::string& action) {
     std::cout << "merrorInfo = " << merrorInfo << std::endl;
   }
 
-  if(mbatchType==LOADLEVELER) {
+  if((mbatchType==LOADLEVELER) && (wellSubmitted==false)) {
     boost::filesystem::path llErrorFile(llErrorPath.c_str());
     if(!boost::filesystem::is_empty(llErrorFile)) {
       merrorInfo = vishnu::get_file_content(llErrorPath);
-      
+
       std::ostringstream errorMsgSerialized;
       errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
       errorMsgSerialized << merrorInfo;
