@@ -176,22 +176,13 @@ public :
 
   /**
    * \brief Function to add an element to code
-   * \fn  virtual int code(const string& cmd, unsigned int code = 0);
+   * \fn  virtual int code(const string& cmd, unsigned int code = 0)
    * \param cmd The string to add
    * \param code If 0, the code is created, otherwize it is the key in the map to add the string
    * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
    */
   virtual int
   code(const string& cmd, unsigned int code = 0);
-
-  /**
-   * \brief To end a command, delete it from the map and get its value
-   * \fn virtual string finalize(int key);
-   * \param key The entry in the map to get an remove
-   * \return The coded value of the command
-   */
-  virtual string
-  finalize(int key);
 
   /**
    * \brief To get, from a coded string, the cli like command that made it
@@ -426,15 +417,6 @@ private:
   string
   decodeConfOp(vector<int> separator, const string& msg);
 
-  /**
-   * \brief To find all the separator in the string s and fill the vector with their position in the string
-   * \fn void findSeparator(const string& s, vector<int>& vec)
-   * \param s The string to find the separator
-   * \param vec A vector containing the position of the separator in the string s (OUT)
-   * \return The cli like close command
-   */
-  void
-  findSeparator(const string& s, vector<int>& vec);
   
   /**
    * \brief To deserialize the serial string, make a user objet, and get the values in the same string
