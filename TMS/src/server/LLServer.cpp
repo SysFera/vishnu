@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
-//#include "llapi.h"
+#include "llapi.h"
 #include "LLServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
@@ -424,3 +424,55 @@ LLServer::getJobInfo(string job){
   return mjob;
 }
 
+TMS_Data::ListProgression*
+LLServer::getJobProgress(TMS_Data::ProgressOptions op){
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mprog = ecoreFactory->createListProgression();
+  TMS_Data::Progression_ptr prog;
+  // Listing all jobs
+  try{
+    mjobs = listAllJobs();
+  }catch (TMSVishnuException& e){
+    throw e;
+  }
+  // If filter on the job id
+  if(op.getJobId().compare("")!=0){
+    try{
+      mjob = filterJob(op.getJobId());
+      // Create the progression object
+      makeProg(prog, mjob);
+      // Create a list with only the found job
+      mprog->getProgress().push_back(prog);
+    }
+    catch(TMSVishnuException e){
+      throw e;
+    }
+  }
+  else if (op.getJobOwner().compare("")!=0) {
+    TMS_Data::ListJobsOptions jobOp;
+    jobOp.setOwner(op.getJobOwner());
+    mjobs = filterJobs(jobOp);
+    for (unsigned int i = 0 ; i < mjobs->getJobs().size() ; i++){
+      makeProg(prog, mjobs->getJobs().get(i));
+      mprog->getProgress().push_back(prog);
+    }
+  }
+  else {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "No filter given to get progression ");    
+  }
+  return mprog;
+}
+
+
+void
+LLServer::makeProg(TMS_Data::Progression_ptr prog, TMS_Data::Job_ptr job){
+  time_t current; // TODO : FILL CURRENT
+  double percent = (current-job->getSubmitDate())/(job->getWallClockLimit()-job->getSubmitDate());
+  prog->setJobId(job->getJobId());
+  prog->setJobName(job->getJobName());
+  prog->setWallTime(job->getWallClockLimit());
+  prog->setStartTime(job->getSubmitDate());
+  prog->setEndTime(job->getEndDate());
+  prog->setStatus(job->getStatus());
+  prog->setPercent(percent);
+}
