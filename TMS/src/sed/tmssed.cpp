@@ -15,7 +15,7 @@
  */
 int
 usage(char* cmd) {
-  std::cout << "Usage: %s vishnu_config.cfg\n" + std::string(cmd);
+  std::cout << "Usage: " << cmd << " vishnu_config.cfg" << std::endl;
   return 1;
 }
 
@@ -49,8 +49,16 @@ int main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
+#ifndef HAVE_TORQUE
+      std::cerr << "Error: can't initialize TORQUE batch type because this server has not compiled with torque library" << std::endl;
+      exit(1);
+#endif
       batchType = TORQUE;
     } else if (batchTypeStr == "LOADLEVELER") {
+#ifndef HAVE_LOADLEVELER
+      std::cerr << "Error: can't initialize LOADLEVELER batch type because this server has not compiled with LOADLEVELER library" << std::endl;
+      exit(1);
+#endif
       batchType = LOADLEVELER;
     } else {
       std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER')" << std::endl;
@@ -62,7 +70,7 @@ int main(int argc, char* argv[], char* envp[]) {
     exit(1);
   }
 
-  //Initialize the UMS Server (Opens a connection to the database)
+  //Initialize the TMS Server 
   TMSServer* server = TMSServer::getInstance();
   res = server->init(vishnuId, dbConfig, machineId, batchType);
 
