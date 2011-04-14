@@ -35,6 +35,12 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
 {
 
   msessionServer.check(); //To check the sessionKey
+  
+  std::string acLogin = getUserAccountLogin();
+  std::cout << "acLogin = " << acLogin << std::endl;
+
+  std::string machineName = getMachineName();
+  std::cout << "machineName = " << machineName << std::endl;
 
   std::string jobSerialized ;
   std::string submitOptionsSerialized; 
@@ -53,7 +59,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   submitOptionsSerialized = optSer.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
  
-  SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, "", "", "", mbatchType);
+  SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, acLogin, machineName, "", mbatchType);
   sshJobExec.sshexec("SUBMIT");
 
   //SSHJobExec().deleteFile(scriptPath);
@@ -74,10 +80,12 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
-  std::cout << "BatchJobId=" << mjob.getJobId() << std::endl;
+  std::string BatchJobId=mjob.getJobId();
+  std::cout << "BatchJobId=" << BatchJobId << std::endl;
   std::cout << "ServerTMS::getInstance()->getVishnuId()=" << ServerTMS::getInstance()->getVishnuId() << std::endl;
   std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
   std::cout << "vishnuJobId = " << vishnuJobId << std::endl;
+  //mjob.setJobId(vishnuJobId);
   SSHJobExec().deleteFile(scriptPath);
   delete job;
 
@@ -142,6 +150,55 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
       message = errorInfo.substr(pos+1);             
     }
   }
+}
+
+std::string JobServer::getUserAccountLogin() {
+
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init();
+
+  std::string userId = (userServer.getData()).getUserId();
+  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
+  account->setMachineId(mmachineId);
+  account->setUserId(userId);
+  LocalAccountServer localAccount(account, msessionServer);
+
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(mmachineId);
+  MachineServer machineServer(machine);
+ 
+  //To get the database number id of the machine
+  std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
+  //To get the database number id of the user
+  std::string numUser = userServer.getAttribut("where userid='"+localAccount.getData()->getUserId()+"'");
+
+  std::string acLogin;
+  if ((numMachine.size() > 0) && (numUser.size() > 0)) {
+    acLogin = localAccount.getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "aclogin");
+  } 
+
+  if(acLogin.size()==0) {
+    delete account;
+    delete machine; 
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");  
+  }
+
+  delete account;
+  delete machine;
+  return acLogin;
+}
+
+std::string JobServer::getMachineName() {
+
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(mmachineId);
+  MachineServer machineServer(machine);
+
+  std::string  machineName = machineServer.getAttribut("where machineid='"+machineServer.getData()->getMachineId()+"'", "name");
+
+  delete machine;
+
+  return machineName;
 }
 
 /**
