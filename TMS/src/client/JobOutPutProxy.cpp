@@ -107,13 +107,14 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
-  //To get all files from the container
-  dagda_get_file(content.elt_ids[0],&outputPath);
-  dagda_get_file(content.elt_ids[1],&errorPath);
+  if (content.size == 2) {
+    //To get all files from the container
+    dagda_get_file(content.elt_ids[0],&outputPath);
+    dagda_get_file(content.elt_ids[1],&errorPath);
 
-  vishnu::copyDagdaFile(std::string(outputPath), outJobResult->getOutputPath());
-  vishnu::copyDagdaFile(std::string(errorPath), outJobResult->getErrorPath());
-
+    vishnu::copyDagdaFile(std::string(outputPath), outJobResult->getOutputPath());
+    vishnu::copyDagdaFile(std::string(errorPath), outJobResult->getErrorPath());
+  }
   /*dagda_delete_data(content.elt_ids[0]);
   dagda_delete_data(content.elt_ids[1]);
   dagda_delete_data(IDContainer);*/
@@ -173,17 +174,20 @@ JobOutPutProxy::getAllJobsOutPut() {
     dagda_get_container_elements(IDContainer, &content);
 
     std::string currentDirectory = std::string(std::string(getenv("PWD")));
-    //To get all files from the container
-    for(unsigned int i = 0; i < content.size; i++) {
-      char* path = NULL;
-      dagda_get_file(content.elt_ids[i],&path);
 
-      //To check if the current directory contains tmp or not
-      if(!bfs::exists(bfs::path(currentDirectory+"/tmp"))){
-        bfs::create_directories(bfs::path(currentDirectory+"/tmp"));
+    if (content.size != 1) {
+      //To get all files from the container
+      for(unsigned int i = 0; i < content.size; i++) {
+        char* path = NULL;
+        dagda_get_file(content.elt_ids[i],&path);
+
+        //To check if the current directory contains tmp or not
+        if(!bfs::exists(bfs::path(currentDirectory+"/tmp"))){
+          bfs::create_directories(bfs::path(currentDirectory+"/tmp"));
+        }
+        //To copy dagda files from /tmp to the tmp directory of the current directory
+        bfs::copy_file(bfs::path(std::string(path)), bfs::path(currentDirectory+std::string(path)));
       }
-      //To copy dagda files from /tmp to the tmp directory of the current directory
-      bfs::copy_file(bfs::path(std::string(path)), bfs::path(currentDirectory+std::string(path)));
     }
 
     if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
