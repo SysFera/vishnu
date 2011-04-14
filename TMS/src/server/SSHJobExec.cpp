@@ -28,16 +28,16 @@ SSHJobExec::SSHJobExec() {
   mbatchType = UNDEFINED;
   merrorInfo = "";
   muser = "";
-  msshKey = "";
   mhostname = "";
+  msshKey = "";
 }
 
 SSHJobExec::SSHJobExec(char* script_path, 
                        const std::string& jobSerialized, 
                        const std::string& submitOptionsSerialized,
                        const std::string& user, 
-                       const std::string& sshKey,
                        const std::string& hostname,
+                       const std::string& sshKey, 
                        BatchType batchType) 
 {
   mscript_path = script_path;
@@ -45,6 +45,9 @@ SSHJobExec::SSHJobExec(char* script_path,
   msubmitOptionsSerialized = submitOptionsSerialized;
   mbatchType = batchType;
   merrorInfo = "";
+  muser = user;
+  mhostname = hostname;
+  msshKey = sshKey;
 }
      
 std::string SSHJobExec::getJobSerialized() {
