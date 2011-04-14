@@ -1,5 +1,5 @@
 /**
- * \file TMSServer.hpp
+ * \file ServerTMS.hpp
  * \brief This file presents the implementation of the TMS server.
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April
@@ -27,17 +27,23 @@ static const char* SERVICES[NB_SRV] = {
 };
 
 /**
- * \class TMSServer
+ * \class ServerTMS
  * \brief This class describes the g server
  */
-class TMSServer {
+class ServerTMS {
 public :
 
   /**
    * \brief To get the unique instance of the server
    */
-  static TMSServer*  getInstance();
-
+  static ServerTMS*  getInstance();
+  /**
+   * \brief to get the VishnuId
+   * \fn int getvishnuid()
+   * \return the path of the configuration file
+   */
+  int
+  getVishnuId() const;
   /**
   * \brief To get the batchType
   * \return the type of the underlying batch scheduler
@@ -64,21 +70,21 @@ public :
 
   /**
    * \brief Destructor, raises an exception on error
-   * \fn ~TMSServer()
+   * \fn ~ServerTMS()
    */
-  ~TMSServer();
+  ~ServerTMS();
 
 private :
 
   /**
    * \brief Constructor, private because class is singleton
    */
-  TMSServer();
+  ServerTMS();
 
   /**
    * \brief operator=
    */
-  TMSServer& operator=(const TMSServer&);
+  ServerTMS& operator=(const ServerTMS&);
 
   /////////////////////////////////
   // Attributes
@@ -86,7 +92,11 @@ private :
   /**
    * \brief The singleton reference
    */
-  static TMSServer *minstance;
+  static ServerTMS *minstance;
+  /**
+   * \brief The vishnu id
+   */
+  int mvishnuId;
   /**
   * \brief represents The batch Type
   */
