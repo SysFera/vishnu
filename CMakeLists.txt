@@ -17,7 +17,6 @@ option(ENABLE_JAVA OFF "compile the java api")
 option(ENABLE_ORACLE OFF "compile with the oracle support. Deprecated")
 option(COMPILE_UMS OFF "compile the module UMS")
 option(COMPILE_TMS OFF "compile the module TMS")
-option(BUILD_TEST OFF "compile the test")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
 

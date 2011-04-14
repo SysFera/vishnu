@@ -33,10 +33,10 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
     case TORQUE:
 #ifdef HAVE_TORQUE
       mbatchServer = new TorqueServer();
-      break;
 #else
       mbatchServer = NULL;
 #endif
+      break;
     case LOADLEVELER:
 #ifdef HAVE_LOADLEVELER
       mbatchServer = new LLServer();
