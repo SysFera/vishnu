@@ -8,6 +8,7 @@
 #include "common.hpp"
 #include "listHistoryCmdUtils.hpp"
 #include "sessionUtils.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include<boost/bind.hpp>
 namespace po = boost::program_options;

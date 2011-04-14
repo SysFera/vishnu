@@ -8,7 +8,7 @@
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
-#include "utils.hpp"
+#include "cliUtil.hpp"
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
