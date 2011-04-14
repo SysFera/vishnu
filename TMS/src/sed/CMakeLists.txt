@@ -28,7 +28,7 @@ include_directories(
 
 add_executable(tmssed
   tmssed
-  TMSServer
+  ServerTMS
   internalTMSAPI
 )
 
