@@ -8,6 +8,7 @@
 
 
 #include "common.hpp"
+#include "cliUtil.hpp"
 #include "utils.hpp"
 #include "sessionUtils.hpp"
 
