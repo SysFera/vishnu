@@ -17,3 +17,4 @@ set( config_SRCS
 
 # static because we don't ship this
 add_library( config-vishnu STATIC ${config_SRCS} )
+SET_TARGET_PROPERTIES( config-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
