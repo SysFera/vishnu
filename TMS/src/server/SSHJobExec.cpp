@@ -106,7 +106,7 @@ int SSHJobExec::sshexec(const std::string& action) {
   std::string submitOptionsSerializedPath;
   std::string jobUpdateSerializedPath;
   std::string errorPath;
-  std::string llErrorPath;
+  std::string stderrFilePath;
   bool wellSubmitted = false;
 
   jobSerializedPath = TMS_SERVER_FILES_DIR+"/jobSerializedXXXXXX";
@@ -133,11 +133,11 @@ int SSHJobExec::sshexec(const std::string& action) {
     cmd << " " << mscript_path;
   }
   
-  if(mbatchType==LOADLEVELER) {
-     llErrorPath = TMS_SERVER_FILES_DIR+"/llErrorPathXXXXXX";
-     createTmpFile(const_cast<char*>(llErrorPath.c_str()));
-     cmd << " 2> " << llErrorPath; 
-  }
+  //if(mbatchType==LOADLEVELER) {
+     stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
+     createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
+     cmd << " 2> " << stderrFilePath; 
+  //}
 
   std::cout << cmd.str() << std::endl;
   if(system((cmd.str()).c_str())) { //A REMPLACER PAR exec
@@ -146,10 +146,17 @@ int SSHJobExec::sshexec(const std::string& action) {
     deleteFile(submitOptionsSerializedPath.c_str());
     deleteFile(jobUpdateSerializedPath.c_str());
     deleteFile(errorPath.c_str());
-    if(mbatchType==LOADLEVELER) {
-      deleteFile(llErrorPath.c_str());
-    } 
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "TMS server : can't execute tmsSlave executable with ssh, copy the tmsSlave executable into /tmp/ directory");
+    boost::filesystem::path stderrFile(stderrFilePath.c_str());
+    if(!boost::filesystem::is_empty(stderrFile)) {
+      std::string stderrMsg = "SSHJobExec::sshexec: can't execute tmsSlave executable with ssh -l, the error are: \n";
+      merrorInfo = vishnu::get_file_content(stderrFilePath);
+      stderrMsg.append(merrorInfo);
+      merrorInfo = stderrMsg;
+      //merrorInfo = stderrMsg.substr(0, stderrMsg.find_last_of('\n'));
+      std::cout << "merrorInfo = " << merrorInfo << std::endl;
+    }
+    deleteFile(stderrFilePath.c_str());
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, merrorInfo);
   }
 
   boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
@@ -161,9 +168,7 @@ int SSHJobExec::sshexec(const std::string& action) {
       deleteFile(submitOptionsSerializedPath.c_str());
       deleteFile(jobUpdateSerializedPath.c_str());
       deleteFile(errorPath.c_str());
-      if(mbatchType==LOADLEVELER) {
-        deleteFile(llErrorPath.c_str());
-      }
+      deleteFile(stderrFilePath.c_str());
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "SSHJobExec::sshexec: job object is not well built");
     }
     ::ecorecpp::serializer::serializer _ser("job");
@@ -180,9 +185,9 @@ int SSHJobExec::sshexec(const std::string& action) {
   }
 
   if((mbatchType==LOADLEVELER) && (wellSubmitted==false)) {
-    boost::filesystem::path llErrorFile(llErrorPath.c_str());
-    if(!boost::filesystem::is_empty(llErrorFile)) {
-      merrorInfo = vishnu::get_file_content(llErrorPath);
+    boost::filesystem::path stderrFile(stderrFilePath.c_str());
+    if(!boost::filesystem::is_empty(stderrFile)) {
+      merrorInfo = vishnu::get_file_content(stderrFilePath);
 
       std::ostringstream errorMsgSerialized;
       errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
@@ -190,7 +195,6 @@ int SSHJobExec::sshexec(const std::string& action) {
       merrorInfo = errorMsgSerialized.str();
       merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
       std::cout << "merrorInfo = " << merrorInfo << std::endl;
-      deleteFile(llErrorPath.c_str());
     }
   }
   
@@ -199,7 +203,7 @@ int SSHJobExec::sshexec(const std::string& action) {
   deleteFile(submitOptionsSerializedPath.c_str());
   deleteFile(jobUpdateSerializedPath.c_str());
   deleteFile(errorPath.c_str());
-
+  deleteFile(stderrFilePath.c_str());
 }
 
 std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
