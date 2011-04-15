@@ -40,7 +40,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   diet_container_t content;
   char* outputPath = NULL;
   char* errorPath = NULL;
-
+  TMS_Data::JobResult_ptr outJobResult;
 
   TMS_Data::JobResult jobResult;
   jobResult.setJobId(jobId);
@@ -75,8 +75,8 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
    //OUT Parameters
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT);
-  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,5), DIET_PERSISTENT_RETURN);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,3), &jobResultInString, NULL)){
@@ -84,41 +84,46 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
       raiseDietMsgException(msgErrorDiet);
     }
 
-    IDContainer = (profile->parameters[4]).desc.id;
-    dagda_get_container(IDContainer);
-    dagda_get_container_elements(IDContainer, &content);
-
-
-    if(diet_string_get(diet_parameter(profile,5), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
+
+     /*To raise a vishnu exception if the receiving message is not empty*/
+     TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+
+    //To parse JobResult object serialized
+    if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult, "Error when receiving JobResult object serialized")) {
+      throw UserException(ERRCODE_INVALID_PARAM);
+    }
+
+    IDContainer = (profile->parameters[5]).desc.id;
+    dagda_get_container(IDContainer);
+    dagda_get_container_elements(IDContainer, &content);
+
+    if (content.size == 2) {
+      //To get all files from the container
+      dagda_get_file(content.elt_ids[0],&outputPath);
+      dagda_get_file(content.elt_ids[1],&errorPath);
+
+      std::string err =  outJobResult->getErrorPath();
+      std::string out = outJobResult->getOutputPath();
+      vishnu::copyDagdaFile(std::string(outputPath), out);
+      vishnu::copyDagdaFile(std::string(errorPath), err);
+    }
+
   }
   else {
     raiseDietMsgException("DIET call failure");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+  /*if (content.size == 2) {
+    for (unsigned int i = 0; i < content.size; i++) {
+      dagda_delete_data(content.elt_ids[i]);
+    }
+  }*/
 
-  TMS_Data::JobResult_ptr outJobResult;
-  //To parse JobResult object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult, "Error when receiving JobResult object serialized")) {
-    throw UserException(ERRCODE_INVALID_PARAM);
-  }
-
-  if (content.size == 2) {
-    //To get all files from the container
-    dagda_get_file(content.elt_ids[0],&outputPath);
-    dagda_get_file(content.elt_ids[1],&errorPath);
-
-    vishnu::copyDagdaFile(std::string(outputPath), outJobResult->getOutputPath());
-    vishnu::copyDagdaFile(std::string(errorPath), outJobResult->getErrorPath());
-  }
-  /*dagda_delete_data(content.elt_ids[0]);
-  dagda_delete_data(content.elt_ids[1]);
-  dagda_delete_data(IDContainer);*/
-
+  dagda_delete_data(IDContainer);
   diet_profile_free(profile);
   return outJobResult;
 }
@@ -127,7 +132,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 * \brief Function to get the results of all job submitted
 * \return The list of the job results
 */
-
+//TODO: faire un try catch Vishnu exception pour nettoyer l'id Dadga dans le cache puis throw e;
 TMS_Data::ListJobResults_ptr
 JobOutPutProxy::getAllJobsOutPut() {
   diet_profile_t* profile = NULL;
@@ -159,8 +164,8 @@ JobOutPutProxy::getAllJobsOutPut() {
 
    //OUT Parameters
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,3), DIET_PERSISTENT);
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT_RETURN);
 
   if(!diet_call(profile)) {
 
@@ -169,48 +174,57 @@ JobOutPutProxy::getAllJobsOutPut() {
       raiseDietMsgException(msgErrorDiet);
     }
 
-    IDContainer = (profile->parameters[3]).desc.id;
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+      msgErrorDiet += " by receiving errorInfo message";
+      raiseDietMsgException(msgErrorDiet);
+    }
+
+    /*To raise a vishnu exception if the receiving message is not empty*/
+    TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+
+    IDContainer = (profile->parameters[4]).desc.id;
     dagda_get_container(IDContainer);
     dagda_get_container_elements(IDContainer, &content);
 
-    std::string currentDirectory = std::string(std::string(getenv("PWD")));
-
-    if (content.size != 1) {
-      //To get all files from the container
-      for(unsigned int i = 0; i < content.size; i++) {
-        char* path = NULL;
-        dagda_get_file(content.elt_ids[i],&path);
-
-        //To check if the current directory contains tmp or not
-        if(!bfs::exists(bfs::path(currentDirectory+"/tmp"))){
-          bfs::create_directories(bfs::path(currentDirectory+"/tmp"));
+    try {
+      if (content.size > 1) {
+        //To get all files from the container
+        for(unsigned int i = 0; i < content.size; i++) {
+          char* path = NULL;
+          dagda_get_file(content.elt_ids[i],&path);
+          bfs::path filePath(path);
+          //For moving dagda files from /tmp to the tmp directory of the current directory
+          bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
         }
-        //To copy dagda files from /tmp to the tmp directory of the current directory
-        bfs::copy_file(bfs::path(std::string(path)), bfs::path(currentDirectory+std::string(path)));
       }
-    }
-
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
-      msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+    } //To catch boost exception and change it to UserException
+    catch(std::exception& e) {
+      /*if (content.size > 1) {
+        for(unsigned int i = 0; i < content.size; i++) {
+          dagda_delete_data(content.elt_ids[i]);
+        }
+      }*/
+      dagda_delete_data(IDContainer);
+      diet_profile_free(profile);
+      throw UserException(ERRCODE_INVALID_PARAM, e.what());
     }
   }
   else {
     raiseDietMsgException("DIET call failure");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
-
+  dagda_delete_data(IDContainer);
   //To parse ListJobResult object serialized
   if (!vishnu::parseTMSEmfObject(std::string(listJobResultInString), listJobResults_ptr, "Error when receiving ListJobResult object serialized")) {
     throw UserException(ERRCODE_INVALID_PARAM);
   }
 
-  /*for(unsigned int i = 0; i < content.size; i++) {
-    dagda_delete_data(content.elt_ids[i]);
-  }
-  dagda_delete_data(IDContainer);*/
+  /*if (content.size > 1) {
+    for(unsigned int i = 0; i < content.size; i++) {
+      dagda_delete_data(content.elt_ids[i]);
+    }
+  }*/
+  dagda_delete_data(IDContainer);
   diet_profile_free(profile);
   return listJobResults_ptr;
 }
