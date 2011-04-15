@@ -77,6 +77,25 @@
           
         <para>Modified signature FMS::listDir and FMS::ListFileTransfers. Removed FMS::ListFileFileTransferStatus. Added data type FMS::FileTransfer, FMS::FileTransferList, FMS::FileStatList.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>15/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+          
+        <para>Updates to TMS:
+            Modified description of machineId parameter. Modified getJobProgress output parameter. Modified submitJob description and output
+            parameters (jobId and jobPath replaced by jobInfo). Modified name of getAllJobsOutput to getCompletedJobsOutput. Added input
+            parameter outDir to getJobOutput and getCompletedJobsOutput. Modified output parameter of getCompletedJobsOutput. Added
+            service getMachineRefreshPeriod. Removed function setMachineEnv. Removed JobPriority attribute in submitOptions class.
+            Removed Not_submitted status value of Job class. Updated error messages and codes.
+          </para><para>Updates to IMS :
+            Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
+            Add services stop and getSystemInfo.
+            Add corresponding datatypes (option) plus list of system info and processes.
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -4128,7 +4147,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Is the id of the machine where the job must be submitted</para></entry>
+                <entry><para>Is the id of the machine on which the job must be submitted</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4140,16 +4159,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>jobId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the returned id of the submitted job</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>jobPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the path to the file containing job characteristics</para></entry>
+                <entry><para>jobInfo</para></entry>
+                <entry><para><link linkend="Job">Job</link></para></entry>
+                <entry><para>The  Job object containing the output information (ex: jobId and jobPath) of the job to submit</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4164,7 +4176,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob() function submits job on a machine through the use of a script (scriptFilePath). The script is a shell script which will be executed by a command shell such as sh or csh</para>
+        <para>The submitJob() function submits job on a machine through the use of a script (scriptFilePath). </para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -4181,54 +4193,38 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_JOBPATH</para></entry>
-                <entry><para>The path to the file containing the characteristics of the job to submit is not a valid path</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>Error invalid parameters</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
                 <entry><para>Indicates that the batch scheduler type is not known</para></entry>
               </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_QUEUE</para></entry>
-                <entry><para>Indicates that the specified queue by the user is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
-              </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>jobPath</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::getJobInfo</title>
@@ -4267,7 +4263,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Machine hash key</para></entry>
+                <entry><para>Is the id of the machine on which  the job is running</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4310,23 +4306,15 @@
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
@@ -4335,11 +4323,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4384,13 +4368,13 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Is the id of the machine to get the jobs progression.</para></entry>
+                <entry><para>Is the id of the machine to get the jobs progression</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>progress</para></entry>
-                <entry><para><link linkend="Progression">Progression</link></para></entry>
+                <entry><para>listProgress</para></entry>
+                <entry><para><link linkend="ListProgression">ListProgression</link></para></entry>
                 <entry><para>Is the object containing jobs progression information</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
@@ -4423,30 +4407,22 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>Progression&amp; <parameter>progress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListProgression&amp; <parameter>listProgress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::listQueues</title>
@@ -4485,7 +4461,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Machine hash key</para></entry>
+                <entry><para>Is the id of the machine that the user wants to list queues</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4521,23 +4497,15 @@
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
@@ -4546,11 +4514,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4595,7 +4559,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Machine hash key</para></entry>
+                <entry><para>Is the id of the machine on which  the jobs are running</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4638,23 +4602,15 @@
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
@@ -4663,11 +4619,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4676,7 +4628,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function TMS::getJobOutPut</title>
+        <title>Function TMS::getJobOutput</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4712,7 +4664,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Machine hash key</para></entry>
+                <entry><para>gets outputPath and errorPath of a job from its id</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4724,16 +4676,16 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>outputPath</para></entry>
+                <entry><para>outDir</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The path of the file containinig the output result of the job</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
+                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
               <row>
-                <entry><para>errorPath</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The path of the file containinig the errors that has been occurred during the execution  of the job</para></entry>
+                <entry><para>outputInfo</para></entry>
+                <entry><para><link linkend="JobResult">JobResult</link></para></entry>
+                <entry><para>The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4741,7 +4693,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getJobOutPut() function gets outputPath and errorPath of a job from its id</para>
+        <para>The getJobOutput() function gets standard output and error output files of a job given its id</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -4762,24 +4714,16 @@
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
@@ -4787,20 +4731,16 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutPut</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>outputPath</parameter></paramdef><paramdef>string&amp; <parameter>errorPath</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = Error (Not Definide)</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function TMS::getAllJobsOutPut</title>
+        <title>Function TMS::getCompletedJobsOutput</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -4836,9 +4776,16 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Machine hash key</para></entry>
+                <entry><para>Is the id of the machine on which  the jobs are been submitted</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>outDir</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
               <row>
                 <entry><para>listOfResults</para></entry>
@@ -4851,7 +4798,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getAllJobsOutPut() function dynamically gets outputPath and errorPath of completed jobs</para>
+        <para>The getCompletedJobsOutput() function gets standard output and error output files of completed jobs (applies only once for each job)</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -4872,24 +4819,16 @@
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
@@ -4897,17 +4836,13 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getAllJobsOutPut</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = Error (Not Definide)</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::cancelJob</title>
@@ -4946,7 +4881,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Machine hash key</para></entry>
+                <entry><para>Is the id of the machine on which  the job is running</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -4955,13 +4890,6 @@
                 <entry><para>string</para></entry>
                 <entry><para>The Id of the job</para></entry>
                 <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>infoMsg</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The information message</para></entry>
-                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -4989,24 +4917,16 @@
                 <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_RESPONSE</para></entry>
-                <entry><para>Indicates that the implementation produced a response that does not match the criteria defined by the specification</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_REQUEST</para></entry>
-                <entry><para>Indicates that the request is not valid</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_NOT_FOUND</para></entry>
-                <entry><para>The sessionKey is unrecognized</para></entry>
-              </row>
-              <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>Indicates the requested operation is not allowed for provided user</para></entry>
+                <entry><para>Permission denied</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
@@ -5014,17 +4934,13 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
-              </row>
-              <row>
-                <entry><para>DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>string&amp; <parameter>infoMsg</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::setMachineRefreshPeriod</title>
@@ -5063,7 +4979,7 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The id of the machine</para></entry>
+                <entry><para>Is the id of the machine that the user wants to set refresh period</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -5095,12 +5011,12 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5145,8 +5061,15 @@
               <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Represents the machine id</para></entry>
+                <entry><para>Is the id of the machine that the user wants to get refresh period</para></entry>
                 <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>value</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>Is the refresh interval value (in seconds)</para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
             </tbody>
@@ -5170,18 +5093,18 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_VISHNU_OK</para></entry>
+                <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service was performed  successfully</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine  is not known</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMachineRefreshPeriod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMachineRefreshPeriod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>int&amp; <parameter>value</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -5243,6 +5166,11 @@
               <entry><para>errorPath</para></entry>
               <entry><para>string</para></entry>
               <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
+            </row>
+            <row>
+              <entry><para>scriptContent</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the content of the file containing the job characteristics.</para></entry>
             </row>
             <row>
               <entry><para>jobPrio</para></entry>
@@ -5496,6 +5424,37 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="ListProgression"><emphasis role="bold">Class TMS::ListProgression Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>nbJobs</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the number of jobs in progression list.</para></entry>
+            </row>
+            <row>
+              <entry><para>progress</para></entry>
+              <entry><para>List of <link linkend="Progression">Progression</link></para></entry>
+              <entry><para>Represents the list of jobs in progression.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="ListQueues"><emphasis role="bold">Class TMS::ListQueues Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -5714,11 +5673,6 @@
               <entry><para>Assigns a job name. The default is the path of job.</para></entry>
             </row>
             <row>
-              <entry><para>priority</para></entry>
-              <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-              <entry><para>Assigns priority of the job.</para></entry>
-            </row>
-            <row>
               <entry><para>queue</para></entry>
               <entry><para>string</para></entry>
               <entry><para>Assigns the queue or class of the job.</para></entry>
@@ -5744,7 +5698,7 @@
               <entry><para>The number of nodes and processors per node.</para></entry>
             </row>
             <row>
-              <entry><para>outPutPath</para></entry>
+              <entry><para>outputPath</para></entry>
               <entry><para>string</para></entry>
               <entry><para>Assigns the path and file for job output.</para></entry>
             </row>
@@ -5770,6 +5724,10 @@
             </row>
           </thead>
           <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
             <row>
               <entry><para>VERY_LOW</para></entry>
               <entry><para>100</para></entry>
@@ -5857,6 +5815,10 @@
           </thead>
           <tbody>
             <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
+            <row>
               <entry><para>VERY_LOW</para></entry>
               <entry><para>0</para></entry>
             </row>
@@ -5894,19 +5856,19 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>STARTED</para></entry>
+              <entry><para>NOT_STARTED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>RUNNING</para></entry>
+              <entry><para>NOT_AVAILABLE</para></entry>
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>NOT_STARTED</para></entry>
+              <entry><para>STARTED</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>NOT_AVAILABLE</para></entry>
+              <entry><para>RUNNING</para></entry>
               <entry><para>3</para></entry>
             </row>
           </tbody>
@@ -6046,6 +6008,13 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The id of the machine</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
                 <entry><para>metricValue</para></entry>
                 <entry><para><link linkend="Metric">Metric</link></para></entry>
                 <entry><para>Value of the metric</para></entry>
@@ -6053,8 +6022,8 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>option</para></entry>
-                <entry><para><link linkend="CurMetricOpt">CurMetricOpt</link></para></entry>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="CurMetricOp">CurMetricOp</link></para></entry>
                 <entry><para>The options for the current metric value</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
@@ -6095,7 +6064,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Metric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOpt&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>Metric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getMetricHistory</title>
@@ -6153,7 +6122,7 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>option</para></entry>
+                <entry><para>options</para></entry>
                 <entry><para><link linkend="MetricHistOp">MetricHistOp</link></para></entry>
                 <entry><para>The optional fields for the metric history</para></entry>
                 <entry><para>IN</para></entry>
@@ -6195,7 +6164,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricHistory</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>metricType</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValues</parameter></paramdef><paramdef>const MetricHistOp&amp; <parameter>option = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricHistory</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>metricType</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValues</parameter></paramdef><paramdef>const MetricHistOp&amp; <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getProcesses</title>
@@ -6232,13 +6201,6 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The id of the machine the user wants the running processes</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>process</para></entry>
                 <entry><para><link linkend="ListProcesses">ListProcesses</link></para></entry>
                 <entry><para>The list of the Vishnu processes on the machine</para></entry>
@@ -6246,11 +6208,11 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>option</para></entry>
-                <entry><para><link linkend="ExportOp">ExportOp</link></para></entry>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="ProcessOp">ProcessOp</link></para></entry>
                 <entry><para>The options to search for the processes</para></entry>
                 <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6284,7 +6246,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getProcesses</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListProcesses&amp; <parameter>process</parameter></paramdef><paramdef>const ExportOp&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getProcesses</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses&amp; <parameter>process</parameter></paramdef><paramdef>const ProcessOp&amp; <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::setSystemInfo</title>
@@ -6317,13 +6279,6 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The session key</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The id of the machine</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6370,7 +6325,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SystemInfo&amp; <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const SystemInfo&amp; <parameter>systemInfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::setSystemThreshold</title>
@@ -6407,23 +6362,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>thresholdType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>The type of the metric to set</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>The threshold value</para></entry>
+                <entry><para>threshold</para></entry>
+                <entry><para><link linkend="Threshold">Threshold</link></para></entry>
+                <entry><para>The threshold to set</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6463,7 +6404,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>thresholdType</parameter></paramdef><paramdef>const double&amp; <parameter>value</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Threshold&amp; <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getSystemThreshold</title>
@@ -6501,13 +6442,13 @@
               </row>
               <row>
                 <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>The threshold value</para></entry>
+                <entry><para><link linkend="ListThreshold">ListThreshold</link></para></entry>
+                <entry><para>The thresholds value</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>option</para></entry>
+                <entry><para>options</para></entry>
                 <entry><para><link linkend="ThresholdOp">ThresholdOp</link></para></entry>
                 <entry><para>The options for the threshold</para></entry>
                 <entry><para>IN</para></entry>
@@ -6549,7 +6490,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>double&amp; <parameter>value</parameter></paramdef><paramdef>const ThresholdOp&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold&amp; <parameter>value</parameter></paramdef><paramdef>const ThresholdOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::defineUserIdentifier</title>
@@ -7115,6 +7056,264 @@
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getUpdateFrequency</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>int&amp; <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
+      <section>
+        <title>Function IMS::stop</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>process</para></entry>
+                <entry><para><link linkend="Process">Process</link></para></entry>
+                <entry><para>The process to stop and do not try to restart anymore</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The stop() function to stop (and do not try to relaunch) a SeD</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Process&amp; <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function IMS::getSystemInfo</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>res</para></entry>
+                <entry><para><link linkend="ListSysInfo">ListSysInfo</link></para></entry>
+                <entry><para>The list of the system information gotten</para></entry>
+                <entry><para>OUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="SysInfoOp">SysInfoOp</link></para></entry>
+                <entry><para>Optional field for system information</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The getSystemInfo() function to get the system info on a machine</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo&amp; <parameter>res</parameter></paramdef><paramdef>const SysInfoOp&amp; <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
+      <section>
+        <title>Function IMS::restart</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The id of the machine where to restart</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para><link linkend="RestartType">RestartType</link></para></entry>
+                <entry><para>If restarting a sed or an agent</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>options</para></entry>
+                <entry><para><link linkend="RestartOp">RestartOp</link></para></entry>
+                <entry><para>The option for the restart</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The restart() function to restart a SeD or a MA</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+              <row>
+                <entry><para>DB_ERROR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartType&amp; <parameter>type</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
     </section>
     <section>
       <title>Data types definitions</title>
@@ -7136,11 +7335,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>machineId</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>The id of the machine where the metric is defined</para></entry>
-            </row>
             <row>
               <entry><para>metricType</para></entry>
               <entry><para><link linkend="MetricType">MetricType</link></para></entry>
@@ -7170,7 +7364,7 @@
             <row>
               <entry><para>exportType</para></entry>
               <entry><para><link linkend="ExportType">ExportType</link></para></entry>
-              <entry><para>TO DO</para></entry>
+              <entry><para>The type to export</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7221,8 +7415,60 @@
           <tbody>
             <row>
               <entry><para>process</para></entry>
-              <entry><para>List of <link linkend="Processes">Processes</link></para></entry>
+              <entry><para>List of <link linkend="Process">Process</link></para></entry>
               <entry><para>The processes of the list</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListSysInfo"><emphasis role="bold">Class IMS::ListSysInfo Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>sysInfo</para></entry>
+              <entry><para>List of <link linkend="SystemInfo">SystemInfo</link></para></entry>
+              <entry><para>The set of system info</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ListThreshold"><emphasis role="bold">Class IMS::ListThreshold Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Threshold</para></entry>
+              <entry><para>List of <link linkend="Threshold">Threshold</link></para></entry>
+              <entry><para>The list of the thresholds</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7294,7 +7540,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="Processes"><emphasis role="bold">Class IMS::Processes Content</emphasis></para>
+      <para xml:id="Process"><emphasis role="bold">Class IMS::Process Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -7313,9 +7559,117 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>name</para></entry>
+              <entry><para>processName</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>The value of the metric</para></entry>
+              <entry><para>The name of the process (the name of the executable)</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The id of the machine</para></entry>
+            </row>
+            <row>
+              <entry><para>dietId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The diet id of the process</para></entry>
+            </row>
+            <row>
+              <entry><para>state</para></entry>
+              <entry><para><link linkend="ProcessState">ProcessState</link></para></entry>
+              <entry><para>THe state of the process</para></entry>
+            </row>
+            <row>
+              <entry><para>timestamp</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>The timestamp corresponding to the moment the process is registered</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ProcessOp"><emphasis role="bold">Class IMS::ProcessOp Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The id of the machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="RestartOp"><emphasis role="bold">Class IMS::RestartOp Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>dietConfFile</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The path to the diet configuration file</para></entry>
+            </row>
+            <row>
+              <entry><para>vishnuConf</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The path to the vishnu configuration file</para></entry>
+            </row>
+            <row>
+              <entry><para>sedType</para></entry>
+              <entry><para><link linkend="SeDType">SeDType</link></para></entry>
+              <entry><para>The type of the vishnu sed</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="SysInfoOp"><emphasis role="bold">Class IMS::SysInfoOp Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The machine id</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7347,6 +7701,47 @@
               <entry><para>diskSpace</para></entry>
               <entry><para>long</para></entry>
               <entry><para>Amount of disk space available on the machine (in Bytes)</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The id of the machine</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Threshold"><emphasis role="bold">Class IMS::Threshold Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>value</para></entry>
+              <entry><para>double</para></entry>
+              <entry><para>The value of the threshold</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The machine ID the threshold is available</para></entry>
+            </row>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+              <entry><para>The type of the threshold</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7477,6 +7872,105 @@
             <row>
               <entry><para>CPUNBR</para></entry>
               <entry><para>6</para></entry>
+            </row>
+            <row>
+              <entry><para>ALL</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="ProcessState"><emphasis role="bold">Enumeration IMS::ProcessState Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>RUNNING</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>DOWN</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>DELETED</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="RestartType"><emphasis role="bold">Enumeration IMS::RestartType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>SED</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="SeDType"><emphasis role="bold">Enumeration IMS::SeDType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>UMS</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>TMS</para></entry>
+              <entry><para>2</para></entry>
+            </row>
+            <row>
+              <entry><para>FMS</para></entry>
+              <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>IMS</para></entry>
+              <entry><para>4</para></entry>
             </row>
           </tbody>
         </tgroup>
