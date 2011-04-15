@@ -49,7 +49,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   ::ecorecpp::serializer::serializer optSer(name);
   ::ecorecpp::serializer::serializer jobSer(name);
 
-  scriptPath = strdup((std::string(getenv("HOME"))+"/job_scriptXXXXXX").c_str());
+  scriptPath = strdup("/tmp/job_scriptXXXXXX");
   SSHJobExec().createTmpFile(scriptPath, scriptContent);
 
   std::ofstream ofile(scriptPath);
@@ -62,7 +62,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, acLogin, machineName, "", mbatchType);
   sshJobExec.sshexec("SUBMIT");
 
-  //SSHJobExec().deleteFile(scriptPath);
+  SSHJobExec().deleteFile(scriptPath);
   
   std::string errorInfo = sshJobExec.getErrorInfo();
 
@@ -76,7 +76,6 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   std::string updateJobSerialized = sshJobExec.getJobSerialized().c_str();
   TMS_Data::Job_ptr job = NULL;
   if(!vishnu::parseTMSEmfObject(std::string(updateJobSerialized), job)) {
-    SSHJobExec().deleteFile(scriptPath);
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
@@ -86,7 +85,6 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
   std::cout << "vishnuJobId = " << vishnuJobId << std::endl;
   //mjob.setJobId(vishnuJobId);
-  SSHJobExec().deleteFile(scriptPath);
   delete job;
 
   return 0;
@@ -107,9 +105,15 @@ int JobServer::cancelJob()
 
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-  SSHJobExec sshJobExec(NULL, jobSerialized, "", "", "", "", mbatchType);
+  std::string acLogin = getUserAccountLogin();
+  std::cout << "acLogin = " << acLogin << std::endl;
+
+  std::string machineName = getMachineName();
+  std::cout << "machineName = " << machineName << std::endl;
+
+  SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
   sshJobExec.sshexec("CANCEL");
-  
+ 
   std::string errorInfo = sshJobExec.getErrorInfo();
 
   if(errorInfo.size()!=0) {
