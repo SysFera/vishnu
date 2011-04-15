@@ -14,13 +14,16 @@
 
 
 //  Boost archives
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 // To serialize a std::list
 #include <boost/serialization/list.hpp>
+#include <boost/serialization/nvp.hpp>
 
 using namespace boost::archive;
+
+class VishnuException;
 
 /**
  * \class SessionEntry
@@ -198,6 +201,27 @@ storeLastSession(const std::string& sessionKey,int closePolicy,int ppid);
 
 std::string
 getLastSessionKey(int ppid);
+
+/**
+ * \brief To remove the bad session keys stored in the session file
+ * \param ppid : The process identifier of the terminal in which the session had
+ * been open.
+ */ 
+void
+removeBadSessionKeyFromFile(int ppid);
+
+
+/**
+ * \brief A helper function which check if an given exception represents a bad
+ * sessionKey
+ *\param e: a given VishnuException
+ *\return   : true if it's a bad session key or false otherwhise
+ */
+bool
+checkBadSessionKeyError(const VishnuException& e);
+
+
+
 
 
 #endif
