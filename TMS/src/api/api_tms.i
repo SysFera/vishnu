@@ -32,6 +32,16 @@
 
 // All EMF includes (same as in UMS_Data.hpp)
 %include "TMS_Data_forward.hpp"
+%include "TMS_Data/Job.hpp"
+%include "TMS_Data/JobResult.hpp"
+%include "TMS_Data/ListJobResult.hpp"
+%include "TMS_Data/ListJobs.hpp"
+%include "TMS_Data/ListJobsOptions.hpp"
+%include "TMS_Data/ListProgression.hpp"
+%include "TMS_Data/ListQueues.hpp"
+%include "TMS_Data/ProgressOptions.hpp"
+%include "TMS_Data/Queue.hpp"
+%include "TMS_Data/SubmitOptions.hpp"
 
 // TODO make copy of object when using the push_back() method of EList
 // because this causes a segfault due to double free
@@ -39,6 +49,10 @@
 // Instantiate the template for all lists
 // the templates used within the list template must be instantiated first
 %template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
+%template(EJobList) ::ecorecpp::mapping::EList<::UMS_Data::Job>;
+%template(EProgressionList) ::ecorecpp::mapping::EList<::UMS_Data::Progression>;
+%template(EQueueList) ::ecorecpp::mapping::EList<::UMS_Data::Queue>;
+%template(EJobResultList) ::ecorecpp::mapping::EList<::UMS_Data::JobResult>;
 
 #ifdef SWIGPYTHON
 
