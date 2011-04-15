@@ -122,8 +122,8 @@ int SSHJobExec::sshexec(const std::string& action) {
   createTmpFile(const_cast<char*>(errorPath.c_str()));
 
   std::ostringstream cmd;
-  //cmd << "ssh -l muser mhostname ";
-  cmd << "/usr/bin/ssh localhost ";
+  cmd << "ssh -l " << muser << " " << mhostname << " ";
+  //cmd << "/usr/bin/ssh localhost ";
   cmd << DEFAULT_SLAVE_EXECUTABLE_DIR << "/tmsSlave ";
   cmd << action << " ";
   cmd << convertBatchTypeToString(mbatchType) << " ";
@@ -139,6 +139,7 @@ int SSHJobExec::sshexec(const std::string& action) {
      cmd << " 2> " << llErrorPath; 
   }
 
+  std::cout << cmd.str() << std::endl;
   if(system((cmd.str()).c_str())) { //A REMPLACER PAR exec
     std::cerr << "can't execute " << cmd.str() << std::endl;
     deleteFile(jobSerializedPath.c_str());
@@ -148,7 +149,7 @@ int SSHJobExec::sshexec(const std::string& action) {
     if(mbatchType==LOADLEVELER) {
       deleteFile(llErrorPath.c_str());
     } 
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "TMS server : can't execute tmsSlave executable with ssh");
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "TMS server : can't execute tmsSlave executable with ssh, copy the tmsSlave executable into /tmp/ directory");
   }
 
   boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
