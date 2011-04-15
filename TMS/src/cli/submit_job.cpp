@@ -173,6 +173,10 @@ int main (int argc, char* argv[]){
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);
+    //check the bad session key
+    if (checkBadSessionKeyError(e)){
+      removeBadSessionKeyFromFile(getppid());
+    }
     return e.getMsgI() ;
   } catch(std::exception& e){// catch all std runtime error
     errorUsage(argv[0],e.what());
