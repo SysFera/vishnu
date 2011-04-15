@@ -142,16 +142,16 @@ vishnu::get_file_content(const std::string& filePath){
 int
 vishnu::copyDagdaFile(std::string src, std::string dest) {
 
-  std::string currentDirectory = std::string(std::string(getenv("PWD")));
+  bfs::path filePath(src);
+  bfs::path fileDestPath(dest);
+
   try {
-    //If the destination does not exist, the file is created locally on a directory tmp;
-    if(!bfs::exists(bfs::path(dest))){
-      bfs::create_directories(bfs::path(currentDirectory+"/tmp"));
-      bfs::copy_file(bfs::path(src), bfs::path(currentDirectory+std::string(src)));
+    //If the destination does not exist, the file is created locally
+    if(!bfs::exists(fileDestPath)) {
+      bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
     }
     else {
-      bfs::create_directories(bfs::path(dest+"/tmp"));
-      bfs::copy_file(bfs::path(src), bfs::path(dest+src));
+      bfs::rename(filePath, bfs::path(fileDestPath / filePath.filename()));
     }
   }
   catch(std::exception& e) {
