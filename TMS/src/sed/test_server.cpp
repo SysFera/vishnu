@@ -371,21 +371,22 @@ solve_jobOutPutGetResult(diet_profile_t* pb) {
   //OUT Parameter
   diet_string_set(diet_parameter(pb,3), jobResultOutSerialized, DIET_VOLATILE);
 
+  diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+
   char* ID2 = NULL;
   char* ID3 = NULL;
+
   std::string path = "/home/capo-chichi/tmp/test1.txt";
   std::string path2 = "/home/capo-chichi/tmp/test2.txt";
 
-  dagda_init_container(diet_parameter(pb,4));
+  dagda_init_container(diet_parameter(pb,5));
 
-  dagda_put_file(strdup(path.c_str()), DIET_STICKY_RETURN, &ID2);
-  dagda_put_file(strdup(path2.c_str()), DIET_STICKY_RETURN, &ID3);
+  dagda_put_file(strdup(path.c_str()), DIET_PERSISTENT_RETURN, &ID2);
+  dagda_put_file(strdup(path2.c_str()), DIET_PERSISTENT_RETURN, &ID3);
 
+  dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID2, 0);
+  dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID3, 1);
 
-  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID2, 0);
-  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID3, 1);
-
-  diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
 
   return 0;
 }
@@ -409,31 +410,34 @@ solve_jobOutPutGetAllResult(diet_profile_t* pb) {
   string  errorInfo = ""/*"15#connectErrorMessage"*/;
   diet_string_set(diet_parameter(pb,2), strdup(listOfAlljobResults.c_str()), DIET_VOLATILE);
 
+   if (diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE)) {
+      cerr << "diet_string_set error" << endl;
+    return 1;
+  }
+
   char* ID2;
   char* ID3;
+  char* ID4;
   std::string path = "/home/capo-chichi/tmp/test2.txt";
   std::string path2 = "/home/capo-chichi/tmp/test1.txt";
 
-  dagda_init_container(diet_parameter(pb,3));
+  dagda_init_container(diet_parameter(pb,4));
 
   //dagda_put_scalar(l3, DIET_LONGINT, DIET_PERSISTENT, &ID2);
   //dagda_put_scalar(l4, DIET_LONGINT, DIET_PERSISTENT, &ID3);
-  dagda_put_file(strdup(path.c_str()), DIET_STICKY_RETURN, &ID2);
-  dagda_put_file(strdup(path2.c_str()), DIET_STICKY_RETURN, &ID3);
+  dagda_put_file(strdup(path.c_str()), DIET_PERSISTENT_RETURN, &ID2);
+  dagda_put_file(strdup(path2.c_str()), DIET_PERSISTENT_RETURN, &ID3);
+  dagda_put_file(strdup(path2.c_str()), DIET_PERSISTENT_RETURN, &ID4);
 
   /*dagda_add_container_element((*diet_parameter(pb,3)).desc.id, ID2, 2);
   std::cout << "ADD1" << std::endl;
   dagda_add_container_element((*diet_parameter(pb,3)).desc.id, ID3, 3);
   std::cout << "ADD2" << std::endl;*/
 
-  dagda_add_container_element((*diet_parameter(pb,3)).desc.id, ID2, 0);
-  dagda_add_container_element((*diet_parameter(pb,3)).desc.id, ID3, 1);
+  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID2, 0);
+  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID3, 1);
+  dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID4, 2);
 
-
-  if (diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE)) {
-      cerr << "diet_string_set error" << endl;
-    return 1;
-  }
   cout << " done" << endl;
   return 0;
 }
@@ -530,8 +534,8 @@ main(int argc, char* argv[], char* envp[])
   diet_generic_desc_set(diet_param_desc(profile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,3), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(profile,4), DIET_CONTAINER, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(profile,5), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,5), DIET_CONTAINER, DIET_CHAR);
   if (diet_service_table_add(profile, NULL, solve_jobOutPutGetResult)) return 1;
 
   /* jobOutPutGetAllResult */
@@ -539,8 +543,8 @@ main(int argc, char* argv[], char* envp[])
   diet_generic_desc_set(diet_param_desc(profile,0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(profile,2), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(profile,3), DIET_CONTAINER, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(profile,4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(profile,4), DIET_CONTAINER, DIET_CHAR);
   if (diet_service_table_add(profile, NULL, solve_jobOutPutGetAllResult)) return 1;
 
   diet_profile_desc_free(profile);
