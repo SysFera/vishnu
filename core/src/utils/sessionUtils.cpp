@@ -5,7 +5,9 @@
 #include <cstdlib>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include "UMSVishnuException.hpp"
 namespace bfs = boost::filesystem;
+namespace bs = boost::serialization;
 
 /**
  * \brief A default constructor
@@ -58,7 +60,8 @@ SessionEntry::getClosePolicy()const{
 template<class Archive>
 void
 SessionEntry::serialize(Archive& ar, const unsigned int version){
-  ar & sessionKey & closePolicy ;
+ // ar & sessionKey & closePolicy ;
+  ar & bs::make_nvp("sessionKey", sessionKey) & bs::make_nvp("closePolicy",closePolicy) ;
 }
 
 
@@ -91,7 +94,9 @@ saveIntoFile(SessionContainer& allSessions, const char* file){
 
   T ar(ofile);
 
-  ar << allSessions;
+//  ar << allSessions;
+
+  ar << bs::make_nvp("sessions",allSessions);
 
   ofile.close();
 }
@@ -113,7 +118,8 @@ getFromFile(SessionContainer& allSessions, const char* file){
 
   T ar(ifile);
 
-  ar >> allSessions;
+ // ar >> allSessions;
+ ar >> bs::make_nvp("sessions",allSessions);
 
   ifile.close();
 }
@@ -136,7 +142,7 @@ storeLastSession(const SessionEntry& session,const std::string& terminal){
 
   allSessions.push_back(session);
 
-  saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
+  saveIntoFile<binary_oarchive>(allSessions, terminal.c_str());
 
 }
 
@@ -159,7 +165,7 @@ getAllSessions(const std::string& terminal){
 
   if( bfs::exists(pid_file) && !bfs::is_empty(pid_file)){
 
-    getFromFile<text_iarchive>(allSessions, terminal.c_str());
+    getFromFile<binary_iarchive>(allSessions, terminal.c_str());
 
   }
   return allSessions;
@@ -219,7 +225,7 @@ removeLastSession(const std::string & terminal){
     allSessions.pop_back();
 
 
-    saveIntoFile<text_oarchive>(allSessions, terminal.c_str());
+    saveIntoFile<binary_oarchive>(allSessions, terminal.c_str());
 
   }
   else{// all session have been closed
@@ -314,3 +320,33 @@ getLastSessionKey(int ppid){
 
 
 }
+
+/**
+ * \brief To remove the bad session keys stored in the session file
+ * \param ppid : The process identifier of the terminal in which the session had
+ * been open.
+ */ 
+void
+removeBadSessionKeyFromFile(int ppid){
+
+    std::string sessionFile=getSessionLocation(ppid); // get the path of the session file
+
+    removeLastSession(sessionFile);// remove from the file
+
+}
+
+
+
+/**
+ * \brief A helper function which check if an given exception represents a bad
+ * sessionKey
+ *\param e: a given VishnuException
+ *\return   : true if it's a bad session key or false otherwhise
+ */
+bool
+checkBadSessionKeyError(const VishnuException& e){
+
+return( (e.getMsgI()==ERRCODE_SESSIONKEY_NOT_FOUND) || e.getMsgI()==ERRCODE_SESSIONKEY_EXPIRED   );
+
+}
+

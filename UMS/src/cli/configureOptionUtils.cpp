@@ -7,7 +7,6 @@
 
 #include "configureOptionUtils.hpp"
 #include "Options.hpp"
-#include "sessionUtils.hpp"
 #include "utils.hpp"
 #include <boost/bind.hpp>
 
