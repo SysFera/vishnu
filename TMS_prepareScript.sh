@@ -36,20 +36,33 @@ mkdir $path/core/database
 
 # Copy core sources
 mkdir $path/core/src/
+mkdir $path/core/src/config
 mkdir $path/core/src/database
 mkdir $path/core/src/exception
 mkdir $path/core/src/registry
 mkdir $path/core/src/utils
+mkdir $path/core/test
+mkdir $path/core/test/cfgs
+mkdir $path/core/test/src
 cp core/src/CMakeLists.txt $path/core/src/
+cp core/src/config/CMakeLists.txt $path/core/src/config/
 cp core/src/database/CMakeLists.txt $path/core/src/database/
 cp core/src/exception/CMakeLists.txt $path/core/src/exception/
 cp core/src/registry/CMakeLists.txt $path/core/src/registry/
 cp core/src/utils/CMakeLists.txt $path/core/src/utils/
+cp core/test/CMakeLists.txt $path/core/test/
+cp core/test/src/CMakeLists.txt $path/core/test/src/
+cp core/test/cfgs/CMakeLists.txt $path/core/test/cfgs/
+cp core/src/config/*pp $path/core/src/config/
 cp core/src/database/*pp $path/core/src/database/
 cp core/src/exception/*pp $path/core/src/exception/
 cp core/src/registry/*pp $path/core/src/registry/
 cp core/src/utils/*pp $path/core/src/utils/
 cp core/src/utils/*i $path/core/src/utils/
+cp core/test/src/*pp $path/core/test/src/
+cp core/test/src/*h.in $path/core/test/src/
+cp core/test/cfgs/*cfg.in $path/core/test/cfgs/
+cp -r core/test/third-party $path/core/test
 
 # Copy TMS sources
 mkdir $path/TMS
@@ -80,8 +93,8 @@ mkdir $path/TMS/doc/man/man3
 
 # Copy man pages
 #cp  TMS/doc/man/CMakeLists.txt $path/TMS/doc/man/
-#cp  -r TMS/doc/man/man1/ $path/TMS/doc/man/ 
-#cp  -r TMS/doc/man/man3/ $path/TMS/doc/man/ 
+#cp  -r TMS/doc/man/man1/ $path/TMS/doc/man/
+#cp  -r TMS/doc/man/man3/ $path/TMS/doc/man/
 
 
 cp setCopyright.sh $path/
