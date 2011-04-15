@@ -139,6 +139,14 @@ int main (int ac, char* av[]){
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
 
     errorUsage(av[0], msg,EXECERROR);
+    
+    //check the bad session key
+    
+    if (checkBadSessionKeyError(e)){
+
+      removeBadSessionKeyFromFile(getppid());
+    }
+
 
     return e.getMsgI() ;
   }

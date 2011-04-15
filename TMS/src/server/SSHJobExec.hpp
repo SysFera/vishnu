@@ -21,8 +21,8 @@ class SSHJobExec {
                const std::string& jobSerialized, 
                const std::string& submitOptionsSerialized,
                const std::string& user, 
-               const std::string& key,
                const std::string& hostname,
+               const std::string& key,
                BatchType batchType);
      
     std::string getJobSerialized();

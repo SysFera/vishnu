@@ -4,7 +4,7 @@
 #include <boost/filesystem/fstream.hpp>
 
 #include "MachineServer.hpp"
-#include "TMSServer.hpp"
+#include "ServerTMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
 
@@ -72,7 +72,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   //Initialize the TMS Server 
-  TMSServer* server = TMSServer::getInstance();
+  ServerTMS* server = ServerTMS::getInstance();
   res = server->init(vishnuId, dbConfig, machineId, batchType);
 
   //A remettre dans le fichier util server
