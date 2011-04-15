@@ -133,11 +133,9 @@ int SSHJobExec::sshexec(const std::string& action) {
     cmd << " " << mscript_path;
   }
   
-  //if(mbatchType==LOADLEVELER) {
-     stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
-     createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
-     cmd << " 2> " << stderrFilePath; 
-  //}
+  stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
+  createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
+  cmd << " 2> " << stderrFilePath; 
 
   std::cout << cmd.str() << std::endl;
   if(system((cmd.str()).c_str())) { //A REMPLACER PAR exec
