@@ -28,21 +28,21 @@ public:
 //changePassword();
 //addMachine();
 VishnuConnexion(const string& uid, const string& upwd, const string& mid, const UMS_Data::ConnectOptions& co):muid(uid),mupwd(upwd),mmid(mid),mco(co){
-
-BOOST_REQUIRE_EQUAL(vishnu::connect(uid,upwd,msession,mco),0);
-BOOST_MESSAGE("The session is open");
+ 
+    BOOST_REQUIRE_EQUAL(vishnu::connect(uid,upwd,msession,mco),0);
+    BOOST_MESSAGE("The session is open");
 }
 
 ~VishnuConnexion(){
-BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
-BOOST_MESSAGE("The session is closed");
+  BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
+  BOOST_MESSAGE("The session is closed");
 }
 
- UMS_Data::Session msession;
- UMS_Data::ConnectOptions mco;
- std::string muid;
- std::string mupwd;
- std::string mmid;
+UMS_Data::Session msession;
+UMS_Data::ConnectOptions mco;
+std::string muid;
+std::string mupwd;
+std::string mmid;
 
 };
 
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_SUITE(submit_a_job)
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 {
-   
+  VishnuConnexion vcp("U_5","vishnu_user","MA_1",ConnectOptions()); 
 // get the session key and the machine identifier
  string sessionKey=vcp.msession.getSessionKey();
  string machineId=vcp.mmid;
