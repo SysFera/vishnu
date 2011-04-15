@@ -63,15 +63,21 @@
         </revision>
         <revision>
         <revnumber>5</revnumber>
-        <date>08/04/2011</date>
+        <date>15/04/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
-          <para>
-	    IMS update :
-	    Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
-	    Add services stop and getSystemInfo
-	    Add corresponding datatypes (option) plus list of system info and processes
-	  </para>
+          <para>Updates to TMS:
+            Modified description of machineId parameter. Modified getJobProgress output parameter. Modified submitJob description and output
+            parameters (jobId and jobPath replaced by jobInfo). Modified name of getAllJobsOutput to getCompletedJobsOutput. Added input
+            parameter outDir to getJobOutput and getCompletedJobsOutput. Modified output parameter of getCompletedJobsOutput. Added
+            service getMachineRefreshPeriod. Removed function setMachineEnv. Removed JobPriority attribute in submitOptions class.
+            Removed Not_submitted status value of Job class. Updated error messages and codes.
+          </para>
+          <para>Updates to IMS :
+            Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
+            Add services stop and getSystemInfo.
+            Add corresponding datatypes (option) plus list of system info and processes.
+          </para>
         </revdescription>
         </revision>
       </revhistory>
