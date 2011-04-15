@@ -370,7 +370,7 @@
         <para>The vishnu_reconnect command reconnects to a session that is still active</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>userId </replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>sessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -395,7 +395,7 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>userId </para></entry>
+                <entry><para>userId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>userId represents the VISHNU user identifier</para></entry>
@@ -1274,7 +1274,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_machine command lists the machines in which  the local user configurations are defined for the given user</para>
+        <para>The vishnu_list_machine command lists the machines that are accessible through VISHNU</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_machine</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
@@ -2367,58 +2367,6 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_set_machine_env</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_set_machine_env command sets environment variables on a remote machine</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_set_machine_env</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>listEnv</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>Represents the machine id</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>listEnv</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>Represents the list environement variables</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
         <title>vishnu_set_machine_refresh_period</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
@@ -2462,6 +2410,51 @@
                 <entry><para>int</para></entry>
                 <entry/>
                 <entry><para>Is the refresh interval value (in seconds)</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_get_machine_refresh_period</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_get_machine_refresh_period command gets the refresh period of output and error files contents</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_get_machine_refresh_period</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>Represents the machine id</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -2525,6 +2518,10 @@
           </thead>
           <tbody>
             <row>
+              <entry><para>NOT_SUBMITTED</para></entry>
+              <entry><para>-1</para></entry>
+            </row>
+            <row>
               <entry><para>RUNNING</para></entry>
               <entry><para>0</para></entry>
             </row>
@@ -2551,10 +2548,6 @@
             <row>
               <entry><para>FAILED</para></entry>
               <entry><para>6</para></entry>
-            </row>
-            <row>
-              <entry><para>NOT_SUBMITTED</para></entry>
-              <entry><para>7</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -2642,7 +2635,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_export_commands command exports all the commands made by a user during a session</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="opt"><option>-h</option></arg><arg/><arg
               choice="plain"><replaceable>oldSessionId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2674,6 +2667,13 @@
                 <entry><para>The id of the session to export (session has ended)</para></entry>
                 <entry><para>YES</para></entry>
               </row>
+              <row>
+                <entry><para>exportType</para></entry>
+                <entry><para><link linkend="ExportType">ExportType</link></para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -2687,7 +2687,58 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_get_metric_current_value command retrieve the current value of a metric on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="opt"><option>-h</option></arg><arg/><arg/></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The id of the machine where the metric is defined</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>metricType</para></entry>
+                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry/>
+                <entry><para>The type of the metric</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_get_metric_history</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_get_metric_history command retrieve the history of values of a metric on a machine</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="opt"><option>-h</option></arg><arg/><arg/><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2726,72 +2777,19 @@
                 <entry><para>Type of metric</para></entry>
                 <entry><para>YES</para></entry>
               </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>vishnu_get_metric_history</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any VISHNU user</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_get_metric_history command retrieve the history of values of a metric on a machine</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>startTime</replaceable></arg><arg
-              choice="plain"><replaceable>endTime</replaceable></arg><arg choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
               <row>
                 <entry><para>startTime</para></entry>
                 <entry><para>long</para></entry>
                 <entry/>
-                <entry><para>Start time of metric history</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>The start time to get the history</para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>endTime</para></entry>
                 <entry><para>long</para></entry>
                 <entry/>
-                <entry><para>End time of metric history</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>metricType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry/>
-                <entry><para>Type of metric</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>The end time to get the history</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2806,7 +2804,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_get_processes command gets the list of the processes running over a front machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_get_processes</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_get_processes</command><arg choice="opt"><option>-h</option></arg><arg/><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2837,6 +2835,13 @@
                 <entry/>
                 <entry><para>The id of the machine the user wants the running processes</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>exportType</para></entry>
+                <entry><para><link linkend="ExportType">ExportType</link></para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2912,9 +2917,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_set_system_threshold command sets a threshold on a machine of a system</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>thresholdType</replaceable></arg><arg
-              choice="plain"><replaceable>value</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_set_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg/><arg/><arg/></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2939,25 +2942,25 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>thresholdType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry/>
-                <entry><para>The type of the metric to set</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>value</para></entry>
                 <entry><para>double</para></entry>
                 <entry/>
-                <entry><para>The threshold value</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>The value of the threshold</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The machine ID the threshold is available</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry/>
+                <entry><para>The type of the threshold</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2972,8 +2975,7 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_get_system_threshold command gets a System threshold on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_get_system_threshold</command><arg choice="opt"><option>-h</option></arg><arg/><arg/></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3001,15 +3003,15 @@
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>The id of the machine where the metric is defined</para></entry>
+                <entry><para>NO</para></entry>
               </row>
               <row>
-                <entry><para>type</para></entry>
+                <entry><para>metricType</para></entry>
                 <entry><para><link linkend="MetricType">MetricType</link></para></entry>
                 <entry/>
-                <entry><para>The threshold type desired</para></entry>
-                <entry><para>YES</para></entry>
+                <entry><para>The type of the metric</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -3315,9 +3317,7 @@
         <para>The vishnu_restart command restarts the whole VISHNU infrastructure. Actions are saved and restarted from the beginning once the infrastructure has been restarted</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-n <replaceable>componentName</replaceable></option></arg><arg
-              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
-              choice="opt"><option>-f <replaceable>file</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>componentName</replaceable></option></arg><arg/><arg/><arg/><arg
               choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -3357,17 +3357,24 @@
                 <entry><para>NO</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
+                <entry><para>dietConfFile</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>m</para></entry>
-                <entry><para>The id of the machine where the component is to be relaunched</para></entry>
+                <entry/>
+                <entry><para>The path to the diet configuration file</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
-                <entry><para>file</para></entry>
+                <entry><para>vishnuConf</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>f</para></entry>
-                <entry><para>The config file to use to restart</para></entry>
+                <entry/>
+                <entry><para>The path to the vishnu configuration file</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>TO DO</para></entry>
+                <entry><para>TO DO</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3379,6 +3386,31 @@
     </section>
     <section>
       <title>Parameters definitions</title>
+      <para xml:id="ExportType"><emphasis role="bold">Enumeration IMS::ExportType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>SHELL</para></entry>
+              <entry><para>1</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="LoadShedType"><emphasis role="bold">Enumeration IMS::LoadShedType Type</emphasis></para>
       <informaltable>
         <tgroup cols="2">
@@ -3394,12 +3426,16 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>SOFT</para></entry>
+              <entry><para>UNDEFINED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
               <entry><para>HARD</para></entry>
               <entry><para>1</para></entry>
+            </row>
+            <row>
+              <entry><para>SOFT</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3419,7 +3455,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>CPUNBR</para></entry>
+              <entry><para>UNDEFINED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
@@ -3442,6 +3478,10 @@
               <entry><para>FREEMEMORY</para></entry>
               <entry><para>5</para></entry>
             </row>
+            <row>
+              <entry><para>CPUNBR</para></entry>
+              <entry><para>6</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -3460,7 +3500,7 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>ALL</para></entry>
+              <entry><para>UNDEFINED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
@@ -3474,6 +3514,10 @@
             <row>
               <entry><para>DAEMON</para></entry>
               <entry><para>3</para></entry>
+            </row>
+            <row>
+              <entry><para>ALL</para></entry>
+              <entry><para>4</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -3521,14 +3565,14 @@
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The  file to create following the pattern  [host:]file path</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
-                <entry><para>int</para></entry>
+                <entry><para>mode_t</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>The file access permissions in octal numeral system</para></entry>
+                <entry><para>The file access permissions in octal numeral system.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3574,14 +3618,14 @@
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The  directory to create following the pattern  [host:]directory path</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
-                <entry><para>int</para></entry>
+                <entry><para>mode_t</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>the new directories permission access in octal numeral system</para></entry>
+                <entry><para>the new directories permission access in octal numeral system.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3773,7 +3817,7 @@
               </row>
               <row>
                 <entry><para>mode</para></entry>
-                <entry><para>int</para></entry>
+                <entry><para>mode_t</para></entry>
                 <entry/>
                 <entry><para> the access rigths of file/directory in octal system.</para></entry>
                 <entry><para>YES</para></entry>
@@ -4451,67 +4495,6 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_list_file_transfer_status</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any VISHNU user</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_file_transfer_status command displays the status of all file transfers submitted by User.</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_list_file_transfer_status</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-i <replaceable>transferId</replaceable></option></arg><arg
-              choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
-              choice="opt"><option>-u <replaceable>userId</replaceable></option></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>transferId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>i</para></entry>
-                <entry><para>a given transfer id</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>fromMachineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>m</para></entry>
-                <entry><para>the machine that is the source of the file transfer</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-              <row>
-                <entry><para>userId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>u</para></entry>
-                <entry><para>allows the admin to list file transfers initiated by a specific user</para></entry>
-                <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
         <title>vishnu_list_file_transfers</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
@@ -4519,6 +4502,7 @@
         <para>The vishnu_list_file_transfers command displays the history of all file transfers submitted by User.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_file_transfers</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-t <replaceable>transferId</replaceable></option></arg><arg
               choice="opt"><option>-m <replaceable>fromMachineId</replaceable></option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
               choice="opt"><option>-s <replaceable>status</replaceable></option></arg></cmdsynopsis>
@@ -4545,6 +4529,13 @@
               </row>
             </thead>
             <tbody>
+              <row>
+                <entry><para>transferId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>t</para></entry>
+                <entry><para>a given transfer id</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
               <row>
                 <entry><para>fromMachineId</para></entry>
                 <entry><para>string</para></entry>

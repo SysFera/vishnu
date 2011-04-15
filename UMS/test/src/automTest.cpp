@@ -26,7 +26,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   argv[0]= (char*)"./automTest";
   argv[1]= (char*) dietClientConfigPath.c_str();
   if (diet_initialize(dietClientConfigPath.c_str(), argc, argv)) {
-    BOOST_TEST_MESSAGE( "Error in diet_initialize..." );
+    BOOST_TEST_MESSAGE( "Error in diet_initialize... (using config: "
+                        << dietClientConfigPath << ")" );
   }
 
   // CREATE DATA MODEL

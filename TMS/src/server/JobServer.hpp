@@ -49,7 +49,18 @@ public:
    */
   TMS_Data::Job getData();
 
+  /**
+   * \brief Function to get user account login
+   * \return The user acLogin 
+   */
+  std::string getUserAccountLogin();
 
+  /**
+   * \brief Function to get the name of the machine 
+   * \return The name of the machine 
+   */
+  std::string getMachineName();
+  
   /**
    * \brief Destructor
    */

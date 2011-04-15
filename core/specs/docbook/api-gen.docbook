@@ -6054,7 +6054,7 @@
               </row>
               <row>
                 <entry><para>option</para></entry>
-                <entry><para><link linkend="CurMetricOpt">CurMetricOpt</link></para></entry>
+                <entry><para><link linkend="CurMetricOp">CurMetricOp</link></para></entry>
                 <entry><para>The options for the current metric value</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
@@ -6095,7 +6095,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Metric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOpt&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Metric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOp&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getMetricHistory</title>
@@ -6407,23 +6407,9 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The id of the machine</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>thresholdType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>The type of the metric to set</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>The threshold value</para></entry>
+                <entry><para>threshold</para></entry>
+                <entry><para><link linkend="Threshold">Threshold</link></para></entry>
+                <entry><para>The threshold to set</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6463,7 +6449,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>thresholdType</parameter></paramdef><paramdef>const double&amp; <parameter>value</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Threshold&amp; <parameter>threshold</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getSystemThreshold</title>
@@ -6501,8 +6487,8 @@
               </row>
               <row>
                 <entry><para>value</para></entry>
-                <entry><para>double</para></entry>
-                <entry><para>The threshold value</para></entry>
+                <entry><para><link linkend="ListThreshold">ListThreshold</link></para></entry>
+                <entry><para>The thresholds value</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6549,7 +6535,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>double&amp; <parameter>value</parameter></paramdef><paramdef>const ThresholdOp&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemThreshold</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold&amp; <parameter>value</parameter></paramdef><paramdef>const ThresholdOp&amp; <parameter>option</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::defineUserIdentifier</title>
@@ -7227,6 +7213,32 @@
           </tbody>
         </tgroup>
       </informaltable>
+      <para xml:id="ListThreshold"><emphasis role="bold">Class IMS::ListThreshold Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>Threshold</para></entry>
+              <entry><para>List of <link linkend="Threshold">Threshold</link></para></entry>
+              <entry><para>TO DO</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="Metric"><emphasis role="bold">Class IMS::Metric Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -7347,6 +7359,42 @@
               <entry><para>diskSpace</para></entry>
               <entry><para>long</para></entry>
               <entry><para>Amount of disk space available on the machine (in Bytes)</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Threshold"><emphasis role="bold">Class IMS::Threshold Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>value</para></entry>
+              <entry><para>double</para></entry>
+              <entry><para>The value of the threshold</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The machine ID the threshold is available</para></entry>
+            </row>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+              <entry><para>The type of the threshold</para></entry>
             </row>
           </tbody>
         </tgroup>

@@ -58,14 +58,20 @@
         </revision>
         <revision>
         <revnumber>4</revnumber>
-        <date>08/04/2011</date>
+        <date>15/04/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>
-	    IMS update :
-	    Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
-	    Add services stop and getSystemInfo
-	  </para>
+            Updates for TMS:
+            Modified description of machineId parameter, vishnu_submit_job service. Modified name of get_all_jobs_output to get_completed_jobs_output. Added input
+            parameter outDir to get_job_output and get_completed_jobs_output. Added vishnu_get_machine_refresh_period service. Removed
+            set_machine_env service. Removed jobPriority option in submit_job.
+          </para>
+          <para>
+            Updates for IMS:
+            Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
+            Add services stop and getSystemInfo.
+          </para>
         </revdescription>
         </revision>
       </revhistory>

@@ -1,31 +1,41 @@
 /**
-* \file TMSServer.cpp
+* \file ServerTMS.cpp
 * \brief This file presents the implementation of the TMS server.
 * \author Daouda Traore (daouda.traore@sysfera.com)
 * \date April
 */
 
-#include "TMSServer.hpp"
+#include "ServerTMS.hpp"
 #include "internalTMSAPI.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 
-TMSServer *TMSServer::minstance = NULL;
-BatchType TMSServer::mbatchType = UNDEFINED;
-std::string TMSServer::mmachineId = "";
-Database *TMSServer::mdatabaseVishnu = NULL;
+ServerTMS *ServerTMS::minstance = NULL;
+BatchType ServerTMS::mbatchType = UNDEFINED;
+std::string ServerTMS::mmachineId = "";
+Database *ServerTMS::mdatabaseVishnu = NULL;
 
 /**
  * \brief To get the unique instance of the server
  */
-TMSServer*
-TMSServer::getInstance() {
+ServerTMS*
+ServerTMS::getInstance() {
   if (minstance == NULL) {
-    minstance = new TMSServer();
+    minstance = new ServerTMS();
   }
   return minstance;
+}
+
+/**
+* \brief To get the vishnuId
+* \fn int getVishnuId()
+* \return the path of the configuration file
+*/
+int
+ServerTMS::getVishnuId() const {
+  return mvishnuId;
 }
 
 /**
@@ -33,7 +43,7 @@ TMSServer::getInstance() {
   * \return the id of the underlying batch scheduler
   */
 BatchType
-TMSServer::getBatchType()  {
+ServerTMS::getBatchType()  {
   return mbatchType;
 }
 
@@ -42,15 +52,15 @@ TMSServer::getBatchType()  {
   * \return the machine id
   */
 std::string
-TMSServer::getMachineId() {
+ServerTMS::getMachineId() {
   return mmachineId;
 }
 
 /**
 * \brief Constructor (private)
-* \fn TMSServer()
+* \fn ServerTMS()
 */
-TMSServer::TMSServer() : mprofile(NULL) {
+ServerTMS::ServerTMS() : mprofile(NULL) {
 }
 
 /**
@@ -61,7 +71,7 @@ TMSServer::TMSServer() : mprofile(NULL) {
  * \param batchType the type of batch scheduler
  */
 int
-TMSServer::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType)
+ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType)
 {
 
   //initialization of the batchType
@@ -78,6 +88,10 @@ TMSServer::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
 
    try {
     mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+ 
+    //initialization of vishnuId
+    mvishnuId = vishnuId;
+  
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
@@ -130,9 +144,9 @@ TMSServer::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
 }
 
 /**
-* \fn ~TMSServer()
+* \fn ~ServerTMS()
 * \brief Destructor, raises an exception on error
 */
-TMSServer::~TMSServer() {
+ServerTMS::~ServerTMS() {
 
 }
