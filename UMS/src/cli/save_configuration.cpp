@@ -108,6 +108,14 @@ int main (int ac, char* av[]){
 
     errorUsage(av[0], msg,EXECERROR);
 
+    //check the bad session key
+    
+    if (checkBadSessionKeyError(e)){
+
+      removeBadSessionKeyFromFile(getppid());
+    }
+
+
     return e.getMsgI() ;
 
   }

@@ -109,8 +109,22 @@ deleter(char* dietConfig,int ac,char* av[]){
 
                 }
 
-                close (session.getSessionKey()); // and need to be closed
+                try{
 
+                close (session.getSessionKey()); // and need to be closed
+               
+                }
+                catch(VishnuException & e ){// if the close command fails
+                 
+                  if (false==checkBadSessionKeyError(e)){// check if we need to stop the daemon
+                    
+                     syslog(LOG_ERR, "The file is corrupted");
+                    
+                     exit(e.getMsgI());
+
+                  }
+
+                }
                 vishnuFinalize();
               }
 

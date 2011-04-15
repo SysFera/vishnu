@@ -12,7 +12,7 @@
 
 #include "cliUtil.hpp"
 #include "common.hpp"
-
+#include "sessionUtils.hpp"
 //Boost Headers
 #include <boost/function.hpp>
 

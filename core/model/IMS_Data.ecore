@@ -191,7 +191,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListThreshold" instanceTypeName="ListThreshold">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Threshold" upperBound="-1"
-        eType="#//Threshold">
+        eType="#//Threshold" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="The list of the thresholds"/>
       </eAnnotations>
@@ -234,7 +234,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListSysInfo" instanceTypeName="ListSysInfo">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sysInfo" upperBound="-1"
-        eType="#//SystemInfo">
+        eType="#//SystemInfo" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="The set of system info"/>
       </eAnnotations>
