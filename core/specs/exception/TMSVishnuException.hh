@@ -6,14 +6,17 @@
 #ifndef __TMSVISHNUEXCEPTION__
 #define __TMSVISHNUEXCEPTION__
 
-#include "SystemException.hh"
+#include "UserException.hpp"
 
-static const int TNBERR = 5;
+// Definitions of TMS specific error codes
 
-class TMSVishnuException: public SystemException{
-private :
-protected:
-public:
+
+
+
+
+class TMSVishnuException: public UserException{
+
+  public:
   /**
    * \brief Default constructor
    * \fn TMSVishnuException()
@@ -23,17 +26,25 @@ public:
    * \brief Copy constructor
    * \fn UMSVishnuException()
    */
-  TMSVishnuException(TMSVishnuException& e);
+  TMSVishnuException(const TMSVishnuException& e);
   /**
    * \brief Constructor
    * \fn UMSVishnuException()
    */
-  TMSVishnuException(int msg, std::string msgComp);
+  TMSVishnuException(int msg, std::string msgComp= "");
   /**
    * \brief Default constructor
    * \fn ~TMSVishnuException()
    */
   ~TMSVishnuException() throw (){};
+  
+  /**
+   * \brief Function to initialize all UMS generic messages
+   * \fn void initMsg()
+   */
+  void
+  initMsg();
+
   
 };
 
