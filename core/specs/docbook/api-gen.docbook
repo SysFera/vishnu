@@ -89,7 +89,7 @@
             parameters (jobId and jobPath replaced by jobInfo). Modified name of getAllJobsOutput to getCompletedJobsOutput. Added input
             parameter outDir to getJobOutput and getCompletedJobsOutput. Modified output parameter of getCompletedJobsOutput. Added
             service getMachineRefreshPeriod. Removed function setMachineEnv. Removed JobPriority attribute in submitOptions class.
-            Removed Not_submitted status value of Job class. Updated error messages and codes.
+            Removed Not_submitted status value of Job class. Modified values of JobStatus Enum. Updated error messages and codes.
           </para><para>Updates to IMS :
             Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
             Add services stop and getSystemInfo.
@@ -484,19 +484,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -613,19 +613,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -736,19 +736,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -859,19 +859,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -974,19 +974,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1074,19 +1074,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1180,19 +1180,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1302,19 +1302,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1428,19 +1428,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1543,19 +1543,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1657,19 +1657,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1760,19 +1760,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1863,19 +1863,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -1978,19 +1978,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2093,19 +2093,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2204,19 +2204,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2318,19 +2318,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2432,19 +2432,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2546,19 +2546,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2668,19 +2668,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2782,19 +2782,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -2900,19 +2900,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -3011,19 +3011,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -3122,19 +3122,19 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Internal Error: Database returned an error</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Internal Error: Database connection failure</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Internal Error: System call failure</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -3210,7 +3210,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -3251,7 +3251,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Internal Error: SysDS service failure</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -4220,6 +4220,26 @@
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
                 <entry><para>Indicates that the batch scheduler type is not known</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4325,6 +4345,26 @@
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4417,6 +4457,26 @@
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4515,6 +4575,26 @@
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4620,6 +4700,26 @@
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4733,6 +4833,26 @@
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4838,6 +4958,26 @@
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4936,6 +5076,26 @@
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -5018,6 +5178,30 @@
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -5099,6 +5283,30 @@
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
                 <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5766,36 +5974,28 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>NOT_SUBMITTED</para></entry>
-              <entry><para>-1</para></entry>
-            </row>
-            <row>
-              <entry><para>RUNNING</para></entry>
+              <entry><para>SUBMITTED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>WAITING</para></entry>
+              <entry><para>QUEUED</para></entry>
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>COMPLETED</para></entry>
+              <entry><para>WAITING</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>CANCELED</para></entry>
+              <entry><para>RUNNING</para></entry>
               <entry><para>3</para></entry>
             </row>
             <row>
-              <entry><para>HELD</para></entry>
+              <entry><para>TERMINATED</para></entry>
               <entry><para>4</para></entry>
             </row>
             <row>
-              <entry><para>QUEUED</para></entry>
+              <entry><para>CANCELLED</para></entry>
               <entry><para>5</para></entry>
-            </row>
-            <row>
-              <entry><para>FAILED</para></entry>
-              <entry><para>6</para></entry>
             </row>
           </tbody>
         </tgroup>

@@ -71,7 +71,7 @@
             parameters (jobId and jobPath replaced by jobInfo). Modified name of getAllJobsOutput to getCompletedJobsOutput. Added input
             parameter outDir to getJobOutput and getCompletedJobsOutput. Modified output parameter of getCompletedJobsOutput. Added
             service getMachineRefreshPeriod. Removed function setMachineEnv. Removed JobPriority attribute in submitOptions class.
-            Removed Not_submitted status value of Job class. Updated error messages and codes.
+            Removed Not_submitted status value of Job class. Modified values of JobStatus Enum. Updated error messages and codes.
           </para>
           <para>Updates to IMS :
             Add option in exportCommand, getMetricCurrentValue, getProcesses, getMetricHistory, restart and getSystemThreshold.
