@@ -42,8 +42,8 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
 int LLServer::cancel(const char* jobId) { 
 
   std::ostringstream cmd;
-  //std::string  cancelCommand="llcancel"; //The correct value
-  std::string  cancelCommand="ssh bg llcancel";// pour des tests sur la machine blue aux Etats-Unis
+  std::string  cancelCommand="llcancel"; //The correct value
+  //std::string  cancelCommand="ssh bg llcancel";// pour des tests sur la machine blue aux Etats-Unis
   
   cmd << cancelCommand << " " << jobId;
   if(system((cmd.str()).c_str())) { //A remplacer par excec
