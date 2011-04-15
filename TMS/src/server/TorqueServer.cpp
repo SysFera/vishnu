@@ -79,12 +79,12 @@ int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& 
 
     if (errmsg != NULL)
     {
-      submit_error << "pbs_submit: " << errmsg << std::endl;
+      submit_error << "TORQUE ERROR: pbs_submit: " << errmsg << std::endl;
 
     }
     else
     {
-      submit_error << "pbs_submit: Error (" << pbs_errno << "-";
+      submit_error << "TORQUE ERROR: pbs_submit: Error (" << pbs_errno << "-";
       submit_error << pbs_strerror(pbs_errno) << std::endl;
     }
     pbs_disconnect(connect);
@@ -164,7 +164,7 @@ int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLoca
     if (get_server(tmsJobId, tmsJobIdOut, serverOut))
     {
       std::ostringstream jobIdError;
-      jobIdError << "pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
+      jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
     }
   }
@@ -184,10 +184,7 @@ int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLoca
     connect_error << "TORQUE ERROR: cannot connect to server ";
     connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbs_strerror(pbs_errno) << std::endl;
 
-    //rt_job_err("qdel", connect, tmsJobIdOut);
-    
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
-
   }
 
   pbs_errno = 0;
@@ -195,9 +192,14 @@ int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLoca
 
   std::ostringstream pbs_del_error;
   if (stat && (pbs_errno != PBSE_UNKJOBID)) {
-       pbs_del_error << "vishnu_cancel: " << connect << tmsJobIdOut << std::endl;
-       TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, pbs_del_error.str());
-       pbs_disconnect(connect);
+    char* errmsg = pbs_geterrmsg(connect);
+    if(errmsg!=NULL) {
+       pbs_del_error <<  "TORQUE ERROR: pbs_deljob: " << errmsg  << " " << tmsJobIdOut << std::endl;
+    } else {
+       pbs_del_error <<  "TORQUE ERROR: pbs_deljob: Server returned error " << pbs_errno << " for job " << tmsJobIdOut << std::endl;
+    }
+    pbs_disconnect(connect);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, pbs_del_error.str());
   } else if (stat && (pbs_errno == PBSE_UNKJOBID) && isLocal ) {
     if (locate_job(tmsJobIdOut, serverOut, remoteServer)) { 
       pbs_disconnect(connect);
