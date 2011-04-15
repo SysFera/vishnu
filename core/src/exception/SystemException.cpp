@@ -9,7 +9,7 @@ SystemException::SystemException(int msg, std::string msgComp):VishnuException(m
 
 std::string
 SystemException::getTypeS() const{
- 
+
   std::string errorTypeStr;
 
   switch (mtype){
@@ -35,14 +35,14 @@ SystemException::getTypeS() const{
   return errorTypeStr;
 }
 
-void 
+void
 SystemException::initMsg(){
-  mp.insert(std::pair<int, std::string>(ERRCODE_DIET, std::string("Internal Error: SysDS service failure")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Internal Error: Database returned an error")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Internal Error: Database connection failure")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Internal Error: System call failure")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Internal Error: Invalid component")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Internal Error: Invalid mapper")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DIET, std::string("Vishnu not available (Service bus failure)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Vishnu not available (Database error)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Vishnu not available (Database connection)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Vishnu not available (System)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Vishnu not available (Component)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Vishnu not available (Mapper)")));
 }
 
 std::string
