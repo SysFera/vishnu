@@ -17,10 +17,10 @@ LLServer::LLServer():BatchServer() {
 
 int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
 
-  /*LL_job llJobInfo;
+  LL_job llJobInfo;
   //options // TODO: A prendre en compte
   if(llsubmit(const_cast<char*>(scriptPath), NULL, NULL, &llJobInfo, LL_JOB_VERSION)) {
-    return -1 ;//TODO: A remplacer par l'envoie d'une exception
+    return -1 ;//error messages are written to stderr, VISHNU redirects these messages into a file
   };
 
   std::ostringstream llJobId;
@@ -31,10 +31,11 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   job.setJobId(llJobId.str());
 
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
-  return 0;*/
   
-  /**Test sur la machine distante blue gene*/
-  return remove_test(job);
+  return 0;
+  
+  /**Test sur la machine distante blue gene aux Etats-Unis*/
+  //return remove_test(job);
 
 }
 
@@ -42,7 +43,7 @@ int LLServer::cancel(const char* jobId) {
 
   std::ostringstream cmd;
   //std::string  cancelCommand="llcancel"; //The correct value
-  std::string  cancelCommand="ssh bg llcancel";
+  std::string  cancelCommand="ssh bg llcancel";// pour des tests sur la machine blue aux Etats-Unis
   
   cmd << cancelCommand << " " << jobId;
   if(system((cmd.str()).c_str())) { //A remplacer par excec
