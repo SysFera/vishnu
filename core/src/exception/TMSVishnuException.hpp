@@ -12,8 +12,7 @@
 static const int ERRCODE_UNKNOWN_BATCH_SCHEDULER = 101;
 static const int ERRCODE_BATCH_SCHEDULER_ERROR = 102;
 static const int ERRCODE_UNKNOWN_JOBID = 103;
-static const int ERRCODE_CANT_CANCEL = 104;
-static const int ERRCODE_TMS_NOT_ADMIN = 105;
+static const int ERRCODE_PERMISSION_DENIED = 104;
 
 
 
@@ -41,7 +40,7 @@ class TMSVishnuException: public UserException{
    * \fn ~TMSVishnuException()
    */
   ~TMSVishnuException() throw (){};
-  
+
   /**
    * \brief Function to initialize all UMS generic messages
    * \fn void initMsg()
@@ -49,7 +48,7 @@ class TMSVishnuException: public UserException{
   void
   initMsg();
 
-  
+
 };
 
 #endif // TMSVishnuException
