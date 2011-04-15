@@ -107,6 +107,4 @@ displayQueue(Queue& j){
 void
 displaySubmit(TMS_Data::Job job){
   cout << "Job Id     : " << job.getJobId() << endl;
-  cout << " Session Id: " << job.getSessionId() << endl;
-  cout << " Machine Id: " << job.getSubmitMachineId() << endl;
 }
