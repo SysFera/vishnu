@@ -283,14 +283,12 @@
     <eLiterals name="VERY_HIGH" value="500"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobStatus" instanceTypeName="JobStatus">
-    <eLiterals name="NOT_SUBMITTED" value="-1"/>
-    <eLiterals name="RUNNING"/>
-    <eLiterals name="WAITING" value="1"/>
-    <eLiterals name="COMPLETED" value="2"/>
-    <eLiterals name="CANCELED" value="3"/>
-    <eLiterals name="HELD" value="4"/>
-    <eLiterals name="QUEUED" value="5"/>
-    <eLiterals name="FAILED" value="6"/>
+    <eLiterals name="SUBMITTED" literal="SUBMITTED"/>
+    <eLiterals name="QUEUED" value="1"/>
+    <eLiterals name="WAITING" value="2"/>
+    <eLiterals name="RUNNING" value="3"/>
+    <eLiterals name="TERMINATED" value="4" literal="TERMINATED"/>
+    <eLiterals name="CANCELLED" value="5" literal="CANCELLED"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProgressOptions" instanceTypeName="ProgressOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">

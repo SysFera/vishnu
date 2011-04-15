@@ -37,11 +37,13 @@ include_directories(
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
+  ${CONFIG_SOURCE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${SED_SOURCE_DIR}
+  ${TMS_SED_SOURCE_DIR}
   ${TMS_UTILS_DIR}
   ${SERVER_SOURCE_DIR}
   ${USED_BATCH_INCLUDE_DIR}
@@ -65,6 +67,7 @@ target_link_libraries(tms-server
   database-vishnu
   exception-vishnu
   register-vishnu
+  config-vishnu
   ums-server
   utils-vishnu
   utils-server
