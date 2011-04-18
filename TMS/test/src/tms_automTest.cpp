@@ -6,14 +6,14 @@
 #include "TMS_Data.hpp"
 #include "TMS_Data_forward.hpp"
 #include <iostream>
-#include "fixtures.hpp"
+#include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
 using namespace std;
 using namespace UMS_Data;
 using namespace TMS_Data;
 using namespace vishnu;
 
-BOOST_GLOBAL_FIXTURE(VishnuConfigure)
+BOOST_GLOBAL_FIXTURE(UMSFixture)
 
 //Test category 1
 
@@ -27,9 +27,9 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 {
 
   BOOST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" );
-  
-  
-  VishnuConnexion vc("root","vishnu_user"); 
+
+
+  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
 
@@ -60,8 +60,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 {
 
   BOOST_MESSAGE(" Testing bad session Key for job submission (use case T1.1)" );
-  
-  VishnuConnexion vc("root","vishnu_user"); 
+
+  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
   string sessionKey="bad session key";
@@ -171,9 +171,9 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 {
 
   BOOST_MESSAGE(" Testing normal job cancelling corresponding to use case T2.1" );
-  
-  
-  VishnuConnexion vc("root","vishnu_user"); 
+
+
+  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
 
@@ -195,7 +195,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
   BOOST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
   // now let cancel the job
- 
+
 // setting cancel job parameters
 
 
@@ -211,8 +211,8 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 {
 
   BOOST_MESSAGE(" Testing bad session Key for job cancelling (use case T2.1)" );
-  
-  VishnuConnexion vc("root","vishnu_user"); 
+
+  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
   string sessionKey=vc.getConnexion();
@@ -330,8 +330,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_userId)
   // setting cancel job parameters
 
 
-  // get another connexion for another user 
-  
+  // get another connexion for another user
+
   VishnuConnexion vc("U_1","vishnu_user");
 
     // get the session key and the machine identifier
