@@ -102,7 +102,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   if(listJobs_ptr != NULL) {
     jobInfos = listJobs_ptr->getJobs().get(0);
   }
-  delete listJobs_ptr;
   return 0;
 }
 
@@ -140,7 +139,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       listOfJobs.getJobs().push_back(job);
     }
   }
-  delete listJobs_ptr;
   return 0;
 }
 
@@ -177,7 +175,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       listOfProgress.getProgress().push_back(progression);
     }
   }
-  delete listProgression_ptr;
   return 0;
 }
 
@@ -207,7 +204,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       listofQueues.getQueues().push_back(queue);
     }
   }
-  delete listQueues_ptr;
   return 0;
 }
 
@@ -306,6 +302,5 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       listOfResults.getResults().push_back(jobResult);
     }
   }
-  delete listJobResults_ptr;
   return 0;
 }

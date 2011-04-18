@@ -32,6 +32,7 @@
 #include "ServerTMS.hpp"
 #include "SSHJobExec.hpp"
 #include "JobServer.hpp"
+#include "ListQueuesServer.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 
@@ -43,7 +44,7 @@ using namespace vishnu;
  */
 /* submitJob */
 int
-solve_submitJob(diet_profile_t* pb)
+solveSubmitJob(diet_profile_t* pb)
 {
 
   char* sessionKey = NULL;
@@ -108,7 +109,7 @@ solve_submitJob(diet_profile_t* pb)
 
 /* cancelJob */
 int
-solve_cancelJob(diet_profile_t* pb)
+solveCancelJob(diet_profile_t* pb)
 {
 
   char* sessionKey = NULL;
@@ -153,3 +154,54 @@ solve_cancelJob(diet_profile_t* pb)
   cout << " done" << endl;
   return 0;
 }
+
+/*
+ * SOLVE FUNCTIONS
+ */
+/* listQueues */
+int
+solveListOfQueues(diet_profile_t* pb) {
+
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  std::string empty("");
+  std::string errorInfo ="";
+  std::string listQueuesSerialized = "From TestServer";
+
+  cout << "Solve ListQueues " << endl;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  cout << "************machineId=" << machineId << " ..." << endl;
+
+  std::cout << "Cancel: The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
+  std::cout << "Cancel: The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  TMS_Data::ListQueues_ptr listQueues = NULL;
+
+  ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getBatchType());
+
+  try {
+
+    listQueues = queryQueues.list();
+
+    const char* name = "listQueues";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listQueuesSerialized =  _ser.serialize(listQueues);
+
+    diet_string_set(diet_parameter(pb,2), strdup(listQueuesSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+
+  } catch (VishnuException& e) {
+    errorInfo =  e.buildExceptionString();
+    std::cout << "errorInfo=" << errorInfo << std::endl;
+    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+
+  cout << " done" << endl;
+  return 0;
+}
+

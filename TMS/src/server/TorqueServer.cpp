@@ -57,12 +57,12 @@ int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& 
   std::cerr << "******* connect = " << connect << std::endl;
   if (connect <= 0) {
     std::ostringstream connect_error;
-    connect_error << "TORQUE ERROR: cannot connect to server ";
+    connect_error << "TORQUE ERROR: pbs_submit: cannot connect to server ";
     connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbs_strerror(pbs_errno) << std::endl;
 
     if (getenv("PBSDEBUG") != NULL)
     {
-      connect_error << "TORQUE ERROR: pbs_server daemon may not be running on host";
+      connect_error << "TORQUE ERROR: pbs_submit: pbs_server daemon may not be running on host";
       connect_error << "or hostname in file '$TORQUEHOME/server_name' may be incorrect" << std::endl;
     }
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
@@ -376,19 +376,22 @@ TorqueServer::makeListJobOption(TMS_Data::ListJobsOptions op, struct attropl* at
 
 int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
 
+  if(state.compare("T")==0) {
+    return 0; //SUBMITTED
+  }
   if(state.compare("Q")==0) {
     return 1; //QUEUED
   }
-  if(state.compare("W")==0 || state.compare("H")==0) {
+  if(state.compare("W")==0 || state.compare("H")==0 || state.compare("S")==0) {
     return 2; //WAITING
   }
-  if(state.compare("R")==0) {
+  if(state.compare("R")==0 || state.compare("E")==0) {
     return 3; //RUNNING
   }
-  if(state.compare("E")==0) {
+  if(state.compare("C")==0) {
     return 4; //TERMINATED
   } else {
-    return 0;
+    return 4;
   }
   
 }
@@ -433,7 +436,6 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
     if(a->name!=NULL) {
       // Getting the value
       str = string(a->value);
-
       // Getting the attribute the value corresponds to
       if(!strcmp(a->name, ATTR_name)){ // job name
         name = str;
@@ -500,57 +502,75 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
     }// end if name != null
   } // end while
   // TODO :
-  // JOBPATH ?
-  // SUBMITMACHINEID ?
-  // SESSIONID ?
-  // SCRIPCONTENT ?
   // WORKING DIR ?
   // DESCRIPTION ?
-  //
-  // READ FROM DATABASE BUT IN A HIGHER LEVEL
-  //
 
   // Creating job
   job.setJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);
   //      job.setJobId(timeu); ? timeu ? TODO
-  if (state.compare("")!=0)
+  if (state.compare("")!=0) {
     job.setStatus(convertTorqueStateToVishnuState(state));
-  else
+  } else {
     job.setStatus(0);
+  }
+
   job.setJobQueue(location);
   job.setOutputPath(output);
   job.setErrorPath(error);
-  if (prio.compare("")!=0)
+
+  if (prio.compare("")!=0) {
     job.setJobPrio(atoi(prio.c_str()));
-  else
+  } else {
     job.setJobPrio(0);
-  if (ncpus.compare("")!=0)
-    job.setNbCpus(atoi(ncpus.c_str()));
-  else
+  }
+
+  if (ncpus.compare("")!=0) {
+    std::ostringstream os_ncpus;
+    os_ncpus << ncpus.c_str();
+    job.setNbCpus(vishnu::convertToInt(ncpus.c_str()));
+  } else {
     job.setNbCpus(0);
-  if (qtime.compare("")!=0)
-    job.setSubmitDate(atol(qtime.c_str()));
-  else
+  }
+
+  if (qtime.compare("")!=0) {
+    std::istringstream isQtime(qtime.c_str()); 
+    long lQtime;
+    isQtime >> lQtime;
+    job.setSubmitDate(lQtime);
+  } else {
     job.setSubmitDate(0);
+  }
+
   job.setGroupName(group);
-  if (etime.compare("")!=0)
-    job.setEndDate(atol(etime.c_str()));
-  else
+
+  if (etime.compare("")!=0) {
+    std::istringstream isEtime;
+    long lEtime;
+    isEtime >> lEtime;
+    job.setEndDate(lEtime);
+  } else {
     job.setEndDate(0);
-  if (wall.compare("")!=0)
+  }
+
+  if (wall.compare("")!=0) {
     job.setWallClockLimit(vishnu::convertStringToWallTime(std::string(wall.c_str())));
-  else
+  } else {
     job.setWallClockLimit(0);
-  if (mem.compare("")!=0)
+  }
+
+  if (mem.compare("")!=0) {
     job.setMemLimit(atoi(mem.c_str()));
-  else
+  } else {
     job.setMemLimit(0);
-  if (node.compare("")!=0)
-    job.setNbNodes(atoi(node.c_str()));
-  else
+  }
+
+  if (node.compare("")!=0) {
+    job.setNbNodes(vishnu::convertToInt(node.c_str()));
+  } else {
     job.setNbNodes(0);
+  }
   // TODO uncomment once api corrected
   //
   //    job.setNbNodesAndCpuPerNode(nodeAndCpu);
@@ -752,4 +772,135 @@ TorqueServer::getJobInfo(string job){
   fillJobInfo(*mjob, p);
 
   return mjob;
+}
+
+
+TMS_Data::ListQueues*
+TorqueServer::listQueues() { 
+
+  int connect;
+  std::string errorMsg;
+
+  // Connect to the torque server
+  connect = cnt2server(serverOut);
+
+  if (connect <= 0)
+  {
+    errorMsg = "TORQUE: pbs_statque: cannot connect to server ";
+
+    if (getenv("PBSDEBUG") != NULL)
+    {
+      errorMsg.append("TORQUE: pbs_statque: pbs_server daemon may not be running on host");
+      errorMsg.append(" or hostname in file '$TORQUEHOME/server_name' may be incorrect\n");
+    }
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
+  }
+
+  struct batch_status *p_status = pbs_statque(connect, NULL, NULL, NULL);
+
+  if(p_status==NULL)
+  {
+    char* errmsg = pbs_geterrmsg(connect);
+    if(errmsg!=NULL)
+    {
+      errorMsg = "TORQUE: pbs_statque: ";
+      errorMsg.append(std::string(errmsg));
+    }
+    else {
+      errorMsg = "TORQUE: pbs_statque: getting status of server\n";
+    }
+
+    pbs_disconnect(connect);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
+  }
+
+  pbs_disconnect(connect);
+
+  int nbqueue = 0;
+  int nbRunningJobs = 0; 
+  int nbJobsInQueue = 0;
+  int tot_nbRunningJobs  = 0;
+  int tot_nbJobsInQueue  = 0;
+  struct batch_status *p;
+  struct attrl *a;
+
+
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mlistQueues = ecoreFactory->createListQueues();
+
+  for(p = p_status; p!=NULL; p = p->next)
+  {
+    TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+    queue->setName(std::string(p->name));
+    queue->setWallTime(0);
+    queue->setMemory(-1);
+    queue->setNode(0);
+    queue->setNbRunningJobs(0);
+    queue->setNbJobsInQueue(0);
+
+    a = p->attribs;
+    while(a!=NULL)
+    {
+
+      if(a->name!=NULL) {
+        if(!strcmp(a->name, ATTR_start)) {
+          if(*a->value == 'T') {
+            queue->setState(3); //RUNNING = 'R';
+          } else {
+            queue->setState(0); // STARTED = 'S';
+          }
+        }  else if(!strcmp(a->name, ATTR_count)) { 
+          //std::cout << "a->value=" << a->value << std::endl;
+          // a->value=Transit:X Queued:X Held:X Waiting:W Running:X Exiting:X            
+          std::string str = std::string(a->value);
+          size_t found = 0;
+          nbJobsInQueue = 0;
+          nbRunningJobs = 0;
+          //Queued
+          found = str.find(':');
+          str = str.substr(str.find(':', found+1)+1);
+          nbJobsInQueue += vishnu::convertToInt(str.substr(0, str.find(' ')));
+
+          //Held
+          found = str.find(':');
+          str = str.substr(found+1);
+          nbJobsInQueue += vishnu::convertToInt(str.substr(0, str.find(' '))); 
+
+          //Waiting
+          found = str.find(':');
+          str = str.substr(found+1);
+          nbJobsInQueue += vishnu::convertToInt(str.substr(0, str.find(' ')));
+
+          //Running
+          found = str.find(':');
+          str = str.substr(found+1);
+          nbRunningJobs += vishnu::convertToInt(str.substr(0, str.find(' '))); 
+          
+          queue->setNbJobsInQueue(nbJobsInQueue);
+          queue->setNbRunningJobs(nbRunningJobs);
+        } else if(!strcmp(a->name, ATTR_rescmax)){
+          if(!strcmp(a->resource, "mem")) {
+            std::string walltime = std::string(a->value);
+
+            size_t pos = walltime.find_first_not_of("0123456789");
+            if(pos!=std::string::npos) {
+              walltime = walltime.substr(0, pos);
+            } 
+            //A Verifier : si la taille de la memoire est en byte?
+            queue->setMemory(vishnu::convertToInt(walltime));  
+          }
+          if(!strcmp(a->resource, "walltime")){
+            queue->setWallTime(vishnu::convertStringToWallTime(std::string(a->value)));      
+          } else if(!strcmp(a->resource, "nodect")) {
+            queue->setNode(vishnu::convertToInt(std::string(a->value)));
+          }
+        }
+        a = a->next;
+      }
+    }
+    // Adding created job to the list
+    mlistQueues->getQueues().push_back(queue);
+  }
+  mlistQueues->setNbQueues(mlistQueues->getQueues().size());
+  return mlistQueues;
 }
