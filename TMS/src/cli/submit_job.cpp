@@ -123,7 +123,7 @@ int main (int argc, char* argv[]){
 					      fmemory, fnbCpu, fnbNodeAndCpu,
 					      foutput, ferr, dietConfig);
 
-  opt->add("machineId,m",
+  opt->add("machineId,i",
 	   "represents the id of the machine",
 	   HIDDEN,
 	   machineId,1);
@@ -170,6 +170,7 @@ int main (int argc, char* argv[]){
       submitJob(sessionKey, machineId, scriptPath, job, subOp);
     }
     displaySubmit(job);
+    displayJob(job); //temporary
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);

@@ -44,11 +44,6 @@
         <details key="content" value="Is the path to the file containing errors occured during job's execution. "/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scriptContent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="Is the content of the file containing the job characteristics."/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobPrio" eType="#//JobPriority"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">

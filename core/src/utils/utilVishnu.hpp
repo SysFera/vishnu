@@ -120,5 +120,26 @@ namespace vishnu {
    */
   int
   copyDagdaFile(std::string src, std::string dest);
+
+  /**
+   * \brief Function to check a numerical value 
+   * \param value The value to check 
+   * \return raises an exception on error 
+   */
+  bool isNumericalValue(const std::string value);
+
+  /**
+   * \brief Function a given walltime into string 
+   * \param walltime The walltime to convert
+   * \return the walltime converted to string 
+   */
+   std::string convertWallTimeToString(const long& walltime);
+
+   /**
+    * \brief Function a given walltime into seconds 
+    * \param walltime The walltime to convert
+    * \return the walltime converted to seconds 
+    */
+   long convertStringToWallTime(const std::string& walltime);
 }
 #endif // _UTILVISHNU_H_

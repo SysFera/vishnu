@@ -41,6 +41,10 @@ target_link_libraries(tmsSlave
   tms-server
 )
 
+install_targets(/sbin/
+  tmsSlave
+)
+
 install_targets(/tmp
  tmsSlave 
 )

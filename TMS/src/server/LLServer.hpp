@@ -2,10 +2,6 @@
 #define TMS_LL_SERVER_H
 
 #include <string>
-#include <vector>
-#include <list>
-#include <iostream>
-#include <assert.h>
 
 #include "BatchServer.hpp"
 
@@ -43,6 +39,10 @@ public:
 
 private:
   int remove_test(TMS_Data::Job& job);
+
+  int insertOptionLine(const std::string& optionLineToInsert, std::string& content);
+
+  int processOptions(const char* scriptPath, const TMS_Data::SubmitOptions& options);
 
   /**
    * \brief To list the jobs on the torque batch
