@@ -9,8 +9,18 @@ class TorqueServer : public BatchServer
   public:
 
   TorqueServer();
-  int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp=NULL);
-  int cancel(const char* jobId) ;
+  int 
+  submit(const char* scriptPath, 
+         const TMS_Data::SubmitOptions& options, 
+         TMS_Data::Job& job, 
+         char** envp=NULL);
+
+  int 
+  cancel(const char* jobId) ;
+ 
+  TMS_Data::ListQueues*
+  listQueues(); 
+ 
   TMS_Data::Job 
   getJob() { };
 
@@ -25,9 +35,6 @@ class TorqueServer : public BatchServer
 
   TMS_Data::JobResult 
   getJobResults() { };
-
-  TMS_Data::ListQueues* 
-  listQueues() { };
 
   TMS_Data::ListJobResults* 
   getAllJobsResults() { };
@@ -114,6 +121,10 @@ class TorqueServer : public BatchServer
    * \brief Job returned
    */
   TMS_Data::Job_ptr mjob;
+  /**
+   * \brief Job returned
+   */
+  TMS_Data::ListQueues_ptr mlistQueues; 
   /**
    * Server to connect
    */

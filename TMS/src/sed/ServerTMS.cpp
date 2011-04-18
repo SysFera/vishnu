@@ -124,7 +124,7 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solve_submitJob)) {
+  if (diet_service_table_add(mprofile, NULL, solveSubmitJob)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);
@@ -135,11 +135,21 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
   diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solve_cancelJob)) {
+  if (diet_service_table_add(mprofile, NULL, solveCancelJob)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);
 
+  /* listOfQueues */
+  mprofile = diet_profile_desc_alloc((SERVICES[2]+std::string(machineId)).c_str(), 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveListOfQueues)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
   return 0;
 }
 
