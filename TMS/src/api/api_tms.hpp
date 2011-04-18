@@ -20,6 +20,8 @@
 #include "QueryProxy.hpp"
 #include "UtilsProxy.hpp"
 #include "UserException.hpp"
+#include "UMSVishnuException.hpp"
+#include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include "utilsTMSClient.hpp"
 
@@ -47,7 +49,7 @@ namespace vishnu {
             const std::string& scriptFilePath,
             Job& jobInfo,
             const SubmitOptions& options)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The cancelJob function cancels a job from its id
@@ -62,7 +64,7 @@ namespace vishnu {
   cancelJob(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& jobId)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The getJobInfo function gets information on a job from its id
@@ -78,7 +80,7 @@ namespace vishnu {
              const std::string& machineId,
              const std::string& jobId,
              Job_ptr& jobInfos)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The listJobs function gets a list of all submitted jobs
@@ -94,7 +96,7 @@ namespace vishnu {
            const std::string& machineId,
            ListJobs& listOfJobs,
            const ListJobsOptions& options)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The getJobProgress function gets the progression status of jobs
@@ -110,7 +112,7 @@ namespace vishnu {
                  const std::string& machineId,
                  ListProgression& listOfProgress,
                  const ProgressOptions& options)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The listQueues function gets queues information
@@ -124,7 +126,7 @@ namespace vishnu {
   listQueues(const std::string& sessionKey,
              const std::string& machineId,
              ListQueues& listofQueues)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The setMachineRefreshPeriod function sets the refresh period of output and error files contents
@@ -138,7 +140,7 @@ namespace vishnu {
   setMachineRefreshPeriod(const std::string& sessionKey,
                           const std::string& machineId,
                           const int& value)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The getMachineRefreshPeriod function gets the refresh period of output and error files contents
@@ -153,7 +155,7 @@ namespace vishnu {
                           const std::string& machineId,
                           int& value
                          )
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
@@ -170,7 +172,7 @@ namespace vishnu {
                const std::string& machineId,
                const std::string& jobId,
                JobResult_ptr& outputInfos)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
   * \brief The getAllJobsOutput function dynamically gets outputPath and errorPath of completed jobs
@@ -184,7 +186,7 @@ namespace vishnu {
   getAllJobsOutput(const std::string& sessionKey,
                    const std::string& machineId,
                    ListJobResults& listOfResults)
-  throw(UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 }//END namespace vishnu
 

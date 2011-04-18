@@ -116,7 +116,6 @@ vishnu::get_file_content(const std::string& filePath){
   bfs::path file (filePath);
 
   // Check the existence of file
-
   if (((false==bfs::exists(file)) || (true==bfs::is_empty(file)))
     || (false==bfs::is_regular_file(file))) {
     throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
@@ -134,37 +133,35 @@ vishnu::get_file_content(const std::string& filePath){
 }
 
 /**
-* \brief Function to copy file from Dagda
-* \param src: the path of the file to copy
-* \param dest: the destination to copy file
+* \brief Function to move file
+* \param src: the path of the file to move
+* \param dest: the destination where the file will be moved
 * \return raises an exception on error
 */
 int
-vishnu::copyDagdaFile(std::string src, std::string dest) {
+vishnu::moveFile(std::string src, std::string dest) {
 
   bfs::path filePath(src);
   bfs::path fileDestPath(dest);
 
   try {
-    //If the destination does not exist, the file is created locally
+    //If the destination does not exist, the file is created in the current directory
     if(!bfs::exists(fileDestPath)) {
       bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
     }
     else {
       bfs::rename(filePath, bfs::path(fileDestPath / filePath.filename()));
     }
+  } catch (std::exception& e) {
+      throw UserException(ERRCODE_INVALID_PARAM, e.what());
   }
-  catch(std::exception& e) {
-    throw UserException(ERRCODE_INVALID_PARAM, e.what());
-  }
-
   return 0;
 }
 
 /**
- * \brief Function to check a numerical value 
- * \param value The value to check 
- * \return raises an exception on error 
+ * \brief Function to check a numerical value
+ * \param value The value to check
+ * \return raises an exception on error
  */
 bool vishnu::isNumericalValue(const std::string value) {
   bool ret = ((value.size()==0) || value.find_first_not_of("0123456789")==std::string::npos);
@@ -176,9 +173,9 @@ bool vishnu::isNumericalValue(const std::string value) {
 
 
 /**
- * \brief Function a given walltime into string 
+ * \brief Function a given walltime into string
  * \param walltime The walltime to convert
- * \return the walltime converted to string 
+ * \return the walltime converted to string
  */
 std::string vishnu::convertWallTimeToString(const long& walltime) {
 
@@ -221,9 +218,9 @@ std::string vishnu::convertWallTimeToString(const long& walltime) {
 }
 
 /**
- * \brief Function a given walltime into seconds 
+ * \brief Function a given walltime into seconds
  * \param walltime The walltime to convert
- * \return the walltime converted to seconds 
+ * \return the walltime converted to seconds
  */
 long vishnu::convertStringToWallTime(const std::string& walltime) {
 
@@ -232,7 +229,7 @@ long vishnu::convertStringToWallTime(const std::string& walltime) {
   int heure = 0;
   int jour = 0;
   std::string value;
-  size_t found; 
+  size_t found;
 
   size_t size = walltime.size();
   size_t pos = walltime.rfind(":");

@@ -24,7 +24,7 @@ vishnu::submitJob(const std::string& sessionKey,
           const std::string& scriptFilePath,
           Job& jobInfo,
           const SubmitOptions& options)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
 
@@ -54,7 +54,7 @@ int
 vishnu::cancelJob(const std::string& sessionKey,
           const std::string& machineId,
           const std::string& jobId)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
 
@@ -84,7 +84,7 @@ vishnu::getJobInfo(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& jobId,
             Job_ptr& jobInfos)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   std::string serviceName = "getListOfJobs_";
   serviceName.append(machineId);
@@ -120,7 +120,7 @@ vishnu::listJobs(const std::string& sessionKey,
           const std::string& machineId,
           ListJobs& listOfJobs,
           const ListJobsOptions& options)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   std::string serviceName = "getListOfJobs_";
   serviceName.append(machineId);
@@ -158,7 +158,7 @@ vishnu::getJobProgress(const std::string& sessionKey,
               const std::string& machineId,
               ListProgression& listOfProgress,
               const ProgressOptions& options)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   std::string serviceName = "getJobsProgression_";
   serviceName.append(machineId);
@@ -193,7 +193,7 @@ int
 vishnu::listQueues(const std::string& sessionKey,
             const std::string& machineId,
             ListQueues& listofQueues)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
@@ -224,7 +224,7 @@ int
 vishnu::setMachineRefreshPeriod(const std::string& sessionKey,
                         const std::string& machineId,
                         const int& value)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
@@ -245,7 +245,7 @@ int
 vishnu::getMachineRefreshPeriod(const std::string& sessionKey,
                                 const std::string& machineId,
                                 int& value)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
@@ -270,7 +270,7 @@ vishnu::getJobOutput(const std::string& sessionKey,
               const std::string& machineId,
               const std::string& jobId,
               JobResult_ptr& outputInfos)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
@@ -292,7 +292,7 @@ int
 vishnu::getAllJobsOutput(const std::string& sessionKey,
                   const std::string& machineId,
                   ListJobResults& listOfResults)
-throw(UserException, SystemException) {
+throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
