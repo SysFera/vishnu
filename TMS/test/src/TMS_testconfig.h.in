@@ -1,0 +1,11 @@
+// TMS_testconfig.h.in
+
+#ifndef _TMS_TESTCONFIG_H_IN_
+#define _TMS_TESTCONFIG_H_IN_
+
+#define TMSSQLPATH "@TMSSQL@"
+#define TMSSCRIPTSPATH "@TMSSCRIPTS"
+#define TMSSEDCONF "@TMSSEDCONF@"
+#define TMSSEDBINDIR "@TMSSEDBINDIR@"
+
+#endif /* _TMS_TESTCONFIG_H_IN_ */

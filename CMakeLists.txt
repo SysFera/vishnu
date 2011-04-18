@@ -151,10 +151,6 @@ set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 # for testing
 set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
 
-# FIXME to put inside TMS
-set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
-set (TEST_TMS_SQL "${TMS_TEST_DIR}")
-
 add_subdirectory(core/src)
 add_subdirectory(core/deps/emf4cpp)
 

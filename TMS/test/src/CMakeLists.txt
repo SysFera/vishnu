@@ -15,19 +15,35 @@ include_directories(
   ${DATA_BASE_INCLUDE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${PROJECT_BINARY_DIR}/include
-  ${TMS_TEST_DIR}
-  ${TMS_TEST_DIR}/../../process/
+  ${TESTVISHNU_SOURCE_DIR}
+  ${TESTVISHNU_SOURCE_DIR}/../third-party
   )
 
+set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
 file( TO_NATIVE_PATH ${TEST_CONFIG_TMS} TESTCONF )
-#file( TO_NATIVE_PATH ${TEST_TMS_SQL} TESTF )
+set (TEST_TMS_SQL "${CMAKE_CURRENT_SOURCE_DIR}/sql")
+file( TO_NATIVE_PATH ${TEST_TMS_SQL} TMSSQL )
+set (TEST_TMS_SCRIPTS "${CMAKE_CURRENT_SOURCE_DIR}/scripts")
+file( TO_NATIVE_PATH ${TEST_TMS_SCRIPTS} TMSSCRIPTS )
+# Path to the DIET configuration for the SeD (used for umssed_testing.cfg)
+set (TEST_DIET_SED_CONFIG "${PROJECT_BINARY_DIR}/etc/SeD_testing.cfg")
+file( TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
+# Path to the VISHNU UMS SeD configuration
+set (TEST_TMS_SED_CONFIG "${PROJECT_BINARY_DIR}/etc/tmssed_testing.cfg")
+file ( TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG} TMSSEDCONF)
+# Path to the VISHNU TMS SeD executable
+file( TO_NATIVE_PATH "${PROJECT_BINARY_DIR}/bin" TMSSEDBINDIR)
 
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
-  ${PROJECT_BINARY_DIR}/include/config.h )
+# Create header for VISHNU TMS tests
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/TMS_testconfig.h.in
+  ${PROJECT_BINARY_DIR}/include/TMS_testconfig.h )
+# Create configuration for VISHNU TMS SeD
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
+  ${PROJECT_BINARY_DIR}/etc/tmssed_testing.cfg
+)
 
 include(TMSTestingMacros)
-#tms_test_setup()
-
+tms_test_setup()
 tms_test(tms_automTest)
 
 #add_executable(stresser
