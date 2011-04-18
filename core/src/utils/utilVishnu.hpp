@@ -113,32 +113,32 @@ namespace vishnu {
   get_file_content(const std::string& filePath);
 
   /**
-   * \brief Function to copy file from Dagda
-   * \param src: the path of the file to copy
-   * \param dest: the destination to copy file
-   * \return raises an exception on error
-   */
+  * \brief Function to move file
+  * \param src: the path of the file to move
+  * \param dest: the destination where the file will be moved
+  * \return raises an exception on error
+  */
   int
-  copyDagdaFile(std::string src, std::string dest);
+  moveFile(std::string src, std::string dest);
 
   /**
-   * \brief Function to check a numerical value 
-   * \param value The value to check 
-   * \return raises an exception on error 
+   * \brief Function to check a numerical value
+   * \param value The value to check
+   * \return raises an exception on error
    */
   bool isNumericalValue(const std::string value);
 
   /**
-   * \brief Function a given walltime into string 
+   * \brief Function a given walltime into string
    * \param walltime The walltime to convert
-   * \return the walltime converted to string 
+   * \return the walltime converted to string
    */
    std::string convertWallTimeToString(const long& walltime);
 
    /**
-    * \brief Function a given walltime into seconds 
+    * \brief Function a given walltime into seconds
     * \param walltime The walltime to convert
-    * \return the walltime converted to seconds 
+    * \return the walltime converted to seconds
     */
    long convertStringToWallTime(const std::string& walltime);
 }
