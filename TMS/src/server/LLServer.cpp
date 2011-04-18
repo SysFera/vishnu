@@ -1,11 +1,10 @@
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 #include <sstream>
-#include <cstdlib>
 #include "llapi.h"
+
 #include "LLServer.hpp"
+
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
@@ -17,8 +16,10 @@ LLServer::LLServer():BatchServer() {
 
 int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
 
+  //Puts the options values into the scriptPath
+  processOptions(scriptPath, options);
+
   LL_job llJobInfo;
-  //options // TODO: A prendre en compte
   if(llsubmit(const_cast<char*>(scriptPath), NULL, NULL, &llJobInfo, LL_JOB_VERSION)) {
     return -1 ;//error messages are written to stderr, VISHNU redirects these messages into a file
   };
@@ -27,13 +28,29 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   llJobId<< (llJobInfo.step_list[0])->id.from_host;
   llJobId<< "." << (llJobInfo.step_list[0])->id.cluster;
   llJobId<< "." << (llJobInfo.step_list[0])->id.proc;
-  
+
   job.setJobId(llJobId.str());
+  job.setOutputPath(std::string((llJobInfo.step_list[0])->out)) ;
+  job.setErrorPath(std::string((llJobInfo.step_list[0])->err));
+  job.setStatus(0);
+  job.setJobName(std::string(llJobInfo.job_name));
+  job.setSubmitDate((llJobInfo.step_list[0])->q_date);
+  job.setOwner(std::string(llJobInfo.owner));
+  job.setJobQueue(std::string((llJobInfo.step_list[0])->stepclass));
+  job.setWallClockLimit(-1);
+  job.setEndDate(-1);
+  job.setGroupName(std::string((llJobInfo.step_list[0])->group_name));
+  job.setJobDescription(std::string((llJobInfo.step_list[0])->comment));
+  job.setJobPrio((llJobInfo.step_list[0])->prio);//WARNING: a convertir en VISHNU PRIORITY TYPE
+  job.setMemLimit(-1);
+  job.setNbCpus(-1);
+  job.setNbNodes(-1);
+  //job.setNbNodesAndCpuPerNode(nodeAndCpu); 
 
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
-  
+
   return 0;
-  
+
   /**Test sur la machine distante blue gene aux Etats-Unis*/
   //return remove_test(job);
 
@@ -52,6 +69,80 @@ int LLServer::cancel(const char* jobId) {
   }
  
  return 0; 
+}
+
+int LLServer::processOptions(const char* scriptPath, const TMS_Data::SubmitOptions& options) {
+
+  std::string content = vishnu::get_file_content(scriptPath); 
+  std::string optionLineToInsert;
+  if(content.size()!=0) {
+    if(options.getName().size()!=0){
+      optionLineToInsert ="# @ job_name="+options.getName()+"\n";
+      insertOptionLine(optionLineToInsert, content); 
+    }
+    if(options.getQueue().size()!=0) {
+      optionLineToInsert ="# @ class="+options.getQueue()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+    if(options.getOutputPath().size()!=0) {
+      optionLineToInsert ="# @ output="+options.getOutputPath()+"\n";
+      insertOptionLine(optionLineToInsert, content); 
+    }
+    if(options.getErrorPath().size()!=0) {
+      optionLineToInsert ="# @ error="+options.getErrorPath()+"\n";
+      insertOptionLine(optionLineToInsert, content);
+    }
+    if(options.getWallTime()!=-1) {
+      optionLineToInsert ="# @ wall_clock_limit="+vishnu::convertWallTimeToString(options.getWallTime());
+      insertOptionLine(optionLineToInsert, content);
+    }
+
+
+    if(optionLineToInsert.size()!=0) {
+      ofstream ofs(scriptPath);
+      ofs << content;
+      ofs.close();
+    }
+  }
+
+}
+
+int LLServer::insertOptionLine(const std::string& optionLineToInsert, std::string& content) {
+
+  size_t pos = 0;
+  size_t posLastDirective = 0;
+
+  while(pos!=string::npos) {
+
+    pos = content.find("#", pos);
+    if(pos!=string::npos) {
+
+      std::string line = content.substr(pos, content.find("\n", pos)-pos);
+      pos++;
+      size_t pos1 = line.find("#");
+      size_t pos2 = line.find("@");
+      if((pos1!=string::npos) && (pos2!=string::npos)) {
+        std::cout << line << std::endl;
+        std::string space = line.substr(pos1+1, pos2-pos1-1);
+        size_t spaceSize = space.size();
+        int i = 0;
+        while((i < spaceSize) && (space[i]==' ')) {
+          i++;
+        };
+
+        if(i==spaceSize) {
+          std::string line_tolower(line);
+          std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
+          if(line_tolower.find("queue")!=string::npos) {
+            content.insert(posLastDirective, optionLineToInsert);
+            pos = pos + optionLineToInsert.size()+1;
+          }
+        }
+      }
+
+      posLastDirective = pos+line.size();
+    }
+  }
 }
 
 int LLServer::remove_test(TMS_Data::Job& job) {
