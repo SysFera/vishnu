@@ -62,7 +62,9 @@ class TorqueServer : public BatchServer
   pbs_cancel(const char* jobId, char remoteServer[], bool isLocal=true);
 
   void
-  process_options(const TMS_Data::SubmitOptions& options, std::vector<std::string>&cmds_options);
+  processOptions(const TMS_Data::SubmitOptions& options, std::vector<std::string>& cmdsOptions);
+
+  int convertTorqueStateToVishnuState(std::string state); 
 
   /**
    * \brief To add an option with the corresponding values
