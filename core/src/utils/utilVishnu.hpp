@@ -113,12 +113,12 @@ namespace vishnu {
   get_file_content(const std::string& filePath);
 
   /**
-   * \brief Function to copy file from Dagda
-   * \param src: the path of the file to copy
-   * \param dest: the destination to copy file
-   * \return raises an exception on error
-   */
+  * \brief Function to move file
+  * \param src: the path of the file to move
+  * \param dest: the destination where the file will be moved
+  * \return raises an exception on error
+  */
   int
-  copyDagdaFile(std::string src, std::string dest);
+  moveFile(std::string src, std::string dest);
 }
 #endif // _UTILVISHNU_H_
