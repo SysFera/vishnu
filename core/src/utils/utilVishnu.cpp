@@ -116,7 +116,6 @@ vishnu::get_file_content(const std::string& filePath){
   bfs::path file (filePath);
 
   // Check the existence of file
-
   if (((false==bfs::exists(file)) || (true==bfs::is_empty(file)))
     || (false==bfs::is_regular_file(file))) {
     throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
@@ -134,29 +133,27 @@ vishnu::get_file_content(const std::string& filePath){
 }
 
 /**
-* \brief Function to copy file from Dagda
-* \param src: the path of the file to copy
-* \param dest: the destination to copy file
+* \brief Function to move file
+* \param src: the path of the file to move
+* \param dest: the destination where the file will be moved
 * \return raises an exception on error
 */
 int
-vishnu::copyDagdaFile(std::string src, std::string dest) {
+vishnu::moveFile(std::string src, std::string dest) {
 
   bfs::path filePath(src);
   bfs::path fileDestPath(dest);
 
   try {
-    //If the destination does not exist, the file is created locally
+    //If the destination does not exist, the file is created in the current directory
     if(!bfs::exists(fileDestPath)) {
       bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
     }
     else {
       bfs::rename(filePath, bfs::path(fileDestPath / filePath.filename()));
     }
+  } catch (std::exception& e) {
+      throw UserException(ERRCODE_INVALID_PARAM, e.what());
   }
-  catch(std::exception& e) {
-    throw UserException(ERRCODE_INVALID_PARAM, e.what());
-  }
-
   return 0;
 }
