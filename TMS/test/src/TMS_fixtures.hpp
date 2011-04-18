@@ -6,6 +6,9 @@
 
 #include "diet_fixtures.hpp"
 #include "TMS_testconfig.h"
+//#include <boost/test/unit_test.hpp>
+#include "api_ums.hpp"
+#include "api_tms.hpp"
 using namespace std;
 
 char TMSSeD[] = "tmssed";
