@@ -446,9 +446,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="QueueStatus" instanceTypeName="QueueStatus">
     <eLiterals name="NOT_STARTED" literal="NOT_STARTED"/>
-    <eLiterals name="NOT_AVAILABLE" value="1" literal="NOT_AVAILABLE"/>
-    <eLiterals name="STARTED" value="2" literal="STARTED"/>
-    <eLiterals name="RUNNING" value="3"/>
+    <eLiterals name="STARTED" value="1" literal="STARTED"/>
+    <eLiterals name="RUNNING" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JobResult" instanceTypeName="JobResult">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
