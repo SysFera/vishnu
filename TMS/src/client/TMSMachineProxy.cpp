@@ -75,8 +75,8 @@ TMSMachineProxy::getMachineQueues() {
   TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse ListQueues object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(listQueuesInString), listQueues, "Error when receiving ListQueues object serialized")) {
-    throw UserException(ERRCODE_INVALID_PARAM);
+  if (!vishnu::parseTMSEmfObject(std::string(listQueuesInString), listQueues)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving ListQueues object serialized");
   }
 
   diet_profile_free(profile);
@@ -198,7 +198,6 @@ TMSMachineProxy::getMachineRefreshPeriod() {
 
   return mrefreshPeriod;
 }
-
 
 /**
 * \brief Destructor
