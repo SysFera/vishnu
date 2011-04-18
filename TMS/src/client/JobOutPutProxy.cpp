@@ -7,6 +7,7 @@
 #include "DIET_Dagda.h"
 #include <boost/filesystem.hpp>
 #include "utilVishnu.hpp"
+#include <omniORB4/CORBA.h>
 
 namespace bfs = boost::filesystem;
 using namespace vishnu;
@@ -93,36 +94,47 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
      TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
     //To parse JobResult object serialized
-    if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult, "Error when receiving JobResult object serialized")) {
-      throw UserException(ERRCODE_INVALID_PARAM);
+    if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving JobResult object serialized");
     }
 
-    IDContainer = (profile->parameters[5]).desc.id;
-    dagda_get_container(IDContainer);
-    dagda_get_container_elements(IDContainer, &content);
+    try {
+      IDContainer = (profile->parameters[5]).desc.id;
+      dagda_get_container(IDContainer);
+      dagda_get_container_elements(IDContainer, &content);
 
-    if (content.size == 2) {
-      //To get all files from the container
-      dagda_get_file(content.elt_ids[0],&outputPath);
-      dagda_get_file(content.elt_ids[1],&errorPath);
+      if (content.size == 2) {
+        //To get all files from the container
+        dagda_get_file(content.elt_ids[0],&outputPath);
+        dagda_get_file(content.elt_ids[1],&errorPath);
 
-      std::string err =  outJobResult->getErrorPath();
-      std::string out = outJobResult->getOutputPath();
-      vishnu::copyDagdaFile(std::string(outputPath), out);
-      vishnu::copyDagdaFile(std::string(errorPath), err);
+        std::string err =  outJobResult->getErrorPath();
+        std::string out = outJobResult->getOutputPath();
+        vishnu::moveFile(std::string(outputPath), out);
+        vishnu::moveFile(std::string(errorPath), err);
+      }
+    } catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
+      if (content.size == 2) {
+        for(unsigned int i = 0; i < content.size; i++) {
+          dagda_delete_data(content.elt_ids[i]);
+        }
+      }
+      dagda_delete_data(IDContainer);
+      diet_profile_free(profile);
+      throw UserException(ERRCODE_INVALID_PARAM,"CORBA Exception: "+ std::string(e._name())+
+            " ("+std::string(IDContainer) + ")");
+      }
     }
-
-  }
   else {
     raiseDietMsgException("DIET call failure");
   }
-
-  /*if (content.size == 2) {
+  if (content.size == 2) {
+    //To clean the container
     for (unsigned int i = 0; i < content.size; i++) {
       dagda_delete_data(content.elt_ids[i]);
     }
-  }*/
-
+  }
+  //To clean the container Id
   dagda_delete_data(IDContainer);
   diet_profile_free(profile);
   return outJobResult;
@@ -132,7 +144,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 * \brief Function to get the results of all job submitted
 * \return The list of the job results
 */
-//TODO: faire un try catch Vishnu exception pour nettoyer l'id Dadga dans le cache puis throw e;
+//TODO: faire un try catch Vishnu exception pour nettoyer l'id Dadga dans le catch puis throw e;
 TMS_Data::ListJobResults_ptr
 JobOutPutProxy::getAllJobsOutPut() {
   diet_profile_t* profile = NULL;
@@ -182,11 +194,11 @@ JobOutPutProxy::getAllJobsOutPut() {
     /*To raise a vishnu exception if the receiving message is not empty*/
     TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
-    IDContainer = (profile->parameters[4]).desc.id;
-    dagda_get_container(IDContainer);
-    dagda_get_container_elements(IDContainer, &content);
-
     try {
+      IDContainer = (profile->parameters[4]).desc.id;
+      dagda_get_container(IDContainer);
+      dagda_get_container_elements(IDContainer, &content);
+
       if (content.size > 1) {
         //To get all files from the container
         for(unsigned int i = 0; i < content.size; i++) {
@@ -196,34 +208,31 @@ JobOutPutProxy::getAllJobsOutPut() {
           //For moving dagda files from /tmp to the tmp directory of the current directory
           bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
         }
-      }
-    } //To catch boost exception and change it to UserException
-    catch(std::exception& e) {
-      /*if (content.size > 1) {
+        //To clean the container
         for(unsigned int i = 0; i < content.size; i++) {
           dagda_delete_data(content.elt_ids[i]);
         }
-      }*/
-      dagda_delete_data(IDContainer);
-      diet_profile_free(profile);
-      throw UserException(ERRCODE_INVALID_PARAM, e.what());
-    }
+      }
+    } catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
+        if (content.size > 1) {
+          for(unsigned int i = 0; i < content.size; i++) {
+            dagda_delete_data(content.elt_ids[i]);
+          }
+        }
+        dagda_delete_data(IDContainer);
+        diet_profile_free(profile);
+        throw UserException(ERRCODE_INVALID_PARAM, "CORBA Exception: "+std::string(e._name())+
+        " ("+std::string(IDContainer) + ")");
+      }
   }
   else {
     raiseDietMsgException("DIET call failure");
   }
-
-  dagda_delete_data(IDContainer);
   //To parse ListJobResult object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(listJobResultInString), listJobResults_ptr, "Error when receiving ListJobResult object serialized")) {
-    throw UserException(ERRCODE_INVALID_PARAM);
+  if (!vishnu::parseTMSEmfObject(std::string(listJobResultInString), listJobResults_ptr)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving ListJobResult object serialized");
   }
-
-  /*if (content.size > 1) {
-    for(unsigned int i = 0; i < content.size; i++) {
-      dagda_delete_data(content.elt_ids[i]);
-    }
-  }*/
+  //To clean the container Id
   dagda_delete_data(IDContainer);
   diet_profile_free(profile);
   return listJobResults_ptr;
