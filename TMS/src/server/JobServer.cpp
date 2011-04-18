@@ -79,6 +79,11 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
+  mjob.setSubmitMachineId(mmachineId);
+  mjob.setSubmitMachineName(machineName);
+  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+  mjob.setSessionId(sessionId);
+
   std::string BatchJobId=mjob.getJobId();
   std::cout << "BatchJobId=" << BatchJobId << std::endl;
   std::cout << "ServerTMS::getInstance()->getVishnuId()=" << ServerTMS::getInstance()->getVishnuId() << std::endl;

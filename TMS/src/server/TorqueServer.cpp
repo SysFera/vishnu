@@ -24,28 +24,28 @@ TorqueServer::TorqueServer():BatchServer() {
 int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
 
   char destination[PBS_MAXDEST];
-  char script_tmp[MAXPATHLEN + 1] = "";
+  char scriptTmp[MAXPATHLEN + 1] = "";
   struct attrl *attrib= NULL;
   char errMsg[1024];
   int argc = 0;
   
   std::ostringstream os_str;
 
-  std::vector<std::string> cmds_options;
+  std::vector<std::string> cmdsOptions;
   //processes the options
-  process_options(options, cmds_options);
-  argc = cmds_options.size()+2;
+  processOptions(options, cmdsOptions);
+  argc = cmdsOptions.size()+2;
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
   argv[1] = const_cast<char*>(scriptPath);
-  for(int i=0; i < cmds_options.size(); i++) {
-   argv[i+2] = const_cast<char*>(cmds_options[i].c_str());
+  for(int i=0; i < cmdsOptions.size(); i++) {
+   argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
   destination[0] = '\0';
   serverOut[0] = '\0';
   //parses the scripthPath and sets the options values
-  pbs_prepare_script(argc, argv, envp, script_tmp, destination, serverOut, &attrib);
+  pbs_prepare_script(argc, argv, envp, scriptTmp, destination, serverOut, &attrib);
   
   errMsg[0] = '\0';
   get_pbs_error_msg(errMsg);
@@ -67,10 +67,10 @@ int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& 
     }
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
   }
-  
+ 
   pbs_errno = 0;
   char*jobId = pbs_submit(connect, (struct attropl *)attrib,
-                          script_tmp, destination, NULL);
+                          scriptTmp, destination, NULL);
 
   if (jobId == NULL) {
     std::cerr << "******* jobId is NULL ...." << std::endl;
@@ -89,60 +89,68 @@ int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& 
     }
     pbs_disconnect(connect);
 
-    unlink(script_tmp);
+    unlink(scriptTmp);
 
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, submit_error.str());
   }
 
-  pbs_disconnect(connect);
-  unlink(script_tmp);
+  //pbs_disconnect(connect);
+  unlink(scriptTmp);
 
+  struct batch_status *p_status = pbs_statjob(connect, jobId, NULL, NULL);
+
+  pbs_disconnect(connect);
+
+  if(p_status!=NULL) {
+    fillJobInfo(job, p_status);
+  }
   job.setJobId(std::string(jobId));
 
   return 0;
 }
 
-void TorqueServer::process_options(const TMS_Data::SubmitOptions& options, std::vector<std::string>&cmds_options) {
+void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::vector<std::string>&cmdsOptions) {
 
   if(options.getName().size()!=0){
-    cmds_options.push_back("-N");
-    cmds_options.push_back(options.getName());
+    cmdsOptions.push_back("-N");
+    cmdsOptions.push_back(options.getName());
   }
   if(options.getQueue().size()!=0) {
-    cmds_options.push_back("-q");
-    cmds_options.push_back(options.getQueue());
+    cmdsOptions.push_back("-q");
+    cmdsOptions.push_back(options.getQueue());
   }
   if(options.getOutputPath().size()!=0) {
-    cmds_options.push_back("-o");
-    cmds_options.push_back(options.getOutputPath());
+    cmdsOptions.push_back("-o");
+    cmdsOptions.push_back(options.getOutputPath());
   }
   if(options.getErrorPath().size()!=0) {
-    cmds_options.push_back("-e");
-    cmds_options.push_back(options.getErrorPath());
+    cmdsOptions.push_back("-e");
+    cmdsOptions.push_back(options.getErrorPath());
   }
   if(options.getWallTime()!=-1) {
-    cmds_options.push_back("-l"); //TODO:prendre bien en compte ce traitement dans pbs_prepare_script
-    std::ostringstream os_str;
-    os_str << options.getWallTime(); //TODO:A convertir en string correctement
-    cmds_options.push_back("walltime="+os_str.str());
+    cmdsOptions.push_back("-l"); 
+    cmdsOptions.push_back("walltime="+vishnu::convertWallTimeToString(options.getWallTime()));
   }
   if(options.getNbCpu()!=-1) {
-    cmds_options.push_back("-l");
+    cmdsOptions.push_back("-l");
     std::ostringstream os_str;
-    //os_str.clear();
     os_str << options.getNbCpu();
-    cmds_options.push_back("ncpus="+os_str.str());
+    cmdsOptions.push_back("ncpus="+os_str.str());
   }
   if(options.getMemory()!=-1) {
-    cmds_options.push_back("-l");
-    //os_str.clear();
+    cmdsOptions.push_back("-l");
     std::ostringstream os_str;
     os_str << options.getMemory();
-    cmds_options.push_back("mem="+os_str.str());
+    cmdsOptions.push_back("mem="+os_str.str());
   }
-  if(options.getNbNodesAndCpuPerNode()!=-1) {//TODO: le type est string
-    //cmds_options.push_back("-l");
-    //cmds_options.push_back("nodes=1:ppn=2");
+  if(options.getNbNodesAndCpuPerNode()!=-1) {//TODO: le type doit etre une string
+    //cmdsOptions.push_back("-l");
+    //std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode()
+    //size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
+    //std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+    //size_t posCpuPerNode = NbNodesAndCpuPerNode.find(posNbNodes+1, ":");
+    //std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode); 
+    //cmdsOptions.push_back("nodes="+nbNodes":"ppn="+cpuPerNode);
   }
 
 }
@@ -366,6 +374,24 @@ TorqueServer::makeListJobOption(TMS_Data::ListJobsOptions op, struct attropl* at
   }
 }
 
+int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
+
+  if(state.compare("Q")==0) {
+    return 1; //QUEUED
+  }
+  if(state.compare("W")==0 || state.compare("H")==0) {
+    return 2; //WAITING
+  }
+  if(state.compare("R")==0) {
+    return 3; //RUNNING
+  }
+  if(state.compare("E")==0) {
+    return 4; //TERMINATED
+  } else {
+    return 0;
+  }
+  
+}
 
 void
 TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
@@ -392,7 +418,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   string wall       = string("");
   string etime      = string("");
   string nodeAndCpu = string("");
-    
+   
   // Getting job idx
   str = p->name;
   pos_found =  str.find(".");
@@ -410,88 +436,87 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
 
       // Getting the attribute the value corresponds to
       if(!strcmp(a->name, ATTR_name)){ // job name
-	name = str;
+        name = str;
       }
       else if(!strcmp(a->name, ATTR_owner)){ // job owner
-	pos_found =  string(a->value).find("@");
-	str = str.substr(0, pos_found);
-	owner = str;
+        pos_found =  string(a->value).find("@");
+        str = str.substr(0, pos_found);
+        owner = str;
       }
       else if(!strcmp(a->name, ATTR_used)){ // cpu time
-	if(!strcmp(a->resource, "cput")) {
-	  timeu = str;
-	}
+        if(!strcmp(a->resource, "cput")) {
+          timeu = str;
+        }
       }
       else if(!strcmp(a->name, ATTR_state)){ // state
-	state = str;
+        state = str;
       }
       else if(!strcmp(a->name, ATTR_queue)){ // queue
-	pos_found =  std::string(a->value).find("@");
-	str = str.substr(0, pos_found);
-	location = str;
+        pos_found =  std::string(a->value).find("@");
+        str = str.substr(0, pos_found);
+        location = str;
       }
       else if (!strcmp(a->name, ATTR_o)){ // output
-	output = str;
+        output = str;
       }
       else if (!strcmp(a->name, ATTR_e)){ // error
-	error = str;
+        error = str;
       }
       else if (!strcmp(a->name, ATTR_p)){ // priority
-	prio = str;
+        prio = str;
       }
       else if (!strcmp(a->name, ATTR_l)){ // nbcpu or qtime
-	if (!strcmp(a->resource, "ncpus")){
-	  ncpus = str;
-	}
-	else if(!strcmp(a->resource, "qtime")){
-	  qtime = str;
-	}
-	else if(!strcmp(a->resource, "mem")){
-	  mem = str;
-	}
-	else if(!strcmp(a->resource, "walltime")){
-	  wall = str;
-	}
-	else if(!strcmp(a->resource, "nodes")){ // node and nodeandcpupernode
-	  string tmp;
-	  pos_found =  string(a->value).find(":");
-	  if (pos_found != string::npos){
-	    tmp = str.substr(0, pos_found);
-	    node = tmp;
-	    nodeAndCpu = str;
-	  }
-	  else{
-	    node = str;
-	  }
-	}
-      }
+        if (!strcmp(a->resource, "ncpus")){
+          ncpus = str;
+        }
+        else if(!strcmp(a->resource, "mem")){
+          mem = str;
+        }
+        else if(!strcmp(a->resource, "walltime")){
+          wall = str;
+        }
+        else if(!strcmp(a->resource, "nodes")){ // node and nodeandcpupernode
+          string tmp;
+          pos_found =  string(a->value).find(":");
+          if (pos_found != string::npos){
+            tmp = str.substr(0, pos_found);
+            node = tmp;
+            nodeAndCpu = str;
+          }
+          else{
+            node = str;
+          }
+        }
+      } 
       else if (!strcmp(a->name, ATTR_g)){ // group
-	group = str;
+        group = str;
+      } else if(!strcmp(a->name, ATTR_qtime)){
+        qtime = str;
       }
       else if (!strcmp(a->name, ATTR_etime)){ // end time ?
-	etime = str;
+        etime = str;
       }	      
       a = a->next;
     }// end if name != null
   } // end while
-    // TODO :
-    // JOBPATH ?
-    // SUBMITMACHINEID ?
-    // SESSIONID ?
-    // SCRIPCONTENT ?
-    // WORKING DIR ?
-    // DESCRIPTION ?
-    //
-    // READ FROM DATABASE BUT IN A HIGHER LEVEL
-    //
+  // TODO :
+  // JOBPATH ?
+  // SUBMITMACHINEID ?
+  // SESSIONID ?
+  // SCRIPCONTENT ?
+  // WORKING DIR ?
+  // DESCRIPTION ?
+  //
+  // READ FROM DATABASE BUT IN A HIGHER LEVEL
+  //
 
-    // Creating job
+  // Creating job
   job.setJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);
   //      job.setJobId(timeu); ? timeu ? TODO
   if (state.compare("")!=0)
-    job.setStatus(atoi(state.c_str()));
+    job.setStatus(convertTorqueStateToVishnuState(state));
   else
     job.setStatus(0);
   job.setJobQueue(location);
@@ -515,7 +540,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   else
     job.setEndDate(0);
   if (wall.compare("")!=0)
-    job.setWallClockLimit(atol(wall.c_str()));
+    job.setWallClockLimit(vishnu::convertStringToWallTime(std::string(wall.c_str())));
   else
     job.setWallClockLimit(0);
   if (mem.compare("")!=0)
