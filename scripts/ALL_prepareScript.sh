@@ -6,7 +6,7 @@
 #
 
 if [ ! $# -eq 1 ]; then
-  echo "Usage: " $0 "<no_version>"
+  echo "Usage: " $0 "<no_version: 1.0.x>"
   exit 1
 else
   NO_VERSION=$1
@@ -78,6 +78,10 @@ cp core/test/src/*h.in $path/core/test/src/
 cp core/test/cfgs/*cfg.in $path/core/test/cfgs/
 cp -r core/test/third-party $path/core/test
 
+###############################################################################
+#                                    U M S                                    #
+###############################################################################
+
 # Copy the sendmail script
 cp core/src/utils/sendmail.py $path/core/src/utils/
 
@@ -103,7 +107,7 @@ mkdir $path/UMS/test
 mkdir $path/UMS/test/src
 cp -r UMS/test/src/sql $path/UMS/test/src
 cp UMS/test/src/*pp $path/UMS/test/src
-cp UMS/test/src/config.h.in $path/UMS/test/src
+cp UMS/test/src/*.h.in $path/UMS/test/src
 cp UMS/test/src/CMakeLists.txt $path/UMS/test/src
 
 # Copy man pages
@@ -111,8 +115,33 @@ cp  UMS/doc/man/CMakeLists.txt $path/UMS/doc/man/
 cp  -r UMS/doc/man/man1/ $path/UMS/doc/man/
 cp  -r UMS/doc/man/man3/ $path/UMS/doc/man/
 
+###############################################################################
+#                                    T M S                                    #
+###############################################################################
 
-cp setCopyright.sh $path/
+mkdir $path/TMS
+mkdir $path/TMS/src/
+cp TMS/src/CMakeLists.txt $path/TMS/src/
+cp -r TMS/src/api $path/TMS/src
+cp -r TMS/src/cli $path/TMS/src
+cp -r TMS/src/client $path/TMS/src
+cp -r TMS/src/sed $path/TMS/src
+cp -r TMS/src/server $path/TMS/src
+cp -r TMS/src/utils $path/TMS/src
+cp -r TMS/src/utils_torque $path/TMS/src
+cp -r TMS/src/slave $path/TMS/src
+
+# Copy TMS man
+mkdir $path/TMS/doc/
+mkdir $path/TMS/doc/man
+mkdir $path/TMS/doc/man/man1
+mkdir $path/TMS/doc/man/man3
+
+###############################################################################
+#                                 All modules                                 #
+###############################################################################
+
+cp scripts/setCopyright.sh $path/
 
 cd $path
 
@@ -128,11 +157,11 @@ cp -r core/deps/emf4cpp $path/core/deps/
 
 cd $path
 
-rm tmp.txt
+rm -f tmp.txt
 
 # Remove .project
-rm UMS/src/utils/emfdata/UMS_Data/.project
-rm UMS/src/utils/emfdata/UMS_Data/.cproject
+rm -f UMS/src/utils/emfdata/UMS_Data/.project
+rm -f UMS/src/utils/emfdata/UMS_Data/.cproject
 rm core/deps/emf4cpp/.project
 rm core/deps/emf4cpp/.cproject
 
@@ -148,8 +177,8 @@ for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
 cd ..
 
 # Archive to send
-tar -czvf VISHNU_D2_2a-UMS_v1_0.tgz VISHNU_UMS_1.0
+tar -czvf VISHNU_v${NO_VERSION}.tgz VISHNU_$NO_VERSION
 
 # Moving archive in /tmp
-mv VISHNU_D2_2a-UMS_v1_0.tgz /tmp/
+mv VISHNU_v${NO_VERSION}.tgz /tmp/
 
