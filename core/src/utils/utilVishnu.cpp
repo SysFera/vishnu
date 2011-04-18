@@ -157,3 +157,151 @@ vishnu::moveFile(std::string src, std::string dest) {
   }
   return 0;
 }
+
+/**
+ * \brief Function to check a numerical value
+ * \param value The value to check
+ * \return raises an exception on error
+ */
+bool vishnu::isNumericalValue(const std::string value) {
+  bool ret = ((value.size()==0) || value.find_first_not_of("0123456789")==std::string::npos);
+  if(!ret) {
+    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: "+value));
+  }
+  return ret;
+}
+
+
+/**
+ * \brief Function a given walltime into string
+ * \param walltime The walltime to convert
+ * \return the walltime converted to string
+ */
+std::string vishnu::convertWallTimeToString(const long& walltime) {
+
+  long totalTime = walltime;
+  long j = totalTime/86400;
+  totalTime = walltime-j*86400;
+  long h =  totalTime/3600;
+  totalTime =  totalTime-h*3600;
+  long m =  totalTime/60;
+  long s =  totalTime-m*60;
+
+  std::ostringstream StrWallTime;
+  if(j > 0) {
+    if(j < 10) {
+      StrWallTime << "0" << j << ":";
+    } else {
+      StrWallTime <<  j << ":";
+    }
+  }
+
+  if(h < 10) {
+    StrWallTime << "0" << h << ":";
+  } else {
+    StrWallTime <<  h << ":";
+  }
+
+  if(m < 10) {
+    StrWallTime << "0" << m << ":";
+  } else {
+    StrWallTime << m << ":";
+  }
+
+  if(s < 10) {
+    StrWallTime << "0" << s;
+  } else {
+    StrWallTime << s ;
+  }
+
+  return StrWallTime.str();
+}
+
+/**
+ * \brief Function a given walltime into seconds
+ * \param walltime The walltime to convert
+ * \return the walltime converted to seconds
+ */
+long vishnu::convertStringToWallTime(const std::string& walltime) {
+
+  int seconds = 0;
+  int minute = 0;
+  int heure = 0;
+  int jour = 0;
+  std::string value;
+  size_t found;
+
+  size_t size = walltime.size();
+  size_t pos = walltime.rfind(":");
+  if(pos!=std::string::npos) {
+    if((size-pos > 1)) {
+      value = walltime.substr(pos+1, size-1-pos);
+      if(isNumericalValue(value)) {
+        seconds = convertToInt(value);
+      }
+    }
+  } else {
+    if(walltime.size() > 0) {
+      value = walltime;
+      if(isNumericalValue(value)) {
+        seconds = convertToInt(value);
+      }
+    }
+  }
+
+  if((pos!=std::string::npos) && (pos > 0)) {
+    size = pos;
+    pos =  walltime.rfind(":", size-1);
+    if(pos!=std::string::npos) {
+      if((size-pos > 1)) {
+        value = walltime.substr(pos+1, size-pos-1);
+        if(isNumericalValue(value)) {
+          minute = convertToInt(value);
+        }
+      }
+    } else {
+      value = walltime.substr(0, size);
+      if(isNumericalValue(value)) {
+        minute = convertToInt(value);
+      }
+    }
+  }
+
+  if((pos!=std::string::npos) && (pos > 0)) {
+    size = pos;
+    pos =  walltime.rfind(":", size-1);
+    if(pos!=std::string::npos) {
+      if((size-pos > 1)) {
+        value = walltime.substr(pos+1, size-pos-1);
+        if(isNumericalValue(value)) {
+          heure = convertToInt(value);
+        }
+      }
+    } else {
+      value = walltime.substr(0, size);
+      if(isNumericalValue(value)) {
+        heure = convertToInt(value);
+      }
+    }
+  }
+
+  if((pos!=std::string::npos) && (pos > 0)) {
+    size = pos;
+    pos =  walltime.rfind(":", size-1);
+    if(pos!=std::string::npos) {
+      if((size-pos > 1)) {
+        throw std::runtime_error("Invalid wallltime value: "+walltime);
+      }
+    } else {
+      value = walltime.substr(0, size);
+      if(isNumericalValue(value)) {
+        jour = convertToInt(value);
+      }
+    }
+  }
+
+  long walltimeInSeconds = (jour*86400+heure*3600+minute*60+seconds);
+
+  return walltimeInSeconds;
+
+}
