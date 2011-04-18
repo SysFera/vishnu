@@ -15,7 +15,7 @@ using namespace TMS_Data;
 using namespace vishnu;
 namespace bpt= boost::posix_time;
 
-BOOST_GLOBAL_FIXTURE(UMSFixture)
+BOOST_GLOBAL_FIXTURE(TMSFixture)
 
 //Test category 1
 
@@ -345,15 +345,10 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
   // setting cancel job parameters
 
 
-<<<<<<< HEAD
-  // get another connexion for another user
 
-  VishnuConnexion vc("U_1","vishnu_user");
-=======
   // get another connexion for another user
 
   VishnuConnexion vc2("U_1","vishnu_user");
->>>>>>> 19a866a9792e72600e3432aef23fa1671a378340
 
     // get the session key and the machine identifier
     //
