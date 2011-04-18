@@ -6,7 +6,7 @@
 macro( tms_test_setup )
   enable_testing()
   # add a test-xml targets that allows us to generate Boost.Test xml reports
-  add_custom_target( test-xml )
+  add_custom_target( tms_test-xml )
   include(CTest)
 
   file( MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/reports )
@@ -60,7 +60,6 @@ macro( tms_test NAME )
       ${DIET_CLIENT_LIB}
       ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
-      # ${CLI_SOURCE_DIR}
       ${Boost_LIBRARIES}
       emf4cpp-UMS_Data
       emf4cpp-TMS_Data
@@ -68,6 +67,7 @@ macro( tms_test NAME )
       exception-vishnu
       vishnu-tms-api
       vishnu-ums-api
+      test-utils
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
