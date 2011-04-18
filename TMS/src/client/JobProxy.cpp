@@ -105,8 +105,8 @@ JobProxy::submitJob(const std::string scriptContent,
   TMS_Data::Job_ptr job_ptr = NULL;
 
   //To parse Job object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(jobInString), job_ptr, "Error when receiving Job object serialized")) {
-    throw UserException(ERRCODE_INVALID_PARAM);
+  if (!vishnu::parseTMSEmfObject(std::string(jobInString), job_ptr)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving Job object serialized");
   }
 
   mjob = *job_ptr;
