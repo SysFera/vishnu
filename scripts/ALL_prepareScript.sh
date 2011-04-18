@@ -99,21 +99,19 @@ cp -r UMS/src/utils $path/UMS/src
 # Copy UMS man
 mkdir $path/UMS/doc/
 mkdir $path/UMS/doc/man
-mkdir $path/UMS/doc/man/man1
-mkdir $path/UMS/doc/man/man3
 
 # Copy tests
 mkdir $path/UMS/test
 mkdir $path/UMS/test/src
 cp -r UMS/test/src/sql $path/UMS/test/src
 cp UMS/test/src/*pp $path/UMS/test/src
-cp UMS/test/src/*.h.in $path/UMS/test/src
+cp UMS/test/src/*.in $path/UMS/test/src
 cp UMS/test/src/CMakeLists.txt $path/UMS/test/src
 
 # Copy man pages
 cp  UMS/doc/man/CMakeLists.txt $path/UMS/doc/man/
-cp  -r UMS/doc/man/man1/ $path/UMS/doc/man/
-cp  -r UMS/doc/man/man3/ $path/UMS/doc/man/
+cp  -r UMS/doc/man/man1 $path/UMS/doc/man/
+cp  -r UMS/doc/man/man3 $path/UMS/doc/man/
 
 ###############################################################################
 #                                    T M S                                    #
@@ -131,11 +129,20 @@ cp -r TMS/src/utils $path/TMS/src
 cp -r TMS/src/utils_torque $path/TMS/src
 cp -r TMS/src/slave $path/TMS/src
 
-# Copy TMS man
+# Copy tests
+mkdir $path/TMS/test
+mkdir $path/TMS/test/src
+cp -r TMS/test/src/sql $path/TMS/test/src
+cp TMS/test/src/*pp $path/TMS/test/src
+cp TMS/test/src/config.h.in $path/TMS/test/src
+cp TMS/test/src/CMakeLists.txt $path/TMS/test/src
+
+# Copy man pages
 mkdir $path/TMS/doc/
 mkdir $path/TMS/doc/man
-mkdir $path/TMS/doc/man/man1
-mkdir $path/TMS/doc/man/man3
+cp  TMS/doc/man/CMakeLists.txt $path/TMS/doc/man/
+cp  -r TMS/doc/man/man1 $path/TMS/doc/man/
+cp  -r TMS/doc/man/man3 $path/TMS/doc/man/
 
 ###############################################################################
 #                                 All modules                                 #
