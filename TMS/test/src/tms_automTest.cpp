@@ -8,10 +8,12 @@
 #include <iostream>
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
+#include <boost/thread.hpp>
 using namespace std;
 using namespace UMS_Data;
 using namespace TMS_Data;
 using namespace vishnu;
+namespace bpt= boost::posix_time;
 
 BOOST_GLOBAL_FIXTURE(UMSFixture)
 
@@ -42,14 +44,22 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  SubmitOptions subOptions;
+  subOptions.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+  subOptions.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
 
-  BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
+  BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
   BOOST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+
   // Check the success of submitJob function
+  ListJobs lsJobs;
+  ListJobsOptions lsOptions;
+  lsOptions.setJobId(jobInfo.getJobId());
+ // BOOST_REQUIRE_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
+
+  //BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( lsJobs.getJobs().get(0)->getJobId()==jobInfo.getJobId() )  );
+
 
 }
 
@@ -161,7 +171,7 @@ BOOST_AUTO_TEST_SUITE_END()
 //-----------------------------------------------------------------------------------------
 
 
-// T2.1 : cancel a job
+// T2.2 : cancel a job
 
 BOOST_AUTO_TEST_SUITE(cancel_a_job)
 
@@ -170,7 +180,7 @@ BOOST_AUTO_TEST_SUITE(cancel_a_job)
 BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 {
 
-  BOOST_MESSAGE(" Testing normal job cancelling corresponding to use case T2.1" );
+  BOOST_MESSAGE(" Testing normal job cancelling corresponding to use case T2.2" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -201,6 +211,11 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
   BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
 
+  // wait a few seconds and check the success of cancelling job
+  //bpt::seconds sleepTime(5);
+  // boost::this_thread::sleep(sleepTime);
+  Job_ptr pJob;
+  BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), pJob),VishnuException  );
 
 }
 
@@ -210,7 +225,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 {
 
-  BOOST_MESSAGE(" Testing bad session Key for job cancelling (use case T2.1)" );
+  BOOST_MESSAGE(" Testing bad session Key for job cancelling (use case T2.2)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -242,7 +257,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 {
-  BOOST_MESSAGE(" Testing bad machine identifier for job cancellin (use case T2.1)" );
+  BOOST_MESSAGE(" Testing bad machine identifier for job cancellin (use case T2.2)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -273,13 +288,13 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 }
 
 
-// submit a job: bad parameters: bad job id
+// cancel a job: bad parameters: bad job id
 
 
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 {
-  BOOST_MESSAGE(" Testing bad job identifier for job cancelling (use case T2.1)" );
+  BOOST_MESSAGE(" Testing bad job identifier for job cancelling (use case T2.2)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -301,17 +316,17 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 /*
 
 
-// submit a job: bad parameters: bad user id
+// cancel a job: bad parameters: bad user id
 
-BOOST_AUTO_TEST_CASE( submit_a_Job_bad_userId)
+BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 {
-  BOOST_MESSAGE(" Testing bad user identifier for job cancelling (use case T2.1)" );
+  BOOST_MESSAGE(" Testing bad user identifier for job cancelling (use case T2.2)" );
 
-  VishnuConnexion vc("root","vishnu_user");
+  VishnuConnexion vc1("root","vishnu_user");
 
   // get the session key and the machine identifier
 
-  string sessionKey=vc.getConnexion();
+  string sessionKey=vc1.getConnexion();
 
   string machineId="MA_1";
 
@@ -330,25 +345,160 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_userId)
   // setting cancel job parameters
 
 
+<<<<<<< HEAD
   // get another connexion for another user
 
   VishnuConnexion vc("U_1","vishnu_user");
+=======
+  // get another connexion for another user
+
+  VishnuConnexion vc2("U_1","vishnu_user");
+>>>>>>> 19a866a9792e72600e3432aef23fa1671a378340
 
     // get the session key and the machine identifier
     //
-      string sessionKey=vc.getConnexion();
+       sessionKey=vc2.getConnexion();
 
   BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()),VishnuException  );
 
 
 
 }
+
 */
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+/*
+
+//-----------------------------------------------------------------------------------------
+
+// TA1 : set machine refresh period
+
+BOOST_AUTO_TEST_SUITE(set_machine_refresh_period)
+
+  //set machine refresh period: normal call
+
+BOOST_AUTO_TEST_CASE( set_machine_refresh_period_normal_call)
+{
+
+  BOOST_MESSAGE(" Testing normal execution of the set machine refresh period function  corresponding to use case TA1" );
+
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string machineId="MA_1";
+
+  int expectedValue =10;
+  //Setting  parameters
+
+  BOOST_CHECK_EQUAL(setMachineRefreshPeriod(sessionKey,machineId, expectedValue),0);
+
+
+
+  // wait a few seconds and check the success of cancelling job
+  //bpt::seconds sleepTime(5);
+  // boost::this_thread::sleep(sleepTime);
+  int realValue;
+  BOOST_CHECK_EQUAL(getMachineRefreshPeriod(sessionKey,machineId, realValue),0);
+  BOOST_CHECK_EQUAL (realValue,expectedValue);
+}
+
+
+// set machine refresh period: bad parameters: bad session key
+
+BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_sessionKey)
+{
+
+  BOOST_MESSAGE(" Testing bad session Key for the set machine refresh period function (use case TA1)" );
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+  string badSessionKey="bad session key";
+  string machineId="MA_1";
+
+  int value =10;
+
+
+
+  BOOST_CHECK_THROW(setMachineRefreshPeriod(badSessionKey,machineId, value),VishnuException );
+
+}
+
+// set machine refresh period: bad parameters: bad machine identifier
+
+BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_machineId)
+{
+  BOOST_MESSAGE(" Testing bad machine identifier for set machine refresh period (use case TA1)" );
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string badMachineId="badMachineId";
+
+  int value =10;
+
+  BOOST_CHECK_THROW(setMachineRefreshPeriod(sessionKey,badMachineId, value),VishnuException );
+
+}
+
+
+// set machine refresh period: bad parameters: negative value
+
+
+
+BOOST_AUTO_TEST_CASE( set_machine_refresh_period_negative_value)
+{
+  BOOST_MESSAGE(" Testing negative value for set machine refresh period (use case TA1)" );
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string machineId="MA_1";
+
+  int negValue=-1;
+
+  BOOST_CHECK_THROW(setMachineRefreshPeriod(sessionKey,machineId, negValue),VishnuException );
+
+
+}
+
+
+// set machine refresh period: bad parameters: bad user id
+
+BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_userId)
+{
+  BOOST_MESSAGE(" Testing bad user identifier for set machine refresh period (use case TA1)" );
+
+  VishnuConnexion vc("U_1","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string machineId="MA_1";
+  int value=10;
+
+  BOOST_CHECK_THROW(setMachineRefreshPeriod(sessionKey,machineId, value),VishnuException );
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()
 
 
+*/
 
 
 //-----------------------------------------------------------------------------------------
@@ -358,38 +508,144 @@ BOOST_AUTO_TEST_SUITE_END()
 //==============================================================================================
 
 
-/*
-
 
 //Test category 2
 
-// T1.1 : submit a job
 
-BOOST_AUTO_TEST_SUITE(T1.1_submit_a_job)
 
-// submit a job: normal call
+// T2.1 : get job information
 
-BOOST_AUTO_TEST_CASE( submitJob_normal_call)
+BOOST_AUTO_TEST_SUITE( get_job_information)
+
+  //  get job information: normal call
+
+BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
 {
- BOOST_MESSAGE(" Testing normal job submission T1.1" );
 
-   BOOST_CHECK( true );
+  BOOST_MESSAGE(" Testing normal execution of the  get job information function corresponding to use case T2.1" );
+
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string machineId="MA_1";
+
+
+  //Setting submitjob parameters
+
+  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  Job jobInfo;
+  SubmitOptions options;
+  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+
+  BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
+
+  BOOST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+
+  ListJobs lsJobs;
+  ListJobsOptions lsOptions;
+  lsOptions.setJobId(jobInfo.getJobId());
+  BOOST_REQUIRE_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
+
+
+  Job_ptr pJob;
+  BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), pJob),0  );
+
+// Check the success of getJobInfo function
+  //BOOST_REQUIRE(  lsJobs.getJobs().get(0)->getJobId()==pJob->getJobId() )  );
 }
 
 
-// submit a job: bad parameters
+//get job information: bad parameters: bad session key
 
-BOOST_AUTO_TEST_CASE( submitJob_bad_parameters)
+BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
 {
- BOOST_MESSAGE(" Testing normal job submission T1.1" );
 
-   BOOST_CHECK( true );
+  BOOST_MESSAGE(" Testing bad session Key for the get job information function (use case T2.1)" );
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string badSessionKey="bad session key";
+  string machineId="MA_1";
+
+  //Setting submitjob parameters
+
+  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  Job jobInfo;
+  SubmitOptions options;
+  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+
+  BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
+
+  // now let get the job information
+
+  // set the get the job information function parameters
+
+Job_ptr pJob;
+
+  BOOST_CHECK_THROW(getJobInfo(badSessionKey, machineId, jobInfo.getJobId(), pJob),VishnuException );
+
 }
+
+// get job information: bad parameters: bad machine identifier
+
+BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
+{
+  BOOST_MESSAGE(" Testing bad machine identifier for the get job information function (use case T2.1)" );
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string machineId="MA_1";
+  string badMachineId="badMachineId";
+
+  //Setting submitjob parameters
+
+  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  Job jobInfo;
+  SubmitOptions options;
+  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+
+  BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
+
+  // setting get job information function parameters
+  Job_ptr pJob;
+  BOOST_CHECK_THROW(getJobInfo(sessionKey, badMachineId, jobInfo.getJobId(),pJob),VishnuException );
+
+}
+
+
+//  get job information: bad parameters: bad job id
+
+
+BOOST_AUTO_TEST_CASE( get_job_information_bad_JobId)
+{
+  BOOST_MESSAGE(" Testing bad job identifier for the  get job information function (use case T2.1)" );
+
+  VishnuConnexion vc("root","vishnu_user");
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  string machineId="MA_1";
+
+  // setting get job information function parameters
+  Job_ptr pJob;
+  BOOST_CHECK_THROW(getJobInfo(sessionKey,machineId, "bad job id",pJob),VishnuException );
+
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
-
-//-----------------------------------------------------------------------------------------------
-
-*/
