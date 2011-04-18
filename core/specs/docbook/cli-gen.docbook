@@ -2548,36 +2548,28 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>NOT_SUBMITTED</para></entry>
-              <entry><para>-1</para></entry>
-            </row>
-            <row>
-              <entry><para>RUNNING</para></entry>
+              <entry><para>SUBMITTED</para></entry>
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>WAITING</para></entry>
+              <entry><para>QUEUED</para></entry>
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>COMPLETED</para></entry>
+              <entry><para>WAITING</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>CANCELED</para></entry>
+              <entry><para>RUNNING</para></entry>
               <entry><para>3</para></entry>
             </row>
             <row>
-              <entry><para>HELD</para></entry>
+              <entry><para>TERMINATED</para></entry>
               <entry><para>4</para></entry>
             </row>
             <row>
-              <entry><para>QUEUED</para></entry>
+              <entry><para>CANCELLED</para></entry>
               <entry><para>5</para></entry>
-            </row>
-            <row>
-              <entry><para>FAILED</para></entry>
-              <entry><para>6</para></entry>
             </row>
           </tbody>
         </tgroup>
