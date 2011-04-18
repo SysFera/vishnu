@@ -55,6 +55,7 @@ add_library(tms-server STATIC
    SSHJobExec
    JobServer
    BatchFactory
+   ListQueuesServer
 )
 
 target_link_libraries(tms-server

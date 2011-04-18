@@ -15,9 +15,13 @@
 
 /* submitJob */
 int
-solve_submitJob(diet_profile_t* pb);
+solveSubmitJob(diet_profile_t* pb);
 
 /* cancelJob */
 int
-solve_cancelJob(diet_profile_t* pb);
+solveCancelJob(diet_profile_t* pb);
+
+/* listQueues */
+int
+solveListOfQueues(diet_profile_t* pb);
 #endif
