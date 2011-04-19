@@ -1,5 +1,5 @@
 /**
- * \file internalTMSAPI.cpp 
+ * \file internalTMSAPI.cpp
  * \brief This file contains the VISHNU internal TMS API function.
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April 2011
@@ -44,8 +44,7 @@ using namespace vishnu;
  */
 /* submitJob */
 int
-solveSubmitJob(diet_profile_t* pb)
-{
+solveSubmitJob(diet_profile_t* pb) {
 
   char* sessionKey = NULL;
   char* machineId = NULL;
@@ -55,35 +54,46 @@ solveSubmitJob(diet_profile_t* pb)
   char* script_content = NULL;
   std::string empty("");
   std::string errorInfo ="";
+  int mapperkey;
+  std::string cmd = "";
+
 
   cout << "Solve submitJob " << endl;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
-  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  cout << "************machineId=" << machineId << " ..." << endl;
-  diet_string_get(diet_parameter(pb,2), &script_content, NULL);
-  cout << "************script_content=" << script_content << " ..." << endl;
-  diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
-  cout << "************options=" << submitOptionsSerialized << " ..." << endl;
-  diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
-  cout << "************job=" << jobSerialized << " ..." << endl;
 
-  std::cout << "The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
-  std::cout << "The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+    diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+    cout << "************sessionKey=" << sessionKey << " ..." << endl;
+    diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+    cout << "************machineId=" << machineId << " ..." << endl;
+    diet_string_get(diet_parameter(pb,2), &script_content, NULL);
+    cout << "************script_content=" << script_content << " ..." << endl;
+    diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
+    cout << "************options=" << submitOptionsSerialized << " ..." << endl;
+    diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
+    cout << "************job=" << jobSerialized << " ..." << endl;
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
-  TMS_Data::Job_ptr job = NULL;
-  TMS_Data::SubmitOptions_ptr submitOptions = NULL;
+    std::cout << "The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
+    std::cout << "The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+    SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  try {
+    try {
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_submit_job");
+    mapper->code(std::string(machineId), mapperkey);
+    mapper->code(std::string(submitOptionsSerialized), mapperkey);
+    mapper->code(std::string(jobSerialized), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    TMS_Data::Job_ptr job = NULL;
+    TMS_Data::SubmitOptions_ptr submitOptions = NULL;
 
     if(!vishnu::parseTMSEmfObject(std::string(jobSerialized), job)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: Job object is not well built");  
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: Job object is not well built");
     }
 
     if(!vishnu::parseTMSEmfObject(std::string(submitOptionsSerialized), submitOptions)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: SubmitOptions object is not well built"); 
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: SubmitOptions object is not well built");
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getBatchType());
@@ -96,11 +106,14 @@ solveSubmitJob(diet_profile_t* pb)
 
     diet_string_set(diet_parameter(pb,5), updateJobSerialized, DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
+    sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
   } catch (VishnuException& e) {
+    sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
     errorInfo =  e.buildExceptionString();
     std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
+
   }
 
   cout << " done" << endl;

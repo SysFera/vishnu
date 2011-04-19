@@ -319,7 +319,7 @@ SessionServer::check() {
 */
 
 int
-SessionServer::finish(const std::string& cmdDescription,
+SessionServer::finish(std::string cmdDescription,
                       CmdType cmdType,
                       CmdStatus cmdStatus,
                       std::string newVishnuObjectID) {
