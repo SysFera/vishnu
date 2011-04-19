@@ -339,6 +339,8 @@ CREATE TABLE command (
   endtime TIMESTAMP    ,
   description VARCHAR2(1000)    ,
   ctype BINARY_FLOAT      ,
+  status INTEGER     ,
+  vishnuobjectid VARCHAR2(255),
 PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);

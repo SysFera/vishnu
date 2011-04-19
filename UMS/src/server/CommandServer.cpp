@@ -45,21 +45,28 @@ CommandServer::getCommand() {
 
 /**
 * \brief Function to record the command on the database
-* \fn int save()
+* \param cmdType The type of the command (UMS, TMS, FMS, IMS)
+* \param cmdStatus The status of the command
+* \param newVishnuObjectID the new vishnu object Id
+* \param startTime The start time of command
+* \param endTime The end time of command
 * \return raises an exception on error
 */
 int
 CommandServer::record(CmdType cmdType,
+                      CmdStatus cmdStatus,
+                      std::string newVishnuObjectID,
                       std::string startTime,
                       std::string endTime) {
 
   std::string sqlCmd = std::string("insert into command (vsession_numsessionid, starttime,"
-  "endtime, description, ctype) values (");
+  "endtime, description, ctype, status, vishnuobjectid) values (");
 
   sqlCmd.append(msessionServer.getAttribut("WHERE "
   "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
-  sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+")");
+  sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+","+
+                convertToString(cmdStatus)+", '"+newVishnuObjectID+"'"+ ")");
 
   mdatabaseVishnu->process(sqlCmd.c_str());
   return 0;
