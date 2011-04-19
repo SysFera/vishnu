@@ -33,7 +33,7 @@ macro( tms_test NAME )
     add_executable( ${NAME}
       "${NAME}.cpp"
       #entry point
-    TestRunner.cpp 
+    TestRunner.cpp
     tmsTestUtils.cpp)
     include_directories( ${Boost_INCLUDE_DIRS}
       ${DIET_INCLUDE_DIR}
@@ -88,7 +88,7 @@ macro( tms_test NAME )
 	-DVISHNU_CONFIG=${UMS_TEST_DIR}/client.cfg
         -DREPORT_PATH=${REPORT_OUTPUT_PATH}
         -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
-      add_dependencies( test-xml ${NAME}-xml )
+      add_dependencies( tms_test-xml ${NAME}-xml )
     endif()
 endmacro()
 

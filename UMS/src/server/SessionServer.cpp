@@ -310,6 +310,29 @@ SessionServer::check() {
 }
 
 /**
+* \brief Function to finalize the service
+* \param cmdDescritpion The description of the command
+* \param cmdType The type of the command (UMS, TMS, FMS, IMS)
+* \param cmdStatus The status of the command
+* \param newVishnuObjectID the new vishnu object
+* \return raises an exception on error
+*/
+
+int
+SessionServer::finish(std::string cmdDescription,
+                      CmdType cmdType,
+                      CmdStatus cmdStatus,
+                      std::string newVishnuObjectID) {
+
+  //To save the date of the last connection
+  saveConnection();
+  //To save the command
+  CommandServer commandServer = CommandServer(cmdDescription, *this);
+  commandServer.record(cmdType, cmdStatus, newVishnuObjectID);
+}
+
+
+/**
 * \brief Function to generate the session key
 * \fn    int generateSessionKey(std::string salt)
 * \param salt This string is used to perturb the algorithm
