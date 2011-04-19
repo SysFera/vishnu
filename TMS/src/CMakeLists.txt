@@ -6,7 +6,6 @@ if (NOT CLIENT_ONLY)
 endif (NOT CLIENT_ONLY)
 
 add_subdirectory(utils)
-add_subdirectory(utils/emfdata)
 add_subdirectory(api)
 add_subdirectory(client)
 add_subdirectory(cli)
