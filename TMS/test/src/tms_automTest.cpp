@@ -23,6 +23,9 @@ BOOST_GLOBAL_FIXTURE(TMSFixture)
 
 BOOST_AUTO_TEST_SUITE(submit_a_job)
 
+const string jobOutputPath = TMSWORKINGDIR "/output.txt";
+const string jobErrorPath = TMSWORKINGDIR "/error.txt";
+
   // submit a job: normal call
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
@@ -45,8 +48,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions subOptions;
-  subOptions.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  subOptions.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  subOptions.setOutputPath(jobOutputPath);
+  subOptions.setErrorPath(jobErrorPath);
 
   BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
@@ -82,8 +85,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_CHECK_THROW(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,VishnuException );
 }
@@ -107,9 +110,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
 
   BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
@@ -135,8 +137,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/bad_torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
 
@@ -160,8 +162,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_path)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
 
@@ -174,6 +176,9 @@ BOOST_AUTO_TEST_SUITE_END()
 // T2.2 : cancel a job
 
 BOOST_AUTO_TEST_SUITE(cancel_a_job)
+
+const string jobOutputPath = TMSWORKINGDIR "/output.txt";
+const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   // submit a job: normal call
 
@@ -197,8 +202,8 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
@@ -239,8 +244,8 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
 
@@ -273,9 +278,8 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
 
@@ -335,8 +339,8 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_REQUIRE_EQUAL( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0 );
 
@@ -512,6 +516,9 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( get_job_information)
 
+const string jobOutputPath = TMSWORKINGDIR "/output.txt";
+const string jobErrorPath = TMSWORKINGDIR "/error.txt";
+
   //  get job information: normal call
 
 BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
@@ -534,8 +541,8 @@ BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
@@ -574,8 +581,8 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+  options.setOutputPath(jobOutputPath);
+  options.setErrorPath(jobErrorPath);
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
 
@@ -609,8 +616,8 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath("/home/ibrahima/Brouillon/JobOutput/error.txt");
-  options.setErrorPath("/home/ibrahima/Brouillon/JobOutput/output.txt");
+  options.setOutputPath(jobErrorPath);
+  options.setErrorPath(jobOutputPath);
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
 
