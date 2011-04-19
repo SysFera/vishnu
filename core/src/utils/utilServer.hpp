@@ -208,13 +208,13 @@ namespace vishnu {
    * \param msgComp an exception message
    * \return  true if success else false
    */
-  template<class T>
+  template<class P, class T>
   bool parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
 
     object_ptr = NULL;
     try {
       //CREATE DATA MODEL
-      UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+      P * ecorePackage = P::_instance();
       ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 
       //Parse the model
