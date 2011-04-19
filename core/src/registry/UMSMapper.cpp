@@ -296,7 +296,7 @@ UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){
   LocalAccount_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -328,7 +328,7 @@ UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
   LocalAccount_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -390,7 +390,7 @@ UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){
   Configuration_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -413,7 +413,7 @@ UMSMapper::decodeAddM(vector<int> separator, const string& msg){
   Machine_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -443,7 +443,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
   Machine_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -509,7 +509,7 @@ UMSMapper::decodeListAcc(vector<int> separator, const string& msg){
   ListLocalAccOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -544,7 +544,7 @@ UMSMapper::decodeListM(vector<int> separator, const string& msg){
   ListMachineOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -581,7 +581,7 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
   ListCmdOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -630,7 +630,7 @@ UMSMapper::decodeListOp(vector<int> separator, const string& msg){
   ListOptOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -681,7 +681,7 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
   ListSessionOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -751,7 +751,7 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
   OptionValue_ptr opt = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(u)), opt)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(u)), opt)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -792,7 +792,7 @@ UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
   OptionValue_ptr opt = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(u)), opt)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(u)), opt)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -827,7 +827,7 @@ UMSMapper::getU(string serial){
   User_ptr user = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(serial)), user)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(serial)), user)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
@@ -871,7 +871,7 @@ UMSMapper::getUupdate(string serial){
   User_ptr user = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(serial)), user)) {
+  if(!parseEmfObject<UMS_DataPackage>(std::string(std::string(serial)), user)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
