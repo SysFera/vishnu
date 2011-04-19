@@ -218,22 +218,33 @@ PRIMARY KEY(numfileid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
-
-
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  command_numcommandid INTEGER   NOT NULL ,
-  jobid VARCHAR(255)    ,
-  state INTEGER    ,
-  path VARCHAR(255)    ,
-  outputpath VARCHAR(255)    ,
-  errorpath VARCHAR(255)    ,
-  submitdir VARCHAR(255)      ,
+  vsession_numsessionid INTEGER   NOT NULL ,  
+  submitMachineId VARCHAR(255),
+  submitMachineName VARCHAR(255),
+  jobId VARCHAR(255),
+  jobName VARCHAR(255),
+  jobPath VARCHAR(255),
+  outputPath VARCHAR(255),
+  errorPath VARCHAR(255),  
+  jobPrio INTEGER,
+  nbCpus INTEGER,
+  jobWorkingDir VARCHAR(255),
+  status INTEGER,
+  submitDate TIMESTAMP,
+  endDate TIMESTAMP,
+  owner VARCHAR(255),
+  jobQueue VARCHAR(255),
+  wallClockLimit INTEGER,
+  groupName VARCHAR(255),
+  jobDescription VARCHAR(255),
+  memLimit INTEGER,
+  nbNodes INTEGER,
+  nbNodesAndCpuPerNode VARCHAR(255),
 PRIMARY KEY(numjobid),
-  FOREIGN KEY(command_numcommandid)
-    REFERENCES command(numcommandid));
-
-
+    FOREIGN KEY(vsession_numsessionid)
+    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
 -- Role Creation;
 
