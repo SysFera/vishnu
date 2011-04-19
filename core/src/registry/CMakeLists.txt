@@ -22,4 +22,11 @@ ADD_LIBRARY(register-vishnu STATIC
   IMSMapper.cpp
   TMSMapper.cpp
   )
+
+target_link_libraries(register-vishnu
+tms-utils-cli
+utils-vishnu
+vishnu-tms-api
+)
+
 SET_TARGET_PROPERTIES(register-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")

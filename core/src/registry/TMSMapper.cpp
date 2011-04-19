@@ -22,7 +22,7 @@ TMSMapper::~TMSMapper(){
 
 TMSMapper::TMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<int, string>(VISHNU_SUBMITJOB, "submitJob"));
+  mmap.insert (pair<int, string>(VISHNU_SUBMITJOB, "vishnu_submit_job"));
   mmap.insert (pair<int, string>(VISHNU_GETJOBINFO, "getJobInfo"));
   mmap.insert (pair<int, string>(VISHNU_GETJOBPROG, "getJobProgress"));
   mmap.insert (pair<int, string>(VISHNU_LISTQUEUES, "listQueues"));
@@ -169,21 +169,24 @@ TMSMapper::decode (const string& msg){
 
 string
 TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
+  cout << "dans le decode submit " << endl;
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_SUBMITJOB))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  cout << "machineid = " << u << endl;
   res += u;
-  res+= " ";
-  u    = msg.substr(separator.at(1)+1, separator.at(1)-2);
-  res += u;
-  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
+//  res+= " ";
+  u    = msg.substr(separator.at(1)+1, separator.at(2)-2);
+    cout << "option = " << u << endl;
+  //  res += u;
+//  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   TMS_Data::SubmitOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(u)), ac)) {
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM);
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "option: "+u);
   }
 
   u = ac->getName();
@@ -226,7 +229,19 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " -e ";
     res += u;
   }
+  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(3));
+  TMS_Data::Job_ptr j = NULL;
 
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(u)), j)) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "job: "+u);
+  }
+  u = j->getJobPath();
+    cout << "jobpath = " << u << endl;
+  if (u.compare("")){
+    res += u;
+  }
+  cout << "chaine decodee :" << res << endl;
   return res;
 }
 
