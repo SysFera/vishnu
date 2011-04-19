@@ -47,6 +47,7 @@ namespace vishnu {
 
   static const std::string ROOTUSERNAME = "root";
   static const std::string UMSMAPPERNAME = "UMS";
+  static const std::string TMSMAPPERNAME = "TMS";
   static const int PASSWORD_MAX_SIZE = 8;
   /**
   * \brief Generic function to convert an object to string
