@@ -149,7 +149,7 @@ solveSessionClose(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
@@ -207,7 +207,7 @@ solveUserCreate(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //To serialize the user object
     const char* name = "solveUserCreate";
@@ -274,7 +274,7 @@ solveUserUpdate(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -328,7 +328,7 @@ solveUserDelete(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -416,7 +416,7 @@ solveUserPasswordReset(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup((user.getPassword()).c_str()), DIET_VOLATILE);
@@ -477,7 +477,7 @@ solveMachineCreate(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //To serialize the user object
     const char* name = "solveMachineCreate";
@@ -541,7 +541,7 @@ solveMachineUpdate(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -594,7 +594,7 @@ solveMachineDelete(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -652,7 +652,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,2), strdup(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
@@ -711,7 +711,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -768,7 +768,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
@@ -822,7 +822,7 @@ solveConfigurationSave(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameters
     diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
@@ -881,7 +881,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -938,7 +938,7 @@ solveOptionValueSet(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -994,7 +994,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     //OUT Parameter
     diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
@@ -1055,7 +1055,7 @@ solveGenerique(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     const char* name = "list";
     ::ecorecpp::serializer::serializer _ser(name);
@@ -1119,7 +1119,7 @@ solveListUsers(diet_profile_t* pb) {
 
     //COMMAND REGISTRATION
     CommandServer commandServer = CommandServer(cmd, sessionServer);
-    commandServer.record(UMS);
+    commandServer.record(UMS, vishnu::CMDSUCCESS);
 
     const char* name = "listUsers";
     ::ecorecpp::serializer::serializer _ser(name);
