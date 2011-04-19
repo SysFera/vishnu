@@ -16,6 +16,7 @@ ServerTMS *ServerTMS::minstance = NULL;
 BatchType ServerTMS::mbatchType = UNDEFINED;
 std::string ServerTMS::mmachineId = "";
 Database *ServerTMS::mdatabaseVishnu = NULL;
+TMSMapper *ServerTMS::mmapper = NULL;
 
 /**
  * \brief To get the unique instance of the server
@@ -83,17 +84,19 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
   // initialization of the service table
   diet_service_table_init(NB_SRV);
 
-
   DbFactory factory;
 
    try {
     mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
- 
+
     //initialization of vishnuId
     mvishnuId = vishnuId;
-  
+
     /*connection to the database*/
     mdatabaseVishnu->connect();
+
+    mmapper = new TMSMapper(MapperRegistry::getInstance(), vishnu::TMSMAPPERNAME);
+    mmapper->registerMapper();
 
     std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
@@ -158,5 +161,10 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
 * \brief Destructor, raises an exception on error
 */
 ServerTMS::~ServerTMS() {
-
+  if (mmapper != NULL) {
+    delete mmapper;
+  }
+  if (mdatabaseVishnu != NULL) {
+    delete mdatabaseVishnu;
+  }
 }

@@ -13,13 +13,15 @@
 #include "DIET_server.h"
 #include "DbConfiguration.hpp"
 #include "utilVishnu.hpp"
+#include "TMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 class Database;
 
 /**
  *  * \brief Number of service in TMS
  *   */
-#define NB_SRV 3 
+#define NB_SRV 3
 
 static const char* SERVICES[NB_SRV] = {
   "jobSubmit_",
@@ -114,5 +116,9 @@ private :
   * \brief Instance of Database
   */
   static Database *mdatabaseVishnu;
+  /**
+  * \brief Instance of TMSMapper
+  */
+  static TMSMapper *mmapper;
 };
 #endif // SERVER
