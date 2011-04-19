@@ -117,6 +117,7 @@ BOOST_AUTO_TEST_CASE( my_test )
 
   BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
 
+try {
 
   // Connect normal call
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
@@ -860,6 +861,10 @@ BOOST_AUTO_TEST_CASE( my_test )
 
   BOOST_REQUIRE(restore    (sqlScript+"/cleanall.sql")==0);
   BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
+
+} catch (VishnuException& e) {
+  std::cout << e.what();
 }
+} // BOOST_AUTO_TEST_CASE( my_test )
 
 BOOST_AUTO_TEST_SUITE_END()
