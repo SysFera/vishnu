@@ -6,7 +6,11 @@
  */
 
 #include "TMSMapper.hpp"
+#include "TMS_Data.hpp"
+#include "TMS_Data_forward.hpp"
 #include "utilVishnu.hpp"
+#include "TMSVishnuException.hpp"
+#include "utilServer.hpp"
 
 using namespace vishnu;
 
@@ -165,7 +169,65 @@ TMSMapper::decode (const string& msg){
 
 string
 TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
-  return "";
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_SUBMITJOB))->second;
+  res+= " ";
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res += u;
+  res+= " ";
+  u    = msg.substr(separator.at(1)+1, separator.at(1)-2);
+  res += u;
+  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
+  TMS_Data::SubmitOptions_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(u)), ac)) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+
+  u = ac->getName();
+  if (u.compare("")){
+    res += " -n ";
+    res += u;
+  }
+  u = ac->getQueue();
+  if (u.compare("")){
+    res += " -q ";
+    res += u;
+  }
+  u = ac->getWallTime();
+  if (u.compare("")){
+    res += " -t ";
+    res += u;
+  }
+  u = ac->getMemory();
+  if (u.compare("")){
+    res += " -m ";
+    res += u;
+  }
+  u = ac->getNbCpu();
+  if (u.compare("")){
+    res += " -P ";
+    res += u;
+  }
+  u = ac->getNbNodesAndCpuPerNode();
+  if (u.compare("")){
+    res += " -N ";
+    res += u;
+  }
+  u = ac->getOutputPath();
+  if (u.compare("")){
+    res += " -o ";
+    res += u;
+  }
+  u = ac->getErrorPath();
+  if (u.compare("")){
+    res += " -e ";
+    res += u;
+  }
+
+  return res;
 }
 
 string
