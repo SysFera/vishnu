@@ -15,6 +15,9 @@
 #define NB_SRV 25
 #include "DIET_server.h"
 #include "UMSMapper.hpp"
+#include "TMSMapper.hpp"
+#include "FMSMapper.hpp"
+#include "IMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
 
@@ -129,5 +132,17 @@ private :
   * \brief Instance of UMSMapper
   */
   static UMSMapper *mmapper;
+  /**
+  * \brief Instance of UMSMapper
+  */
+  static TMSMapper *mmapperTMS;
+  /**
+  * \brief Instance of UMSMapper
+  */
+  static FMSMapper *mmapperFMS;
+  /**
+  * \brief Instance of UMSMapper
+  */
+  static IMSMapper *mmapperIMS;
 };
 #endif // SERVERUMS

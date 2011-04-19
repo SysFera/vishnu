@@ -119,9 +119,6 @@ public:
     std::vector<std::string> results;
     std::string description;
 
-    //MAPPER CREATION
-    Mapper* mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-
     sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from "
                          " vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and "
                          " vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";
@@ -148,9 +145,12 @@ public:
           ii = results.begin();
 
           UMS_Data::Command_ptr command = ecoreFactory->createCommand();
-          command->setCommandId(convertCmdType(static_cast<CmdType>(convertToInt(*ii))));
+          CmdType currentCmdType = static_cast<CmdType>(convertToInt(*ii));
+          command->setCommandId(convertCmdType(static_cast<CmdType>(currentCmdType)));
           command->setSessionId(*(++ii));
           command->setMachineId(*(++ii));
+          //MAPPER CREATION
+          Mapper* mapper = MapperRegistry::getInstance()->getMapper(convertypetoMapperName(currentCmdType));
           description = mapper->decode(*(++ii));
           command->setCmdDescription(description);
           command->setCmdStartTime(convertToTimeType(*(++ii)));
@@ -202,6 +202,33 @@ public:
          break;
     }
     return cmd;
+  }
+
+  /**
+   * \brief To convert the command type to the corresponding Mapper name
+   * \fn std::string convertCmdType(CmdType type)
+   * \param type The type to convert
+   * \return The corresponding mapper name
+   */
+  std::string
+  convertypetoMapperName(CmdType type) {
+
+    std::string mapperName;
+    switch(type) {
+      case UMS :
+         mapperName = UMSMAPPERNAME;
+         break;
+      case TMS :
+         mapperName = TMSMAPPERNAME;
+         break;
+      case FMS :
+         mapperName = FMSMAPPERNAME;
+         break;
+      case IMS :
+         mapperName = IMSMAPPERNAME;
+         break;
+    }
+    return mapperName;
   }
 
   /**
