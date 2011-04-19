@@ -11,6 +11,7 @@
 #include "utilVishnu.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilServer.hpp"
+#include "emfTMSUtils.hpp"
 
 using namespace vishnu;
 
@@ -83,6 +84,7 @@ TMSMapper::code(const string& cmd, unsigned int code){
       throw new SystemException(ERRCODE_SYSTEM, "Error wrong code to build command: "+cmd);
     }
     it->second += "#";
+    // If empty param value
     if (cmd.compare("")==0){
       it->second += " ";
     }else {
@@ -169,24 +171,21 @@ TMSMapper::decode (const string& msg){
 
 string
 TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
-  cout << "dans le decode submit " << endl;
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_SUBMITJOB))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  cout << "machineid = " << u << endl;
   res += u;
 //  res+= " ";
-  u    = msg.substr(separator.at(1)+1, separator.at(2)-2);
-    cout << "option = " << u << endl;
+  u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-2);
   //  res += u;
 //  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   TMS_Data::SubmitOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(u)), ac)) {
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "option: "+u);
+  if(!vishnu::parseTMSEmfObject(u, ac)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
 
   u = ac->getName();
@@ -199,22 +198,22 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " -q ";
     res += u;
   }
-  u = ac->getWallTime();
+  u = convertToString(ac->getWallTime());
   if (u.compare("")){
     res += " -t ";
     res += u;
   }
-  u = ac->getMemory();
+  u = convertToString(ac->getMemory());
   if (u.compare("")){
     res += " -m ";
     res += u;
   }
-  u = ac->getNbCpu();
+  u = convertToString(ac->getNbCpu());
   if (u.compare("")){
     res += " -P ";
     res += u;
   }
-  u = ac->getNbNodesAndCpuPerNode();
+  u = convertToString(ac->getNbNodesAndCpuPerNode());
   if (u.compare("")){
     res += " -N ";
     res += u;
@@ -229,19 +228,18 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " -e ";
     res += u;
   }
-  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(3));
+  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
   TMS_Data::Job_ptr j = NULL;
 
   //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(u)), j)) {
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "job: "+u);
+  if(!parseTMSEmfObject(u, j)) {
+    throw SystemException(ERRCODE_INVMAPPER, "job: "+u);
   }
   u = j->getJobPath();
-    cout << "jobpath = " << u << endl;
   if (u.compare("")){
+    res += " ";
     res += u;
   }
-  cout << "chaine decodee :" << res << endl;
   return res;
 }
 
