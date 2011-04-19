@@ -140,7 +140,7 @@ public:
   * \return raises an exception on error
   */
   int
-  finish (const std::string& cmdDescription,
+  finish (std::string cmdDescription,
           CmdType cmdType,
           CmdStatus cmdStatus,
           std::string newVishnuObjectID = "");
