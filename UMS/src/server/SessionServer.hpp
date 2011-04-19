@@ -27,6 +27,7 @@
 #include "MachineClientServer.hpp"
 #include "OptionValueServer.hpp"
 #include "utilVishnu.hpp"
+#include "utilServer.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
 
@@ -130,6 +131,19 @@ public:
   */
   int
   check();
+  /**
+  * \brief Function to finalize the service
+  * \param cmdDescritpion The description of the command
+  * \param cmdType The type of the command (UMS, TMS, FMS, IMS)
+  * \param cmdStatus The status of the command
+  * \param newVishnuObjectID the new vishnu object Id
+  * \return raises an exception on error
+  */
+  int
+  finish (const std::string& cmdDescription,
+          CmdType cmdType,
+          CmdStatus cmdStatus,
+          std::string newVishnuObjectID = "");
 
   private:
   /////////////////////////////////
