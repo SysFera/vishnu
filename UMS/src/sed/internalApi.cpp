@@ -143,7 +143,7 @@ solveSessionClose(diet_profile_t* pb) {
     sessionServer.close();
 
     //MAPPER CREATION
-      Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_close");
     cmd = mapper->finalize(mapperkey);
 
