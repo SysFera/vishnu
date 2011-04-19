@@ -13,17 +13,6 @@
 #include "SessionServer.hpp"
 
 /**
-* \enum CmdType
-* \brief The type of the command
-*/
-typedef enum {
-  UMS = 0,/*!< For UMS command type */
-  TMS = 1,/*!< For TMS command type */
-  FMS = 2,/*!< For FMS command type */
-  IMS = 3/*!< For IMS command type */
-} CmdType;
-
-/**
 * \class CommandServer
 * \brief CommandServer class implementation
 */
@@ -51,14 +40,17 @@ public:
   getCommand();
   /**
   * \brief Function to record the command on the database
-  * \fn int record(CmdType cmdType, std::string startTime = "CURRENT_TIMESTAMP", std::string endTime = "CURRENT_TIMESTAMP")
   * \param cmdType The type of the command (UMS, TMS, FMS, IMS)
+  * \param cmdStatus The status of the command
+  * \param newVishnuObjectID the new vishnu object Id
   * \param startTime The start time of command
   * \param endTime The end time of command
   * \return raises an exception on error
   */
 	int
 	record(CmdType cmdType,
+         vishnu::CmdStatus cmdStatus,
+         std::string newVishnuObjectID = " ",
          std::string startTime = "CURRENT_TIMESTAMP",
          std::string endTime = "CURRENT_TIMESTAMP");
   /**
