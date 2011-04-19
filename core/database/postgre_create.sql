@@ -180,6 +180,8 @@ CREATE TABLE command (
   endtime TIMESTAMP    ,
   description TEXT    ,
   ctype INTEGER      ,
+  status INTEGER     ,
+  vishnuobjectid VARCHAR(255),
 PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
