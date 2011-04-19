@@ -13,7 +13,6 @@
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
 
-
 /**
 * \brief Function to get a random number
 * \fn    int isMonth (const char * s)
@@ -294,3 +293,4 @@ vishnu::getObjectId(int vishnuId,
   }
   return idGenerated;
 }
+
