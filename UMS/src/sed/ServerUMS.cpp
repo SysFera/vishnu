@@ -11,6 +11,10 @@
 Database *ServerUMS::mdatabaseVishnu = NULL;
 ServerUMS *ServerUMS::minstance = NULL;
 UMSMapper *ServerUMS::mmapper = NULL;
+TMSMapper *ServerUMS::mmapperTMS = NULL;
+FMSMapper *ServerUMS::mmapperFMS = NULL;
+IMSMapper *ServerUMS::mmapperIMS = NULL;
+
 /**
  * \brief To get the unique instance of the server
  */
@@ -74,8 +78,12 @@ ServerUMS::init(int vishnuId,
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
-
-    //UMSMapper* mapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
+    mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
+    mmapperTMS->registerMapper();
+    mmapperIMS = new IMSMapper(MapperRegistry::getInstance(), IMSMAPPERNAME);
+    mmapperIMS->registerMapper();
+    mmapperFMS = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
+    mmapperFMS->registerMapper();
     mmapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
     mmapper->registerMapper();
 
