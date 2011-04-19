@@ -57,26 +57,24 @@ solveSubmitJob(diet_profile_t* pb) {
   int mapperkey;
   std::string cmd = "";
 
-
   cout << "Solve submitJob " << endl;
 
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  cout << "************machineId=" << machineId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,2), &script_content, NULL);
+  cout << "************script_content=" << script_content << " ..." << endl;
+  diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
+  cout << "************options=" << submitOptionsSerialized << " ..." << endl;
+  diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
+  cout << "************job=" << jobSerialized << " ..." << endl;
 
-    diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-    cout << "************sessionKey=" << sessionKey << " ..." << endl;
-    diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-    cout << "************machineId=" << machineId << " ..." << endl;
-    diet_string_get(diet_parameter(pb,2), &script_content, NULL);
-    cout << "************script_content=" << script_content << " ..." << endl;
-    diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
-    cout << "************options=" << submitOptionsSerialized << " ..." << endl;
-    diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
-    cout << "************job=" << jobSerialized << " ..." << endl;
+  std::cout << "The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
+  std::cout << "The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-    std::cout << "The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
-    std::cout << "The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
-    SessionServer sessionServer = SessionServer(std::string(sessionKey));
-
-    try {
+  try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_submit_job");
@@ -113,7 +111,6 @@ solveSubmitJob(diet_profile_t* pb) {
     std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
-
   }
 
   cout << " done" << endl;
