@@ -863,7 +863,8 @@ try {
   BOOST_REQUIRE(restore    (sqlScript+"/initTest.sql")==0);
 
 } catch (VishnuException& e) {
-  std::cout << e.what();
+  BOOST_MESSAGE(e.what());
+  BOOST_CHECK(false);
 }
 } // BOOST_AUTO_TEST_CASE( my_test )
 
