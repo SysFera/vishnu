@@ -24,10 +24,11 @@ ADD_LIBRARY(register-vishnu STATIC
   TMSMapper.cpp
   )
 
+# Register is linked to all VISHNU modules due to serialized storage
+# of command parameters that are used to display the command history
 target_link_libraries(register-vishnu
-tms-utils-cli
-utils-vishnu
-vishnu-tms-api
+  emf4cpp-UMS_Data
+  emf4cpp-TMS_Data
 )
 
 SET_TARGET_PROPERTIES(register-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")

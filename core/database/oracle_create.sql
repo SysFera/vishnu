@@ -416,17 +416,33 @@ END;
 -- Table for jobs
 
 CREATE TABLE job (
-  numjobid BINARY_FLOAT   NOT NULL ,
-  command_numcommandid BINARY_FLOAT   NOT NULL ,
-  jobid VARCHAR2(255)    ,
-  state BINARY_FLOAT    ,
-  path VARCHAR2(255)    ,
-  outputpath VARCHAR2(255)    ,
-  errorpath VARCHAR2(255)    ,
-  submitdir VARCHAR2(255)      ,
+  numjobid SERIAL  NOT NULL ,
+  vsession_numsessionid BINARY_FLOAT   NOT NULL ,  
+  submitMachineId VARCHAR2(255),
+  submitMachineName VARCHAR2(255),
+  jobId VARCHAR2(255),
+  jobName VARCHAR2(255),
+  jobPath VARCHAR2(255),
+  outputPath VARCHAR2(255),
+  errorPath VARCHAR2(255),  
+  jobPrio BINARY_FLOAT,
+  nbCpus BINARY_FLOAT,
+  jobWorkingDir VARCHAR2(255),
+  status BINARY_FLOAT,
+  submitDate TIMESTAMP,
+  endDate TIMESTAMP,
+  owner VARCHAR2(255),
+  jobQueue VARCHAR2(255),
+  wallClockLimit BINARY_FLOAT,
+  groupName VARCHAR2(255),
+  jobDescription VARCHAR2(255),
+  memLimit BINARY_FLOAT,
+  nbNodes BINARY_FLOAT,
+  nbNodesAndCpuPerNode VARCHAR2(255),
 PRIMARY KEY(numjobid),
-  FOREIGN KEY(command_numcommandid)
-    REFERENCES command(numcommandid));
+    FOREIGN KEY(vsession_numsessionid)
+    REFERENCES vsession(numsessionid) ON DELETE CASCADE);
+
 
 CREATE SEQUENCE s_job;
 
