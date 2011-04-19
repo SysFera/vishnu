@@ -11,7 +11,6 @@
 #include "ecore.hpp" // Ecore metamodel
 #include "ecorecpp.hpp" // EMF4CPP utils
 #include "UMS_Data.hpp"
-//#include "TMS_Data.hpp"
 
 /**
 * \class Format_t
@@ -46,6 +45,25 @@ namespace vishnu {
     JOB = 2, /*!< For the jobs */
     FILETRANSFERT = 3  /*!< For the file tranfers*/
   } IdType;
+  /**
+   * \enum cmdStatus
+   * \brief The status of the command execution
+   */
+  typedef enum{
+    CMDFAILED = 0, /*!< command failed */
+    CMDSUCCESS = 1,/*!< command success */
+  } CmdStatus;
+
+  /**
+  * \enum CmdType
+  * \brief The type of the command
+  */
+  typedef enum {
+    UMS = 0,/*!< For UMS command type */
+    TMS = 1,/*!< For TMS command type */
+    FMS = 2,/*!< For FMS command type */
+    IMS = 3/*!< For IMS command type */
+  } CmdType;
 
   /**
    * \brief Return true if the string starts with 'MONTH'
