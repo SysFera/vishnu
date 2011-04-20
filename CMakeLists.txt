@@ -170,6 +170,7 @@ if(COMPILE_UMS)
   add_subdirectory(UMS/doc/man)
   if (BUILD_TESTING)
     add_subdirectory(UMS/test/src)
+    set(UMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/test/src)
   endif (BUILD_TESTING)
 endif (COMPILE_UMS)
 

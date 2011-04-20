@@ -13,13 +13,14 @@
 #include "TMS_Data.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
+#include "SystemException.hpp"
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
-#include "SystemException.hpp"
+#include "ServerTMS.hpp"
+
 
 const std::string TMS_SERVER_FILES_DIR="/tmp";
-const std::string DEFAULT_SLAVE_EXECUTABLE_DIR = "/tmp";
 
 SSHJobExec::SSHJobExec() {
   mscript_path = NULL;
@@ -124,7 +125,7 @@ int SSHJobExec::sshexec(const std::string& action) {
   std::ostringstream cmd;
   cmd << "ssh -l " << muser << " " << mhostname << " ";
   //cmd << "/usr/bin/ssh localhost ";
-  cmd << DEFAULT_SLAVE_EXECUTABLE_DIR << "/tmsSlave ";
+  cmd << ServerTMS::getSlaveDirectory() << "/tmsSlave ";
   cmd << action << " ";
   cmd << convertBatchTypeToString(mbatchType) << " ";
   cmd << jobSerializedPath << " " <<  errorPath << " ";
