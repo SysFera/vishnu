@@ -16,6 +16,7 @@
 
 #include "SessionServer.hpp"
 #include "DbFactory.hpp"
+#include "UMSVishnuException.hpp"
 
 /**
  * \class QueryServer
@@ -168,7 +169,7 @@ public:
    */
   void checkUserId(std::string userId) {
     std::string sqlUserRequest = "SELECT userid from users where userid='"+userId+"'";
-    DatabaseResult *user = mdatabaseVishnu->getResult(sqlUserRequest.c_str());
+    boost::scoped_ptr<DatabaseResult> user(mdatabaseVishnu->getResult(sqlUserRequest.c_str()));
     if(user->getNbTuples()==0) {
        throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
     }
@@ -181,7 +182,7 @@ public:
    */
   void checkMachineId(std::string machineId) {
     std::string sqlMachineRequest = "SELECT machineid from machine where machineid='"+machineId+"'";
-    DatabaseResult *machine = mdatabaseVishnu->getResult(sqlMachineRequest.c_str());
+    boost::scoped_ptr<DatabaseResult> machine(mdatabaseVishnu->getResult(sqlMachineRequest.c_str()));
     if(machine->getNbTuples()==0) {
        throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
     }
@@ -194,7 +195,7 @@ public:
    */
   void checkClientMachineName(std::string clmachineId) {
     std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
-    DatabaseResult *clmachine = mdatabaseVishnu->getResult(sqlclMachineRequest.c_str());
+    boost::scoped_ptr<DatabaseResult> clmachine(mdatabaseVishnu->getResult(sqlclMachineRequest.c_str()));
     if(clmachine->getNbTuples()==0) {
        throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
     }
@@ -208,7 +209,7 @@ public:
    */
   void checkOptionName(std::string name) {
     std::string sqlNameRequest = "SELECT description from optionu where description='"+name+"'";
-    DatabaseResult *nameResults = mdatabaseVishnu->getResult(sqlNameRequest.c_str());
+    boost::scoped_ptr<DatabaseResult> nameResults(mdatabaseVishnu->getResult(sqlNameRequest.c_str()));
     if(nameResults->getNbTuples()==0) {
        throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
     }
@@ -221,7 +222,7 @@ public:
    */
   void checkSessionId(std::string sessionId) {
     std::string sqlSessionRequest = "SELECT vsessionid from vsession where vsessionid='"+sessionId+"'";
-    DatabaseResult *session = mdatabaseVishnu->getResult(sqlSessionRequest.c_str());
+    boost::scoped_ptr<DatabaseResult> session(mdatabaseVishnu->getResult(sqlSessionRequest.c_str()));
     if(session->getNbTuples()==0) {
        throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
     }
