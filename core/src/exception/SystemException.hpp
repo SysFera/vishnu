@@ -16,6 +16,7 @@ static const int ERRCODE_SYSTEM = 4;
 static const int ERRCODE_INVCOMP = 5;
 static const int ERRCODE_INVMAPPER = 6;
 static const int ERRCODE_INVEXCEP = 7;
+static const int ERRCODE_INVDATA = 8;
 
 
 /**
