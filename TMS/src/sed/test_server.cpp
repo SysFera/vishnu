@@ -11,7 +11,6 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 
 #include "TMS_Data.hpp"
-#include "emfTMSUtils.hpp"
 
 #include "DIET_server.h"
 #include "DIET_Dagda.h"
@@ -117,7 +116,7 @@ solve_submitJob(diet_profile_t* pb)
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
   //To parse the object serialized
 
-  if(!parseTMSEmfObject(std::string(options), submitOptions)) {
+  if(!parseEmfObject(std::string(options), submitOptions)) {
      cout << "parseEmfObject returns NULL...." << endl;
      return 1;
   }
@@ -125,7 +124,7 @@ solve_submitJob(diet_profile_t* pb)
   cout << submitOptions << endl;;
 
   TMS_Data::Job_ptr job = NULL;
-  if(!parseTMSEmfObject(std::string(jobSerialized), job)) {
+  if(!parseEmfObject(std::string(jobSerialized), job)) {
      cout << "parseEmfObject returns NULL...." << endl;
      return 1;
   }
@@ -190,7 +189,7 @@ solve_cancelJob(diet_profile_t* pb)
   TMS_Data::Job_ptr job = NULL;
   //To parse the object serialized
 
-  if(!parseTMSEmfObject(std::string(jobSerialized), job)) {
+  if(!parseEmfObject(std::string(jobSerialized), job)) {
      cout << "parseEmfObject returns NULL...." << endl;
      return 1;
   }
@@ -355,7 +354,7 @@ solve_jobOutPutGetResult(diet_profile_t* pb) {
   cout << "************jobResultSerialized=" << jobResultSerialized << " ..." << endl;
 
   TMS_Data::JobResult_ptr jobResult = NULL;
-  if(!parseTMSEmfObject(std::string(jobResultSerialized), jobResult)) {
+  if(!parseEmfObject(std::string(jobResultSerialized), jobResult)) {
      cout << "parseEmfObject returns NULL...." << endl;
      return 1;
   }
