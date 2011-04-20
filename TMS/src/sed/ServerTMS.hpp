@@ -42,7 +42,7 @@ public :
    */
   static ServerTMS*  getInstance();
   /**
-   * \brief To get the unique instance of the database 
+   * \brief To get the unique instance of the database
    */
   static Database* getDatabaseVishnu();
 
@@ -67,15 +67,27 @@ public :
   static std::string
   getMachineId();
 
+  /**
+   * \brief To get the slave binary directory
+   * \return path to the binary tmsSlave
+   */
+  static std::string
+  getSlaveDirectory();
+
    /**
    * \brief To initialize the TMS Server class
    * \param vishnuId The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
    * \param machineId the id of the machine
    * \param batchType the type of batch scheduler
+   * \param slaveBinDir  the directory that contains the slave binary
    */
   int
-  init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType);
+  init(int vishnuId,
+       DbConfiguration dbConfig,
+       std::string machineId,
+       BatchType batchType,
+       std::string slaveBinDir);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -126,5 +138,9 @@ private :
   * \brief Instance of TMSMapper
   */
   static TMSMapper *mmapper;
+  /**
+   * \brief Directory containing the slave binary
+   */
+  static std::string mslaveBinDir;
 };
 #endif // SERVER

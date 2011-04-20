@@ -17,6 +17,7 @@ BatchType ServerTMS::mbatchType = UNDEFINED;
 std::string ServerTMS::mmachineId = "";
 Database *ServerTMS::mdatabaseVishnu = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
+std::string ServerTMS::mslaveBinDir = "";
 
 /**
  * \brief To get the unique instance of the server
@@ -30,9 +31,9 @@ ServerTMS::getInstance() {
 }
 
 /**
- * \brief To get the unique instance of the database 
+ * \brief To get the unique instance of the database
  */
-Database* 
+Database*
 ServerTMS::getDatabaseVishnu() {
   return mdatabaseVishnu;
 }
@@ -66,6 +67,15 @@ ServerTMS::getMachineId() {
 }
 
 /**
+ * \brief To get the slave binary directory
+ * \return path to the binary tmsSlave
+ */
+string
+ServerTMS::getSlaveDirectory() {
+  return mslaveBinDir;
+}
+
+/**
 * \brief Constructor (private)
 * \fn ServerTMS()
 */
@@ -78,9 +88,15 @@ ServerTMS::ServerTMS() : mprofile(NULL) {
  * \param dbConfig  The configuration of the database
  * \param machineId the id of the machine
  * \param batchType the type of batch scheduler
+ * \param slaveBinDir  the directory that contains the slave binary
  */
 int
-ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType)
+ServerTMS::init(int vishnuId,
+                DbConfiguration dbConfig,
+                std::string machineId,
+                BatchType batchType,
+                std::string slaveBinDir
+               )
 {
 
   //initialization of the batchType
@@ -88,6 +104,9 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
 
   //initialization of the machineId
   mmachineId = machineId;
+
+  //initialization of the slave directory
+  mslaveBinDir = slaveBinDir;
 
   // initialization of the service table
   diet_service_table_init(NB_SRV);
