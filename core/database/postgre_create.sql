@@ -191,18 +191,6 @@ PRIMARY KEY(numfiletransferid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
-CREATE TABLE process (
-  numprocess SERIAL NOT NULL,
-  pstatus INTEGER,
-  vishnuName VARCHAR(255),
-  dietName VARCHAR(255),
-  machineId VARCHAR(255),	
-  starttime TIMESTAMP,
-  PRIMARY KEY(numprocess)
-);
-
-
-
 
 CREATE TABLE fileSub (
   numfileid SERIAL  NOT NULL ,
@@ -220,11 +208,13 @@ CREATE TABLE job (
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
   jobId VARCHAR(255),
+  batchJobId VARCHAR(255),
+  batchType INTEGER,
   jobName VARCHAR(255),
   jobPath VARCHAR(255),
   outputPath VARCHAR(255),
   errorPath VARCHAR(255),
-  scriptContent VARCHAR(255),  
+  scriptContent TEXT,  
   jobPrio INTEGER,
   nbCpus INTEGER,
   jobWorkingDir VARCHAR(255),
