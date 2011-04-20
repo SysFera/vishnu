@@ -21,6 +21,7 @@ include_directories(
   ${TMS_UTILS_DIR}
   ${TORQUE_INCLUDE_DIR}
   ${UTILS_TORQUE_DIR}
+  ${CONFIG_SOURCE_DIR}
 )
 
 
