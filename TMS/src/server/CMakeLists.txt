@@ -56,6 +56,7 @@ add_library(tms-server STATIC
    JobServer
    BatchFactory
    ListQueuesServer
+   JobOutputServer
 )
 
 target_link_libraries(tms-server

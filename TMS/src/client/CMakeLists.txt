@@ -5,6 +5,7 @@ link_directories(
 
 include_directories(
   ${DIET_INCLUDE_DIR}
+  ${OMNIORB4_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${UMS_DATA_DIR}
