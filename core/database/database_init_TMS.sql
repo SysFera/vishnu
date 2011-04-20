@@ -25,6 +25,7 @@ CREATE TABLE job (
   jobPath VARCHAR(255),
   outputPath VARCHAR(255),
   errorPath VARCHAR(255),  
+  scriptContent VARCHAR(255),
   jobPrio INTEGER,
   nbCpus INTEGER,
   jobWorkingDir VARCHAR(255),
