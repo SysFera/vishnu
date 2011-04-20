@@ -65,6 +65,15 @@ namespace vishnu {
     IMS = 3/*!< For IMS command type */
   } CmdType;
 
+
+  /**
+   * \brief To register the server in the database
+   * \param type: The type of the SeD
+   * \param config: The configuration of the executable
+   */
+  int
+  registerSeD(CmdType type, ExecConfiguration config);
+
   /**
    * \brief Return true if the string starts with 'MONTH'
    * \fn int isMonth (const char * s)
