@@ -87,18 +87,6 @@ PRIMARY KEY(numstateid),
 
 
 
-CREATE TABLE cpu (
-  cpuid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
-  model VARCHAR(255)    ,
-  frequency INTEGER    ,
-  core INTEGER    ,
-  cache INTEGER      ,
-PRIMARY KEY(cpuid),
-  FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid) ON DELETE CASCADE);
-
-
 
 CREATE TABLE description (
   numdescriptionid SERIAL  NOT NULL ,
@@ -203,7 +191,15 @@ PRIMARY KEY(numfiletransferid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
-
+CREATE TABLE process (
+  numprocess SERIAL NOT NULL,
+  pstatus INTEGER,
+  vishnuName VARCHAR(255),
+  dietName VARCHAR(255),
+  machineId VARCHAR(255),	
+  starttime TIMESTAMP,
+  PRIMARY KEY(numprocess)
+);
 
 
 
@@ -268,7 +264,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON cpu TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON description TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_db_admin";
@@ -278,6 +273,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
 
 
 --CREATE ROLE vishnu_user;
@@ -290,7 +286,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON cpu TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON description TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_user";
@@ -300,13 +295,13 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
 
 --Grant on sequences
 
 GRANT ALL ON SEQUENCE account_numaccountid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE clmachine_numclmachineid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE command_numcommandid_seq TO vishnu_user;
-GRANT ALL ON SEQUENCE cpu_cpuid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE description_numdescriptionid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE filesub_numfileid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE filetransfer_numfiletransferid_seq TO vishnu_user;
@@ -319,5 +314,6 @@ GRANT ALL ON SEQUENCE threshold_thresholdid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE users_numuserid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE vishnu_vishnuid_seq TO vishnu_user;
 GRANT ALL ON SEQUENCE vsession_numsessionid_seq TO vishnu_user;
+GRANT ALL ON SEQUENCE process_numprocess_seq TO vishnu_user;
 
 
