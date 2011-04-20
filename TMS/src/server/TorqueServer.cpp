@@ -842,6 +842,7 @@ TorqueServer::listQueues() {
     while(a!=NULL)
     {
 
+      std::cout << "==============a->name=" << a->name << std::endl;
       if(a->name!=NULL) {
         if(!strcmp(a->name, ATTR_start)) {
           if(*a->value == 'T') {
