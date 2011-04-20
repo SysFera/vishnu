@@ -7,6 +7,7 @@
 #include "DbConfiguration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/scoped_ptr.hpp>
 
 using namespace vishnu;
 /**
@@ -103,7 +104,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
-    ServerUMS* server = ServerUMS::getInstance();
+    boost::scoped_ptr<ServerUMS> server(ServerUMS::getInstance());
     res = server->init(vishnuId, dbConfig, sendmailScriptPath);
 
     //Declaration of signal handler
@@ -116,9 +117,6 @@ int main(int argc, char* argv[], char* envp[]) {
     if (!res) {
       diet_print_service_table();
       res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-      if (server != NULL) {
-        delete server;
-      }
     } else {
       std::cerr << "There was a problem during services initialization" << std::endl;
       exit(1);
