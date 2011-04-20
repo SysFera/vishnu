@@ -215,3 +215,77 @@ solveListOfQueues(diet_profile_t* pb) {
   return 0;
 }
 
+
+/* jobOutPutGetResult */
+int
+solveJobOutPutGetResult(diet_profile_t* pb) {
+
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  char* ID2 = NULL;
+  char* ID3 = NULL;
+  char* jobResultSerialized = NULL;
+  char* jobResultOutSerialized;
+  std::string empty = "";
+  std::string errorInfo;
+
+  //IN Parameters
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  cout << "************machineId=" << machineId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,2), &jobResultSerialized, NULL);
+  cout << "************jobResultSerialized=" << jobResultSerialized << " ..." << endl;
+
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+
+  try {
+    TMS_Data::JobResult_ptr jobResult = NULL;
+    if(!parseTMSEmfObject(std::string(jobResultSerialized), jobResult)) {
+      cout << "parseEmfObject returns NULL...." << endl;
+      return 1;
+    }
+
+    std::cout << "jobdId = " << jobResult->getJobId() << std::endl;
+
+    JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
+    TMS_Data::JobResult result = jobOutputServer.getJobOutput();
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+
+    char* ID2 = NULL;
+    char* ID3 = NULL;
+
+    std::string outputPath = result.getOutputPath();
+    std::string errorPath = result.getErrorPath();
+
+    dagda_init_container(diet_parameter(pb,4));
+
+    dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID2);
+    dagda_put_file(strdup(errorPath.c_str()), DIET_PERSISTENT_RETURN, &ID3);
+
+    dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID2, 0);
+    dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID3, 1);
+
+  } catch (VishnuException& e) {
+    errorInfo =  e.buildExceptionString();
+    std::cout << "errorInfo=" << errorInfo << std::endl;
+    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+
+    std::string outputPath = "error.txt";
+    std::string errorPath = "error.txt";
+
+    dagda_init_container(diet_parameter(pb,4));
+
+    dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID2);
+    dagda_put_file(strdup(errorPath.c_str()), DIET_PERSISTENT_RETURN, &ID3);
+
+    dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID2, 0);
+    dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID3, 1);
+
+  }
+
+
+  return 0;
+}
+
