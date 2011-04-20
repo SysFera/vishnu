@@ -4,7 +4,7 @@
  * Author : bisnard
  */
 
-#include "diet_fixtures.hpp"
+#include "UMS_fixtures.hpp"
 #include "TMS_testconfig.h"
 //#include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
@@ -15,7 +15,7 @@ char TMSSeD[] = "tmssed";
 char ConfigTMSSeD[] = TMSSEDCONF;
 char BinDirTMSSeD[] = TMSSEDBINDIR;
 
-typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, DietMAFixture> TMSSeDFixture;
+typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, UMSSeDFixture> TMSSeDFixture;
 
 class TMSFixture : public TMSSeDFixture {
 

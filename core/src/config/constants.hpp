@@ -25,7 +25,8 @@ namespace vishnu {
     DBPASSWORD,
     SENDMAILSCRIPT,
     BATCHTYPE,
-    MACHINEID
+    MACHINEID,
+    REMOTEBINDIR
   } param_type_t;
 
   struct param_t
