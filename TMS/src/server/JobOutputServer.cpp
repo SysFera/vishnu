@@ -35,12 +35,28 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 TMS_Data::JobResult
 JobOutputServer::getJobOutput() {
 
-  //Recuperer les output depuis la base de donnees
-  std::string outputPath;// = JobServer::mapOfOutputPath[mjobResult.getJobId()];
-  std::string errorPath;// = JobServer::mapOfErrorPath[mjobResult.getJobId()];
+  //To check the sessionKey
+  msessionServer.check();
 
-  std::cout << "outputPath before = " << outputPath << std::endl;
-  std::cout << "errorPath before = " << errorPath << std::endl;
+  std::string outputPath;
+  std::string errorPath;
+  std::vector<std::string> results;
+  std::vector<std::string>::iterator  iter;
+  //To get the output and error path of the job
+  std::string sqlRequest = "SELECT outputPath, errorPath from vsession, job where"
+                           " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'";
+  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+  
+  if (sqlResult->getNbTuples() != 0){ 
+    results.clear();
+    results = sqlResult->get(0);
+    iter = results.begin();
+    outputPath = *iter;
+    iter++;
+    errorPath = *iter;
+  } else {
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+  }
 
   outputPath = outputPath.substr(outputPath.find(":")+1);
   errorPath = errorPath.substr(errorPath.find(":")+1);
