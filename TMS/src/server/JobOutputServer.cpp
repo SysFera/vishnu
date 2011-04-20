@@ -26,8 +26,6 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
     const TMS_Data::JobResult& jobResult):
   msessionServer(sessionServer), mmachineId(machineId), mjobResult(jobResult)
 {
-  JobServer::mapOfOutputPath["130.daoudasys"] = "daoudasys:/home/traore/testname2.o130";
-  JobServer::mapOfErrorPath["130.daoudasys"] = "daoudasys:/home/traore/testname2.e130";
 }
 /**
  * \brief Function to get the job results
@@ -38,8 +36,8 @@ TMS_Data::JobResult
 JobOutputServer::getJobOutput() {
 
   //Recuperer les output depuis la base de donnees
-  std::string outputPath = JobServer::mapOfOutputPath[mjobResult.getJobId()];
-  std::string errorPath = JobServer::mapOfErrorPath[mjobResult.getJobId()];
+  std::string outputPath;// = JobServer::mapOfOutputPath[mjobResult.getJobId()];
+  std::string errorPath;// = JobServer::mapOfErrorPath[mjobResult.getJobId()];
 
   std::cout << "outputPath before = " << outputPath << std::endl;
   std::cout << "errorPath before = " << errorPath << std::endl;
