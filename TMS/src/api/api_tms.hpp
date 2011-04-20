@@ -23,7 +23,6 @@
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
-#include "utilsTMSClient.hpp"
 
 //TMS include
 #include "JobProxy.hpp"
