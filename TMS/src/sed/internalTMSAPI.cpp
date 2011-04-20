@@ -17,14 +17,14 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
+
 //EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
-
 #include "TMS_Data.hpp"
-
 #include "DIET_server.h"
 #include "DIET_Dagda.h"
+#include "ListJobServer.hpp"
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
@@ -108,17 +108,17 @@ solveSubmitJob(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
   } catch (VishnuException& e) {
-    try {
-      sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
-    } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
-    }
-    e.appendMsgComp(finishError); 
-    errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo=" << errorInfo << std::endl;
-    diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      try {
+        sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
+      } catch (VishnuException& fe) {
+        finishError =  fe.what();
+        finishError +="\n";
+      }
+      e.appendMsgComp(finishError);
+      errorInfo =  e.buildExceptionString();
+      std::cout << "errorInfo=" << errorInfo << std::endl;
+      diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 
   cout << " done" << endl;
@@ -292,8 +292,90 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     dagda_add_container_element((*diet_parameter(pb,4)).desc.id, ID3, 1);
 
   }
-
-
   return 0;
+}
+
+/**
+* \brief Function to solve the service solveGenerique
+* \fn int solveGenerique(diet_profile_t* pb)
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+template <class QueryParameters, class List, class QueryType>
+int
+solveGenerique(diet_profile_t* pb) {
+
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  char* optionValueSerialized = NULL;
+  std::string listSerialized = "";
+  std::string empty = "";
+  std::string errorInfo;
+  int mapperkey;
+  std::string cmd;
+  std::string finishError ="";
+
+  //IN Parameters
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  cout << "************machineId=" << machineId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,2), &optionValueSerialized, NULL);
+  cout << "************optionValueSerialized=" << optionValueSerialized << " ..." << endl;
+
+  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
+
+  QueryParameters* options = NULL;
+  List* list = NULL;
+
+  try {
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+
+    QueryType query(options, sessionServer);
+    list = query.list();
+
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
+    mapperkey = mapper->code(query.getCommandName());
+    mapper->code(std::string(machineId), mapperkey);
+    mapper->code(std::string(optionValueSerialized), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    const char* name = "list";
+    ::ecorecpp::serializer::serializer _ser(name);
+    listSerialized =  _ser.serialize(list);
+
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,3), strdup(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+
+    sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
+  } catch (VishnuException& e) {
+      try {
+        sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
+      } catch (VishnuException& fe) {
+          finishError =  fe.what();
+          finishError +="\n";
+      }
+      e.appendMsgComp(finishError);
+
+      errorInfo =  e.buildExceptionString();
+      //OUT Parameter
+      diet_string_set(diet_parameter(pb,3), strdup(listSerialized.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+  delete options;
+  delete list;
+  return 0;
+}
+
+
+int
+solveGetListOfJobs(diet_profile_t* pb) {
+  return solveGenerique<TMS_Data::ListJobsOptions, TMS_Data::ListJobs, ListJobServer >(pb);
 }
 
