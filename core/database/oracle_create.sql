@@ -368,10 +368,11 @@ END;
 CREATE TABLE process (
   numprocess NIBARY_FLOAT NOT NULL,
   pstatus INTEGER,
-  vishnuName VARCHAR(255),
-  dietName VARCHAR(255),
-  machineId VARCHAR(255),	
-  starttime TIMESTAMP,
+  vishnuname VARCHAR(255),
+  dietname VARCHAR(255),
+  machineid VARCHAR(255),	
+  uptime TIMESTAMP,
+  launchscript VARCHAR2(1000),
   PRIMARY KEY(numprocess)
 );
 
