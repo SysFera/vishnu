@@ -120,10 +120,11 @@ namespace vishnu {
   * \brief Function to move file
   * \param src: the path of the file to move
   * \param dest: the destination where the file will be moved
+  * \param file: the name of the file in dest
   * \return raises an exception on error
   */
   int
-  moveFile(std::string src, std::string dest);
+  moveFile(std::string src, std::string dest,  const std::string& filename="");
 
   /**
    * \brief Function to check a numerical value
