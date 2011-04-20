@@ -194,10 +194,11 @@ PRIMARY KEY(numfiletransferid),
 CREATE TABLE process (
   numprocess SERIAL NOT NULL,
   pstatus INTEGER,
-  vishnuName VARCHAR(255),
-  dietName VARCHAR(255),
-  machineId VARCHAR(255),	
-  starttime TIMESTAMP,
+  vishnuname VARCHAR(255),
+  dietname VARCHAR(255),
+  machineid VARCHAR(255),	
+  uptime TIMESTAMP,
+  launchscript TEXT,
   PRIMARY KEY(numprocess)
 );
 
