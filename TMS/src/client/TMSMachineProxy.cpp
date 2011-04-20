@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 #include "TMSMachineProxy.hpp"
-#include "utilsClient.hpp"
-#include "utilsTMSClient.hpp"
-#include "emfTMSUtils.hpp"
+#include "utilClient.hpp"
 #include "utilVishnu.hpp"
 
 using namespace vishnu;
@@ -72,12 +70,10 @@ TMSMachineProxy::getMachineQueues() {
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse ListQueues object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(listQueuesInString), listQueues)) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving ListQueues object serialized");
-  }
+  parseEmfObject(std::string(listQueuesInString), listQueues);
 
   diet_profile_free(profile);
   return listQueues;
@@ -133,7 +129,7 @@ TMSMachineProxy::setMachineRefreshPeriod(int refreshPeriod) {
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   mrefreshPeriod = refreshPeriod;
   diet_profile_free(profile);
@@ -191,7 +187,7 @@ TMSMachineProxy::getMachineRefreshPeriod() {
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   mrefreshPeriod = vishnu::convertToInt(std::string(refreshPeriod));
   diet_profile_free(profile);

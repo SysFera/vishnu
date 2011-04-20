@@ -23,7 +23,6 @@ add_library(tms-client-proxy STATIC
   JobProxy.cpp
   TMSMachineProxy.cpp
   JobOutPutProxy.cpp
-  utilsTMSClient.cpp
 )
 
 SET_TARGET_PROPERTIES(tms-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
