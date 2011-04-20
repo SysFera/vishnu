@@ -13,6 +13,17 @@
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
 
+
+// TODO: Implement this function
+int
+registerSeD(CmdType type, ExecConfiguration config){
+  // config.getContentAsString()
+  // getHostname()
+  // getMachineIdFromHostname()
+  // insert into process() values (status(undefined), type, machine, timestamp, scriptContent)
+  return 0;
+}
+
 /**
 * \brief Function to get a random number
 * \fn    int isMonth (const char * s)
