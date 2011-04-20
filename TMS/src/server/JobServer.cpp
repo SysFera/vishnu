@@ -12,6 +12,12 @@
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
 #include "ServerTMS.hpp"
+
+///////////////JUST A TEST /////////////////
+std::map<std::string, std::string> JobServer::mapOfOutputPath = std::map<std::string, std::string>();
+std::map<std::string, std::string> JobServer::mapOfErrorPath = std::map<std::string, std::string>();
+////////////// END TEST ///////////////////
+
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The machine identifier 
@@ -23,6 +29,7 @@ JobServer::JobServer(const SessionServer& sessionServer,
                      const TMS_Data::Job& job, 
                      const BatchType& batchType): 
   msessionServer(sessionServer), mmachineId(machineId), mjob(job), mbatchType(batchType) {
+
 }
 
 /**
@@ -90,6 +97,8 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
   std::cout << "vishnuJobId = " << vishnuJobId << std::endl;
   //mjob.setJobId(vishnuJobId);
+  mapOfOutputPath[BatchJobId] = mjob.getOutputPath();
+  mapOfErrorPath[BatchJobId] = mjob.getErrorPath();
   delete job;
 
   return 0;

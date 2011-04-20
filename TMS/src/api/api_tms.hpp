@@ -171,7 +171,7 @@ namespace vishnu {
   getJobOutput(const std::string& sessionKey,
                const std::string& machineId,
                const std::string& jobId,
-               JobResult_ptr& outputInfos)
+               JobResult& outputInfos)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**

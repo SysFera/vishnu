@@ -30,14 +30,16 @@ public:
   */
 	explicit
 	JobOutPutProxy( const SessionProxy& session,
-                  const std::string& machineId);
+                  const std::string& machineId,
+                  TMS_Data::JobResult& outputInfos);
 
   /**
   * \brief Function to get the job results
   * \param jobId The Id of the
   * \return The job results data structure
   */
-  TMS_Data::JobResult_ptr
+  //TMS_Data::JobResult_ptr
+  TMS_Data::JobResult
 	getJobOutPut(const std::string& jobId);
 
   /**
@@ -66,6 +68,8 @@ private:
   * \brief The id of the machine
   */
   std::string mmachineId;
+
+  TMS_Data::JobResult moutputInfos;
 };
 
 #endif
