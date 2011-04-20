@@ -166,31 +166,6 @@ END;
 
 /
 
--- Table for Machine CPU Information
-
-CREATE TABLE cpu (
-  cpuid BINARY_FLOAT   NOT NULL ,
-  machine_nummachineid BINARY_FLOAT   NOT NULL ,
-  model VARCHAR2(255)    ,
-  frequency BINARY_FLOAT    ,
-  core BINARY_FLOAT    ,
-  cache BINARY_FLOAT      ,
-PRIMARY KEY(cpuid),
-  FOREIGN KEY(machine_nummachineid)
-    REFERENCES machine(nummachineid) ON DELETE CASCADE);
-
-CREATE SEQUENCE s_cpu;
-
-CREATE OR REPLACE TRIGGER AINC_cpu
-BEFORE INSERT  ON cpu
-FOR EACH ROW
-BEGIN
-  IF (:NEW.cpuid IS NULL) THEN
-    SELECT s_cpu.NEXTVAL INTO :NEW.cpuid FROM DUAL;
-  END IF;
-END;
-
-/
 
 -- Table for Machine descriptions
 
@@ -383,6 +358,30 @@ FOR EACH ROW
 BEGIN
   IF (:NEW.numfiletransferid IS NULL) THEN
     SELECT s_filetransfer.NEXTVAL INTO :NEW.numfiletransferid FROM DUAL;
+  END IF;
+END;
+
+/
+
+-- Table for processes
+
+CREATE TABLE process (
+  numprocess NIBARY_FLOAT NOT NULL,
+  pstatus INTEGER,
+  vishnuName VARCHAR(255),
+  dietName VARCHAR(255),
+  machineId VARCHAR(255),	
+  starttime TIMESTAMP,
+  PRIMARY KEY(numprocess)
+);
+
+CREATE SEQUENCE s_process;
+CREATE OR REPLACE TRIGGER AINC_process
+BEFORE INSERT ON process
+FOR EACH ROW
+BEGIN
+  IF (:NEW.numprocess IS NULL) THEN
+    SELECT s_process.NEXTVAL INTO :NEW.numprocess FROM DUAL;
   END IF;
 END;
 
