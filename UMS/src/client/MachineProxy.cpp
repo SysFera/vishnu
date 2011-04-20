@@ -11,7 +11,7 @@
 /**
  * \fn MachineProxy(const UMS_Data::Machine& machine,
  *                       const SessionProxy& session)
- * \param machine The object which encapsulates the information of the machine 
+ * \param machine The object which encapsulates the information of the machine
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
@@ -21,7 +21,7 @@ MachineProxy::MachineProxy(const UMS_Data::Machine& machine, const SessionProxy&
 }
 
 /**
- * \brief Function to add a new machine 
+ * \brief Function to add a new machine
  * \fn  int add()
  * \return raises an exception on error
  */
@@ -40,7 +40,7 @@ int MachineProxy::add()
 
   const char* name = "addMachineInformation";
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the mmachine object in to machineToString 
+  //To serialize the mmachine object in to machineToString
   machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
   std::string sshKeyFilePath = mmachine.getSshPublicKey();
@@ -51,7 +51,7 @@ int MachineProxy::add()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
@@ -79,7 +79,7 @@ int MachineProxy::add()
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  UMS_Data::Machine_ptr machine_ptr; 
+  UMS_Data::Machine_ptr machine_ptr;
 
   //To parse machine object serialized
   parseEmfObject(std::string(machineInString), machine_ptr, "Error by receiving Machine object serialized");
@@ -91,10 +91,10 @@ int MachineProxy::add()
 }
 
 /**
- * \brief Function to update machine description 
+ * \brief Function to update machine description
  * \fn  int update()
  * \return raises an exception on error
- */ 
+ */
 int MachineProxy::update()
 {
   diet_profile_t* profile = NULL;
@@ -108,7 +108,7 @@ int MachineProxy::update()
 
   const char* name = "addMachineInformation";
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the mmachine object in to machineToString 
+  //To serialize the mmachine object in to machineToString
   machineToString =  _ser.serialize(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
   std::string sshKeyFilePath = mmachine.getSshPublicKey();
@@ -146,10 +146,10 @@ int MachineProxy::update()
 }
 
 /**
- * \brief Function to remove a machine 
+ * \brief Function to remove a machine
  * \fn  int deleteMachine()
  * \return raises an exception on error
- */ 
+ */
 int MachineProxy::deleteMachine()
 {
   diet_profile_t* profile = NULL;
@@ -165,7 +165,7 @@ int MachineProxy::deleteMachine()
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
@@ -178,11 +178,11 @@ int MachineProxy::deleteMachine()
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg); 
+      raiseDietMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("DIET call failure"); 
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -192,9 +192,9 @@ int MachineProxy::deleteMachine()
 }
 
 /**
- * \brief Function get SessionProxy object which contains the VISHNU session identifier 
- * \fn SessionProxy getSessionProxy() 
- * \return a SessionProy object which contains the VISHNU session information 
+ * \brief Function get SessionProxy object which contains the VISHNU session identifier
+ * \fn SessionProxy getSessionProxy()
+ * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
 SessionProxy MachineProxy::getSessionProxy()
@@ -203,9 +203,9 @@ SessionProxy MachineProxy::getSessionProxy()
 }
 
 /**
- * \brief Function get machine information 
+ * \brief Function get machine information
  * \fn  UMS_Data::Machine getData()
- * \return Machine object encapsulates the information of the machine 
+ * \return Machine object encapsulates the information of the machine
  * \return raises an exception on error
  */
 UMS_Data::Machine MachineProxy::getData()
@@ -216,7 +216,7 @@ UMS_Data::Machine MachineProxy::getData()
 /**
  * \fn ~MachineProxy()
  * \brief Destructor, raises an exception on error
- */ 
+ */
 MachineProxy::~MachineProxy()
 {
 }

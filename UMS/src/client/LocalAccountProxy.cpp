@@ -11,7 +11,7 @@
 /**
  * \fn LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
  *                       const SessionProxy& session)
- * \param localAccount The object which encapsulates the user Acccount information 
+ * \param localAccount The object which encapsulates the user Acccount information
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
@@ -22,9 +22,9 @@ LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
 }
 
 /**
- * \brief Function to combine add() and update() into one function 
- * \fn  int _addLocalAccountInformation(bool isNewMachine=true); 
- * \param isNewLocalAccount to select the call of add or update function 
+ * \brief Function to combine add() and update() into one function
+ * \fn  int _addLocalAccountInformation(bool isNewMachine=true);
+ * \param isNewLocalAccount to select the call of add or update function
  * \return raises an exception on error
  */
 int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
@@ -36,7 +36,7 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  if(isNewLocalAccount) { 
+  if(isNewLocalAccount) {
     profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
   }
   else {
@@ -47,7 +47,7 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
   const char* name = "addLocalAccountInformation";
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the mlocalAccount object in to localAccountToString 
+  //To serialize the mlocalAccount object in to localAccountToString
   localAccountToString =  _ser.serialize(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
 
   //IN Parameters
@@ -57,7 +57,7 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(localAccountToString.c_str()), DIET_VOLATILE)) {
     msg += "with localAccountToString parameter "+localAccountToString;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -96,7 +96,7 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 }
 
 /**
- * \brief Function to add a new local user configuration 
+ * \brief Function to add a new local user configuration
  * \fn  int add()
  * \return raises an exception on error
  */
@@ -106,20 +106,20 @@ int LocalAccountProxy::add()
 }
 
 /**
- * \brief Function to update a new local user configuration 
+ * \brief Function to update a new local user configuration
  * \fn  int update()
  * \return raises an exception on error
- */ 
+ */
 int LocalAccountProxy::update()
 {
   return _addLocalAccountInformation(false);
 }
 
 /**
- * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU 
+ * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU
  * \fn  int deleteLocalAccount()
  * \return raises an exception on error
- */ 
+ */
 int LocalAccountProxy::deleteLocalAccount()
 {
   diet_profile_t* profile = NULL;
@@ -154,7 +154,7 @@ int LocalAccountProxy::deleteLocalAccount()
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg); 
+      raiseDietMsgException(msg);
     }
   }
   else {
@@ -168,20 +168,20 @@ int LocalAccountProxy::deleteLocalAccount()
 }
 
 /**
- * \brief Function get SessionProxy object which contains the VISHNU session identifier 
- * \fn SessionProxy getSessionProxy() 
- * \return a SessionProy object which contains the VISHNU session information 
+ * \brief Function get SessionProxy object which contains the VISHNU session identifier
+ * \fn SessionProxy getSessionProxy()
+ * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
- */ 
+ */
 SessionProxy LocalAccountProxy::getSessionProxy() const
 {
   return msessionProxy;
 }
 
 /**
- * \brief Function get the VISHNU ssh public key  
- * \fn std::string getSshPublicKey() const 
- * \return the VISHNU ssh public Key 
+ * \brief Function get the VISHNU ssh public key
+ * \fn std::string getSshPublicKey() const
+ * \return the VISHNU ssh public Key
  * \return raises an exception on error
  */
 std::string LocalAccountProxy::getSshPublicKey() const {

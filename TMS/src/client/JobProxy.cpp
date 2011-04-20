@@ -3,11 +3,9 @@
 #include <string>
 #include "JobProxy.hpp"
 #include "UMSVishnuException.hpp"
-#include "utilsClient.hpp"
-#include "utilsTMSClient.hpp"
-#include "emfTMSUtils.hpp"
+#include "utilClient.hpp"
 
-using namespace vishnu;
+// using namespace vishnu;
 
 /**
 * \param session The object which encapsulates the session information
@@ -100,14 +98,11 @@ JobProxy::submitJob(const std::string scriptContent,
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   TMS_Data::Job_ptr job_ptr = NULL;
 
-  //To parse Job object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(jobInString), job_ptr)) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving Job object serialized");
-  }
+  parseEmfObject(std::string(jobInString), job_ptr);
 
   mjob = *job_ptr;
 
@@ -168,7 +163,7 @@ JobProxy::cancelJob() {
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
-  TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionIfNotEmptyMsg(errorInfo);
 
   diet_profile_free(profile);
 	return 0;
