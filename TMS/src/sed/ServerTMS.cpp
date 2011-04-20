@@ -30,6 +30,14 @@ ServerTMS::getInstance() {
 }
 
 /**
+ * \brief To get the unique instance of the database 
+ */
+Database* 
+ServerTMS::getDatabaseVishnu() {
+  return mdatabaseVishnu;
+}
+
+/**
 * \brief To get the vishnuId
 * \fn int getVishnuId()
 * \return the path of the configuration file
