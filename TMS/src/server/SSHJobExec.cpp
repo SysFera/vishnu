@@ -216,6 +216,23 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
   }
 }
 
+int SSHJobExec::copyFiles(const std::string& outputPath, const std::string& errorPath , const char* copyOfOutputPath, const char* copyOfErrorPath) {
+
+  std::ostringstream cmd1;
+  cmd1 << "scp " << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
+  if(system((cmd1.str()).c_str())) { //A REMPLACER PAR exec
+    std::cerr << "can't execute " << cmd1.str() << std::endl;
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: problem to get the output or error file on this user local account");
+  }
+
+  std::ostringstream cmd2;
+  cmd2 << "scp " << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
+  if(system((cmd2.str()).c_str())) { //A REMPLACER PAR exec
+    std::cerr << "can't execute " << cmd2.str() << std::endl;
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: problem to get the output or error file on this user local account");
+  } 
+}
+
 SSHJobExec::~SSHJobExec() {
 
 }

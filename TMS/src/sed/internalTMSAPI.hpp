@@ -24,4 +24,8 @@ solveCancelJob(diet_profile_t* pb);
 /* listQueues */
 int
 solveListOfQueues(diet_profile_t* pb);
+
+/* jobOutPutGetResult */
+int
+solveJobOutPutGetResult(diet_profile_t* pb);
 #endif

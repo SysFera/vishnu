@@ -13,11 +13,38 @@
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
 #include "displayer.hpp"
+#include <boost/bind.hpp>
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
+
+/**
+ * \brief To build options for the VISHNU submit job command
+ * \param ouputDir : The directory of job output
+ * \param errorDir : The directory of job output
+ * \return The description of all options allowed by the command
+ */
+boost::shared_ptr<Options>
+makeJobResultOp(string pgName,
+             boost::function1<void, string>& foutput,
+             string& dietConfig){
+
+  boost::shared_ptr<Options> opt(new Options(pgName));
+ 
+  // Environement option
+  opt->add("dietConfig,c",
+      "The diet config file",
+      ENV,
+      dietConfig);
+ 
+   opt->add("outDir,o",
+     "The outputh dir of the job output",
+     CONFIG,
+     foutput);
+  return opt;
+} 
 
 
 int main (int argc, char* argv[]){
@@ -31,6 +58,13 @@ int main (int argc, char* argv[]){
   string jobId;
 
   /********** EMF data ************/
+  TMS_Data::JobResult jobResult;
+
+  /******** Callback functions ******************/
+  boost::function1<void,string> foutput(boost::bind(&TMS_Data::JobResult::setOutputPath,boost::ref(jobResult),_1));
+
+
+  /********** EMF data ************/
 
   /******** Callback functions ******************/
      
@@ -38,13 +72,14 @@ int main (int argc, char* argv[]){
   TMS_Data::JobResult_ptr out;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt (new Options(argv[0]));
+  //boost::shared_ptr<Options> opt (new Options(argv[0]));
+  boost::shared_ptr<Options> opt=makeJobResultOp(argv[0], foutput, dietConfig);  
 
   // Environement option
-  opt->add("dietConfig,c",
+  /*opt->add("dietConfig,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           dietConfig);*/
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -91,10 +126,11 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getJobOutput(sessionKey, machineId, jobId, out);
+      getJobOutput(sessionKey, machineId, jobId, jobResult/*out*/);
     }
 
-    displayJobOutput(out);
+    //displayJobOutput(out);
+      displayJobOutput(&jobResult);
 
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
