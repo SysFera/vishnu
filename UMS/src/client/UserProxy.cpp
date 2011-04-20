@@ -9,9 +9,9 @@
 #include "utilsClient.hpp"
 
 /**
- * \fn  UserProxy(const std::string& userId, const std::string& password) 
+ * \fn  UserProxy(const std::string& userId, const std::string& password)
  * \param userId the user identifier
- * \password the user password 
+ * \password the user password
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(const  std::string& userId, const std::string& password)
@@ -22,7 +22,7 @@ UserProxy::UserProxy(const  std::string& userId, const std::string& password)
 }
 
 /**
- * \fn explicit UserProxy(SessionProxy session) 
+ * \fn explicit UserProxy(SessionProxy session)
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
@@ -32,8 +32,8 @@ UserProxy::UserProxy(SessionProxy session):
 }
 
 /**
- * \fn explicit UserProxy(const UMS_Data::User& user) 
- * \param user The object which encapsulates the user information 
+ * \fn explicit UserProxy(const UMS_Data::User& user)
+ * \param user The object which encapsulates the user information
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(const UMS_Data::User& user):
@@ -43,7 +43,7 @@ UserProxy::UserProxy(const UMS_Data::User& user):
 }
 
 /**
- * \brief Function to add new user 
+ * \brief Function to add new user
  * \fn  int add(UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
@@ -55,23 +55,23 @@ int UserProxy::add(UMS_Data::User& user)
   char* userToString;
   char* errorInfo;
   char* userInString;
-  std::string msg = "call of function diet_string_set is rejected ";  
+  std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("userCreate", 1, 1, 3);
   sessionKey = msessionProxy->getSessionKey();
 
   const char* name = "add";
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the user object in to userToString 
+  //To serialize the user object in to userToString
   userToString =  strdup(_ser.serialize(const_cast<UMS_Data::User_ptr>(&user)).c_str());
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), userToString, DIET_VOLATILE)) {
     msg += "with userToString parameter "+std::string(userToString);
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -85,14 +85,14 @@ int UserProxy::add(UMS_Data::User& user)
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += " by receiving errorInfo message";
-      raiseDietMsgException(msg); 
+      raiseDietMsgException(msg);
     }
-  }  
+  }
   else {
     raiseDietMsgException("DIET call failure");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/ 
+  /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   UMS_Data::User_ptr user_ptr;
@@ -106,11 +106,11 @@ int UserProxy::add(UMS_Data::User& user)
 }
 
 /**
- * \brief Function to update user information 
+ * \brief Function to update user information
  * \fn  int update(const UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
- */ 
+ */
 int UserProxy::update(const UMS_Data::User& user)
 {
   diet_profile_t* profile = NULL;
@@ -125,7 +125,7 @@ int UserProxy::update(const UMS_Data::User& user)
 
   const char* name = "addUserInformation";
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the user object in to userToString 
+  //To serialize the user object in to userToString
   userToString =  _ser.serialize(const_cast<UMS_Data::User_ptr>(&user));
 
   //IN Parameters
@@ -158,8 +158,8 @@ int UserProxy::update(const UMS_Data::User& user)
 }
 
 /**
- * \brief Function to remove user information 
- * \fn  int deleteUser(const UMS_Data::User& user) 
+ * \brief Function to remove user information
+ * \fn  int deleteUser(const UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
@@ -179,11 +179,11 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);   
+    raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+userId;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -205,10 +205,10 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
 }
 
 /**
- * \brief Function to change user password 
- * \fn  int changePassword(const std::string& password, const std::string& newPassword) 
+ * \brief Function to change user password
+ * \fn  int changePassword(const std::string& password, const std::string& newPassword)
  * \param oldPassword the old password of the user
- * \param newPassword the new password of the user 
+ * \param newPassword the new password of the user
  * \return raises an exception on error
  */
 int UserProxy::changePassword(const std::string& password, const std::string& newPassword)
@@ -220,20 +220,20 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
 
   profile = diet_profile_alloc("userPasswordChange", 2, 2, 3);
 
-  //IN Parameters  
+  //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   if(diet_string_set(diet_parameter(profile,1), strdup(password.c_str()), DIET_VOLATILE)) {
     msg += "with password parameter "+password;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   if(diet_string_set(diet_parameter(profile,2), strdup(newPassword.c_str()), DIET_VOLATILE)) {
     msg += "with newPassword parameter "+newPassword;
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   //OUT Parameters
@@ -242,24 +242,24 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);   
+      raiseDietMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("DIET call failure"); 
+    raiseDietMsgException("DIET call failure");
   }
-  /*To raise a vishnu exception if the receiving message is not empty*/   
+  /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   return 0;
 }
 
 /**
- * \brief Function to reset user password 
+ * \brief Function to reset user password
  * \fn  int resetPassword(UMS_Data::User& user)
- * \param user The object which encapsulates the user information 
+ * \param user The object which encapsulates the user information
  * \return raises an exception on error
- */ 
+ */
 int UserProxy::resetPassword(UMS_Data::User& user)
 {
 
@@ -270,10 +270,10 @@ int UserProxy::resetPassword(UMS_Data::User& user)
 
   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
 
-  //IN Parameters  
+  //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
-    raiseDietMsgException(msg); 
+    raiseDietMsgException(msg);
   }
 
   if(diet_string_set(diet_parameter(profile,1), strdup((user.getUserId()).c_str()), DIET_VOLATILE)) {
@@ -288,15 +288,15 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), &tmpPassword, NULL)){
       msg += "by receiving tmpPassWord message";
-      raiseDietMsgException(msg);     
+      raiseDietMsgException(msg);
     }
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);     
+      raiseDietMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("DIET call failure"); 
+    raiseDietMsgException("DIET call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
@@ -309,22 +309,22 @@ int UserProxy::resetPassword(UMS_Data::User& user)
 }
 
 /**
- * \brief Function get user information 
+ * \brief Function get user information
  * \fn  UMS_Data::User getData()
- * \return User object encapsulates the information of the user 
+ * \return User object encapsulates the information of the user
  * \return raises an exception on error
- */ 
+ */
 UMS_Data::User UserProxy::getData() const
 {
   return muser;
 }
 
 /**
- * \brief Function get SessionProxy object which contains the VISHNU session identifier 
- * \fn SessionProxy getSessionProxy() 
- * \return a SessionProy object which contains the VISHNU session information 
+ * \brief Function get SessionProxy object which contains the VISHNU session identifier
+ * \fn SessionProxy getSessionProxy()
+ * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
- */ 
+ */
 SessionProxy UserProxy::getSessionProxy() const
 {
   return  *msessionProxy;

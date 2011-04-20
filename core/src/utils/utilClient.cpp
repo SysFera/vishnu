@@ -1,25 +1,30 @@
 /**
- * \file utilsTMSClient.hpp
- * \brief This file contains the TMS utils functions for VISHNU client Proxy classes
+ * \file utilClient.cpp
+ * \brief This file contains client utils functions for VISHNU client Proxy classes
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * and Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date February 2011
+ * \date April 2011
  */
-
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
-
-#include "utilsTMSClient.hpp"
+#include "utilClient.hpp"
 #include "utilVishnu.hpp"
 
 /**
+ * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
+ * \fn void raiseDietMsgException(const std::string& msg)
+ * \param msg to spread
+ * \return raises an exception on error
+ */
+void raiseDietMsgException(const std::string& msg) {
+  SystemException e(ERRCODE_DIET, msg);
+  throw e;
+}
+
+/**
  * \brief Function to split the receiving message into error code and message error
- * \fn void raiseTMSExceptionIfNotEmptyMsg(const std::string& msg)
+ * \fn void raiseExceptionIfNotEmptyMsg(const std::string& msg)
  * \param msg to split
  * \return raises an exception on error
  */
-void
-TMSUtils::raiseTMSExceptionIfNotEmptyMsg(const std::string& msg) {
+void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
 
   if(msg.size() > 0 ) {
     size_t pos = msg.find('#');
@@ -30,14 +35,11 @@ TMSUtils::raiseTMSExceptionIfNotEmptyMsg(const std::string& msg) {
         int code;
         isCode >> code;
         std::string message = msg.substr(pos+1);
-
-        if (code < 10){
+        if (code<10){
           throw SystemException(code, message);
-        } //if the exception is an UMSVishnuException
-        else if (code < 100){
+        } else if (code<100){
           throw UMSVishnuException(code, message);
-        }//if the exception is an TMSVishnuException
-        else if ((code >= 100) && (code < 200)) {
+        } else if ((code >= 100) && (code < 200)) {
           throw TMSVishnuException(code, message);
         } else {
           std::string tmp = "Invalid code: ";
@@ -51,5 +53,4 @@ TMSUtils::raiseTMSExceptionIfNotEmptyMsg(const std::string& msg) {
       throw SystemException(ERRCODE_INVEXCEP, msg);
     }
   }
-
 }

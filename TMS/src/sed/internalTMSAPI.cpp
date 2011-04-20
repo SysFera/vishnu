@@ -22,7 +22,6 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 
 #include "TMS_Data.hpp"
-#include "emfTMSUtils.hpp"
 
 #include "DIET_server.h"
 #include "DIET_Dagda.h"
@@ -88,11 +87,11 @@ solveSubmitJob(diet_profile_t* pb) {
     TMS_Data::Job_ptr job = NULL;
     TMS_Data::SubmitOptions_ptr submitOptions = NULL;
 
-    if(!vishnu::parseTMSEmfObject(std::string(jobSerialized), job)) {
+    if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: Job object is not well built");
     }
 
-    if(!vishnu::parseTMSEmfObject(std::string(submitOptionsSerialized), submitOptions)) {
+    if(!vishnu::parseEmfObject(std::string(submitOptionsSerialized), submitOptions)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: SubmitOptions object is not well built");
     }
 
@@ -147,7 +146,7 @@ solveCancelJob(diet_profile_t* pb)
 
   try {
 
-    if(!vishnu::parseTMSEmfObject(std::string(jobSerialized), job)) {
+    if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_cancelJob: Job object is not well built");
     }
 
@@ -243,7 +242,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
   try {
     TMS_Data::JobResult_ptr jobResult = NULL;
-    if(!parseTMSEmfObject(std::string(jobResultSerialized), jobResult)) {
+    if(!parseEmfObject(std::string(jobResultSerialized), jobResult)) {
       cout << "parseEmfObject returns NULL...." << endl;
       return 1;
     }
