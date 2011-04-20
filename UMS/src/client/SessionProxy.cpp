@@ -26,9 +26,9 @@ SessionProxy::SessionProxy(const std::string& sessionKey):msessionKey(sessionKey
 
 /**
  * \fn explicit SessionProxy(const UMS_Data::Session& session)
- * \param session The object which encapsulates the session information (ex: identifier of the session) 
+ * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
- */  
+ */
 SessionProxy::SessionProxy(const UMS_Data::Session& session):msession(session)
 {
 }
@@ -36,19 +36,19 @@ SessionProxy::SessionProxy(const UMS_Data::Session& session):msession(session)
 /**
  * \fn SessionProxy()
  * \brief Constructor, raises an exception on error
- */  
+ */
 SessionProxy::SessionProxy()
 {
 }
 
 /**
- * \brief Function to combine connect() and reconnect() into one function 
- * \fn  _connect(const UserProxy& user, 
- *               bool connect = false, 
+ * \brief Function to combine connect() and reconnect() into one function
+ * \fn  _connect(const UserProxy& user,
+ *               bool connect = false,
  *               const UMS_Data::ConnectOptions& options=UMS_Data::ConnectOptions())
- * \param user The object which encapsulates the user information (ex: userId and password) 
- * \param connect to select the call of connect or reconnect function 
- * \param options the object which encapsulate the options available for the connect method. It allows the user 
+ * \param user The object which encapsulates the user information (ex: userId and password)
+ * \param connect to select the call of connect or reconnect function
+ * \param options the object which encapsulate the options available for the connect method. It allows the user
  *  to choose the way for way for closing the session automatically on TIMEOUT or on DISCONNECT and the
  *  possibility for an admin to open a session as she was a specific user
  * \return raises an exception on error
@@ -56,7 +56,7 @@ SessionProxy::SessionProxy()
 int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::ConnectOptions& options)
 {
 
-  diet_profile_t* profile = NULL; 
+  diet_profile_t* profile = NULL;
   char hostname[HOST_NAME_MAX_SIZE];
   std::string sshKey1;
   std::string sshKey2;
@@ -74,7 +74,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   sshKey2 = "/etc/ssh/ssh_host_rsa_key.pub";
   sshKey3 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_dsa_key.pub";
   sshKey4 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_rsa_key.pub";
-  gethostname(hostname, HOST_NAME_MAX_SIZE);  
+  gethostname(hostname, HOST_NAME_MAX_SIZE);
 
   std::ifstream ifile;
   std::ifstream ifile1(sshKey1.c_str());
@@ -84,9 +84,9 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 
   bool checkFile1 = ifile1.is_open();
   bool checkFile2 = ifile2.is_open();
-  bool checkFile3 = ifile3.is_open(); 
-  bool checkFile4 = ifile4.is_open(); 
-  //To check if at least on file can be oponed     
+  bool checkFile3 = ifile3.is_open();
+  bool checkFile4 = ifile4.is_open();
+  //To check if at least on file can be oponed
   if(!checkFile1 && !checkFile2 && !checkFile3 && !checkFile4) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
         "You must copy the file of your sshKey in one of three free files:\n"
@@ -94,7 +94,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
         +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
         +"$HOME/.vishnu/ssh_host_dsa_key.pub, or\n"
         +"$HOME/.vishnu/ssh_host_rsa_key.pub");
-  } 
+  }
 
   //To get the content of the first opened file and close the others files opened
   if(checkFile1) {
@@ -137,14 +137,14 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   ifile.read(key, length);
   ifile.close();
 
-  std::string salt = "$6$"+user.getData().getUserId()+"$";                 
+  std::string salt = "$6$"+user.getData().getUserId()+"$";
   encryptedKey = crypt(key, salt.c_str());
 
   if(connect) {
     // SERIALIZE DATA MODEL
     const char* name = "sessionConnect";
     ::ecorecpp::serializer::serializer _ser(name);
-    //To serialize the options object in to optionsToString 
+    //To serialize the options object in to optionsToString
     optionsToString =  _ser.serialize(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
     profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
   } else {
@@ -163,16 +163,16 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
     msg += "with sshKey parameter sshKey path";
     raiseDietMsgException(msg);
-  } 
+  }
   if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
     msg += "with hostname parameter "+std::string(hostname);
     raiseDietMsgException(msg);
-  }  
+  }
   if(connect) {
     if(diet_string_set(diet_parameter(profile,4), strdup(optionsToString.c_str()), DIET_VOLATILE)){
       msg += "with optionsToString parameter ";
       raiseDietMsgException(msg);
-    } 
+    }
   } else {
     if(diet_string_set(diet_parameter(profile,4), strdup((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
       msg += "with sessionId parameter "+msession.getSessionId();
@@ -199,7 +199,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
-  UMS_Data::Session_ptr session_ptr; 
+  UMS_Data::Session_ptr session_ptr;
 
   //To parse Session object serialized
   parseEmfObject(std::string(sessionInString), session_ptr, "Error by receiving Session object serialized");
@@ -213,33 +213,33 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 }
 
 /**
- * \brief Function to open a session 
+ * \brief Function to open a session
  * \fn  int connect(const UserProxy& user, const UMS_Data::ConnectOptions& options)
- * \param user The object which encapsulates the user information (ex: userId and password) 
- * \param options the object which encapsulate the options available for the connect method. It allows the user 
+ * \param user The object which encapsulates the user information (ex: userId and password)
+ * \param options the object which encapsulate the options available for the connect method. It allows the user
  *  to choose the way for way for closing the session automatically on TIMEOUT or on DISCONNECT and the
  *  possibility for an admin to open a session as she was a specific user
  * \return raises an exception on error
  */
-int SessionProxy::connect(const UserProxy& user, const UMS_Data::ConnectOptions& options) 
+int SessionProxy::connect(const UserProxy& user, const UMS_Data::ConnectOptions& options)
 {
   return _connect(user, true, options);
 }
 
 /**
- * \brief Function to reconnect to an opened session 
- * \fn  int reconnect(const UserProxy& user) 
- * \param user The object which encapsulates the user information (ex: userId and password) 
+ * \brief Function to reconnect to an opened session
+ * \fn  int reconnect(const UserProxy& user)
+ * \param user The object which encapsulates the user information (ex: userId and password)
  * \return raises an exception on error
- */  
+ */
 int SessionProxy::reconnect(const UserProxy& user)
 {
   return _connect(user);
 }
 
 /**
- * \brief Function close an opened session 
- * \fn  int close() 
+ * \brief Function close an opened session
+ * \fn  int close()
  * \return raises an exception on error
  */
 int SessionProxy::close()
@@ -249,8 +249,8 @@ int SessionProxy::close()
   std::string msg = "call of function diet_string_set is rejected ";
 
   std::string sessionKey =  msessionKey;
-    
-  diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1); 
+
+  diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1);
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
@@ -265,8 +265,8 @@ int SessionProxy::close()
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
-  } else {  
-    raiseDietMsgException("DIET call failure"); 
+  } else {
+    raiseDietMsgException("DIET call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -278,18 +278,18 @@ int SessionProxy::close()
 /**
  * \brief Function get the encrypted identifier of the session generated by VISHNU
  * \fn std::string getSessionKey() const
- * \return the encrypted identifier of the session generated by VISHNU 
+ * \return the encrypted identifier of the session generated by VISHNU
  * \return raises an exception on error
- */ 
+ */
 std::string SessionProxy::getSessionKey() const
 {
   return msessionKey;
 }
 
 /**
- * \brief Function get machine information 
+ * \brief Function get machine information
  * \fn  UMS_Data::Session getData()
- * \return Session object encapsulates the information of the session 
+ * \return Session object encapsulates the information of the session
  * \return raises an exception on error
  */
 UMS_Data::Session SessionProxy::getData() const
