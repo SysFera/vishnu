@@ -25,6 +25,7 @@
 #include "emfTMSUtils.hpp"
 
 #include "DIET_server.h"
+#include "DIET_Dagda.h"
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
@@ -33,6 +34,7 @@
 #include "SSHJobExec.hpp"
 #include "JobServer.hpp"
 #include "ListQueuesServer.hpp"
+#include "JobOutputServer.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 
