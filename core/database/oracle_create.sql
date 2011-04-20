@@ -363,30 +363,6 @@ END;
 
 /
 
--- Table for processes
-
-CREATE TABLE process (
-  numprocess NIBARY_FLOAT NOT NULL,
-  pstatus INTEGER,
-  vishnuName VARCHAR(255),
-  dietName VARCHAR(255),
-  machineId VARCHAR(255),	
-  starttime TIMESTAMP,
-  PRIMARY KEY(numprocess)
-);
-
-CREATE SEQUENCE s_process;
-CREATE OR REPLACE TRIGGER AINC_process
-BEFORE INSERT ON process
-FOR EACH ROW
-BEGIN
-  IF (:NEW.numprocess IS NULL) THEN
-    SELECT s_process.NEXTVAL INTO :NEW.numprocess FROM DUAL;
-  END IF;
-END;
-
-/
-
 -- Table for submitted files
 
 CREATE TABLE filesub (
@@ -420,11 +396,13 @@ CREATE TABLE job (
   submitMachineId VARCHAR2(255),
   submitMachineName VARCHAR2(255),
   jobId VARCHAR2(255),
+  batchJobId VARCHAR2(255),
+  batchType INTEGER, 
   jobName VARCHAR2(255),
   jobPath VARCHAR2(255),
   outputPath VARCHAR2(255),
   errorPath VARCHAR2(255), 
-  scriptContent VARCHAR2(255), 
+  scriptContent VARCHAR2(2000), 
   jobPrio BINARY_FLOAT,
   nbCpus BINARY_FLOAT,
   jobWorkingDir VARCHAR2(255),
