@@ -121,10 +121,10 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
         std::string err =   moutputInfos.getErrorPath();
         std::string out =  moutputInfos.getOutputPath();
-    
-        std::string outFileName = "outputOfJob_"+moutputInfos.getJobId(); 
+
+        std::string outFileName = "outputOfJob_"+moutputInfos.getJobId();
         std::string errFileName =  "errorsOfJob_"+moutputInfos.getJobId();
-        
+
         vishnu::moveFile(std::string(outputPath), out, outFileName);
         vishnu::moveFile(std::string(errorPath), err, errFileName);
       }
@@ -244,7 +244,7 @@ JobOutPutProxy::getAllJobsOutPut() {
     raiseDietMsgException("DIET call failure");
   }
   //To parse ListJobResult object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(listJobResultInString), listJobResults_ptr)) {
+  if (!vishnu::parseEmfObject(std::string(listJobResultInString), listJobResults_ptr)) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving ListJobResult object serialized");
   }
   //To clean the container Id
