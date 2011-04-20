@@ -21,13 +21,14 @@ class Database;
 /**
  *  * \brief Number of service in TMS
  *   */
-#define NB_SRV 4
+#define NB_SRV 5
 
 static const char* SERVICES[NB_SRV] = {
   "jobSubmit_",
   "jobCancel_",
   "TMSMachineGetListOfQueues_",
-  "jobOutPutGetResult_"
+  "jobOutPutGetResult_",
+  "getListOfJobs_",
 };
 
 /**
@@ -42,7 +43,7 @@ public :
    */
   static ServerTMS*  getInstance();
   /**
-   * \brief To get the unique instance of the database 
+   * \brief To get the unique instance of the database
    */
   static Database* getDatabaseVishnu();
 
