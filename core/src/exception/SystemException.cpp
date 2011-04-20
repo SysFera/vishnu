@@ -43,6 +43,7 @@ SystemException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Vishnu not available (System)")));
   mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Vishnu not available (Component)")));
   mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Vishnu not available (Mapper)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVDATA, std::string("Vishnu not available (Data error)")));
 }
 
 std::string
