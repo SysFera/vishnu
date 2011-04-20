@@ -87,8 +87,8 @@ main (int argc, char* argv[]){
       listQueues(sessionKey, machineId, queue);
     }
 
-    displayQueues(queue);
-
+    //displayQueues(queue);
+    std::cout << queue << std::endl;
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);

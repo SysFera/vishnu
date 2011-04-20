@@ -80,3 +80,12 @@ displayQueue(Queue& j);
  */
 void
 displaySubmit(TMS_Data::Job job);
+
+/**
+ * \brief Helper function to display a list of users
+ * \param os: The output stream in which the list will be printed 
+ * \param lsQueues: The list to display
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, ListQueues& lsQueues);
