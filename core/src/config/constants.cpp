@@ -15,7 +15,8 @@ namespace vishnu {
     /* [7]  */ {DBPASSWORD, "databaseUserPassword", STRING_PARAMETER},
     /* [8]  */ {SENDMAILSCRIPT, "sendmailScriptPath", STRING_PARAMETER},
     /* [9]  */ {BATCHTYPE, "batchSchedulerType", STRING_PARAMETER},
-    /* [10] */ {MACHINEID, "vishnuMachineId", STRING_PARAMETER}
+    /* [10] */ {MACHINEID, "vishnuMachineId", STRING_PARAMETER},
+    /* [11] */ {REMOTEBINDIR, "vishnuRemoteBinDirectory", STRING_PARAMETER}
   };
 }
 
