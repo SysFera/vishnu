@@ -14,7 +14,6 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 
 #include "TMS_Data.hpp"
-#include "emfTMSUtils.hpp"
 
 #include "DIET_server.h"
 
@@ -33,7 +32,7 @@ using namespace vishnu;
 
 
 void usage(char* cmd) {
-  cerr << "Usage: " << cmd << "COMMANDE_TYPE[SUBMIT] <BatchType> <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>"; 
+  cerr << "Usage: " << cmd << "COMMANDE_TYPE[SUBMIT] <BatchType> <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>";
   cerr << " <SubmitOptionsSerializedPath> <job_script_path>" << endl;
   cerr << "\t\t\t\t\t" << " or " << endl;
   cerr << "Usage: " << cmd << "COMMANDE_TYPE[CANCEL] <BatchType> <JobSerializedPath>  <SlaveErrorPath>" << endl;
@@ -94,19 +93,19 @@ main(int argc, char* argv[], char* envp[])
     std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER')" << std::endl;
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER')");
   }
-  
+
   jobSerializedPath = argv[3];
   slaveErrorPath = argv[4];
   os1 << argv[0] << " " << action << " " << batchTypeStr << " " << jobSerializedPath << " " << slaveErrorPath << " ";
   //Just to verify command line
   std::cout << os1.str() << os2.str() << std::endl;
- 
+
   TMS_Data::Job_ptr job = NULL;
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
   BatchServer* batchServer;
 
   try {
-  
+
     //To create batchServer Factory
     BatchFactory factory;
     batchServer = factory.getBatchServerInstance(batchType);
@@ -115,13 +114,13 @@ main(int argc, char* argv[], char* envp[])
     }
 
     std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
-    if(!parseTMSEmfObject(std::string(jobSerialized), job)) {
+    if(!parseEmfObject(std::string(jobSerialized), job)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: job object is not well built");
     }
 
     if(action.compare("SUBMIT")==0) {
       std::string options  = vishnu::get_file_content(optionsPath);
-      if(!parseTMSEmfObject(std::string(options), submitOptions)) {
+      if(!parseEmfObject(std::string(options), submitOptions)) {
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: SubmitOptions object is not well built");
       }
 
@@ -160,7 +159,7 @@ main(int argc, char* argv[], char* envp[])
 
   delete job;
   delete submitOptions;
-  delete batchServer; 
+  delete batchServer;
 
   return 0;
 }
