@@ -191,19 +191,6 @@ PRIMARY KEY(numfiletransferid),
   FOREIGN KEY(command_numcommandid)
     REFERENCES command(numcommandid));
 
-CREATE TABLE process (
-  numprocess SERIAL NOT NULL,
-  pstatus INTEGER,
-  vishnuname VARCHAR(255),
-  dietname VARCHAR(255),
-  machineid VARCHAR(255),	
-  uptime TIMESTAMP,
-  launchscript TEXT,
-  PRIMARY KEY(numprocess)
-);
-
-
-
 
 CREATE TABLE fileSub (
   numfileid SERIAL  NOT NULL ,

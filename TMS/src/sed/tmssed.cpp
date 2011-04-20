@@ -37,6 +37,7 @@ int main(int argc, char* argv[], char* envp[]) {
   BatchType batchType ;
   std::string batchTypeStr;
   std::string machineId;
+  std::string remoteBinDirectory;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -66,14 +67,17 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
+    if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
+      remoteBinDirectory = std::string(getenv("PWD"));
+    }
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
     exit(1);
   }
 
-  //Initialize the TMS Server 
+  //Initialize the TMS Server
   ServerTMS* server = ServerTMS::getInstance();
-  res = server->init(vishnuId, dbConfig, machineId, batchType);
+  res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
 
   //A remettre dans le fichier util server
   {

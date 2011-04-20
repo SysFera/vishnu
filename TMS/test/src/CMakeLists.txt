@@ -17,6 +17,7 @@ include_directories(
   ${PROJECT_BINARY_DIR}/include
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
+  ${UMS_TEST_SOURCE_DIR}
   )
 
 set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
