@@ -101,8 +101,14 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="timestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
       <eAnnotations source="Description">
-        <details key="content" value="The timestamp corresponding to the moment the process is registered"/>
+        <details key="content" value="The timestamp corresponding to the moment the process has been updated"/>
         <details key="shortOption" value="t"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The content of the script used to launch the sed"/>
+        <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
