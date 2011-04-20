@@ -74,7 +74,8 @@ void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const s
   object_ptr = NULL;
   try {
     //CREATE DATA MODEL
-    UMS_Data::UMS_DataPackage_ptr ecorePackage = UMS_Data::UMS_DataPackage::_instance();
+    T tmpObject;
+    ecore::EPackage_ptr ecorePackage = tmpObject._eClass()->getEPackage();
     ecorecpp::MetaModelRepository::_instance()->load(ecorePackage);
 
     //Parse the model
@@ -82,7 +83,7 @@ void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const s
     object_ptr = parser.load(objectSerialized)->as< T >();
   }
   catch (std::exception& e) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+    throw SystemException(ERRCODE_INVDATA, msgComp);
   }
 
 }
