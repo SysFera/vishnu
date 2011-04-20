@@ -30,9 +30,9 @@ ServerTMS::getInstance() {
 }
 
 /**
- * \brief To get the unique instance of the database 
+ * \brief To get the unique instance of the database
  */
-Database* 
+Database*
 ServerTMS::getDatabaseVishnu() {
   return mdatabaseVishnu;
 }
@@ -170,6 +170,16 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_CONTAINER, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveJobOutPutGetResult)) return 1;
+
+  /* ListOfJobs and getJobInfo */
+  mprofile = diet_profile_desc_alloc((SERVICES[4]+std::string(machineId)).c_str(), 2, 2, 4);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobs)) return 1;
+
 
   return 0;
 }
