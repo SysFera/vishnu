@@ -5,7 +5,6 @@
   * \date April 2011
   */
 #include "JobOutputServer.hpp"
-#include "emfTMSUtils.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
 #include "UserServer.hpp"
@@ -18,7 +17,7 @@
 
 /**
  * \param session The object which encapsulates the session information
- * \param machineid The machine identifier 
+ * \param machineid The machine identifier
  * \param jobResult The job result data structure
  * \brief Constructor
  */
@@ -77,7 +76,7 @@ JobOutputServer::getJobOutput() {
   }
 
   return mjobResult;
-}      
+}
 
 /**
  * \brief Destructor

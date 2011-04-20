@@ -19,6 +19,7 @@ ${DATA_BASE_INCLUDE_DIR}
 
 ADD_LIBRARY(utils-vishnu STATIC
   utilVishnu
+  utilClient
   Options
   sessionUtils
   CLICmd

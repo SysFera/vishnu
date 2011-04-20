@@ -11,8 +11,8 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 
 #include "TMS_Data.hpp"
-#include "emfTMSUtils.hpp"
 #include "utilVishnu.hpp"
+#include "utilServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
@@ -32,13 +32,13 @@ SSHJobExec::SSHJobExec() {
   msshKey = "";
 }
 
-SSHJobExec::SSHJobExec(char* script_path, 
-                       const std::string& jobSerialized, 
+SSHJobExec::SSHJobExec(char* script_path,
+                       const std::string& jobSerialized,
                        const std::string& submitOptionsSerialized,
-                       const std::string& user, 
+                       const std::string& user,
                        const std::string& hostname,
-                       const std::string& sshKey, 
-                       BatchType batchType) 
+                       const std::string& sshKey,
+                       BatchType batchType)
 {
   mscript_path = script_path;
   mjobSerialized = jobSerialized;
@@ -49,7 +49,7 @@ SSHJobExec::SSHJobExec(char* script_path,
   mhostname = hostname;
   msshKey = sshKey;
 }
-     
+
 std::string SSHJobExec::getJobSerialized() {
  return mjobSerialized;
 }
@@ -59,7 +59,7 @@ std::string SSHJobExec::getErrorInfo() {
 }
 
 void SSHJobExec::createTmpFile(char* fileName, const std::string& file_content) {
-  
+
   int  file_descriptor = mkstemp( fileName ) ;
   size_t file_size = file_content.size();
   if( file_descriptor == -1 ) {
@@ -74,14 +74,14 @@ void SSHJobExec::createTmpFile(char* fileName, const std::string& file_content) 
 
   if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
     std::cerr << "SSHJobExec: Cannot write the content int to new created file" << std::endl;
-    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot write the content int to new created file"); 
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot write the content int to new created file");
   }
 
   close(file_descriptor);
 }
 
 void SSHJobExec::createTmpFile(char* fileName) {
-  
+
   int  file_descriptor = mkstemp( fileName ) ;
   if( file_descriptor == -1 ) {
     std::cerr << "SSHJobExec: Cannot create new tmp file" << std::endl;
@@ -97,7 +97,7 @@ void SSHJobExec::createTmpFile(char* fileName) {
 }
 
 int SSHJobExec::deleteFile(const char* fileName) {
-  return unlink(fileName); 
+  return unlink(fileName);
 }
 
 int SSHJobExec::sshexec(const std::string& action) {
@@ -132,10 +132,10 @@ int SSHJobExec::sshexec(const std::string& action) {
     cmd <<  jobUpdateSerializedPath << " " <<  submitOptionsSerializedPath;
     cmd << " " << mscript_path;
   }
-  
+
   stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
   createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
-  cmd << " 2> " << stderrFilePath; 
+  cmd << " 2> " << stderrFilePath;
 
   std::cout << cmd.str() << std::endl;
   if(system((cmd.str()).c_str())) { //A REMPLACER PAR exec
@@ -161,7 +161,7 @@ int SSHJobExec::sshexec(const std::string& action) {
   if(!boost::filesystem::is_empty(jobUpdateSerializedFile)) {
     std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath);
     TMS_Data::Job_ptr job = NULL;
-    if(!vishnu::parseTMSEmfObject(std::string(jobSerialized), job)) {
+    if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
       deleteFile(jobSerializedPath.c_str());
       deleteFile(submitOptionsSerializedPath.c_str());
       deleteFile(jobUpdateSerializedPath.c_str());
@@ -195,7 +195,7 @@ int SSHJobExec::sshexec(const std::string& action) {
       std::cout << "merrorInfo = " << merrorInfo << std::endl;
     }
   }
-  
+
 
   deleteFile(jobSerializedPath.c_str());
   deleteFile(submitOptionsSerializedPath.c_str());
@@ -230,7 +230,7 @@ int SSHJobExec::copyFiles(const std::string& outputPath, const std::string& erro
   if(system((cmd2.str()).c_str())) { //A REMPLACER PAR exec
     std::cerr << "can't execute " << cmd2.str() << std::endl;
     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: problem to get the output or error file on this user local account");
-  } 
+  }
 }
 
 SSHJobExec::~SSHJobExec() {
