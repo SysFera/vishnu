@@ -11,7 +11,7 @@
 /**
  * \fn OptionValueProxy(const UMS_Data::OptionValue& optionValue,
  *                      const SessionProxy& session)
- * \param optionValue The object which encapsulates the information of the option 
+ * \param optionValue The object which encapsulates the information of the option
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
@@ -21,11 +21,11 @@ OptionValueProxy::OptionValueProxy(const UMS_Data::OptionValue& optionValue, con
 }
 
 /**
- * \brief Function to combine configureOption() and configureDefaultOption() into one function 
- * \fn  int setOptionValue(bool defaultValue=true); 
- * \param defaultValue to select the call of configureOption() or configureOption() function 
+ * \brief Function to combine configureOption() and configureDefaultOption() into one function
+ * \fn  int setOptionValue(bool defaultValue=true);
+ * \param defaultValue to select the call of configureOption() or configureOption() function
  * \return raises an exception on error
- */ 
+ */
 int OptionValueProxy::setOptionValue(bool defaultValue)
 {
   diet_profile_t* profile = NULL;
@@ -44,7 +44,7 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
 
   const char* name = "optionValueSet";
   ::ecorecpp::serializer::serializer _ser(name);
-  //To serialize the moptionValue object in to optionValueToString 
+  //To serialize the moptionValue object in to optionValueToString
   optionValueToString =  _ser.serialize(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
 
   //IN Parameters
@@ -77,40 +77,40 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
 }
 
 /**
- * \brief Function to configure an option of the user 
+ * \brief Function to configure an option of the user
  * \fn  int configureOption()
  * \return raises an exception on error
  */
-int OptionValueProxy::configureOption() 
+int OptionValueProxy::configureOption()
 {
   return setOptionValue(false);
 }
 
 /**
- * \brief Function to configure a default option value 
- * \fn  int configureDefaultOption() 
+ * \brief Function to configure a default option value
+ * \fn  int configureDefaultOption()
  * \return raises an exception on error
- */ 
+ */
 int OptionValueProxy::configureDefaultOption()
 {
   return setOptionValue();
 }
 
 /**
- * \brief Function get option information 
+ * \brief Function get option information
  * \fn  UMS_Data::OptionValue getData()
- * \return OptionValue object encapsulates the information of the machine 
+ * \return OptionValue object encapsulates the information of the machine
  * \return raises an exception on error
- */ 
+ */
 UMS_Data::OptionValue OptionValueProxy::getData()
 {
   return moptionValue;
 }
 
 /**
- * \brief Function get SessionProxy object which contains the VISHNU session identifier 
- * \fn SessionProxy getSessionProxy() 
- * \return a SessionProy object which contains the VISHNU session information 
+ * \brief Function get SessionProxy object which contains the VISHNU session identifier
+ * \fn SessionProxy getSessionProxy()
+ * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
 SessionProxy OptionValueProxy::getSessionProxy()
