@@ -16,7 +16,7 @@
 
 // TODO: Implement this function
 int
-registerSeD(CmdType type, ExecConfiguration config){
+vishnu::registerSeD(CmdType type, ExecConfiguration config){
   // config.getContentAsString()
   // getHostname()
   // getMachineIdFromHostname()
