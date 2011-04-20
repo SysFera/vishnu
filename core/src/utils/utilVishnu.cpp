@@ -136,21 +136,26 @@ vishnu::get_file_content(const std::string& filePath){
 * \brief Function to move file
 * \param src: the path of the file to move
 * \param dest: the destination where the file will be moved
+* \param file: the name of the file in dest
 * \return raises an exception on error
 */
 int
-vishnu::moveFile(std::string src, std::string dest) {
+vishnu::moveFile(std::string src, std::string dest, const std::string& filename) {
 
   bfs::path filePath(src);
   bfs::path fileDestPath(dest);
-
+  bfs::path fileNewPath(src);
+  if(filename.size()!=0) {
+    fileNewPath = bfs::path(filename);
+  }
+  
   try {
     //If the destination does not exist, the file is created in the current directory
     if(!bfs::exists(fileDestPath)) {
-      bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
+      bfs::rename(filePath, bfs::path(bfs::current_path().string() / fileNewPath.filename() /*filePath.filename()*/));
     }
     else {
-      bfs::rename(filePath, bfs::path(fileDestPath / filePath.filename()));
+      bfs::rename(filePath, bfs::path(fileDestPath / fileNewPath.filename() /*filePath.filename()*/));
     }
   } catch (std::exception& e) {
       throw UserException(ERRCODE_INVALID_PARAM, e.what());

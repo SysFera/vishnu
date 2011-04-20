@@ -7,6 +7,8 @@
 
 #include "api_tms.hpp"
 #include "utilVishnu.hpp"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 
 /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
@@ -265,11 +267,20 @@ int
 vishnu::getJobOutput(const std::string& sessionKey,
               const std::string& machineId,
               const std::string& jobId,
-              JobResult_ptr& outputInfos)
+              JobResult& outputInfos)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+ std::string outputPath = outputInfos.getOutputPath();
+ std::string errorPath = outputInfos.getErrorPath();
+ if((outputPath.size()!=0)&&(!boost::filesystem::exists(outputPath))) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The derectory "+outputPath+" does not exist");
+  }
+  if((errorPath.size()!=0)&&(!boost::filesystem::exists(errorPath))) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The derectory "+errorPath+" does not exist");
+  }
+
   SessionProxy sessionProxy(sessionKey);
-  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
+  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId, outputInfos);
 
   outputInfos = jobOutPutProxy.getJobOutPut(jobId);
 
@@ -291,7 +302,8 @@ vishnu::getAllJobsOutput(const std::string& sessionKey,
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId);
+  JobResult outputInfos;
+  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId, outputInfos);
 
   TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutPutProxy.getAllJobsOutPut();
 
