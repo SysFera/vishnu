@@ -42,6 +42,11 @@ public :
    */
   static ServerTMS*  getInstance();
   /**
+   * \brief To get the unique instance of the database 
+   */
+  static Database* getDatabaseVishnu();
+
+  /**
    * \brief to get the VishnuId
    * \fn int getvishnuid()
    * \return the path of the configuration file
