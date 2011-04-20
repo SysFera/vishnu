@@ -55,6 +55,7 @@ solveSubmitJob(diet_profile_t* pb) {
   char* script_content = NULL;
   std::string empty("");
   std::string errorInfo ="";
+  std::string finishError ="";
   int mapperkey;
   std::string cmd = "";
 
