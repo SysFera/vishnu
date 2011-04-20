@@ -20,8 +20,9 @@ using namespace vishnu;
 * \brief Constructor
 */
 JobOutPutProxy::JobOutPutProxy( const SessionProxy& session,
-                  const std::string& machineId)
-:msessionProxy(session), mmachineId(machineId) {
+                  const std::string& machineId,
+                  TMS_Data::JobResult& outputInfos)
+:msessionProxy(session), mmachineId(machineId), moutputInfos(outputInfos) {
 }
 
 /**
@@ -29,7 +30,8 @@ JobOutPutProxy::JobOutPutProxy( const SessionProxy& session,
 * \param jobId The Id of the
 * \return The job results data structure
 */
-TMS_Data::JobResult_ptr
+//TMS_Data::JobResult_ptr
+TMS_Data::JobResult
 JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
   diet_profile_t* profile = NULL;
@@ -43,13 +45,15 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   char* errorPath = NULL;
   TMS_Data::JobResult_ptr outJobResult;
 
-  TMS_Data::JobResult jobResult;
-  jobResult.setJobId(jobId);
+  /*TMS_Data::JobResult jobResult;
+  jobResult.setJobId(jobId);*/
+  moutputInfos.setJobId(jobId);
+  moutputInfos.setErrorPath(moutputInfos.getOutputPath());
 
   std::string serviceName = "jobOutPutGetResult_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
+  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -67,7 +71,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
    const char* name = "getJobOutPut";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
-  jobResultToString =  strdup(_ser.serialize(const_cast<TMS_Data::JobResult_ptr>(&jobResult)).c_str());
+  jobResultToString =  strdup(_ser.serialize(const_cast<TMS_Data::JobResult_ptr>(&moutputInfos)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), jobResultToString, DIET_VOLATILE)) {
     msgErrorDiet += "with the job result parameter "+std::string(jobResultToString);
@@ -76,16 +80,16 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
    //OUT Parameters
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,5), DIET_PERSISTENT_RETURN);
+  //diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT_RETURN);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &jobResultInString, NULL)){
+    /*if(diet_string_get(diet_parameter(profile,3), &jobResultInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
-    }
+    }*/
 
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -94,12 +98,12 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
      TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
     //To parse JobResult object serialized
-    if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult)) {
+    /*if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult)) {
       throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving JobResult object serialized");
-    }
+    }*/
 
     try {
-      IDContainer = (profile->parameters[5]).desc.id;
+      IDContainer = (profile->parameters[4]).desc.id;
       dagda_get_container(IDContainer);
       dagda_get_container_elements(IDContainer, &content);
 
@@ -108,10 +112,21 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
         dagda_get_file(content.elt_ids[0],&outputPath);
         dagda_get_file(content.elt_ids[1],&errorPath);
 
-        std::string err =  outJobResult->getErrorPath();
-        std::string out = outJobResult->getOutputPath();
-        vishnu::moveFile(std::string(outputPath), out);
-        vishnu::moveFile(std::string(errorPath), err);
+        if(moutputInfos.getOutputPath().size()==0) {
+          moutputInfos.setOutputPath((bfs::path(bfs::current_path().string())).string());
+        }
+        if(moutputInfos.getErrorPath().size()==0) {
+          moutputInfos.setErrorPath((bfs::path(bfs::current_path().string())).string());
+        }
+
+        std::string err =   moutputInfos.getErrorPath();
+        std::string out =  moutputInfos.getOutputPath();
+    
+        std::string outFileName = "outputOfJob_"+moutputInfos.getJobId(); 
+        std::string errFileName =  "errorsOfJob_"+moutputInfos.getJobId();
+        
+        vishnu::moveFile(std::string(outputPath), out, outFileName);
+        vishnu::moveFile(std::string(errorPath), err, errFileName);
       }
     } catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
       if (content.size == 2) {
@@ -137,7 +152,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   //To clean the container Id
   dagda_delete_data(IDContainer);
   diet_profile_free(profile);
-  return outJobResult;
+  return moutputInfos; //outJobResult;
 }
 
 /**

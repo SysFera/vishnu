@@ -1,3 +1,4 @@
+#include "utilVishnu.hpp"
 #include "displayer.hpp"
 
 using namespace std;
@@ -108,3 +109,111 @@ void
 displaySubmit(TMS_Data::Job job){
   cout << "Job Id     : " << job.getJobId() << endl;
 }
+
+
+/**
+ * \brief Display a '-' caracter 
+ * \param size: The number of '-' to diplay
+ * \The output stream in which the display will be done.
+ */
+void
+setFill(int size, ostream& os) {
+
+  for(int i=0; i < size; i++) {
+    os << "-";
+  }
+  os << "  ";
+}
+
+/**
+ * \brief Helper function to display a list of users
+ * \param os: The output stream in which the list will be printed 
+ * \param lsQueues: The list to display
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, ListQueues& lsQueues) {
+
+  std::string name;
+  int Memory;
+  long walltime;
+  int node;
+  int nbRunJobs;
+  int nbJobsQue;
+  int state;
+
+  std::string nameHead = "name";
+  std::string memoryHead = "Memory";
+  std::string walltimeHead = "Walltime";
+  std::string nodeHead = "Node";
+  std::string nbRunJobsHead = "Running jobs";
+  std::string nbJobsQueHead = "Job in queue"; 
+  std::string stateHead = "State";
+  std::string blank = " --- ";
+
+  size_t maxNameSize = nameHead.size();
+  size_t maxMemorySize = memoryHead.size();
+  size_t maxWalltimeSize = walltimeHead.size();
+  size_t maxNodeSize = nodeHead.size(); 
+  size_t maxNbRunJobsSize = nbRunJobsHead.size();
+  size_t maxNbJobsQueSize = nbJobsQueHead.size();
+  size_t maxStateSize = stateHead.size();
+
+  for(size_t i = 0; i < lsQueues.getQueues().size(); i++) {
+
+    name = (lsQueues.getQueues().get(i))->getName();
+    maxNameSize = std::max(maxNameSize, name.size());
+
+    Memory = (lsQueues.getQueues().get(i))->getMemory();
+    maxMemorySize = std::max(maxMemorySize, vishnu::convertToString(Memory).size());
+
+    walltime = (lsQueues.getQueues().get(i))->getWallTime();
+    maxWalltimeSize = std::max(maxWalltimeSize, vishnu::convertWallTimeToString(walltime).size());
+
+    node = (lsQueues.getQueues().get(i))->getNode();
+    maxNodeSize = std::max(maxNodeSize, vishnu::convertToString(node).size());
+
+    nbRunJobs = (lsQueues.getQueues().get(i))->getNbRunningJobs();
+    maxNbRunJobsSize = std::max(maxNbRunJobsSize, vishnu::convertToString(nbRunJobs).size());
+
+    nbJobsQue = (lsQueues.getQueues().get(i))->getNbJobsInQueue();
+    maxNbJobsQueSize = std::max(maxNbJobsQueSize, vishnu::convertToString(nbJobsQue).size());
+
+  }
+
+  os << setw(maxNameSize+2) << left << nameHead << setw(maxMemorySize+2) << left << memoryHead << setw(maxWalltimeSize+2) ;
+  os << left << walltimeHead << setw(maxNodeSize+2) << left << nodeHead << setw(maxNbRunJobsSize+2) << left << nbRunJobsHead;
+  os << setw(maxNbJobsQueSize+2) << left << nbJobsQueHead << setw(maxStateSize+2) << left << stateHead << endl;
+
+  setFill(maxNameSize, os);
+  setFill(maxMemorySize, os);
+  setFill(maxWalltimeSize, os);
+  setFill(maxNodeSize, os);
+  setFill(maxNbRunJobsSize, os);
+  setFill(maxNbJobsQueSize, os);
+  setFill(maxStateSize, os);
+  os << endl;
+
+  for(size_t i = 0; i < lsQueues.getQueues().size(); i++) {
+    name = (lsQueues.getQueues().get(i))->getName();
+    Memory = (lsQueues.getQueues().get(i))->getMemory();
+    walltime = (lsQueues.getQueues().get(i))->getWallTime();
+    node = (lsQueues.getQueues().get(i))->getNode();
+    nbRunJobs = (lsQueues.getQueues().get(i))->getNbRunningJobs();
+    nbJobsQue = (lsQueues.getQueues().get(i))->getNbJobsInQueue();
+    state = (lsQueues.getQueues().get(i))->getState();
+
+    os << setw(maxNameSize+2) << left << name;
+    os << setw(maxMemorySize+2) << left << Memory;
+    os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
+    os << setw(maxNodeSize+2) << left << node;
+    os << setw(maxNbRunJobsSize+2) << left << nbRunJobs;
+    os << setw(maxNbJobsQueSize+2) << left << nbJobsQue;
+    os << setw(maxStateSize+2) << left << state;
+    os << endl;
+
+  } 
+
+  return os;
+}
+
