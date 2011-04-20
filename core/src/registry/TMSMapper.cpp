@@ -11,7 +11,6 @@
 #include "utilVishnu.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilServer.hpp"
-#include "emfTMSUtils.hpp"
 
 using namespace vishnu;
 
@@ -184,7 +183,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
   TMS_Data::SubmitOptions_ptr ac = NULL;
 
   //To parse the object serialized
-  if(!vishnu::parseTMSEmfObject(u, ac)) {
+  if(!vishnu::parseEmfObject(u, ac)) {
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
 
@@ -232,7 +231,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
   TMS_Data::Job_ptr j = NULL;
 
   //To parse the object serialized
-  if(!parseTMSEmfObject(u, j)) {
+  if(!parseEmfObject(u, j)) {
     throw SystemException(ERRCODE_INVMAPPER, "job: "+u);
   }
   u = j->getJobPath();

@@ -4,7 +4,6 @@
 #include "TMSMachineProxy.hpp"
 #include "utilsClient.hpp"
 #include "utilsTMSClient.hpp"
-#include "emfTMSUtils.hpp"
 #include "utilVishnu.hpp"
 
 using namespace vishnu;
@@ -75,7 +74,7 @@ TMSMachineProxy::getMachineQueues() {
   TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse ListQueues object serialized
-  if (!vishnu::parseTMSEmfObject(std::string(listQueuesInString), listQueues)) {
+  if (!vishnu::parseEmfObject(std::string(listQueuesInString), listQueues)) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving ListQueues object serialized");
   }
 

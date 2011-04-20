@@ -5,7 +5,6 @@
   * \date April 2011
   */
 #include "JobServer.hpp"
-#include "emfTMSUtils.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
 #include "UserServer.hpp"
@@ -20,14 +19,14 @@ std::map<std::string, std::string> JobServer::mapOfErrorPath = std::map<std::str
 
 /**
  * \param session The object which encapsulates the session information
- * \param machineId The machine identifier 
+ * \param machineId The machine identifier
  * \param job The job data structure
  * \brief Constructor
  */
-JobServer::JobServer(const SessionServer& sessionServer, 
-                     const std::string& machineId, 
-                     const TMS_Data::Job& job, 
-                     const BatchType& batchType): 
+JobServer::JobServer(const SessionServer& sessionServer,
+                     const std::string& machineId,
+                     const TMS_Data::Job& job,
+                     const BatchType& batchType):
   msessionServer(sessionServer), mmachineId(machineId), mjob(job), mbatchType(batchType) {
 
 }
@@ -37,12 +36,12 @@ JobServer::JobServer(const SessionServer& sessionServer,
  * \param scriptContent the content of the script
  * \param options the options to submit job
  * \return raises an exception on error
- */ 
+ */
 int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::SubmitOptions& options)
 {
 
   msessionServer.check(); //To check the sessionKey
-  
+
   std::string acLogin = getUserAccountLogin();
   std::cout << "acLogin = " << acLogin << std::endl;
 
@@ -50,7 +49,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   std::cout << "machineName = " << machineName << std::endl;
 
   std::string jobSerialized ;
-  std::string submitOptionsSerialized; 
+  std::string submitOptionsSerialized;
   char* scriptPath = NULL;
   const char* name = "submit";
   ::ecorecpp::serializer::serializer optSer(name);
@@ -65,24 +64,24 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
 
   submitOptionsSerialized = optSer.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
- 
+
   SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, acLogin, machineName, "", mbatchType);
   sshJobExec.sshexec("SUBMIT");
 
   SSHJobExec().deleteFile(scriptPath);
-  
+
   std::string errorInfo = sshJobExec.getErrorInfo();
 
   if(errorInfo.size()!=0) {
      int code;
      std::string message;
      scanErrorMessage(errorInfo, code, message);
-     throw TMSVishnuException(code, message); 
+     throw TMSVishnuException(code, message);
   }
 
   std::string updateJobSerialized = sshJobExec.getJobSerialized().c_str();
   TMS_Data::Job_ptr job = NULL;
-  if(!vishnu::parseTMSEmfObject(std::string(updateJobSerialized), job)) {
+  if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
@@ -107,7 +106,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
 /**
  * \brief Function to cancel job
  * \return raises an exception on error
- */ 
+ */
 int JobServer::cancelJob()
 {
 
@@ -127,7 +126,7 @@ int JobServer::cancelJob()
 
   SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
   sshJobExec.sshexec("CANCEL");
- 
+
   std::string errorInfo = sshJobExec.getErrorInfo();
 
   if(errorInfo.size()!=0) {
@@ -143,14 +142,14 @@ int JobServer::cancelJob()
 /**
  * \brief Function to get job information
  * \return The job data structure
- */ 
+ */
 TMS_Data::Job JobServer::getData()
 {
 	return mjob;
 }
 
 /**
- * \brief Function to scan the error message 
+ * \brief Function to scan the error message
  * \param errorInfo The error message to scan
  * \param code The code of errorInfo
  * \param message The message of errorInfo
@@ -165,7 +164,7 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
     if(codeInString.size()!=0) {
       std::istringstream isCode(codeInString);
       isCode >> code;
-      message = errorInfo.substr(pos+1);             
+      message = errorInfo.substr(pos+1);
     }
   }
 }
@@ -184,7 +183,7 @@ std::string JobServer::getUserAccountLogin() {
   UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
   machine->setMachineId(mmachineId);
   MachineServer machineServer(machine);
- 
+
   //To get the database number id of the machine
   std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
   //To get the database number id of the user
@@ -193,12 +192,12 @@ std::string JobServer::getUserAccountLogin() {
   std::string acLogin;
   if ((numMachine.size() > 0) && (numUser.size() > 0)) {
     acLogin = localAccount.getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "aclogin");
-  } 
+  }
 
   if(acLogin.size()==0) {
     delete account;
-    delete machine; 
-    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");  
+    delete machine;
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
   }
 
   delete account;
