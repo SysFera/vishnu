@@ -12,11 +12,6 @@
 #include "utilServer.hpp"
 #include "ServerTMS.hpp"
 
-///////////////JUST A TEST /////////////////
-std::map<std::string, std::string> JobServer::mapOfOutputPath = std::map<std::string, std::string>();
-std::map<std::string, std::string> JobServer::mapOfErrorPath = std::map<std::string, std::string>();
-////////////// END TEST ///////////////////
-
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The machine identifier
@@ -85,21 +80,36 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
+  delete job;
+
   mjob.setSubmitMachineId(mmachineId);
   mjob.setSubmitMachineName(machineName);
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
   mjob.setSessionId(sessionId);
 
   std::string BatchJobId=mjob.getJobId();
-  std::cout << "BatchJobId=" << BatchJobId << std::endl;
-  std::cout << "ServerTMS::getInstance()->getVishnuId()=" << ServerTMS::getInstance()->getVishnuId() << std::endl;
   std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
-  std::cout << "vishnuJobId = " << vishnuJobId << std::endl;
-  //mjob.setJobId(vishnuJobId);
-  mapOfOutputPath[BatchJobId] = mjob.getOutputPath();
-  mapOfErrorPath[BatchJobId] = mjob.getErrorPath();
-  delete job;
+  mjob.setJobId(vishnuJobId);
 
+  Database* databaseVishnu = ServerTMS::getDatabaseVishnu();
+  std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
+  std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
+    "jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
+    "status, submitDate, endDate, owner, jobQueue, wallClockLimit, groupName, jobDescription, memLimit,"
+    "nbNodes, nbNodesAndCpuPerNode)"
+    " values ("+numsession+",'"+mjob.getSubmitMachineId()+"','"+ mjob.getSubmitMachineName()+"','"+vishnuJobId+"','"
+    +BatchJobId+"',"+convertToString(mbatchType)+",'"+mjob.getJobName()+"','"+mjob.getJobPath()+"','"
+    +mjob.getOutputPath()+"','"+mjob.getErrorPath()+"','"
+    +std::string(scriptContent)+"',"+convertToString(mjob.getJobPrio())+","+convertToString(mjob.getNbCpus())+",'"
+    +mjob.getJobWorkingDir()+"',"
+    +convertToString(mjob.getStatus())+",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue()
+    +"',"+convertToString(mjob.getWallClockLimit())+",'"+mjob.getGroupName()+"','"+mjob.getJobDescription()+"',"
+    +convertToString(mjob.getMemLimit())
+    +","+convertToString(mjob.getNbNodes())+","+"'1:1'"+")" ;  //TODO : a ajouter mjob.getNbNodesAndCpuPerNode() 
+
+  std::cout << sqlInsert << std::endl;
+  databaseVishnu->process(sqlInsert); 
+    
   return 0;
 }
 

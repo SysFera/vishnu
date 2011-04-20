@@ -76,12 +76,6 @@ public:
   std::string mmachineId;
   BatchType mbatchType;
 
-  ///////////////JUST A TEST /////////////////
-#include <map>
-  public:
-  static std::map<std::string, std::string> mapOfOutputPath;
-  static std::map<std::string, std::string> mapOfErrorPath;
-  ////////////// END TEST ///////////////////
 };
 
 #endif
