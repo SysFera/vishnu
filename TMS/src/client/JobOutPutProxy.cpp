@@ -1,9 +1,7 @@
 #include <string>
 #include <iostream>
 #include "JobOutPutProxy.hpp"
-#include "utilsClient.hpp"
-#include "utilsTMSClient.hpp"
-#include "emfTMSUtils.hpp"
+#include "utilClient.hpp"
 #include "DIET_Dagda.h"
 #include <boost/filesystem.hpp>
 #include "utilVishnu.hpp"
@@ -95,7 +93,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
     }
 
      /*To raise a vishnu exception if the receiving message is not empty*/
-     TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+     raiseExceptionIfNotEmptyMsg(errorInfo);
 
     //To parse JobResult object serialized
     /*if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult)) {
@@ -207,7 +205,7 @@ JobOutPutProxy::getAllJobsOutPut() {
     }
 
     /*To raise a vishnu exception if the receiving message is not empty*/
-    TMSUtils::raiseTMSExceptionIfNotEmptyMsg(errorInfo);
+    raiseExceptionIfNotEmptyMsg(errorInfo);
 
     try {
       IDContainer = (profile->parameters[4]).desc.id;
@@ -244,9 +242,7 @@ JobOutPutProxy::getAllJobsOutPut() {
     raiseDietMsgException("DIET call failure");
   }
   //To parse ListJobResult object serialized
-  if (!vishnu::parseEmfObject(std::string(listJobResultInString), listJobResults_ptr)) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving ListJobResult object serialized");
-  }
+  parseEmfObject(std::string(listJobResultInString), listJobResults_ptr);
   //To clean the container Id
   dagda_delete_data(IDContainer);
   diet_profile_free(profile);
