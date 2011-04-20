@@ -55,6 +55,7 @@ solveSubmitJob(diet_profile_t* pb) {
   char* script_content = NULL;
   std::string empty("");
   std::string errorInfo ="";
+  std::string finishError ="";
   int mapperkey;
   std::string cmd = "";
 
@@ -107,7 +108,13 @@ solveSubmitJob(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
   } catch (VishnuException& e) {
-    sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
+    try {
+      sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    e.appendMsgComp(finishError); 
     errorInfo =  e.buildExceptionString();
     std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
