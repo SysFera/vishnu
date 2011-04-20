@@ -5,7 +5,7 @@
 -- REVISIONS
 -- Revision nb          : 1.0
 -- Revision date        : 27/01/11
--- Revision author      : Benjamin ISNARD <benjamin.isnard@sysfera.com>, 
+-- Revision author      : Benjamin ISNARD <benjamin.isnard@sysfera.com>,
 --                        Daouda TRAORE <daouda.traore@sysfera.com>,
 --                        Eugène PAMBA CAPO-CHICHI <eugene.capochichi@sysfera.com>
 -- Revision comment     : The purpose of this script is to update the database for old script version used for UMS
@@ -17,16 +17,16 @@ DROP TABLE job;
 
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,  
+  vsession_numsessionid INTEGER   NOT NULL ,
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
   jobId VARCHAR(255),
   batchJobId VARCHAR(255),
-  batchType INTEGER, 
+  batchType INTEGER,
   jobName VARCHAR(255),
   jobPath VARCHAR(255),
   outputPath VARCHAR(255),
-  errorPath VARCHAR(255),  
+  errorPath VARCHAR(255),
   scriptContent TEXT,
   jobPrio INTEGER,
   nbCpus INTEGER,
@@ -47,3 +47,5 @@ PRIMARY KEY(numjobid),
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
 GRANT ALL ON SEQUENCE job_numjobid_seq TO vishnu_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
