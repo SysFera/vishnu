@@ -22,7 +22,7 @@ include_directories(
 
 set (TEST_CONFIG_TMS "${PROJECT_BINARY_DIR}/include")
 file( TO_NATIVE_PATH ${TEST_CONFIG_TMS} TESTCONF )
-set (TEST_TMS_SQL "${CMAKE_CURRENT_SOURCE_DIR}/sql")
+set (TEST_TMS_SQL "${PROJECT_BINARY_DIR}/test_files/sql")
 file( TO_NATIVE_PATH ${TEST_TMS_SQL} TMSSQL )
 set (TEST_TMS_SCRIPTS "${CMAKE_CURRENT_SOURCE_DIR}/scripts")
 file( TO_NATIVE_PATH ${TEST_TMS_SCRIPTS} TMSSCRIPTS )
@@ -61,3 +61,5 @@ tms_test(tms_automTest)
   #  exception-vishnu
   #  vishnu-ums-api
   #  ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_subdirectory( sql )

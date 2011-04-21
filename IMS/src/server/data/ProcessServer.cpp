@@ -6,13 +6,14 @@
 
 using namespace vishnu;
 
-ProcessServer::ProcessServer(const SessionServer session):msession(session){
+ProcessServer::ProcessServer(const UserServer session):msession(session){
   DbFactory factory;
   mcommandName = "vishnu_list_processes";
   mdatabase = factory.getDatabaseInstance();
+  mop = IMS_Data::ProcessOp_ptr();
 }
 
-ProcessServer::ProcessServer(IMS_Data::ProcessOp_ptr op, const SessionServer session):mop(op), msession(session){
+ProcessServer::ProcessServer(IMS_Data::ProcessOp_ptr op, const UserServer session):mop(op), msession(session){
   DbFactory factory;
   mcommandName = "vishnu_list_processes";
   mdatabase = factory.getDatabaseInstance();
@@ -23,6 +24,10 @@ ProcessServer::~ProcessServer(){
 
 IMS_Data::ListProcesses*
 ProcessServer::list(){
+  if (!msession.isAdmin()){
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "get processes is an admin function. A user cannot call it");
+  }
+
   string request = "SELECT * from process WHERE \"pstatus\"='"+convertToString(PRUNNING)+"' ";
   vector<string> results;
   vector<string>::iterator iter;
@@ -31,7 +36,7 @@ ProcessServer::list(){
     string machine = "SELECT machineid from machine where machineid='"+mop->getMachineId()+"'";
     DatabaseResult *res = mdatabase->getResult(machine.c_str());
     if(res->getNbTuples()==0) {
-       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
+      throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
     }
     request += "AND \"machineid\"='"+mop->getMachineId()+"'";
   }
