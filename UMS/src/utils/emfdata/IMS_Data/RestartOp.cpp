@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 RestartOp::RestartOp() :
-    m_sedType()
+    m_sedType(0)
 {
 
     /*PROTECTED REGION ID(RestartOpImpl__RestartOpImpl) START*/
@@ -50,32 +50,6 @@ RestartOp::~RestartOp()
 /*PROTECTED REGION END*/
 
 // Attributes
-
-::ecore::EString const& RestartOp::getDietConfFile() const
-{
-    return m_dietConfFile;
-}
-
-void RestartOp::setDietConfFile(::ecore::EString const& _dietConfFile)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_dietConfFile = m_dietConfFile;
-#endif
-    m_dietConfFile = _dietConfFile;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getRestartOp__dietConfFile(),
-                _old_dietConfFile,
-                m_dietConfFile
-        );
-        eNotify(&notification);
-    }
-#endif
-}
 
 ::ecore::EString const& RestartOp::getVishnuConf() const
 {

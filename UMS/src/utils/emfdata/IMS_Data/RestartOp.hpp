@@ -69,17 +69,6 @@ namespace IMS_Data
 
         // Attributes
         /**
-         * \brief To get the dietConfFile
-         * \return The dietConfFile attribute value
-         **/
-        ::ecore::EString const& getDietConfFile() const;
-        /**
-         * \brief To set the dietConfFile
-         * \param _dietConfFile The dietConfFile value
-         **/
-        void setDietConfFile(::ecore::EString const& _dietConfFile);
-
-        /**
          * \brief To get the vishnuConf
          * \return The vishnuConf attribute value
          **/
@@ -125,8 +114,6 @@ namespace IMS_Data
 
     protected:
         // Attributes
-
-        ::ecore::EString m_dietConfFile;
 
         ::ecore::EString m_vishnuConf;
 
