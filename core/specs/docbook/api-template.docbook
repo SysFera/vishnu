@@ -80,6 +80,17 @@
           </para>
         </revdescription>
         </revision>
+        <revision>
+        <revnumber>5</revnumber>
+        <date>21/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates to TMS:
+            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. 
+            Removed of outputPah and errorPath of ListJobsOptions. Modified JobResult to JobOutputInfo. Modified ListJobResults to ListJobOutputInfo.
+          </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
