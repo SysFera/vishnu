@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions subOptions;
   subOptions.setOutputPath(jobOutputPath);
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -275,7 +275,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -538,7 +538,7 @@ BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -578,7 +578,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobOutputPath);
@@ -613,7 +613,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
 
   //Setting submitjob parameters
 
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/torque_script";
+  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
   SubmitOptions options;
   options.setOutputPath(jobErrorPath);

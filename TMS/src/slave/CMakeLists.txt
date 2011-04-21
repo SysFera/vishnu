@@ -30,22 +30,14 @@ add_executable(tmsSlave
 )
 
 target_link_libraries(tmsSlave
-  ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
   ${TORQUE_LIB}
   emf4cpp-TMS_Data
   register-vishnu
   exception-vishnu
-  database-vishnu
   utils-vishnu
   utils-server
   tms-server
 )
 
-install_targets(/sbin/
-  tmsSlave
-)
-
-install_targets(/tmp
- tmsSlave 
-)
+install(TARGETS tmsSlave DESTINATION sbin)
