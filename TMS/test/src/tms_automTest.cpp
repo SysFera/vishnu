@@ -26,21 +26,36 @@ BOOST_AUTO_TEST_SUITE(submit_a_job)
 const string jobOutputPath = TMSWORKINGDIR "/output.txt";
 const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
+// BOOST_AUTO_TEST_CASE( initialize_database )
+// {
+//     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
+//     string sqlPath = TMSSQLPATH;
+//     if (restore(sqlPath + "/cleanall.sql") != 0) {
+//       cout << "Clean database failed" << endl;
+//       return;
+//     }
+//     if (restore(sqlPath + "/TMSinitTest.sql")!=0) {
+//       cout << "Database initialization failed" << endl;
+//       return;
+//     }
+//     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
+// }
+
   // submit a job: normal call
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 {
 
   BOOST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" );
-
-
+  bpt::seconds sleepTime(500);
+  boost::this_thread::sleep(sleepTime);
   VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
 
   //Setting submitjob parameters
@@ -78,7 +93,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 
   // get the session key and the machine identifier
   string sessionKey="bad session key";
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   //Setting submitjob parameters
 
@@ -130,7 +145,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   //Setting submitjob parameters
 
@@ -155,7 +170,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_path)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   //Setting submitjob parameters
 
@@ -194,7 +209,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
 
   //Setting submitjob parameters
@@ -237,7 +252,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
   // get the session key and the machine identifier
   string sessionKey=vc.getConnexion();
   string badSessionKey="bad session key";
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   //Setting submitjob parameters
 
@@ -270,7 +285,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
   string badMachineId="badMachineId";
 
   //Setting submitjob parameters
@@ -306,7 +321,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
 
   // now let cancel the job
@@ -332,7 +347,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 
   string sessionKey=vc1.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   //Setting submitjob parameters
 
@@ -391,7 +406,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_normal_call)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   int expectedValue =10;
   //Setting  parameters
@@ -420,7 +435,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_sessionKey)
 
   // get the session key and the machine identifier
   string badSessionKey="bad session key";
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   int value =10;
 
@@ -465,7 +480,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_negative_value)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   int negValue=-1;
 
@@ -487,7 +502,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_userId)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
   int value=10;
 
   BOOST_CHECK_THROW(setMachineRefreshPeriod(sessionKey,machineId, value),VishnuException );
@@ -533,7 +548,7 @@ BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
 
   //Setting submitjob parameters
@@ -574,7 +589,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
   // get the session key and the machine identifier
   string sessionKey=vc.getConnexion();
   string badSessionKey="bad session key";
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   //Setting submitjob parameters
 
@@ -608,7 +623,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
   string badMachineId="badMachineId";
 
   //Setting submitjob parameters
@@ -641,7 +656,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_JobId)
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="MA_1";
+  string machineId="machine_1";
 
   // setting get job information function parameters
   Job_ptr pJob;
