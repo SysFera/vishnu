@@ -335,7 +335,7 @@ solveGenerique(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
-    QueryType query(options, sessionServer);
+    QueryType query(options, sessionServer, std::string (machineId));
     list = query.list();
 
     //MAPPER CREATION
