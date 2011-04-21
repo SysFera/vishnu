@@ -130,14 +130,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MetricHistOp" instanceTypeName="MetricHistOp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
-        defaultValueLiteral="">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="The start time to get the history"/>
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
-        defaultValueLiteral="">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="The end time to get the history"/>
         <details key="shortOption" value="e"/>
@@ -145,12 +145,6 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RestartOp" instanceTypeName="RestartOp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dietConfFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="The path to the diet configuration file"/>
-        <details key="shortOption" value="d"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vishnuConf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The path to the vishnu configuration file"/>
@@ -158,7 +152,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sedType" eType="#//SeDType"
-        defaultValueLiteral="">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="The type of the vishnu sed"/>
         <details key="shortOption" value="t"/>
@@ -210,7 +204,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="">
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="The machine ID the threshold is available"/>
       </eAnnotations>
@@ -255,12 +249,5 @@
     <eLiterals name="TMS" value="2"/>
     <eLiterals name="FMS" value="3"/>
     <eLiterals name="IMS" value="4"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="RestartType" instanceTypeName="RestartType">
-    <eAnnotations source="Description">
-      <details key="content" value="The type of element to restart"/>
-    </eAnnotations>
-    <eLiterals name="UNDEFINED"/>
-    <eLiterals name="SED" value="1"/>
   </eClassifiers>
 </ecore:EPackage>

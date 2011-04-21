@@ -6,63 +6,53 @@ link_directories(
 
 include_directories(
   ${DIET_INCLUDE_DIR}
-  ${TMS_EMF_DATA_DIR}
-  ${TMS_DATA_DIR}
+  ${IMS_EMF_DATA_DIR}
   ${EMF_DATA_DIR}
-  ${UMS_DATA_DIR}
+  ${IMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${CONFIG_SOURCE_DIR}
   ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
-  ${TMS_SERVER_SOURCE_DIR}
+  ${SERVER_SOURCE_DIR}
+  ${IMS_SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
-  ${TMS_UTILS_DIR}
-  ${TORQUE_INCLUDE_DIR}
-  ${UTILS_TORQUE_DIR}
-  ${SERVER_SOURCE_DIR}
-  ${SED_SOURCE_DIR}
 )
 
-add_executable(tmssed
-  tmssed
-  ServerTMS
-  internalTMSAPI
+add_executable(imssed
+  imssed.cpp
+  ServerIMS.cpp
+  internalApiIMS.cpp
 )
 
-target_link_libraries(tmssed
+target_link_libraries(imssed
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
-  ${TORQUE_LIB}
-  emf4cpp-TMS_Data
+  ums-sed
   register-vishnu
   exception-vishnu
   database-vishnu
   config-vishnu
-  utils-vishnu
-  utils-server
-  ums-server
-  ums-sed
-  tms-server
+  ims-server
 )
 
-install(TARGETS tmssed DESTINATION sbin)
-
-add_executable(test_server
-  test_server
+add_library(ims-sed
+  ServerIMS.cpp
+  internalApiIMS.cpp
 )
+SET_TARGET_PROPERTIES(ims-sed PROPERTIES COMPILE_FLAGS "-fPIC")
 
-target_link_libraries(test_server
+target_link_libraries(ims-sed
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
-  ${TORQUE_LIB}
-  emf4cpp-TMS_Data
   register-vishnu
   exception-vishnu
   database-vishnu
-  utils-vishnu
-  utils-server
-  tms-server
+  ims-server
 )
+
+install(TARGETS ims-sed DESTINATION lib)
+install(TARGETS imssed DESTINATION sbin)
+
