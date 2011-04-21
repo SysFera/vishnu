@@ -38,7 +38,7 @@ template <class QueryParameters, class List, class QueryType>
 int
 solveGenerique(diet_profile_t* pb);
 
-/* getListOfJobs and getJobInfo */
+/* getListOfJobs */
 int
 solveGetListOfJobs(diet_profile_t* pb);
 

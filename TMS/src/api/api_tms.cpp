@@ -128,12 +128,16 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
 
+  //To check the job status options
+  checkJobStatus(options.getStatus());
+  //To check the job priority options
+  checkJobPriority(options.getPriority());
+
   QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
   query(options, sessionProxy, serviceName, machineId);
 
   TMS_Data::ListJobs* listJobs_ptr = query.list();
 
-  //TODO faire une template qui parcours la liste et remplit l'objet en out
   if(listJobs_ptr != NULL) {
     TMS_Data::Job_ptr job;
     for(unsigned int i = 0; i < listJobs_ptr->getJobs().size(); i++) {

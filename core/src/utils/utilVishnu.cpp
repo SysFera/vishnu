@@ -10,6 +10,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include "UserException.hpp"
+#include "TMS_Data.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
@@ -148,7 +149,7 @@ vishnu::moveFile(std::string src, std::string dest, const std::string& filename)
   if(filename.size()!=0) {
     fileNewPath = bfs::path(filename);
   }
-  
+
   try {
     //If the destination does not exist, the file is created in the current directory
     if(!bfs::exists(fileDestPath)) {
@@ -309,4 +310,31 @@ long vishnu::convertStringToWallTime(const std::string& walltime) {
 
   return walltimeInSeconds;
 
+}
+
+/**
+* \brief Function to check the job status
+* \param status the status of the job
+* \return raises an exception on error
+*/
+void
+vishnu::checkJobStatus(const int& status) {
+
+  if ((status < -1) || (status > 7)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The status value is incorrect");
+  }
+}
+
+/**
+* \brief Function to check the job priority
+* \param priority the priority of the job
+* \return raises an exception on error
+*/
+void
+vishnu::checkJobPriority(const int& priority) {
+
+  if ((priority != -1) && (priority != 100) && (priority != 200) &&
+      (priority != 300) && (priority != 400) && (priority != 500)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The priority value is incorrect");
+  }
 }
