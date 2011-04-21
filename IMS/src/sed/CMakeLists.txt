@@ -15,6 +15,7 @@ include_directories(
   ${POSTGRESQL_INCLUDE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${SERVER_SOURCE_DIR}
+  ${IMS_SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
@@ -29,6 +30,7 @@ add_executable(imssed
 target_link_libraries(imssed
   ${DIET_SERVER_LIBRARIES}
   ${Boost_LIBRARIES}
+  ums-sed
   register-vishnu
   exception-vishnu
   database-vishnu

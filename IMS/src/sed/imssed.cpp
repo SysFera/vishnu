@@ -1,6 +1,7 @@
-#include <csignal>
 #include <fstream>
 #include "ServerIMS.hpp"
+#include "ExecConfiguration.hpp"
+#include "DbConfiguration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
