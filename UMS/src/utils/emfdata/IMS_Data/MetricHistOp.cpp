@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 MetricHistOp::MetricHistOp() :
-    m_startTime(), m_endTime()
+    m_startTime(0), m_endTime(0)
 {
 
     /*PROTECTED REGION ID(MetricHistOpImpl__MetricHistOpImpl) START*/

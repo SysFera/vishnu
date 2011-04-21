@@ -163,11 +163,6 @@ IMS_DataPackage::IMS_DataPackage()
     m_RestartOpEClass->setClassifierID(RESTARTOP);
     m_RestartOpEClass->setEPackage(this);
     getEClassifiers().push_back(m_RestartOpEClass);
-    m_RestartOp__dietConfFile = new ::ecore::EAttribute();
-    m_RestartOp__dietConfFile->setFeatureID(
-            ::IMS_Data::IMS_DataPackage::RESTARTOP__DIETCONFFILE);
-    m_RestartOpEClass->getEStructuralFeatures().push_back(
-            m_RestartOp__dietConfFile);
     m_RestartOp__vishnuConf = new ::ecore::EAttribute();
     m_RestartOp__vishnuConf->setFeatureID(
             ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF);
@@ -294,11 +289,6 @@ IMS_DataPackage::IMS_DataPackage()
     m_SeDTypeEEnum->setClassifierID(SEDTYPE);
     m_SeDTypeEEnum->setEPackage(this);
     getEClassifiers().push_back(m_SeDTypeEEnum);
-
-    m_RestartTypeEEnum = new ::ecore::EEnum();
-    m_RestartTypeEEnum->setClassifierID(RESTARTTYPE);
-    m_RestartTypeEEnum->setEPackage(this);
-    getEClassifiers().push_back(m_RestartTypeEEnum);
 
     // Create data types
 
@@ -579,20 +569,6 @@ IMS_DataPackage::IMS_DataPackage()
     m_RestartOpEClass->setName("RestartOp");
     m_RestartOpEClass->setAbstract(false);
     m_RestartOpEClass->setInterface(false);
-    m_RestartOp__dietConfFile->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_RestartOp__dietConfFile->setName("dietConfFile");
-    m_RestartOp__dietConfFile->setDefaultValueLiteral("");
-    m_RestartOp__dietConfFile->setLowerBound(0);
-    m_RestartOp__dietConfFile->setUpperBound(1);
-    m_RestartOp__dietConfFile->setTransient(false);
-    m_RestartOp__dietConfFile->setVolatile(false);
-    m_RestartOp__dietConfFile->setChangeable(true);
-    m_RestartOp__dietConfFile->setUnsettable(false);
-    m_RestartOp__dietConfFile->setID(false);
-    m_RestartOp__dietConfFile->setUnique(true);
-    m_RestartOp__dietConfFile->setDerived(false);
-    m_RestartOp__dietConfFile->setOrdered(true);
     m_RestartOp__vishnuConf->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_RestartOp__vishnuConf->setName("vishnuConf");
@@ -1027,30 +1003,6 @@ IMS_DataPackage::IMS_DataPackage()
         m_SeDTypeEEnum->getELiterals().push_back(_el);
     }
 
-    // RestartType
-    m_RestartTypeEEnum->setName("RestartType");
-    m_RestartTypeEEnum->setSerializable(true);
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // UNDEFINED
-        _el->setName("UNDEFINED");
-        _el->setValue(0);
-        _el->setLiteral("UNDEFINED");
-        _el->setEEnum(m_RestartTypeEEnum);
-        m_RestartTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // SED
-        _el->setName("SED");
-        _el->setValue(1);
-        _el->setLiteral("SED");
-        _el->setEEnum(m_RestartTypeEEnum);
-        m_RestartTypeEEnum->getELiterals().push_back(_el);
-    }
-
     _initialize();
 }
 
@@ -1134,10 +1086,6 @@ IMS_DataPackage::IMS_DataPackage()
 {
     return m_SeDTypeEEnum;
 }
-::ecore::EEnum_ptr IMS_DataPackage::getRestartType()
-{
-    return m_RestartTypeEEnum;
-}
 
 ::ecore::EAttribute_ptr IMS_DataPackage::getMetric__type()
 {
@@ -1206,10 +1154,6 @@ IMS_DataPackage::IMS_DataPackage()
 ::ecore::EAttribute_ptr IMS_DataPackage::getMetricHistOp__endTime()
 {
     return m_MetricHistOp__endTime;
-}
-::ecore::EAttribute_ptr IMS_DataPackage::getRestartOp__dietConfFile()
-{
-    return m_RestartOp__dietConfFile;
 }
 ::ecore::EAttribute_ptr IMS_DataPackage::getRestartOp__vishnuConf()
 {

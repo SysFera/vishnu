@@ -124,34 +124,29 @@ namespace IMS_Data
         static const int RESTARTOP = 14;
 
         /**
-         * \brief Constant for RestartType class
-         */
-        static const int RESTARTTYPE = 15;
-
-        /**
          * \brief Constant for SeDType class
          */
-        static const int SEDTYPE = 16;
+        static const int SEDTYPE = 15;
 
         /**
          * \brief Constant for SysInfoOp class
          */
-        static const int SYSINFOOP = 17;
+        static const int SYSINFOOP = 16;
 
         /**
          * \brief Constant for SystemInfo class
          */
-        static const int SYSTEMINFO = 18;
+        static const int SYSTEMINFO = 17;
 
         /**
          * \brief Constant for Threshold class
          */
-        static const int THRESHOLD = 19;
+        static const int THRESHOLD = 18;
 
         /**
          * \brief Constant for ThresholdOp class
          */
-        static const int THRESHOLDOP = 20;
+        static const int THRESHOLDOP = 19;
 
         /**
          * \brief Constant for METRIC__TYPE feature
@@ -239,69 +234,64 @@ namespace IMS_Data
         static const int METRICHISTOP__ENDTIME = 16;
 
         /**
-         * \brief Constant for RESTARTOP__DIETCONFFILE feature
-         */
-        static const int RESTARTOP__DIETCONFFILE = 17;
-
-        /**
          * \brief Constant for RESTARTOP__VISHNUCONF feature
          */
-        static const int RESTARTOP__VISHNUCONF = 18;
+        static const int RESTARTOP__VISHNUCONF = 17;
 
         /**
          * \brief Constant for RESTARTOP__SEDTYPE feature
          */
-        static const int RESTARTOP__SEDTYPE = 19;
+        static const int RESTARTOP__SEDTYPE = 18;
 
         /**
          * \brief Constant for CURMETRICOP__METRICTYPE feature
          */
-        static const int CURMETRICOP__METRICTYPE = 20;
+        static const int CURMETRICOP__METRICTYPE = 19;
 
         /**
          * \brief Constant for PROCESSOP__MACHINEID feature
          */
-        static const int PROCESSOP__MACHINEID = 21;
+        static const int PROCESSOP__MACHINEID = 20;
 
         /**
          * \brief Constant for THRESHOLDOP__MACHINEID feature
          */
-        static const int THRESHOLDOP__MACHINEID = 22;
+        static const int THRESHOLDOP__MACHINEID = 21;
 
         /**
          * \brief Constant for THRESHOLDOP__METRICTYPE feature
          */
-        static const int THRESHOLDOP__METRICTYPE = 23;
+        static const int THRESHOLDOP__METRICTYPE = 22;
 
         /**
          * \brief Constant for LISTTHRESHOLD__THRESHOLD feature
          */
-        static const int LISTTHRESHOLD__THRESHOLD = 24;
+        static const int LISTTHRESHOLD__THRESHOLD = 23;
 
         /**
          * \brief Constant for THRESHOLD__VALUE feature
          */
-        static const int THRESHOLD__VALUE = 25;
+        static const int THRESHOLD__VALUE = 24;
 
         /**
          * \brief Constant for THRESHOLD__MACHINEID feature
          */
-        static const int THRESHOLD__MACHINEID = 26;
+        static const int THRESHOLD__MACHINEID = 25;
 
         /**
          * \brief Constant for THRESHOLD__TYPE feature
          */
-        static const int THRESHOLD__TYPE = 27;
+        static const int THRESHOLD__TYPE = 26;
 
         /**
          * \brief Constant for SYSINFOOP__MACHINEID feature
          */
-        static const int SYSINFOOP__MACHINEID = 28;
+        static const int SYSINFOOP__MACHINEID = 27;
 
         /**
          * \brief Constant for LISTSYSINFO__SYSINFO feature
          */
-        static const int LISTSYSINFO__SYSINFO = 29;
+        static const int LISTSYSINFO__SYSINFO = 28;
 
         // EClassifiers methods
 
@@ -425,12 +415,6 @@ namespace IMS_Data
          */
         virtual ::ecore::EEnum_ptr getSeDType();
 
-        /**
-         * \brief Returns the reflective object for class RestartType
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EEnum_ptr getRestartType();
-
         // EStructuralFeatures methods
 
         /**
@@ -534,12 +518,6 @@ namespace IMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getMetricHistOp__endTime();
-
-        /**
-         * \brief Returns the reflective object for feature dietConfFile of class RestartOp
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getRestartOp__dietConfFile();
 
         /**
          * \brief Returns the reflective object for feature vishnuConf of class RestartOp
@@ -726,11 +704,6 @@ namespace IMS_Data
          */
         ::ecore::EEnum_ptr m_SeDTypeEEnum;
 
-        /**
-         * \brief The instance for the enum RestartType
-         */
-        ::ecore::EEnum_ptr m_RestartTypeEEnum;
-
         // EDataType instances 
 
 
@@ -820,11 +793,6 @@ namespace IMS_Data
          * \brief The instance for the feature endTime of class MetricHistOp
          */
         ::ecore::EAttribute_ptr m_MetricHistOp__endTime;
-
-        /**
-         * \brief The instance for the feature dietConfFile of class RestartOp
-         */
-        ::ecore::EAttribute_ptr m_RestartOp__dietConfFile;
 
         /**
          * \brief The instance for the feature vishnuConf of class RestartOp
