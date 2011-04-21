@@ -159,6 +159,12 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
 
+# ---------------- SET THE LINKER SEARCH PATH (RPATH) ----------------------
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON
+    CACHE BOOL "Whether to set an rpath for dynamic libraries.")
+set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib
+    CACHE STRING "Rpath set at install stage." FORCE)
+
 # for testing
 set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
 
