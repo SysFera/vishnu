@@ -17,6 +17,7 @@ BatchType ServerTMS::mbatchType = UNDEFINED;
 std::string ServerTMS::mmachineId = "";
 Database *ServerTMS::mdatabaseVishnu = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
+std::string ServerTMS::mslaveBinDir = "";
 
 /**
  * \brief To get the unique instance of the server
@@ -30,9 +31,9 @@ ServerTMS::getInstance() {
 }
 
 /**
- * \brief To get the unique instance of the database 
+ * \brief To get the unique instance of the database
  */
-Database* 
+Database*
 ServerTMS::getDatabaseVishnu() {
   return mdatabaseVishnu;
 }
@@ -66,6 +67,15 @@ ServerTMS::getMachineId() {
 }
 
 /**
+ * \brief To get the slave binary directory
+ * \return path to the binary tmsSlave
+ */
+string
+ServerTMS::getSlaveDirectory() {
+  return mslaveBinDir;
+}
+
+/**
 * \brief Constructor (private)
 * \fn ServerTMS()
 */
@@ -78,9 +88,15 @@ ServerTMS::ServerTMS() : mprofile(NULL) {
  * \param dbConfig  The configuration of the database
  * \param machineId the id of the machine
  * \param batchType the type of batch scheduler
+ * \param slaveBinDir  the directory that contains the slave binary
  */
 int
-ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, BatchType batchType)
+ServerTMS::init(int vishnuId,
+                DbConfiguration dbConfig,
+                std::string machineId,
+                BatchType batchType,
+                std::string slaveBinDir
+               )
 {
 
   //initialization of the batchType
@@ -88,6 +104,9 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
 
   //initialization of the machineId
   mmachineId = machineId;
+
+  //initialization of the slave directory
+  mslaveBinDir = slaveBinDir;
 
   // initialization of the service table
   diet_service_table_init(NB_SRV);
@@ -170,6 +189,16 @@ ServerTMS::init(int vishnuId, DbConfiguration dbConfig, std::string machineId, B
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_CONTAINER, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveJobOutPutGetResult)) return 1;
+
+  /* ListOfJobs and getJobInfo */
+  mprofile = diet_profile_desc_alloc((SERVICES[4]+std::string(machineId)).c_str(), 2, 2, 4);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobs)) return 1;
+
 
   return 0;
 }
