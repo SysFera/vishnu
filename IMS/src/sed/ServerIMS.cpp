@@ -69,19 +69,19 @@ ServerIMS::init(int vishnuId,
 
   DbFactory factory;
 
-  //To get database instance
-  mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
   mvishnuId = vishnuId;
 
   string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
 
 
   try {
+    //To get database instance
+    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
+
     /*Mapper registration*/
-    mdatabaseVishnu->connect();
     mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
     mmapperTMS->registerMapper();
     mmapperIMS = new IMSMapper(MapperRegistry::getInstance(), IMSMAPPERNAME);
