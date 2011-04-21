@@ -250,18 +250,6 @@
         <details key="shortOption" value="p"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outPutPath" eType="ecore:EDataType Ecore.ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="Gets the path and file for each job output."/>
-        <details key="shortOption" value="o"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorPath" eType="ecore:EDataType Ecore.ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="Gets the path and file for each job error."/>
-        <details key="shortOption" value="e"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="queue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="To list jobs which have this queue name."/>
@@ -278,6 +266,7 @@
     <eLiterals name="VERY_HIGH" value="500"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobStatus" instanceTypeName="JobStatus">
+    <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
     <eLiterals name="SUBMITTED" literal="SUBMITTED"/>
     <eLiterals name="QUEUED" value="1"/>
     <eLiterals name="WAITING" value="2"/>
@@ -325,19 +314,19 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Represents the job wall time."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Start date and time of the job (unix timestamp)"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="End date and time of the job (unix timestamp)"/>
       </eAnnotations>
@@ -449,7 +438,7 @@
     <eLiterals name="STARTED" value="1" literal="STARTED"/>
     <eLiterals name="RUNNING" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JobResult" instanceTypeName="JobResult">
+  <eClassifiers xsi:type="ecore:EClass" name="JobOutputInfo" instanceTypeName="JobOutputInfo">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Represents the id of the job."/>
@@ -466,7 +455,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListJobResults" instanceTypeName="ListJobResults">
+  <eClassifiers xsi:type="ecore:EClass" name="ListJobOutputInfo" instanceTypeName="ListJobOutputInfo">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbJobs" eType="ecore:EDataType Ecore.ecore#//EString"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
@@ -474,7 +463,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Results" upperBound="-1"
-        eType="#//JobResult" containment="true">
+        eType="#//JobOutputInfo" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="Represents the list of completed jobs results."/>
       </eAnnotations>
