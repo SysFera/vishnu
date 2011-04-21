@@ -1,0 +1,54 @@
+
+link_directories(
+ ${VISHNU_EXCEPTION_INCLUDE_DIR}
+ ${Boost_LIBRARY_DIRS}
+)
+
+
+include_directories(
+  ${DIET_INCLUDE_DIR}
+  ${IMS_EMF_DATA_DIR}
+  ${IMS_DATA_DIR}
+  ${EMF_DATA_DIR}
+  ${UMS_DATA_DIR}
+  ${EMF4CPP_INCLUDE_DIR}
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${DATA_BASE_INCLUDE_DIR}
+  ${CONFIG_SOURCE_DIR}
+  ${POSTGRESQL_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
+  ${REGISTRY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
+  ${SED_SOURCE_DIR}
+  ${IMS_SED_SOURCE_DIR}
+  ${IMS_UTIL_DIR}
+  ${SERVER_SOURCE_DIR}
+)
+
+add_library(ims-server STATIC
+  controller/logTool/LogTool.cpp
+  controller/logTool/IMSVishnuTool.cpp
+  controller/logTool/Watcher.cpp
+  controller/logTool/ToolFactory.cpp
+  controller/process/Process.cpp
+  data/ProcessServer.cpp
+  data/ExportServer.cpp
+  data/ShellExporter.cpp
+
+)
+
+target_link_libraries(ims-server
+  ${DIET_CLIENT_LIB}
+  ${DIET_SERVER_LIB}
+  ${Boost_LIBRARIES}
+  ${LIBCRYPT_LIB}
+  ${USED_BATCH_LIB}
+  emf4cpp-IMS_Data
+  database-vishnu
+  exception-vishnu
+  register-vishnu
+  config-vishnu
+  ums-server
+  utils-vishnu
+  utils-server
+)
