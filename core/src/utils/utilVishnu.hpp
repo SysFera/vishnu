@@ -146,5 +146,21 @@ namespace vishnu {
     * \return the walltime converted to seconds
     */
    long convertStringToWallTime(const std::string& walltime);
+
+   /**
+    * \brief Function to check the job status
+    * \param status the status of the job
+    * \return raises an exception on error
+    */
+   void
+   checkJobStatus(const int& status);
+
+   /**
+    * \brief Function to check the job priority
+    * \param priority the priority of the job
+    * \return raises an exception on error
+    */
+   void
+   checkJobPriority(const int& priority);
 }
 #endif // _UTILVISHNU_H_

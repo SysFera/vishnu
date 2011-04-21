@@ -17,6 +17,7 @@
 #include "SessionServer.hpp"
 #include "DbFactory.hpp"
 #include "UMSVishnuException.hpp"
+#include "TMSVishnuException.hpp"
 
 /**
  * \class QueryServer
@@ -250,6 +251,34 @@ public:
       }
   }
 
+
+  /**
+   * \brief Function to check if a given job identifier exists
+   * \fn void checkSessionId(std::string jobId)
+   * \param jobId the job identifier
+   */
+  void
+  checkJobId(std::string jobId) {
+    std::string sqlJobRequest = "SELECT numjobid from job where jobId='"+jobId+"'";
+    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+    if(result->getNbTuples() == 0) {
+       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+    }
+  }
+  /**
+   * \brief Function to check if a given queue exists
+   * \fn void checkQueueName(std::string queueName)
+   * \param queueName the name of the queue
+   */
+  void
+  checkQueueName(std::string queueName) {
+    std::string sqlJobRequest = "SELECT numjobid from job where jobQueue='"+queueName+"'";
+    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+    if(result->getNbTuples() == 0) {
+       throw UserException(ERRCODE_INVALID_PARAM, "This queue name is unknwon");
+    }
+  }
+  //TODO: faire template pour méthode check
   /**
    * \fn ~QueryServer()
    * \brief Destructor, raises an exception on error
