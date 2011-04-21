@@ -300,17 +300,17 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -i ";
     res += u;
   }
-  u = j->getNbCpu();
+  u = convertToString(j->getNbCpu());
   if (u.compare("")){
     res += " -P ";
     res += u;
   }
-  u = j->getFromSubmitDate();
+  u = convertToString(j->getFromSubmitDate());
   if (u.compare("")){
     res += " -d ";
     res += u;
   }
-  u = j->getToSubmitDate();
+  u = convertToString(j->getToSubmitDate());
   if (u.compare("")){
     res += " -D ";
     res += u;
@@ -320,12 +320,12 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -u ";
     res += u;
   }
-  u = j->getStatus();
+  u = convertToString(j->getStatus());
   if (u.compare("")){
     res += " -s ";
     res += u;
   }
-  u = j->getPriority();
+  u = convertToString(j->getPriority());
   if (u.compare("")){
     res += " -p ";
     res += u;
@@ -429,10 +429,5 @@ TMSMapper::decodeJobInfo(vector<int> separator, const string& msg){
   res += u;
   return res;
 }
-
-
-
-
-
 
 
