@@ -48,9 +48,7 @@ target_link_libraries(tmssed
   tms-server
 )
 
-install_targets(/sbin/
-  tmssed
-)
+install(TARGETS tmssed DESTINATION sbin)
 
 add_executable(test_server
   test_server
