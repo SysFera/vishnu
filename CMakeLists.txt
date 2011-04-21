@@ -153,11 +153,26 @@ set(TMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/sed)
 set(TMS_UTILS_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils/)
 set(UTILS_TORQUE_DIR ${VISHNU_SOURCE_DIR}/TMS/src/utils_torque/)
 
+#IMS
+set(IMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils/emfdata)
+set(IMS_DATA_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils/emfdata/IMS_Data)
+set(IMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/client)
+set(IMS_SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/server)
+set(IMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/api)
+set(IMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/sed)
+set(IMS_UTIL_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils)
+
 
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set( BIN_DIR ${EXECUTABLE_OUTPUT_PATH} )
+
+# ---------------- SET THE LINKER SEARCH PATH (RPATH) ----------------------
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON
+    CACHE BOOL "Whether to set an rpath for dynamic libraries.")
+set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib
+    CACHE STRING "Rpath set at install stage." FORCE)
 
 # for testing
 set(TESTVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/test/src)
@@ -180,6 +195,10 @@ if(COMPILE_TMS)
     add_subdirectory(TMS/test/src)
   endif (BUILD_TESTING)
 endif (COMPILE_TMS)
+
+if(COMPILE_IMS)
+  add_subdirectory(IMS/src)
+endif (COMPILE_IMS)
 
 if (BUILD_TESTING)
   set( TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
