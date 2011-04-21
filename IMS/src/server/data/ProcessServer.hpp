@@ -36,11 +36,11 @@ public:
   /**
    * \brief Constructor
    */
-  ProcessServer(const SessionServer session);
+  ProcessServer(const UserServer session);
   /**
    * \brief Constructor
    */
-  ProcessServer(IMS_Data::ProcessOp_ptr op, const SessionServer session);
+  ProcessServer(IMS_Data::ProcessOp_ptr op, const UserServer session);
   /**
    * \brief Destructor
    */
@@ -98,7 +98,7 @@ private:
   /**
    * \brief The session
    */
-  SessionServer msession;
+  UserServer msession;
   /**
   * \brief An instance of vishnu database
   */
