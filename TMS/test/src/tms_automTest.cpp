@@ -46,10 +46,15 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 {
 
-  BOOST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" );
-  bpt::seconds sleepTime(500);
-  boost::this_thread::sleep(sleepTime);
-  VishnuConnexion vc("root","vishnu_user");
+  BOOST_TEST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" );
+
+  // sleep while waiting for  tms and ums SeD  
+  
+  bpt::seconds sleepTime(6);
+
+ boost::this_thread::sleep(sleepTime);
+  
+ VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
 
@@ -68,7 +73,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
-  BOOST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
   // Check the success of submitJob function
   ListJobs lsJobs;
@@ -87,7 +92,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 {
 
-  BOOST_MESSAGE(" Testing bad session Key for job submission (use case T1.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad session Key for job submission (use case T1.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -110,7 +115,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 {
-  BOOST_MESSAGE(" Testing bad machine identifier for job submission (use case T1.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad machine identifier for job submission (use case T1.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -137,7 +142,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
 {
-  BOOST_MESSAGE(" Testing bad script content for job submission (use case T1.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad script content for job submission (use case T1.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -162,7 +167,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_path)
 {
-  BOOST_MESSAGE(" Testing bad script path for job submission (use case T1.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad script path for job submission (use case T1.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -200,7 +205,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 {
 
-  BOOST_MESSAGE(" Testing normal job cancelling corresponding to use case T2.2" );
+  BOOST_TEST_MESSAGE(" Testing normal job cancelling corresponding to use case T2.2" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -222,7 +227,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
-  BOOST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
   // now let cancel the job
 
@@ -245,7 +250,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 {
 
-  BOOST_MESSAGE(" Testing bad session Key for job cancelling (use case T2.2)" );
+  BOOST_TEST_MESSAGE(" Testing bad session Key for job cancelling (use case T2.2)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -277,7 +282,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 {
-  BOOST_MESSAGE(" Testing bad machine identifier for job cancellin (use case T2.2)" );
+  BOOST_TEST_MESSAGE(" Testing bad machine identifier for job cancellin (use case T2.2)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -313,7 +318,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 {
-  BOOST_MESSAGE(" Testing bad job identifier for job cancelling (use case T2.2)" );
+  BOOST_TEST_MESSAGE(" Testing bad job identifier for job cancelling (use case T2.2)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -339,7 +344,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 {
-  BOOST_MESSAGE(" Testing bad user identifier for job cancelling (use case T2.2)" );
+  BOOST_TEST_MESSAGE(" Testing bad user identifier for job cancelling (use case T2.2)" );
 
   VishnuConnexion vc1("root","vishnu_user");
 
@@ -397,7 +402,7 @@ BOOST_AUTO_TEST_SUITE(set_machine_refresh_period)
 BOOST_AUTO_TEST_CASE( set_machine_refresh_period_normal_call)
 {
 
-  BOOST_MESSAGE(" Testing normal execution of the set machine refresh period function  corresponding to use case TA1" );
+  BOOST_TEST_MESSAGE(" Testing normal execution of the set machine refresh period function  corresponding to use case TA1" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -429,7 +434,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_normal_call)
 BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_sessionKey)
 {
 
-  BOOST_MESSAGE(" Testing bad session Key for the set machine refresh period function (use case TA1)" );
+  BOOST_TEST_MESSAGE(" Testing bad session Key for the set machine refresh period function (use case TA1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -449,7 +454,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_sessionKey)
 
 BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_machineId)
 {
-  BOOST_MESSAGE(" Testing bad machine identifier for set machine refresh period (use case TA1)" );
+  BOOST_TEST_MESSAGE(" Testing bad machine identifier for set machine refresh period (use case TA1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -472,7 +477,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_machineId)
 
 BOOST_AUTO_TEST_CASE( set_machine_refresh_period_negative_value)
 {
-  BOOST_MESSAGE(" Testing negative value for set machine refresh period (use case TA1)" );
+  BOOST_TEST_MESSAGE(" Testing negative value for set machine refresh period (use case TA1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -494,7 +499,7 @@ BOOST_AUTO_TEST_CASE( set_machine_refresh_period_negative_value)
 
 BOOST_AUTO_TEST_CASE( set_machine_refresh_period_bad_userId)
 {
-  BOOST_MESSAGE(" Testing bad user identifier for set machine refresh period (use case TA1)" );
+  BOOST_TEST_MESSAGE(" Testing bad user identifier for set machine refresh period (use case TA1)" );
 
   VishnuConnexion vc("U_1","vishnu_user");
 
@@ -539,7 +544,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
 {
 
-  BOOST_MESSAGE(" Testing normal execution of the  get job information function corresponding to use case T2.1" );
+  BOOST_TEST_MESSAGE(" Testing normal execution of the  get job information function corresponding to use case T2.1" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -561,7 +566,7 @@ BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
 
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
-  BOOST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
   ListJobs lsJobs;
   ListJobsOptions lsOptions;
@@ -582,7 +587,7 @@ BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
 BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
 {
 
-  BOOST_MESSAGE(" Testing bad session Key for the get job information function (use case T2.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad session Key for the get job information function (use case T2.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -615,7 +620,7 @@ Job_ptr pJob;
 
 BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
 {
-  BOOST_MESSAGE(" Testing bad machine identifier for the get job information function (use case T2.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad machine identifier for the get job information function (use case T2.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -648,7 +653,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
 
 BOOST_AUTO_TEST_CASE( get_job_information_bad_JobId)
 {
-  BOOST_MESSAGE(" Testing bad job identifier for the  get job information function (use case T2.1)" );
+  BOOST_TEST_MESSAGE(" Testing bad job identifier for the  get job information function (use case T2.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
