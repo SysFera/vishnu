@@ -55,12 +55,6 @@ void RestartOp::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__DIETCONFFILE:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_dietConfFile);
-    }
-        return _any;
     case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
@@ -83,12 +77,6 @@ void RestartOp::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__DIETCONFFILE:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_dietConfFile);
-    }
-        return;
     case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
@@ -110,9 +98,6 @@ void RestartOp::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__DIETCONFFILE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_dietConfFile);
     case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_vishnuConf);

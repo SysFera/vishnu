@@ -125,13 +125,6 @@ IMS_DataFactory::IMS_DataFactory()
                 dynamic_cast< ::IMS_Data::IMS_DataPackage_ptr > (getEPackage());
         return _epkg->getSeDType()->getEEnumLiteralByLiteral(_literalValue)->getValue();
     }
-    case IMS_DataPackage::RESTARTTYPE:
-    {
-        ::ecore::EJavaObject _any;
-        IMS_DataPackage_ptr _epkg =
-                dynamic_cast< ::IMS_Data::IMS_DataPackage_ptr > (getEPackage());
-        return _epkg->getRestartType()->getEEnumLiteralByLiteral(_literalValue)->getValue();
-    }
     default:
         throw "IllegalArgumentException";
     }
@@ -182,14 +175,6 @@ IMS_DataFactory::IMS_DataFactory()
         ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
                 ::ecore::EInt >(_instanceValue);
         return _epkg->getSeDType()->getEEnumLiteral(_value)->getName();
-    }
-    case IMS_DataPackage::RESTARTTYPE:
-    {
-        IMS_DataPackage_ptr _epkg = ::IMS_Data::instanceOf<
-                ::IMS_Data::IMS_DataPackage >(getEPackage());
-        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
-                ::ecore::EInt >(_instanceValue);
-        return _epkg->getRestartType()->getEEnumLiteral(_value)->getName();
     }
     default:
         throw "IllegalArgumentException";

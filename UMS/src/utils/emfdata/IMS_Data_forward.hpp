@@ -61,11 +61,6 @@ namespace IMS_Data
     // To do this, add the keyword ENABLED before START.
     typedef int SeDType;
     /*PROTECTED REGION END*/
-    /*PROTECTED REGION ID(IMS_Data_RestartType) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    typedef int RestartType;
-    /*PROTECTED REGION END*/
 
     // EClass
 
