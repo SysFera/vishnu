@@ -36,7 +36,7 @@ main (int argc, char* argv[]){
   /******** Callback functions ******************/
      
   /*********** Out parameters *********************/
-  TMS_Data::Job_ptr job;
+  TMS_Data::Job job;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -95,7 +95,7 @@ main (int argc, char* argv[]){
       getJobInfo(sessionKey, machineId, jobId, job);
     }
 
-    displayJob(*job);
+    displayJob(job);
 
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";

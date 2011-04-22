@@ -20,13 +20,13 @@ solveSubmitJob(diet_profile_t* pb);
 int
 solveCancelJob(diet_profile_t* pb);
 
-/* listQueues */
+/**
+ * \brief Function to solve the service solveGenerique
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
-solveListOfQueues(diet_profile_t* pb);
-
-/* jobOutPutGetResult */
-int
-solveJobOutPutGetResult(diet_profile_t* pb);
+solveJobInfo(diet_profile_t* pb);
 
 /**
 * \brief Function to solve the service solveGenerique
@@ -42,4 +42,15 @@ solveGenerique(diet_profile_t* pb);
 int
 solveGetListOfJobs(diet_profile_t* pb);
 
+/* listJobsProgression */
+int
+solveGetListOfJobsProgression(diet_profile_t* pb);
+
+/* listQueues */
+int
+solveListOfQueues(diet_profile_t* pb);
+
+/* jobOutPutGetResult */
+int
+solveJobOutPutGetResult(diet_profile_t* pb);
 #endif
