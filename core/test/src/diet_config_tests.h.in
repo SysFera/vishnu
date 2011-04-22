@@ -12,7 +12,7 @@
 #define ENV_LIBRARY_PATH "@TESTENV_LIBRARY_PATH@"
 
 // Sleep time in milliseconds
-#define SLEEP_TIME 1000
+#define SLEEP_TIME 2000
 
 // omniNames specific options
 #define LOCAL_TEST_PORT "@LOCAL_TEST_PORT@"
