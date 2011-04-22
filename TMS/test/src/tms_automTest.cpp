@@ -239,8 +239,8 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
   // wait a few seconds and check the success of cancelling job
   //bpt::seconds sleepTime(5);
   // boost::this_thread::sleep(sleepTime);
-  Job_ptr pJob;
-  BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), pJob),VishnuException  );
+  Job job;
+  BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),VishnuException  );
 
 }
 
@@ -574,8 +574,8 @@ BOOST_AUTO_TEST_CASE(  get_job_information_normal_call)
   BOOST_REQUIRE_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
 
 
-  Job_ptr pJob;
-  BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), pJob),0  );
+  Job job;
+  BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),0  );
 
 // Check the success of getJobInfo function
   //BOOST_REQUIRE(  lsJobs.getJobs().get(0)->getJobId()==pJob->getJobId() )  );
@@ -610,9 +610,9 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
 
   // set the get the job information function parameters
 
-Job_ptr pJob;
+  Job job;
 
-  BOOST_CHECK_THROW(getJobInfo(badSessionKey, machineId, jobInfo.getJobId(), pJob),VishnuException );
+  BOOST_CHECK_THROW(getJobInfo(badSessionKey, machineId, jobInfo.getJobId(), job),VishnuException );
 
 }
 
@@ -642,8 +642,8 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
   BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ,0 );
 
   // setting get job information function parameters
-  Job_ptr pJob;
-  BOOST_CHECK_THROW(getJobInfo(sessionKey, badMachineId, jobInfo.getJobId(),pJob),VishnuException );
+  Job job;
+  BOOST_CHECK_THROW(getJobInfo(sessionKey, badMachineId, jobInfo.getJobId(),job),VishnuException );
 
 }
 
@@ -664,8 +664,8 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_JobId)
   string machineId="machine_1";
 
   // setting get job information function parameters
-  Job_ptr pJob;
-  BOOST_CHECK_THROW(getJobInfo(sessionKey,machineId, "bad job id",pJob),VishnuException );
+  Job job;
+  BOOST_CHECK_THROW(getJobInfo(sessionKey,machineId, "bad job id",job),VishnuException );
 
 }
 
