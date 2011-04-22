@@ -22,7 +22,7 @@ public:
   virtual TMS_Data::Job getJob()=0;
   virtual TMS_Data::ListJobs* listJobs(TMS_Data::ListJobsOptions op)=0;
   virtual TMS_Data::JobResult getJobResults()=0;
-  virtual TMS_Data::ListQueues* listQueues()=0;
+  virtual TMS_Data::ListQueues* listQueues(const std::string& optQueueName=std::string())=0;
   virtual TMS_Data::Job* getJobInfo(string job)=0;
   virtual TMS_Data::ListJobResults* getAllJobsResults()=0;
   virtual TMS_Data::ListProgression* getJobProgress(TMS_Data::ProgressOptions op)=0;

@@ -20,8 +20,9 @@
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
-ListQueuesServer::ListQueuesServer(const SessionServer& session, const std::string& machineId, const BatchType& batchType):
-msessionServer(session), mmachineId(machineId), mbatchType(batchType)
+ListQueuesServer::ListQueuesServer(const SessionServer& session, const std::string& machineId, const BatchType& batchType,
+                                   const std::string& option):
+msessionServer(session), mmachineId(machineId), mbatchType(batchType), moption(option)
 {
    mlistQueues = NULL;
    BatchFactory factory;
@@ -36,7 +37,7 @@ msessionServer(session), mmachineId(machineId), mbatchType(batchType)
  */
 TMS_Data::ListQueues* ListQueuesServer::list()
 {
- return mbatchServer->listQueues();
+  return mbatchServer->listQueues(moption);
 }
 
 /**
