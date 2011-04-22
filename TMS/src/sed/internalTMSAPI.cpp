@@ -33,6 +33,7 @@
 #include "SSHJobExec.hpp"
 #include "JobServer.hpp"
 #include "ListQueuesServer.hpp"
+#include "ListProgressServer.hpp"
 #include "JobOutputServer.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
@@ -173,6 +174,59 @@ solveCancelJob(diet_profile_t* pb)
   return 0;
 }
 
+/**
+ * \brief Function to solve the service solveGenerique
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveJobInfo(diet_profile_t* pb) {
+
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  char* jobSerialized = NULL;
+  char* updateJobSerialized = NULL;
+  std::string empty = "";
+  std::string errorInfo;
+
+  //IN Parameters
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  cout << "************machineId=" << machineId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,2), &jobSerialized, NULL);
+  cout << "************JobSerialized=" << jobSerialized << " ..." << endl;
+
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+
+  try{
+    TMS_Data::Job_ptr job = NULL;
+    if(!parseEmfObject(std::string(jobSerialized), job)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solveJobOutPutGetResult: Job object is not well built");
+    }
+
+    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getBatchType());
+    *job = jobServer.getJobInfo();
+
+    const char* name = "solveJobOutPutGetResult";
+    ::ecorecpp::serializer::serializer _ser(name);
+    updateJobSerialized = strdup(_ser.serialize(const_cast<TMS_Data::Job_ptr>(job)).c_str());
+
+    //OUT Parameter
+    diet_string_set(diet_parameter(pb,3), updateJobSerialized, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+
+  } catch (VishnuException& e) {
+    errorInfo =  e.buildExceptionString();
+    std::cout << "errorInfo=" << errorInfo << std::endl;
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  }
+
+  return 0;
+}
+
+
 /*
  * SOLVE FUNCTIONS
  */
@@ -182,24 +236,21 @@ solveListOfQueues(diet_profile_t* pb) {
 
   char* sessionKey = NULL;
   char* machineId = NULL;
+  char* option = NULL;
   std::string empty("");
   std::string errorInfo ="";
-  std::string listQueuesSerialized = "From TestServer";
+  std::string listQueuesSerialized;
 
   cout << "Solve ListQueues " << endl;
 
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  cout << "************machineId=" << machineId << " ..." << endl;
-
-  std::cout << "Cancel: The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
-  std::cout << "Cancel: The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+  diet_string_get(diet_parameter(pb,2), &option, NULL);
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   TMS_Data::ListQueues_ptr listQueues = NULL;
 
-  ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getBatchType());
+  ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getBatchType(), std::string(option));
 
   try {
 
@@ -209,17 +260,17 @@ solveListOfQueues(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser(name);
     listQueuesSerialized =  _ser.serialize(listQueues);
 
-    diet_string_set(diet_parameter(pb,2), strdup(listQueuesSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(listQueuesSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo=" << errorInfo << std::endl;
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 
   cout << " done" << endl;
+
   return 0;
 }
 
@@ -377,5 +428,10 @@ solveGenerique(diet_profile_t* pb) {
 int
 solveGetListOfJobs(diet_profile_t* pb) {
   return solveGenerique<TMS_Data::ListJobsOptions, TMS_Data::ListJobs, ListJobServer >(pb);
+}
+
+int
+solveGetListOfJobsProgression(diet_profile_t* pb) {
+  return solveGenerique<TMS_Data::ProgressOptions, TMS_Data::ListProgression, ListProgressServer >(pb);
 }
 

@@ -78,7 +78,7 @@ namespace vishnu {
   getJobInfo(const std::string& sessionKey,
              const std::string& machineId,
              const std::string& jobId,
-             Job_ptr& jobInfos)
+             Job& jobInfos)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -119,12 +119,14 @@ namespace vishnu {
   * \param sessionKey : The session key
   * \param machineId : The id of the machine
   * \param listofQueues : The list of queues
+  * \param queueName The option value, if it given, listQueues only information of this queue
   * \return int : an error code
   */
   int
   listQueues(const std::string& sessionKey,
              const std::string& machineId,
-             ListQueues& listofQueues)
+             ListQueues& listofQueues,
+             const std::string& queueName=std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
