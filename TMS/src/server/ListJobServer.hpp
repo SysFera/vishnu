@@ -108,8 +108,10 @@ public:
       addOptionRequest("jobPrio", convertToString(options->getPriority()), sqlRequest);
     }
 
-    //TODO: Owner
-    if (options->getOwner().size() != 0) {}
+    if (options->getOwner().size() != 0) {
+      //TODO: check owner
+      addOptionRequest("owner", options->getOwner(), sqlRequest);
+    }
 
     //To check if the queue is defined
     if (options->getQueue().size() != 0) {
@@ -118,8 +120,6 @@ public:
       //To add the jobId on the request
       addOptionRequest("jobQueue", options->getQueue(), sqlRequest);
     }
-
-
   }
 
   /**
