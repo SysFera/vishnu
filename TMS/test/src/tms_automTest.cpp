@@ -15,7 +15,7 @@ using namespace TMS_Data;
 using namespace vishnu;
 namespace bpt= boost::posix_time;
 
-BOOST_GLOBAL_FIXTURE(TMSFixture)
+BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
 //Test category 1
 
@@ -48,12 +48,12 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   BOOST_TEST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" );
 
-  // sleep while waiting for  tms and ums SeD  
-  
+  // sleep while waiting for  tms and ums SeD
+
   bpt::seconds sleepTime(6);
 
  boost::this_thread::sleep(sleepTime);
-  
+
  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
