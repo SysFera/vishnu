@@ -125,7 +125,7 @@ int SSHJobExec::sshexec(const std::string& action) {
   std::ostringstream cmd;
   cmd << "ssh -l " << muser << " " << mhostname << " ";
   //cmd << "/usr/bin/ssh localhost ";
-  cmd << ServerTMS::getSlaveDirectory() << "/tmsSlave ";
+  cmd << ServerTMS::getInstance()->getSlaveDirectory() << "/tmsSlave ";
   cmd << action << " ";
   cmd << convertBatchTypeToString(mbatchType) << " ";
   cmd << jobSerializedPath << " " <<  errorPath << " ";

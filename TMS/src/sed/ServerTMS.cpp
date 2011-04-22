@@ -13,11 +13,7 @@
 #include "SystemException.hpp"
 
 ServerTMS *ServerTMS::minstance = NULL;
-BatchType ServerTMS::mbatchType = UNDEFINED;
-std::string ServerTMS::mmachineId = "";
-Database *ServerTMS::mdatabaseVishnu = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
-std::string ServerTMS::mslaveBinDir = "";
 
 /**
  * \brief To get the unique instance of the server
@@ -79,7 +75,12 @@ ServerTMS::getSlaveDirectory() {
 * \brief Constructor (private)
 * \fn ServerTMS()
 */
-ServerTMS::ServerTMS() : mprofile(NULL) {
+ServerTMS::ServerTMS() {
+  mprofile = NULL;
+  mbatchType = UNDEFINED;
+  mmachineId = "";
+  mdatabaseVishnu = NULL;
+  mslaveBinDir = "";
 }
 
 /**

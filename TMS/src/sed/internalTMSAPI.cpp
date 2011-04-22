@@ -73,8 +73,8 @@ solveSubmitJob(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
   cout << "************job=" << jobSerialized << " ..." << endl;
 
-  std::cout << "The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
-  std::cout << "The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+  std::cout << "The machine identifier is: " << ServerTMS::getInstance()->getMachineId() << std::endl;
+  std::cout << "The batch identifier is: " << ServerTMS::getInstance()->getBatchType() << std::endl;
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
@@ -97,7 +97,7 @@ solveSubmitJob(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: SubmitOptions object is not well built");
     }
 
-    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getBatchType());
+    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
     jobServer.submitJob(script_content, *submitOptions);
     *job = jobServer.getData();
 
@@ -145,8 +145,8 @@ solveCancelJob(diet_profile_t* pb)
   diet_string_get(diet_parameter(pb,2), &jobSerialized, NULL);
   cout << "************job=" << jobSerialized << " ..." << endl;
 
-  std::cout << "Cancel: The machine identifier is: " << ServerTMS::getMachineId() << std::endl;
-  std::cout << "Cancel: The batch identifier is: " << ServerTMS::getBatchType() << std::endl;
+  std::cout << "Cancel: The machine identifier is: " << ServerTMS::getInstance()->getMachineId() << std::endl;
+  std::cout << "Cancel: The batch identifier is: " << ServerTMS::getInstance()->getBatchType() << std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   TMS_Data::Job_ptr job = NULL;
@@ -158,7 +158,7 @@ solveCancelJob(diet_profile_t* pb)
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_cancelJob: Job object is not well built");
     }
 
-    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getBatchType());
+    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
     jobServer.cancelJob();
 
     if(diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE)) {
@@ -205,7 +205,7 @@ solveJobInfo(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solveJobOutPutGetResult: Job object is not well built");
     }
 
-    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getBatchType());
+    JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
     *job = jobServer.getJobInfo();
 
     const char* name = "solveJobOutPutGetResult";
@@ -250,7 +250,7 @@ solveListOfQueues(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   TMS_Data::ListQueues_ptr listQueues = NULL;
 
-  ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getBatchType(), std::string(option));
+  ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getInstance()->getBatchType(), std::string(option));
 
   try {
 
