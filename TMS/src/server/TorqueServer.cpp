@@ -19,6 +19,7 @@ using namespace std;
 using namespace vishnu;
 
 TorqueServer::TorqueServer():BatchServer() {
+  serverOut[0] = '\0'; //serveur par defaut
 }
 
 int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
@@ -585,14 +586,15 @@ TorqueServer::fillJobProgress(TMS_Data::Progression &job, struct batch_status *p
   string str;
 
   // Initializing all fields
-  string jobid      = string("");
-  string name       = string("");
-  string state      = string("");
-  string wall       = string("");
-  string etime      = string("");
-  string stime      = string("");
-  string nodeAndCpu = string("");
-  string cput       = string("");
+  string jobid             = string("");
+  string name              = string("");
+  string state             = string("");
+  string wall              = string("");
+  string etime             = string("");
+  string stime             = string("");
+  string nodeAndCpu        = string("");
+  string cput              = string("");
+  string wallRemaining     = string("");
 
   // Getting job idx
   str = p->name;
@@ -611,51 +613,69 @@ TorqueServer::fillJobProgress(TMS_Data::Progression &job, struct batch_status *p
 
       // Getting the attribute the value corresponds to
       if(!strcmp(a->name, ATTR_name)){ // job name
-	name = str;
+        name = str;
       }
       else if(!strcmp(a->name, ATTR_state)){ // state
-	state = str;
+        state = str;
       }
       else if (!strcmp(a->name, ATTR_l)){ // nbcpu or qtime
-	if(!strcmp(a->resource, "walltime")){
-	  wall = str;
-	}
-	if(!strcmp(a->resource, "cput")){
-	  cput = str;
-	}
+        if(!strcmp(a->resource, "walltime")){
+          wall = str;
+        }
+        if(!strcmp(a->resource, "cput")){
+          cput = str;
+        }
       }
       else if (!strcmp(a->name, ATTR_etime)){ // end time ?
-	etime = str;
+        etime = str;
       }
-      else if (!strcmp(a->name, ATTR_start)){ // start time ?
-	stime = str;
-      }	      
+      else if (!strcmp(a->name, ATTR_qtime)){ // start time ?
+        stime = str;
+      } else if(!strcmp(a->name, "Walltime")){
+        if(!strcmp(a->resource, "Remaining")) {
+          wallRemaining = a->value;
+        }
+      }      
       a = a->next;
     }// end if name != null
   } // end while
 
-  double start, end, percent;
+  double start; 
+  double end; 
+  double percent = double(0);
 
   // Creating job
   job.setJobId(jobid);
   job.setJobName(name);
-  if (state.compare("")!=0)
-    job.setStatus(atoi(state.c_str()));
-  else
+  if (state.compare("")!=0) {
+    job.setStatus(convertTorqueStateToVishnuState(state));
+  } else {
     job.setStatus(0);
+  }
 
-  end = double(atol(etime.c_str()));
-  job.setEndTime(end);
+  //end = convertToInt(etime);
+  start = convertToInt(stime);
+  job.setEndTime(start+convertStringToWallTime(wall)); //a voir
 
-  start = double(atol(stime.c_str()));
+  start = convertToInt(stime);
   job.setStartTime(start);
 
-  if (wall.compare("")!=0)
-    job.setWallTime(atol(wall.c_str()));
-  else
+  if (wall.compare("")!=0) {
+    job.setWallTime(convertStringToWallTime(wall));
+  } else {
     job.setWallTime(0);
+  }
 
-  job.setPercent(atoi(cput.c_str())/atoi(wall.c_str()));
+  std::cout << "cput=" << convertToInt(cput) << std::endl;
+  std::cout << "walltime =" << convertStringToWallTime(wall) << std::endl;
+  std::cout << "remaining walltime = " << convertToInt(wallRemaining) << std::endl;
+  //job.setPercent(converToInt(cput)/convertToInt(wall));
+  double remainingTime = convertToInt(wallRemaining);
+  if(remainingTime > double(0)) {
+    percent = 100*(1-remainingTime/convertStringToWallTime(wall));
+  }
+  std::cout << "percent = " << percent << std::endl;
+  job.setPercent(percent);
 }
 
 TMS_Data::ListProgression*
@@ -665,14 +685,17 @@ TorqueServer::getJobProgress(TMS_Data::ProgressOptions op){
   mprog = ecoreFactory->createListProgression();
 
   struct attropl attr[NBFIELDLISTJOBOPT];
-
   char *errmsg;
+  std::string errorMsg;
   int   connect;
   struct batch_status *p_status;
-  
+
+  serverOut[0] = '\0'; //le bon nom a recuperer dans la base vishnu
+
   // Connect to the torque server
   connect = cnt2server(serverOut);
 
+  std::cout << "connect = " << connect << std::endl;
   // If connexion failure
   if (connect <= 0) {
     string msg;
@@ -685,22 +708,32 @@ TorqueServer::getJobProgress(TMS_Data::ProgressOptions op){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
   }
 
+  std::cout << "connect=" << connect << "op.getJobId()=" << op.getJobId() << std::endl;
   // If jobid given, the info about this job are gotten
-  if (op.getJobId()!=""){
+  if(op.getJobOwner().size()!=0) {
+    bool b=true; 
+    fill(attr, b, (char *)ATTR_u, NULL, (char *)op.getJobOwner().c_str(), EQ);
+    p_status = pbs_selstat(connect, attr, NULL);
+  }
+  else if (op.getJobId().size()!=0){ //TODO : combinaison d'options  a faire
     p_status = pbs_statjob(connect, (char *)op.getJobId().c_str(), NULL, NULL);
   } else{
-    // Stat for a job only
-    bool b=true;
-    fill(attr, b, (char *)ATTR_u, NULL, (char *)op.getJobOwner().c_str(), EQ);
-
-    // Listing jobs
-    p_status = pbs_selstat(connect, attr, NULL);
+    p_status = pbs_selstat(connect, NULL, NULL);
   }
   // If error listing
   if(p_status==NULL) {
     errmsg = pbs_geterrmsg(connect);
+     if(errmsg!=NULL)
+    {
+      errorMsg = "TORQUE: pbs_stat: ";
+      errorMsg.append(std::string(errmsg));
+    }
+    else {
+      errorMsg = "TORQUE: pbs_stat: unknown parameters values\n";
+    }
+
     pbs_disconnect(connect);
-    throw TMSVishnuException (ERRCODE_BATCH_SCHEDULER_ERROR, string(errmsg));
+    throw TMSVishnuException (ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
   }
   // Disconnect from torque
   pbs_disconnect(connect);
@@ -711,14 +744,15 @@ TorqueServer::getJobProgress(TMS_Data::ProgressOptions op){
 
   // For each result
   for(p = p_status; p!=NULL; p = p->next) {
-    TMS_Data::Progression job;
+
+    TMS_Data::Progression_ptr job = ecoreFactory->createProgression();
     // Creating the corresponding progression
-    fillJobProgress(job, p);
+    fillJobProgress(*job, p);
 
     nbJobs++;
 
     // Adding created job to list
-    mprog->getProgress().push_back(&job);
+    mprog->getProgress().push_back(job);
   } // end for
   mprog->setNbJobs(nbJobs);
   return mprog;  
@@ -776,11 +810,12 @@ TorqueServer::getJobInfo(string job){
 
 
 TMS_Data::ListQueues*
-TorqueServer::listQueues() { 
+TorqueServer::listQueues(const std::string& OptqueueName) { 
 
   int connect;
   std::string errorMsg;
 
+  serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
   // Connect to the torque server
   connect = cnt2server(serverOut);
 
@@ -796,7 +831,13 @@ TorqueServer::listQueues() {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
   }
 
-  struct batch_status *p_status = pbs_statque(connect, NULL, NULL, NULL);
+
+  struct batch_status *p_status;
+  if(OptqueueName.size()!=0) {
+    p_status = pbs_statque(connect, strdup(OptqueueName.c_str()), NULL, NULL);
+  } else {
+    p_status = pbs_statque(connect, NULL, NULL, NULL);
+  }
 
   if(p_status==NULL)
   {

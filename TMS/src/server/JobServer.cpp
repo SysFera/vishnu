@@ -153,6 +153,62 @@ int JobServer::cancelJob()
  * \brief Function to get job information
  * \return The job data structure
  */
+TMS_Data::Job JobServer::getJobInfo() {
+
+  //To check the sessionKey
+  msessionServer.check();
+
+  std::string outputPath;
+  std::string errorPath;
+  std::vector<std::string> results;
+  std::vector<std::string>::iterator  iter;
+  std::string sqlRequest = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath, errorPath,"
+                                "outputPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
+                                "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
+                                "nbNodesAndCpuPerNode from job, vsession "
+                                "where vsession.numsessionid=job.vsession_numsessionid"
+                                " and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
+
+  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+  
+  if (sqlResult->getNbTuples() != 0){
+      results.clear();
+      results = sqlResult->get(0);
+      iter = results.begin();
+  
+      mjob.setSessionId(*iter);  
+      mjob.setSubmitMachineId(*(++iter));
+      mjob.setSubmitMachineName(*(++iter));
+      mjob.setJobId(*(++iter));
+      mjob.setJobName(*(++iter));
+      mjob.setJobPath(*(++iter));
+      mjob.setOutputPath(*(++iter));
+      mjob.setErrorPath(*(++iter));
+      mjob.setJobPrio(convertToInt(*(++iter)));
+      mjob.setNbCpus(convertToInt(*(++iter)));
+      mjob.setJobWorkingDir(*(++iter));
+      mjob.setStatus(convertToInt(*(++iter)));
+      mjob.setSubmitDate(string_to_time_t(*(++iter)));
+      mjob.setEndDate(string_to_time_t(*(++iter)));
+      mjob.setOwner(*(++iter));
+      mjob.setJobQueue(*(++iter));
+      mjob.setWallClockLimit(convertToInt(*(++iter)));
+      mjob.setGroupName(*(++iter));
+      mjob.setJobDescription(*(++iter));
+      mjob.setMemLimit(convertToInt(*(++iter)));
+      mjob.setNbNodes(convertToInt(*(++iter)));
+      mjob.setNbNodesAndCpuPerNode(1); // a remplacer par  
+  } else {
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+  }
+
+ return mjob;
+}
+
+/**
+ * \brief Function to get job information
+ * \return The job data structure
+ */
 TMS_Data::Job JobServer::getData()
 {
 	return mjob;
