@@ -55,7 +55,7 @@ public:
     BOOST_TEST_MESSAGE( "== Test teardown [END]: Finalizing client ==" );
   }
 
-private:
+//private:
   int mac;
   char* mav[2];
 };
