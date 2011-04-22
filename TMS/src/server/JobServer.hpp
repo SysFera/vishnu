@@ -42,9 +42,15 @@ public:
    * \return raises an exception on error
    */
 	int cancelJob();
-	
+
   /**
    * \brief Function to get job information
+   * \return The job data structure
+   */
+  TMS_Data::Job getJobInfo(); 
+
+  /**
+   * \brief Function to get job data 
    * \return The job data structure
    */
   TMS_Data::Job getData();
