@@ -14,14 +14,14 @@ VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UM
 VishnuConnexion::~VishnuConnexion(){
   if(false==msession.getSessionKey().empty()){
   BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
-  BOOST_MESSAGE("The session is closed");
+  BOOST_TEST_MESSAGE("The session is closed");
   }
 }
 
 string VishnuConnexion::getConnexion(){
 
   BOOST_REQUIRE_EQUAL(vishnu::connect(muid,mupwd,msession,mco),0);
-   BOOST_MESSAGE("The session is open");
+   BOOST_TEST_MESSAGE("The session is open");
    return msession.getSessionKey();
 }
 
