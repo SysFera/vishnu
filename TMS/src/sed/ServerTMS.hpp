@@ -21,14 +21,16 @@ class Database;
 /**
  *  * \brief Number of service in TMS
  *   */
-#define NB_SRV 5
+#define NB_SRV 7 
 
 static const char* SERVICES[NB_SRV] = {
   "jobSubmit_",
   "jobCancel_",
-  "TMSMachineGetListOfQueues_",
-  "jobOutPutGetResult_",
+  "jobInfo_",
   "getListOfJobs_",
+  "getJobsProgression_",
+  "getListOfQueues_",
+  "jobOutPutGetResult_"
 };
 
 /**

@@ -71,7 +71,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 
 /**
-* \brief The getJobInfo function gets information on a job from its id
+* \brief The listJobs function gets a list of all submitted jobs
+bInfo function gets information on a job from its id
 * \fn int getJobInfo(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, Job& jobInfos)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
@@ -79,32 +80,24 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 * \param jobInfos : The resulting information on the job
 * \return int : an error code
 */
-
-//TODO: fonction api externe à enlever car identique à liste job
 int
 vishnu::getJobInfo(const std::string& sessionKey,
-            const std::string& machineId,
-            const std::string& jobId,
-            Job_ptr& jobInfos)
+    const std::string& machineId,
+    const std::string& jobId,
+    Job& jobInfo)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
-  std::string serviceName = "getListOfJobs_";
-  serviceName.append(machineId);
-
   SessionProxy sessionProxy(sessionKey);
+  jobInfo.setJobId(jobId);
 
-  TMS_Data::ListJobsOptions listJobsOptions;
-  listJobsOptions.setJobId(jobId);
+  JobProxy jobProxy(sessionProxy,
+      machineId,
+      jobInfo);
 
-  QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-  query(listJobsOptions, sessionProxy, serviceName, machineId);
+  jobInfo = jobProxy.getJobInfo();
 
-  TMS_Data::ListJobs* listJobs_ptr = query.list();
-
-  if(listJobs_ptr != NULL) {
-    jobInfos = listJobs_ptr->getJobs().get(0);
-  }
   return 0;
+
 }
 
 /**
@@ -190,18 +183,25 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param listofQueues : The list of queues
+* \param queueName The option value, if it given, listQueues only information of this queue
 * \return int : an error code
 */
 int
 vishnu::listQueues(const std::string& sessionKey,
-            const std::string& machineId,
-            ListQueues& listofQueues)
+                   const std::string& machineId,
+                   ListQueues& listofQueues,
+                   const std::string& queueName)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
-  SessionProxy sessionProxy(sessionKey);
-  TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
+  std::string serviceName = "getListOfQueues_";
+  serviceName.append(machineId);
 
-  TMS_Data::ListQueues_ptr listQueues_ptr = tmsMachineProxy.getMachineQueues();
+  SessionProxy sessionProxy(sessionKey);
+
+  QueryProxy<std::string, TMS_Data::ListQueues>
+    query(queueName, sessionProxy, serviceName, machineId);
+
+  TMS_Data::ListQueues* listQueues_ptr = query.listWithParamsString();
 
   if(listQueues_ptr != NULL) {
     TMS_Data::Queue_ptr queue;
@@ -211,6 +211,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     }
   }
   return 0;
+
 }
 
 
