@@ -44,5 +44,4 @@ target_link_libraries(ums-server
   register-vishnu
   utils-vishnu
   utils-server
-  ums-sed
 )
