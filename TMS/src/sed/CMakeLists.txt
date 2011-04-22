@@ -44,7 +44,6 @@ target_link_libraries(tmssed
   utils-vishnu
   utils-server
   ums-server
-  ums-sed
   tms-server
 )
 

@@ -46,11 +46,12 @@ public:
   save();
   /**
   * \brief Function to restore a VISHNU configuration
-  * \fn int restore()
+  * \fn int restore(int vishnuId)
+  * \param vishnuId The identifier of the vishnu instance
   * \return raises an exception on error
   */
   int
-  restore();
+  restore(int vishnuId);
   /**
   * \fn ~ConfigurationServer()
   * \brief Destructor
@@ -87,20 +88,21 @@ private:
   /////////////////////////////////
   /**
   * \brief Function to get the sql code of users from a VISHNU configuration
-  * \fn std::string userToSql(UMS_Data::User_ptr user)
+  * \fn std::string userToSql(UMS_Data::User_ptr user, int vishnuId)
   * \param user The user object
+  * \param vishnuId The identifier of the vishnu instance
   * \return the sql code containing the sql code of users
   */
   std::string
-  userToSql(UMS_Data::User_ptr user);
+  userToSql(UMS_Data::User_ptr user, int vishnuId);
   /**
   * \brief Function to get the sql code of machines from a VISHNU configuration
-  * \fn std::string machineToSql(UMS_Data::Machine_ptr machine)
-  * \param machine The machine object
+  * \fn std::string machineToSql(UMS_Data::Machine_ptr machine, int vishnuId)
+  * \param vishnuId The identifier of the vishnu instance
   * \return the sql code containing the sql code of machines
   */
   std::string
-  machineToSql(UMS_Data::Machine_ptr machine);
+  machineToSql(UMS_Data::Machine_ptr machine, int vishnuId);
   /**
   * \brief Function to get the sql code of machines description from a VISHNU configuration
   * \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)

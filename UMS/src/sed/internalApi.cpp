@@ -8,6 +8,7 @@
 #include "internalApi.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
+#include "ServerUMS.hpp"
 
 using namespace vishnu;
 
@@ -194,7 +195,9 @@ solveUserCreate(diet_profile_t* pb) {
     }
 
     userServer.init();
-    userServer.add(user);
+    userServer.add(user,
+                   ServerUMS::getInstance()->getVishnuId(),
+                   ServerUMS::getInstance()->getSendmailScriptPath());
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -403,7 +406,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
 
   try {
     userServer.init();
-    userServer.resetPassword(user);
+    userServer.resetPassword(user, ServerUMS::getInstance()->getSendmailScriptPath());
+
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -464,7 +468,7 @@ solveMachineCreate(diet_profile_t* pb) {
     }
 
     MachineServer machineServer = MachineServer(machine, sessionServer);
-    machineServer.add();
+    machineServer.add(ServerUMS::getInstance()->getVishnuId());
 
     //To save the last connection on the database
     sessionServer.saveConnection();
@@ -868,7 +872,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
     }
 
     ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
-    configurationServer.restore();
+    configurationServer.restore(ServerUMS::getInstance()->getVishnuId());
 
     //To save the last connection on the database
     sessionServer.saveConnection();

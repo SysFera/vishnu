@@ -6,7 +6,6 @@
 */
 
 #include "MachineServer.hpp"
-#include "ServerUMS.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
@@ -38,31 +37,32 @@ mmachine(machine), msessionServer(session)
 
 /**
 * \brief Function to add a new VISHNU machine
-* \fn int add()
+* \fn int add(int vishnuId)
+* \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
 int
-MachineServer::add() {
+MachineServer::add(int vishnuId) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
   std::string idMachineGenerated;
   int machineCpt;
-  std::string vishnuId;
   std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
+
+  std::string vishnuid;
 
   //if the user exists
   if (userServer.exist()) {
     //if the user is an admin
     if (userServer.isAdmin()) {
 
-      vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
-
-      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuId));
+      vishnuid = convertToString(vishnuId);
+      machineCpt = convertToInt(getAttrVishnu("machinecpt", vishnuid));
 
       //To get the formatidmachine
-      formatidmachine = getAttrVishnu("formatidmachine", vishnuId);
+      formatidmachine = getAttrVishnu("formatidmachine", vishnuid);
       //if the formatidmachine is defined
       if (formatidmachine.size() != 0) {
         //Generation of userid
@@ -80,7 +80,7 @@ MachineServer::add() {
           //if the machineId does not exist
           if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
 
-            mdatabaseVishnu->process(sqlInsert + "("+vishnuId+",'"+mmachine->getName()+"'\
+            mdatabaseVishnu->process(sqlInsert + "("+vishnuid+",'"+mmachine->getName()+"'\
             ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
             '"+mmachine->getSshPublicKey()+"')");
 
