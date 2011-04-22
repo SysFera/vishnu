@@ -170,7 +170,7 @@ vishnu::moveFile(std::string src, std::string dest, const std::string& filename)
  * \return raises an exception on error
  */
 bool vishnu::isNumericalValue(const std::string value) {
-  bool ret = ((value.size()==0) || value.find_first_not_of("0123456789")==std::string::npos);
+  bool ret = (value.find_first_not_of("0123456789")==std::string::npos);
   if(!ret) {
     throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: "+value));
   }

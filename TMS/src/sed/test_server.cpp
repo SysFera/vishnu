@@ -17,7 +17,6 @@
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
-#include "TorqueServer.hpp"
 
 // definition of the number of available services and their names
 #define NB_SERVICES 9
@@ -78,11 +77,6 @@ operator<<(std::ostream& os, const TMS_Data::Job_ptr& job) {
   return os;
 }
 
-int jobSubmit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job,
-                  BatchServer* batchServer) {
-    return batchServer->submit(scriptPath, options, job);
-}
-
 /*
  * SOLVE FUNCTIONS
  */
@@ -135,9 +129,6 @@ solve_submitJob(diet_profile_t* pb)
   cout << "******************************************" << endl;
   ofile << scriptContent;
   ofile.close();
-
-  TorqueServer* torqueServer = new TorqueServer();
-  jobSubmit(scriptPath.c_str(),  *submitOptions, *job, torqueServer);
 
   //To serialize the user object
   const char* name = "solveSubmitJob";

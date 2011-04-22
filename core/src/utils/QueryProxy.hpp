@@ -313,13 +313,51 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+  if (mmachineId.size() != 0) {
+    profile = diet_profile_alloc(mserviceName.c_str(), 2, 2, 4);
+  } else {
+    profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+  }
 
-  //IN Parameters
+   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy.getSessionKey()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy.getSessionKey();
     raiseDietMsgException(msg);
   }
+
+   //If the query uses the machineId (machineId not null)
+  if (mmachineId.size() != 0) {
+    //IN Parameters
+    if(diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+      msg += "with machineId parameter "+mmachineId;
+      raiseDietMsgException(msg);
+    }
+
+    if(diet_string_set(diet_parameter(profile,2), strdup(mparameters.c_str()), DIET_VOLATILE)) {
+      msg += "with with mparameters parameter "+mparameters;
+      raiseDietMsgException(msg);
+    }
+
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+
+    if(!diet_call(profile)) {
+      if(diet_string_get(diet_parameter(profile,3), &listObjectInString, NULL)){
+        msg += "by receiving listObjectInString message";
+        raiseDietMsgException(msg);
+      }
+      if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+        msg += "by receiving errorInfo message";
+        raiseDietMsgException(msg);
+      }
+    }
+    else {
+      raiseDietMsgException("DIET call failure");
+    }
+  } else {
+ 
+  //IN Parameters
   if(diet_string_set(diet_parameter(profile,1), strdup(mparameters.c_str()), DIET_VOLATILE)) {
     msg += "with mparameters parameter "+mparameters;
     raiseDietMsgException(msg);
@@ -341,6 +379,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
   }
   else {
     raiseDietMsgException("DIET call failure");
+  }
   }
 
   /*To check the receiving message error*/

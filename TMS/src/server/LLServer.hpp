@@ -22,7 +22,7 @@ public:
   TMS_Data::ListJobs*
   listJobs(TMS_Data::ListJobsOptions op);
   TMS_Data::JobResult getJobResults() { };
-  TMS_Data::ListQueues* listQueues() { };
+  TMS_Data::ListQueues* listQueues(const std::string& optQueueName=std::string()) { };
   TMS_Data::ListJobResults* getAllJobsResults() { };
   /**
    * \brief To get the info about a job
