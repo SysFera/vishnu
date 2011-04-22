@@ -45,7 +45,7 @@ JobOutputServer::getJobOutput() {
   //To get the output and error path of the job
   std::string sqlRequest = "SELECT outputPath, errorPath from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'";
-  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
   
   if (sqlResult->getNbTuples() != 0){ 
     results.clear();

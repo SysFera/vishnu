@@ -62,7 +62,7 @@ public:
   list() {
     
     BatchFactory factory;
-    BatchType batchType  = ServerTMS::getBatchType();
+    BatchType batchType  = ServerTMS::getInstance()->getBatchType();
     BatchServer* batchServer = factory.getBatchServerInstance(batchType);
 
     mlistObject = batchServer->getJobProgress(*mparameters);
