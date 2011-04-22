@@ -1,7 +1,10 @@
+
+#include "boost/date_time/posix_time/posix_time.hpp"
 #include "utilVishnu.hpp"
 #include "displayer.hpp"
 
 using namespace std;
+using namespace vishnu;
 
 void 
 displayAllJobOutput(TMS_Data::ListJobResults& j){
@@ -21,6 +24,9 @@ displayJobOutput(TMS_Data::JobResult_ptr j){
 
 void 
 displayJob(TMS_Data::Job& j){
+
+  boost::posix_time::ptime pt;
+
   cout << " ------------------------ " << endl;
   cout << " Session Id      : " << j.getSessionId() << endl;
   cout << " Machine Id      : " << j.getSubmitMachineId() << endl;
@@ -35,11 +41,13 @@ displayJob(TMS_Data::Job& j){
   cout << " CPU             : " << j.getNbCpus() << endl;
   cout << " Working dir     : " << j.getJobWorkingDir() << endl;
   cout << " Status          : " << j.getStatus() << endl;
-  cout << " Submit date     : " << j.getSubmitDate() << endl;
-  cout << " End date        : " << j.getEndDate() << endl;
+  pt =  boost::posix_time::from_time_t(j.getSubmitDate());
+  cout << " Submit date     : " << boost::posix_time::to_simple_string(pt) << endl;
+  pt =  boost::posix_time::from_time_t(j.getEndDate());
+  cout << " End date        : " << boost::posix_time::to_simple_string(pt) << endl;
   cout << " Owner           : " << j.getOwner() << endl;
   cout << " Queue           : " << j.getJobQueue() << endl;
-  cout << " Wall clock limit: " << j.getWallClockLimit() << endl;
+  cout << " Wall clock limit: " << convertWallTimeToString(j.getWallClockLimit()) << endl;
   cout << " Group name      : " << j.getGroupName() << endl;
   cout << " Description     : " << j.getJobDescription() << endl;
   cout << " Max memory      : " << j.getMemLimit() << endl;
@@ -56,15 +64,20 @@ displayJobProgress(ListProgression& j){
 }
 
 void
-displayProgress(Progression& j){
+displayProgress(Progression& p){
+
+  boost::posix_time::ptime pt;
+
   cout << " ------------------------ " << endl;
-  cout << " Job Id    : " << j.getJobId() << endl;
-  cout << " Job name  : " << j.getJobName() << endl;
-  cout << " Wall time : " << j.getWallTime() << endl;
-  cout << " Start time: " << j.getStartTime() << endl;
-  cout << " End time  : " << j.getEndTime() << endl;
-  cout << " Percent   : " << j.getPercent() << "%" << endl;
-  cout << " Status    : " << j.getStatus() << endl;
+  cout << " Job Id    : " << p.getJobId() << endl;
+  cout << " Job name  : " << p.getJobName() << endl;
+  cout << " Wall time : " << convertWallTimeToString(p.getWallTime()) << endl;
+  pt =  boost::posix_time::from_time_t(p.getStartTime());
+  cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
+  pt =  boost::posix_time::from_time_t(p.getEndTime());
+  cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
+  cout << " Percent   : " << p.getPercent() << "%" << endl;
+  cout << " Status    : " << p.getStatus() << endl;
   cout << endl;
 }
 
@@ -89,19 +102,22 @@ displayQueues(ListQueues& j){
 
 
 void
-displayQueue(Queue& j){
+displayQueue(Queue& q){
+
+  boost::posix_time::ptime pt;
+
   cout << " ------------------------ " << endl;
-  cout << " Name        : " << j.getName() << endl;
-  cout << " Max job cpu : " << j.getMaxJobCpu() << endl;
-  cout << " Max proc cpu: " << j.getMaxProcCpu() << endl;
-  cout << " Memory      : " << j.getMemory() << endl;
-  cout << " Wall time   : " << j.getWallTime() << endl;
-  cout << " Node        : " << j.getNode() << endl;
-  cout << " Running jobs: " << j.getNbRunningJobs() << endl;
-  cout << " Job in queue: " << j.getNbJobsInQueue() << endl;
-  cout << " State       : " << j.getState() << endl;
-  cout << " Priority    : " << j.getPriority() << endl;
-  cout << " Description : " << j.getDescription() << endl;
+  cout << " Name        : " << q.getName() << endl;
+  cout << " Max job cpu : " << q.getMaxJobCpu() << endl;
+  cout << " Max proc cpu: " << q.getMaxProcCpu() << endl;
+  cout << " Memory      : " << q.getMemory() << endl;
+  cout << " Wall time   : " << convertWallTimeToString(q.getWallTime()) << endl;
+  cout << " Node        : " << q.getNode() << endl;
+  cout << " Running jobs: " << q.getNbRunningJobs() << endl;
+  cout << " Job in queue: " << q.getNbJobsInQueue() << endl;
+  cout << " State       : " << q.getState() << endl;
+  cout << " Priority    : " << q.getPriority() << endl;
+  cout << " Description : " << q.getDescription() << endl;
 }
 
 

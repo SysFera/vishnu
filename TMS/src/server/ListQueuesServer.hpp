@@ -26,7 +26,7 @@ public:
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
-  explicit ListQueuesServer(const SessionServer& session, const std::string& machineId, const BatchType& batchType);
+  explicit ListQueuesServer(const SessionServer& session, const std::string& machineId, const BatchType& batchType, const std::string& option);
   /**
    * \fn ListQueuesServer(const std::string& option,
    *                     const SessionServer& session)

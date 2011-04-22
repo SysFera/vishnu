@@ -19,7 +19,6 @@
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
-#include "TorqueServer.hpp"
 #include "VishnuException.hpp"
 #include "BatchFactory.hpp"
 #include "TMSVishnuException.hpp"

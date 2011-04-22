@@ -28,6 +28,7 @@ main (int argc, char* argv[]){
   string dietConfig;
   string sessionKey;
   string machineId;
+  string queueName;
 
   /********** EMF data ************/
 
@@ -39,11 +40,23 @@ main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
+
   // Environement option
   opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
+      "The diet config file",
+      ENV,
+      dietConfig);
+
+  opt->add("queueName,q",
+          "An option for listing all information of the given\n"
+          "queue name",
+          CONFIG,
+          queueName); 
+
+  //All cli option parameters
+  opt->add("full,f",
+      "An option for get full information on each queue",
+      CONFIG);
 
   // All cli obligatory parameters
   opt->setPosition("machineId",1);
@@ -84,11 +97,14 @@ main (int argc, char* argv[]){
     // DIET call : list queue
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      listQueues(sessionKey, machineId, queue);
+      listQueues(sessionKey, machineId, queue, queueName);
     }
 
-    //displayQueues(queue);
-    std::cout << queue << std::endl;
+    if (opt->count("full") || queueName.size()!=0){
+      displayQueues(queue);
+    } else {
+      std::cout << queue << std::endl;
+    }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);

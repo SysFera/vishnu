@@ -19,7 +19,7 @@ class TorqueServer : public BatchServer
   cancel(const char* jobId) ;
  
   TMS_Data::ListQueues*
-  listQueues(); 
+  listQueues(const std::string& optQueueName=std::string()); 
  
   TMS_Data::Job 
   getJob() { };

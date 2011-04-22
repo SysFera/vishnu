@@ -50,19 +50,3 @@ target_link_libraries(tmssed
 
 install(TARGETS tmssed DESTINATION sbin)
 
-add_executable(test_server
-  test_server
-)
-
-target_link_libraries(test_server
-  ${DIET_SERVER_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${TORQUE_LIB}
-  emf4cpp-TMS_Data
-  register-vishnu
-  exception-vishnu
-  database-vishnu
-  utils-vishnu
-  utils-server
-  tms-server
-)

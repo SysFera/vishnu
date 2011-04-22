@@ -38,12 +38,23 @@ class JobProxy {
   int
   submitJob(const std::string scriptContent,
             const TMS_Data::SubmitOptions& options);
+
+  
   /**
   * \brief Function to cancel job
   * \return raises an exception on error
   */
   int
   cancelJob();
+
+  /**
+   * \brief Function to get job information
+   * \param options the options to submit job
+   * \return raises an exception on error
+   */
+  TMS_Data::Job  
+  getJobInfo(); 
+
   /**
   * \brief Function to get job information
   * \return The job data structure
