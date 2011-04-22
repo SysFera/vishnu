@@ -45,11 +45,12 @@ public:
   MachineServer(UMS_Data::Machine*& machine, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU machine
-  * \fn int add()
+  * \fn int add(int vishnuId)
+  * \param vishnuId The identifier of the vishnu instance
   * \return raises an exception on error
   */
   int
-  add();
+  add(int vishnuId);
   /**
   * \brief Function to update a VISHNU machine
   * \fn int update()

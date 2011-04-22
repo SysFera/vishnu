@@ -8,7 +8,6 @@
 #include "ConfigurationServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
-#include "ServerUMS.hpp"
 #include "DbFactory.hpp"
 
 /**
@@ -139,10 +138,11 @@ ConfigurationServer::save() {
 
 /**
  * \brief Function to restore a VISHNU configuration
- * \fn int restore()
+ * \fn int restore(int vishnuId)
+ * \param vishnuId The identifier of the vishnu instance
  * \return raises an exception on error
  */
-int ConfigurationServer::restore() {
+int ConfigurationServer::restore(int vishnuId) {
   std::string sqlcode = "";
   std::string sqlCodeDescMachine = "";
 
@@ -161,13 +161,13 @@ int ConfigurationServer::restore() {
       for(unsigned int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
         UMS_Data::User_ptr user = mconfiguration->getListConfUsers().get(i);
         //userServer.add(user);
-        sqlcode.append(userToSql(user));
+        sqlcode.append(userToSql(user, vishnuId));
       }
 
       //To get all machines
       for(unsigned int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
         UMS_Data::Machine_ptr machine = mconfiguration->getListConfMachines().get(i);
-        sqlcode.append(machineToSql(machine));
+        sqlcode.append(machineToSql(machine, vishnuId));
       }
 
       //To insert machines and users
@@ -220,18 +220,17 @@ ConfigurationServer::getData() {
 
 /**
  * \brief Function to get the sql code of users from a VISHNU configuration
- * \fn std::string userToSql(UMS_Data::User_ptr user)
+ * \fn std::string userToSql(UMS_Data::User_ptr user, int vishnuId)
+ * \param vishnuId The identifier of the vishnu instance
  * \return the sql code containing the sql code of users
  */
 std::string
-ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
+ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
  " privilege, email, passwordstate, status) values ";
 
-  std::string vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
-
-  return (sqlInsert + "(" + vishnuId +", "
+  return (sqlInsert + "(" + convertToString(vishnuId) +", "
   "'"+user->getUserId()+"','"+user->getPassword()+"','"
   + user->getFirstname()+"','"+user->getLastname()+"',"+
   convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
@@ -240,16 +239,15 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user) {
 
 /**
  * \brief Function to get the sql code of machines from a VISHNU configuration
- * \fn std::string machineToSql(UMS_Data::Machine_ptr machine)
+ * \fn std::string machineToSql(UMS_Data::Machine_ptr machine, int vishnuId)
+ * \param vishnuId The identifier of the vishnu instance
  * \return the sql code containing the sql code of machines
  */
 std::string
-ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine) {
+ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
   std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
 
-  std::string vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
-
-  sqlInsert.append("("+vishnuId+",'"+machine->getName()+"'"
+  sqlInsert.append("("+convertToString(vishnuId)+",'"+machine->getName()+"'"
   ",'"+ machine->getSite()+"','"+machine->getMachineId()+"',"
   +convertToString(machine->getStatus())+",'"+machine->getSshPublicKey() +"');");
 
