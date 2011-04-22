@@ -7,7 +7,6 @@
 
 #include <boost/scoped_ptr.hpp>
 #include "UserServer.hpp"
-#include "ServerUMS.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
 #include "utilVishnu.hpp"
@@ -50,12 +49,14 @@ UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServ
 
 /**
 * \brief Function to add a new VISHNU user
-* \fn int add(UMS_Data::User*& user)
+* \fn int add(UMS_Data::User*& user, int vishnuId)
 * \param user The user data structure
+* \param vishnuId The identifier of the vishnu instance
+* \param sendmailScriptPath The path to the script for sending emails
 * \return raises an exception on error
 */
 int
-UserServer::add(UMS_Data::User*& user) {
+UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath) {
   std::string pwd;
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
   "privilege, email, passwordstate, status) values ";
@@ -63,9 +64,8 @@ UserServer::add(UMS_Data::User*& user) {
   std::string idUserGenerated;
   std::string passwordCrypted;
   int userCpt;
-  std::string vishnuId;
   std::string formatiduser;
-
+  std::string vishnuid;
 
   if (exist()) {
     if (isAdmin()) {
@@ -74,13 +74,12 @@ UserServer::add(UMS_Data::User*& user) {
       pwd = generatePassword(user->getLastname(), user->getFirstname());
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
-      vishnuId = convertToString(ServerUMS::getInstance()->getVishnuId());
-
+      vishnuid = convertToString(vishnuId);
       //To get the user counter
-      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuId));
+      userCpt = convertToInt(getAttrVishnu("usercpt", vishnuid));
 
       //To get the formatiduser
-      formatiduser = getAttrVishnu("formatiduser", vishnuId).c_str();
+      formatiduser = getAttrVishnu("formatiduser", vishnuid).c_str();
 
       //if the formatiduser is defined
       if (formatiduser.size() != 0) {
@@ -103,7 +102,7 @@ UserServer::add(UMS_Data::User*& user) {
           if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
 
             //To insert user on the database
-            mdatabaseVishnu->process(sqlInsert + "(" + vishnuId+", "
+            mdatabaseVishnu->process(sqlInsert + "(" + vishnuid+", "
             "'"+user->getUserId()+"','"+passwordCrypted+"','"
             + user->getFirstname()+"','"+user->getLastname()+"',"+
             convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
@@ -111,7 +110,7 @@ UserServer::add(UMS_Data::User*& user) {
 
             //Send email
             std::string emailBody = getMailContent(*user, true);
-            sendMailToUser(*user, emailBody, "Vishnu message: user created");
+            sendMailToUser(*user, emailBody, "Vishnu message: user created", sendmailScriptPath);
 
           }// END If the user to add exists
           else {
@@ -295,12 +294,13 @@ UserServer::changePassword(std::string newPassword) {
 
 /**
 * \brief Function to change VISHNU user password
-* \fn int resetPassword(UMS_Data::User user)
+* \fn int resetPassword(UMS_Data::User user, std::string sendmailScriptPath)
 * \param user The user data structure
+* \param sendmailScriptPath The path to the script for sending emails
 * \return raises an exception on error
 */
 int
-UserServer::resetPassword(UMS_Data::User& user) {
+UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) {
   std::string sqlResetPwd;
   std::string sqlUpdatePwdState;
   std::string passwordCrypted;
@@ -335,7 +335,7 @@ UserServer::resetPassword(UMS_Data::User& user) {
         user.setEmail(email);
         //Send email
         std::string emailBody = getMailContent(user, false);
-        sendMailToUser(user, emailBody, "Vishnu message: password reset");
+        sendMailToUser(user, emailBody, "Vishnu message: password reset", sendmailScriptPath);
       } // End if the user whose password will be reset exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
@@ -535,9 +535,13 @@ UserServer::generatePassword(std::string value1, std::string value2) {
 * \param user     the user to whom send the email
 * \param content  the body of the email
 * \param subject  the subject of the email
+* \param sendmailScriptPath The path to the script for sending emails
 */
 int
-UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject) {
+UserServer::sendMailToUser(const UMS_Data::User& user,
+                           std::string content,
+                           std::string subject,
+                           std::string sendmailScriptPath) {
 
   std::vector<std::string> tokens;
   std::ostringstream command;
@@ -548,7 +552,7 @@ UserServer::sendMailToUser(const UMS_Data::User& user, std::string content, std:
   if (address.empty()) {
     throw UserException(ERRCODE_INVALID_MAIL_ADRESS, "Empty email address");
   }
-  std::string sendmailScriptPath = ServerUMS::getInstance()->getSendmailScriptPath();
+
   //If the script is empty
   if (sendmailScriptPath.empty()) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid server configuration");

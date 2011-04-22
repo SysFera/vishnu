@@ -48,12 +48,14 @@ public:
   UserServer(SessionServer sessionServer);
   /**
   * \brief Function to add a new VISHNU user
-  * \fn int add(UMS_Data::User*& user)
+  * \fn int add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath)
   * \param user The user data structure
+  * \param vishnuId The identifier of the vishnu instance
+  * \param sendmailScriptPath The path to the script for sending emails
   * \return raises an exception on error
   */
   int
-  add(UMS_Data::User*& user);
+  add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath);
   /**
   * \brief Function to update user information
   * \fn int update(UMS_Data::User* user)
@@ -80,12 +82,13 @@ public:
   changePassword(std::string newPassword);
   /**
   * \brief Function to change VISHNU user password
-  * \fn int resetPassword(UMS_Data::User& user)
+  * \fn int resetPassword(UMS_Data::User& user, std::string sendmailScriptPath)
   * \param user The user data structure
+  * \param sendmailScriptPath The path to the script for sending emails
   * \return raises an exception on error
   */
   int
-  resetPassword(UMS_Data::User& user);
+  resetPassword(UMS_Data::User& user, std::string sendmailScriptPath);
   /**
   * \fn ~UserServer()
   * \brief Destructor
@@ -182,10 +185,14 @@ private:
    * \param user     the user to whom send the email
    * \param content the body of the email
    * \param subject the subject of the email
+   * \param sendmailScriptPath The path to the script for sending emails
    * \return The error or success code
    */
   int
-  sendMailToUser(const UMS_Data::User& user, std::string content, std::string subject);
+  sendMailToUser(const UMS_Data::User& user,
+                 std::string content,
+                 std::string subject,
+                 std::string sendmailScriptPath);
 
   /**
    * \brief Function to get the email content
