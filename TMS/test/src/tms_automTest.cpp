@@ -15,9 +15,9 @@ using namespace TMS_Data;
 using namespace vishnu;
 namespace bpt= boost::posix_time;
 
-BOOST_GLOBAL_FIXTURE(TMSFixture)
+BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
-//Test category 1
+//Test category 1g
 
 // T1.1 : submit a job
 
@@ -26,21 +26,6 @@ BOOST_AUTO_TEST_SUITE(submit_a_job)
 const string jobOutputPath = TMSWORKINGDIR "/output.txt";
 const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
-// BOOST_AUTO_TEST_CASE( initialize_database )
-// {
-//     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
-//     string sqlPath = TMSSQLPATH;
-//     if (restore(sqlPath + "/cleanall.sql") != 0) {
-//       cout << "Clean database failed" << endl;
-//       return;
-//     }
-//     if (restore(sqlPath + "/TMSinitTest.sql")!=0) {
-//       cout << "Database initialization failed" << endl;
-//       return;
-//     }
-//     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
-// }
-
   // submit a job: normal call
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
@@ -48,12 +33,6 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   BOOST_TEST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" );
 
-  // sleep while waiting for  tms and ums SeD  
-  
-  bpt::seconds sleepTime(6);
-
- boost::this_thread::sleep(sleepTime);
-  
  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier

@@ -63,7 +63,7 @@ public:
     {
         if (this != &other)
         {
-            _reset();
+//             _reset();
             _copy(other);
         }
         return *this;

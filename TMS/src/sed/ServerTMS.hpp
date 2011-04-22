@@ -47,7 +47,7 @@ public :
   /**
    * \brief To get the unique instance of the database
    */
-  static Database* getDatabaseVishnu();
+  Database* getDatabaseVishnu();
 
   /**
    * \brief to get the VishnuId
@@ -60,21 +60,21 @@ public :
   * \brief To get the batchType
   * \return the type of the underlying batch scheduler
   */
-  static BatchType
+  BatchType
   getBatchType();
 
  /**
   * \brief To get the machine id of the TMS server
   * \return the machine id
   */
-  static std::string
+  std::string
   getMachineId();
 
   /**
    * \brief To get the slave binary directory
    * \return path to the binary tmsSlave
    */
-  static std::string
+  std::string
   getSlaveDirectory();
 
    /**
@@ -118,17 +118,21 @@ private :
    */
   static ServerTMS *minstance;
   /**
+   * \brief Instance of TMSMapper
+   */
+  static TMSMapper *mmapper;
+  /**
    * \brief The vishnu id
    */
   int mvishnuId;
   /**
   * \brief represents The batch Type
   */
-  static BatchType mbatchType;
+  BatchType mbatchType;
   /**
   * \brief represents The batch Type
   */
-  static std::string mmachineId;
+  std::string mmachineId;
   /**
   * \brief Structure representing a profile description
   */
@@ -136,14 +140,10 @@ private :
   /**
   * \brief Instance of Database
   */
-  static Database *mdatabaseVishnu;
-  /**
-  * \brief Instance of TMSMapper
-  */
-  static TMSMapper *mmapper;
+  Database *mdatabaseVishnu;
   /**
    * \brief Directory containing the slave binary
    */
-  static std::string mslaveBinDir;
+  std::string mslaveBinDir;
 };
 #endif // SERVER
