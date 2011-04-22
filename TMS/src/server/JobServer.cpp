@@ -88,10 +88,10 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   mjob.setSessionId(sessionId);
 
   std::string BatchJobId=mjob.getJobId();
-  std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
+  std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
   mjob.setJobId(vishnuJobId);
 
-  Database* databaseVishnu = ServerTMS::getDatabaseVishnu();
+  Database* databaseVishnu = ServerTMS::getInstance()->getDatabaseVishnu();
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
     "jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
@@ -169,7 +169,7 @@ TMS_Data::Job JobServer::getJobInfo() {
                                 "where vsession.numsessionid=job.vsession_numsessionid"
                                 " and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
   
   if (sqlResult->getNbTuples() != 0){
       results.clear();
