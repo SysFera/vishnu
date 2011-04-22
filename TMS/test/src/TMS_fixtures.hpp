@@ -16,9 +16,7 @@ char TMSSeD[] = "tmssed";
 char ConfigTMSSeD[] = TMSSEDCONF;
 char BinDirTMSSeD[] = TMSSEDBINDIR;
 
-typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, UMSSeDFixture> TMSSeDFixture;
-
-class TMSFixture : public TMSSeDFixture {
+class TMSFixture : public UMSSeDFixture {
 
 public:
   TMSFixture():mac(2){
@@ -35,17 +33,17 @@ public:
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
-//     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
-//     string sqlPath = TMSSQLPATH;
-//     if (restore(sqlPath + "/cleanall.sql") != 0) {
-//       cout << "Clean database failed" << endl;
-//       return;
-//     }
-//     if (restore(sqlPath + "/TMSinitTest.sql")!=0) {
-//       cout << "Database initialization failed" << endl;
-//       return;
-//     }
-//     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
+    string sqlPath = TMSSQLPATH;
+    if (restore(sqlPath + "/cleanall.sql") != 0) {
+      cout << "Clean database failed" << endl;
+      return;
+    }
+    if (restore(sqlPath + "/TMSinitTest.sql")!=0) {
+      cout << "Database initialization failed" << endl;
+      return;
+    }
+    BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
 
   }
 
@@ -59,3 +57,5 @@ public:
   int mac;
   char* mav[2];
 };
+
+typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, TMSFixture> TMSSeDFixture;
