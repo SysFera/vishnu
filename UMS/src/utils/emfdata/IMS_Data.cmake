@@ -58,7 +58,7 @@ set(IMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListSysInfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListSysInfoImpl.cpp
    )
-   
+
 set(IMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data_forward.hpp
@@ -84,7 +84,7 @@ set(IMS_Data_HEADERS
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data.hpp DESTINATION include/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data_forward.hpp DESTINATION include/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/IMS_DataFactory.hpp DESTINATION include/emf4cpp/IMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/IMS_DataPackage.hpp DESTINATION include/emf4cpp/IMS_Data)   
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/IMS_DataPackage.hpp DESTINATION include/emf4cpp/IMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/Metric.hpp DESTINATION include/emf4cpp/IMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListMetric.hpp DESTINATION include/emf4cpp/IMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListProcesses.hpp DESTINATION include/emf4cpp/IMS_Data)
@@ -100,11 +100,10 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListThreshold.hpp DESTINATION
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/Threshold.hpp DESTINATION include/emf4cpp/IMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/SysInfoOp.hpp DESTINATION include/emf4cpp/IMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/IMS_Data/ListSysInfo.hpp DESTINATION include/emf4cpp/IMS_Data)
-   
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} /home/keo/Bureau/depot_git_edf/vishnu/core/deps/emf_bin/../include/emf4cpp /home/keo/Bureau/depot_git_edf/vishnu/core/deps/emf_bin/../include/emf4cpp)
 
-add_library(emf4cpp-IMS_Data SHARED ${IMS_Data_HEADERS} ${IMS_Data_SOURCES})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
+
+add_library(emf4cpp-IMS_Data STATIC ${IMS_Data_HEADERS} ${IMS_Data_SOURCES})
+set_target_properties(emf4cpp-IMS_Data PROPERTIES COMPILE_FLAGS "-fPIC")
+target_link_libraries(emf4cpp-IMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-IMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
-
-install(TARGETS emf4cpp-IMS_Data DESTINATION lib)
-
