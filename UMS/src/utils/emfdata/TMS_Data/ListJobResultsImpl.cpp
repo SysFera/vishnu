@@ -65,8 +65,7 @@ void ListJobResults::_initialize()
     {
     case ::TMS_Data::TMS_DataPackage::LISTJOBRESULTS__NBJOBS:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_nbJobs);
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_nbJobs);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::LISTJOBRESULTS__RESULTS:
@@ -86,7 +85,7 @@ void ListJobResults::eSet(::ecore::EInt _featureID,
     {
     case ::TMS_Data::TMS_DataPackage::LISTJOBRESULTS__NBJOBS:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_nbJobs);
     }
         return;
