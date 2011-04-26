@@ -51,6 +51,11 @@ namespace UMS_Data
     // To do this, add the keyword ENABLED before START.
     typedef int StatusType;
     /*PROTECTED REGION END*/
+    /*PROTECTED REGION ID(UMS_Data_CommandStatusType) START*/
+    // Please, enable the protected region if you add manually written code.
+    // To do this, add the keyword ENABLED before START.
+    typedef int CommandStatusType;
+    /*PROTECTED REGION END*/
 
     // EClass
 

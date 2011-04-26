@@ -125,6 +125,14 @@ UMS_DataFactory::UMS_DataFactory()
                 dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (getEPackage());
         return _epkg->getStatusType()->getEEnumLiteralByLiteral(_literalValue)->getValue();
     }
+    case UMS_DataPackage::COMMANDSTATUSTYPE:
+    {
+        ::ecore::EJavaObject _any;
+        UMS_DataPackage_ptr _epkg =
+                dynamic_cast< ::UMS_Data::UMS_DataPackage_ptr > (getEPackage());
+        return _epkg->getCommandStatusType()->getEEnumLiteralByLiteral(
+                _literalValue)->getValue();
+    }
     default:
         throw "IllegalArgumentException";
     }
@@ -159,6 +167,14 @@ UMS_DataFactory::UMS_DataFactory()
         ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
                 ::ecore::EInt >(_instanceValue);
         return _epkg->getStatusType()->getEEnumLiteral(_value)->getName();
+    }
+    case UMS_DataPackage::COMMANDSTATUSTYPE:
+    {
+        UMS_DataPackage_ptr _epkg = ::UMS_Data::instanceOf<
+                ::UMS_Data::UMS_DataPackage >(getEPackage());
+        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EInt >(_instanceValue);
+        return _epkg->getCommandStatusType()->getEEnumLiteral(_value)->getName();
     }
     default:
         throw "IllegalArgumentException";
