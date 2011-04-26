@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file UMS_DataFactory.hpp
- * \brief Factory for all UMS objects
+ * \brief The UMS_DataFactory class
  * \author Generated file
- * \date 31/01/2011
+ * \date 31/03/2011
  */
-
 #ifndef _UMS_DATAFACTORY_HPP
 #define _UMS_DATAFACTORY_HPP
 
@@ -33,156 +33,151 @@ namespace UMS_Data
 {
     /**
      * \class UMS_DataFactory
-     * \brief Factory for all UMS objects
+     * \brief The factory class for generated model UMS_Data
      */
     class UMS_DataFactory: public virtual ::ecore::EFactory
     {
     public:
-	/**
-	 * \brief Getter of the factory (singleton)
-	 * \fn static UMS_DataFactory_ptr _instance()
-	 */
+
+        /**
+         * \brief To get the instance of the singleton
+         * \return Pointer to the instance
+         */
         static UMS_DataFactory_ptr _instance();
 
-	/**
-	 * \brief To get a connect option object pointer
-	 * \fn virtual ConnectOptions_ptr createConnectOptions()
-	 */
+        /**
+         * \brief Creates a new object of class ConnectOptions
+         * \return Pointer to the object
+         */
         virtual ConnectOptions_ptr createConnectOptions();
-	/**
-	 * \brief To get a session object pointer
-	 * \fn virtual Session_ptr createSession()
-	 */
+        /**
+         * \brief Creates a new object of class Session
+         * \return Pointer to the object
+         */
         virtual Session_ptr createSession();
-	/**
-	 * \brief To get a list session object pointer
-	 * \fn virtual ListSessions_ptr createListSessions()
-	 */
+        /**
+         * \brief Creates a new object of class ListSessions
+         * \return Pointer to the object
+         */
         virtual ListSessions_ptr createListSessions();
-	/**
-	 * \brief To get a list session option object pointer
-	 * \fn virtual ListSessionOptions_ptr createListSessionOptions()
-	 */
+        /**
+         * \brief Creates a new object of class ListSessionOptions
+         * \return Pointer to the object
+         */
         virtual ListSessionOptions_ptr createListSessionOptions();
-	/**
-	 * \brief To get a user object pointer
-	 * \fn virtual User_ptr createUser()
-	 */
+        /**
+         * \brief Creates a new object of class User
+         * \return Pointer to the object
+         */
         virtual User_ptr createUser();
-	/**
-	 * \brief To get a  list user object pointer
-	 * \fn virtual ListUsers_ptr createListUsers()
-	 */
+        /**
+         * \brief Creates a new object of class ListUsers
+         * \return Pointer to the object
+         */
         virtual ListUsers_ptr createListUsers();
-	/**
-	 * \brief To get a command object pointer
-	 * \fn virtual Command_ptr createCommand()
-	 */
+        /**
+         * \brief Creates a new object of class Command
+         * \return Pointer to the object
+         */
         virtual Command_ptr createCommand();
-	/**
-	 * \brief To get a list command option object pointer
-	 * \fn virtual ListCommands_ptr createListCommands()
-	 */
+        /**
+         * \brief Creates a new object of class ListCommands
+         * \return Pointer to the object
+         */
         virtual ListCommands_ptr createListCommands();
-	/**
-	 * \brief To get a list command option object pointer
-	 * \fn virtual ListCmdOptions_ptr createListCmdOptions()
-	 */
+        /**
+         * \brief Creates a new object of class ListCmdOptions
+         * \return Pointer to the object
+         */
         virtual ListCmdOptions_ptr createListCmdOptions();
-	/**
-	 * \brief To get a local accounr object pointer
-	 * \fn virtual LocalAccount_ptr createLocalAccount()
-	 */
+        /**
+         * \brief Creates a new object of class LocalAccount
+         * \return Pointer to the object
+         */
         virtual LocalAccount_ptr createLocalAccount();
-	/**
-	 * \brief To get a list local account object pointer
-	 * \fn virtual ListLocalAccounts_ptr createListLocalAccounts()
-	 */
+        /**
+         * \brief Creates a new object of class ListLocalAccounts
+         * \return Pointer to the object
+         */
         virtual ListLocalAccounts_ptr createListLocalAccounts();
-	/**
-	 * \brief To get a list local option object pointer
-	 * \fn virtual ListLocalAccOptions_ptr createListLocalAccOptions()
-	 */
+        /**
+         * \brief Creates a new object of class ListLocalAccOptions
+         * \return Pointer to the object
+         */
         virtual ListLocalAccOptions_ptr createListLocalAccOptions();
-	/**
-	 * \brief To get a machine object pointer
-	 * \fn virtual Machine_ptr createMachine()
-	 */
+        /**
+         * \brief Creates a new object of class Machine
+         * \return Pointer to the object
+         */
         virtual Machine_ptr createMachine();
-	/**
-	 * \brief To get a list machine object pointer
-	 * \fn virtual ListMachines_ptr createListMachines()
-	 */
+        /**
+         * \brief Creates a new object of class ListMachines
+         * \return Pointer to the object
+         */
         virtual ListMachines_ptr createListMachines();
-	/**
-	 * \brief To get a list machine option object pointer
-	 * \fn virtual ListMachineOptions_ptr createListMachineOptions()
-	 */
+        /**
+         * \brief Creates a new object of class ListMachineOptions
+         * \return Pointer to the object
+         */
         virtual ListMachineOptions_ptr createListMachineOptions();
-	/**
-	 * \brief To get a configuration object pointer
-	 * \fn virtual Configuration_ptr createConfiguration()
-	 */
+        /**
+         * \brief Creates a new object of class Configuration
+         * \return Pointer to the object
+         */
         virtual Configuration_ptr createConfiguration();
-	/**
-	 * \brief To get an option value object pointer
-	 * \fn virtual OptionValue_ptr createOptionValue()
-	 */
+        /**
+         * \brief Creates a new object of class OptionValue
+         * \return Pointer to the object
+         */
         virtual OptionValue_ptr createOptionValue();
-	/**
-	 * \brief To get a list option value object pointer
-	 * \fn virtual ListOptionsValues_ptr createListOptionsValues()
-	 */
+        /**
+         * \brief Creates a new object of class ListOptionsValues
+         * \return Pointer to the object
+         */
         virtual ListOptionsValues_ptr createListOptionsValues();
-	/**
-	 * \brief To get a list option of option object pointer
-	 * \fn virtual ListOptOptions_ptr createListOptOptions()
-	 */
+        /**
+         * \brief Creates a new object of class ListOptOptions
+         * \return Pointer to the object
+         */
         virtual ListOptOptions_ptr createListOptOptions();
 
-	/**
-	 * \brief To create an object of a class
-	 * \fn virtual ::ecore::EObject_ptr create(::ecore::EClass_ptr _eClass)
-	 * \param _eClass The class type to create
-	 * \return The created object
-	 */
+        /**
+         * \brief To create an object of a given class (reflective API)
+         * \param _eClass The class object to create (obtained using the Package class)
+         * \return Generic pointer to the object
+         */
         virtual ::ecore::EObject_ptr create(::ecore::EClass_ptr _eClass);
-	/**
-	 * \brief To create an object from a string
-	 * \fn virtual ::ecore::EJavaObject createFromString(
-	 *             ::ecore::EDataType_ptr _eDataType,
-         *             ::ecore::EString const& _literalValue)
-	 * \param _eDataType Datatype
-	 * \param _literalValue string
-	 * \return The created object
-	 */
+
+        /**
+         * \brief To create an object from a string (deserialize)
+         * \param _eDataType The datatype
+         * \param _literalValue The string
+         * \return Generic pointer to the object
+         */
         virtual ::ecore::EJavaObject createFromString(
                 ::ecore::EDataType_ptr _eDataType,
                 ::ecore::EString const& _literalValue);
-	/**
-	 * \brief To convert an object to a string
-	 * \fn virtual ::ecore::EString convertToString(
-	 *             ::ecore::EDataType_ptr _eDataType,
-         *             ::ecore::EJavaObject const& _instanceValue)
-	 * \param _eDataType Datatype
-	 * \param _instanceValue Value of the instance
-	 * \return The object as a string
-	 */
+
+        /**
+         * \brief To convert an object to a string (serialize)
+         * \param _eDataType The datatype
+         * \param _instanceValue Value of the instance
+         * \return The object serialized in a string
+         */
         virtual ::ecore::EString convertToString(
                 ::ecore::EDataType_ptr _eDataType,
                 ::ecore::EJavaObject const& _instanceValue);
 
     protected:
 
-	/**
-	 * \brief The unique instance of the singleton
-	 */
+        /**
+         * \brief The instance of the singleton
+         */
         static std::auto_ptr< UMS_DataFactory > s_instance;
 
-	/**
-	 * \brief Constructor
-	 * \fn UMS_DataFactory()
-	 */
+        /**
+         * \brief Constructor
+         */
         UMS_DataFactory();
 
     };

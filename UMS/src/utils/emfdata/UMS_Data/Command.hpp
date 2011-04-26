@@ -21,7 +21,7 @@
  * \file Command.hpp
  * \brief The Command class
  * \author Generated file
- * \date 20/02/2011
+ * \date 31/03/2011
  */
 
 #ifndef UMS_DATA_COMMAND_HPP
@@ -135,6 +135,17 @@ namespace UMS_Data
          **/
         void setCmdEndTime(::ecore::ELong _cmdEndTime);
 
+        /**
+         * \brief To get the status
+         * \return The status attribute value
+         **/
+        ::UMS_Data::CommandStatusType getStatus() const;
+        /**
+         * \brief To set the status
+         * \param _status The status value
+         **/
+        void setStatus(::UMS_Data::CommandStatusType _status);
+
         // References
 
 
@@ -171,6 +182,8 @@ namespace UMS_Data
         ::ecore::ELong m_cmdStartTime;
 
         ::ecore::ELong m_cmdEndTime;
+
+        ::UMS_Data::CommandStatusType m_status;
 
         // References
 
