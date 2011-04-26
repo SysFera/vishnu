@@ -89,7 +89,8 @@
         <details key="content" value="Is the name of the queue or class associated to the job."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallClockLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallClockLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Is the maximum wall-clock time during which the job can run (in seconds)"/>
       </eAnnotations>
@@ -119,6 +120,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Is the number of nodes and processors per node used by the job."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallClockUsed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="Is the wallclock already used by the job (in seconds)"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -366,31 +373,31 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxJobCpu" eType="ecore:EDataType Ecore.ecore#//EInt"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Is the maximum number of Cups that a job can use."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxProcCpu" eType="ecore:EDataType Ecore.ecore#//EInt"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Is the maximum number of Cpus of the queue."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memory" eType="ecore:EDataType Ecore.ecore#//EInt"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Represents the queue memory size."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallTime" eType="ecore:EDataType Ecore.ecore#//ELong"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Is the total wallTime of the queue."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="node" eType="ecore:EDataType Ecore.ecore#//EInt"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Is the maximum number of nodes of the queue."/>
       </eAnnotations>
@@ -408,7 +415,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//QueueStatus"
-        defaultValueLiteral="0">
+        defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="Is the status of the queue."/>
       </eAnnotations>
@@ -438,7 +445,7 @@
     <eLiterals name="STARTED" value="1" literal="STARTED"/>
     <eLiterals name="RUNNING" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JobOutputInfo" instanceTypeName="JobOutputInfo">
+  <eClassifiers xsi:type="ecore:EClass" name="JobResult" instanceTypeName="JobResult">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Represents the id of the job."/>
@@ -455,7 +462,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListJobOutputInfo" instanceTypeName="ListJobOutputInfo">
+  <eClassifiers xsi:type="ecore:EClass" name="ListJobResults" instanceTypeName="ListJobResults">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbJobs" eType="ecore:EDataType Ecore.ecore#//EString"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
@@ -463,7 +470,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Results" upperBound="-1"
-        eType="#//JobOutputInfo" containment="true">
+        eType="#//JobResult" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="Represents the list of completed jobs results."/>
       </eAnnotations>

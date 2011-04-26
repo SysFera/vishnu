@@ -30,7 +30,7 @@ set(ALLCLI
   cancel_job get_job_info get_job_progress
   list_jobs set_machine_refresh_period
   get_machine_refresh_period
-  get_all_job_output get_job_output
+  get_completed_jobs_output get_job_output
   list_queues submit_job
   )
 
