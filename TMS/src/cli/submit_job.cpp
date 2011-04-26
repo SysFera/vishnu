@@ -41,7 +41,7 @@ makeSubJobOp(string pgName,
 	     boost::function1<void, int>& fwallTime, 
 	     boost::function1<void, int>& fmemory, 
 	     boost::function1<void, int>& fnbCpu,
-	     boost::function1<void, int>& fnbNodeAndCpu,
+	     boost::function1<void, string>& fnbNodeAndCpu,
 	     boost::function1<void, string>& foutput,
 	     boost::function1<void, string>& ferr,
 	     string& dietConfig){
@@ -110,7 +110,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,int> fwallTime(boost::bind(&TMS_Data::SubmitOptions::setWallTime,boost::ref(subOp),_1));
   boost::function1<void,int> fmemory(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
   boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
-  boost::function1<void,int> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
+  boost::function1<void,string> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
   boost::function1<void,string> foutput(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(subOp),_1));
   boost::function1<void,string> ferr(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(subOp),_1));
 

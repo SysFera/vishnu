@@ -30,6 +30,7 @@ add_executable(tmssed
   tmssed
   ServerTMS
   internalTMSAPI
+  MonitorTMS 
 )
 
 target_link_libraries(tmssed

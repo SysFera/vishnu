@@ -36,7 +36,6 @@ displayJob(TMS_Data::Job& j){
   cout << " Job path        : " << j.getJobPath() << endl;
   cout << " Output path     : " << j.getOutputPath() << endl;
   cout << " Error path      : " << j.getErrorPath() << endl;
-  cout << " Script content  : " << j.getScriptContent() << endl;
   cout << " Priority        : " << j.getJobPrio() << endl;
   cout << " CPU             : " << j.getNbCpus() << endl;
   cout << " Working dir     : " << j.getJobWorkingDir() << endl;

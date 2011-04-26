@@ -45,8 +45,6 @@ makeListJobOp(string pgName,
 	      boost::function1<void, string>& fowner,
 	      boost::function1<void, JobStatus>& fstatus,
 	      boost::function1<void, JobPriority>& fpriority,
-	      boost::function1<void, string>& foutput,
-	      boost::function1<void, string>& ferr,
 	      boost::function1<void, string>& fqueue,
 	      string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -86,14 +84,6 @@ makeListJobOp(string pgName,
 	   "The priority of the job",
 	   CONFIG,
 	   fpriority);
-  opt->add("outPutPath,o",
-	   "The outputh path of the job",
-	   CONFIG,
-	   foutput);
-  opt->add("errorPath,e",
-	   "The path for the job errors",
-	   CONFIG,
-	   ferr);
   opt->add("queue,q",
 	   "The queue to submit the job",
 	   CONFIG,
@@ -123,8 +113,6 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fown(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
   boost::function1<void,JobStatus> fstatus(boost::bind(&TMS_Data::ListJobsOptions::setStatus,boost::ref(jobOp),_1));
   boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
-  boost::function1<void,string> foutput(boost::bind(&TMS_Data::ListJobsOptions::setOutPutPath,boost::ref(jobOp),_1));
-  boost::function1<void,string> ferr(boost::bind(&TMS_Data::ListJobsOptions::setErrorPath,boost::ref(jobOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
 
      
@@ -140,8 +128,6 @@ int main (int argc, char* argv[]){
 					       fown, 
 					       fstatus,
 					       fpriority,
-					       foutput,
-					       ferr,
 					       fqueue,
                  dietConfig);
 

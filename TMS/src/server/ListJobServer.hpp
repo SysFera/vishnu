@@ -98,6 +98,8 @@ public:
       checkJobStatus(options->getStatus());
       //To add the number of the cpu to the request
       addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
+    } else {
+      sqlRequest.append(" and status < 4 "); 
     }
 
     //To check the job priority
@@ -129,12 +131,12 @@ public:
    */
   TMS_Data::ListJobs*
   list() {
-    std::string sqlListOfJobs = "SELECT submitMachineId, submitMachineName, jobId, jobName, jobPath, errorPath,"
+    std::string sqlListOfJobs = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath, errorPath,"
                                 "outputPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
                                 "nbNodesAndCpuPerNode from job, vsession "
                                 "where vsession.numsessionid=job.vsession_numsessionid"
-                                " and job.submitMachineId='"+mmachineId+"'";
+                                " and status >=0 and job.submitMachineId='"+mmachineId+"'";
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -155,7 +157,9 @@ public:
         ii = results.begin();
 
         TMS_Data::Job_ptr job = ecoreFactory->createJob();
-        job->setSubmitMachineId(*ii);
+
+        job->setSessionId(*ii);
+        job->setSubmitMachineId(*(++ii));
         job->setSubmitMachineName(*(++ii));
         job->setJobId(*(++ii));
         job->setJobName(*(++ii));
@@ -175,8 +179,7 @@ public:
         job->setJobDescription(*(++ii));
         job->setMemLimit(convertToInt(*(++ii)));
         job->setNbNodes(convertToInt(*(++ii)));
-        job->setNbNodes(convertToInt(*(++ii)));
-        job->setNbNodesAndCpuPerNode(1); // TODO
+        job->setNbNodesAndCpuPerNode(*(++ii)); 
 
         mlistObject->getJobs().push_back(job);
       }
