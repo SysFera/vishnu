@@ -120,7 +120,11 @@ int main (int argc, char* argv[]){
       getJobProgress(sessionKey, machineId, prog, progOp);
     }
 
-    displayJobProgress(prog);
+    if(progOp.getJobId().size()==0 && progOp.getJobOwner().size()==0) {
+      std::cout << prog << std::endl;
+    } else {
+      displayJobProgress(prog);
+    }
 
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";

@@ -143,7 +143,7 @@ int main (int argc, char* argv[]){
 					       foutput,
 					       ferr,
 					       fqueue,
-					       dietConfig);
+                 dietConfig);
 
   opt->add("machineId,m",
 	   "represents the id of the machine",
@@ -186,7 +186,11 @@ int main (int argc, char* argv[]){
       listJobs(sessionKey, machineId, job, jobOp);
     }
 
-    displayListJobs(job);
+    if(jobOp.getJobId().size()==0 && jobOp.getNbCpu() <= 0 && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 ) {
+      std::cout << job << std::endl;
+    } else {
+      displayListJobs(job);
+    }
 
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
