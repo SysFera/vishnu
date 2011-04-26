@@ -178,7 +178,10 @@ ServerTMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveJobInfo)) return 1;
+  if (diet_service_table_add(mprofile, NULL, solveJobInfo)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
 
   /* ListOfJobs */
   mprofile = diet_profile_desc_alloc((SERVICES[3]+std::string(machineId)).c_str(), 2, 2, 4);
@@ -187,7 +190,10 @@ ServerTMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobs)) return 1;
+  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobs)) {
+     return 1;
+  }
+  diet_profile_desc_free(mprofile);
 
   /* ListOfJobsProgression */
   mprofile = diet_profile_desc_alloc((SERVICES[4]+std::string(machineId)).c_str(), 2, 2, 4);
@@ -196,7 +202,10 @@ ServerTMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobsProgression)) return 1;
+  if (diet_service_table_add(mprofile, NULL, solveGetListOfJobsProgression)) {
+     return 1;
+  }
+  diet_profile_desc_free(mprofile);
 
   /* listOfQueues */
   mprofile = diet_profile_desc_alloc((SERVICES[5]+std::string(machineId)).c_str(), 2, 2, 4);
@@ -217,7 +226,22 @@ ServerTMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_CONTAINER, DIET_CHAR);
-  if (diet_service_table_add(mprofile, NULL, solveJobOutPutGetResult)) return 1;
+  if (diet_service_table_add(mprofile, NULL, solveJobOutPutGetResult)) { 
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+  /* JobOutPutGetCompletedJobs */
+  mprofile = diet_profile_desc_alloc((SERVICES[7]+std::string(machineId)).c_str(), 1, 1, 4);
+  diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_CONTAINER, DIET_CHAR);
+  if (diet_service_table_add(mprofile, NULL, solveJobOutPutGetCompletedJobs)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
 
   return 0;
 }

@@ -29,11 +29,12 @@ int main (int argc, char* argv[]){
   string dietConfig;
   string sessionKey;
   string machineId;
+  std::string outDir;
 
   /********** EMF data ************/
 
   /******** Callback functions ******************/
-     
+    
   /*********** Out parameters *********************/
   TMS_Data::ListJobResults job;
 
@@ -45,6 +46,11 @@ int main (int argc, char* argv[]){
            "The diet config file",
            ENV,
            dietConfig);
+
+  opt->add("outDir,o",
+     "The outputh dir of the job output",
+     CONFIG,
+     outDir);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -85,7 +91,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getAllJobsOutput(sessionKey, machineId, job);
+      getCompletedJobsOutput(sessionKey, machineId, outDir, job);
     }
 
     displayAllJobOutput(job);

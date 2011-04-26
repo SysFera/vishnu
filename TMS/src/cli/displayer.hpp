@@ -82,10 +82,28 @@ void
 displaySubmit(TMS_Data::Job job);
 
 /**
- * \brief Helper function to display a list of users
+ * \brief Helper function to display a list of queues
  * \param os: The output stream in which the list will be printed 
  * \param lsQueues: The list to display
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
 operator<<(std::ostream& os, ListQueues& lsQueues);
+
+/**
+ * \brief Helper function to display a list of jobs 
+ * \param os: The output stream in which the list will be printed 
+ * \param ListJobs: The list to display
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, ListJobs& listJobs);
+
+/**
+ * \brief Helper function to display a list of jobs progression
+ * \param os: The output stream in which the list will be printed 
+ * \param listProgress: The list to display
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, ListProgression& listProgress);

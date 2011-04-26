@@ -122,7 +122,7 @@ class TorqueServer : public BatchServer
    */
   TMS_Data::Job_ptr mjob;
   /**
-   * \brief Job returned
+   * \brief ListQueues returned
    */
   TMS_Data::ListQueues_ptr mlistQueues; 
   /**

@@ -13,14 +13,14 @@ using namespace vishnu;
 /**
 * \param session The object which encapsulates the session information
 * \param machine The object which encapsulates the machine information
-* \param jobResult The job results data structure
-* \param listJobResults the list of job results data structure
+* \param outDir The output directory where the files will be stored 
+* (default is current directory)
 * \brief Constructor
 */
 JobOutPutProxy::JobOutPutProxy( const SessionProxy& session,
                   const std::string& machineId,
-                  TMS_Data::JobResult& outputInfos)
-:msessionProxy(session), mmachineId(machineId), moutputInfos(outputInfos) {
+                  const std::string& outDir)
+:msessionProxy(session), mmachineId(machineId), moutDir(outDir) {
 }
 
 /**
@@ -35,7 +35,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* jobResultToString;
-  char* jobResultInString;
+  //char* jobResultInString;
   char* errorInfo = NULL;
   char* IDContainer = NULL;
   diet_container_t content;
@@ -43,10 +43,9 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   char* errorPath = NULL;
   TMS_Data::JobResult_ptr outJobResult;
 
-  /*TMS_Data::JobResult jobResult;
-  jobResult.setJobId(jobId);*/
-  moutputInfos.setJobId(jobId);
-  moutputInfos.setErrorPath(moutputInfos.getOutputPath());
+  TMS_Data::JobResult jobResult;
+
+  jobResult.setJobId(jobId);
 
   std::string serviceName = "jobOutPutGetResult_";
   serviceName.append(mmachineId);
@@ -69,7 +68,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
    const char* name = "getJobOutPut";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
-  jobResultToString =  strdup(_ser.serialize(const_cast<TMS_Data::JobResult_ptr>(&moutputInfos)).c_str());
+  jobResultToString =  strdup(_ser.serialize(const_cast<TMS_Data::JobResult_ptr>(&jobResult)).c_str());
 
   if (diet_string_set(diet_parameter(profile,2), jobResultToString, DIET_VOLATILE)) {
     msgErrorDiet += "with the job result parameter "+std::string(jobResultToString);
@@ -110,21 +109,18 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
         dagda_get_file(content.elt_ids[0],&outputPath);
         dagda_get_file(content.elt_ids[1],&errorPath);
 
-        if(moutputInfos.getOutputPath().size()==0) {
-          moutputInfos.setOutputPath((bfs::path(bfs::current_path().string())).string());
+         std::string outFileName = "outputOfJob_"+jobResult.getJobId();
+         std::string errFileName = "errorsOfJob_"+jobResult.getJobId();
+
+        if(moutDir.size()==0) {
+          moutDir = (bfs::path(bfs::current_path().string())).string();
         }
-        if(moutputInfos.getErrorPath().size()==0) {
-          moutputInfos.setErrorPath((bfs::path(bfs::current_path().string())).string());
-        }
 
-        std::string err =   moutputInfos.getErrorPath();
-        std::string out =  moutputInfos.getOutputPath();
+        vishnu::moveFile(std::string(outputPath), moutDir, outFileName);
+        vishnu::moveFile(std::string(errorPath), moutDir, errFileName);
 
-        std::string outFileName = "outputOfJob_"+moutputInfos.getJobId();
-        std::string errFileName =  "errorsOfJob_"+moutputInfos.getJobId();
-
-        vishnu::moveFile(std::string(outputPath), out, outFileName);
-        vishnu::moveFile(std::string(errorPath), err, errFileName);
+        jobResult.setOutputPath(moutDir+outFileName);
+        jobResult.setErrorPath(moutDir+errFileName);
       }
     } catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
       if (content.size == 2) {
@@ -150,7 +146,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   //To clean the container Id
   dagda_delete_data(IDContainer);
   diet_profile_free(profile);
-  return moutputInfos; //outJobResult;
+  return jobResult;
 }
 
 /**
@@ -207,6 +203,13 @@ JobOutPutProxy::getAllJobsOutPut() {
     /*To raise a vishnu exception if the receiving message is not empty*/
     raiseExceptionIfNotEmptyMsg(errorInfo);
 
+    //To build the listJobResults_ptr
+    parseEmfObject(std::string(listJobResultInString), listJobResults_ptr);
+
+    if(moutDir.size()==0) {
+      moutDir = (bfs::path(bfs::current_path().string())).string();
+    }
+
     try {
       IDContainer = (profile->parameters[4]).desc.id;
       dagda_get_container(IDContainer);
@@ -217,9 +220,20 @@ JobOutPutProxy::getAllJobsOutPut() {
         for(unsigned int i = 0; i < content.size; i++) {
           char* path = NULL;
           dagda_get_file(content.elt_ids[i],&path);
-          bfs::path filePath(path);
-          //For moving dagda files from /tmp to the tmp directory of the current directory
-          bfs::rename(filePath, bfs::path(bfs::current_path().string() / filePath.filename()));
+          
+          std::string outFileName = "outputOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
+          vishnu::moveFile(std::string(path), moutDir, outFileName); 
+          listJobResults_ptr->getResults().get((i/2))->setOutputPath(moutDir+outFileName) ;
+         
+          if(i < content.size-1) {
+            i++;
+            char* errorPath = NULL;
+            dagda_get_file(content.elt_ids[i],&errorPath);
+            
+            std::string errFileName =  "errorsOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
+            vishnu::moveFile(std::string(errorPath), moutDir, errFileName);
+            listJobResults_ptr->getResults().get((i/2))->setErrorPath(moutDir+errFileName);
+          }
         }
         //To clean the container
         for(unsigned int i = 0; i < content.size; i++) {
@@ -241,8 +255,6 @@ JobOutPutProxy::getAllJobsOutPut() {
   else {
     raiseDietMsgException("DIET call failure");
   }
-  //To parse ListJobResult object serialized
-  parseEmfObject(std::string(listJobResultInString), listJobResults_ptr);
   //To clean the container Id
   dagda_delete_data(IDContainer);
   diet_profile_free(profile);
