@@ -183,8 +183,7 @@
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString"
-        defaultValueLiteral="">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The number of nodes and processors per node."/>
         <details key="shortOption" value="N"/>
