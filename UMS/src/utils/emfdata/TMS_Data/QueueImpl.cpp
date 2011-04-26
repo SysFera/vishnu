@@ -204,7 +204,8 @@ void Queue::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::QUEUE__NAME:
-    return m_name !=;
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_name);
     case ::TMS_Data::TMS_DataPackage::QUEUE__MAXJOBCPU:
         return m_maxJobCpu != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__MAXPROCCPU:

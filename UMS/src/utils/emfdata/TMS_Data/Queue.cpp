@@ -31,7 +31,7 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Queue::Queue() :
-    m_name(), m_maxJobCpu(-1), m_maxProcCpu(-1), m_memory(-1), m_wallTime(-1),
+    m_maxJobCpu(-1), m_maxProcCpu(-1), m_memory(-1), m_wallTime(-1),
             m_node(-1), m_nbRunningJobs(0), m_nbJobsInQueue(0), m_state(-1),
             m_priority(-1)
 {

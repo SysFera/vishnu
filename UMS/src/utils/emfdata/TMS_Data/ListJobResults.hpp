@@ -72,12 +72,12 @@ namespace TMS_Data
          * \brief To get the nbJobs
          * \return The nbJobs attribute value
          **/
-        ::ecore::EString const& getNbJobs() const;
+        ::ecore::EInt getNbJobs() const;
         /**
          * \brief To set the nbJobs
          * \param _nbJobs The nbJobs value
          **/
-        void setNbJobs(::ecore::EString const& _nbJobs);
+        void setNbJobs(::ecore::EInt _nbJobs);
 
         // References
         /**
@@ -108,7 +108,7 @@ namespace TMS_Data
     protected:
         // Attributes
 
-        ::ecore::EString m_nbJobs;
+        ::ecore::EInt m_nbJobs;
 
         // References
 
