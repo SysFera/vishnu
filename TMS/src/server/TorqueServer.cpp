@@ -144,14 +144,14 @@ void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::v
     os_str << options.getMemory();
     cmdsOptions.push_back("mem="+os_str.str());
   }
-  if(options.getNbNodesAndCpuPerNode()!=-1) {//TODO: le type doit etre une string
-    //cmdsOptions.push_back("-l");
-    //std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode()
-    //size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
-    //std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-    //size_t posCpuPerNode = NbNodesAndCpuPerNode.find(posNbNodes+1, ":");
-    //std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode); 
-    //cmdsOptions.push_back("nodes="+nbNodes":"ppn="+cpuPerNode);
+  if(options.getNbNodesAndCpuPerNode()!="") {
+    cmdsOptions.push_back("-l");
+    std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
+    size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
+    std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+    size_t posCpuPerNode = NbNodesAndCpuPerNode.find(":", posNbNodes+1);
+    std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode); 
+    cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
   }
 
 }
@@ -230,7 +230,35 @@ int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLoca
   return 0;
 }
 
-TorqueServer::~TorqueServer() { 
+int TorqueServer::getJobState(const std::string& jobId) {
+
+  int connect;
+  struct batch_status *p_status;
+  struct attrl *a;
+  int state = 4; //TERMINATED
+
+  serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
+  // Connect to the torque server
+  connect = cnt2server(serverOut);
+
+  if (connect > 0)
+  {
+   p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
+   pbs_disconnect(connect);
+  }
+
+  if(p_status!=NULL) {
+      a = p_status->attribs;
+      while(a!=NULL) {
+         if(!strcmp(a->name, ATTR_state)){
+          state = convertTorqueStateToVishnuState(std::string(a->value));
+          break;
+         }
+      a = a->next;
+      }
+  }
+
+return state;
 }
 
 TMS_Data::ListJobs* 
@@ -356,16 +384,6 @@ TorqueServer::makeListJobOption(TMS_Data::ListJobsOptions op, struct attropl* at
   // If the priority is an option
   if (op.getPriority()>0){
     fill(attr+pos, first, (char *)ATTR_p, NULL, (char *)convertToString(op.getPriority()).c_str(), EQ);
-    pos++;
-  }
-  // If the output path is an option
-  if (op.getOutPutPath().compare("")!=0){
-    fill(attr+pos, first, (char *)ATTR_o, NULL, (char *)op.getOutPutPath().c_str(), EQ);
-    pos++;
-  }
-  // If the error path is an option
-  if (op.getErrorPath().compare("")!=0){
-    fill(attr+pos, first, (char *)ATTR_e, NULL, (char *)op.getErrorPath().c_str(), EQ);
     pos++;
   }
   // If the queue is an option
@@ -955,3 +973,7 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
   return mlistQueues;
 }
+
+TorqueServer::~TorqueServer() {
+}
+
