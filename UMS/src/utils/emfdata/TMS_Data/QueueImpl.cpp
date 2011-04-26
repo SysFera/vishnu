@@ -204,34 +204,25 @@ void Queue::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::QUEUE__NAME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_name);
+    return m_name !=;
     case ::TMS_Data::TMS_DataPackage::QUEUE__MAXJOBCPU:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_maxJobCpu);
+        return m_maxJobCpu != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__MAXPROCCPU:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_maxProcCpu);
+        return m_maxProcCpu != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__MEMORY:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_memory);
+        return m_memory != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__WALLTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_wallTime);
+        return m_wallTime != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__NODE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_node);
+        return m_node != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__NBRUNNINGJOBS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_nbRunningJobs);
+        return m_nbRunningJobs != 0;
     case ::TMS_Data::TMS_DataPackage::QUEUE__NBJOBSINQUEUE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_nbJobsInQueue);
+        return m_nbJobsInQueue != 0;
     case ::TMS_Data::TMS_DataPackage::QUEUE__STATE:
-        return ::ecorecpp::mapping::set_traits< ::TMS_Data::QueueStatus >::is_set(
-                m_state);
+        return m_state != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__PRIORITY:
-        return ::ecorecpp::mapping::set_traits< ::TMS_Data::QueuePriority >::is_set(
-                m_priority);
+        return m_priority != -1;
     case ::TMS_Data::TMS_DataPackage::QUEUE__DESCRIPTION:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_description);

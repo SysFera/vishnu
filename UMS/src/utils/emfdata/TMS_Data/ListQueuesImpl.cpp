@@ -109,8 +109,7 @@ void ListQueues::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::LISTQUEUES__NBQUEUES:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_nbQueues);
+        return m_nbQueues != 0;
     case ::TMS_Data::TMS_DataPackage::LISTQUEUES__QUEUES:
         return m_queues && m_queues->size();
 

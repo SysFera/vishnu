@@ -158,17 +158,6 @@ namespace TMS_Data
         void setErrorPath(::ecore::EString const& _errorPath);
 
         /**
-         * \brief To get the scriptContent
-         * \return The scriptContent attribute value
-         **/
-        ::ecore::EString const& getScriptContent() const;
-        /**
-         * \brief To set the scriptContent
-         * \param _scriptContent The scriptContent value
-         **/
-        void setScriptContent(::ecore::EString const& _scriptContent);
-
-        /**
          * \brief To get the jobPrio
          * \return The jobPrio attribute value
          **/
@@ -315,12 +304,13 @@ namespace TMS_Data
          * \brief To get the nbNodesAndCpuPerNode
          * \return The nbNodesAndCpuPerNode attribute value
          **/
-        ::ecore::EInt getNbNodesAndCpuPerNode() const;
+        ::ecore::EString const& getNbNodesAndCpuPerNode() const;
         /**
          * \brief To set the nbNodesAndCpuPerNode
          * \param _nbNodesAndCpuPerNode The nbNodesAndCpuPerNode value
          **/
-        void setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode);
+        void setNbNodesAndCpuPerNode(
+                ::ecore::EString const& _nbNodesAndCpuPerNode);
 
         // References
 
@@ -363,8 +353,6 @@ namespace TMS_Data
 
         ::ecore::EString m_errorPath;
 
-        ::ecore::EString m_scriptContent;
-
         ::TMS_Data::JobPriority m_jobPrio;
 
         ::ecore::EInt m_nbCpus;
@@ -391,7 +379,7 @@ namespace TMS_Data
 
         ::ecore::EInt m_nbNodes;
 
-        ::ecore::EInt m_nbNodesAndCpuPerNode;
+        ::ecore::EString m_nbNodesAndCpuPerNode;
 
         // References
 

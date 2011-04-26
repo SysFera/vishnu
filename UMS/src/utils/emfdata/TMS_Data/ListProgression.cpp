@@ -31,7 +31,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-ListProgression::ListProgression()
+ListProgression::ListProgression() :
+    m_nbJobs(0)
 {
 
     m_progress.reset(new ::ecorecpp::mapping::ReferenceEListImpl<

@@ -108,8 +108,7 @@ void ListProgression::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::LISTPROGRESSION__NBJOBS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_nbJobs);
+        return m_nbJobs != 0;
     case ::TMS_Data::TMS_DataPackage::LISTPROGRESSION__PROGRESS:
         return m_progress && m_progress->size();
 

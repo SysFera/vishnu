@@ -131,14 +131,11 @@ void ListJobs::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::LISTJOBS__NBJOBS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_nbJobs);
+        return m_nbJobs != 0;
     case ::TMS_Data::TMS_DataPackage::LISTJOBS__NBRUNNINGJOBS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_nbRunningJobs);
+        return m_nbRunningJobs != 0;
     case ::TMS_Data::TMS_DataPackage::LISTJOBS__NBWAITINGJOBS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_nbWaitingJobs);
+        return m_nbWaitingJobs != 0;
     case ::TMS_Data::TMS_DataPackage::LISTJOBS__JOBS:
         return m_jobs && m_jobs->size();
 

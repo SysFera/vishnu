@@ -109,8 +109,7 @@ void ListJobResults::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::LISTJOBRESULTS__NBJOBS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_nbJobs);
+        return m_nbJobs != 0;
     case ::TMS_Data::TMS_DataPackage::LISTJOBRESULTS__RESULTS:
         return m_Results && m_Results->size();
 

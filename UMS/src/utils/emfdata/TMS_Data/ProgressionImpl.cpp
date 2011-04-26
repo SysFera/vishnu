@@ -165,20 +165,15 @@ void Progression::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_jobName);
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__WALLTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
-                m_wallTime);
+        return m_wallTime != -1;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__STARTTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_startTime);
+        return m_startTime != -1;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__ENDTIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_endTime);
+        return m_endTime != -1;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__PERCENT:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EDouble >::is_set(
-                m_percent);
+        return m_percent != 0;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__STATUS:
-        return ::ecorecpp::mapping::set_traits< ::TMS_Data::JobStatus >::is_set(
-                m_status);
+        return m_status != -1;
 
     }
     throw "Error";
