@@ -13,6 +13,7 @@ public:
   int submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp=NULL);
   int cancel(const char* jobId);
   TMS_Data::Job getJob() { };
+  TMS_Data::ListQueues* listQueues(const std::string& optQueueName=std::string());
   /**
    * \brief To list the jobs on the torque batch
    * \fn TMS_Data::ListJobs* listJobs(ListJobsOptions op)
@@ -22,7 +23,6 @@ public:
   TMS_Data::ListJobs*
   listJobs(TMS_Data::ListJobsOptions op);
   TMS_Data::JobResult getJobResults() { };
-  TMS_Data::ListQueues* listQueues(const std::string& optQueueName=std::string()) { };
   TMS_Data::ListJobResults* getAllJobsResults() { };
   /**
    * \brief To get the info about a job
@@ -100,6 +100,10 @@ private:
    * \brief A job
    */  
   TMS_Data::Job_ptr mjob;
+  /**
+   * \brief ListQueues returned
+   */
+  TMS_Data::ListQueues_ptr mlistQueues;
 };
 
 #endif
