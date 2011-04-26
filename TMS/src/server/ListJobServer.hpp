@@ -109,7 +109,6 @@ public:
     }
 
     if (options->getOwner().size() != 0) {
-      //TODO: check owner
       addOptionRequest("owner", options->getOwner(), sqlRequest);
     }
 
