@@ -25,13 +25,14 @@ public:
   * \param session The object which encapsulates the session information
   * \param machine The object which encapsulates the machine information
   * \param jobResult The job results data structure
-  * \param listJobResults the list of job results data structure
+  * \param outDir The output directory where the files will be stored 
+  * (default is current directory) 
   * \brief Constructor, raises an exception on error
   */
 	explicit
 	JobOutPutProxy( const SessionProxy& session,
                   const std::string& machineId,
-                  TMS_Data::JobResult& outputInfos);
+                  const std::string& outDir);
 
   /**
   * \brief Function to get the job results
@@ -69,7 +70,7 @@ private:
   */
   std::string mmachineId;
 
-  TMS_Data::JobResult moutputInfos;
+  std::string moutDir;
 };
 
 #endif
