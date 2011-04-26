@@ -119,7 +119,7 @@ public:
     std::vector<std::string> results;
     std::string description;
 
-    sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, userid from "
+    sqlListOfCommands = "SELECT ctype, vsessionid, name, description, starttime, endtime, command.status from "
                          " vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and "
                          " vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid";
 
@@ -155,6 +155,7 @@ public:
           command->setCmdDescription(description);
           command->setCmdStartTime(convertToTimeType(*(++ii)));
           command->setCmdEndTime(convertToTimeType(*(++ii)));
+          command->setStatus(convertToInt(*(++ii)));
 
           mlistObject->getCommands().push_back(command);
         }
