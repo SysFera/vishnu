@@ -84,7 +84,7 @@ void SubmitOptions::_initialize()
         return _any;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any,
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_nbNodesAndCpuPerNode);
     }
         return _any;
@@ -142,7 +142,7 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
         return;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_nbNodesAndCpuPerNode);
     }
         return;
@@ -180,7 +180,7 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBCPU:
         return m_nbCpu != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
-        return m_nbNodesAndCpuPerNode != -1;
+    return m_nbNodesAndCpuPerNode !=;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_outputPath);

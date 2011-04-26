@@ -80,10 +80,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__errorPath = new ::ecore::EAttribute();
     m_Job__errorPath->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__ERRORPATH);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__errorPath);
-    m_Job__scriptContent = new ::ecore::EAttribute();
-    m_Job__scriptContent->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::JOB__SCRIPTCONTENT);
-    m_JobEClass->getEStructuralFeatures().push_back(m_Job__scriptContent);
     m_Job__jobPrio = new ::ecore::EAttribute();
     m_Job__jobPrio->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__JOBPRIO);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__jobPrio);
@@ -241,16 +237,6 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__PRIORITY);
     m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
             m_ListJobsOptions__priority);
-    m_ListJobsOptions__outPutPath = new ::ecore::EAttribute();
-    m_ListJobsOptions__outPutPath->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__OUTPUTPATH);
-    m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListJobsOptions__outPutPath);
-    m_ListJobsOptions__errorPath = new ::ecore::EAttribute();
-    m_ListJobsOptions__errorPath->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__ERRORPATH);
-    m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListJobsOptions__errorPath);
     m_ListJobsOptions__queue = new ::ecore::EAttribute();
     m_ListJobsOptions__queue->setFeatureID(
             ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__QUEUE);
@@ -579,20 +565,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__errorPath->setUnique(true);
     m_Job__errorPath->setDerived(false);
     m_Job__errorPath->setOrdered(true);
-    m_Job__scriptContent->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Job__scriptContent->setName("scriptContent");
-    m_Job__scriptContent->setDefaultValueLiteral("");
-    m_Job__scriptContent->setLowerBound(0);
-    m_Job__scriptContent->setUpperBound(1);
-    m_Job__scriptContent->setTransient(false);
-    m_Job__scriptContent->setVolatile(false);
-    m_Job__scriptContent->setChangeable(true);
-    m_Job__scriptContent->setUnsettable(false);
-    m_Job__scriptContent->setID(false);
-    m_Job__scriptContent->setUnique(true);
-    m_Job__scriptContent->setDerived(false);
-    m_Job__scriptContent->setOrdered(true);
     m_Job__jobPrio->setEType(m_JobPriorityEEnum);
     m_Job__jobPrio->setName("jobPrio");
     m_Job__jobPrio->setDefaultValueLiteral("-1");
@@ -650,7 +622,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__submitDate->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Job__submitDate->setName("submitDate");
-    m_Job__submitDate->setDefaultValueLiteral("");
+    m_Job__submitDate->setDefaultValueLiteral("-1");
     m_Job__submitDate->setLowerBound(0);
     m_Job__submitDate->setUpperBound(1);
     m_Job__submitDate->setTransient(false);
@@ -706,7 +678,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__wallClockLimit->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Job__wallClockLimit->setName("wallClockLimit");
-    m_Job__wallClockLimit->setDefaultValueLiteral("");
+    m_Job__wallClockLimit->setDefaultValueLiteral("-1");
     m_Job__wallClockLimit->setLowerBound(0);
     m_Job__wallClockLimit->setUpperBound(1);
     m_Job__wallClockLimit->setTransient(false);
@@ -774,7 +746,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__nbNodes->setDerived(false);
     m_Job__nbNodes->setOrdered(true);
     m_Job__nbNodesAndCpuPerNode->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Job__nbNodesAndCpuPerNode->setName("nbNodesAndCpuPerNode");
     m_Job__nbNodesAndCpuPerNode->setDefaultValueLiteral("");
     m_Job__nbNodesAndCpuPerNode->setLowerBound(0);
@@ -794,7 +766,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobs__nbJobs->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_ListJobs__nbJobs->setName("nbJobs");
-    m_ListJobs__nbJobs->setDefaultValueLiteral("");
+    m_ListJobs__nbJobs->setDefaultValueLiteral("0");
     m_ListJobs__nbJobs->setLowerBound(0);
     m_ListJobs__nbJobs->setUpperBound(1);
     m_ListJobs__nbJobs->setTransient(false);
@@ -808,7 +780,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobs__nbRunningJobs->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_ListJobs__nbRunningJobs->setName("nbRunningJobs");
-    m_ListJobs__nbRunningJobs->setDefaultValueLiteral("");
+    m_ListJobs__nbRunningJobs->setDefaultValueLiteral("0");
     m_ListJobs__nbRunningJobs->setLowerBound(0);
     m_ListJobs__nbRunningJobs->setUpperBound(1);
     m_ListJobs__nbRunningJobs->setTransient(false);
@@ -822,7 +794,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobs__nbWaitingJobs->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_ListJobs__nbWaitingJobs->setName("nbWaitingJobs");
-    m_ListJobs__nbWaitingJobs->setDefaultValueLiteral("");
+    m_ListJobs__nbWaitingJobs->setDefaultValueLiteral("0");
     m_ListJobs__nbWaitingJobs->setLowerBound(0);
     m_ListJobs__nbWaitingJobs->setUpperBound(1);
     m_ListJobs__nbWaitingJobs->setTransient(false);
@@ -921,9 +893,9 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__nbCpu->setDerived(false);
     m_SubmitOptions__nbCpu->setOrdered(true);
     m_SubmitOptions__nbNodesAndCpuPerNode->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SubmitOptions__nbNodesAndCpuPerNode->setName("nbNodesAndCpuPerNode");
-    m_SubmitOptions__nbNodesAndCpuPerNode->setDefaultValueLiteral("-1");
+    m_SubmitOptions__nbNodesAndCpuPerNode->setDefaultValueLiteral("");
     m_SubmitOptions__nbNodesAndCpuPerNode->setLowerBound(0);
     m_SubmitOptions__nbNodesAndCpuPerNode->setUpperBound(1);
     m_SubmitOptions__nbNodesAndCpuPerNode->setTransient(false);
@@ -1062,34 +1034,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__priority->setUnique(true);
     m_ListJobsOptions__priority->setDerived(false);
     m_ListJobsOptions__priority->setOrdered(true);
-    m_ListJobsOptions__outPutPath->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ListJobsOptions__outPutPath->setName("outPutPath");
-    m_ListJobsOptions__outPutPath->setDefaultValueLiteral("");
-    m_ListJobsOptions__outPutPath->setLowerBound(0);
-    m_ListJobsOptions__outPutPath->setUpperBound(1);
-    m_ListJobsOptions__outPutPath->setTransient(false);
-    m_ListJobsOptions__outPutPath->setVolatile(false);
-    m_ListJobsOptions__outPutPath->setChangeable(true);
-    m_ListJobsOptions__outPutPath->setUnsettable(false);
-    m_ListJobsOptions__outPutPath->setID(false);
-    m_ListJobsOptions__outPutPath->setUnique(true);
-    m_ListJobsOptions__outPutPath->setDerived(false);
-    m_ListJobsOptions__outPutPath->setOrdered(true);
-    m_ListJobsOptions__errorPath->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ListJobsOptions__errorPath->setName("errorPath");
-    m_ListJobsOptions__errorPath->setDefaultValueLiteral("");
-    m_ListJobsOptions__errorPath->setLowerBound(0);
-    m_ListJobsOptions__errorPath->setUpperBound(1);
-    m_ListJobsOptions__errorPath->setTransient(false);
-    m_ListJobsOptions__errorPath->setVolatile(false);
-    m_ListJobsOptions__errorPath->setChangeable(true);
-    m_ListJobsOptions__errorPath->setUnsettable(false);
-    m_ListJobsOptions__errorPath->setID(false);
-    m_ListJobsOptions__errorPath->setUnique(true);
-    m_ListJobsOptions__errorPath->setDerived(false);
-    m_ListJobsOptions__errorPath->setOrdered(true);
     m_ListJobsOptions__queue->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_ListJobsOptions__queue->setName("queue");
@@ -1143,7 +1087,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListProgression__nbJobs->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_ListProgression__nbJobs->setName("nbJobs");
-    m_ListProgression__nbJobs->setDefaultValueLiteral("");
+    m_ListProgression__nbJobs->setDefaultValueLiteral("0");
     m_ListProgression__nbJobs->setLowerBound(0);
     m_ListProgression__nbJobs->setUpperBound(1);
     m_ListProgression__nbJobs->setTransient(false);
@@ -1202,7 +1146,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Progression__wallTime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Progression__wallTime->setName("wallTime");
-    m_Progression__wallTime->setDefaultValueLiteral("");
+    m_Progression__wallTime->setDefaultValueLiteral("-1");
     m_Progression__wallTime->setLowerBound(0);
     m_Progression__wallTime->setUpperBound(1);
     m_Progression__wallTime->setTransient(false);
@@ -1216,7 +1160,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Progression__startTime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Progression__startTime->setName("startTime");
-    m_Progression__startTime->setDefaultValueLiteral("");
+    m_Progression__startTime->setDefaultValueLiteral("-1");
     m_Progression__startTime->setLowerBound(0);
     m_Progression__startTime->setUpperBound(1);
     m_Progression__startTime->setTransient(false);
@@ -1230,7 +1174,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Progression__endTime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Progression__endTime->setName("endTime");
-    m_Progression__endTime->setDefaultValueLiteral("");
+    m_Progression__endTime->setDefaultValueLiteral("-1");
     m_Progression__endTime->setLowerBound(0);
     m_Progression__endTime->setUpperBound(1);
     m_Progression__endTime->setTransient(false);
@@ -1244,7 +1188,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Progression__percent->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEDouble());
     m_Progression__percent->setName("percent");
-    m_Progression__percent->setDefaultValueLiteral("");
+    m_Progression__percent->setDefaultValueLiteral("0");
     m_Progression__percent->setLowerBound(0);
     m_Progression__percent->setUpperBound(1);
     m_Progression__percent->setTransient(false);
@@ -1257,7 +1201,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Progression__percent->setOrdered(true);
     m_Progression__status->setEType(m_JobStatusEEnum);
     m_Progression__status->setName("status");
-    m_Progression__status->setDefaultValueLiteral("");
+    m_Progression__status->setDefaultValueLiteral("-1");
     m_Progression__status->setLowerBound(0);
     m_Progression__status->setUpperBound(1);
     m_Progression__status->setTransient(false);
@@ -1275,7 +1219,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListQueues__nbQueues->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_ListQueues__nbQueues->setName("nbQueues");
-    m_ListQueues__nbQueues->setDefaultValueLiteral("");
+    m_ListQueues__nbQueues->setDefaultValueLiteral("0");
     m_ListQueues__nbQueues->setLowerBound(0);
     m_ListQueues__nbQueues->setUpperBound(1);
     m_ListQueues__nbQueues->setTransient(false);
@@ -1320,7 +1264,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__maxJobCpu->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Queue__maxJobCpu->setName("maxJobCpu");
-    m_Queue__maxJobCpu->setDefaultValueLiteral("");
+    m_Queue__maxJobCpu->setDefaultValueLiteral("-1");
     m_Queue__maxJobCpu->setLowerBound(0);
     m_Queue__maxJobCpu->setUpperBound(1);
     m_Queue__maxJobCpu->setTransient(false);
@@ -1334,7 +1278,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__maxProcCpu->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Queue__maxProcCpu->setName("maxProcCpu");
-    m_Queue__maxProcCpu->setDefaultValueLiteral("");
+    m_Queue__maxProcCpu->setDefaultValueLiteral("-1");
     m_Queue__maxProcCpu->setLowerBound(0);
     m_Queue__maxProcCpu->setUpperBound(1);
     m_Queue__maxProcCpu->setTransient(false);
@@ -1348,7 +1292,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__memory->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Queue__memory->setName("memory");
-    m_Queue__memory->setDefaultValueLiteral("");
+    m_Queue__memory->setDefaultValueLiteral("-1");
     m_Queue__memory->setLowerBound(0);
     m_Queue__memory->setUpperBound(1);
     m_Queue__memory->setTransient(false);
@@ -1362,7 +1306,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__wallTime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Queue__wallTime->setName("wallTime");
-    m_Queue__wallTime->setDefaultValueLiteral("");
+    m_Queue__wallTime->setDefaultValueLiteral("-1");
     m_Queue__wallTime->setLowerBound(0);
     m_Queue__wallTime->setUpperBound(1);
     m_Queue__wallTime->setTransient(false);
@@ -1376,7 +1320,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__node->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Queue__node->setName("node");
-    m_Queue__node->setDefaultValueLiteral("");
+    m_Queue__node->setDefaultValueLiteral("-1");
     m_Queue__node->setLowerBound(0);
     m_Queue__node->setUpperBound(1);
     m_Queue__node->setTransient(false);
@@ -1390,7 +1334,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__nbRunningJobs->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Queue__nbRunningJobs->setName("nbRunningJobs");
-    m_Queue__nbRunningJobs->setDefaultValueLiteral("");
+    m_Queue__nbRunningJobs->setDefaultValueLiteral("0");
     m_Queue__nbRunningJobs->setLowerBound(0);
     m_Queue__nbRunningJobs->setUpperBound(1);
     m_Queue__nbRunningJobs->setTransient(false);
@@ -1404,7 +1348,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__nbJobsInQueue->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Queue__nbJobsInQueue->setName("nbJobsInQueue");
-    m_Queue__nbJobsInQueue->setDefaultValueLiteral("");
+    m_Queue__nbJobsInQueue->setDefaultValueLiteral("0");
     m_Queue__nbJobsInQueue->setLowerBound(0);
     m_Queue__nbJobsInQueue->setUpperBound(1);
     m_Queue__nbJobsInQueue->setTransient(false);
@@ -1417,7 +1361,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__nbJobsInQueue->setOrdered(true);
     m_Queue__state->setEType(m_QueueStatusEEnum);
     m_Queue__state->setName("state");
-    m_Queue__state->setDefaultValueLiteral("");
+    m_Queue__state->setDefaultValueLiteral("-1");
     m_Queue__state->setLowerBound(0);
     m_Queue__state->setUpperBound(1);
     m_Queue__state->setTransient(false);
@@ -1430,7 +1374,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Queue__state->setOrdered(true);
     m_Queue__priority->setEType(m_QueuePriorityEEnum);
     m_Queue__priority->setName("priority");
-    m_Queue__priority->setDefaultValueLiteral("");
+    m_Queue__priority->setDefaultValueLiteral("-1");
     m_Queue__priority->setLowerBound(0);
     m_Queue__priority->setUpperBound(1);
     m_Queue__priority->setTransient(false);
@@ -1508,7 +1452,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobResults__nbJobs->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_ListJobResults__nbJobs->setName("nbJobs");
-    m_ListJobResults__nbJobs->setDefaultValueLiteral("");
+    m_ListJobResults__nbJobs->setDefaultValueLiteral("0");
     m_ListJobResults__nbJobs->setLowerBound(0);
     m_ListJobResults__nbJobs->setUpperBound(1);
     m_ListJobResults__nbJobs->setTransient(false);
@@ -1606,60 +1550,20 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // NOT_SUBMITTED
-        _el->setName("NOT_SUBMITTED");
+        // UNDEFINED
+        _el->setName("UNDEFINED");
         _el->setValue(0);
-        _el->setLiteral("NOT_SUBMITTED");
+        _el->setLiteral("UNDEFINED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // RUNNING
-        _el->setName("RUNNING");
+        // SUBMITTED
+        _el->setName("SUBMITTED");
         _el->setValue(1);
-        _el->setLiteral("RUNNING");
-        _el->setEEnum(m_JobStatusEEnum);
-        m_JobStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // WAITING
-        _el->setName("WAITING");
-        _el->setValue(2);
-        _el->setLiteral("WAITING");
-        _el->setEEnum(m_JobStatusEEnum);
-        m_JobStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // COMPLETED
-        _el->setName("COMPLETED");
-        _el->setValue(3);
-        _el->setLiteral("COMPLETED");
-        _el->setEEnum(m_JobStatusEEnum);
-        m_JobStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // CANCELED
-        _el->setName("CANCELED");
-        _el->setValue(4);
-        _el->setLiteral("CANCELED");
-        _el->setEEnum(m_JobStatusEEnum);
-        m_JobStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // HELD
-        _el->setName("HELD");
-        _el->setValue(5);
-        _el->setLiteral("HELD");
+        _el->setLiteral("SUBMITTED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }
@@ -1668,7 +1572,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // QUEUED
         _el->setName("QUEUED");
-        _el->setValue(6);
+        _el->setValue(2);
         _el->setLiteral("QUEUED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
@@ -1676,10 +1580,40 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // FAILED
-        _el->setName("FAILED");
-        _el->setValue(7);
-        _el->setLiteral("FAILED");
+        // WAITING
+        _el->setName("WAITING");
+        _el->setValue(3);
+        _el->setLiteral("WAITING");
+        _el->setEEnum(m_JobStatusEEnum);
+        m_JobStatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // RUNNING
+        _el->setName("RUNNING");
+        _el->setValue(4);
+        _el->setLiteral("RUNNING");
+        _el->setEEnum(m_JobStatusEEnum);
+        m_JobStatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // TERMINATED
+        _el->setName("TERMINATED");
+        _el->setValue(5);
+        _el->setLiteral("TERMINATED");
+        _el->setEEnum(m_JobStatusEEnum);
+        m_JobStatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // CANCELLED
+        _el->setName("CANCELLED");
+        _el->setValue(6);
+        _el->setLiteral("CANCELLED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }
@@ -1690,9 +1624,19 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // UNDEFINED
+        _el->setName("UNDEFINED");
+        _el->setValue(0);
+        _el->setLiteral("UNDEFINED");
+        _el->setEEnum(m_QueuePriorityEEnum);
+        m_QueuePriorityEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // VERY_LOW
         _el->setName("VERY_LOW");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("VERY_LOW");
         _el->setEEnum(m_QueuePriorityEEnum);
         m_QueuePriorityEEnum->getELiterals().push_back(_el);
@@ -1702,7 +1646,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // LOW
         _el->setName("LOW");
-        _el->setValue(1);
+        _el->setValue(2);
         _el->setLiteral("LOW");
         _el->setEEnum(m_QueuePriorityEEnum);
         m_QueuePriorityEEnum->getELiterals().push_back(_el);
@@ -1712,7 +1656,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // NORMAL
         _el->setName("NORMAL");
-        _el->setValue(2);
+        _el->setValue(3);
         _el->setLiteral("NORMAL");
         _el->setEEnum(m_QueuePriorityEEnum);
         m_QueuePriorityEEnum->getELiterals().push_back(_el);
@@ -1722,7 +1666,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // HIGH
         _el->setName("HIGH");
-        _el->setValue(3);
+        _el->setValue(4);
         _el->setLiteral("HIGH");
         _el->setEEnum(m_QueuePriorityEEnum);
         m_QueuePriorityEEnum->getELiterals().push_back(_el);
@@ -1732,7 +1676,7 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // VERY_HIGH
         _el->setName("VERY_HIGH");
-        _el->setValue(4);
+        _el->setValue(5);
         _el->setLiteral("VERY_HIGH");
         _el->setEEnum(m_QueuePriorityEEnum);
         m_QueuePriorityEEnum->getELiterals().push_back(_el);
@@ -1744,9 +1688,19 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // NOT_STARTED
+        _el->setName("NOT_STARTED");
+        _el->setValue(0);
+        _el->setLiteral("NOT_STARTED");
+        _el->setEEnum(m_QueueStatusEEnum);
+        m_QueueStatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // STARTED
         _el->setName("STARTED");
-        _el->setValue(0);
+        _el->setValue(1);
         _el->setLiteral("STARTED");
         _el->setEEnum(m_QueueStatusEEnum);
         m_QueueStatusEEnum->getELiterals().push_back(_el);
@@ -1756,28 +1710,8 @@ TMS_DataPackage::TMS_DataPackage()
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
         // RUNNING
         _el->setName("RUNNING");
-        _el->setValue(1);
-        _el->setLiteral("RUNNING");
-        _el->setEEnum(m_QueueStatusEEnum);
-        m_QueueStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // NOT_STARTED
-        _el->setName("NOT_STARTED");
         _el->setValue(2);
-        _el->setLiteral("NOT_STARTED");
-        _el->setEEnum(m_QueueStatusEEnum);
-        m_QueueStatusEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // NOT_AVAILABLE
-        _el->setName("NOT_AVAILABLE");
-        _el->setValue(3);
-        _el->setLiteral("NOT_AVAILABLE");
+        _el->setLiteral("RUNNING");
         _el->setEEnum(m_QueueStatusEEnum);
         m_QueueStatusEEnum->getELiterals().push_back(_el);
     }
@@ -1877,10 +1811,6 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__errorPath()
 {
     return m_Job__errorPath;
-}
-::ecore::EAttribute_ptr TMS_DataPackage::getJob__scriptContent()
-{
-    return m_Job__scriptContent;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__jobPrio()
 {
@@ -2013,14 +1943,6 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__priority()
 {
     return m_ListJobsOptions__priority;
-}
-::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__outPutPath()
-{
-    return m_ListJobsOptions__outPutPath;
-}
-::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__errorPath()
-{
-    return m_ListJobsOptions__errorPath;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__queue()
 {

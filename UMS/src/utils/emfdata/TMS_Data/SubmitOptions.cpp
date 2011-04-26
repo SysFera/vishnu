@@ -31,7 +31,7 @@ using namespace ::TMS_Data;
 
 // Default constructor
 SubmitOptions::SubmitOptions() :
-    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_nbNodesAndCpuPerNode(-1)
+    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_nbNodesAndCpuPerNode()
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -181,15 +181,16 @@ void SubmitOptions::setNbCpu(::ecore::EInt _nbCpu)
 #endif
 }
 
-::ecore::EInt SubmitOptions::getNbNodesAndCpuPerNode() const
+::ecore::EString const& SubmitOptions::getNbNodesAndCpuPerNode() const
 {
     return m_nbNodesAndCpuPerNode;
 }
 
-void SubmitOptions::setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode)
+void SubmitOptions::setNbNodesAndCpuPerNode(
+        ::ecore::EString const& _nbNodesAndCpuPerNode)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EInt _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
+    ::ecore::EString _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
 #endif
     m_nbNodesAndCpuPerNode = _nbNodesAndCpuPerNode;
 #ifdef ECORECPP_NOTIFICATION_API

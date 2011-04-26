@@ -103,12 +103,6 @@ void Job::_initialize()
                 m_errorPath);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__SCRIPTCONTENT:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_scriptContent);
-    }
-        return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__JOBPRIO:
     {
         ::ecorecpp::mapping::any_traits< ::TMS_Data::JobPriority >::toAny(_any,
@@ -187,7 +181,7 @@ void Job::_initialize()
         return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__NBNODESANDCPUPERNODE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any,
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_nbNodesAndCpuPerNode);
     }
         return _any;
@@ -246,12 +240,6 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_errorPath);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::JOB__SCRIPTCONTENT:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_scriptContent);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::JOB__JOBPRIO:
@@ -334,7 +322,7 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return;
     case ::TMS_Data::TMS_DataPackage::JOB__NBNODESANDCPUPERNODE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_nbNodesAndCpuPerNode);
     }
         return;
@@ -371,9 +359,6 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__ERRORPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorPath);
-    case ::TMS_Data::TMS_DataPackage::JOB__SCRIPTCONTENT:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_scriptContent);
     case ::TMS_Data::TMS_DataPackage::JOB__JOBPRIO:
         return m_jobPrio != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__NBCPUS:
@@ -384,8 +369,7 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__STATUS:
         return m_status != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__SUBMITDATE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_submitDate);
+        return m_submitDate != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__ENDDATE:
         return m_endDate != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__OWNER:
@@ -395,8 +379,7 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_jobQueue);
     case ::TMS_Data::TMS_DataPackage::JOB__WALLCLOCKLIMIT:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_wallClockLimit);
+        return m_wallClockLimit != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__GROUPNAME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_groupName);
@@ -408,7 +391,7 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__NBNODES:
         return m_nbNodes != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__NBNODESANDCPUPERNODE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_nbNodesAndCpuPerNode);
 
     }

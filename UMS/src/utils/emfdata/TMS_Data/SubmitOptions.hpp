@@ -128,12 +128,13 @@ namespace TMS_Data
          * \brief To get the nbNodesAndCpuPerNode
          * \return The nbNodesAndCpuPerNode attribute value
          **/
-        ::ecore::EInt getNbNodesAndCpuPerNode() const;
+        ::ecore::EString const& getNbNodesAndCpuPerNode() const;
         /**
          * \brief To set the nbNodesAndCpuPerNode
          * \param _nbNodesAndCpuPerNode The nbNodesAndCpuPerNode value
          **/
-        void setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode);
+        void setNbNodesAndCpuPerNode(
+                ::ecore::EString const& _nbNodesAndCpuPerNode);
 
         /**
          * \brief To get the outputPath
@@ -192,7 +193,7 @@ namespace TMS_Data
 
         ::ecore::EInt m_nbCpu;
 
-        ::ecore::EInt m_nbNodesAndCpuPerNode;
+        ::ecore::EString m_nbNodesAndCpuPerNode;
 
         ::ecore::EString m_outputPath;
 

@@ -30,7 +30,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-Progression::Progression()
+Progression::Progression() :
+    m_wallTime(-1), m_startTime(-1), m_endTime(-1), m_percent(0), m_status(-1)
 {
 
     /*PROTECTED REGION ID(ProgressionImpl__ProgressionImpl) START*/
