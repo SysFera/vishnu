@@ -878,6 +878,8 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
     queue->setNode(0);
     queue->setNbRunningJobs(0);
     queue->setNbJobsInQueue(0);
+    queue->setMaxProcCpu(-1);
+    queue->setMaxJobCpu(-1);
 
     a = p->attribs;
     while(a!=NULL)
@@ -930,13 +932,20 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
             } 
             //A Verifier : si la taille de la memoire est en byte?
             queue->setMemory(vishnu::convertToInt(walltime));  
+          } else if(!strcmp(a->resource, "ncpus")) {
+            queue->setMaxProcCpu(vishnu::convertToInt(std::string(a->value)));
           }
           if(!strcmp(a->resource, "walltime")){
             queue->setWallTime(vishnu::convertStringToWallTime(std::string(a->value)));      
           } else if(!strcmp(a->resource, "nodect")) {
             queue->setNode(vishnu::convertToInt(std::string(a->value)));
           }
+        } else if (!strcmp(a->name, ATTR_p)){ 
+          queue->setPriority(vishnu::convertToInt(std::string(a->value)));
+        } else if (!strcmp(a->name, ATTR_comment)) {
+          queue->setDescription(std::string(a->value));
         }
+
         a = a->next;
       }
     }

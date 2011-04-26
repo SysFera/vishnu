@@ -12,6 +12,7 @@ using namespace vishnu;
 using namespace std;
 
 LLServer::LLServer():BatchServer() {
+ mlistQueues = NULL;
 }
 
 int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
@@ -32,20 +33,20 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   job.setJobId(llJobId.str());
   job.setOutputPath(std::string((llJobInfo.step_list[0])->out)) ;
   job.setErrorPath(std::string((llJobInfo.step_list[0])->err));
-  job.setStatus(0);
+  job.setStatus(llJobInfo.step_list[0]->status);//A mapper en VISHNU status
   job.setJobName(std::string(llJobInfo.job_name));
   job.setSubmitDate((llJobInfo.step_list[0])->q_date);
   job.setOwner(std::string(llJobInfo.owner));
   job.setJobQueue(std::string((llJobInfo.step_list[0])->stepclass));
-  job.setWallClockLimit(-1);
+  job.setWallClockLimit(llJobInfo.step_list[0]->limits.soft_wall_clock_limit);
   job.setEndDate(-1);
   job.setGroupName(std::string((llJobInfo.step_list[0])->group_name));
   job.setJobDescription(std::string((llJobInfo.step_list[0])->comment));
   job.setJobPrio((llJobInfo.step_list[0])->prio);//WARNING: a convertir en VISHNU PRIORITY TYPE
-  job.setMemLimit(-1);
-  job.setNbCpus(-1);
-  job.setNbNodes(-1);
-  //job.setNbNodesAndCpuPerNode(nodeAndCpu); 
+  job.setMemLimit(llJobInfo.step_list[0]->limits64.memlock_soft_limit);
+  job.setNbCpus(llJobInfo.step_list[0]->limits.cpu_soft_limit);
+  job.setNbNodes(llJobInfo.step_list[0]->limits.core_soft_limit);
+  //job.setNbNodesAndCpuPerNode(llJobInfo.step_list[0]->limits.cpus_per_core); 
 
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
 
@@ -178,6 +179,108 @@ int LLServer::remove_test(TMS_Data::Job& job) {
   return 0;
 }
 
+TMS_Data::ListQueues* LLServer::listQueues(const std::string& optQueueName) {
+
+  LL_element *queryObject;
+  LL_element  *queryInfos;
+  int rc;
+  int objCount;
+  int errCode;
+  char  *className;
+  char  *classComment;
+  int classPriority;
+  int walltime;
+  int mem;
+  int maxCpu;
+  int maxProcs;
+  std::string errMsg;
+
+  queryObject = ll_query(CLASSES);
+  if(!queryObject) {
+    errMsg = "LOADLEVELER: ll_query() return NULL.";
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errMsg);
+  }
+
+  if(optQueueName.size()==0) {
+    rc = ll_set_request(queryObject, QUERY_ALL, NULL, ALL_DATA);
+  } else {
+    char* classList[2];
+    classList[0] = strdup(optQueueName.c_str());
+    classList[1] = NULL;
+    rc = ll_set_request(queryObject, QUERY_CLASS, classList, ALL_DATA);
+  }
+
+  if(rc) {
+    std::ostringstream oss;
+    oss << "LOADLEVELER: ll_set_request() return code (" << rc << ") is non-zero."; 
+    errMsg = oss.str();
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errMsg);
+  }
+
+  queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
+  if(errCode) {
+    std::ostringstream oss;
+    oss << "LOADLEVELER: ll_get_objs() return code (" << errCode << ") is non-zero.";
+    errMsg = oss.str();
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errMsg);
+  }
+  if(queryInfos==NULL) {
+    std::ostringstream oss;
+    oss << "LOADLEVELER: ll_get_objs() return NULL.";
+    errMsg = oss.str();
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errMsg);
+  }
+
+  TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+  mlistQueues = ecoreFactory->createListQueues();
+
+  while(queryInfos)
+  {
+
+    TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+    queue->setWallTime(-1);
+    queue->setMemory(-1);
+    queue->setNode(-1);
+    queue->setNbRunningJobs(0);
+    queue->setNbJobsInQueue(0);
+    queue->setMaxProcCpu(-1);
+    queue->setMaxJobCpu(-1);
+
+    ll_get_data(queryInfos, LL_ClassName, &className);
+    queue->setName(std::string(className));
+
+    ll_get_data(queryInfos, LL_ClassPriority, &classPriority);
+    queue->setPriority(classPriority);
+
+    ll_get_data(queryInfos, LL_ClassWallClockLimitSoft, &walltime);
+    queue->setWallTime(walltime);
+
+    ll_get_data(queryInfos, LL_ClassMemlockLimitHard, &mem);
+    queue->setMemory(mem);
+
+    ll_get_data(queryInfos, LL_ClassComment, &classComment);
+    queue->setDescription(classComment);  
+
+    ll_get_data(queryInfos, LL_ClassCpuLimitHard, &maxCpu);
+    queue->setMaxProcCpu(maxCpu);
+
+    ll_get_data(queryInfos, LL_ClassMaxProcessors, &maxProcs);
+    queue->setMaxJobCpu(maxProcs);    
+
+    // Adding created job to the list
+    mlistQueues->getQueues().push_back(queue); 
+
+    queryInfos = ll_next_obj(queryObject);
+
+  }
+
+  ll_free_objs(queryInfos);
+  ll_deallocate(queryObject);
+
+  mlistQueues->setNbQueues(mlistQueues->getQueues().size());
+  return mlistQueues;
+}
+
 TMS_Data::ListJobs*
 LLServer::listJobs(TMS_Data::ListJobsOptions op){
   // Listing all jobs
@@ -290,7 +393,7 @@ LLServer::listAllJobs(){
    
   LL_job job_info;
   LL_element *queryObject, *queryInfos, *step, *credential, *machine_obj;
-  int rc, obj_count, state, err_code, hold_type, pri;
+  int rc, objCount, state, errCode, hold_type, pri;
   char  *owner, *machine, *id, *jclass;
   time_t submittime;
   time_t endtime;
@@ -327,13 +430,13 @@ LLServer::listAllJobs(){
   }
 
   // Calling to get the results
-  queryInfos = ll_get_objs(queryObject, /*LL_SCHEDD*/LL_CM, NULL, &obj_count, &err_code);
+  queryInfos = ll_get_objs(queryObject, /*LL_SCHEDD*/LL_CM, NULL, &objCount, &errCode);
   if(queryInfos==NULL) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query Infos : ll_get_objs() returns NULL.\n");
   }
 
 
-  int nb_jobs = obj_count;
+  int nb_jobs = objCount;
   // Transforming each result in a TMS_Data::Job
   while(queryInfos)
     {
@@ -559,6 +662,7 @@ LLServer::getJobProgress(TMS_Data::ProgressOptions op){
 void
 LLServer::makeProg(TMS_Data::Progression_ptr prog, TMS_Data::Job_ptr job){
   time_t current; // TODO : FILL CURRENT
+  //LL_StepWallClockUsed A utiliser
   double percent = (current-job->getSubmitDate())/(job->getWallClockLimit()-job->getSubmitDate());
   prog->setJobId(job->getJobId());
   prog->setJobName(job->getJobName());

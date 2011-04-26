@@ -126,6 +126,29 @@ int JobServer::cancelJob()
   const char* name = "submit";
   ::ecorecpp::serializer::serializer jobSer(name);
 
+  std::string batchJobId;
+  std::vector<std::string> results;
+  std::vector<std::string>::iterator  iter;
+  std::string sqlCancelRequest = "SELECT batchJobId from job, vsession "
+                                "where vsession.numsessionid=job.vsession_numsessionid"
+                                " and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
+
+  boost::scoped_ptr<DatabaseResult> sqlCancelResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlCancelRequest.c_str()));
+  std::cout << "JobServer::cancelJob: " << sqlCancelRequest << std::endl;
+
+  if (sqlCancelResult->getNbTuples() != 0){
+    results.clear();
+    results = sqlCancelResult->get(0);
+    iter = results.begin();
+    batchJobId = *iter;
+  } else {
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+  }
+
+  std::cout << "JobServer::cancelJob: batchJobId = " << batchJobId << std::endl;
+
+  mjob.setJobId(batchJobId); //To reset the jobId
+
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
   std::string acLogin = getUserAccountLogin();

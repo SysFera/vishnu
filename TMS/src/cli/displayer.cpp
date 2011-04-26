@@ -142,7 +142,7 @@ setFill(int size, ostream& os) {
 }
 
 /**
- * \brief Helper function to display a list of users
+ * \brief Helper function to display a list of queues
  * \param os: The output stream in which the list will be printed 
  * \param lsQueues: The list to display
  * \return The output stream in which the list of users has been printed
@@ -229,6 +229,186 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
     os << endl;
 
   } 
+
+  return os;
+}
+
+/**
+ * \brief Helper function to display a list of jobs
+ * \param os: The output stream in which the list will be printed 
+ * \param listJobs: The list to display
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, ListJobs& listJobs) {
+
+  std::string jobId;
+  std::string jobName;
+  std::string owner;
+  std::string queue;
+  int priority;
+  int status;
+
+  std::string jobIdHead = "Job id";
+  std::string jobNameHead = "Job name";
+  std::string ownerHead = "Owner";
+  std::string statusHead = "Status";
+  std::string queueHead = "Queue";
+  std::string priorityHead = "Priority";
+
+  size_t maxJobIdSize = jobIdHead.size();
+  size_t maxJobNameSize = jobNameHead.size();
+  size_t maxOwnerSize = ownerHead.size();
+  size_t maxStatusSize = statusHead.size();
+  size_t maxQueueSize = queueHead.size();
+  size_t maxPrioritySize = priorityHead.size();
+
+  for(size_t i = 0; i < listJobs.getJobs().size(); i++) {
+
+    jobId = (listJobs.getJobs().get(i))->getJobId();
+    maxJobIdSize = std::max(maxJobIdSize, jobId.size());
+    
+    jobName = (listJobs.getJobs().get(i))->getJobName();
+    maxJobNameSize = std::max(maxJobNameSize, jobName.size()); 
+
+    owner = (listJobs.getJobs().get(i))->getOwner();
+    maxOwnerSize = std::max(maxOwnerSize, owner.size());
+
+    queue = (listJobs.getJobs().get(i))->getJobQueue();
+    maxQueueSize = std::max(maxQueueSize, queue.size());
+
+  }
+
+  os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxOwnerSize+2) ;
+  os << left << ownerHead << setw(maxStatusSize+2) << statusHead  << setw(maxQueueSize+2) << left << queueHead;
+  os << setw(maxPrioritySize+2) << left << priorityHead  << endl;
+
+  setFill(maxJobIdSize, os);
+  setFill(maxJobNameSize, os);
+  setFill(maxOwnerSize, os);
+  setFill(maxStatusSize, os);
+  setFill(maxQueueSize, os);
+  setFill(maxPrioritySize, os);
+  os << endl;
+
+ for(size_t i = 0; i < listJobs.getJobs().size(); i++) {
+ 
+    jobId = (listJobs.getJobs().get(i))->getJobId();
+    jobName = (listJobs.getJobs().get(i))->getJobName();
+    owner = (listJobs.getJobs().get(i))->getOwner();
+    status = (listJobs.getJobs().get(i))->getStatus();
+    queue = (listJobs.getJobs().get(i))->getJobQueue();
+    priority = (listJobs.getJobs().get(i))->getJobPrio();
+
+    os << setw(maxJobIdSize+2) << left << jobId;
+    os << setw(maxJobNameSize+2) << left << jobName;
+    os << setw(maxOwnerSize+2) << left << owner;
+    os << setw(maxStatusSize+2) << left << status;
+    os << setw(maxQueueSize+2) << left << queue;
+    os << setw(maxPrioritySize+2) << left << priority;
+    os << endl;
+
+  }
+
+  os << endl;
+  os << "The number of jobs is: " << listJobs.getJobs().size() << std::endl; 
+  return os;
+}
+
+/**
+ * \brief Helper function to display a list of jobs progression
+ * \param os: The output stream in which the list will be printed 
+ * \param listProgress: The list to display
+ * \return The output stream in which the list of users has been printed
+ */
+std::ostream&
+operator<<(std::ostream& os, ListProgression& listProgress) {
+
+  
+  std::string jobId;
+  std::string jobName;
+  long walltime;
+  long startTime;
+  long endTime;
+  int status;
+  double percent;
+  boost::posix_time::ptime pt;
+
+  std::string jobIdHead = "Job id";
+  std::string jobNameHead = "Job name";
+  std::string walltimeHead = "Walltime";
+  std::string startTimeHead = "Start time";
+  std::string endTimeHead = "End time";
+  std::string statusHead = "Status";
+  std::string percentHead = "Percent";
+
+  size_t maxJobIdSize = jobIdHead.size();
+  size_t maxJobNameSize = jobNameHead.size();
+  size_t maxWalltimeSize = walltimeHead.size();
+  size_t maxStartTimeSize = startTimeHead.size();
+  size_t maxEndTimeSize = endTimeHead.size();
+  size_t maxStatusSize = statusHead.size();
+  size_t maxPercentSize = percentHead.size();
+
+  for(size_t i = 0; i < listProgress.getProgress().size(); i++) {
+
+    jobId = (listProgress.getProgress().get(i))->getJobId();
+    maxJobIdSize = std::max(maxJobIdSize, jobId.size());
+
+    jobName = (listProgress.getProgress().get(i))->getJobName();
+    maxJobNameSize = std::max(maxJobNameSize, jobName.size());
+
+    walltime = (listProgress.getProgress().get(i))->getWallTime();
+    maxWalltimeSize = std::max(maxWalltimeSize, vishnu::convertWallTimeToString(walltime).size());
+
+    startTime = (listProgress.getProgress().get(i))->getStartTime();
+    pt =  boost::posix_time::from_time_t(startTime);
+    maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
+
+    endTime = (listProgress.getProgress().get(i))->getEndTime();
+    pt =  boost::posix_time::from_time_t(endTime);
+    maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
+
+    percent = (listProgress.getProgress().get(i))->getPercent();
+    maxPercentSize = std::max(maxPercentSize, convertToString(percent).size());
+
+  }
+
+  os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxWalltimeSize+2) ;
+  os << left << walltimeHead << setw(maxStartTimeSize+2) << startTimeHead  << setw(maxEndTimeSize+2) << left << endTimeHead;
+  os << setw(maxStatusSize+2) << left << statusHead  << setw(maxPercentSize+2) << percentHead << endl;
+
+  setFill(maxJobIdSize, os);
+  setFill(maxJobNameSize, os);
+  setFill(maxWalltimeSize, os);
+  setFill(maxStartTimeSize, os);
+  setFill(maxEndTimeSize, os);
+  setFill(maxStatusSize, os);
+  setFill(maxPercentSize, os);
+  os << endl;
+
+ for(size_t i = 0; i < listProgress.getProgress().size(); i++) {
+
+    jobId = (listProgress.getProgress().get(i))->getJobId();
+    jobName = (listProgress.getProgress().get(i))->getJobName();
+    walltime = (listProgress.getProgress().get(i))->getWallTime(); 
+    startTime = (listProgress.getProgress().get(i))->getStartTime();
+    endTime = (listProgress.getProgress().get(i))->getEndTime();
+    status =  (listProgress.getProgress().get(i))->getStatus();
+    percent = (listProgress.getProgress().get(i))->getPercent();
+
+    os << setw(maxJobIdSize+2) << left << jobId;
+    os << setw(maxJobNameSize+2) << left << jobName;
+    os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
+    pt =  boost::posix_time::from_time_t(startTime);
+    os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
+    pt =  boost::posix_time::from_time_t(startTime);
+    os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
+    os << setw(maxStatusSize+2) << left <<  status;
+    os << setw(maxPercentSize+2) << left << percent << "%";
+    os << endl;
+
+  }
 
   return os;
 }

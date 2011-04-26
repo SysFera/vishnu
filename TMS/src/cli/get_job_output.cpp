@@ -20,33 +20,6 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
-/**
- * \brief To build options for the VISHNU submit job command
- * \param ouputDir : The directory of job output
- * \param errorDir : The directory of job output
- * \return The description of all options allowed by the command
- */
-boost::shared_ptr<Options>
-makeJobResultOp(string pgName,
-             boost::function1<void, string>& foutput,
-             string& dietConfig){
-
-  boost::shared_ptr<Options> opt(new Options(pgName));
- 
-  // Environement option
-  opt->add("dietConfig,c",
-      "The diet config file",
-      ENV,
-      dietConfig);
- 
-   opt->add("outDir,o",
-     "The outputh dir of the job output",
-     CONFIG,
-     foutput);
-  return opt;
-} 
-
-
 int main (int argc, char* argv[]){
   
   int ret; // Return value
@@ -56,13 +29,10 @@ int main (int argc, char* argv[]){
   string sessionKey;
   string machineId;
   string jobId;
+  std::string outDir;
 
   /********** EMF data ************/
   TMS_Data::JobResult jobResult;
-
-  /******** Callback functions ******************/
-  boost::function1<void,string> foutput(boost::bind(&TMS_Data::JobResult::setOutputPath,boost::ref(jobResult),_1));
-
 
   /********** EMF data ************/
 
@@ -72,15 +42,19 @@ int main (int argc, char* argv[]){
   TMS_Data::JobResult_ptr out;
 
   /**************** Describe options *************/
-  //boost::shared_ptr<Options> opt (new Options(argv[0]));
-  boost::shared_ptr<Options> opt=makeJobResultOp(argv[0], foutput, dietConfig);  
+  boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
-  /*opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);*/
+  opt->add("dietConfig,c",
+      "The diet config file",
+      ENV,
+      dietConfig);
 
+   opt->add("outDir,o",
+     "The outputh dir of the job output",
+     CONFIG,
+     outDir);
+   
   // All cli obligatory parameters
   opt->add("machineId,m",
 	   "represents the id of the machine",
@@ -126,7 +100,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getJobOutput(sessionKey, machineId, jobId, jobResult/*out*/);
+      getJobOutput(sessionKey, machineId, jobId, outDir, jobResult);
     }
 
     //displayJobOutput(out);

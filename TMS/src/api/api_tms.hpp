@@ -159,33 +159,35 @@ namespace vishnu {
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
-  * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
-  * \fn int getJobOutput(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, JobResult& outputInfo, std::string& infoMsg)
-  * \param sessionKey : The session key
-  * \param machineId : The id of the machine
-  * \param jobId : The Id of the job
-  * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
-  * \param infoMsg : The information message
-  * \return int : an error code
-  */
+   * \brief The getJobOutput function gets outputPath and errorPath of a job from its id 
+   * \param sessionKey : The session key
+   * \param machineId : The id of the machine
+   * \param jobId : The Id of the job
+   *  \param outDir : The output directory where the files will be stored (default is current directory)
+   * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
+   * \return int : an error code
+   */
   int
   getJobOutput(const std::string& sessionKey,
                const std::string& machineId,
                const std::string& jobId,
+               const std::string& outDir,
                JobResult& outputInfos)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
-  * \brief The getAllJobsOutput function dynamically gets outputPath and errorPath of completed jobs
-  * \fn int getAllJobsOutput(const std::string& sessionKey, const std::string& machineId, ListJobResults& listOfResults)
-  * \param sessionKey : The session key
-  * \param machineId : The id of the machine
-  * \param listOfResults : Is the list of jobs results
-  * \return int : an error code
-  */
+   * \brief The getCompletedJobsOutput() function gets standard output and error output files 
+   * of completed jobs (applies only once for each job)
+   * \param sessionKey : The session key
+   * \param machineId : The id of the machine
+   *  \param outDir : The output directory where the files will be stored (default is current directory)
+   * \param listOfResults : Is the list of jobs results
+   * \return int : an error code
+   */
   int
-  getAllJobsOutput(const std::string& sessionKey,
+  getCompletedJobsOutput(const std::string& sessionKey,
                    const std::string& machineId,
+                   const std::string& outDir,
                    ListJobResults& listOfResults)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
