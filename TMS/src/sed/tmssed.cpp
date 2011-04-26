@@ -2,11 +2,14 @@
 #include <fstream>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <sys/types.h>
+#include <signal.h>
 
 #include "MachineServer.hpp"
 #include "ServerTMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
+#include "MonitorTMS.hpp"
 
 /**
  * \brief To show how to use the sed
@@ -75,39 +78,59 @@ int main(int argc, char* argv[], char* envp[]) {
     exit(1);
   }
 
-  //Initialize the TMS Server
-  ServerTMS* server = ServerTMS::getInstance();
-  res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
+  // Fork a child for UMS monitoring
+  pid_t pid;
+  pid_t ppid;
+  pid = fork();
 
-  //A remettre dans le fichier util server
-  {
-    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-    UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-    machine->setMachineId(machineId);
-    MachineServer machineServer(machine);
-    if(machineServer.getAttribut("where machineid='"+machineId+"'").size()==0){
-      delete machine;
-      std::cerr << "Error: The machine of id " << machineId << " does not exist among the defined machines by VISHNU System" << std::endl;
+  if (pid > 0) {
+    //Initialize the TMS Server
+    ServerTMS* server = ServerTMS::getInstance();
+    res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
+
+    //A remettre dans le fichier util server
+    {
+      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+      machine->setMachineId(machineId);
+      MachineServer machineServer(machine);
+      if(machineServer.getAttribut("where machineid='"+machineId+"'").size()==0){
+        delete machine;
+        std::cerr << "Error: The machine of id " << machineId << " does not exist among the defined machines by VISHNU System" << std::endl;
+        exit(1);
+      }
+      if(machineServer.getAttribut("where status=1 and  machineid='"+machineId+"'").size() == 0) {
+        delete machine;
+        std::cerr << "Error: The machine of id " << machineId << " is locked" << std::endl;
+        exit(1);
+      }
+    }
+
+    // Initialize the DIET SeD
+    if (!res) {
+      diet_print_service_table();
+      res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+      if (server != NULL) {
+        delete server;
+      }
+    } else {
+      std::cerr << "There was a problem during services initialization" << std::endl;
       exit(1);
     }
-    if(machineServer.getAttribut("where status=1 and  machineid='"+machineId+"'").size() == 0) {
-      delete machine;
-      std::cerr << "Error: The machine of id " << machineId << " is locked" << std::endl;
-      exit(1);
-    }
-  }
+  }  else if (pid == 0) {
+    // Initialize the TMS Monitor (Opens a connection to the database)
+    MonitorTMS monitor;
+    monitor.init(vishnuId, dbConfig, machineId, batchType);
+    ppid = getppid();
 
-  // Initialize the DIET SeD
-  if (!res) {
-    diet_print_service_table();
-    res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-    if (server != NULL) {
-      delete server;
+    while(kill(ppid,0) == 0) {
+      monitor.run();
     }
   } else {
-    std::cerr << "There was a problem during services initialization" << std::endl;
+    std::cerr << "There was a problem to initialize the server" << std::endl;
     exit(1);
   }
+
 
 return res;
 }

@@ -330,16 +330,6 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -p ";
     res += u;
   }
-  u = j->getOutPutPath();
-  if (u.compare("")){
-    res += " -o ";
-    res += u;
-  }
-  u = j->getErrorPath();
-  if (u.compare("")){
-    res += " -e ";
-    res += u;
-  }
   u = j->getQueue();
   if (u.compare("")){
     res += " -q ";
