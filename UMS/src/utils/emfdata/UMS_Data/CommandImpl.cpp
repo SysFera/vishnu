@@ -91,6 +91,12 @@ void Command::_initialize()
                 m_cmdEndTime);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::COMMAND__STATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::CommandStatusType >::toAny(
+                _any, m_status);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -137,6 +143,12 @@ void Command::eSet(::ecore::EInt _featureID,
                 m_cmdEndTime);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::COMMAND__STATUS:
+    {
+        ::ecorecpp::mapping::any_traits< ::UMS_Data::CommandStatusType >::fromAny(
+                _newValue, m_status);
+    }
+        return;
 
     }
     throw "Error";
@@ -159,6 +171,8 @@ void Command::eSet(::ecore::EInt _featureID,
         return m_cmdStartTime != -1;
     case ::UMS_Data::UMS_DataPackage::COMMAND__CMDENDTIME:
         return m_cmdEndTime != -1;
+    case ::UMS_Data::UMS_DataPackage::COMMAND__STATUS:
+        return m_status != 0;
 
     }
     throw "Error";
