@@ -180,7 +180,8 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBCPU:
         return m_nbCpu != -1;
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBNODESANDCPUPERNODE:
-    return m_nbNodesAndCpuPerNode !=;
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_nbNodesAndCpuPerNode);
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__OUTPUTPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_outputPath);
