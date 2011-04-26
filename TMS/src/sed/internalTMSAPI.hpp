@@ -53,4 +53,8 @@ solveListOfQueues(diet_profile_t* pb);
 /* jobOutPutGetResult */
 int
 solveJobOutPutGetResult(diet_profile_t* pb);
+
+/* JobOutPutGetCompletedJobsOutput */
+int
+solveJobOutPutGetCompletedJobs(diet_profile_t* pb);
 #endif
