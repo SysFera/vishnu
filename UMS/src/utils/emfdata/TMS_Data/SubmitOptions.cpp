@@ -31,7 +31,7 @@ using namespace ::TMS_Data;
 
 // Default constructor
 SubmitOptions::SubmitOptions() :
-    m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_nbNodesAndCpuPerNode()
+    m_wallTime(-1), m_memory(-1), m_nbCpu(-1)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
