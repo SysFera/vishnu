@@ -81,13 +81,23 @@
         </revdescription>
         </revision>
         <revision>
-        <revnumber>5</revnumber>
+        <revnumber>6</revnumber>
         <date>21/04/2011</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Updates to TMS:
             Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. 
             Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. Added wallClokUsed in Job class.
+          </para>
+        </revdescription>
+        </revision>
+	<revision>
+        <revnumber>7</revnumber>
+        <date>26/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of UMS:
+            Added CommandStatusType Enum and an attribute status to the Command Class.
           </para>
         </revdescription>
         </revision>

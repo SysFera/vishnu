@@ -245,6 +245,12 @@
         <details key="content" value="cmdEndTime is the date of the command end (the UNIX timestamps is used)"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//CommandStatusType"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="The machineId is the identifier of the machine used by the command"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListCommands" instanceTypeName="ListCommands">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Commands" upperBound="-1"
@@ -524,5 +530,12 @@
     </eAnnotations>
     <eLiterals name="INACTIVE" literal="INACTIVE"/>
     <eLiterals name="ACTIVE" value="1" literal="ACTIVE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CommandStatusType" instanceTypeName="CommandStatusType">
+    <eAnnotations source="Description">
+      <details key="content" value="represents the different status of the commands"/>
+    </eAnnotations>
+    <eLiterals name="FAILURE" literal="FAILURE"/>
+    <eLiterals name="SUCCESS" value="1" literal="SUCCESS"/>
   </eClassifiers>
 </ecore:EPackage>
