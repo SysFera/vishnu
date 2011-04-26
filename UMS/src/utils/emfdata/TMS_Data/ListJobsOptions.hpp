@@ -147,28 +147,6 @@ namespace TMS_Data
         void setPriority(::TMS_Data::JobPriority _priority);
 
         /**
-         * \brief To get the outPutPath
-         * \return The outPutPath attribute value
-         **/
-        ::ecore::EString const& getOutPutPath() const;
-        /**
-         * \brief To set the outPutPath
-         * \param _outPutPath The outPutPath value
-         **/
-        void setOutPutPath(::ecore::EString const& _outPutPath);
-
-        /**
-         * \brief To get the errorPath
-         * \return The errorPath attribute value
-         **/
-        ::ecore::EString const& getErrorPath() const;
-        /**
-         * \brief To set the errorPath
-         * \param _errorPath The errorPath value
-         **/
-        void setErrorPath(::ecore::EString const& _errorPath);
-
-        /**
          * \brief To get the queue
          * \return The queue attribute value
          **/
@@ -217,10 +195,6 @@ namespace TMS_Data
         ::TMS_Data::JobStatus m_status;
 
         ::TMS_Data::JobPriority m_priority;
-
-        ::ecore::EString m_outPutPath;
-
-        ::ecore::EString m_errorPath;
 
         ::ecore::EString m_queue;
 

@@ -31,8 +31,8 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Job::Job() :
-    m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_endDate(-1), m_memLimit(-1),
-            m_nbNodes(-1)
+    m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
+            m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1)
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
@@ -254,32 +254,6 @@ void Job::setErrorPath(::ecore::EString const& _errorPath)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__errorPath(),
                 _old_errorPath,
                 m_errorPath
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& Job::getScriptContent() const
-{
-    return m_scriptContent;
-}
-
-void Job::setScriptContent(::ecore::EString const& _scriptContent)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_scriptContent = m_scriptContent;
-#endif
-    m_scriptContent = _scriptContent;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__scriptContent(),
-                _old_scriptContent,
-                m_scriptContent
         );
         eNotify(&notification);
     }
@@ -624,15 +598,15 @@ void Job::setNbNodes(::ecore::EInt _nbNodes)
 #endif
 }
 
-::ecore::EInt Job::getNbNodesAndCpuPerNode() const
+::ecore::EString const& Job::getNbNodesAndCpuPerNode() const
 {
     return m_nbNodesAndCpuPerNode;
 }
 
-void Job::setNbNodesAndCpuPerNode(::ecore::EInt _nbNodesAndCpuPerNode)
+void Job::setNbNodesAndCpuPerNode(::ecore::EString const& _nbNodesAndCpuPerNode)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EInt _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
+    ::ecore::EString _old_nbNodesAndCpuPerNode = m_nbNodesAndCpuPerNode;
 #endif
     m_nbNodesAndCpuPerNode = _nbNodesAndCpuPerNode;
 #ifdef ECORECPP_NOTIFICATION_API

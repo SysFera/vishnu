@@ -234,58 +234,6 @@ void ListJobsOptions::setPriority(::TMS_Data::JobPriority _priority)
 #endif
 }
 
-::ecore::EString const& ListJobsOptions::getOutPutPath() const
-{
-    return m_outPutPath;
-}
-
-void ListJobsOptions::setOutPutPath(::ecore::EString const& _outPutPath)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_outPutPath = m_outPutPath;
-#endif
-    m_outPutPath = _outPutPath;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__outPutPath(),
-                _old_outPutPath,
-                m_outPutPath
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& ListJobsOptions::getErrorPath() const
-{
-    return m_errorPath;
-}
-
-void ListJobsOptions::setErrorPath(::ecore::EString const& _errorPath)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_errorPath = m_errorPath;
-#endif
-    m_errorPath = _errorPath;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__errorPath(),
-                _old_errorPath,
-                m_errorPath
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
 ::ecore::EString const& ListJobsOptions::getQueue() const
 {
     return m_queue;

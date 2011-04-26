@@ -96,18 +96,6 @@ void ListJobsOptions::_initialize()
                 m_priority);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__OUTPUTPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_outPutPath);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__ERRORPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_errorPath);
-    }
-        return _any;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__QUEUE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
@@ -166,18 +154,6 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
                 _newValue, m_priority);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__OUTPUTPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_outPutPath);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__ERRORPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_errorPath);
-    }
-        return;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__QUEUE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
@@ -209,12 +185,6 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
         return m_status != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__PRIORITY:
         return m_priority != -1;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__OUTPUTPATH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_outPutPath);
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__ERRORPATH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_errorPath);
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__QUEUE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_queue);
