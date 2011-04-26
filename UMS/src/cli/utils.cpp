@@ -1,6 +1,6 @@
 /**
  * \file utils.cpp
- * \brief this file contains a definition of helper functions used by the command line interface 
+ * \brief this file contains a definition of helper functions used by the command line interface
  * \authors Daouda Traore (daouda.traore@sysfera.com) and Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -26,7 +26,7 @@ using namespace std;
 
 
 /**
- * \brief Display a '-' caracter 
+ * \brief Display a '-' caracter
  * \param size: The number of '-' to diplay
  * \The output stream in which the display will be done.
  */
@@ -44,7 +44,7 @@ setFill(int size, ostream& os) {
 
 /**
  * \brief Helper function to display a session
- * \param os: An output stream in which the session will be printed 
+ * \param os: An output stream in which the session will be printed
  * \param session: The session to display
  * \return The output stream in which the session has been printed
  */
@@ -71,7 +71,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   } else {
     pt =  boost::posix_time::from_time_t(dateLastConnect);
     dateLastConnectStr = boost::posix_time::to_simple_string(pt);
-  } 
+  }
 
   long  dateCreate = session->getDateCreation();
   if(dateCreate <= 0) {
@@ -114,7 +114,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
 
 /**
  * \brief Helper function to display a list of session
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param listSession: The list to display
  * \return The output stream in which the list of sessions has been printed
  */
@@ -126,7 +126,7 @@ std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
   boost::posix_time::ptime pt;
-  size_t maxSessionIdSize = std::string("SessionId").size(); 
+  size_t maxSessionIdSize = std::string("SessionId").size();
   size_t maxUserIdSize = std::string("UserId").size();
   size_t maxDateLastConnectSize = std::string("DateLastConnect").size();
   size_t maxDateCreateSize = std::string("DateCreation").size();
@@ -158,9 +158,9 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
      if(dateLastConnect > 0) {
        pt =  boost::posix_time::from_time_t(dateLastConnect);
        dateLastConnectStr = boost::posix_time::to_simple_string(pt);
-     } 
+     }
      maxDateLastConnectSize = max(maxDateLastConnectSize, dateLastConnectStr.size());
-     
+
      dateCreate = (listSession.getSessions().get(i))->getDateCreation();
      if(dateCreate > 0) {
        pt =  boost::posix_time::from_time_t(dateCreate);
@@ -174,7 +174,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
        dateCloseStr = boost::posix_time::to_simple_string(pt);
      }
      maxDateCloseSize = max(maxDateCloseSize, dateCloseStr.size());
-     
+
      timeOut = (listSession.getSessions().get(i))->getTimeout();
      ostringstream os_timeOut;
      os_timeOut << timeOut;
@@ -200,10 +200,10 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
     userId = (listSession.getSessions().get(i))->getUserId();
 
-    
+
     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
     if(dateLastConnect <= 0) {
-      dateLastConnectStr = blank; 
+      dateLastConnectStr = blank;
     } else {
       pt =  boost::posix_time::from_time_t(dateLastConnect);
       dateLastConnectStr = boost::posix_time::to_simple_string(pt);
@@ -251,7 +251,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
 
 /**
  * \brief Helper function to display a local account
- * \param os: The output stream in which the local account will be printed 
+ * \param os: The output stream in which the local account will be printed
  * \param account: The local account  to display
  * \return The output stream in which the local account has been printed
  */
@@ -281,7 +281,7 @@ operator<<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
 
 /**
  * \brief Helper function to display a list of local accounts
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsLocalAccounts: The list to display
  * \return The output stream in which the list of local accounts has been printed
  */
@@ -330,8 +330,8 @@ ostream& operator<<(ostream& os,  UMS_Data::ListLocalAccounts& lsLocalAccount) {
 }
 
 /**
- * \brief Helper function to display a machine 
- * \param os: The output stream in which the machine will be printed 
+ * \brief Helper function to display a machine
+ * \param os: The output stream in which the machine will be printed
  * \param machine: The machine  to display
  * \return The output stream in which the machine has been printed
  */
@@ -363,7 +363,7 @@ ostream&
 
 /**
  * \brief Helper function to display a list of machines
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsMachine: The list to display
  * \return The output stream in which the list of machines has been printed
  */
@@ -422,8 +422,8 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 }
 
 /**
- * \brief Helper function to display a command 
- * \param os: The output stream in which the command will be printed 
+ * \brief Helper function to display a command
+ * \param os: The output stream in which the command will be printed
  * \param command: The command  to display
  * \return The output stream in which the command has been printed
  */
@@ -432,42 +432,46 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 std::ostream&
 operator<<(std::ostream& os, const UMS_Data::Command_ptr& command) {
 
-   std::string commandId = command->getCommandId();
-   std::string sessionId = command->getSessionId();
-   std::string machineId = command->getMachineId();
-   std::string descr = command->getCmdDescription();
+  std::string commandId = command->getCommandId();
+  std::string sessionId = command->getSessionId();
+  std::string machineId = command->getMachineId();
+  std::string descr = command->getCmdDescription();
+  int status = command->getStatus();
 
-   boost::posix_time::ptime pt;
-   std::string undefined = "Undefined";
-   std::string startTimeStr = undefined;
-   std::string endTimeStr = undefined;
+  std::string statusStr = (status?"SUCCESS":"FAILURE");
 
-   long startTime = command->getCmdStartTime();
-   if(startTime > 0) {
-     pt =  boost::posix_time::from_time_t(startTime);
-     startTimeStr = boost::posix_time::to_simple_string(pt);
-   }
+  boost::posix_time::ptime pt;
+  std::string undefined = "Undefined";
+  std::string startTimeStr = undefined;
+  std::string endTimeStr = undefined;
 
-   long endTime = command->getCmdEndTime();
-   if(endTime > 0) {
-     pt =  boost::posix_time::from_time_t(endTime);
-     endTimeStr = boost::posix_time::to_simple_string(pt);
-   }
+  long startTime = command->getCmdStartTime();
+  if(startTime > 0) {
+    pt =  boost::posix_time::from_time_t(startTime);
+    startTimeStr = boost::posix_time::to_simple_string(pt);
+  }
 
-   os << "============ Command for " << commandId << "===========" << std::endl;
-   os << setw(25) << right << "CommandId: " << commandId << endl;
-   os << setw(25) << right << "SessionId: " << sessionId << endl;
-   os << setw(25) << right << "MachineId: "  << machineId << endl;
-   os << setw(25) << right << "Description: "  << descr << endl ;
-   os << setw(25) << right << "Start Time: " << startTimeStr << endl;
-   os << setw(25) << right << "End Time: " << endTimeStr << endl;
+  long endTime = command->getCmdEndTime();
+  if(endTime > 0) {
+    pt =  boost::posix_time::from_time_t(endTime);
+    endTimeStr = boost::posix_time::to_simple_string(pt);
+  }
 
- return os;
+  os << "============ Command for " << commandId << "===========" << std::endl;
+  os << setw(25) << right << "CommandId: " << commandId << endl;
+  os << setw(25) << right << "SessionId: " << sessionId << endl;
+  os << setw(25) << right << "MachineId: "  << machineId << endl;
+  os << setw(25) << right << "Description: "  << descr << endl ;
+  os << setw(25) << right << "Start Time: " << startTimeStr << endl;
+  os << setw(25) << right << "End Time: " << endTimeStr << endl;
+  os << setw(25) << right << "Status: "  << status << " (" << statusStr << ")" << endl;
+
+  return os;
 }
 
 /**
  * \brief Helper function to display a list of command
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsCommand: The list to display
  * \return The output stream in which the list of command has been printed
  */
@@ -480,6 +484,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
    std::string commandId;
    std::string sessionId;
    std::string machineId;
+   int status;
    long startTime;
    long endTime;
    std::string blank =  "  ----  ";
@@ -490,6 +495,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
    size_t maxMachineIdSize = std::string("MachineId").size();
    size_t maxStartTimeSize = std::string("Start Time").size();
    size_t maxEndTimeSize = std::string("End Time").size();
+   size_t maxStatusSize = std::string("Status").size()+1;
    boost::posix_time::ptime pt;
 
 
@@ -506,12 +512,12 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      maxMachineIdSize = max(maxMachineIdSize, machineId.size());
 
      startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
-     if(startTime > 0) { 
+     if(startTime > 0) {
        pt =  boost::posix_time::from_time_t(startTime);
        startTimeStr = boost::posix_time::to_simple_string(pt);
      }
      maxStartTimeSize = max(maxStartTimeSize, startTimeStr.size());
-     
+
      endTime = (lsCommand.getCommands().get(i))->getCmdEndTime();
      if(endTime > 0) {
        pt =  boost::posix_time::from_time_t(endTime);
@@ -523,12 +529,13 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
 
   os << setw(maxCommandIdSize+2) << left << "CommandId" << setw(maxSessionIdSize+2) << left << "SessionId" << setw(maxMachineIdSize+2) << left << "MachineId";
   os << setw(maxStartTimeSize+2) << left << "Start Time" << setw(maxEndTimeSize+2) << left << "End Time";
-  os << endl;
+  os << setw(maxStatusSize+2) << left << "Status"<< endl;
   setFill(maxCommandIdSize, os);
   setFill(maxSessionIdSize, os);
   setFill(maxMachineIdSize, os);
   setFill(maxStartTimeSize, os);
   setFill(maxEndTimeSize, os);
+  setFill(maxStatusSize, os);
   os << endl;
 
   for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
@@ -536,6 +543,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      sessionId = (lsCommand.getCommands().get(i))->getSessionId();
      machineId = (lsCommand.getCommands().get(i))->getMachineId();
+     status = (lsCommand.getCommands().get(i))->getStatus();
 
      startTime = (lsCommand.getCommands().get(i))->getCmdStartTime();
      if(startTime > 0) {
@@ -558,6 +566,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
      os << setw(maxMachineIdSize+2) << left << machineId;
      os << setw(maxStartTimeSize+2) << left << startTimeStr ;
      os << setw(maxEndTimeSize+2) << left << endTimeStr;
+     os << setw(maxStatusSize+2) << left << (status?"SUCCESS":"FAILURE");
      os << endl;
   }
 
@@ -566,7 +575,7 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
 
 /**
  * \brief Helper function to display an option value
- * \param os: The output stream in which the option value will be printed 
+ * \param os: The output stream in which the option value will be printed
  * \param command: The option value to display
  * \return The output stream in which the option value has been printed
  */
@@ -588,7 +597,7 @@ operator<<(std::ostream& os, const UMS_Data::OptionValue_ptr& optionValue) {
 
 /**
  * \brief Helper function to display a list of options
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsOptions: The list to display
  * \return The output stream in which the list of options has been printed
  */
@@ -633,7 +642,7 @@ operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions) {
 
 /**
  * \brief Helper function to display a user
- * \param os: The output stream in which the user will be printed 
+ * \param os: The output stream in which the user will be printed
  * \param user: The user to display
  * \return The output stream in which the user has been printed
  */
@@ -665,7 +674,7 @@ operator<<(std::ostream& os, const UMS_Data::User_ptr& user) {
 
 /**
  * \brief Helper function to display a list of users
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsUsers: The list to display
  * \return The output stream in which the list of users has been printed
  */
