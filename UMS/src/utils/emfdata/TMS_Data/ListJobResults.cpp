@@ -55,15 +55,15 @@ ListJobResults::~ListJobResults()
 
 // Attributes
 
-::ecore::EString const& ListJobResults::getNbJobs() const
+::ecore::EInt ListJobResults::getNbJobs() const
 {
     return m_nbJobs;
 }
 
-void ListJobResults::setNbJobs(::ecore::EString const& _nbJobs)
+void ListJobResults::setNbJobs(::ecore::EInt _nbJobs)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_nbJobs = m_nbJobs;
+    ::ecore::EInt _old_nbJobs = m_nbJobs;
 #endif
     m_nbJobs = _nbJobs;
 #ifdef ECORECPP_NOTIFICATION_API
