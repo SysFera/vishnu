@@ -25,7 +25,8 @@ std::auto_ptr< ::UMS_Data::UMS_DataPackage > UMS_DataPackage::s_instance;
 
 ::UMS_Data::UMS_DataPackage_ptr UMS_DataPackage::_instance()
 {
-    if (!s_instance.get()) {
+    if (!s_instance.get())
+    {
         new UMS_DataPackage();
     }
     return s_instance.get();
