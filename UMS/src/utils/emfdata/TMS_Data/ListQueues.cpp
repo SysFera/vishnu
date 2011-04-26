@@ -31,7 +31,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-ListQueues::ListQueues()
+ListQueues::ListQueues() :
+    m_nbQueues(0)
 {
 
     m_queues.reset(new ::ecorecpp::mapping::ReferenceEListImpl<

@@ -31,7 +31,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-ListJobResults::ListJobResults()
+ListJobResults::ListJobResults() :
+    m_nbJobs(0)
 {
 
     m_Results.reset(new ::ecorecpp::mapping::ReferenceEListImpl<
