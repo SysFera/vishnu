@@ -91,6 +91,13 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
   mjob.setJobId(vishnuJobId);
 
+  string scriptContentStr = std::string(scriptContent);
+  size_t pos = scriptContentStr.find("'");
+  while(pos!=std::string::npos) {
+    scriptContentStr.replace(pos, 1, " ");
+    pos = scriptContentStr.find("'");
+  }
+  
   Database* databaseVishnu = ServerTMS::getInstance()->getDatabaseVishnu();
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
@@ -100,7 +107,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     " values ("+numsession+",'"+mjob.getSubmitMachineId()+"','"+ mjob.getSubmitMachineName()+"','"+vishnuJobId+"','"
     +BatchJobId+"',"+convertToString(mbatchType)+",'"+mjob.getJobName()+"','"+mjob.getJobPath()+"','"
     +mjob.getOutputPath()+"','"+mjob.getErrorPath()+"','"
-    +std::string(scriptContent)+"',"+convertToString(mjob.getJobPrio())+","+convertToString(mjob.getNbCpus())+",'"
+    +scriptContentStr+"',"+convertToString(mjob.getJobPrio())+","+convertToString(mjob.getNbCpus())+",'"
     +mjob.getJobWorkingDir()+"',"
     +convertToString(mjob.getStatus())+",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue()
     +"',"+convertToString(mjob.getWallClockLimit())+",'"+mjob.getGroupName()+"','"+mjob.getJobDescription()+"',"
@@ -220,7 +227,7 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setJobDescription(*(++iter));
       mjob.setMemLimit(convertToInt(*(++iter)));
       mjob.setNbNodes(convertToInt(*(++iter)));
-      mjob.setNbNodesAndCpuPerNode(1); // a remplacer par  
+      mjob.setNbNodesAndCpuPerNode(*(++iter)); // a remplacer par  
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
