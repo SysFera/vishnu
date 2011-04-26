@@ -32,7 +32,7 @@ using namespace ::UMS_Data;
 // Default constructor
 Command::Command() :
     m_commandId(""), m_sessionId(""), m_machineId(""), m_cmdStartTime(-1),
-            m_cmdEndTime(-1)
+            m_cmdEndTime(-1), m_status(0)
 {
 
     /*PROTECTED REGION ID(CommandImpl__CommandImpl) START*/
@@ -202,6 +202,32 @@ void Command::setCmdEndTime(::ecore::ELong _cmdEndTime)
                 (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getCommand__cmdEndTime(),
                 _old_cmdEndTime,
                 m_cmdEndTime
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::UMS_Data::CommandStatusType Command::getStatus() const
+{
+    return m_status;
+}
+
+void Command::setStatus(::UMS_Data::CommandStatusType _status)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::UMS_Data::CommandStatusType _old_status = m_status;
+#endif
+    m_status = _status;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getCommand__status(),
+                _old_status,
+                m_status
         );
         eNotify(&notification);
     }

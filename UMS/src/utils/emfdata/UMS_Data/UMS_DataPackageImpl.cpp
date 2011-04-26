@@ -243,6 +243,10 @@ UMS_DataPackage::UMS_DataPackage()
     m_Command__cmdEndTime->setFeatureID(
             ::UMS_Data::UMS_DataPackage::COMMAND__CMDENDTIME);
     m_CommandEClass->getEStructuralFeatures().push_back(m_Command__cmdEndTime);
+    m_Command__status = new ::ecore::EAttribute();
+    m_Command__status->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::COMMAND__STATUS);
+    m_CommandEClass->getEStructuralFeatures().push_back(m_Command__status);
 
     // ListCommands
     m_ListCommandsEClass = new ::ecore::EClass();
@@ -504,6 +508,11 @@ UMS_DataPackage::UMS_DataPackage()
     m_StatusTypeEEnum->setClassifierID(STATUSTYPE);
     m_StatusTypeEEnum->setEPackage(this);
     getEClassifiers().push_back(m_StatusTypeEEnum);
+
+    m_CommandStatusTypeEEnum = new ::ecore::EEnum();
+    m_CommandStatusTypeEEnum->setClassifierID(COMMANDSTATUSTYPE);
+    m_CommandStatusTypeEEnum->setEPackage(this);
+    getEClassifiers().push_back(m_CommandStatusTypeEEnum);
 
     // Create data types
 
@@ -1043,6 +1052,19 @@ UMS_DataPackage::UMS_DataPackage()
     m_Command__cmdEndTime->setUnique(true);
     m_Command__cmdEndTime->setDerived(false);
     m_Command__cmdEndTime->setOrdered(true);
+    m_Command__status->setEType(m_CommandStatusTypeEEnum);
+    m_Command__status->setName("status");
+    m_Command__status->setDefaultValueLiteral("0");
+    m_Command__status->setLowerBound(0);
+    m_Command__status->setUpperBound(1);
+    m_Command__status->setTransient(false);
+    m_Command__status->setVolatile(false);
+    m_Command__status->setChangeable(true);
+    m_Command__status->setUnsettable(false);
+    m_Command__status->setID(false);
+    m_Command__status->setUnique(true);
+    m_Command__status->setDerived(false);
+    m_Command__status->setOrdered(true);
     // ListCommands
     m_ListCommandsEClass->setName("ListCommands");
     m_ListCommandsEClass->setAbstract(false);
@@ -1673,6 +1695,30 @@ UMS_DataPackage::UMS_DataPackage()
         m_StatusTypeEEnum->getELiterals().push_back(_el);
     }
 
+    // CommandStatusType
+    m_CommandStatusTypeEEnum->setName("CommandStatusType");
+    m_CommandStatusTypeEEnum->setSerializable(true);
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // FAILURE
+        _el->setName("FAILURE");
+        _el->setValue(0);
+        _el->setLiteral("FAILURE");
+        _el->setEEnum(m_CommandStatusTypeEEnum);
+        m_CommandStatusTypeEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // SUCCESS
+        _el->setName("SUCCESS");
+        _el->setValue(1);
+        _el->setLiteral("SUCCESS");
+        _el->setEEnum(m_CommandStatusTypeEEnum);
+        m_CommandStatusTypeEEnum->getELiterals().push_back(_el);
+    }
+
     _initialize();
 }
 
@@ -1763,6 +1809,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EEnum_ptr UMS_DataPackage::getStatusType()
 {
     return m_StatusTypeEEnum;
+}
+::ecore::EEnum_ptr UMS_DataPackage::getCommandStatusType()
+{
+    return m_CommandStatusTypeEEnum;
 }
 
 ::ecore::EAttribute_ptr UMS_DataPackage::getConnectOptions__closePolicy()
@@ -1908,6 +1958,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getCommand__cmdEndTime()
 {
     return m_Command__cmdEndTime;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getCommand__status()
+{
+    return m_Command__status;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getListCommands__Commands()
 {
