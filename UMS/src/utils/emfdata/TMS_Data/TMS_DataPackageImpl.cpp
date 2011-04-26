@@ -1450,7 +1450,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobResultsEClass->setAbstract(false);
     m_ListJobResultsEClass->setInterface(false);
     m_ListJobResults__nbJobs->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_ListJobResults__nbJobs->setName("nbJobs");
     m_ListJobResults__nbJobs->setDefaultValueLiteral("0");
     m_ListJobResults__nbJobs->setLowerBound(0);
