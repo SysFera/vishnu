@@ -87,7 +87,7 @@
         <revdescription>
           <para>Updates to TMS:
             Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. 
-            Removed of outputPah and errorPath of ListJobsOptions. Modified JobResult to JobOutputInfo. Modified ListJobResults to ListJobOutputInfo.
+            Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. Added wallClokUsed in Job class.
           </para>
         </revdescription>
         </revision>
