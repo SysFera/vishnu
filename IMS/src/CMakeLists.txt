@@ -5,4 +5,4 @@ endif (NOT CLIENT_ONLY)
 
 add_subdirectory(api)
 add_subdirectory(client)
-#add_subdirectory(cli)
+add_subdirectory(cli)

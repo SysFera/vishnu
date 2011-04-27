@@ -8,6 +8,8 @@
 #include "ExecConfiguration.hpp"
 #include "constants.hpp"
 
+using namespace std;
+
 const std::string simple_cast_traits<std::string>::zero_value = "";
 
 /**
@@ -48,4 +50,18 @@ ExecConfiguration::getConfigValue(vishnu::param_type_t param, std::string& value
     value = it->second;
     return true;
   }
+}
+
+string
+ExecConfiguration::scriptToString(){
+  string res;
+  for (map<string, string>::iterator it = mconfig.begin();
+       it != mconfig.end();
+       it++){
+    res += it->first;
+    res += "=";
+    res += it->second;
+    res += "\n";
+  }
+  return res;
 }
