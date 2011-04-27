@@ -99,7 +99,7 @@ public:
       //To add the number of the cpu to the request
       addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
     } else {
-      sqlRequest.append(" and status < 4 "); 
+      sqlRequest.append(" and status < 5 "); 
     }
 
     //To check the job priority
@@ -136,7 +136,7 @@ public:
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
                                 "nbNodesAndCpuPerNode from job, vsession "
                                 "where vsession.numsessionid=job.vsession_numsessionid"
-                                " and status >=0 and job.submitMachineId='"+mmachineId+"'";
+                                " and status > 0 and job.submitMachineId='"+mmachineId+"'";
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;

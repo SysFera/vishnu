@@ -134,6 +134,7 @@ int JobServer::cancelJob()
   ::ecorecpp::serializer::serializer jobSer(name);
 
   std::string batchJobId;
+  std::string jobId;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
   std::string sqlCancelRequest = "SELECT batchJobId from job, vsession "
@@ -153,7 +154,7 @@ int JobServer::cancelJob()
   }
 
   std::cout << "JobServer::cancelJob: batchJobId = " << batchJobId << std::endl;
-
+  jobId = mjob.getJobId(); //Id of the job in the DataBase
   mjob.setJobId(batchJobId); //To reset the jobId
 
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
@@ -176,6 +177,9 @@ int JobServer::cancelJob()
     throw TMSVishnuException(code, message);
   }
 
+  std::string sqlUpdatedRequest = "UPDATE job SET status=6 where jobId='"+jobId+"'";
+  ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
+
   return 0;
 }
 
@@ -196,8 +200,8 @@ TMS_Data::Job JobServer::getJobInfo() {
                                 "outputPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
                                 "nbNodesAndCpuPerNode from job, vsession "
-                                "where vsession.numsessionid=job.vsession_numsessionid"
-                                " and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
+                                "where vsession.numsessionid=job.vsession_numsessionid "
+                                " and status > 0 and status < 6 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
   
