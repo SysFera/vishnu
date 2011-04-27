@@ -332,16 +332,6 @@ std::string JobServer::getMachineName() {
   return machineName;
 }
 
-bool JobServer::isJobOwnerOf(std::string const& owner, const std::string& jobId) {
-
-  std::string sqlCheckOwnerRequest = "SELECT jobId from job, vsession "
-                                "where vsession.numsessionid=job.vsession_numsessionid "
-                                " and owner='"+owner+"' and jobId='"+jobId+"'";
-
-  boost::scoped_ptr<DatabaseResult> sqlCheckOwnerResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlCheckOwnerRequest.c_str()));
-
-  return (sqlCheckOwnerResult->getNbTuples() != 0);
-}
 /**
  * \brief Destructor
  */
