@@ -98,7 +98,7 @@ ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
 }
 int
 ProcessServer::authentifyProcess(IMS_Data::Process_ptr proc){
-  string request = "UPDATE \"process\" SET \"dietname\"='"+proc->getDietId()+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"vishnuname\"='"+proc->getProcessName()+"' AND \"machineid\"='"+proc->getMachineId()+"'";
+  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PRUNNING)+"', \"dietname\"='"+proc->getDietId()+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"vishnuname\"='"+proc->getProcessName()+"' AND \"machineid\"='"+proc->getMachineId()+"' AND \"pstatus\"='"+convertToString(PUNDEF)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -120,17 +120,6 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
   return IMS_SUCCESS;
 }
 
-string
-ProcessServer::getMidFromHost(string hostname){
-  string req = "SELECT * from machine where name='"+hostname+"'";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
-  if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown hostname");
-  }
-  vector<string> res;
-  res = result->get(0);
-  return res.at(MIDPOS);
-}
 
 bool
 ProcessServer::isIMSSeD(string Pname){

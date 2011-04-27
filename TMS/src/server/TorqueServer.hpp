@@ -75,6 +75,7 @@ class TorqueServer : public BatchServer
 
   int convertTorqueStateToVishnuState(std::string state); 
 
+  int convertTorquePrioToVishnuPrio(const int& prio); 
   /**
    * \brief To add an option with the corresponding values
    * \fn void fill(struct attrl* attr, bool& first, char* name, char* res, char* val, enum batch_op op)
