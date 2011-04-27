@@ -34,6 +34,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
   int vishnuId = 0;
+  int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
   std::string dietConfigFile;
@@ -51,6 +52,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.initFromFile(argv[1]);
     config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
+    config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
@@ -119,7 +121,7 @@ int main(int argc, char* argv[], char* envp[]) {
     }
   }  else if (pid == 0) {
     // Initialize the TMS Monitor (Opens a connection to the database)
-    MonitorTMS monitor;
+    MonitorTMS monitor(interval);
     monitor.init(vishnuId, dbConfig, machineId, batchType);
     ppid = getppid();
 

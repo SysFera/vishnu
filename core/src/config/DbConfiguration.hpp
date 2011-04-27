@@ -70,6 +70,11 @@ public:
    * \return database user password
    */
   const std::string& getDbUserPassword() const { return mdbPassword; }
+   /**
+   * \brief Get the monitor TMS refresh period
+   * \return the refresh period
+   */
+  int getIntervalMonitorTMS() const { return mIntervalMonitor; }
 
 protected:
 
@@ -111,6 +116,11 @@ protected:
    * \brief Attribute user password to connect to the database
    */
   std::string mdbPassword;
+
+  /**
+   * \brief The Monitor refresh period
+   */
+  int mIntervalMonitor;
 };
 
 #endif // _DBCONFIGURATION_HPP_
