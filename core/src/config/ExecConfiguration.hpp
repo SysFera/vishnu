@@ -97,6 +97,12 @@ public:
     }
   }
 
+  /***
+   * \brief To convert the script in a string
+   */
+  std::string
+  scriptToString();
+
 protected:
   ConfigMap mconfig;
 };

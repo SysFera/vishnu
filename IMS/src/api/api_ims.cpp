@@ -3,7 +3,7 @@
 #include "QueryProxy.hpp"
 
 int
-exportCommands(const string sessionKey,
+vishnu::exportCommands(const string sessionKey,
 	       const string oldSessionId,
 	       string filename,
 	       IMS_Data::ExportOp op)
@@ -12,7 +12,7 @@ exportCommands(const string sessionKey,
 }
 
 int
-getMetricCurrentValue(const string sessionKey,
+vishnu::getMetricCurrentValue(const string sessionKey,
 		      string machineId,
 		      IMS_Data::Metric& val,
 		      IMS_Data::CurMetricOp op)
@@ -21,7 +21,7 @@ getMetricCurrentValue(const string sessionKey,
 }
 
 int
-getMetricHistory(const string sessionKey,
+vishnu::getMetricHistory(const string sessionKey,
 		 string machineId,
 		 IMS_Data::MetricType type,
 		 IMS_Data::ListMetric& list,
@@ -32,13 +32,13 @@ getMetricHistory(const string sessionKey,
 
 
 int
-getProcesses(const string sessionKey,
+vishnu::getProcesses(const string sessionKey,
 	     IMS_Data::ListProcesses& list,
 	     IMS_Data::ProcessOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);  
-  string name = "solve_getProcesses";
+  string name = "int_getProcesses";
   QueryProxy<IMS_Data::ProcessOp, IMS_Data::ListProcesses> 
     query(op, sessionProxy, name);
 
@@ -58,7 +58,7 @@ getProcesses(const string sessionKey,
 
 
 int
-setSystemInfo(const string sessionKey,
+vishnu::setSystemInfo(const string sessionKey,
 	      IMS_Data::SystemInfo sys)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -66,7 +66,7 @@ setSystemInfo(const string sessionKey,
 
 
 int 
-setSystemThreshold(const int sessionKey,
+vishnu::setSystemThreshold(const int sessionKey,
 		   IMS_Data::Threshold threshold)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -74,7 +74,7 @@ setSystemThreshold(const int sessionKey,
 
 
 int 
-getSystemThreshold(const int sessionKey,
+vishnu::getSystemThreshold(const int sessionKey,
 		   IMS_Data::ListThreshold& list,
 		   IMS_Data::ThresholdOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
@@ -83,7 +83,7 @@ getSystemThreshold(const int sessionKey,
 
 
 int
-defineUserIdentifier(const int sessionKey,
+vishnu::defineUserIdentifier(const int sessionKey,
 		     string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -91,7 +91,7 @@ defineUserIdentifier(const int sessionKey,
 
 
 int
-defineMachineIdentifier(const int sessionKey,
+vishnu::defineMachineIdentifier(const int sessionKey,
 			string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -99,7 +99,7 @@ defineMachineIdentifier(const int sessionKey,
 
 
 int
-defineJobIdentifier(const int sessionKey,
+vishnu::defineJobIdentifier(const int sessionKey,
 		    string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -107,7 +107,7 @@ defineJobIdentifier(const int sessionKey,
 
 
 int
-defineTransferIdentifier(const int sessionKey,
+vishnu::defineTransferIdentifier(const int sessionKey,
 			 string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -115,7 +115,7 @@ defineTransferIdentifier(const int sessionKey,
 
 
 int
-loadShed(const string sessionKey,
+vishnu::loadShed(const string sessionKey,
 	 string machineId,
 	 IMS_Data::LoadShedType)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
@@ -124,7 +124,7 @@ loadShed(const string sessionKey,
 
 
 int
-setUpdateFrequency(const string sessionKey,
+vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -132,7 +132,7 @@ setUpdateFrequency(const string sessionKey,
 
 
 int
-getUpdateFrequency(const string sessionKey,
+vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -140,7 +140,7 @@ getUpdateFrequency(const string sessionKey,
 
 
 int
-stop(const string sessionKey,
+vishnu::stop(const string sessionKey,
      IMS_Data::Process proc)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -148,7 +148,7 @@ stop(const string sessionKey,
 
 
 int
-getSystemInfo(const string sessionKey,
+vishnu::getSystemInfo(const string sessionKey,
 	      IMS_Data::ListSysInfo& list,
 	      IMS_Data::SysInfoOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
@@ -157,7 +157,7 @@ getSystemInfo(const string sessionKey,
 
 
 int
-restart(const string sessionKey,
+vishnu::restart(const string sessionKey,
 	string machineId,
 	IMS_Data::RestartOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){

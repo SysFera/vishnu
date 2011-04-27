@@ -76,6 +76,7 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string dietConfigFile;
   std::string sendmailScriptPath;
   struct sigaction action;
+  string UMSTYPE = "UMS";
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -97,6 +98,7 @@ int main(int argc, char* argv[], char* envp[]) {
     exit(1);
   }
 
+
   // Fork a child for UMS monitoring
   pid_t pid;
   pid_t ppid;
@@ -106,6 +108,7 @@ int main(int argc, char* argv[], char* envp[]) {
     //Initialize the UMS Server (Opens a connection to the database)
     boost::scoped_ptr<ServerUMS> server(ServerUMS::getInstance());
     res = server->init(vishnuId, dbConfig, sendmailScriptPath);
+    registerSeD(UMSTYPE, config);
 
     //Declaration of signal handler
     action.sa_handler = controlSignal;
