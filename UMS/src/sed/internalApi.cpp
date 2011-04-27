@@ -1075,12 +1075,6 @@ solveGenerique(diet_profile_t* pb) {
   List* list = NULL;
 
   try {
-
-    //To parse the object serialized
-    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
-    }
-
     QueryType query(options, sessionServer);
 
     //MAPPER CREATION
@@ -1088,6 +1082,11 @@ solveGenerique(diet_profile_t* pb) {
     mapperkey = mapper->code(query.getCommandName());
     mapper->code(std::string(optionValueSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
 
     list = query.list();
 
