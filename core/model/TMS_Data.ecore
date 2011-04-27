@@ -259,20 +259,20 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobPriority" instanceTypeName="JobPriority">
     <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
-    <eLiterals name="VERY_LOW" value="100"/>
-    <eLiterals name="LOW" value="200"/>
-    <eLiterals name="NORMAL" value="300"/>
-    <eLiterals name="HIGH" value="400"/>
-    <eLiterals name="VERY_HIGH" value="500"/>
+    <eLiterals name="VERY_LOW" value="1"/>
+    <eLiterals name="LOW" value="2"/>
+    <eLiterals name="NORMAL" value="3"/>
+    <eLiterals name="HIGH" value="4"/>
+    <eLiterals name="VERY_HIGH" value="5"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobStatus" instanceTypeName="JobStatus">
     <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
-    <eLiterals name="SUBMITTED" literal="SUBMITTED"/>
-    <eLiterals name="QUEUED" value="1"/>
-    <eLiterals name="WAITING" value="2"/>
-    <eLiterals name="RUNNING" value="3"/>
-    <eLiterals name="TERMINATED" value="4" literal="TERMINATED"/>
-    <eLiterals name="CANCELLED" value="5" literal="CANCELLED"/>
+    <eLiterals name="SUBMITTED" value="1" literal="SUBMITTED"/>
+    <eLiterals name="QUEUED" value="2"/>
+    <eLiterals name="WAITING" value="3"/>
+    <eLiterals name="RUNNING" value="4"/>
+    <eLiterals name="TERMINATED" value="5" literal="TERMINATED"/>
+    <eLiterals name="CANCELLED" value="6" literal="CANCELLED"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProgressOptions" instanceTypeName="ProgressOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
@@ -426,11 +426,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="QueuePriority" instanceTypeName="QueuePriority">
     <eLiterals name="UNDEFINED" value="-1"/>
-    <eLiterals name="VERY_LOW"/>
-    <eLiterals name="LOW" value="1"/>
-    <eLiterals name="NORMAL" value="2"/>
-    <eLiterals name="HIGH" value="3"/>
-    <eLiterals name="VERY_HIGH" value="4"/>
+    <eLiterals name="VERY_LOW" value="1"/>
+    <eLiterals name="LOW" value="2"/>
+    <eLiterals name="NORMAL" value="3"/>
+    <eLiterals name="HIGH" value="4"/>
+    <eLiterals name="VERY_HIGH" value="5"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="QueueStatus" instanceTypeName="QueueStatus">
     <eLiterals name="NOT_STARTED" literal="NOT_STARTED"/>
