@@ -12,17 +12,55 @@
 #include "utilVishnu.hpp"
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
+#include "DbFactory.hpp"
 
+// To get the hostname
+#include <unistd.h>
+
+using namespace std;
 
 // TODO: Implement this function
 int
-vishnu::registerSeD(CmdType type, ExecConfiguration config){
-  // config.getContentAsString()
-  // getHostname()
-  // getMachineIdFromHostname()
-  // insert into process() values (status(undefined), type, machine, timestamp, scriptContent)
+vishnu::registerSeD(string type, ExecConfiguration config){
+  string s = config.scriptToString();
+  // Hostname limit size of 200
+  char hname[200];
+  gethostname(hname, 199);
+  string mid = getMidFromHost(hname);
+  // Insert sed statement
+  string req = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) values ('";
+  req += convertToString(PUNDEF);
+  req += "', '";
+  req += type;
+  req += "', '";
+  req += string(mid);
+  req += "', CURRENT_TIMESTAMP, '"+s+"')";
+  // Database execution
+  try {
+    DbFactory factory;
+    Database* database = factory.getDatabaseInstance();
+    database->process(req.c_str());
+  } catch (SystemException& e) {
+    throw (e);
+  }
   return 0;
 }
+
+string
+vishnu::getMidFromHost(string hostname){
+  DbFactory factory;
+  Database* database = factory.getDatabaseInstance();
+  string req = "SELECT * from machine where name='"+hostname+"'";
+  boost::scoped_ptr<DatabaseResult> result(database->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Unknown hostname");
+  }
+  vector<string> res;
+  res = result->get(0);
+  string ret = res.at(MIDPOS);
+  return ret;
+}
+
 
 /**
 * \brief Function to get a random number
