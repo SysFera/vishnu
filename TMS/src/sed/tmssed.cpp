@@ -43,6 +43,7 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string batchTypeStr;
   std::string machineId;
   std::string remoteBinDirectory;
+  string TMSTYPE = "TMS";
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -90,6 +91,7 @@ int main(int argc, char* argv[], char* envp[]) {
     //Initialize the TMS Server
     boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
     res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
+    registerSeD(TMSTYPE, config);
 
     //A remettre dans le fichier util server
     {
