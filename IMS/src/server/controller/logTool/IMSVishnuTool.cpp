@@ -103,7 +103,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
       // If it is on the same machine as the sed
       if (hname.compare(string(msyshName))){
 	log = "Disconnexion of the component with the name : " + string(msg[i].componentName);
-	p->setProcessName(string(msg[i].componentName));
+	p->setDietId(string(msg[i].componentName));
 	try{
 	  mproc.disconnectProcess(p);
 	} catch(SystemException& e){
