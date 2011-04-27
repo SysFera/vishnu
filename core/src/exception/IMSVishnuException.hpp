@@ -9,7 +9,7 @@
 #include "UserException.hpp"
 
 // Definitions of IMS specific error codes
-
+static const int ERRCODE_INVPROCESS = 301;
 
 
 class IMSVishnuException: public UserException{

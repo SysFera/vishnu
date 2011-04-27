@@ -5,7 +5,12 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
+#include "controller/logTool/Watcher.hpp"
+#include "controller/logTool/ToolFactory.hpp"
+#include <boost/thread.hpp>
+
 using namespace vishnu;
+using namespace boost;
 /**
  * \mainpage IMS
  *
@@ -77,13 +82,24 @@ int main(int argc, char* argv[], char* envp[]) {
   // Initialize the UMS Server (Opens a connection to the database)
   ServerIMS* server = ServerIMS::getInstance();
   res = server->init(vishnuId, dbConfig, sendmailScriptPath);
+
+  // Watcher thread
+  Watcher w(IMSVishnuTool_v1, argc, argv);
+  thread thr1(bind(&Watcher::run, &w));
+  thr1.join();
+
   // Initialize the DIET SeD
   if (!res) {
+    cout << "*****************************Printing services ! " << endl;
     diet_print_service_table();
-    res = diet_SeD(argv[1], argc, argv);
+    res = diet_SeD(dietConfigFile.c_str(), argc, argv);
   } else {
     std::cerr << "There was a problem during services initialization" << std::endl;
     exit(1);
   }
+  while(1){
+    sleep(1000);
+  }
+
   return res;
 }
