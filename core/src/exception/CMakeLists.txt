@@ -8,7 +8,7 @@ ADD_LIBRARY(exception-vishnu STATIC
  UserException.cpp
  UMSVishnuException.cpp
  TMSVishnuException.cpp
-#  IMSVishnuException.cpp
+ IMSVishnuException.cpp
 #  FMSVishnuException.cpp
  InternalVishnuException.cpp
 )
@@ -21,7 +21,7 @@ INSTALL( FILES
     UMSVishnuException.hpp
     TMSVishnuException.hpp
 #     FMSVishnuException.hpp
-#     IMSVishnuException.hpp
+    IMSVishnuException.hpp
 
     DESTINATION
     include

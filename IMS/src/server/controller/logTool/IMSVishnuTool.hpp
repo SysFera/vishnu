@@ -9,6 +9,7 @@
 #define __IMSVISHNUTOOL__HH__
 
 #include "LogTool.hpp"
+#include "data/ProcessServer.hpp"
 
 class IMSVishnuTool: public LogTool{
 public:
@@ -46,6 +47,23 @@ public:
   void setFilename(string name);
 protected:
 private:
+  /**
+   * \brief Extract hostname from log message
+   */
+  string
+  getHostnameFromLog(string msg);
+  /**
+   * \brief The process server
+   */
+  ProcessServer mproc;
+  /**
+   * The size of the hostname
+   */
+  static const int HNAMESIZE = 200;
+  /**
+   * \brief The hostname system
+   */
+  char msyshName[HNAMESIZE];
 };
 
 
