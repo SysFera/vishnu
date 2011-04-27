@@ -53,13 +53,23 @@ JobOutputServer::getJobOutput() {
 
   std::string outputPath;
   std::string errorPath;
+  std::string owner;
+  int status;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
   //To get the output and error path of the job
-  std::string sqlRequest = "SELECT outputPath, errorPath from vsession, job where"
+  std::string sqlRequest = "SELECT outputPath, errorPath, owner, status from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'";
   boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
-  
+ 
+  TMS_Data::Job job;
+  JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
+  std::string acLogin = jobServer.getUserAccountLogin();
+  std::cout << "acLogin = " << acLogin << std::endl;
+
+  std::string machineName = jobServer.getMachineName();
+  std::cout << "machineName = " << machineName << std::endl;
+ 
   if (sqlResult->getNbTuples() != 0){ 
     results.clear();
     results = sqlResult->get(0);
@@ -67,6 +77,19 @@ JobOutputServer::getJobOutput() {
     outputPath = *iter;
     iter++;
     errorPath = *iter;
+    iter++;
+    owner = *iter;
+    if(owner.compare(acLogin)!=0) {
+      throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of this job because it is for an other owner");
+    } 
+    iter++;
+    status = convertToInt(*iter);
+    if(status < 5) {
+      throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED);
+    }
+    if(status==6) {
+      throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
+    }
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -80,15 +103,6 @@ JobOutputServer::getJobOutput() {
 
     SSHJobExec().createTmpFile(copyOfOutputPath);
     SSHJobExec().createTmpFile(copyOfErrorPath);
-
-
-    TMS_Data::Job job;
-    JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
-    std::string acLogin = jobServer.getUserAccountLogin();
-    std::cout << "acLogin = " << acLogin << std::endl;
-
-    std::string machineName = jobServer.getMachineName();
-    std::cout << "machineName = " << machineName << std::endl;
 
     std::cout << "outputPath = " << outputPath << std::endl;
     std::cout << "errorPath = " << errorPath << std::endl;
