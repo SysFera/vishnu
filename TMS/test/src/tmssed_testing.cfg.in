@@ -8,3 +8,4 @@ databaseUserName=@TEST_DB_LOGIN@
 databaseUserPassword=@TEST_DB_PASSWORD@
 batchSchedulerType=TORQUE
 vishnuMachineId=machine_1
+intervalMonitor=1
