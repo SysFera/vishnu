@@ -2,6 +2,7 @@
 #include "ServerIMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
+#include "utilServer.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
@@ -57,6 +58,7 @@ int main(int argc, char* argv[], char* envp[]) {
   DbConfiguration dbConfig(config);
   string sendmailScriptPath;
   string dietConfigFile;
+  string IMSTYPE = "IMS";
 
   if (argc < 2) {
     return usage(argv[0]);
@@ -79,9 +81,11 @@ int main(int argc, char* argv[], char* envp[]) {
     exit(1);
   }
 
-  // Initialize the UMS Server (Opens a connection to the database)
+  // Initialize the IMS Server (Opens a connection to the database)
   ServerIMS* server = ServerIMS::getInstance();
   res = server->init(vishnuId, dbConfig, sendmailScriptPath);
+
+  registerSeD(IMSTYPE, config);
 
   // Watcher thread
   Watcher w(IMSVishnuTool_v1, argc, argv);

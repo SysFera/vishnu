@@ -37,6 +37,19 @@ public :
 namespace vishnu {
 
   /**
+   * \brief To get a vishnu machineid based on the hostname
+   * \param hostname: The name of the hostname
+   * \return The corresponding machine id
+   */
+  std::string
+  getMidFromHost(std::string hostname);
+
+  /**
+   * \brief Position of the machine id in the machine table, starting at 0
+   */
+  static const int MIDPOS = 7;
+
+  /**
    * \enum IdType
    * \brief The type of id generated
    */
@@ -59,13 +72,17 @@ namespace vishnu {
   * \enum CmdType
   * \brief The type of the command
   */
-  typedef enum {
+  typedef enum CmdType{
     UMS = 0,/*!< For UMS command type */
     TMS = 1,/*!< For TMS command type */
     FMS = 2,/*!< For FMS command type */
     IMS = 3/*!< For IMS command type */
   } CmdType;
 
+  /**
+   * \brief If the process is in an undefined state
+   */
+  static const int PUNDEF = 0;
 
   /**
    * \brief To register the server in the database
@@ -73,7 +90,7 @@ namespace vishnu {
    * \param config: The configuration of the executable
    */
   int
-  registerSeD(CmdType type, ExecConfiguration config);
+  registerSeD(std::string type, ExecConfiguration config);
 
   /**
    * \brief Return true if the string starts with 'MONTH'

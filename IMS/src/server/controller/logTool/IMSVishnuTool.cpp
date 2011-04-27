@@ -6,6 +6,8 @@
 // For gethostname
 #include <unistd.h>
 
+using namespace vishnu;
+
 IMSVishnuTool::IMSVishnuTool(int argc, char** argv):mproc(UserServer(SessionServer(""))){
   try {
     LogORBMgr::init(argc, argv, false);
@@ -63,8 +65,8 @@ void
 IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 
   for (CORBA::ULong i=0; i<msg.length(); i++){
-    string log;
-    IMS_Data::Process_ptr p;
+    string log = "";
+    IMS_Data::Process_ptr p = new IMS_Data::Process();
     // componentName
     log.append(msg[i].componentName);
     log.append(":");
@@ -72,11 +74,12 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     if (string(msg[i].tag).compare("IN")==0){
       string hname = getHostnameFromLog(string(msg[i].msg));
       // If it is on the same machine as the sed
-      if (hname.compare(string(msyshName))){
+      if (hname.compare(string(msyshName))==0){
 	log += "Connexion of the component with the name : " + string(msg[i].componentName) + " and the message ->" + string(msg[i].msg) + "<- ";
 	p->setProcessName(string(msg[i].componentName));
 	try{
-	  p->setMachineId(mproc.getMidFromHost(msyshName));
+	  string c = getMidFromHost(msyshName);
+	  p->setMachineId(c);
 	}catch(IMSVishnuException& e){
 	  log.append("Machine " + string(msg[i].componentName) + " is not registered as a server");
 	  ofstream dest(mfilename.c_str(),ios::app);
@@ -106,6 +109,9 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	} catch(SystemException& e){
 	  throw (e);
 	}// end catch
+	ofstream dest(mfilename.c_str(),ios::app);
+	dest << log << endl;
+	dest.close();
       }// end if same machine
       // If disconnexion of an IMS sed on an other machine, must set him as out
       else if (mproc.isIMSSeD(string(msg[i].componentName))){
@@ -123,10 +129,11 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
     }// end if disconnexion
     //tagtype
     if (string(msg[i].tag).compare("IN")==0){
-      log.append(msg[i].tag);
-      log.append(":");
-      //msg
-      log.append(msg[i].msg);    
+//      log.append(msg[i].tag);
+//      log.append(":");
+//      log.append("****************************************");
+//      //msg
+//      log.append(msg[i].msg);    
     }
     else {
       if (string(msg[i].msg).compare("sessionConnect")==0){
@@ -134,38 +141,42 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	log.append(":");
 	//msg
 	log.append(string(msg[i].msg)+", with type UMS");
-	p->setMachineId(mproc.getMidFromHost(msyshName));
+	p->setMachineId(getMidFromHost(msyshName));
 	p->setDietId(string(msg[i].componentName));
 	p->setProcessName("UMS");
 	mproc.authentifyProcess(p);
-	//	cout << "The SeD " << msg[i].componentName << "is of type UMS" << endl;
+	ofstream dest(mfilename.c_str(),ios::app);
+	dest << log << endl;
+	dest.close();
       }
       else if ((string(msg[i].msg)).find("jobSubmit")!=string::npos) {
 	log.append(msg[i].tag);
 	log.append(":");
 	//msg
 	log.append(string(msg[i].msg)+", with type TMS");
-	p->setMachineId(mproc.getMidFromHost(msyshName));
+	p->setMachineId(getMidFromHost(msyshName));
 	p->setDietId(string(msg[i].componentName));
 	p->setProcessName("TMS");
 	mproc.authentifyProcess(p);
-	//	cout << "The SeD " << msg[i].componentName << " is of type TMS" << endl;
+	ofstream dest(mfilename.c_str(),ios::app);
+	dest << log << endl;
+	dest.close();
       }// End else if submit machine
       else if (string(msg[i].msg).compare("int_getProcesses")==0) {
 	log.append(msg[i].tag);
 	log.append(":");
 	//msg
-	log.append(string(msg[i].msg)+", with type TMS");
-	p->setMachineId(mproc.getMidFromHost(msyshName));
+	log.append(string(msg[i].msg)+", with type IMS");
+	string t = getMidFromHost(msyshName);
+	p->setMachineId(t);
 	p->setDietId(string(msg[i].componentName));
 	p->setProcessName("IMS");
 	mproc.authentifyProcess(p);
-	//	cout << "The SeD " << msg[i].componentName << " is of type IMS" << endl;
+	ofstream dest(mfilename.c_str(),ios::app);
+	dest << log << endl;
+	dest.close();
       } // End else if get processes
     }// End if not IN tag
-    ofstream dest(mfilename.c_str(),ios::app);
-    dest << log << endl;
-    dest.close();
   }// End for
 }
 

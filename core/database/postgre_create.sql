@@ -174,6 +174,16 @@ PRIMARY KEY(numcommandid),
   FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
+CREATE TABLE process (
+  numprocess SERIAL NOT NULL,
+  pstatus INTEGER,
+  vishnuname VARCHAR(255),
+  dietname VARCHAR(255),
+  machineid VARCHAR(255),	
+  uptime TIMESTAMP,
+  launchscript TEXT,
+  PRIMARY KEY(numprocess)
+);
 
 
 CREATE TABLE filetransfer (
