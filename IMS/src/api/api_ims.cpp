@@ -1,4 +1,6 @@
 #include "api_ims.hpp"
+#include "SessionProxy.hpp"
+#include "QueryProxy.hpp"
 
 int
 exportCommands(const string sessionKey,
@@ -34,6 +36,22 @@ getProcesses(const string sessionKey,
 	     IMS_Data::ListProcesses list,
 	     IMS_Data::ProcessOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "solve_getProcesses";
+  QueryProxy<IMS_Data::ProcessOp, IMS_Data::ListProcesses> 
+    query(op, sessionProxy, name);
+
+  IMS_Data::ListProcesses_ptr li = query.list();
+
+  if(li != NULL) {
+    IMS_Data::Process_ptr proc;
+    for(unsigned int i = 0; i < li->getProcess().size(); i++) {
+      proc = li->getProcess().get(i);
+      list.getProcess().push_back(proc);
+    }
+  }
+
   return IMS_SUCCESS;
 }
 
