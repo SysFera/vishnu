@@ -39,7 +39,7 @@ displayJob(TMS_Data::Job& j){
   cout << " Priority        : " << j.getJobPrio() << endl;
   cout << " CPU             : " << j.getNbCpus() << endl;
   cout << " Working dir     : " << j.getJobWorkingDir() << endl;
-  cout << " Status          : " << j.getStatus() << endl;
+  cout << " Status          : " << convertJobStateToString(j.getStatus()) << endl;
   pt =  boost::posix_time::from_time_t(j.getSubmitDate());
   cout << " Submit date     : " << boost::posix_time::to_simple_string(pt) << endl;
   pt =  boost::posix_time::from_time_t(j.getEndDate());
@@ -123,6 +123,33 @@ displayQueue(Queue& q){
 void
 displaySubmit(TMS_Data::Job job){
   cout << "Job Id     : " << job.getJobId() << endl;
+}
+
+/**
+ * \brief  function to convert job status into string 
+ * \param state: The state of job
+ * \return The converted state value
+ */
+std::string convertJobStateToString(const int& state) {
+
+  switch(state) {
+    case 0:
+      return "UNDEFINED";
+    case 1:
+      return "SUBMITTED";
+    case 2:
+      return "QUEUED";
+    case 3:
+      return "WAITING";
+    case 4:
+      return "RUNNING";
+    case 5:
+      return "TERMINATED";
+    case 6:
+      return "CANCELLED";
+    default:
+      return "UNDEFINED"; 
+  }
 }
 
 
@@ -276,6 +303,8 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     queue = (listJobs.getJobs().get(i))->getJobQueue();
     maxQueueSize = std::max(maxQueueSize, queue.size());
 
+    status = (listJobs.getJobs().get(i))->getStatus();
+    maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
   }
 
   os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxOwnerSize+2) ;
@@ -302,7 +331,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     os << setw(maxJobIdSize+2) << left << jobId;
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxOwnerSize+2) << left << owner;
-    os << setw(maxStatusSize+2) << left << status;
+    os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
     os << setw(maxQueueSize+2) << left << queue;
     os << setw(maxPrioritySize+2) << left << priority;
     os << endl;
