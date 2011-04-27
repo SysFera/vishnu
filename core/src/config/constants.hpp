@@ -26,7 +26,8 @@ namespace vishnu {
     SENDMAILSCRIPT,
     BATCHTYPE,
     MACHINEID,
-    REMOTEBINDIR
+    REMOTEBINDIR,
+    INTERVALMONITOR
   } param_type_t;
 
   struct param_t
