@@ -88,9 +88,31 @@ public:
    */
   int
   stopProcess(IMS_Data::Process_ptr proc);
+  /**
+   * \brief To get a vishnu machineid based on the hostname
+   * \param hostname: The name of the hostname
+   * \return The corresponding machine id
+   */
+  string
+  getMidFromHost(string hostname);
+  /**
+   * \brief Return true if the process with a diet name Pname is of type IMS
+   * \param Pname: DIET name of the process
+   * \return True if Pname represents an IMS SeD
+   */
+  bool
+  isIMSSeD(string Pname);
 
 protected:
 private:
+  /**
+   * \brief Position of the machine id in the machine table, starting at 0
+   */
+  static const int MIDPOS = 7;
+  /**
+   * \brief Position of the diet name in the process table, starting at 0
+   */
+  static const int NAMEPOS = 3;
   /**
    * \brief The list option
    */
