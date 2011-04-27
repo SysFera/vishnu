@@ -82,6 +82,13 @@ void
 displaySubmit(TMS_Data::Job job);
 
 /**
+ * \brief  function to convert job status into string 
+ * \param state: The state of job
+ * \return The converted state value
+ */
+std::string convertJobStateToString(const int& state);
+
+/**
  * \brief Helper function to display a list of queues
  * \param os: The output stream in which the list will be printed 
  * \param lsQueues: The list to display
