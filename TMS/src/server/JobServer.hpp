@@ -76,6 +76,7 @@ public:
   private:
 
   void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
+  bool isJobOwnerOf(std::string const& owner, const std::string& jobId);
 
   TMS_Data::Job mjob;
   SessionServer msessionServer;
