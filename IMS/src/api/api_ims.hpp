@@ -53,7 +53,7 @@ namespace vishnu {
   int
   getMetricCurrentValue(const string sessionKey,
 			string machineId,
-			IMS_Data::Metric val,
+			IMS_Data::Metric& val,
 			IMS_Data::CurMetricOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -70,7 +70,7 @@ namespace vishnu {
   getMetricHistory(const string sessionKey,
 		   string machineId,
 		   IMS_Data::MetricType type,
-		   IMS_Data::ListMetric list,
+		   IMS_Data::ListMetric& list,
 		   IMS_Data::MetricHistOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -83,7 +83,7 @@ namespace vishnu {
    */
   int
   getProcesses(const string sessionKey,
-	       IMS_Data::ListProcesses list,
+	       IMS_Data::ListProcesses& list,
 	       IMS_Data::ProcessOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -117,8 +117,8 @@ namespace vishnu {
    * \return int : an error code
    */
   int 
-  setSystemThreshold(const int sessionKey,
-		     IMS_Data::ListThreshold list,
+  getSystemThreshold(const int sessionKey,
+		     IMS_Data::ListThreshold& list,
 		     IMS_Data::ThresholdOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -197,7 +197,7 @@ namespace vishnu {
    */
   int
   getUpdateFrequency(const string sessionKey,
-		     int freq)
+		     int& freq)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -220,7 +220,7 @@ namespace vishnu {
    */
   int
   getSystemInfo(const string sessionKey,
-		IMS_Data::ListSysInfo list,
+		IMS_Data::ListSysInfo& list,
 		IMS_Data::SysInfoOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
