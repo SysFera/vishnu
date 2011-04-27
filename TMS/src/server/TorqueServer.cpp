@@ -233,18 +233,19 @@ int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLoca
 int TorqueServer::getJobState(const std::string& jobId) {
 
   int connect;
-  struct batch_status *p_status;
+  struct batch_status *p_status = NULL;
   struct attrl *a;
-  int state = 4; //TERMINATED
+  int state = 5; //TERMINATED
 
   serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
   // Connect to the torque server
   connect = cnt2server(serverOut);
 
-  if (connect > 0)
-  {
-   p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
-   pbs_disconnect(connect);
+  if(connect <= 0) {
+    return -1;
+  } else {
+    p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
+    pbs_disconnect(connect);
   }
 
   if(p_status!=NULL) {
@@ -396,21 +397,21 @@ TorqueServer::makeListJobOption(TMS_Data::ListJobsOptions op, struct attropl* at
 int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
 
   if(state.compare("T")==0) {
-    return 0; //SUBMITTED
+    return 1; //SUBMITTED
   }
   if(state.compare("Q")==0) {
-    return 1; //QUEUED
+    return 2; //QUEUED
   }
   if(state.compare("W")==0 || state.compare("H")==0 || state.compare("S")==0) {
-    return 2; //WAITING
+    return 3; //WAITING
   }
   if(state.compare("R")==0 || state.compare("E")==0) {
-    return 3; //RUNNING
+    return 4; //RUNNING
   }
   if(state.compare("C")==0) {
-    return 4; //TERMINATED
+    return 5; //TERMINATED
   } else {
-    return 4;
+    return 5;
   }
   
 }
