@@ -416,6 +416,21 @@ int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
   
 }
 
+int TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
+
+  if(prio < -512) {
+    return 1;
+  } else if(prio >= -512 && prio < 0) {
+    return 2;
+  } else if(prio >= 0 && prio < 512) {
+    return 3;
+  } else if(prio >= 512 && prio < 1023) {
+     return 4;
+  } else if(prio >= 1023) {
+     return 5;
+  } 
+}
+
 void
 TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   struct attrl *a;
@@ -541,9 +556,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   job.setErrorPath(error);
 
   if (prio.compare("")!=0) {
-    job.setJobPrio(atoi(prio.c_str()));
+    job.setJobPrio(convertTorquePrioToVishnuPrio(convertToInt(prio.c_str())));
   } else {
-    job.setJobPrio(0);
+    job.setJobPrio(100);
   }
 
   if (ncpus.compare("")!=0) {
