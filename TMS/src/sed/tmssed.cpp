@@ -4,6 +4,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <sys/types.h>
 #include <signal.h>
+#include <boost/scoped_ptr.hpp>
 
 #include "MachineServer.hpp"
 #include "ServerTMS.hpp"
@@ -87,7 +88,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
   if (pid > 0) {
     //Initialize the TMS Server
-    ServerTMS* server = ServerTMS::getInstance();
+    boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
     res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
 
     //A remettre dans le fichier util server
@@ -112,9 +113,6 @@ int main(int argc, char* argv[], char* envp[]) {
     if (!res) {
       diet_print_service_table();
       res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-      if (server != NULL) {
-        delete server;
-      }
     } else {
       std::cerr << "There was a problem during services initialization" << std::endl;
       exit(1);
@@ -132,7 +130,5 @@ int main(int argc, char* argv[], char* envp[]) {
     std::cerr << "There was a problem to initialize the server" << std::endl;
     exit(1);
   }
-
-
-return res;
+  return res;
 }
