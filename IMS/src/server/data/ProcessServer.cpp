@@ -3,6 +3,7 @@
 #include "DatabaseResult.hpp"
 #include "utilServer.hpp"
 #include "utilIMS.hpp"
+#include "IMSVishnuException.hpp"
 
 using namespace vishnu;
 
@@ -119,3 +120,26 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
   return IMS_SUCCESS;
 }
 
+string
+ProcessServer::getMidFromHost(string hostname){
+  string req = "SELECT * from machine where name='"+hostname+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown hostname");
+  }
+  vector<string> res;
+  res = result->get(0);
+  return res.at(MIDPOS);
+}
+
+bool
+ProcessServer::isIMSSeD(string Pname){
+  string req = "SELECT * from process where dietname='"+Pname+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+  }
+  vector<string> res;
+  res = result->get(0);
+  return (res.at(NAMEPOS)=="IMS");
+}
