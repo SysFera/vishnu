@@ -77,15 +77,9 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
    //OUT Parameters
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  //diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
   diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT_RETURN);
 
   if(!diet_call(profile)) {
-    /*if(diet_string_get(diet_parameter(profile,3), &jobResultInString, NULL)){
-      msgErrorDiet += " by receiving User serialized  message";
-      raiseDietMsgException(msgErrorDiet);
-    }*/
-
     if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
@@ -94,10 +88,6 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
      /*To raise a vishnu exception if the receiving message is not empty*/
      raiseExceptionIfNotEmptyMsg(errorInfo);
 
-    //To parse JobResult object serialized
-    /*if (!vishnu::parseTMSEmfObject(std::string(jobResultInString), outJobResult)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "Error when receiving JobResult object serialized");
-    }*/
 
     try {
       IDContainer = (profile->parameters[4]).desc.id;
@@ -119,8 +109,8 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
         vishnu::moveFile(std::string(outputPath), moutDir, outFileName);
         vishnu::moveFile(std::string(errorPath), moutDir, errFileName);
 
-        jobResult.setOutputPath(moutDir+outFileName);
-        jobResult.setErrorPath(moutDir+errFileName);
+        jobResult.setOutputPath(moutDir+"/"+outFileName);
+        jobResult.setErrorPath(moutDir+"/"+errFileName);
       }
     } catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
       if (content.size == 2) {
@@ -223,7 +213,7 @@ JobOutPutProxy::getAllJobsOutPut() {
           
           std::string outFileName = "outputOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
           vishnu::moveFile(std::string(path), moutDir, outFileName); 
-          listJobResults_ptr->getResults().get((i/2))->setOutputPath(moutDir+outFileName) ;
+          listJobResults_ptr->getResults().get((i/2))->setOutputPath(moutDir+"/"+outFileName) ;
          
           if(i < content.size-1) {
             i++;
@@ -232,7 +222,7 @@ JobOutPutProxy::getAllJobsOutPut() {
             
             std::string errFileName =  "errorsOfJob_"+listJobResults_ptr->getResults().get((i/2))->getJobId();
             vishnu::moveFile(std::string(errorPath), moutDir, errFileName);
-            listJobResults_ptr->getResults().get((i/2))->setErrorPath(moutDir+errFileName);
+            listJobResults_ptr->getResults().get((i/2))->setErrorPath(moutDir+"/"+errFileName);
           }
         }
         //To clean the container
