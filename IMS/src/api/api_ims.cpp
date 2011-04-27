@@ -14,7 +14,7 @@ exportCommands(const string sessionKey,
 int
 getMetricCurrentValue(const string sessionKey,
 		      string machineId,
-		      IMS_Data::Metric val,
+		      IMS_Data::Metric& val,
 		      IMS_Data::CurMetricOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -24,7 +24,7 @@ int
 getMetricHistory(const string sessionKey,
 		 string machineId,
 		 IMS_Data::MetricType type,
-		 IMS_Data::ListMetric list,
+		 IMS_Data::ListMetric& list,
 		 IMS_Data::MetricHistOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -33,7 +33,7 @@ getMetricHistory(const string sessionKey,
 
 int
 getProcesses(const string sessionKey,
-	     IMS_Data::ListProcesses list,
+	     IMS_Data::ListProcesses& list,
 	     IMS_Data::ProcessOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
@@ -74,8 +74,8 @@ setSystemThreshold(const int sessionKey,
 
 
 int 
-setSystemThreshold(const int sessionKey,
-		   IMS_Data::ListThreshold list,
+getSystemThreshold(const int sessionKey,
+		   IMS_Data::ListThreshold& list,
 		   IMS_Data::ThresholdOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -133,7 +133,7 @@ setUpdateFrequency(const string sessionKey,
 
 int
 getUpdateFrequency(const string sessionKey,
-		   int freq)
+		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
 }
@@ -149,7 +149,7 @@ stop(const string sessionKey,
 
 int
 getSystemInfo(const string sessionKey,
-	      IMS_Data::ListSysInfo list,
+	      IMS_Data::ListSysInfo& list,
 	      IMS_Data::SysInfoOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
