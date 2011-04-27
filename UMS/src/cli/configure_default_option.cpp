@@ -9,8 +9,6 @@ using namespace vishnu;
 
 int main (int ac, char* av[]){
 
-
-
   boost::shared_ptr<Options> opt(new Options(av[0])) ;
 
 
@@ -18,7 +16,7 @@ int main (int ac, char* av[]){
   try {
 
     commonConfigure(opt,  ac,  av,&configureDefaultOption);
-      
+
     printSuccessMessage();
 
 
@@ -30,11 +28,11 @@ int main (int ac, char* av[]){
   }
 
   catch(VishnuException& e){// catch all Vishnu runtime error
-
-    errorUsage(av[0], e.getMsg(),EXECERROR);
+    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+    errorUsage(av[0], msg, EXECERROR);
 
     //check the bad session key
-    
+
     if (checkBadSessionKeyError(e)){
 
       removeBadSessionKeyFromFile(getppid());
