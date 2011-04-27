@@ -108,7 +108,9 @@ JobOutputServer::getJobOutput() {
     std::cout << "errorPath = " << errorPath << std::endl;
 
     SSHJobExec sshJobExec(NULL, "", "", acLogin, machineName, "", UNDEFINED);
-    sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath);
+    if(sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)){
+      throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: problem to get the output or error file on this user local account"); 
+    }
 
     mjobResult.setOutputPath(std::string(copyOfOutputPath));
     mjobResult.setErrorPath(std::string(copyOfErrorPath));
@@ -136,6 +138,7 @@ JobOutputServer::getCompletedJobsOutput() {
   std::string outputPath;
   std::string errorPath;
   std::string jobId;
+  int status;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
 
@@ -143,7 +146,7 @@ JobOutputServer::getCompletedJobsOutput() {
   mlistJobsResult = ecoreFactory->createListJobResults();
 
   //To get the output and error path of all jobs
-  std::string sqlRequest = "SELECT jobId, outputPath, errorPath from vsession, job where"
+  std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'";
   boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
 
@@ -159,11 +162,19 @@ JobOutputServer::getCompletedJobsOutput() {
       outputPath = *iter;
       iter++;
       errorPath = *iter;
-    
-      outputPath = outputPath.substr(outputPath.find(":")+1);
-      errorPath = errorPath.substr(errorPath.find(":")+1);
- 
-      if((outputPath.size()!=0) && errorPath.size()!=0) {
+      iter++;
+      status = convertToInt(*iter);
+     
+      size_t pos1 = outputPath.find(":"); 
+      if(pos1!=std::string::npos) {
+        outputPath = outputPath.substr(pos1+1);
+      }
+      size_t pos2 = errorPath.find(":");
+      if(pos2!=std::string::npos) {
+        errorPath = errorPath.substr(pos2+1);
+      }
+
+      if((outputPath.size()!=0) && errorPath.size()!=0 && status==5) {
         char* copyOfOutputPath = strdup("/tmp/job_outputPathXXXXXX");
         char* copyOfErrorPath = strdup("/tmp/job_errorPathXXXXXX");
 
@@ -175,13 +186,14 @@ JobOutputServer::getCompletedJobsOutput() {
         std::cout << "jobId = " << jobId << std::endl;
 
         SSHJobExec sshJobExec(NULL, "", "", acLogin, machineName, "", UNDEFINED);
-        sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath);
+        if(!sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)) {;
 
-        out->setJobId(jobId);
-        out->setOutputPath(std::string(copyOfOutputPath));
-        out->setErrorPath(std::string(copyOfErrorPath));
+          out->setJobId(jobId);
+          out->setOutputPath(std::string(copyOfOutputPath));
+          out->setErrorPath(std::string(copyOfErrorPath));
 
-        mlistJobsResult->getResults().push_back(out);
+          mlistJobsResult->getResults().push_back(out);
+        }
       }
     }
   } else {
