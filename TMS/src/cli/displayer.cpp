@@ -36,7 +36,7 @@ displayJob(TMS_Data::Job& j){
   cout << " Job path        : " << j.getJobPath() << endl;
   cout << " Output path     : " << j.getOutputPath() << endl;
   cout << " Error path      : " << j.getErrorPath() << endl;
-  cout << " Priority        : " << j.getJobPrio() << endl;
+  cout << " Priority        : " << convertJobPriorityToString(j.getJobPrio()) << endl;
   cout << " CPU             : " << j.getNbCpus() << endl;
   cout << " Working dir     : " << j.getJobWorkingDir() << endl;
   cout << " Status          : " << convertJobStateToString(j.getStatus()) << endl;
@@ -150,6 +150,34 @@ std::string convertJobStateToString(const int& state) {
     default:
       return "UNDEFINED"; 
   }
+}
+
+/**
+ * \brief  function to convert job priority into string 
+ * \param state: The state of job
+ * \return The converted state value
+ */
+std::string convertJobPriorityToString(const int& prio) {
+
+  switch(prio) {
+    case -1:
+      return "UNDEFINED";
+    case 0:
+      return "VERY_LOW";
+    case 1:
+      return "VERY_LOW";
+    case 2:
+      return "LOW";
+    case 3:
+      return "NORMAL";
+    case 4:
+      return "HIGH";
+    case 5:
+      return "VERY_HIGH";
+    default:
+      return "UNDEFINED";
+  }
+
 }
 
 
@@ -305,6 +333,9 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
     status = (listJobs.getJobs().get(i))->getStatus();
     maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
+
+    priority = (listJobs.getJobs().get(i))->getJobPrio();
+    maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size());
   }
 
   os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxOwnerSize+2) ;
@@ -333,7 +364,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     os << setw(maxOwnerSize+2) << left << owner;
     os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
     os << setw(maxQueueSize+2) << left << queue;
-    os << setw(maxPrioritySize+2) << left << priority;
+    os << setw(maxPrioritySize+2) << left <<  convertJobPriorityToString(priority);
     os << endl;
 
   }
