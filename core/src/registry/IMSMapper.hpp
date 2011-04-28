@@ -69,6 +69,15 @@ public :
    */
   virtual int
   getKey(const string& command, int& key);
+  /**
+   * \brief Function to add an element to code
+   * \fn  virtual int code(const string& cmd, unsigned int code = 0)
+   * \param cmd The string to add
+   * \param code If 0, the code is created, otherwize it is the key in the map to add the string
+   * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
+   */
+  virtual int
+  code(const string& cmd, unsigned int code = 0);
 
 protected:
 private:

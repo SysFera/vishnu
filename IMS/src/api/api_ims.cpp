@@ -23,10 +23,24 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 int
 vishnu::getMetricHistory(const string sessionKey,
 		 string machineId,
-		 IMS_Data::MetricType type,
 		 IMS_Data::ListMetric& list,
 		 IMS_Data::MetricHistOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_getMetricHistory";
+  QueryProxy<IMS_Data::MetricHistOp, IMS_Data::ListMetric> 
+    query(op, sessionProxy, name, machineId);
+
+  IMS_Data::ListMetric_ptr li = query.list();
+
+  if(li != NULL) {
+    IMS_Data::Metric_ptr met;
+    for(unsigned int i = 0; i < li->getMetric().size(); i++) {
+      met = li->getMetric().get(i);
+      list.getMetric().push_back(met);
+    }
+  }
+
   return IMS_SUCCESS;
 }
 

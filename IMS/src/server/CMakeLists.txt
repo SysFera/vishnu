@@ -33,6 +33,7 @@ add_library(ims-server STATIC
   controller/logTool/ToolFactory.cpp
   controller/process/Process.cpp
   data/ProcessServer.cpp
+  data/MetricServer.cpp
   data/ExportServer.cpp
   data/ShellExporter.cpp
 

@@ -157,6 +157,11 @@ IMS_DataPackage::IMS_DataPackage()
             ::IMS_Data::IMS_DataPackage::METRICHISTOP__ENDTIME);
     m_MetricHistOpEClass->getEStructuralFeatures().push_back(
             m_MetricHistOp__endTime);
+    m_MetricHistOp__type = new ::ecore::EAttribute();
+    m_MetricHistOp__type->setFeatureID(
+            ::IMS_Data::IMS_DataPackage::METRICHISTOP__TYPE);
+    m_MetricHistOpEClass->getEStructuralFeatures().push_back(
+            m_MetricHistOp__type);
 
     // RestartOp
     m_RestartOpEClass = new ::ecore::EClass();
@@ -565,6 +570,19 @@ IMS_DataPackage::IMS_DataPackage()
     m_MetricHistOp__endTime->setUnique(true);
     m_MetricHistOp__endTime->setDerived(false);
     m_MetricHistOp__endTime->setOrdered(true);
+    m_MetricHistOp__type->setEType(m_MetricTypeEEnum);
+    m_MetricHistOp__type->setName("type");
+    m_MetricHistOp__type->setDefaultValueLiteral("0");
+    m_MetricHistOp__type->setLowerBound(0);
+    m_MetricHistOp__type->setUpperBound(1);
+    m_MetricHistOp__type->setTransient(false);
+    m_MetricHistOp__type->setVolatile(false);
+    m_MetricHistOp__type->setChangeable(true);
+    m_MetricHistOp__type->setUnsettable(false);
+    m_MetricHistOp__type->setID(false);
+    m_MetricHistOp__type->setUnique(true);
+    m_MetricHistOp__type->setDerived(false);
+    m_MetricHistOp__type->setOrdered(true);
     // RestartOp
     m_RestartOpEClass->setName("RestartOp");
     m_RestartOpEClass->setAbstract(false);
@@ -1154,6 +1172,10 @@ IMS_DataPackage::IMS_DataPackage()
 ::ecore::EAttribute_ptr IMS_DataPackage::getMetricHistOp__endTime()
 {
     return m_MetricHistOp__endTime;
+}
+::ecore::EAttribute_ptr IMS_DataPackage::getMetricHistOp__type()
+{
+    return m_MetricHistOp__type;
 }
 ::ecore::EAttribute_ptr IMS_DataPackage::getRestartOp__vishnuConf()
 {
