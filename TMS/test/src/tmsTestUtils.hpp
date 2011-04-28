@@ -30,6 +30,6 @@ std::string mupwd;
 
 };
 
-
+bool operator== (const Job& lJob,const Job& rJob );
 
 #endif
