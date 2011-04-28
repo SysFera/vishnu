@@ -923,9 +923,9 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
       if(a->name!=NULL) {
         if(!strcmp(a->name, ATTR_start)) {
           if(*a->value == 'T') {
-            queue->setState(3); //RUNNING = 'R';
+            queue->setState(2); //RUNNING = 'R';
           } else {
-            queue->setState(0); // STARTED = 'S';
+            queue->setState(1); // STARTED = 'S';
           }
         }  else if(!strcmp(a->name, ATTR_count)) { 
           //std::cout << "a->value=" << a->value << std::endl;
@@ -975,7 +975,7 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
             queue->setNode(vishnu::convertToInt(std::string(a->value)));
           }
         } else if (!strcmp(a->name, ATTR_p)){ 
-          queue->setPriority(vishnu::convertToInt(std::string(a->value)));
+          queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
         } else if (!strcmp(a->name, ATTR_comment)) {
           queue->setDescription(std::string(a->value));
         }

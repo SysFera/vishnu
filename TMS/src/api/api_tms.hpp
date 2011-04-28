@@ -129,50 +129,22 @@ namespace vishnu {
              const std::string& queueName=std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
-  /**
-  * \brief The setMachineRefreshPeriod function sets the refresh period of output and error files contents
-  * \fn int setMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId, const int& value)
-  * \param sessionKey : The session key
-  * \param machineId : The id of the machine
-  * \param value : Is the refresh interval value (in seconds)
-  * \return int : an error code
-  */
-  int
-  setMachineRefreshPeriod(const std::string& sessionKey,
-                          const std::string& machineId,
-                          const int& value)
-  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
-
-  /**
-  * \brief The getMachineRefreshPeriod function gets the refresh period of output and error files contents
-  * \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
-  * \param sessionKey : The session key
-  * \param machineId : Represents the machine id
-  * \param value The refresh period value
-  * \return the value of the refresh period
-  */
-  int
-  getMachineRefreshPeriod(const std::string& sessionKey,
-                          const std::string& machineId,
-                          int& value
-                         )
-  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
    * \brief The getJobOutput function gets outputPath and errorPath of a job from its id 
    * \param sessionKey : The session key
    * \param machineId : The id of the machine
    * \param jobId : The Id of the job
-   *  \param outDir : The output directory where the files will be stored (default is current directory)
    * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
+   * \param outDir : The output directory where the files will be stored (default is current directory)
    * \return int : an error code
    */
   int
   getJobOutput(const std::string& sessionKey,
                const std::string& machineId,
                const std::string& jobId,
-               const std::string& outDir,
-               JobResult& outputInfos)
+               JobResult& outputInfos,
+               const std::string& outDir = std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -187,8 +159,8 @@ namespace vishnu {
   int
   getCompletedJobsOutput(const std::string& sessionKey,
                    const std::string& machineId,
-                   const std::string& outDir,
-                   ListJobResults& listOfResults)
+                   ListJobResults& listOfResults,
+                   const std::string& outDir = std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 }//END namespace vishnu
