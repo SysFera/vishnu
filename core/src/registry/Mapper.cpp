@@ -28,7 +28,7 @@ Mapper::finalize(int key){
   pthread_mutex_lock(&mutex);
   it = mcmd.find(key);
   if (it==mcmd.end()){
-    throw new SystemException(ERRCODE_SYSTEM, "Unknown key to finalize");
+    throw SystemException(ERRCODE_SYSTEM, "Unknown key to finalize");
   }
   res = it->second;
   mcmd.erase(it->first);

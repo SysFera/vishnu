@@ -6,6 +6,9 @@
  */
 
 #include "IMSMapper.hpp"
+#include "utilVishnu.hpp"
+
+using namespace vishnu;
 
 IMSMapper::IMSMapper(){
 };
@@ -61,4 +64,42 @@ IMSMapper::getKey(const string& command, int& key){
     }
   }
   return 0;
+}
+
+int
+IMSMapper::code(const string& cmd, unsigned int code){
+  map<int, string>::iterator it;
+  int size;
+  string key;
+  int keycode;
+  // If existing code -> add to the existing entry
+  if(code){
+    it = mcmd.find(code);
+    if (it==mcmd.end()){
+      throw new SystemException(ERRCODE_SYSTEM, "Error wrong code to build command: "+cmd);
+    }
+    it->second += "#";
+    if (cmd.compare("")==0){
+      it->second += " ";
+    }else {
+      it->second += cmd;
+    }
+    return 0;
+  }
+
+  // Else creating a new unique key and insert in the map
+  pthread_mutex_lock(&mutex);
+  size = mcmd.size() + 1;
+  while (true){
+    it = mcmd.find(size);
+    if (it==mcmd.end()){
+      break;
+    }
+    size++;
+  }
+  getKey(cmd, keycode);
+  key = convertToString(keycode);
+  mcmd.insert(pair<int, string>(size, key));
+  pthread_mutex_unlock(&mutex);
+  return size;
 }

@@ -67,6 +67,12 @@ void MetricHistOp::_initialize()
                 m_endTime);
     }
         return _any;
+    case ::IMS_Data::IMS_DataPackage::METRICHISTOP__TYPE:
+    {
+        ::ecorecpp::mapping::any_traits< ::IMS_Data::MetricType >::toAny(_any,
+                m_type);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -89,6 +95,12 @@ void MetricHistOp::eSet(::ecore::EInt _featureID,
                 m_endTime);
     }
         return;
+    case ::IMS_Data::IMS_DataPackage::METRICHISTOP__TYPE:
+    {
+        ::ecorecpp::mapping::any_traits< ::IMS_Data::MetricType >::fromAny(
+                _newValue, m_type);
+    }
+        return;
 
     }
     throw "Error";
@@ -102,6 +114,8 @@ void MetricHistOp::eSet(::ecore::EInt _featureID,
         return m_startTime != 0;
     case ::IMS_Data::IMS_DataPackage::METRICHISTOP__ENDTIME:
         return m_endTime != 0;
+    case ::IMS_Data::IMS_DataPackage::METRICHISTOP__TYPE:
+        return m_type != 0;
 
     }
     throw "Error";
