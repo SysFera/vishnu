@@ -28,10 +28,8 @@ TMSMapper::TMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_LISTQUEUES, "vishnu_list_queues"));
   mmap.insert (pair<int, string>(VISHNU_LISTJOBS, "vishnu_list_jobs"));
   mmap.insert (pair<int, string>(VISHNU_GETJOBOUTPUT, "vishnu_get_job_output"));
-  mmap.insert (pair<int, string>(VISHNU_GETALLJOBOUTPUT, "vishnu_get_all_jobs_output"));
+  mmap.insert (pair<int, string>(VISHNU_GETCOMPLETEDJOB, "vishnu_get_completed_jobs_output"));
   mmap.insert (pair<int, string>(VISHNU_CANCEL, "vishnu_cancel_job"));
-  mmap.insert (pair<int, string>(VISHNU_GETMACHINEREFRESHPERIOD, "vishnu_get_machine_refresh_period"));
-  mmap.insert (pair<int, string>(VISHNU_SETMACHINEREFRESHPERIOD, "vishnu_set_machine_refresh_period"));
 };
 
 int
@@ -145,17 +143,11 @@ TMSMapper::decode (const string& msg){
   case VISHNU_GETJOBOUTPUT:
     res = decodeOutput(separatorPos, msg);
     break;
-  case VISHNU_GETALLJOBOUTPUT:
-    res = decodeAllOutput(separatorPos, msg);
+  case VISHNU_GETCOMPLETEDJOB:
+    res = decodeCompletedJob(separatorPos, msg);
     break;
   case VISHNU_CANCEL:
     res = decodeCancel(separatorPos, msg);
-    break;
-  case VISHNU_GETMACHINEREFRESHPERIOD:
-    res = decodeGetPeriod(separatorPos, msg);
-    break;
-  case VISHNU_SETMACHINEREFRESHPERIOD:
-    res = decodeSetPeriod(separatorPos, msg);
     break;
   case VISHNU_GETJOBINFO:
     res = decodeJobInfo(separatorPos, msg);
@@ -248,7 +240,6 @@ TMSMapper::decodeProg(vector<int> separator, const string& msg){
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  res += u;
   TMS_Data::ProgressOptions_ptr j = NULL;
 
   //To parse the object serialized
@@ -274,8 +265,14 @@ TMSMapper::decodeQueue(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_LISTQUEUES))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
+  // size-2 because # after, and numerotation starts at 0
+  if (separator.at(1)!=(msg.size()-2)) {
+    u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+    res += " -q ";
+    res += u;
+  }
   return res;
 }
 
@@ -288,7 +285,7 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  res += u;
+
   TMS_Data::ListJobsOptions_ptr j = NULL;
 
   //To parse the object serialized
@@ -335,6 +332,7 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -q ";
     res += u;
   }
+  cout << "Chaine decodee: " << res << endl;
   return res;
 }
 string
@@ -347,20 +345,30 @@ TMSMapper::decodeOutput(vector<int> separator, const string& msg){
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
-  res += u;
+
+  TMS_Data::JobResult_ptr j = NULL;
+
+  //To parse the object serialized
+  if(!vishnu::parseEmfObject(u, j)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+  }
   res+= " ";
-  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
-  if (u.compare(" ")){
+  if (j->getJobId().compare("")) {
+    res += j->getJobId();
+    res+= " ";
+  }
+  if (separator.at(2)!=(msg.size()-2)) {
+    u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
     res += " -o ";
     res += u;
   }
   return res;
 }
 string
-TMSMapper::decodeAllOutput(vector<int> separator, const string& msg){
+TMSMapper::decodeCompletedJob(vector<int> separator, const string& msg){
   string res = string("");
   string u;
-  res += (mmap.find(VISHNU_GETALLJOBOUTPUT))->second;
+  res += (mmap.find(VISHNU_GETCOMPLETEDJOB))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
@@ -379,32 +387,22 @@ TMSMapper::decodeCancel(vector<int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_CANCEL))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
-  return res;
-}
-string
-TMSMapper::decodeGetPeriod(vector<int> separator, const string& msg){
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_GETMACHINEREFRESHPERIOD))->second;
-  res+= " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
-  return res;
-}
-
-string
-TMSMapper::decodeSetPeriod(vector<int> separator, const string& msg){
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_SETMACHINEREFRESHPERIOD))->second;
-  res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  res += u;
+
+  TMS_Data::Job_ptr j = NULL;
+
+  //To parse the object serialized
+  if(!vishnu::parseEmfObject(u, j)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+  }
+  if (j->getJobId().compare("")) {
+    res += j->getJobId();
+    res+= " ";
+  }
+
   return res;
 }
 string
@@ -415,8 +413,19 @@ TMSMapper::decodeJobInfo(vector<int> separator, const string& msg){
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
+  res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  res += u;
+
+  TMS_Data::Job_ptr j = NULL;
+
+  //To parse the object serialized
+  if(!vishnu::parseEmfObject(u, j)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+  }
+  if (j->getJobId().compare("")) {
+    res += j->getJobId();
+    res+= " ";
+  }
   return res;
 }
 
