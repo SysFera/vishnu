@@ -12,4 +12,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
 GRANT ALL ON SEQUENCE process_numprocess_seq TO vishnu_user;
 
+alter table state drop column numberofjob;
+
 drop table cpu;

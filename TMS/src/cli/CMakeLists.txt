@@ -27,11 +27,14 @@ add_library(tms-utils-cli
 #declare all command lines provided
 
 set(ALLCLI 
-  cancel_job get_job_info get_job_progress
-  list_jobs set_machine_refresh_period
-  get_machine_refresh_period
-  get_completed_jobs_output get_job_output
-  list_queues submit_job
+  cancel_job 
+  get_job_info 
+  get_job_progress
+  list_jobs 
+  get_completed_jobs_output 
+  get_job_output
+  list_queues 
+  submit_job
   )
 
 #set the prefix of command

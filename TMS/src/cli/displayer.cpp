@@ -36,7 +36,7 @@ displayJob(TMS_Data::Job& j){
   cout << " Job path        : " << j.getJobPath() << endl;
   cout << " Output path     : " << j.getOutputPath() << endl;
   cout << " Error path      : " << j.getErrorPath() << endl;
-  cout << " Priority        : " << convertJobPriorityToString(j.getJobPrio()) << endl;
+  cout << " Priority        : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
   cout << " CPU             : " << j.getNbCpus() << endl;
   cout << " Working dir     : " << j.getJobWorkingDir() << endl;
   cout << " Status          : " << convertJobStateToString(j.getStatus()) << endl;
@@ -76,7 +76,7 @@ displayProgress(Progression& p){
   pt =  boost::posix_time::from_time_t(p.getEndTime());
   cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
   cout << " Percent   : " << p.getPercent() << "%" << endl;
-  cout << " Status    : " << p.getStatus() << endl;
+  cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
   cout << endl;
 }
 
@@ -114,8 +114,10 @@ displayQueue(Queue& q){
   cout << " Node        : " << q.getNode() << endl;
   cout << " Running jobs: " << q.getNbRunningJobs() << endl;
   cout << " Job in queue: " << q.getNbJobsInQueue() << endl;
-  cout << " State       : " << q.getState() << endl;
-  cout << " Priority    : " << q.getPriority() << endl;
+  int state = q.getState();
+  std::string stateStr = (state==1?"STARTED":(state==2?"RUNNING":"NOT_STARTED"));
+  cout << " State       : " << stateStr << endl;
+  cout << " Priority    : " << q.getPriority() << "(" << convertJobPriorityToString(q.getPriority()) << ")" << endl;
   cout << " Description : " << q.getDescription() << endl;
 }
 
@@ -210,6 +212,7 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
   int node;
   int nbRunJobs;
   int nbJobsQue;
+  std::string stateStr;
   int state;
 
   std::string nameHead = "name";
@@ -249,6 +252,9 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
     nbJobsQue = (lsQueues.getQueues().get(i))->getNbJobsInQueue();
     maxNbJobsQueSize = std::max(maxNbJobsQueSize, vishnu::convertToString(nbJobsQue).size());
 
+    state = (lsQueues.getQueues().get(i))->getState();
+    std::string stateStr = (state==1?"STARTED":(state==2?"RUNNING":"NOT_STARTED"));
+    maxStateSize = std::max(maxStateSize, stateStr.size());
   }
 
   os << setw(maxNameSize+2) << left << nameHead << setw(maxMemorySize+2) << left << memoryHead << setw(maxWalltimeSize+2) ;
@@ -279,7 +285,8 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
     os << setw(maxNodeSize+2) << left << node;
     os << setw(maxNbRunJobsSize+2) << left << nbRunJobs;
     os << setw(maxNbJobsQueSize+2) << left << nbJobsQue;
-    os << setw(maxStateSize+2) << left << state;
+    stateStr = (state==1?"STARTED":(state==2?"RUNNING":"NOT_STARTED"));
+    os << setw(maxStateSize+2) << left << stateStr;
     os << endl;
 
   } 
@@ -335,7 +342,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
 
     priority = (listJobs.getJobs().get(i))->getJobPrio();
-    maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size());
+    maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size()+3);
   }
 
   os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxOwnerSize+2) ;
@@ -364,7 +371,9 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     os << setw(maxOwnerSize+2) << left << owner;
     os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
     os << setw(maxQueueSize+2) << left << queue;
-    os << setw(maxPrioritySize+2) << left <<  convertJobPriorityToString(priority);
+    ostringstream oss;
+    oss << priority  << "(" << convertJobPriorityToString(priority) << ")";
+    os << setw(maxPrioritySize+2) << left << oss.str();
     os << endl;
 
   }
@@ -428,6 +437,9 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     pt =  boost::posix_time::from_time_t(endTime);
     maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
 
+    status = (listProgress.getProgress().get(i))->getStatus();
+    maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
+
     percent = (listProgress.getProgress().get(i))->getPercent();
     maxPercentSize = std::max(maxPercentSize, convertToString(percent).size());
 
@@ -463,7 +475,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
     pt =  boost::posix_time::from_time_t(startTime);
     os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
-    os << setw(maxStatusSize+2) << left <<  status;
+    os << setw(maxStatusSize+2) << left <<  convertJobStateToString(status);
     os << setw(maxPercentSize+2) << left << percent << "%";
     os << endl;
 

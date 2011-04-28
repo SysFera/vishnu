@@ -43,19 +43,11 @@ const int VISHNU_GETJOBOUTPUT            = 6;
 /**
  * \brief Get all job output key
  */
-const int VISHNU_GETALLJOBOUTPUT         = 7;
+const int VISHNU_GETCOMPLETEDJOB         = 7;
 /**
  * \brief Cancel key
  */
 const int VISHNU_CANCEL                  = 8;
-/**
- * \brief Get machine refresh period key
- */
-const int VISHNU_GETMACHINEREFRESHPERIOD = 9;
-/**
- * \brief Set machine refresh period key
- */
-const int VISHNU_SETMACHINEREFRESHPERIOD = 10;
 
 /**
  * \class TMSMapper
@@ -189,13 +181,13 @@ private:
 
   /**
    * \brief To decode the get all output call sequence of the string returned by finalize
-   * \fn string decodeAllOutput(vector<int> separator, const string& msg)
+   * \fn string decodeCompletedJob(vector<int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   string
-  decodeAllOutput(vector<int> separator, const string& msg);
+  decodeCompletedJob(vector<int> separator, const string& msg);
 
   /**
    * \brief To decode the cancel call sequence of the string returned by finalize
