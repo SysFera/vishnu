@@ -38,13 +38,13 @@ boost::shared_ptr<Options>
 makeSubJobOp(string pgName, 
 	     boost::function1<void, string>& fname,
 	     boost::function1<void, string>& fqueue,
-	     boost::function1<void, int>& fwallTime, 
 	     boost::function1<void, int>& fmemory, 
 	     boost::function1<void, int>& fnbCpu,
 	     boost::function1<void, string>& fnbNodeAndCpu,
 	     boost::function1<void, string>& foutput,
 	     boost::function1<void, string>& ferr,
-	     string& dietConfig){
+	     string& walltime,
+       string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -63,9 +63,9 @@ makeSubJobOp(string pgName,
 	   CONFIG,
 	   fqueue);
   opt->add("wallTime,t",
-	   "The wall time for the job",
+	   "The wall time for the job (in the format hh:mm:ss)",
 	   CONFIG,
-	   fwallTime);
+	   walltime);
   opt->add("memory,m",
 	   "The memory needed by the job",
 	   CONFIG,
@@ -100,6 +100,7 @@ int main (int argc, char* argv[]){
   string sessionKey;
   string machineId;
   string scriptPath;
+  string walltime;
 
   /********** EMF data ************/
   TMS_Data::SubmitOptions subOp;
@@ -107,7 +108,6 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
   boost::function1<void,string> fname(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(subOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(subOp),_1));
-  boost::function1<void,int> fwallTime(boost::bind(&TMS_Data::SubmitOptions::setWallTime,boost::ref(subOp),_1));
   boost::function1<void,int> fmemory(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
   boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
   boost::function1<void,string> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
@@ -119,9 +119,9 @@ int main (int argc, char* argv[]){
   Job job;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,fwallTime, 
+  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue, 
 					      fmemory, fnbCpu, fnbNodeAndCpu,
-					      foutput, ferr, dietConfig);
+					      foutput, ferr, walltime, dietConfig);
 
   opt->add("machineId,i",
 	   "represents the id of the machine",
@@ -154,6 +154,10 @@ int main (int argc, char* argv[]){
 
   // Process command
   try {
+
+    if(walltime.size()!=0) {
+      subOp.setWallTime(convertStringToWallTime(walltime));
+    }
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
