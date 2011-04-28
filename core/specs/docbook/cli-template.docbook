@@ -73,6 +73,19 @@
             Add services stop and getSystemInfo.
           </para>
         </revdescription>
+      </revision>
+       <revision>
+        <revnumber>5</revnumber>
+        <date>21/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates for TMS:
+            Removed vishnu_get_machine_refresh_period  and vishnu_set_machine_refresh_period services. 
+            Added UNDEFINED status of JobStatus Enum. Added UNDEFINED priority of JobPriority Enum.
+            Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class.
+            Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED in exception list. Modified values of JobPriority Enum.  Modified values of            QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority. Added option queueName in vishnu_list_queues.
+          </para>
+        </revdescription>
         </revision>
       </revhistory>
     </info>
