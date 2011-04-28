@@ -183,7 +183,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param listofQueues : The list of queues
-* \param queueName The option value, if it given, listQueues only information of this queue
+* \param queueName The option value, if it is given, listQueues gives information only of this queue
 * \return int : an error code
 */
 int
