@@ -135,11 +135,17 @@ int JobServer::cancelJob()
 
   std::string batchJobId;
   std::string jobId;
+  std::string owner;
+  int status;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
-  std::string sqlCancelRequest = "SELECT batchJobId from job, vsession "
-                                "where vsession.numsessionid=job.vsession_numsessionid"
-                                " and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
+
+  std::string acLogin = getUserAccountLogin();
+  std::string machineName = getMachineName();
+
+  std::string sqlCancelRequest = "SELECT owner, status, batchJobId from job, vsession "
+                                "where vsession.numsessionid=job.vsession_numsessionid "
+                                " and jobId='"+mjob.getJobId()+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlCancelResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlCancelRequest.c_str()));
   std::cout << "JobServer::cancelJob: " << sqlCancelRequest << std::endl;
@@ -148,6 +154,20 @@ int JobServer::cancelJob()
     results.clear();
     results = sqlCancelResult->get(0);
     iter = results.begin();
+
+    owner = *iter; 
+    if(owner.compare(acLogin)!=0) {
+      throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't cancel this job because it is for an other owner");
+    }
+    iter++;
+    status = convertToInt(*iter);
+    if(status==5) {
+      throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
+    }
+    if(status==6) {
+      throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
+    }
+    iter++;
     batchJobId = *iter;
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
@@ -158,12 +178,6 @@ int JobServer::cancelJob()
   mjob.setJobId(batchJobId); //To reset the jobId
 
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
-
-  std::string acLogin = getUserAccountLogin();
-  std::cout << "acLogin = " << acLogin << std::endl;
-
-  std::string machineName = getMachineName();
-  std::cout << "machineName = " << machineName << std::endl;
 
   SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
   sshJobExec.sshexec("CANCEL");

@@ -333,8 +333,7 @@ vishnu::checkJobStatus(const int& status) {
 void
 vishnu::checkJobPriority(const int& priority) {
 
-  if ((priority != -1) && (priority != 100) && (priority != 200) &&
-      (priority != 300) && (priority != 400) && (priority != 500)) {
+  if ((priority < -1) || (priority > 5)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The priority value is incorrect");
   }
 }

@@ -183,7 +183,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param listofQueues : The list of queues
-* \param queueName The option value, if it given, listQueues only information of this queue
+* \param queueName The option value, if it is given, listQueues gives information only of this queue
 * \return int : an error code
 */
 int
@@ -214,65 +214,21 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 }
 
-
-/**
-* \brief The setMachineRefreshPeriod function sets the refresh period of output and error files contents
-* \fn int setMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId, const int& value)
-* \param sessionKey : The session key
-* \param machineId : The id of the machine
-* \param value : Is the refresh interval value (in seconds)
-* \return int : an error code
-*/
-int
-vishnu::setMachineRefreshPeriod(const std::string& sessionKey,
-                        const std::string& machineId,
-                        const int& value)
-throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
-  SessionProxy sessionProxy(sessionKey);
-  TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
-  tmsMachineProxy.setMachineRefreshPeriod(value);
-
-  return 0;
-}
-
-/**
-* \brief The getMachineRefreshPeriod function gets the refresh period of output and error files contents
-* \fn int getMachineRefreshPeriod(const std::string& sessionKey, const std::string& machineId)
-* \param sessionKey : The session key
-* \param machineId : Represents the machine id
-* \param value The refresh period value
-* \return the value of the refresh period
-*/
-int
-vishnu::getMachineRefreshPeriod(const std::string& sessionKey,
-                                const std::string& machineId,
-                                int& value)
-throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
-  SessionProxy sessionProxy(sessionKey);
-  TMSMachineProxy tmsMachineProxy (sessionProxy, machineId);
-
-   value = tmsMachineProxy.getMachineRefreshPeriod();
-   return 0;
-}
-
-
 /**
 * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
 * \param sessionKey : The session key
 * \param machineId : The Id of the machine
 * \param jobId : The Id of the job
-* \param outDir : The output directory where the files will be stored (default is current directory)
 * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
+* \param outDir : The output directory where the files will be stored (default is current directory)
 * \return int : an error code
 */
 int
 vishnu::getJobOutput(const std::string& sessionKey,
               const std::string& machineId,
               const std::string& jobId,
-              const std::string& outDir,
-              JobResult& outputInfos)
+              JobResult& outputInfos,
+              const std::string& outDir)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
@@ -292,15 +248,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 * of completed jobs (applies only once for each job)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
-*  \param outDir : The output directory where the files will be stored (default is current directory)
 * \param listOfResults : Is the list of jobs results
+* \param outDir : The output directory where the files will be stored (default is current directory)
 * \return int : an error code
 */
 int
 vishnu::getCompletedJobsOutput(const std::string& sessionKey,
                   const std::string& machineId,
-                  const std::string& outDir,
-                  ListJobResults& listOfResults)
+                  ListJobResults& listOfResults,
+                  const std::string& outDir)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
