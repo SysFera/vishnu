@@ -59,6 +59,7 @@ class TorqueServer : public BatchServer
   getJobProgress(TMS_Data::ProgressOptions op);
 
   int getJobState(const std::string& jobId);  
+  time_t getJobProgressInfo(const std::string& jobId);
 
   ~TorqueServer(); 
 
