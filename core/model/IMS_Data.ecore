@@ -143,6 +143,13 @@
         <details key="shortOption" value="e"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MetricType"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="The type of metric searched"/>
+        <details key="shortOption" value="t"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RestartOp" instanceTypeName="RestartOp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vishnuConf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
