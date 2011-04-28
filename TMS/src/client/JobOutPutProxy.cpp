@@ -50,7 +50,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
   std::string serviceName = "jobOutPutGetResult_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
+  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -75,12 +75,17 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
     raiseDietMsgException(msgErrorDiet);
   }
 
+  if (diet_string_set(diet_parameter(profile,3), strdup((moutDir.c_str())), DIET_VOLATILE)) {
+    msgErrorDiet += "with outDir parameter "+moutDir;
+    raiseDietMsgException(msgErrorDiet);
+  }
+
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT_RETURN);
+  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,5), DIET_PERSISTENT_RETURN);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -90,7 +95,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
 
     try {
-      IDContainer = (profile->parameters[4]).desc.id;
+      IDContainer = (profile->parameters[5]).desc.id;
       dagda_get_container(IDContainer);
       dagda_get_container_elements(IDContainer, &content);
 
@@ -158,7 +163,7 @@ JobOutPutProxy::getAllJobsOutPut() {
   std::string serviceName = "jobOutPutGetAllResult_";
   serviceName.append(mmachineId);
 
-  profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 4);
+  profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -173,19 +178,25 @@ JobOutPutProxy::getAllJobsOutPut() {
     raiseDietMsgException(msgErrorDiet);
   }
 
+  if (diet_string_set(diet_parameter(profile,2), strdup((moutDir.c_str())), DIET_VOLATILE)) {
+    msgErrorDiet += "with outDir parameter "+moutDir;
+    raiseDietMsgException(msgErrorDiet);
+  }
+ 
+
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-  diet_container_set(diet_parameter(profile,4), DIET_PERSISTENT_RETURN);
+  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  diet_container_set(diet_parameter(profile,5), DIET_PERSISTENT_RETURN);
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get(diet_parameter(profile,2), &listJobResultInString, NULL)){
+    if(diet_string_get(diet_parameter(profile,3), &listJobResultInString, NULL)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
 
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -201,7 +212,7 @@ JobOutPutProxy::getAllJobsOutPut() {
     }
 
     try {
-      IDContainer = (profile->parameters[4]).desc.id;
+      IDContainer = (profile->parameters[5]).desc.id;
       dagda_get_container(IDContainer);
       dagda_get_container_elements(IDContainer, &content);
 

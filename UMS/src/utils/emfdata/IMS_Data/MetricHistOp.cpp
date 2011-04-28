@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 MetricHistOp::MetricHistOp() :
-    m_startTime(0), m_endTime(0)
+    m_startTime(0), m_endTime(0), m_type(0)
 {
 
     /*PROTECTED REGION ID(MetricHistOpImpl__MetricHistOpImpl) START*/
@@ -97,6 +97,32 @@ void MetricHistOp::setEndTime(::ecore::ELong _endTime)
                 (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getMetricHistOp__endTime(),
                 _old_endTime,
                 m_endTime
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::IMS_Data::MetricType MetricHistOp::getType() const
+{
+    return m_type;
+}
+
+void MetricHistOp::setType(::IMS_Data::MetricType _type)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::IMS_Data::MetricType _old_type = m_type;
+#endif
+    m_type = _type;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getMetricHistOp__type(),
+                _old_type,
+                m_type
         );
         eNotify(&notification);
     }
