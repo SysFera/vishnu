@@ -28,7 +28,7 @@ using namespace vishnu;
  * \param fstart : The start time of submission for the job
  * \param fend : The end of submission date for the job
  * \param fowner : The owner of the job
- * \param fstatus : The status of the job
+ * \param status : The status of the job
  * \param fpriority : The priority of the job
  * \param foutput : The output path
  * \param ferr : The error path
@@ -43,7 +43,7 @@ makeListJobOp(string pgName,
 	      boost::function1<void, long>& fstart, 
 	      boost::function1<void, long>& fend, 
 	      boost::function1<void, string>& fowner,
-	      boost::function1<void, JobStatus>& fstatus,
+	      string& status,
 	      boost::function1<void, JobPriority>& fpriority,
 	      boost::function1<void, string>& fqueue,
 	      string& dietConfig){
@@ -77,11 +77,17 @@ makeListJobOp(string pgName,
 	   CONFIG,
 	   fowner);
   opt->add("status,s",
-	   "The status of the job",
+	   "The status of the job. The different values of job status are:\n"
+     " 1 or S: for SUBMITTED job\n"
+     " 2 or Q: for QUEUED job\n"
+     " 3 or W: for WAITING job\n"
+     " 4 or R: for RUNNING job\n"
+     " 5 or T: for TERMINATED job\n"
+     " 6 or C: for CANCELED job",
 	   CONFIG,
-	   fstatus);
+	   status);
   opt->add("priority,p",
-	   "The priority of the job",
+	   "The priority of the job. The priority argument must be an integer between 1 and 5 inclusive",
 	   CONFIG,
 	   fpriority);
   opt->add("queue,q",
@@ -101,6 +107,8 @@ int main (int argc, char* argv[]){
   string dietConfig;
   string sessionKey;
   string machineId;
+  string statusStr = "-1";
+  int status;
 
   /********** EMF data ************/
   TMS_Data::ListJobsOptions jobOp;
@@ -111,7 +119,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,long> fstart(boost::bind(&TMS_Data::ListJobsOptions::setFromSubmitDate,boost::ref(jobOp),_1));
   boost::function1<void,long> fend(boost::bind(&TMS_Data::ListJobsOptions::setToSubmitDate,boost::ref(jobOp),_1));
   boost::function1<void,string> fown(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
-  boost::function1<void,JobStatus> fstatus(boost::bind(&TMS_Data::ListJobsOptions::setStatus,boost::ref(jobOp),_1));
+  //boost::function1<void,JobStatus> fstatus(boost::bind(&TMS_Data::ListJobsOptions::setStatus,boost::ref(jobOp),_1));
   boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
 
@@ -126,7 +134,7 @@ int main (int argc, char* argv[]){
 					       fstart, 
 					       fend,
 					       fown, 
-					       fstatus,
+					       statusStr,
 					       fpriority,
 					       fqueue,
                  dietConfig);
@@ -153,6 +161,41 @@ int main (int argc, char* argv[]){
     helpUsage(*opt,"[options] machineId");
     return 0;
   }
+
+  std::istringstream iss(statusStr);
+  iss >> status;
+  if(status==0 && statusStr.size()==1) {
+    switch(statusStr[0]) {
+      case 'S' :
+        status = 1;
+        break;
+      case 'Q' :
+        status = 2;
+        break;
+      case 'W' :
+        status = 3;
+        break; 
+      case 'R' :
+        status = 4;
+        break;
+      case 'T' :
+        status = 5;
+        break;
+      case 'C' :
+        status = 6;
+        break;
+      default:
+        std::cerr << "\nUnknown job status " << statusStr << std::endl;
+        helpUsage(*opt,"[options] machineId");
+        return 0;
+    }
+  }
+  if(status!=-1 && statusStr.size() > 1) {
+    std::cerr << "\nUnknown job status " << statusStr << std::endl;
+    helpUsage(*opt,"[options] machineId");
+    return 0; 
+  } 
+  jobOp.setStatus(status);
 
   // Process command
   try {

@@ -416,6 +416,21 @@ int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
   
 }
 
+int TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
+
+  if(prio < -512) {
+    return 1;
+  } else if(prio >= -512 && prio < 0) {
+    return 2;
+  } else if(prio >= 0 && prio < 512) {
+    return 3;
+  } else if(prio >= 512 && prio < 1023) {
+     return 4;
+  } else if(prio >= 1023) {
+     return 5;
+  } 
+}
+
 void
 TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   struct attrl *a;
@@ -541,9 +556,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   job.setErrorPath(error);
 
   if (prio.compare("")!=0) {
-    job.setJobPrio(atoi(prio.c_str()));
+    job.setJobPrio(convertTorquePrioToVishnuPrio(convertToInt(prio.c_str())));
   } else {
-    job.setJobPrio(0);
+    job.setJobPrio(100);
   }
 
   if (ncpus.compare("")!=0) {
@@ -908,9 +923,9 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
       if(a->name!=NULL) {
         if(!strcmp(a->name, ATTR_start)) {
           if(*a->value == 'T') {
-            queue->setState(3); //RUNNING = 'R';
+            queue->setState(2); //RUNNING = 'R';
           } else {
-            queue->setState(0); // STARTED = 'S';
+            queue->setState(1); // STARTED = 'S';
           }
         }  else if(!strcmp(a->name, ATTR_count)) { 
           //std::cout << "a->value=" << a->value << std::endl;
@@ -960,7 +975,7 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
             queue->setNode(vishnu::convertToInt(std::string(a->value)));
           }
         } else if (!strcmp(a->name, ATTR_p)){ 
-          queue->setPriority(vishnu::convertToInt(std::string(a->value)));
+          queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
         } else if (!strcmp(a->name, ATTR_comment)) {
           queue->setDescription(std::string(a->value));
         }
