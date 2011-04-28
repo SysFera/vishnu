@@ -16,7 +16,6 @@
     <services name="int_getMetricHistory" description="Retrieve the history of values of a metric on a machine">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="metricType" dataType="//@typeList/@types.4" description="Type of metric" shortOptionLetter="" longOptionName=""/>
       <ports name="metricValues" direction="OUT" dataType="//@typeList/@types.10" description="List of metric values" longOptionName=""/>
       <ports name="endTime" dataType="//@typeList/@types.15" description="End time of metric history" optional="true" shortOptionLetter="" longOptionName=""/>
     </services>

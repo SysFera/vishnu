@@ -59,6 +59,17 @@
             <para>Modified 4.2.6, UC IA2. Fix set threshold available in branch c, the threshold is the cpuload and not the number of processes</para>
           </revdescription>
         </revision>
+        <revision>
+        <revnumber>06</revnumber>
+        <date>21/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+            Removed TA1. Added T1.7. Replaced T1.2 by T1.7.
+          </para>
+        </revdescription>
+        </revision>
+
       </revhistory>
     </info>
   <chapter>
