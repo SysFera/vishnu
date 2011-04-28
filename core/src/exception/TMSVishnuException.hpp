@@ -13,8 +13,9 @@ static const int ERRCODE_UNKNOWN_BATCH_SCHEDULER = 101;
 static const int ERRCODE_BATCH_SCHEDULER_ERROR = 102;
 static const int ERRCODE_UNKNOWN_JOBID = 103;
 static const int ERRCODE_PERMISSION_DENIED = 104;
-
-
+static const int ERRCODE_ALREADY_TERMINATED = 105;
+static const int ERRCODE_ALREADY_CANCELED = 106;
+static const int ERRCODE_JOB_IS_NOT_TERMINATED = 107;
 
 
 class TMSVishnuException: public UserException{

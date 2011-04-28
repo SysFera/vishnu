@@ -96,14 +96,12 @@ MonitorTMS::run() {
         jobId = *iter;
         iter++;
         batchJobId = *iter;
-        std::cout << "MonitorTMS::run(): jobId = " << jobId  << ", batchJobId=" << batchJobId << std::endl;
         BatchFactory factory;
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType));
         state = batchServer->getJobState(batchJobId);
-        std::cout << "state = " << state << std::endl;
         if(state!=-1) {
           sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
-          std::cout << "MonitorTMS::run(): " << sqlUpdatedRequest << std::endl;
+          //std::cout << "MonitorTMS::run(): " << sqlUpdatedRequest << std::endl;
 
           mdatabaseVishnu->process(sqlUpdatedRequest.c_str()); 
         }
