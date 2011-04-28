@@ -69,7 +69,6 @@ namespace vishnu {
   int
   getMetricHistory(const string sessionKey,
 		   string machineId,
-		   IMS_Data::MetricType type,
 		   IMS_Data::ListMetric& list,
 		   IMS_Data::MetricHistOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
