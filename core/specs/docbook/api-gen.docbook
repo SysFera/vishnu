@@ -103,8 +103,9 @@
         <revdescription>
           
         <para>Updates to TMS:
-            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. 
-            Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. Added wallClokUsed in Job class.
+            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. Added UNDEFINED priority of JobPriority Enum.
+            Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. 
+            Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED in exception list. Modified values of JobPriority Enum.  Modified values of            QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority.
           </para></revdescription>
       </revision>
       <revision>
@@ -4583,6 +4584,13 @@
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
+              <row>
+                <entry><para>queueName</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para> if it is given, listQueues gives  information only of this queue</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -4651,7 +4659,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::listJobs</title>
@@ -4904,6 +4912,10 @@
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
               </row>
+              <row>
+                <entry><para>ERRCODE_JOB_IS_NOT_TERMINATED</para></entry>
+                <entry><para>The job is not terminated</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -5146,6 +5158,14 @@
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_ALREADY_CANCELED</para></entry>
+                <entry><para>The job is already canceled</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_ALREADY_TERMINATED</para></entry>
+                <entry><para>The job is already terminated</para></entry>
               </row>
             </tbody>
           </tgroup>
