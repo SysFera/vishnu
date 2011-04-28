@@ -90,6 +90,17 @@ namespace IMS_Data
          **/
         void setEndTime(::ecore::ELong _endTime);
 
+        /**
+         * \brief To get the type
+         * \return The type attribute value
+         **/
+        ::IMS_Data::MetricType getType() const;
+        /**
+         * \brief To set the type
+         * \param _type The type value
+         **/
+        void setType(::IMS_Data::MetricType _type);
+
         // References
 
 
@@ -118,6 +129,8 @@ namespace IMS_Data
         ::ecore::ELong m_startTime;
 
         ::ecore::ELong m_endTime;
+
+        ::IMS_Data::MetricType m_type;
 
         // References
 
