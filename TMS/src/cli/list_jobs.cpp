@@ -1,6 +1,6 @@
 /**
  * \file list_jobs.cpp
- * This file defines the VISHNU list jobs command 
+ * This file defines the VISHNU list jobs command
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
 
@@ -37,11 +37,11 @@ using namespace vishnu;
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
-makeListJobOp(string pgName, 
+makeListJobOp(string pgName,
 	      boost::function1<void, string>& fjid,
 	      boost::function1<void, int>& fnbCpu,
-	      boost::function1<void, long>& fstart, 
-	      boost::function1<void, long>& fend, 
+	      boost::function1<void, long>& fstart,
+	      boost::function1<void, long>& fend,
 	      boost::function1<void, string>& fowner,
 	      string& status,
 	      boost::function1<void, JobPriority>& fpriority,
@@ -100,14 +100,14 @@ makeListJobOp(string pgName,
 
 
 int main (int argc, char* argv[]){
-  
+
   int ret; // Return value
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
   string machineId;
-  string statusStr = "-1";
+  string statusStr = "";
   int status;
 
   /********** EMF data ************/
@@ -123,17 +123,17 @@ int main (int argc, char* argv[]){
   boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
 
-     
+
   /*********** Out parameters *********************/
   TMS_Data::ListJobs job;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeListJobOp(argv[0], 
+  boost::shared_ptr<Options> opt=makeListJobOp(argv[0],
 					       fjid,
 					       fnbCpu,
-					       fstart, 
+					       fstart,
 					       fend,
-					       fown, 
+					       fown,
 					       statusStr,
 					       fpriority,
 					       fqueue,
@@ -156,47 +156,49 @@ int main (int argc, char* argv[]){
   }
 
   // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
+  checkVishnuConfig(*opt);
   if ( opt->count("help")){
     helpUsage(*opt,"[options] machineId");
     return 0;
   }
 
-  std::istringstream iss(statusStr);
-  iss >> status;
-  if(status==0 && statusStr.size()==1) {
-    switch(statusStr[0]) {
-      case 'S' :
-        status = 1;
-        break;
-      case 'Q' :
-        status = 2;
-        break;
-      case 'W' :
-        status = 3;
-        break; 
-      case 'R' :
-        status = 4;
-        break;
-      case 'T' :
-        status = 5;
-        break;
-      case 'C' :
-        status = 6;
-        break;
-      default:
-        std::cerr << "\nUnknown job status " << statusStr << std::endl;
-        helpUsage(*opt,"[options] machineId");
+  if(statusStr.size()!=0) {
+    size_t pos = statusStr.find_first_not_of("0123456789");
+    if(pos!=std::string::npos) {
+      if(statusStr.size()==1) {
+        switch(statusStr[0]) {
+          case 'S' :
+            status = 1;
+            break;
+          case 'Q' :
+            status = 2;
+            break;
+          case 'W' :
+            status = 3;
+            break;
+          case 'R' :
+            status = 4;
+            break;
+          case 'T' :
+            status = 5;
+            break;
+          case 'C' :
+            status = 6;
+            break;
+          default:
+            std::cerr << "Unknown job status " << statusStr << std::endl;
+            return 0;
+        }
+      }
+      if(statusStr.size() > 1) {
+        std::cerr << "Unknown job status " << statusStr << std::endl;
         return 0;
+      }
+    } else {
+      status = convertToInt(statusStr);
     }
-  }
-  if(status!=-1 && statusStr.size() > 1) {
-    std::cerr << "\nUnknown job status " << statusStr << std::endl;
-    helpUsage(*opt,"[options] machineId");
-    return 0; 
-  } 
   jobOp.setStatus(status);
-
+ }
   // Process command
   try {
 
@@ -233,6 +235,5 @@ int main (int argc, char* argv[]){
     errorUsage(argv[0],e.what());
     return CLI_ERROR_RUNTIME;
   }
-
   return 0;
 }
