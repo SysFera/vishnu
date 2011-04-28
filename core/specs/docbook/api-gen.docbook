@@ -96,6 +96,27 @@
             Add corresponding datatypes (option) plus list of system info and processes.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>21/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Updates to TMS:
+            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. 
+            Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. Added wallClokUsed in Job class.
+          </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>26/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Updates of UMS:
+            Added CommandStatusType Enum and an attribute status to the Command Class.
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -3314,6 +3335,11 @@
               <entry><para>long</para></entry>
               <entry><para>cmdEndTime is the date of the command end (the UNIX timestamps is used)</para></entry>
             </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para><link linkend="CommandStatusType">CommandStatusType</link></para></entry>
+              <entry><para>The machineId is the identifier of the machine used by the command</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -4021,6 +4047,31 @@
               <entry><para>status</para></entry>
               <entry><para><link linkend="StatusType">StatusType</link></para></entry>
               <entry><para>represents the status of the user</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="CommandStatusType"><emphasis role="bold">Enumeration UMS::CommandStatusType Type</emphasis></para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="4cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Value
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>FAILURE</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+            <row>
+              <entry><para>SUCCESS</para></entry>
+              <entry><para>1</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -4776,18 +4827,18 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>outDir</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
-              <row>
                 <entry><para>outputInfo</para></entry>
                 <entry><para><link linkend="JobResult">JobResult</link></para></entry>
                 <entry><para>The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>outDir</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4857,7 +4908,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = Error (Not Definide)</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::getCompletedJobsOutput</title>
@@ -4901,18 +4952,18 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>outDir</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
-              </row>
-              <row>
                 <entry><para>listOfResults</para></entry>
                 <entry><para><link linkend="ListJobResults">ListJobResults</link></para></entry>
                 <entry><para>Is the list of jobs results</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>outDir</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4982,7 +5033,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = Error (Not Definide)</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::cancelJob</title>
@@ -5101,218 +5152,6 @@
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function TMS::setMachineRefreshPeriod</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the id of the machine that the user wants to set refresh period</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the refresh interval value (in seconds)</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The setMachineRefreshPeriod() function sets the refresh period of output and error files contents</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine id is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNDEFINED</para></entry>
-                <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Vishnu not available (Service bus failure)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Vishnu not available (Database error)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Vishnu not available (Database connection)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Vishnu not available (System)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::setMachineRefreshPeriod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const int&amp; <parameter>value</parameter></paramdef></funcprototype></funcsynopsis>
-      </section>
-      <section>
-        <title>Function TMS::getMachineRefreshPeriod</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This function can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="8cm"/>
-            <colspec colwidth="2cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Description
-</entry>
-                <entry>Mode
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>sessionKey</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>The session key</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>machineId</para></entry>
-                <entry><para>string</para></entry>
-                <entry><para>Is the id of the machine that the user wants to get refresh period</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>value</para></entry>
-                <entry><para>int</para></entry>
-                <entry><para>Is the refresh interval value (in seconds)</para></entry>
-                <entry><para>OUT</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getMachineRefreshPeriod() function gets the refresh period of output and error files contents</para>
-        <para><emphasis role="bold">Return Value </emphasis></para>
-        <para>An error code is returned when an error occurs during the execution of the function</para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colwidth="8.5cm"/>
-            <colspec colwidth="9cm"/>
-            <thead>
-              <row>
-                <entry>Name
-</entry>
-                <entry>Description
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>VISHNU_OK</para></entry>
-                <entry><para>The service was performed  successfully</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
-                <entry><para>The machine id is unknown</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_UNDEFINED</para></entry>
-                <entry><para>Internal Error: Undefined exception</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_DIET</para></entry>
-                <entry><para>Vishnu not available (Service bus failure)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_DBERR</para></entry>
-                <entry><para>Vishnu not available (Database error)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_DBCONN</para></entry>
-                <entry><para>Vishnu not available (Database connection)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SYSTEM</para></entry>
-                <entry><para>Vishnu not available (System)</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
-                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMachineRefreshPeriod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>int&amp; <parameter>value</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -5504,7 +5343,7 @@
           <tbody>
             <row>
               <entry><para>nbJobs</para></entry>
-              <entry><para>string</para></entry>
+              <entry><para>int</para></entry>
               <entry><para>Is the number of jobs.</para></entry>
             </row>
             <row>
@@ -5608,16 +5447,6 @@
               <entry><para>priority</para></entry>
               <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
               <entry><para>To list jobs which have this priority</para></entry>
-            </row>
-            <row>
-              <entry><para>outPutPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Gets the path and file for each job output.</para></entry>
-            </row>
-            <row>
-              <entry><para>errorPath</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>Gets the path and file for each job error.</para></entry>
             </row>
             <row>
               <entry><para>queue</para></entry>
@@ -5933,23 +5762,23 @@
             </row>
             <row>
               <entry><para>VERY_LOW</para></entry>
-              <entry><para>100</para></entry>
+              <entry><para>1</para></entry>
             </row>
             <row>
               <entry><para>LOW</para></entry>
-              <entry><para>200</para></entry>
+              <entry><para>2</para></entry>
             </row>
             <row>
               <entry><para>NORMAL</para></entry>
-              <entry><para>300</para></entry>
+              <entry><para>3</para></entry>
             </row>
             <row>
               <entry><para>HIGH</para></entry>
-              <entry><para>400</para></entry>
+              <entry><para>4</para></entry>
             </row>
             <row>
               <entry><para>VERY_HIGH</para></entry>
-              <entry><para>500</para></entry>
+              <entry><para>5</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5969,28 +5798,32 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>SUBMITTED</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para>UNDEFINED</para></entry>
+              <entry><para>-1</para></entry>
             </row>
             <row>
-              <entry><para>QUEUED</para></entry>
+              <entry><para>SUBMITTED</para></entry>
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>WAITING</para></entry>
+              <entry><para>QUEUED</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>RUNNING</para></entry>
+              <entry><para>WAITING</para></entry>
               <entry><para>3</para></entry>
             </row>
             <row>
-              <entry><para>TERMINATED</para></entry>
+              <entry><para>RUNNING</para></entry>
               <entry><para>4</para></entry>
             </row>
             <row>
-              <entry><para>CANCELLED</para></entry>
+              <entry><para>TERMINATED</para></entry>
               <entry><para>5</para></entry>
+            </row>
+            <row>
+              <entry><para>CANCELLED</para></entry>
+              <entry><para>6</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -6015,23 +5848,23 @@
             </row>
             <row>
               <entry><para>VERY_LOW</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>LOW</para></entry>
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>NORMAL</para></entry>
+              <entry><para>LOW</para></entry>
               <entry><para>2</para></entry>
             </row>
             <row>
-              <entry><para>HIGH</para></entry>
+              <entry><para>NORMAL</para></entry>
               <entry><para>3</para></entry>
             </row>
             <row>
-              <entry><para>VERY_HIGH</para></entry>
+              <entry><para>HIGH</para></entry>
               <entry><para>4</para></entry>
+            </row>
+            <row>
+              <entry><para>VERY_HIGH</para></entry>
+              <entry><para>5</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -6055,16 +5888,12 @@
               <entry><para>0</para></entry>
             </row>
             <row>
-              <entry><para>NOT_AVAILABLE</para></entry>
+              <entry><para>STARTED</para></entry>
               <entry><para>1</para></entry>
             </row>
             <row>
-              <entry><para>STARTED</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-            <row>
               <entry><para>RUNNING</para></entry>
-              <entry><para>3</para></entry>
+              <entry><para>2</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7458,13 +7287,6 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>type</para></entry>
-                <entry><para><link linkend="RestartType">RestartType</link></para></entry>
-                <entry><para>If restarting a sed or an agent</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="RestartOp">RestartOp</link></para></entry>
                 <entry><para>The option for the restart</para></entry>
@@ -7507,7 +7329,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartType&amp; <parameter>type</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
@@ -7776,7 +7598,12 @@
             <row>
               <entry><para>timestamp</para></entry>
               <entry><para>long</para></entry>
-              <entry><para>The timestamp corresponding to the moment the process is registered</para></entry>
+              <entry><para>The timestamp corresponding to the moment the process has been updated</para></entry>
+            </row>
+            <row>
+              <entry><para>script</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The content of the script used to launch the sed</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7825,11 +7652,6 @@
             </row>
           </thead>
           <tbody>
-            <row>
-              <entry><para>dietConfFile</para></entry>
-              <entry><para>string</para></entry>
-              <entry><para>The path to the diet configuration file</para></entry>
-            </row>
             <row>
               <entry><para>vishnuConf</para></entry>
               <entry><para>string</para></entry>
@@ -8104,31 +7926,6 @@
             <row>
               <entry><para>DELETED</para></entry>
               <entry><para>3</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="RestartType"><emphasis role="bold">Enumeration IMS::RestartType Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>SED</para></entry>
-              <entry><para>1</para></entry>
             </row>
           </tbody>
         </tgroup>
