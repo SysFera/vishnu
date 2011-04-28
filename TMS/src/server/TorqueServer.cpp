@@ -263,6 +263,44 @@ int TorqueServer::getJobState(const std::string& jobId) {
 return state;
 }
 
+time_t TorqueServer::getJobProgressInfo(const std::string& jobId) {
+
+  int connect;
+  struct batch_status *p_status = NULL;
+  struct attrl *a;
+  time_t startTime = 0; 
+
+  serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
+  // Connect to the torque server
+  connect = cnt2server(serverOut);
+
+  if(connect <= 0) {
+    return -1;
+  } else {
+    p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
+    pbs_disconnect(connect);
+  }
+
+  if(p_status!=NULL) {
+    a = p_status->attribs;
+    while(a!=NULL) {
+      if (!strcmp(a->name, ATTR_start_time)){
+
+        std::istringstream iss(std::string(a->value));
+        iss >> startTime;    
+        //epoch = (time_t)atoi(a->value);
+        std::cout << "startTime = " << startTime << std::endl;
+        std::cout << "ctime(&startTime) = " << ctime(&startTime) << std::endl;
+        //prt_attr(a->name, a->resource, ctime(&epoch));
+        break;
+      }
+      a = a->next;
+    }
+  }
+
+return startTime;
+} 
+
 TMS_Data::ListJobs* 
 TorqueServer::listJobs(TMS_Data::ListJobsOptions op){
 

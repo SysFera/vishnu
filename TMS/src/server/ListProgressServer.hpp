@@ -61,11 +61,69 @@ public:
   TMS_Data::ListProgression*
   list() {
     
-    BatchFactory factory;
+    /*BatchFactory factory;
     BatchType batchType  = ServerTMS::getInstance()->getBatchType();
     BatchServer* batchServer = factory.getBatchServerInstance(batchType);
-
     mlistObject = batchServer->getJobProgress(*mparameters);
+    delete batchServer;
+    */
+    //To check the sessionKey
+    msessionServer.check();
+
+    std::vector<std::string> results;
+    std::vector<std::string>::iterator  iter;
+    std::string batchJobId;
+    int status;
+    long startTime;
+
+    TMS_Data::Job job;
+    JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
+    std::string acLogin = jobServer.getUserAccountLogin();
+
+    std::string machineName = jobServer.getMachineName();
+
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createListProgression();
+
+    //To get the output and error path of the job
+    std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
+      " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"+" and state < 6 order by jobId";
+    boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+
+    if (sqlResult->getNbTuples() != 0){
+      for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
+
+        results.clear();
+        results = sqlResult->get(i);
+        iter = results.begin();
+
+        TMS_Data::Progression_ptr job = ecoreFactory->createProgression();
+
+        job->setJobId(*iter);
+        job->setJobName(*(++iter));
+        job->setWallTime(convertToInt(*(++iter)));
+        job->setEndTime(string_to_time_t(*(++iter)));
+        status = convertToInt(*(++iter));
+        job->setStatus(status);
+        batchJobId = *(++iter);    
+
+        BatchFactory factory;
+        BatchType batchType  = ServerTMS::getInstance()->getBatchType(); 
+        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+        startTime = batchServer->getJobProgressInfo(batchJobId); 
+        if(startTime!=-1) {
+          job->setStartTime(startTime);//string_to_time_t(*(++iter)));
+        }
+        if(status==5) {
+            job->setPercent(100);  
+        }  
+
+        mlistObject->getProgress().push_back(job); 
+      }
+    }
+    
+    mlistObject->setNbJobs(mlistObject->getProgress().size());
+   
     return mlistObject;
 
   }
