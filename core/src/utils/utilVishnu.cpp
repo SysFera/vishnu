@@ -337,3 +337,32 @@ vishnu::checkJobPriority(const int& priority) {
     throw UserException(ERRCODE_INVALID_PARAM, "The priority value is incorrect");
   }
 }
+
+/**
+ * \brief Function to check the job nbNodesAndCpuPerNode 
+ * \param nbNodesAndNbCpuPerNode the number of nodes and cpu per node
+ * \return raises an exception on error
+ */
+void
+vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) {
+
+  if(nbNodesAndCpuPerNode.size()!=0) {
+    size_t posNbNodes;
+    size_t posCpuPerNode;
+    try {
+      posNbNodes = nbNodesAndCpuPerNode.find(":");
+      if(posNbNodes!=std::string::npos) {
+       
+        std::string nbNodes = nbNodesAndCpuPerNode.substr(0, posNbNodes);
+        isNumericalValue(nbNodes);
+        
+        std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode);
+        isNumericalValue(cpuPerNode);
+      } else {
+        throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
+      }
+    } catch(UserException ue) {
+      throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
+    }
+  }
+}
