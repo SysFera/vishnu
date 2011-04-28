@@ -52,7 +52,7 @@ ProcessServer::list(){
       results = listOfProcess->get(i);
       iter  = results.begin();
       IMS_Data::Process_ptr proc = ecoreFactory->createProcess();
-      proc->setState(convertToInt(*(iter)));
+      proc->setState(convertToInt(*(++iter)));
       proc->setProcessName(*(++iter));
       proc->setDietId(*(++iter));
       proc->setMachineId(*(++iter));
@@ -63,7 +63,6 @@ ProcessServer::list(){
   }catch (SystemException& e){
     throw (e);
   }
-
 
   return mlistObject;
 }

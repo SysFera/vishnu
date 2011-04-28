@@ -191,6 +191,7 @@ endif (COMPILE_UMS)
 
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
+  add_subdirectory(TMS/doc/man)
   if (BUILD_TESTING)
     add_subdirectory(TMS/test/src)
   endif (BUILD_TESTING)

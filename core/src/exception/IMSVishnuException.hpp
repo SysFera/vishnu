@@ -10,6 +10,7 @@
 
 // Definitions of IMS specific error codes
 static const int ERRCODE_INVPROCESS = 301;
+static const int ERRCODE_INVVISHNU = 302;
 
 
 class IMSVishnuException: public UserException{

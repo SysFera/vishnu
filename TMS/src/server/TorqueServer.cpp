@@ -148,10 +148,11 @@ void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::v
     cmdsOptions.push_back("-l");
     std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
-    std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-    size_t posCpuPerNode = NbNodesAndCpuPerNode.find(":", posNbNodes+1);
-    std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode); 
-    cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
+    if(posNbNodes!=std::string::npos) {
+      std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
+      cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
+    }
   }
 
 }
@@ -923,9 +924,9 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
       if(a->name!=NULL) {
         if(!strcmp(a->name, ATTR_start)) {
           if(*a->value == 'T') {
-            queue->setState(3); //RUNNING = 'R';
+            queue->setState(2); //RUNNING = 'R';
           } else {
-            queue->setState(0); // STARTED = 'S';
+            queue->setState(1); // STARTED = 'S';
           }
         }  else if(!strcmp(a->name, ATTR_count)) { 
           //std::cout << "a->value=" << a->value << std::endl;
@@ -975,7 +976,7 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
             queue->setNode(vishnu::convertToInt(std::string(a->value)));
           }
         } else if (!strcmp(a->name, ATTR_p)){ 
-          queue->setPriority(vishnu::convertToInt(std::string(a->value)));
+          queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
         } else if (!strcmp(a->name, ATTR_comment)) {
           queue->setDescription(std::string(a->value));
         }
