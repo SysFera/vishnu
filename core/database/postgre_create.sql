@@ -76,7 +76,6 @@ PRIMARY KEY(numuserid),
 CREATE TABLE state (
   numstateid SERIAL  NOT NULL ,
   machine_nummachineid INTEGER   NOT NULL ,
-  numberofjob INTEGER    ,
   memory INTEGER    ,
   diskspace INTEGER    ,
   cpuload INTEGER    ,
