@@ -1,5 +1,6 @@
 
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/date_time/c_time.hpp"
 #include "utilVishnu.hpp"
 #include "displayer.hpp"
 
@@ -473,13 +474,27 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
     pt =  boost::posix_time::from_time_t(startTime);
     os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
-    pt =  boost::posix_time::from_time_t(startTime);
+    pt =  boost::posix_time::from_time_t(endTime);
     os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
     os << setw(maxStatusSize+2) << left <<  convertJobStateToString(status);
-    os << setw(maxPercentSize+2) << left << percent << "%";
+    ostringstream oss;
+    oss <<  percent << "%";
+    os << setw(maxPercentSize+2) << left << oss.str() ;
     os << endl;
 
   }
+
+  struct tm *date_tm ;
+  struct tm *date_tm2 ;
+  time_t testtime = 1304008200; 
+  date_tm = std::localtime(&testtime);
+  date_tm2 = std::gmtime(&testtime);
+  std::cout << ctime(&testtime) << std::endl;
+  //std::cout << mktime(date_tm)-1304008200 << std::endl;
+  std::cout << date_tm->tm_hour << std::endl;
+  std::cout << date_tm2->tm_hour << std::endl;
+  pt =  boost::posix_time::from_time_t(testtime);
+   std::cout <<  boost::posix_time::to_simple_string(pt) << std::endl;
 
   return os;
 }

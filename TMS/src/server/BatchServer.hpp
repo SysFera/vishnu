@@ -27,6 +27,7 @@ public:
   virtual TMS_Data::ListJobResults* getAllJobsResults()=0;
   virtual TMS_Data::ListProgression* getJobProgress(TMS_Data::ProgressOptions op)=0;
   virtual int getJobState(const std::string& jobId)=0;
+  virtual time_t getJobProgressInfo(const std::string& jobId)=0;
   virtual ~BatchServer();
 
 private:
