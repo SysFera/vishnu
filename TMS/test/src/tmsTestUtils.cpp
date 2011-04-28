@@ -3,10 +3,6 @@ using namespace std;
 
 
 
-
-//addUser();
-//changePassword();
-//addMachine();
 VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UMS_Data::ConnectOptions& co):muid(uid),mupwd(upwd),mco(co){
 
 }
@@ -20,11 +16,30 @@ VishnuConnexion::~VishnuConnexion(){
 
 string VishnuConnexion::getConnexion(){
 
-  BOOST_REQUIRE_EQUAL(vishnu::connect(muid,mupwd,msession,mco),0);
+  BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
    BOOST_TEST_MESSAGE("The session is open");
    return msession.getSessionKey();
 }
 
+
+bool operator== (const Job& lJob,const Job& rJob ){
+
+  return ( (lJob.getJobId() == rJob.getJobId())
+        && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())  
+        && (lJob.getJobPath() == rJob.getJobPath()) 
+        && (lJob.getJobName() == rJob.getJobName()) 
+        && (lJob.getJobPrio() == rJob.getJobPrio())
+        && (lJob.getOwner() == rJob.getOwner() ) 
+        && (lJob.getJobQueue() == rJob.getJobQueue() ) 
+        && (lJob.getWallClockLimit() == rJob.getWallClockLimit() ) 
+      //  && (lJob.getSubmitDate() == rJob.getSubmitDate() ) 
+     
+     
+      );
+
+
+
+}
 
 
 
