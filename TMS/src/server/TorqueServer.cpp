@@ -148,10 +148,11 @@ void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::v
     cmdsOptions.push_back("-l");
     std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
-    std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-    size_t posCpuPerNode = NbNodesAndCpuPerNode.find(":", posNbNodes+1);
-    std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode); 
-    cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
+    if(posNbNodes!=std::string::npos) {
+      std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
+      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
+      cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
+    }
   }
 
 }

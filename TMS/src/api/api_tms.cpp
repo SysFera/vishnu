@@ -28,6 +28,9 @@ vishnu::submitJob(const std::string& sessionKey,
           const SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
+  //To check options value nbNodesAndCpuPerNode
+  checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
+
   SessionProxy sessionProxy(sessionKey);
 
   jobInfo.setJobPath(scriptFilePath);

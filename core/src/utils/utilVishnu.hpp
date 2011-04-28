@@ -162,5 +162,13 @@ namespace vishnu {
     */
    void
    checkJobPriority(const int& priority);
+
+   /**
+    * \brief Function to check the job nbNodesAndCpuPerNode
+    * \param nbNodesAndNbCpuPerNode the number of nodes and cpu per node
+    * \return raises an exception on error
+    */
+   void
+   checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
 }
 #endif // _UTILVISHNU_H_
