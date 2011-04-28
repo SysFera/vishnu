@@ -78,7 +78,7 @@ BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*
 }
 
 
-// submit a job: bad parameters: bad sessionKey 
+// submit a job: bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 {
@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
 
   BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,options),VishnuException );
-  
+
   BOOST_TEST_MESSAGE("***********************  submit a job: bad machine ID ok!!!!*****************************" << " \n");
 
 
@@ -245,14 +245,14 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
   // FIXME replace me by calling a list job function and checking the status
   Job job;
   BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),VishnuException  );
-  
+
   BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************" << " \n");
 
 
 }
 
 
-// cancel a job: bad parameters: bad sessionKey 
+// cancel a job: bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 {
@@ -281,7 +281,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 
 
   BOOST_CHECK_THROW(cancelJob("bad sessionKey ", machineId, jobInfo.getJobId()),VishnuException );
-  
+
   BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************" << " \n");
 
 // delete the submitted job
@@ -353,9 +353,9 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
   BOOST_TEST_MESSAGE("***********************  cancel a job: bad job id  ok!!!!*****************************" << " \n");
 
   // wait a few seconds and check the success of cancelling job
- 
+
 //  bpt::seconds sleepTime(500);
- 
+
  // boost::this_thread::sleep(sleepTime);
 
 }
@@ -394,10 +394,10 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 
   // get another connexion for another user
 
-  
+
   VishnuConnexion vc2("user_1","toto");
 
-  // get the session key 
+  // get the session key
 
   sessionKey=vc2.getConnexion();
 
@@ -467,13 +467,13 @@ BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
   BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
 
   Job job;
-  
+
   BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),0  );
 
 // Check the success of getJobInfo function
 
   BOOST_CHECK( *(lsJobs.getJobs().get(0))== job) ;
-  
+
   BOOST_TEST_MESSAGE("***********************  Get a job info: normal call ok!!!!*****************************" << " \n");
 
 // delete the submitted job
@@ -481,7 +481,7 @@ BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
 }
 
 
-//get job information: bad parameters: bad sessionKey 
+//get job information: bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
 {
@@ -581,7 +581,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 //------------------------------------------------------------------------------------------------------------------------
 
-// T2.4 : list jobs 
+// T2.4 : list jobs
 
 BOOST_AUTO_TEST_SUITE( list_jobs)
 
@@ -626,7 +626,7 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
 // Check the success of listJobs function
 
   BOOST_CHECK(  *(lsJobs.getJobs().get(0))== jobInfo ) ;
-  
+
   BOOST_TEST_MESSAGE("*********************** list a job info: normal call ok!!!!*****************************" << " \n");
 
 // delete the submitted job
@@ -723,7 +723,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 //------------------------------------------------------------------------------------------------------------------------
-// T2.6 : get jobs output 
+// T2.6 : get jobs output
 
 BOOST_AUTO_TEST_SUITE( get_job_output)
 
@@ -765,10 +765,10 @@ BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
 
   // wait a few seconds and check the success of cancelling job
   Job job;
-    
+
   getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
- 
-// ensure that the job is terminated 
+
+// ensure that the job is terminated
 
   while (5!=job.getStatus()){
 
@@ -781,7 +781,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
   // Check the success of get jobs output function
   JobResult outputInfos;
 
-  BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(),TMSWORKINGDIR,outputInfos),0  );
+  BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
 
   bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
 
@@ -827,7 +827,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
 
   JobResult outputInfos;
 
-  BOOST_CHECK_THROW(getJobOutput("bad sessionKey",machineId, jobInfo.getJobId(),TMSWORKINGDIR,outputInfos),VishnuException  );
+  BOOST_CHECK_THROW(getJobOutput("bad sessionKey",machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************" << " \n");
 
@@ -867,7 +867,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
 
   JobResult outputInfos;
 
-  BOOST_CHECK_THROW(getJobOutput(sessionKey,"bad machineId", jobInfo.getJobId(),TMSWORKINGDIR,outputInfos),VishnuException  );
+  BOOST_CHECK_THROW(getJobOutput(sessionKey,"bad machineId", jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** get jobs output : bad machine id ok!!!!*****************************" << " \n");
 
@@ -906,14 +906,14 @@ BOOST_AUTO_TEST_CASE( get_job_output_unterminated)
 
   JobResult outputInfos;
 
-  BOOST_CHECK_THROW(getJobOutput(sessionKey,machineId, jobInfo.getJobId(),TMSWORKINGDIR,outputInfos),VishnuException  );
+  BOOST_CHECK_THROW(getJobOutput(sessionKey,machineId, jobInfo.getJobId(),outputInfos, TMSWORKINGDIR),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** get jobs output : unterminated ok!!!!*****************************" << " \n");
 
 // delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
-  
+
 
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -922,7 +922,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 //------------------------------------------------------------------------------------------------------------------------
-// T1.2 : get Completed Jobs output 
+// T1.2 : get Completed Jobs output
 
 BOOST_AUTO_TEST_SUITE( get_Completed_Jobs_output )
 
@@ -963,10 +963,10 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
   // wait a few seconds and check the success of cancelling job
   Job job;
-    
+
   getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
- 
-// ensure that the job is terminated 
+
+// ensure that the job is terminated
 
   while (5!=job.getStatus()){
 
@@ -978,9 +978,9 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
   // Check the success of get jobs output function
 
-  ListJobResults listOfResults; 
+  ListJobResults listOfResults;
 
-  BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,TMSWORKINGDIR,listOfResults),0  );
+  BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
 
  bool pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
 
@@ -1027,9 +1027,9 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_sessionKey)
   BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
 
-  ListJobResults listOfResults; 
+  ListJobResults listOfResults;
 
-  BOOST_CHECK_THROW(getCompletedJobsOutput("bad sessionKey",machineId,TMSWORKINGDIR,listOfResults),VishnuException  );
+  BOOST_CHECK_THROW(getCompletedJobsOutput("bad sessionKey",machineId, listOfResults, TMSWORKINGDIR),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad sessionKey ok!!!!*****************************" << " \n");
 
@@ -1068,7 +1068,7 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
 
   ListJobResults listOfResults;
 
-  BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,"bad machineId",TMSWORKINGDIR,listOfResults),VishnuException  );
+  BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,"bad machineId",listOfResults, TMSWORKINGDIR),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad machineId ok!!!!*****************************" << " \n");
 
@@ -1109,7 +1109,7 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_uncompleted_job)
 
   ListJobResults listOfResults;
 
-  BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,machineId,TMSWORKINGDIR,listOfResults),VishnuException  );
+  BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad sessionKey ok!!!!*****************************" << " \n");
 
