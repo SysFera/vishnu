@@ -170,5 +170,18 @@ namespace vishnu {
     */
    void
    checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
+
+   /**
+    * \brief Function to get current time in seconds (UTC)
+    * \return the time as the number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)
+    */
+   time_t getCurrentTimeInUTC();
+
+   /**
+    * \brief Function to convert UTC time into localtime (seconds)
+    * \return the correspondant localtime (seconds)
+    */
+   time_t convertUTCtimeINLocaltime(const time_t& localtime);
+
 }
 #endif // _UTILVISHNU_H_
