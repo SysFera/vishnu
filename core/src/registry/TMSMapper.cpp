@@ -202,7 +202,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " -P ";
     res += convertToString(l);
   }
-  u = convertToString(ac->getNbNodesAndCpuPerNode());
+  u = ac->getNbNodesAndCpuPerNode();
   if (u.compare("")){
     res += " -N ";
     res += u;
@@ -281,6 +281,8 @@ string
 TMSMapper::decodeListJob(vector<int> separator, const string& msg){
   string res = string("");
   string u;
+  long l;
+  boost::posix_time::ptime pt;
   res += (mmap.find(VISHNU_LISTJOBS))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
@@ -298,18 +300,22 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -i ";
     res += u;
   }
-  u = convertToString(j->getNbCpu());
-  if (u.compare("")){
+  l = j->getNbCpu();
+  if (l>0){
     res += " -P ";
-    res += u;
+    res += convertToString(l);
   }
-  u = convertToString(j->getFromSubmitDate());
-  if (u.compare("")){
+  l = j->getFromSubmitDate();
+  if (l>0){
+    pt = boost::posix_time::from_time_t(l);
+    u = boost::posix_time::to_simple_string(pt);
     res += " -d ";
     res += u;
   }
-  u = convertToString(j->getToSubmitDate());
-  if (u.compare("")){
+  l = j->getToSubmitDate();
+  if (l>0){
+    pt = boost::posix_time::from_time_t(l);
+    u = boost::posix_time::to_simple_string(pt);
     res += " -D ";
     res += u;
   }
@@ -318,15 +324,15 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
     res += " -u ";
     res += u;
   }
-  u = convertToString(j->getStatus());
-  if (u.compare("")){
+  l = j->getStatus();
+  if (l>0){
     res += " -s ";
-    res += u;
+    res += convertToString(l);
   }
-  u = convertToString(j->getPriority());
-  if (u.compare("")){
+  l = j->getPriority();
+  if (l>0){
     res += " -p ";
-    res += u;
+    res += convertToString(l);
   }
   u = j->getQueue();
   if (u.compare("")){
