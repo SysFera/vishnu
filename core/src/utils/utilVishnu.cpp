@@ -9,6 +9,9 @@
 #include <stdexcept>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <sstream>
+
 #include "UserException.hpp"
 #include "TMS_Data.hpp"
 
@@ -365,4 +368,33 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
       throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
     }
   }
+}
+
+/**
+* \brief Function to get current time in seconds (UTC)
+* \return the time as the number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)
+*/
+time_t vishnu::getCurrentTimeInUTC() {
+
+  //the current time
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+
+  time_t localtime = string_to_time_t(to_simple_string(now));
+
+  return std::time(&localtime);
+}
+
+/**
+* \brief Function to convert UTC time into localtime (seconds)
+* \return the correspondant localtime (seconds)
+*/
+time_t vishnu::convertUTCtimeINLocaltime(const time_t& localtime) {
+
+  //the current time
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+
+  time_t currentTime = string_to_time_t(to_simple_string(now));
+
+  long diff = currentTime-std::time(&currentTime);
+  return (localtime+diff);
 }
