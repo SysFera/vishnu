@@ -93,10 +93,29 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    //To get the output and error path of the job
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
-      " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"+" and status < 5 order by jobId";
+            " vsession.numsessionid=job.vsession_numsessionid";
+
+    if(mparameters->getJobId().size()!=0) {
+      sqlRequest.append(" and jobId='"+mparameters->getJobId().size());
+      sqlRequest.append("'");
+      boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+      if(sqlResult->getNbTuples() == 0) {
+        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);        
+      }
+    } else {
+      if(mparameters->getJobOwner().size()!=0) {
+        acLogin = mparameters->getJobOwner(); //TODO: check acLogin
+      }
+      sqlRequest.append(" and owner='"+acLogin+"'");
+    }
+
+    sqlRequest.append("  and status < 5 order by jobId");
+    
+
     boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+
+    
 
     if (sqlResult->getNbTuples() != 0){
       for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
@@ -111,7 +130,7 @@ public:
         job->setJobName(*(++iter));
         walltime = convertToInt(*(++iter));
         job->setWallTime(walltime);
-        job->setEndTime(string_to_time_t(*(++iter)));
+        job->setEndTime(convertToTimeType(*(++iter)));
         status = convertToInt(*(++iter));
         job->setStatus(status);
         batchJobId = *(++iter);    
@@ -130,6 +149,10 @@ public:
             time_t currentTime = vishnu::getCurrentTimeInUTC();
             double percent = 0;
             time_t gap = currentTime-startTime;
+            if(walltime==0) {
+               walltime = 60;
+            }
+
             if(gap < walltime) {
               percent = 100*(double(gap)/walltime);
             } else {
