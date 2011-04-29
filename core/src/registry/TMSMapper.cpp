@@ -164,6 +164,7 @@ string
 TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
   string res = string("");
   string u;
+  long l;
   res += (mmap.find(VISHNU_SUBMITJOB))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
@@ -186,20 +187,20 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " -q ";
     res += u;
   }
-  u = convertToString(ac->getWallTime());
-  if (u.compare("")){
+  l = ac->getWallTime();
+  if (l>0){
     res += " -t ";
-    res += u;
+    res += convertToString(l);
   }
-  u = convertToString(ac->getMemory());
-  if (u.compare("")){
+  l = ac->getMemory();
+  if (l>0){
     res += " -m ";
-    res += u;
+    res += convertToString(l);
   }
-  u = convertToString(ac->getNbCpu());
-  if (u.compare("")){
+  l = ac->getNbCpu();
+  if (l>0){
     res += " -P ";
-    res += u;
+    res += convertToString(l);
   }
   u = convertToString(ac->getNbNodesAndCpuPerNode());
   if (u.compare("")){
