@@ -275,7 +275,7 @@ time_t TorqueServer::getJobProgressInfo(const std::string& jobId) {
   connect = cnt2server(serverOut);
 
   if(connect <= 0) {
-    return -1;
+    return 0;
   } else {
     p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
     pbs_disconnect(connect);
@@ -288,10 +288,8 @@ time_t TorqueServer::getJobProgressInfo(const std::string& jobId) {
 
         std::istringstream iss(std::string(a->value));
         iss >> startTime;    
-        //epoch = (time_t)atoi(a->value);
         std::cout << "startTime = " << startTime << std::endl;
         std::cout << "ctime(&startTime) = " << ctime(&startTime) << std::endl;
-        //prt_attr(a->name, a->resource, ctime(&epoch));
         break;
       }
       a = a->next;

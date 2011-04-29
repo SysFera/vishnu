@@ -72,10 +72,18 @@ displayProgress(Progression& p){
   cout << " Job Id    : " << p.getJobId() << endl;
   cout << " Job name  : " << p.getJobName() << endl;
   cout << " Wall time : " << convertWallTimeToString(p.getWallTime()) << endl;
-  pt =  boost::posix_time::from_time_t(p.getStartTime());
-  cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
-  pt =  boost::posix_time::from_time_t(p.getEndTime());
-  cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
+  if(p.getStartTime() > 0) {
+    pt =  boost::posix_time::from_time_t(p.getStartTime());
+    cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
+  } else {
+    cout << " Start time: ---" << endl;
+  }
+  if(p.getEndTime() > 0) {
+    pt =  boost::posix_time::from_time_t(p.getEndTime());
+    cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
+  } else {
+    cout << " Start time: ---" << endl;
+  }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
   cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
   cout << endl;
@@ -431,12 +439,16 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     maxWalltimeSize = std::max(maxWalltimeSize, vishnu::convertWallTimeToString(walltime).size());
 
     startTime = (listProgress.getProgress().get(i))->getStartTime();
-    pt =  boost::posix_time::from_time_t(startTime);
-    maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
+    if(startTime > 0) {
+      pt =  boost::posix_time::from_time_t(startTime);
+      maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
+    }
 
     endTime = (listProgress.getProgress().get(i))->getEndTime();
-    pt =  boost::posix_time::from_time_t(endTime);
-    maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
+    if(endTime > 0) {
+      pt =  boost::posix_time::from_time_t(endTime);
+      maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
+    }
 
     status = (listProgress.getProgress().get(i))->getStatus();
     maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
@@ -472,10 +484,18 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << setw(maxJobIdSize+2) << left << jobId;
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
-    pt =  boost::posix_time::from_time_t(startTime);
-    os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
-    pt =  boost::posix_time::from_time_t(endTime);
-    os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
+    if(startTime > 0) {
+      pt =  boost::posix_time::from_time_t(startTime);
+      os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
+    } else {
+      os << setw(maxStartTimeSize+2) << left << " --- ";
+    }
+    if(endTime > 0) {
+      pt =  boost::posix_time::from_time_t(endTime);
+      os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
+    } else {
+      os << setw(maxEndTimeSize+2) << left <<  " --- ";
+    }
     os << setw(maxStatusSize+2) << left <<  convertJobStateToString(status);
     ostringstream oss;
     oss <<  percent << "%";
@@ -483,18 +503,6 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << endl;
 
   }
-
-  struct tm *date_tm ;
-  struct tm *date_tm2 ;
-  time_t testtime = 1304008200; 
-  date_tm = std::localtime(&testtime);
-  date_tm2 = std::gmtime(&testtime);
-  std::cout << ctime(&testtime) << std::endl;
-  //std::cout << mktime(date_tm)-1304008200 << std::endl;
-  std::cout << date_tm->tm_hour << std::endl;
-  std::cout << date_tm2->tm_hour << std::endl;
-  pt =  boost::posix_time::from_time_t(testtime);
-   std::cout <<  boost::posix_time::to_simple_string(pt) << std::endl;
 
   return os;
 }
