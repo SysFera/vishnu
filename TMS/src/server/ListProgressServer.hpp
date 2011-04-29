@@ -156,13 +156,12 @@ public:
             if(gap < walltime) {
               percent = 100*(double(gap)/walltime);
             } else {
-              time_t intialGap = gap;
               gap /= 2; 
-              while(gap >= walltime) {
+              while(gap >= (walltime)) {
                 gap /= 2;
               }
-              if(gap < intialGap/2) {
-                gap = 3*intialGap/4;
+              if(gap < walltime/2) {
+                gap = 3*walltime/4;
               } 
               percent = 100*(double(gap)/walltime);
             }
