@@ -97,8 +97,8 @@ public:
             " vsession.numsessionid=job.vsession_numsessionid";
 
     if(mparameters->getJobId().size()!=0) {
-      sqlRequest.append(" and jobId='"+mparameters->getJobId().size());
-      sqlRequest.append("'");
+      std::string jobId = mparameters->getJobId();
+      sqlRequest.append(" and jobId='"+jobId+"'");
       boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
       if(sqlResult->getNbTuples() == 0) {
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);        
@@ -112,10 +112,7 @@ public:
 
     sqlRequest.append("  and status < 5 order by jobId");
     
-
     boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
-
-    
 
     if (sqlResult->getNbTuples() != 0){
       for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
