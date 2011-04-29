@@ -41,10 +41,19 @@ displayJob(TMS_Data::Job& j){
   cout << " CPU             : " << j.getNbCpus() << endl;
   cout << " Working dir     : " << j.getJobWorkingDir() << endl;
   cout << " Status          : " << convertJobStateToString(j.getStatus()) << endl;
-  pt =  boost::posix_time::from_time_t(j.getSubmitDate());
-  cout << " Submit date     : " << boost::posix_time::to_simple_string(pt) << endl;
-  pt =  boost::posix_time::from_time_t(j.getEndDate());
-  cout << " End date        : " << boost::posix_time::to_simple_string(pt) << endl;
+  if(j.getSubmitDate() > 0) {
+    pt =  boost::posix_time::from_time_t(j.getSubmitDate());
+    cout << " Submit date     : " << boost::posix_time::to_simple_string(pt) << endl;
+  } else  {
+    cout << " Submit date     : --- " << endl;
+  }
+
+  if(j.getEndDate() > 0) {
+    pt =  boost::posix_time::from_time_t(j.getEndDate());
+    cout << " End date        : " << boost::posix_time::to_simple_string(pt) << endl;
+  } else {
+    cout << " End date        : --- " << endl;
+  }
   cout << " Owner           : " << j.getOwner() << endl;
   cout << " Queue           : " << j.getJobQueue() << endl;
   cout << " Wall clock limit: " << convertWallTimeToString(j.getWallClockLimit()) << endl;
@@ -116,11 +125,27 @@ displayQueue(Queue& q){
 
   cout << " ------------------------ " << endl;
   cout << " Name        : " << q.getName() << endl;
-  cout << " Max job cpu : " << q.getMaxJobCpu() << endl;
-  cout << " Max proc cpu: " << q.getMaxProcCpu() << endl;
-  cout << " Memory      : " << q.getMemory() << endl;
+  if(q.getMaxJobCpu() > 0) {
+    cout << " Max job cpu : " << q.getMaxJobCpu() << endl;
+  } else {
+    cout << " Max job cpu : --- " << endl;
+  }
+  if(q.getMaxProcCpu() > 0) {
+    cout << " Max proc cpu: " << q.getMaxProcCpu() << endl;
+  } else {
+    cout << " Max proc cpu: --- " << endl;
+  }
+  if(q.getMemory() > 0) {
+    cout << " Memory      : " << q.getMemory() << endl;
+  } else {
+    cout << " Memory      : --- " << endl;
+  }
   cout << " Wall time   : " << convertWallTimeToString(q.getWallTime()) << endl;
-  cout << " Node        : " << q.getNode() << endl;
+  if(q.getNode() > 0) {
+    cout << " Node        : " << q.getNode() << endl;
+  } else {
+    cout << " Node        : --- " << endl;
+  }
   cout << " Running jobs: " << q.getNbRunningJobs() << endl;
   cout << " Job in queue: " << q.getNbJobsInQueue() << endl;
   int state = q.getState();
@@ -289,9 +314,22 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
     state = (lsQueues.getQueues().get(i))->getState();
 
     os << setw(maxNameSize+2) << left << name;
-    os << setw(maxMemorySize+2) << left << Memory;
-    os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
-    os << setw(maxNodeSize+2) << left << node;
+    if(Memory > 0) {
+      os << setw(maxMemorySize+2) << left << Memory;
+    } else {
+      os << setw(maxMemorySize+2) << left <<  " --- ";
+    }
+    if(walltime > 0) {
+      os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
+    } else {
+      os << setw(maxWalltimeSize+2) << left << " --- ";
+    }
+
+    if(node > 0) {
+      os << setw(maxNodeSize+2) << left << node;
+    } else {
+      os << setw(maxNodeSize+2) << " --- ";
+    }
     os << setw(maxNbRunJobsSize+2) << left << nbRunJobs;
     os << setw(maxNbJobsQueSize+2) << left << nbJobsQue;
     stateStr = (state==1?"STARTED":(state==2?"RUNNING":"NOT_STARTED"));
