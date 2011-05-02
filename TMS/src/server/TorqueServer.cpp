@@ -13,7 +13,6 @@ extern "C" {
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
-const int MAX_STRING_SIZE = 255;
 
 using namespace std;
 using namespace vishnu;
@@ -158,15 +157,15 @@ void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::v
 }
 
 int TorqueServer::cancel(const char* jobId) {
-  char remoteServer[MAX_STRING_SIZE];
+  char remoteServer[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   return pbs_cancel(jobId, remoteServer);
 }
 
 int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLocal) {
 
-  char tmsJobId[MAX_STRING_SIZE];  
-  char tmsJobIdOut[MAX_STRING_SIZE];
-  char serverOut[MAX_STRING_SIZE];
+  char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];  
+  char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+  char serverOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   int connect;
 
   if(isLocal) {
@@ -238,14 +237,26 @@ int TorqueServer::getJobState(const std::string& jobId) {
   struct attrl *a;
   int state = 5; //TERMINATED
 
-  serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
+  char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+  char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+
+  strcpy(tmsJobId, strdup(jobId.c_str()));
+  if (get_server(tmsJobId, tmsJobIdOut, serverOut))
+  {
+    std::ostringstream jobIdError;
+    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
+  } else {
+    serverOut[0] = '\0';
+  }
+
   // Connect to the torque server
   connect = cnt2server(serverOut);
 
   if(connect <= 0) {
     return -1;
   } else {
-    p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
+    p_status = pbs_statjob(connect, tmsJobIdOut, NULL, NULL);
     pbs_disconnect(connect);
   }
 
@@ -270,14 +281,26 @@ time_t TorqueServer::getJobProgressInfo(const std::string& jobId) {
   struct attrl *a;
   time_t startTime = 0; 
 
-  serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
+  char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+  char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+
+  strcpy(tmsJobId, strdup(jobId.c_str()));
+  if (get_server(tmsJobId, tmsJobIdOut, serverOut))
+  {
+    std::ostringstream jobIdError;
+    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
+  } else {
+    serverOut[0] = '\0';
+  }
+
   // Connect to the torque server
   connect = cnt2server(serverOut);
 
   if(connect <= 0) {
-    return -1;
+    return 0;
   } else {
-    p_status = pbs_statjob(connect, strdup(jobId.c_str()), NULL, NULL);
+    p_status = pbs_statjob(connect, tmsJobIdOut, NULL, NULL);
     pbs_disconnect(connect);
   }
 
@@ -288,10 +311,6 @@ time_t TorqueServer::getJobProgressInfo(const std::string& jobId) {
 
         std::istringstream iss(std::string(a->value));
         iss >> startTime;    
-        //epoch = (time_t)atoi(a->value);
-        std::cout << "startTime = " << startTime << std::endl;
-        std::cout << "ctime(&startTime) = " << ctime(&startTime) << std::endl;
-        //prt_attr(a->name, a->resource, ctime(&epoch));
         break;
       }
       a = a->next;
@@ -575,15 +594,11 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
       a = a->next;
     }// end if name != null
   } // end while
-  // TODO :
-  // WORKING DIR ?
-  // DESCRIPTION ?
 
   // Creating job
   job.setJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);
-  //      job.setJobId(timeu); ? timeu ? TODO
   if (state.compare("")!=0) {
     job.setStatus(convertTorqueStateToVishnuState(state));
   } else {
@@ -645,9 +660,9 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   } else {
     job.setNbNodes(0);
   }
-  // TODO uncomment once api corrected
-  //
-  //    job.setNbNodesAndCpuPerNode(nodeAndCpu);
+  if(nodeAndCpu.size()!=0) {
+    job.setNbNodesAndCpuPerNode(nodeAndCpu);
+  }
 }
 
 
