@@ -27,7 +27,7 @@ UMS_Data::Session msession;
 UMS_Data::ConnectOptions mco;
 std::string muid;
 std::string mupwd;
-
+bool open;
 };
 
 bool operator== (const Job& lJob,const Job& rJob );

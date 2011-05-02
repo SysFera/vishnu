@@ -196,8 +196,6 @@ JobOutputServer::getCompletedJobsOutput() {
         }
       }
     }
-  } else {
-    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
 
   return mlistJobsResult;

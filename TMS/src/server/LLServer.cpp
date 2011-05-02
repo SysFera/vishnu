@@ -146,6 +146,208 @@ int LLServer::insertOptionLine(const std::string& optionLineToInsert, std::strin
   }
 }
 
+int LLServer::getJobState(const std::string& jobId) {
+ 
+  LL_job jobInfo;
+  LL_element *queryObject;
+  LL_element *queryInfos;
+  LL_element *step;
+  LL_element *machineObj;
+  char *machine;
+  int rc;
+  int objCount;
+  int state;
+  int errCode;
+  int holdType;
+
+  // Set the type of query
+  queryObject = ll_query(JOBS);
+  if(!queryObject) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query JOBS : ll_query() return NULL.\n");
+  }
+
+  char* IDlist[2];
+  IDlist[0] = strdup(jobId.c_str());
+  IDlist[1] = NULL;
+
+  bool isStepId = false;
+  size_t found = std::string(IDlist[0]).find(".");
+  if(found!=std::string::npos)
+  {
+    found = std::string(IDlist[0]).find(".", found+1);
+    if(found!=std::string::npos) {
+      isStepId = true;
+    }
+  }
+
+  // Create the request
+  if(!isStepId) {
+    rc = ll_set_request(queryObject, QUERY_JOBID, IDlist, ALL_DATA);
+  }
+  else {
+    rc = ll_set_request(queryObject, QUERY_STEPID, IDlist, ALL_DATA);
+  }
+
+  if(rc) {
+    return -1;
+  }
+  if(queryObject==NULL) {
+    return -1;
+  }
+
+  // Calling to get the results
+  queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
+  if(queryInfos==NULL) {
+    return -1;
+  }
+
+  while(queryInfos)
+  {
+
+    rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
+    if(!rc)
+    {
+      while(step) {
+        rc = ll_get_data(step, LL_StepState, &state);
+        if(!rc)
+        {
+          switch(state) {
+            case STATE_IDLE:
+              return 3; 
+            case STATE_RUNNING:
+              return 4;
+            case STATE_STARTING:
+              return 4;
+            case STATE_COMPLETE_PENDING:
+              return 4;
+            case STATE_REJECT_PENDING:
+              return 3;
+            case STATE_REMOVE_PENDING:
+              return 6;
+            case STATE_VACATE_PENDING:
+              return 6;
+            case STATE_VACATED:
+              return 6;
+            case STATE_REJECTED:
+              return 6;
+            case STATE_CANCELED:
+              return 6;
+            case STATE_REMOVED:
+              return 6;
+            case STATE_PENDING:
+              return 2 ;
+            case STATE_PREEMPTED:
+              return 3;
+            case STATE_PREEMPT_PENDING:
+              return 3;
+            case STATE_RESUME_PENDING:
+              return 3;
+            case STATE_COMPLETED: 
+              return 5;
+            case STATE_TERMINATED:
+              return 5;
+            case STATE_HOLD:
+              return 2;
+          }
+
+          machine = (char*)"";
+          if(state==STATE_RUNNING)
+          {
+            holdType = 0;
+            rc = ll_get_data(step, LL_StepGetFirstMachine, &machineObj);
+            if(machineObj!=NULL)
+            {
+              rc = ll_get_data(machineObj, LL_MachineName, &machine);
+            }
+          } else {
+            rc = ll_get_data(step, LL_StepHoldType, &holdType);
+            if(holdType) { 
+              return 2;
+            }
+          }
+
+          ll_get_data(queryInfos, LL_JobGetNextStep, &step);
+        } //end if(!rc)
+      } // end while(step)
+    } // end if(!rc)
+  } //while(queryInfos)
+
+ return -1; 
+}
+
+time_t getJobProgressInfo(const std::string& jobId) { 
+
+  LL_job jobInfo;
+  LL_element *queryObject;
+  LL_element *queryInfos;
+  LL_element *step;
+  int rc;
+  int objCount;
+  time_t startTime;
+  int errCode;
+
+  // Set the type of query
+  queryObject = ll_query(JOBS);
+  if(!queryObject) {
+    return 0;
+  }
+
+  char* IDlist[2];
+  IDlist[0] = strdup(jobId.c_str());
+  IDlist[1] = NULL;
+
+  bool isStepId = false;
+  size_t found = std::string(IDlist[0]).find(".");
+  if(found!=std::string::npos)
+  {
+    found = std::string(IDlist[0]).find(".", found+1);
+    if(found!=std::string::npos) {
+      isStepId = true;
+    }
+  }
+
+  // Create the request
+  if(!isStepId) {
+    rc = ll_set_request(queryObject, QUERY_JOBID, IDlist, ALL_DATA);
+  }
+  else {
+    rc = ll_set_request(queryObject, QUERY_STEPID, IDlist, ALL_DATA);
+  }
+
+  if(rc) {
+    return 0;
+  }
+  if(queryObject==NULL) {
+    return 0;
+  }
+
+  // Calling to get the results
+  queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
+  if(queryInfos==NULL) {
+    return 0;
+  }
+
+  while(queryInfos)
+  {
+    rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
+    if(!rc)
+    {
+      while(step) {
+        rc = ll_get_data(step, LL_StepStartTime, &startTime); 
+        if(!rc) {
+          return startTime;
+        } else {
+          return 0;
+        }
+
+        ll_get_data(queryInfos, LL_JobGetNextStep, &step);
+      }
+    }
+  }
+
+  return 0;
+}
+
 int LLServer::remove_test(TMS_Data::Job& job) {
   /**Test sur la machine distante blue gene*/
   std::ostringstream cmd;
@@ -350,14 +552,6 @@ LLServer::notIn(TMS_Data::Job_ptr it, TMS_Data::ListJobsOptions op){
   }
   // If filter on priority and invalid priority
   if (op.getPriority()>0 && it->getJobPrio() != op.getPriority()){
-    return true;
-  }
-  // If filter on output and invalid output
-  if (op.getOutPutPath().compare("")!=0 && it->getOutputPath() != op.getOutPutPath()){
-    return true;
-  }
-  // If filter on error and invalid error
-  if (op.getErrorPath().compare("")!=0 && it->getErrorPath() != op.getErrorPath()){
     return true;
   }
   // If filter on queue and invalid queue
@@ -583,7 +777,6 @@ LLServer::listAllJobs(){
 	    job.setGroupName(group);
 	    job.setMemLimit(mem);
 	    job.setNbNodes(node);
-	    job.setNbNodesAndCpuPerNode(cpuPcore);
 
 	    mjobs->getJobs().push_back(&job);
 

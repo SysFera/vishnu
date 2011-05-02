@@ -53,11 +53,6 @@ main (int argc, char* argv[]){
           CONFIG,
           queueName); 
 
-  //All cli option parameters
-  opt->add("full,f",
-      "An option for get full information on each queue",
-      CONFIG);
-
   // All cli obligatory parameters
   opt->setPosition("machineId",1);
   opt->add("machineId,m",
@@ -100,7 +95,7 @@ main (int argc, char* argv[]){
       listQueues(sessionKey, machineId, queue, queueName);
     }
 
-    if (opt->count("full") || queueName.size()!=0){
+    if (queueName.size()!=0){
       displayQueues(queue);
     } else {
       std::cout << queue << std::endl;
