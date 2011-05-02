@@ -108,8 +108,11 @@ int main(int argc, char* argv[], char* envp[]) {
     //Initialize the UMS Server (Opens a connection to the database)
     boost::scoped_ptr<ServerUMS> server(ServerUMS::getInstance());
     res = server->init(vishnuId, dbConfig, sendmailScriptPath);
-    registerSeD(UMSTYPE, config);
 
+    try {
+      registerSeD(UMSTYPE, config);
+    } catch(...) {
+    }
     //Declaration of signal handler
     action.sa_handler = controlSignal;
     sigemptyset (&(action.sa_mask));

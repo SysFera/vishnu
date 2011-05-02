@@ -17,6 +17,7 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 		      IMS_Data::Metric& val,
 		      IMS_Data::CurMetricOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);  
   return IMS_SUCCESS;
 }
 
