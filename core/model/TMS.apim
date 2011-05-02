@@ -26,7 +26,7 @@
       </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.4" description="Is an object containing the available options jobs for progression ." optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.7"/>
-      <details key="description" value="This command allows you to get the progression status (the wallclock time already used (in percentage) and the job status) of a specific job. "/>
+      <details key="description" value="This command allows you to get the progression status of a job based on the wallclock time specified by the user. "/>
     </services>
     <services name="listQueues" description="gets queues information" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
