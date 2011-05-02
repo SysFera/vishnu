@@ -35,7 +35,7 @@ public:
 
   TMS_Data::ListProgression* getJobProgress(TMS_Data::ProgressOptions);
 
-  int getJobState(const std::string& jobId) { };
+  int getJobState(const std::string& jobId);
   time_t getJobProgressInfo(const std::string& jobId) { };
 
   ~LLServer() { }
