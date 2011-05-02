@@ -69,6 +69,14 @@ public:
   IMS_Data::ListMetric*
   getHistMet(string machineId);
 
+  /**
+   * \brief To add all the monitored types of metric in the database at a time t
+   * \param set: A list containing the monitored
+   */
+  void
+  addMetricSet(IMS_Data::ListMetric* set, string mid);
+
+
 protected:
 private:
   /**
