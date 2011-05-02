@@ -288,8 +288,6 @@ time_t TorqueServer::getJobProgressInfo(const std::string& jobId) {
 
         std::istringstream iss(std::string(a->value));
         iss >> startTime;    
-        std::cout << "startTime = " << startTime << std::endl;
-        std::cout << "ctime(&startTime) = " << ctime(&startTime) << std::endl;
         break;
       }
       a = a->next;
