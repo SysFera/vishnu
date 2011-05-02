@@ -102,17 +102,17 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
     "jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
-    "status, submitDate, endDate, owner, jobQueue, wallClockLimit, groupName, jobDescription, memLimit,"
+    "status, submitDate, owner, jobQueue, wallClockLimit, groupName, jobDescription, memLimit,"
     "nbNodes, nbNodesAndCpuPerNode)"
     " values ("+numsession+",'"+mjob.getSubmitMachineId()+"','"+ mjob.getSubmitMachineName()+"','"+vishnuJobId+"','"
     +BatchJobId+"',"+convertToString(mbatchType)+",'"+mjob.getJobName()+"','"+mjob.getJobPath()+"','"
     +mjob.getOutputPath()+"','"+mjob.getErrorPath()+"','"
     +scriptContentStr+"',"+convertToString(mjob.getJobPrio())+","+convertToString(mjob.getNbCpus())+",'"
     +mjob.getJobWorkingDir()+"',"
-    +convertToString(mjob.getStatus())+",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue()
+    +convertToString(mjob.getStatus())+",CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue()
     +"',"+convertToString(mjob.getWallClockLimit())+",'"+mjob.getGroupName()+"','"+mjob.getJobDescription()+"',"
     +convertToString(mjob.getMemLimit())
-    +","+convertToString(mjob.getNbNodes())+","+"'1:1'"+")" ;  //TODO : a ajouter mjob.getNbNodesAndCpuPerNode() 
+    +","+convertToString(mjob.getNbNodes())+",'"+mjob.getNbNodesAndCpuPerNode()+"')" ;
 
   std::cout << sqlInsert << std::endl;
   databaseVishnu->process(sqlInsert); 
@@ -236,8 +236,8 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setNbCpus(convertToInt(*(++iter)));
       mjob.setJobWorkingDir(*(++iter));
       mjob.setStatus(convertToInt(*(++iter)));
-      mjob.setSubmitDate(string_to_time_t(*(++iter)));
-      mjob.setEndDate(string_to_time_t(*(++iter)));
+      mjob.setSubmitDate(convertToTimeType(*(++iter)));
+      mjob.setEndDate(convertToTimeType(*(++iter)));
       mjob.setOwner(*(++iter));
       mjob.setJobQueue(*(++iter));
       mjob.setWallClockLimit(convertToInt(*(++iter)));
@@ -331,6 +331,27 @@ std::string JobServer::getMachineName() {
 
   return machineName;
 }
+
+/**
+ * \brief Function to convert a given date into correspondant long value
+ * \fn long long convertToTimeType(std::string date)
+ * \param date The date to convert
+ * \return The converted value
+ */
+long long JobServer::convertToTimeType(std::string date) {
+
+  if(date.size()==0) {
+    return 0;
+  }
+
+  boost::posix_time::ptime pt(time_from_string(date));
+  boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
+  time_duration::sec_type time = (pt - epoch).total_seconds();
+
+  return (long long) time_t(time);
+
+}
+
 
 /**
  * \brief Destructor
