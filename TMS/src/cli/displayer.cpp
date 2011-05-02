@@ -29,39 +29,39 @@ displayJob(TMS_Data::Job& j){
   boost::posix_time::ptime pt;
 
   cout << " ------------------------ " << endl;
-  cout << " Session Id      : " << j.getSessionId() << endl;
-  cout << " Machine Id      : " << j.getSubmitMachineId() << endl;
-  cout << " Machine name    : " << j.getSubmitMachineName() << endl;
-  cout << " Job Id          : " << j.getJobId() << endl;
-  cout << " Job name        : " << j.getJobName() << endl;
-  cout << " Job path        : " << j.getJobPath() << endl;
-  cout << " Output path     : " << j.getOutputPath() << endl;
-  cout << " Error path      : " << j.getErrorPath() << endl;
-  cout << " Priority        : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
-  cout << " CPU             : " << j.getNbCpus() << endl;
-  cout << " Working dir     : " << j.getJobWorkingDir() << endl;
-  cout << " Status          : " << convertJobStateToString(j.getStatus()) << endl;
+  cout << " Session Id           : " << j.getSessionId() << endl;
+  cout << " Machine Id           : " << j.getSubmitMachineId() << endl;
+  cout << " Machine name         : " << j.getSubmitMachineName() << endl;
+  cout << " Job Id               : " << j.getJobId() << endl;
+  cout << " Job name             : " << j.getJobName() << endl;
+  cout << " Job path             : " << j.getJobPath() << endl;
+  cout << " Output path (remote) : " << j.getOutputPath() << endl;
+  cout << " Error path  (remote) : " << j.getErrorPath() << endl;
+  cout << " Priority             : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
+  cout << " CPU                  : " << j.getNbCpus() << endl;
+  cout << " Working dir          : " << j.getJobWorkingDir() << endl;
+  cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
   if(j.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(j.getSubmitDate());
-    cout << " Submit date     : " << boost::posix_time::to_simple_string(pt) << endl;
+    cout << " Submit date          : " << boost::posix_time::to_simple_string(pt) << endl;
   } else  {
-    cout << " Submit date     : --- " << endl;
+    cout << " Submit date          : --- " << endl;
   }
 
   if(j.getEndDate() > 0) {
     pt =  boost::posix_time::from_time_t(j.getEndDate());
-    cout << " End date        : " << boost::posix_time::to_simple_string(pt) << endl;
+    cout << " End date             : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << " End date        : --- " << endl;
+    cout << " End date             : --- " << endl;
   }
-  cout << " Owner           : " << j.getOwner() << endl;
-  cout << " Queue           : " << j.getJobQueue() << endl;
-  cout << " Wall clock limit: " << convertWallTimeToString(j.getWallClockLimit()) << endl;
-  cout << " Group name      : " << j.getGroupName() << endl;
-  cout << " Description     : " << j.getJobDescription() << endl;
-  cout << " Max memory      : " << j.getMemLimit() << endl;
-  cout << " Nodes           : " << j.getNbNodes() << endl;
-  cout << " CPU/Node        : " << j.getNbNodesAndCpuPerNode() << endl;
+  cout << " Owner                : " << j.getOwner() << endl;
+  cout << " Queue                : " << j.getJobQueue() << endl;
+  cout << " Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit()) << endl;
+  cout << " Group name           : " << j.getGroupName() << endl;
+  cout << " Description          : " << j.getJobDescription() << endl;
+  cout << " Max memory           : " << j.getMemLimit() << endl;
+  cout << " Nodes                : " << j.getNbNodes() << endl;
+  cout << " CPU/Node             : " << j.getNbNodesAndCpuPerNode() << endl;
   cout << endl;
 }
 
