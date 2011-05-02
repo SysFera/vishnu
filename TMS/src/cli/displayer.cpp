@@ -545,6 +545,9 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 
   }
 
+  os << endl;
+  os << "The number jobs in queue is: " << listProgress.getNbJobs() << endl;
+ 
   return os;
 }
 
