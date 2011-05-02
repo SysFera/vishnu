@@ -34,7 +34,7 @@ submitJob \- submits job on a machine through the use of a script (scriptFilePat
 .BI "int vishnu::submitJob(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", const\ string&\ " "scriptFilePath" ", Job&\ " "jobInfo" ", const\ SubmitOptions&\ " "options\ =\ SubmitOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-The submission of job on a specific Batch scheduler associated to a machine is possible with this command\&. It allows you to describe a job on a script and to submit it\&.
+The submission of job on a specific Batch scheduler associated to a machine is possible with this command\&. It allows you to describe a job in a script with the corresponding Batch scheduler directives or with the VISHNU generic directives for all Batch schedulers\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
