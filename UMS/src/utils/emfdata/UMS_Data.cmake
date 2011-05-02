@@ -119,9 +119,10 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/UMS_Data/ListOptOptions.hpp DESTINATIO
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 
-add_library(emf4cpp-UMS_Data STATIC ${UMS_Data_HEADERS} ${UMS_Data_SOURCES})
+add_library(emf4cpp-UMS_Data SHARED ${UMS_Data_HEADERS} ${UMS_Data_SOURCES})
 set_target_properties(emf4cpp-UMS_Data PROPERTIES COMPILE_FLAGS "-fPIC")
 target_link_libraries(emf4cpp-UMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-UMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
 
+install(TARGETS emf4cpp-UMS_Data DESTINATION lib)
