@@ -180,6 +180,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       progression = listProgression_ptr->getProgress().get(i);
       listOfProgress.getProgress().push_back(progression);
     }
+    listOfProgress.setNbJobs(listProgression_ptr->getProgress().size());
   }
   return 0;
 }
