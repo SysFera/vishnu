@@ -8,7 +8,7 @@
       <ports name="jobInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The  Job object containing the output information (ex: jobId and jobPath) of the job to submit"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.1" description="Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance." optional="true" shortOptionLetter=""/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.0"/>
-      <details key="description" value="The submission of job on a specific Batch scheduler associated to a machine is possible with this command. It allows you to describe a job on a script and to submit it. "/>
+      <details key="description" value="The submission of job on a specific Batch scheduler associated to a machine is possible with this command. It allows you to describe a job in a script with the corresponding Batch scheduler directives or with the VISHNU generic directives for all Batch schedulers. "/>
     </services>
     <services name="getJobInfo" description="gets information on a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -16,7 +16,7 @@
       <ports name="jobId" dataType="//@typeList/@types.0" description="The id of the job "/>
       <ports name="jobInfos" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The resulting information on the job"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.2"/>
-      <details key="description" value="This command allows you to get information about a specific job."/>
+      <details key="description" value="This command allows you to get information about a specific job. It allows for example to get the status of the job."/>
     </services>
     <services name="getJobProgress" description="gets the progression status of jobs" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -26,13 +26,13 @@
       </ports>
       <ports name="options" dataType="//@modules.0/@typeList/@types.4" description="Is an object containing the available options jobs for progression ." optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.7"/>
-      <details key="description" value="This command allows you to get the progression status of a specific job."/>
+      <details key="description" value="This command allows you to get the progression status of a job based on the wallclock time specified by the user. "/>
     </services>
     <services name="listQueues" description="gets queues information" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine that the user wants to list queues"/>
       <ports name="listofQueues" direction="OUT" dataType="//@modules.0/@typeList/@types.6" description="The list of queues"/>
-      <details key="description" value="This command allows you to display the queues of the Batch scheduler on a specific machine."/>
+      <details key="description" value="This command allows you to display the status of  queues  of the Batch scheduler on a specific machine."/>
     </services>
     <services name="listJobs" description="gets a list of all submitted jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
@@ -57,7 +57,7 @@
       <ports name="listOfResults" direction="OUT" dataType="//@modules.0/@typeList/@types.7" description="Is the list of jobs results"/>
       <ports name="outDir" dataType="//@typeList/@types.0" description="The output directory where the files will be stored (default is current directory)" optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
-      <details key="description" value="This command allows you to get the output files of all job finished."/>
+      <details key="description" value="This command allows you to get the output files of all  completed jobs."/>
     </services>
     <services name="cancelJob" description="cancels a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
