@@ -147,9 +147,12 @@ public:
     msessionServer.check();
 
     processOptions(mparameters, sqlListOfJobs);
+    sqlListOfJobs.append(" order by jobId");
 
     boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlListOfJobs.c_str()));
-
+    long nbRunningJobs = 0;
+    long nbWaitingJobs = 0;
+    int jobStatus ;
     if (ListOfJobs->getNbTuples() != 0){
       for (size_t i = 0; i < ListOfJobs->getNbTuples(); ++i) {
         results.clear();
@@ -169,7 +172,13 @@ public:
         job->setJobPrio(convertToInt(*(++ii)));
         job->setNbCpus(convertToInt(*(++ii)));
         job->setJobWorkingDir(*(++ii));
-        job->setStatus(convertToInt(*(++ii)));
+        jobStatus = convertToInt(*(++ii));
+        if(jobStatus==4) {
+          nbRunningJobs++;
+        } else if(jobStatus >= 1 && jobStatus <= 3) {
+          nbWaitingJobs++;
+        }
+        job->setStatus(jobStatus);
         job->setSubmitDate(convertToTimeType(*(++ii)));
         job->setEndDate(convertToTimeType(*(++ii)));
         job->setOwner(*(++ii));
@@ -183,6 +192,9 @@ public:
 
         mlistObject->getJobs().push_back(job);
       }
+      mlistObject->setNbJobs(mlistObject->getJobs().size());
+      mlistObject->setNbRunningJobs(nbRunningJobs);
+      mlistObject->setNbWaitingJobs(nbWaitingJobs);
     }
     return mlistObject;
   }
