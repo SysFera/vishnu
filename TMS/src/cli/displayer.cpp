@@ -29,30 +29,39 @@ displayJob(TMS_Data::Job& j){
   boost::posix_time::ptime pt;
 
   cout << " ------------------------ " << endl;
-  cout << " Session Id      : " << j.getSessionId() << endl;
-  cout << " Machine Id      : " << j.getSubmitMachineId() << endl;
-  cout << " Machine name    : " << j.getSubmitMachineName() << endl;
-  cout << " Job Id          : " << j.getJobId() << endl;
-  cout << " Job name        : " << j.getJobName() << endl;
-  cout << " Job path        : " << j.getJobPath() << endl;
-  cout << " Output path     : " << j.getOutputPath() << endl;
-  cout << " Error path      : " << j.getErrorPath() << endl;
-  cout << " Priority        : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
-  cout << " CPU             : " << j.getNbCpus() << endl;
-  cout << " Working dir     : " << j.getJobWorkingDir() << endl;
-  cout << " Status          : " << convertJobStateToString(j.getStatus()) << endl;
-  pt =  boost::posix_time::from_time_t(j.getSubmitDate());
-  cout << " Submit date     : " << boost::posix_time::to_simple_string(pt) << endl;
-  pt =  boost::posix_time::from_time_t(j.getEndDate());
-  cout << " End date        : " << boost::posix_time::to_simple_string(pt) << endl;
-  cout << " Owner           : " << j.getOwner() << endl;
-  cout << " Queue           : " << j.getJobQueue() << endl;
-  cout << " Wall clock limit: " << convertWallTimeToString(j.getWallClockLimit()) << endl;
-  cout << " Group name      : " << j.getGroupName() << endl;
-  cout << " Description     : " << j.getJobDescription() << endl;
-  cout << " Max memory      : " << j.getMemLimit() << endl;
-  cout << " Nodes           : " << j.getNbNodes() << endl;
-  cout << " CPU/Node        : " << j.getNbNodesAndCpuPerNode() << endl;
+  cout << " Session Id           : " << j.getSessionId() << endl;
+  cout << " Machine Id           : " << j.getSubmitMachineId() << endl;
+  cout << " Machine name         : " << j.getSubmitMachineName() << endl;
+  cout << " Job Id               : " << j.getJobId() << endl;
+  cout << " Job name             : " << j.getJobName() << endl;
+  cout << " Job path             : " << j.getJobPath() << endl;
+  cout << " Output path (remote) : " << j.getOutputPath() << endl;
+  cout << " Error path  (remote) : " << j.getErrorPath() << endl;
+  cout << " Priority             : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
+  cout << " CPU                  : " << j.getNbCpus() << endl;
+  cout << " Working dir          : " << j.getJobWorkingDir() << endl;
+  cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
+  if(j.getSubmitDate() > 0) {
+    pt =  boost::posix_time::from_time_t(j.getSubmitDate());
+    cout << " Submit date          : " << boost::posix_time::to_simple_string(pt) << endl;
+  } else  {
+    cout << " Submit date          : --- " << endl;
+  }
+
+  if(j.getEndDate() > 0) {
+    pt =  boost::posix_time::from_time_t(j.getEndDate());
+    cout << " End date             : " << boost::posix_time::to_simple_string(pt) << endl;
+  } else {
+    cout << " End date             : --- " << endl;
+  }
+  cout << " Owner                : " << j.getOwner() << endl;
+  cout << " Queue                : " << j.getJobQueue() << endl;
+  cout << " Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit()) << endl;
+  cout << " Group name           : " << j.getGroupName() << endl;
+  cout << " Description          : " << j.getJobDescription() << endl;
+  cout << " Max memory           : " << j.getMemLimit() << endl;
+  cout << " Nodes                : " << j.getNbNodes() << endl;
+  cout << " CPU/Node             : " << j.getNbNodesAndCpuPerNode() << endl;
   cout << endl;
 }
 
@@ -72,10 +81,18 @@ displayProgress(Progression& p){
   cout << " Job Id    : " << p.getJobId() << endl;
   cout << " Job name  : " << p.getJobName() << endl;
   cout << " Wall time : " << convertWallTimeToString(p.getWallTime()) << endl;
-  pt =  boost::posix_time::from_time_t(p.getStartTime());
-  cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
-  pt =  boost::posix_time::from_time_t(p.getEndTime());
-  cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
+  if(p.getStartTime() > 0) {
+    pt =  boost::posix_time::from_time_t(p.getStartTime());
+    cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
+  } else {
+    cout << " Start time: ---" << endl;
+  }
+  if(p.getEndTime() > 0) {
+    pt =  boost::posix_time::from_time_t(p.getEndTime());
+    cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
+  } else {
+    cout << " Start time: ---" << endl;
+  }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
   cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
   cout << endl;
@@ -108,11 +125,27 @@ displayQueue(Queue& q){
 
   cout << " ------------------------ " << endl;
   cout << " Name        : " << q.getName() << endl;
-  cout << " Max job cpu : " << q.getMaxJobCpu() << endl;
-  cout << " Max proc cpu: " << q.getMaxProcCpu() << endl;
-  cout << " Memory      : " << q.getMemory() << endl;
+  if(q.getMaxJobCpu() > 0) {
+    cout << " Max job cpu : " << q.getMaxJobCpu() << endl;
+  } else {
+    cout << " Max job cpu : --- " << endl;
+  }
+  if(q.getMaxProcCpu() > 0) {
+    cout << " Max proc cpu: " << q.getMaxProcCpu() << endl;
+  } else {
+    cout << " Max proc cpu: --- " << endl;
+  }
+  if(q.getMemory() > 0) {
+    cout << " Memory      : " << q.getMemory() << endl;
+  } else {
+    cout << " Memory      : --- " << endl;
+  }
   cout << " Wall time   : " << convertWallTimeToString(q.getWallTime()) << endl;
-  cout << " Node        : " << q.getNode() << endl;
+  if(q.getNode() > 0) {
+    cout << " Node        : " << q.getNode() << endl;
+  } else {
+    cout << " Node        : --- " << endl;
+  }
   cout << " Running jobs: " << q.getNbRunningJobs() << endl;
   cout << " Job in queue: " << q.getNbJobsInQueue() << endl;
   int state = q.getState();
@@ -281,9 +314,22 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
     state = (lsQueues.getQueues().get(i))->getState();
 
     os << setw(maxNameSize+2) << left << name;
-    os << setw(maxMemorySize+2) << left << Memory;
-    os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
-    os << setw(maxNodeSize+2) << left << node;
+    if(Memory > 0) {
+      os << setw(maxMemorySize+2) << left << Memory;
+    } else {
+      os << setw(maxMemorySize+2) << left <<  " --- ";
+    }
+    if(walltime > 0) {
+      os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
+    } else {
+      os << setw(maxWalltimeSize+2) << left << " --- ";
+    }
+
+    if(node > 0) {
+      os << setw(maxNodeSize+2) << left << node;
+    } else {
+      os << setw(maxNodeSize+2) << " --- ";
+    }
     os << setw(maxNbRunJobsSize+2) << left << nbRunJobs;
     os << setw(maxNbJobsQueSize+2) << left << nbJobsQue;
     stateStr = (state==1?"STARTED":(state==2?"RUNNING":"NOT_STARTED"));
@@ -431,12 +477,16 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     maxWalltimeSize = std::max(maxWalltimeSize, vishnu::convertWallTimeToString(walltime).size());
 
     startTime = (listProgress.getProgress().get(i))->getStartTime();
-    pt =  boost::posix_time::from_time_t(startTime);
-    maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
+    if(startTime > 0) {
+      pt =  boost::posix_time::from_time_t(startTime);
+      maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
+    }
 
     endTime = (listProgress.getProgress().get(i))->getEndTime();
-    pt =  boost::posix_time::from_time_t(endTime);
-    maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
+    if(endTime > 0) {
+      pt =  boost::posix_time::from_time_t(endTime);
+      maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
+    }
 
     status = (listProgress.getProgress().get(i))->getStatus();
     maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
@@ -472,10 +522,18 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << setw(maxJobIdSize+2) << left << jobId;
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
-    pt =  boost::posix_time::from_time_t(startTime);
-    os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
-    pt =  boost::posix_time::from_time_t(endTime);
-    os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
+    if(startTime > 0) {
+      pt =  boost::posix_time::from_time_t(startTime);
+      os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
+    } else {
+      os << setw(maxStartTimeSize+2) << left << " --- ";
+    }
+    if(endTime > 0) {
+      pt =  boost::posix_time::from_time_t(endTime);
+      os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
+    } else {
+      os << setw(maxEndTimeSize+2) << left <<  " --- ";
+    }
     os << setw(maxStatusSize+2) << left <<  convertJobStateToString(status);
     ostringstream oss;
     oss <<  percent << "%";
@@ -483,18 +541,6 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << endl;
 
   }
-
-  struct tm *date_tm ;
-  struct tm *date_tm2 ;
-  time_t testtime = 1304008200; 
-  date_tm = std::localtime(&testtime);
-  date_tm2 = std::gmtime(&testtime);
-  std::cout << ctime(&testtime) << std::endl;
-  //std::cout << mktime(date_tm)-1304008200 << std::endl;
-  std::cout << date_tm->tm_hour << std::endl;
-  std::cout << date_tm2->tm_hour << std::endl;
-  pt =  boost::posix_time::from_time_t(testtime);
-   std::cout <<  boost::posix_time::to_simple_string(pt) << std::endl;
 
   return os;
 }

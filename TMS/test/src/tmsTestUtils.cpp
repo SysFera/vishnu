@@ -3,12 +3,12 @@ using namespace std;
 
 
 
-VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UMS_Data::ConnectOptions& co):muid(uid),mupwd(upwd),mco(co){
+VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UMS_Data::ConnectOptions& co):muid(uid),mupwd(upwd),mco(co),open(false){
 
 }
 
 VishnuConnexion::~VishnuConnexion(){
-  if(false==msession.getSessionKey().empty()){
+  if(true==open){
   BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
   BOOST_TEST_MESSAGE("The session is closed");
   }
@@ -17,6 +17,7 @@ VishnuConnexion::~VishnuConnexion(){
 string VishnuConnexion::getConnexion(){
 
   BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
+  open=true;
    BOOST_TEST_MESSAGE("The session is open");
    return msession.getSessionKey();
 }
