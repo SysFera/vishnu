@@ -1,16 +1,29 @@
-//#include <ecore.hpp> // Ecore metamodel
-//#include <ecorecpp.hpp> // EMF4CPP utils
-// Generated code
+/**
+ * \file tms_automTest
+ * \brief Contains TMS API test implementation
+ * References: VISHNU_D4_1b_TMS-PlanTests
+ */
+
+
+//UMS Headers
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
+
+// TMS Headers
 #include "TMS_Data.hpp"
 #include "TMS_Data_forward.hpp"
-#include <iostream>
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
+
+// C++ Headers
+#include <iostream>
+#include <cmath>
+
+// Boost Headers
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
-#include <cmath>
+
+// namespaces declaration and  aliases
 using namespace std;
 using namespace UMS_Data;
 using namespace TMS_Data;
@@ -18,9 +31,15 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
+
+// The database, UMS and TMS SeD are launched by TMSSedFixture.
+ 
+
 BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
-//Test category 1g
+
+
+//Test category 1
 
 // T1.1 : submit a job
 
@@ -34,9 +53,9 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal job submission corresponding to use case T1.1" << "\n");
+  BOOST_TEST_MESSAGE("\n\n Testing normal job submission corresponding to use case T1.1" << "\n");
 
- VishnuConnexion vc("root","vishnu_user");
+  VishnuConnexion vc("root","vishnu_user");
 
   // get the session key and the machine identifier
 
@@ -57,7 +76,8 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  // Check the success of submitJob function
+  // To check the success of submitJob function
+
   ListJobs lsJobs;
   ListJobsOptions lsOptions;
   lsOptions.setJobId(jobInfo.getJobId());
@@ -65,55 +85,55 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( *(lsJobs.getJobs().get(0)) == jobInfo )  );
 
-BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************" << "\n ");
+  BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************" << "\n ");
 
-// wait a few seconds and check the success of cancelling job
+  // wait a few seconds and check the success of cancelling job
 
  // bpt::seconds sleepTime(5);
 
   //boost::this_thread::sleep(sleepTime);
 
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
+//------------------------------------------------------------------------------------------------------------------------------------
 
 // submit a job: bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing bad session Key for job submission (use case T1.1)" << "\n" );
+  BOOST_TEST_MESSAGE("\n \n Testing bad session Key for job submission (use case T1.1)" << "\n" );
 
 
-  // get the session key 
+  // set the machine ID
   string machineId="machine_1";
 
   //Setting submitjob parameters
 
   const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
-
-  BOOST_CHECK_THROW(submitJob("bad sessionKey", machineId, scriptFilePath, jobInfo,options) ,VishnuException );
+  SubmitOptions subOptions;
+  BOOST_CHECK_THROW(submitJob("bad sessionKey", machineId, scriptFilePath, jobInfo,subOptions) ,VishnuException );
 
   BOOST_TEST_MESSAGE("***********************  submit a job: bad sessionKey    ok!!!!*****************************" << " \n");
 
 
 }
 
+//---------------------------------------------------------------------------
+
 // submit a job: bad parameters: bad machine identifier
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 {
-  BOOST_TEST_MESSAGE(" Testing bad machine identifier for job submission (use case T1.1)" << "\n" );
+  BOOST_TEST_MESSAGE("\n\n Testing bad machine identifier for job submission (use case T1.1)" << "\n" );
 
   VishnuConnexion vc("root","vishnu_user");
 
-  // get the session key and the machine identifier
+  // get the session key 
 
   string sessionKey=vc.getConnexion();
 
@@ -122,15 +142,10 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
   const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
-
-
-  BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,options),VishnuException );
+SubmitOptions subOptions;
+  BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,subOptions),VishnuException );
 
   BOOST_TEST_MESSAGE("***********************  submit a job: bad machine ID ok!!!!*****************************" << " \n");
-
 
 
 }
@@ -140,7 +155,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
 {
-  BOOST_TEST_MESSAGE(" Testing bad script content for job submission (use case T1.1)" );
+  BOOST_TEST_MESSAGE("\n \n Testing bad script content for job submission (use case T1.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -168,7 +183,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
 
 BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_path)
 {
-  BOOST_TEST_MESSAGE(" Testing bad script path for job submission (use case T1.1)" );
+  BOOST_TEST_MESSAGE(" \n \nTesting bad script path for job submission (use case T1.1)" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -182,14 +197,15 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_path)
 
   const std::string scriptFilePath="/home/ibrahima/Brouillon/";
   Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+  SubmitOptions subOptions;
 
-  BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
+  BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
 
 }
 BOOST_AUTO_TEST_SUITE_END()
+
+
+
 
 //-----------------------------------------------------------------------------------------
 
@@ -206,7 +222,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal job cancelling corresponding to use case T2.2" );
+  BOOST_TEST_MESSAGE("\n \n Testing normal job cancelling corresponding to use case T2.2 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -249,13 +265,14 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
 }
 
+//----------------------------------------------------------------------------------------
 
 // cancel a job: bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing bad session Key for job cancelling (use case T2.2)"  );
+  BOOST_TEST_MESSAGE(" \n \n Testing bad session Key for job cancelling (use case T2.2)\n"  );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -282,16 +299,19 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
 
   BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+// Clean up:  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 
 }
+
+
+//---------------------------------------------------------------------------
 
 // cancel a job: bad parameters: bad machine identifier
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 {
-  BOOST_TEST_MESSAGE(" Testing bad machine identifier for job cancellin (use case T2.2)" );
+  BOOST_TEST_MESSAGE("\n \n Testing bad machine identifier for job cancellin (use case T2.2) \n" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -311,19 +331,22 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 
   BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
-  // now let cancel the job
+  // now let try to cancel the job
 
-  // setting cancel job parameters
 
   BOOST_CHECK_THROW(cancelJob(sessionKey, "bad machineId", jobInfo.getJobId()),VishnuException );
 
   BOOST_TEST_MESSAGE("***********************  cancel a job: bad machine id  ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 
 
 }
+
+
+//---------------------------------------------------------------------------
+
 
 
 // cancel a job: bad parameters: bad job id
@@ -332,7 +355,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 {
-  BOOST_TEST_MESSAGE(" Testing bad job identifier for job cancelling (use case T2.2)" );
+  BOOST_TEST_MESSAGE(" \n \n Testing bad job identifier for job cancelling (use case T2.2) \n" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -359,14 +382,15 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 }
 
 
+//---------------------------------------------------------------------------
 
+// cancel a job: bad parameters: bad user id 
 
-
-// cancel a job: bad parameters: bad user id
+// FIX ME: I need two different UMS Local accounts for root and user_1  
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 {
-  BOOST_TEST_MESSAGE(" Testing bad user identifier for job cancelling (use case T2.2)" );
+  BOOST_TEST_MESSAGE(" \n \n Testing bad user identifier for job cancelling (use case T2.2) \n " );
 
   VishnuConnexion vc1("root","vishnu_user");
 
@@ -395,7 +419,7 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 
   VishnuConnexion vc2("user_1","toto");
 
-  // get the session key
+  // get his session key
 
   sessionKey=vc2.getConnexion();
 
@@ -435,7 +459,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the  get job information function corresponding to use case T2.1" );
+  BOOST_TEST_MESSAGE(" \n \n Testing normal execution of the  get job information function corresponding to use case T2.1 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -474,10 +498,11 @@ BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
 
   BOOST_TEST_MESSAGE("***********************  Get a job info: normal call ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
+//---------------------------------------------------------------------------
 
 //get job information: bad parameters: bad sessionKey
 
@@ -512,9 +537,12 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
 
   BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
+
+//---------------------------------------------------------------------------
+
 
 // get job information: bad parameters: bad machine identifier
 
@@ -546,17 +574,19 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
 
   BOOST_TEST_MESSAGE("***********************  Get a job info: bad machine ID ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
+
+//---------------------------------------------------------------------------
 
 //  get job information: bad parameters: bad job id
 
 
 BOOST_AUTO_TEST_CASE( get_job_information_bad_JobId)
 {
-  BOOST_TEST_MESSAGE(" Testing bad job identifier for the  get job information function (use case T2.1)" );
+  BOOST_TEST_MESSAGE("\n Testing bad job identifier for the  get job information function (use case T2.1)\n" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -591,7 +621,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( list_job_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the  list job  function corresponding to use case T2.4" );
+  BOOST_TEST_MESSAGE("\n \n Testing normal execution of the  list job  function corresponding to use case T2.4\n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -627,14 +657,19 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
 
   BOOST_TEST_MESSAGE("*********************** list a job info: normal call ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
+
+//------------------------------------------------------------------------------------------------------------------------
+
+
+//  list job : bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( list_job_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the  list job  function corresponding to use case T2.4" );
+  BOOST_TEST_MESSAGE(" \n Testing normal execution of the  list job  function corresponding to use case T2.4 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -667,14 +702,19 @@ BOOST_AUTO_TEST_CASE( list_job_bad_sessionKey)
 
   BOOST_TEST_MESSAGE("*********************** list a job info: bad sessionkey ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
+
+//------------------------------------------------------------------------------------------------------------------------
+
+
+//  list job : bad parameters: bad machineId 
 
 BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the  list job  function corresponding to use case T2.4" );
+  BOOST_TEST_MESSAGE(" \n\n Testing normal execution of the  list job  function corresponding to use case T2.4 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -708,7 +748,7 @@ BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
 
   BOOST_TEST_MESSAGE("*********************** list a job : bad machine id ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
@@ -717,6 +757,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 //------------------------------------------------------------------------------------------------------------------------
+
 // T2.6 : get jobs output
 
 BOOST_AUTO_TEST_SUITE( get_job_output)
@@ -724,16 +765,14 @@ BOOST_AUTO_TEST_SUITE( get_job_output)
 const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
 const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
-  //  list job : normal call
 
-// T2.6 : get jobs output
-
+//  get jobs output: normal call
 
 
 BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the get jobs output function corresponding to use case T2.6" );
+  BOOST_TEST_MESSAGE("\n Testing normal execution of the get jobs output function corresponding to use case T2.6 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -789,13 +828,14 @@ BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
 }
 
 
+//------------------------------------------------------------------------------------------------------------------------
 
-
+// get job out : bad parameters: bad sessionKey  
 
 BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal bad sessionKey for the get jobs output function corresponding to use case T2.6" );
+  BOOST_TEST_MESSAGE("\n \n Testing normal bad sessionKey for the get jobs output function corresponding to use case T2.6 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -825,17 +865,19 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
 
   BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
+//------------------------------------------------------------------------------------
 
+// get job out : bad parameters: bad machineId 
 
 
 BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal bad machineId for the get jobs output function corresponding to use case T2.6" );
+  BOOST_TEST_MESSAGE("\n Testing normal bad machineId for the get jobs output function corresponding to use case T2.6 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -865,16 +907,18 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
 
   BOOST_TEST_MESSAGE("*********************** get jobs output : bad machine id ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
+//------------------------------------------------------------------------------------
 
+// get job out : try to get the output of non terminated job
 
 BOOST_AUTO_TEST_CASE( get_job_output_unterminated)
 {
 
-  BOOST_TEST_MESSAGE(" Testing an unterminated  job output  corresponding to use case T2.6" );
+  BOOST_TEST_MESSAGE("\n Testing an unterminated  job output  corresponding to use case T2.6 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -904,7 +948,7 @@ BOOST_AUTO_TEST_CASE( get_job_output_unterminated)
 
   BOOST_TEST_MESSAGE("*********************** get jobs output : unterminated ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 }
 
@@ -920,8 +964,8 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( get_Completed_Jobs_output )
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
+  const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
+  const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   //get Completed Jobs output : normal call
 
@@ -991,12 +1035,14 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
 
 
+//------------------------------------------------------------------------------------
 
+//get Completed Jobs output : bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing bad sessionKey for the get jobs output function corresponding to use case T2.6" );
+  BOOST_TEST_MESSAGE("\n \n Testing bad sessionKey for the get jobs output function corresponding to use case T2.6 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -1027,15 +1073,19 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_sessionKey)
 
   BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad sessionKey ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 
 }
 
+//------------------------------------------------------------------------------------
+
+//get Completed Jobs output : bad parameters: bad machineId
+
 BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal bad machineId for the get completed jobs output function corresponding to use case T2.6" );
+  BOOST_TEST_MESSAGE("\n \n Testing normal bad machineId for the get completed jobs output function corresponding to use case T2.6 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -1066,7 +1116,7 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
 
   BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad machineId ok!!!!*****************************" << " \n");
 
-// delete the submitted job
+//  Clean up: delete the submitted job
   BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
 
 }
@@ -1074,6 +1124,9 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+  
+  
+  
 
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -1090,7 +1143,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the get jobs progression function corresponding to use case T2.5" );
+  BOOST_TEST_MESSAGE("\n \n Testing normal execution of the get jobs progression function corresponding to use case T2.5\n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -1114,6 +1167,21 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 
   BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
+
+  ListProgression listOfProgress;
+
+  ProgressOptions pgOptions;
+
+  pgOptions.setJobId(jobInfo.getJobId());
+
+  BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,listOfProgress, pgOptions),0);
+  
+  // Check the success of the get jobs progression function
+
+  BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId()); // && listOfProgress.getProgress().get(0)->getPercent()>0
+    //  && listOfProgress.getProgress().get(0)->getPercent()<=100   );
+  std::cout << "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent() << "\n";
+
   Job job;
 
 
@@ -1121,37 +1189,41 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 
   getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
 
-  while (5!=job.getStatus()){
+  while (4!=job.getStatus()){
 
-    bpt::seconds sleepTime(5);
+    bpt::seconds sleepTime(1);
     boost::this_thread::sleep(sleepTime);
 
     getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
   }
 
 
-  ListProgression listOfProgress;
 
-  ProgressOptions pgOptions;
-  pgOptions.setJobId(jobInfo.getJobId());
+  ListProgression jobRunningProgress;
 
-  BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,listOfProgress, pgOptions),0);
+  BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,jobRunningProgress, pgOptions),0);
 
 
   // Check the success of the get jobs progression function
-  double epsilon=1e-16;
 
-  BOOST_CHECK( fabs (listOfProgress.getProgress().get(0)->getPercent()-100)<= epsilon); // && (listOfProgress.getProgress().get(0)->getStatus()==5)     ); 
+  double epsilon;
 
+  BOOST_CHECK( jobRunningProgress.getProgress().get(0)->getPercent()>0);
+
+
+  std::cout << "jobRunningProgress.getProgress().get(0)->getPercent():" <<jobRunningProgress.getProgress().get(0)->getPercent() << "\n";
+  
   BOOST_TEST_MESSAGE("*********************** get jobs progression: normal call ok!!!!*****************************" << " \n");
 }
 
 
+//------------------------------------------------------------------------------------------------------------------------
+//  get Jobs progression: bad parameters : bad sessionKey
 
 BOOST_AUTO_TEST_CASE( get_jobs_progression_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing bad sessionKey for the get jobs progression function corresponding to use case T2.5" );
+  BOOST_TEST_MESSAGE("\n \n Testing bad sessionKey for the get jobs progression function corresponding to use case T2.5 \n" );
 
   string machineId="machine_1";
 
@@ -1166,10 +1238,15 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_bad_sessionKey)
 }
 
 
+
+//------------------------------------------------------------------------------------------------------------------------
+
+//  get Jobs progression: bad parameters : bad machineId
+
 BOOST_AUTO_TEST_CASE( get_jobs_progression_bad_machineId)
 {
 
-  BOOST_TEST_MESSAGE(" Testing bad machineId for the get jobs progression function corresponding to use case T2.5" );
+  BOOST_TEST_MESSAGE("\n \n Testing bad machineId for the get jobs progression function corresponding to use case T2.5 \n" );
 
   VishnuConnexion vc("root","vishnu_user");
 
@@ -1206,7 +1283,7 @@ const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 {
 
-  BOOST_TEST_MESSAGE(" Testing normal execution of the list job queues function corresponding to use case T2.3" );
+  BOOST_TEST_MESSAGE("\n \n Testing normal execution of the list job queues function corresponding to use case T2.3 \n" );
 
 
   VishnuConnexion vc("root","vishnu_user");
@@ -1226,11 +1303,13 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 }
 
 
+//------------------------------------------------------------------------------------------------------------------------
+//  get Jobs progression: bad parameters : bad sessionKey
 
 BOOST_AUTO_TEST_CASE( list_job_queues_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE(" Testing bad sessionKey for the list job queues function corresponding to use case T2.3" );
+  BOOST_TEST_MESSAGE(" \n \n Testing bad sessionKey for the list job queues function corresponding to use case T2.3 \n" );
 
   string machineId="machine_1";
 
@@ -1241,6 +1320,10 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_sessionKey)
   BOOST_TEST_MESSAGE("*********************** list job queues : bad sessionKey ok!!!!*****************************" << " \n");
 }
 
+
+//------------------------------------------------------------------------------------------------------------------------
+
+//  get Jobs progression: bad parameters : bad machineId
 
 BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 {
@@ -1265,3 +1348,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 
 
 BOOST_AUTO_TEST_SUITE_END()
+
+
+// THE END
+  
