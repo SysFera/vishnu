@@ -8,6 +8,8 @@
 
 #include "controller/logTool/Watcher.hpp"
 #include "controller/logTool/ToolFactory.hpp"
+#include "controller/HM/HM.hpp"
+
 #include <boost/thread.hpp>
 
 using namespace vishnu;
@@ -90,6 +92,12 @@ int main(int argc, char* argv[], char* envp[]) {
   // Watcher thread
   Watcher w(IMSVishnuTool_v1, argc, argv);
   thread thr1(bind(&Watcher::run, &w));
+
+
+  // History maker thread
+  HM hm = HM();
+  thread thr2(bind(&HM::run, &hm));
+  thr2.join();
   thr1.join();
 
   // Initialize the DIET SeD
