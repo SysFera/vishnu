@@ -19,7 +19,6 @@
 
 using namespace std;
 
-// TODO: Implement this function
 int
 vishnu::registerSeD(string type, ExecConfiguration config){
   string s = config.scriptToString();
