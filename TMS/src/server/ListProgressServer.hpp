@@ -93,9 +93,25 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    //To get the output and error path of the job
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
-      " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"+" and status < 5 order by jobId";
+            " vsession.numsessionid=job.vsession_numsessionid";
+
+    if(mparameters->getJobId().size()!=0) {
+      std::string jobId = mparameters->getJobId();
+      sqlRequest.append(" and jobId='"+jobId+"'");
+      boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+      if(sqlResult->getNbTuples() == 0) {
+        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);        
+      }
+    } else {
+      if(mparameters->getJobOwner().size()!=0) {
+        acLogin = mparameters->getJobOwner(); //TODO: check acLogin
+      }
+      sqlRequest.append(" and owner='"+acLogin+"'");
+    }
+
+    sqlRequest.append("  and status < 5 order by jobId");
+    
     boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
 
     if (sqlResult->getNbTuples() != 0){
@@ -111,7 +127,7 @@ public:
         job->setJobName(*(++iter));
         walltime = convertToInt(*(++iter));
         job->setWallTime(walltime);
-        job->setEndTime(string_to_time_t(*(++iter)));
+        job->setEndTime(convertToTimeType(*(++iter)));
         status = convertToInt(*(++iter));
         job->setStatus(status);
         batchJobId = *(++iter);    
@@ -130,16 +146,19 @@ public:
             time_t currentTime = vishnu::getCurrentTimeInUTC();
             double percent = 0;
             time_t gap = currentTime-startTime;
+            if(walltime==0) {
+               walltime = 60;
+            }
+
             if(gap < walltime) {
               percent = 100*(double(gap)/walltime);
             } else {
-              time_t intialGap = gap;
               gap /= 2; 
-              while(gap >= walltime) {
+              while(gap >= (walltime)) {
                 gap /= 2;
               }
-              if(gap < intialGap/2) {
-                gap = 3*intialGap/4;
+              if(gap < walltime/2) {
+                gap = 3*walltime/4;
               } 
               percent = 100*(double(gap)/walltime);
             }

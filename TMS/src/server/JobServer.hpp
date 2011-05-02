@@ -76,6 +76,14 @@ public:
   private:
 
   void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
+  
+  /**
+   * \brief Function to convert a given date into correspondant long value
+   * \fn long long convertToTimeType(std::string date)
+   * \param date The date to convert
+   * \return The converted value
+   */
+  long long convertToTimeType(std::string date);  
 
   TMS_Data::Job mjob;
   SessionServer msessionServer;
