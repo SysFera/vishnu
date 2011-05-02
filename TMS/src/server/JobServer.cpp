@@ -130,10 +130,8 @@ int JobServer::cancelJob()
   msessionServer.check(); //To check the sessionKey
 
   std::string jobSerialized;
-  const char* name = "submit";
-  ::ecorecpp::serializer::serializer jobSer(name);
-
   std::string batchJobId;
+  std::string initialJobId;
   std::string jobId;
   std::string owner;
   int status;
@@ -143,56 +141,85 @@ int JobServer::cancelJob()
   std::string acLogin = getUserAccountLogin();
   std::string machineName = getMachineName();
 
-  std::string sqlCancelRequest = "SELECT owner, status, batchJobId from job, vsession "
-                                "where vsession.numsessionid=job.vsession_numsessionid "
-                                " and jobId='"+mjob.getJobId()+"'";
+  //Creation of the object user
+  UserServer userServer = UserServer(msessionServer);
+  userServer.init(); 
+
+  std::string sqlCancelRequest;
+  initialJobId = mjob.getJobId();
+  if(initialJobId.compare("all")!=0 && initialJobId.compare("ALL")!=0) {
+    sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
+      "where vsession.numsessionid=job.vsession_numsessionid "
+      " and jobId='"+mjob.getJobId()+"'";
+  } else {
+    if(!userServer.isAdmin()) {
+      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
+        "where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'"; 
+    } else {
+      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
+        "where vsession.numsessionid=job.vsession_numsessionid and status < 5"; 
+    }
+  } 
+
 
   boost::scoped_ptr<DatabaseResult> sqlCancelResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlCancelRequest.c_str()));
   std::cout << "JobServer::cancelJob: " << sqlCancelRequest << std::endl;
-
+  std::cout << "sqlCancelResult->getNbTuples()=" << sqlCancelResult->getNbTuples() << std::endl;
   if (sqlCancelResult->getNbTuples() != 0){
-    results.clear();
-    results = sqlCancelResult->get(0);
-    iter = results.begin();
+    for (size_t i = 0; i < sqlCancelResult->getNbTuples(); ++i) {
+      results.clear();
+      results = sqlCancelResult->get(i);
+      iter = results.begin();
 
-    owner = *iter; 
-    if(owner.compare(acLogin)!=0) {
-      throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't cancel this job because it is for an other owner");
+      owner = *iter; 
+      if(userServer.isAdmin()) {
+        acLogin = owner;
+      } else if(owner.compare(acLogin)!=0) {
+        throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
+      }
+
+      iter++;
+      status = convertToInt(*iter);
+      if(status==5) {
+        throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
+      }
+      if(status==6) {
+        throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
+      }
+      
+      iter++;
+      jobId = *iter;
+
+      iter++;
+      batchJobId = *iter;
+
+      mjob.setJobId(batchJobId); //To reset the jobId
+
+      const char* name = "cancel";
+      ::ecorecpp::serializer::serializer jobSer(name);
+      jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
+
+      SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
+      sshJobExec.sshexec("CANCEL");
+
+      std::string errorInfo = sshJobExec.getErrorInfo();
+
+      if(errorInfo.size()!=0 && (initialJobId.compare("all")!=0 && initialJobId.compare("ALL")!=0)) {
+        int code;
+        std::string message;
+        scanErrorMessage(errorInfo, code, message);
+        throw TMSVishnuException(code, message);
+      } else if(errorInfo.size()==0) {
+
+        std::string sqlUpdatedRequest = "UPDATE job SET status=6 where jobId='"+jobId+"'";
+        ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
+      }
     }
-    iter++;
-    status = convertToInt(*iter);
-    if(status==5) {
-      throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
-    }
-    if(status==6) {
-      throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
-    }
-    iter++;
-    batchJobId = *iter;
   } else {
-    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+    if(initialJobId.compare("all")!=0 && initialJobId.compare("ALL")!=0) {
+       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
+    }
   }
-
-  std::cout << "JobServer::cancelJob: batchJobId = " << batchJobId << std::endl;
-  jobId = mjob.getJobId(); //Id of the job in the DataBase
-  mjob.setJobId(batchJobId); //To reset the jobId
-
-  jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
-
-  SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
-  sshJobExec.sshexec("CANCEL");
-
-  std::string errorInfo = sshJobExec.getErrorInfo();
-
-  if(errorInfo.size()!=0) {
-    int code;
-    std::string message;
-    scanErrorMessage(errorInfo, code, message);
-    throw TMSVishnuException(code, message);
-  }
-
-  std::string sqlUpdatedRequest = "UPDATE job SET status=6 where jobId='"+jobId+"'";
-  ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
 
   return 0;
 }
