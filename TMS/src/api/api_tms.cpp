@@ -34,6 +34,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   jobInfo.setJobPath(scriptFilePath);
+  jobInfo.setJobWorkingDir((boost::filesystem::path(boost::filesystem::current_path().string())).string());
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
   JobProxy jobProxy(sessionProxy,

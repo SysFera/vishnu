@@ -170,8 +170,8 @@ public:
         job->setNbCpus(convertToInt(*(++ii)));
         job->setJobWorkingDir(*(++ii));
         job->setStatus(convertToInt(*(++ii)));
-        job->setSubmitDate(string_to_time_t(*(++ii)));
-        job->setEndDate(string_to_time_t(*(++ii)));
+        job->setSubmitDate(convertToTimeType(*(++ii)));
+        job->setEndDate(convertToTimeType(*(++ii)));
         job->setOwner(*(++ii));
         job->setJobQueue(*(++ii));
         job->setWallClockLimit(convertToInt(*(++ii)));

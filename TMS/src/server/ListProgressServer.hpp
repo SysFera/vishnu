@@ -12,6 +12,13 @@
 #include <list>
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/local_time/local_time.hpp>
+#include <boost/date_time/local_time/posix_time_zone.hpp>
+#include <boost/date_time/date_facet.hpp>
+#include <locale>
+#include <memory>
+#include <sstream>
+
 #include "QueryServer.hpp"
 #include "SessionServer.hpp"
 #include "TMS_Data.hpp"
@@ -75,6 +82,7 @@ public:
     std::string batchJobId;
     int status;
     long startTime;
+    long walltime;
 
     TMS_Data::Job job;
     JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
@@ -85,9 +93,25 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    //To get the output and error path of the job
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
-      " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'"+" and state < 6 order by jobId";
+            " vsession.numsessionid=job.vsession_numsessionid";
+
+    if(mparameters->getJobId().size()!=0) {
+      std::string jobId = mparameters->getJobId();
+      sqlRequest.append(" and jobId='"+jobId+"'");
+      boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+      if(sqlResult->getNbTuples() == 0) {
+        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);        
+      }
+    } else {
+      if(mparameters->getJobOwner().size()!=0) {
+        acLogin = mparameters->getJobOwner(); //TODO: check acLogin
+      }
+      sqlRequest.append(" and owner='"+acLogin+"'");
+    }
+
+    sqlRequest.append("  and status < 5 order by jobId");
+    
     boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
 
     if (sqlResult->getNbTuples() != 0){
@@ -101,8 +125,9 @@ public:
 
         job->setJobId(*iter);
         job->setJobName(*(++iter));
-        job->setWallTime(convertToInt(*(++iter)));
-        job->setEndTime(string_to_time_t(*(++iter)));
+        walltime = convertToInt(*(++iter));
+        job->setWallTime(walltime);
+        job->setEndTime(convertToTimeType(*(++iter)));
         status = convertToInt(*(++iter));
         job->setStatus(status);
         batchJobId = *(++iter);    
@@ -110,14 +135,38 @@ public:
         BatchFactory factory;
         BatchType batchType  = ServerTMS::getInstance()->getBatchType(); 
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
-        startTime = batchServer->getJobProgressInfo(batchJobId); 
-        if(startTime!=-1) {
-          job->setStartTime(startTime);//string_to_time_t(*(++iter)));
-        }
-        if(status==5) {
-            job->setPercent(100);  
-        }  
 
+        startTime = batchServer->getJobProgressInfo(batchJobId); 
+        if(startTime!=0) {
+          job->setStartTime(vishnu::convertUTCtimeINLocaltime(startTime));
+
+          if(status==5) {
+            job->setPercent(100);  
+          } else {
+            time_t currentTime = vishnu::getCurrentTimeInUTC();
+            double percent = 0;
+            time_t gap = currentTime-startTime;
+            if(walltime==0) {
+               walltime = 60;
+            }
+
+            if(gap < walltime) {
+              percent = 100*(double(gap)/walltime);
+            } else {
+              gap /= 2; 
+              while(gap >= (walltime)) {
+                gap /= 2;
+              }
+              if(gap < walltime/2) {
+                gap = 3*walltime/4;
+              } 
+              percent = 100*(double(gap)/walltime);
+            }
+            job->setPercent(percent);
+          } 
+        } else {
+          job->setPercent(0.0);
+        }
         mlistObject->getProgress().push_back(job); 
       }
     }
