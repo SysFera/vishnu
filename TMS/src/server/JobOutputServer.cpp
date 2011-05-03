@@ -130,10 +130,7 @@ JobOutputServer::getCompletedJobsOutput() {
   TMS_Data::Job job;
   JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
   std::string acLogin = jobServer.getUserAccountLogin();
-  std::cout << "acLogin = " << acLogin << std::endl;
-
   std::string machineName = jobServer.getMachineName();
-  std::cout << "machineName = " << machineName << std::endl;
 
   std::string outputPath;
   std::string errorPath;
@@ -196,6 +193,7 @@ JobOutputServer::getCompletedJobsOutput() {
         }
       }
     }
+    mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
   }
 
   return mlistJobsResult;
