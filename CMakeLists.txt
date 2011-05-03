@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
-set(CMAKE_MODULE_PATH ${VISHNU_SOURCE_DIR}/Cmake)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 set (MANDIR /usr/share/man CACHE string "the man path")
 
 option(BUILD_SHARED_LIBS ON "disable shared libraries usage")
@@ -80,6 +80,12 @@ if (ENABLE_ORACLE)
   endif(ORACLE_FOUND)
 endif (ENABLE_ORACLE)
 SET (ORACLE_FOUND false)
+
+if (COMPILE_TMS)
+if (NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE)
+   message(FATAL_ERROR "You MUST set either VISHNU_USE_TORQUE or VISHNU_USE_LOADLEVELER when compiling TMS module")
+Endif()
+endif()
 
 if (VISHNU_USE_TORQUE)
   add_definitions(-DHAVE_TORQUE)
