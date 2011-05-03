@@ -44,7 +44,7 @@ makeGetJobProgOp(string pgName,
 
   // All cli options
   opt->add("jobid,i",
-	   "The name of the job",
+	   "The id of the job",
 	   CONFIG,
 	   fjid);
   opt->add("jobOwner,u",
