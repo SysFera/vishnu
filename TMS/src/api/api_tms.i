@@ -40,6 +40,7 @@
 %include "TMS_Data/ListProgression.hpp"
 %include "TMS_Data/ListQueues.hpp"
 %include "TMS_Data/ProgressOptions.hpp"
+%include "TMS_Data/Progression.hpp"
 %include "TMS_Data/Queue.hpp"
 %include "TMS_Data/SubmitOptions.hpp"
 
