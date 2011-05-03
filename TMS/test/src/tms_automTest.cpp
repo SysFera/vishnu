@@ -14,9 +14,11 @@
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
+#include "TMS_testconfig.h"
 
 // C++ Headers
 #include <iostream>
+#include <sstream>
 #include <cmath>
 
 // Boost Headers
@@ -42,6 +44,7 @@ BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 //Test category 1
 
 // T1.1 : submit a job
+
 
 BOOST_AUTO_TEST_SUITE(submit_a_job)
 
@@ -380,6 +383,9 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
  // boost::this_thread::sleep(sleepTime);
 
 }
+
+
+
 
 
 //---------------------------------------------------------------------------
@@ -1293,13 +1299,39 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
   string sessionKey=vc.getConnexion();
 
   string machineId="machine_1";
+  // create queues
+  std::ostringstream createCommand;
+  createCommand << "qmgr";
+  createCommand << " ubuntu" << " < " << TMSSCRIPTSPATH << "/config_queues_test.cfg";
+  system(createCommand.str().c_str());
 
   ListQueues listofQueues;
 
   BOOST_CHECK_EQUAL( listQueues(sessionKey, machineId, listofQueues),0);
+  bool success = false;
+  string name;
+
+  // check the successfull of list queues function
+
+  //  bpt::seconds sleepTime(120);
+
+  //boost::this_thread::sleep(sleepTime);
 
 
-  BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
+  for (int i=0; i< listofQueues.getQueues().size(); ++i){
+
+    name=listofQueues.getQueues().get(i)->getName();
+
+    success =(name=="test_queue1" || name == "test_queue2") ;
+  }
+  BOOST_CHECK(success);
+  //Delete the precedent created queues
+  // create queues
+  ostringstream delCommand;
+  delCommand << "qmgr";
+  delCommand << " ubuntu" <<  " < " << TMSSCRIPTSPATH << "/config_clean_queues.cfg";
+  system(delCommand.str().c_str());
+  //BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
 }
 
 
@@ -1350,5 +1382,5 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 BOOST_AUTO_TEST_SUITE_END()
 
 
-// THE END
-  
+  // THE END
+
