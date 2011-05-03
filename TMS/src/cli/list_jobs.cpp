@@ -40,9 +40,9 @@ boost::shared_ptr<Options>
 makeListJobOp(string pgName,
 	      boost::function1<void, string>& fjid,
 	      boost::function1<void, int>& fnbCpu,
-	      boost::function1<void, long>& fstart,
-	      boost::function1<void, long>& fend,
-	      boost::function1<void, string>& fowner,
+	      string& fromDate,
+	      string& toDate,
+        boost::function1<void, string>& fowner,
 	      string& status,
 	      boost::function1<void, JobPriority>& fpriority,
 	      boost::function1<void, string>& fqueue,
@@ -51,27 +51,32 @@ makeListJobOp(string pgName,
 
   // Environement option
   opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
+      "The diet config file",
+      ENV,
+      dietConfig);
 
   // All cli obligatory parameters
   opt->add("jobId,i",
-	   "The id of the job",
-	   CONFIG,
-	   fjid);
+      "The id of the job",
+      CONFIG,
+      fjid);
   opt->add("nbCpu,P",
-	   "The number of cpu needed by the job",
-	   CONFIG,
-	   fnbCpu);
+      "The number of cpu needed by the job",
+      CONFIG,
+      fnbCpu);
   opt->add("fromSubmitDate,d",
-	   "The start time for the job submission",
-	   CONFIG,
-	   fstart);
+      "The start time for the job submission"
+      "by providing the start date\n"
+      "(in the format ""YYYY-MM-DD H:mm:ss "")", 
+      CONFIG,
+      fromDate);
   opt->add("toSubmitDate,D",
-	   "The end time for the job submission",
-	   CONFIG,
-	   fend);
+      "The end time for the job submission"
+      "by providing the end date \n"
+      "(in the format ""YYYY-MM-DD H:mm:ss "")"
+      "By default, the end date is the current day",
+      CONFIG,
+      toDate);
   opt->add("owner,u",
 	   "The owner of the job",
 	   CONFIG,
@@ -109,6 +114,8 @@ int main (int argc, char* argv[]){
   string machineId;
   string statusStr = "";
   int status;
+  std::string fromDate;
+  std::string toDate;
 
   /********** EMF data ************/
   TMS_Data::ListJobsOptions jobOp;
@@ -116,10 +123,7 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
   boost::function1<void,string> fjid(boost::bind(&TMS_Data::ListJobsOptions::setJobId,boost::ref(jobOp),_1));
   boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::ListJobsOptions::setNbCpu,boost::ref(jobOp),_1));
-  boost::function1<void,long> fstart(boost::bind(&TMS_Data::ListJobsOptions::setFromSubmitDate,boost::ref(jobOp),_1));
-  boost::function1<void,long> fend(boost::bind(&TMS_Data::ListJobsOptions::setToSubmitDate,boost::ref(jobOp),_1));
   boost::function1<void,string> fown(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
-  //boost::function1<void,JobStatus> fstatus(boost::bind(&TMS_Data::ListJobsOptions::setStatus,boost::ref(jobOp),_1));
   boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
 
@@ -131,9 +135,9 @@ int main (int argc, char* argv[]){
   boost::shared_ptr<Options> opt=makeListJobOp(argv[0],
 					       fjid,
 					       fnbCpu,
-					       fstart,
-					       fend,
-					       fown,
+                 fromDate,
+					       toDate,
+                 fown,
 					       statusStr,
 					       fpriority,
 					       fqueue,
@@ -201,6 +205,16 @@ int main (int argc, char* argv[]){
  }
   // Process command
   try {
+
+    //convert the date in long format 
+    if(opt->count("fromSubmitDate")){
+      jobOp.setFromSubmitDate(string_to_time_t(fromDate));
+    }
+
+    if(opt->count("toSubmitDate")){
+      jobOp.setToSubmitDate(string_to_time_t(toDate));
+    }
+
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
