@@ -45,14 +45,14 @@ displayJob(TMS_Data::Job& j){
   cout << " Working dir          : " << j.getJobWorkingDir() << endl;
   cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
   if(j.getSubmitDate() > 0) {
-    pt =  boost::posix_time::from_time_t(j.getSubmitDate());
+    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
     cout << " Submit date          : " << boost::posix_time::to_simple_string(pt) << endl;
   } else  {
     cout << " Submit date          : --- " << endl;
   }
 
   if(j.getEndDate() > 0) {
-    pt =  boost::posix_time::from_time_t(j.getEndDate());
+    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getEndDate()));
     cout << " End date             : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
     cout << " End date             : --- " << endl;
@@ -85,16 +85,16 @@ displayProgress(Progression& p){
   cout << " Job name  : " << p.getJobName() << endl;
   cout << " Wall time : " << convertWallTimeToString(p.getWallTime()) << endl;
   if(p.getStartTime() > 0) {
-    pt =  boost::posix_time::from_time_t(p.getStartTime());
+    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(p.getStartTime()));
     cout << " Start time: " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
     cout << " Start time: ---" << endl;
   }
   if(p.getEndTime() > 0) {
-    pt =  boost::posix_time::from_time_t(p.getEndTime());
+    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(p.getEndTime()));
     cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << " Start time: ---" << endl;
+    cout << " End time  : ---" << endl;
   }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
   cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
@@ -484,13 +484,13 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 
     startTime = (listProgress.getProgress().get(i))->getStartTime();
     if(startTime > 0) {
-      pt =  boost::posix_time::from_time_t(startTime);
+      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(startTime));
       maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
     }
 
     endTime = (listProgress.getProgress().get(i))->getEndTime();
     if(endTime > 0) {
-      pt =  boost::posix_time::from_time_t(endTime);
+      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(endTime));
       maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
     }
 
@@ -529,14 +529,14 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
     if(startTime > 0) {
-      pt =  boost::posix_time::from_time_t(startTime);
+      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(startTime));
       os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
     } else {
       os << setw(maxStartTimeSize+2) << left << " --- ";
     }
     if(endTime > 0) {
-      pt =  boost::posix_time::from_time_t(endTime);
-      os << setw(maxEndTimeSize+2) << left <<  boost::posix_time::to_simple_string(pt);
+      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(endTime));
+      os << setw(maxEndTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
     } else {
       os << setw(maxEndTimeSize+2) << left <<  " --- ";
     }
@@ -549,7 +549,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
   }
 
   os << endl;
-  os << "The number jobs in queue is: " << listProgress.getNbJobs() << endl;
+  os << "The number of jobs in queue is: " << listProgress.getNbJobs() << endl;
  
   return os;
 }
