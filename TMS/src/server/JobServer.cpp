@@ -237,6 +237,8 @@ TMS_Data::Job JobServer::getJobInfo() {
   std::string errorPath;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
+  time_t submitDate;
+  time_t endDate;
   std::string sqlRequest = "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath, errorPath,"
                                 "outputPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner,"
                                 "jobQueue,wallClockLimit, groupName, jobDescription, memLimit, nbNodes, "
@@ -263,8 +265,12 @@ TMS_Data::Job JobServer::getJobInfo() {
       mjob.setNbCpus(convertToInt(*(++iter)));
       mjob.setJobWorkingDir(*(++iter));
       mjob.setStatus(convertToInt(*(++iter)));
-      mjob.setSubmitDate(convertToTimeType(*(++iter)));
-      mjob.setEndDate(convertToTimeType(*(++iter)));
+      //convert the submitDate into UTC date
+      submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter))); 
+      mjob.setSubmitDate(submitDate);
+      //convert the endDate into UTC date
+      endDate = convertLocaltimeINUTCtime(convertToTimeType(*(++iter)));
+      mjob.setEndDate(endDate);
       mjob.setOwner(*(++iter));
       mjob.setJobQueue(*(++iter));
       mjob.setWallClockLimit(convertToInt(*(++iter)));
