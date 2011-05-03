@@ -141,6 +141,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       job = listJobs_ptr->getJobs().get(i);
       listOfJobs.getJobs().push_back(job);
     }
+    listOfJobs.setNbJobs(listJobs_ptr->getJobs().size());
+    listOfJobs.setNbRunningJobs(listJobs_ptr->getNbRunningJobs());
+    listOfJobs.setNbWaitingJobs(listJobs_ptr->getNbWaitingJobs());
   }
   return 0;
 }
@@ -177,6 +180,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       progression = listProgression_ptr->getProgress().get(i);
       listOfProgress.getProgress().push_back(progression);
     }
+    listOfProgress.setNbJobs(listProgression_ptr->getProgress().size());
   }
   return 0;
 }
@@ -213,6 +217,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       queue = listQueues_ptr->getQueues().get(i);
       listofQueues.getQueues().push_back(queue);
     }
+    listofQueues.setNbQueues(listQueues_ptr->getQueues().size());
   }
   return 0;
 
@@ -279,6 +284,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       jobResult = listJobResults_ptr->getResults().get(i);
       listOfResults.getResults().push_back(jobResult);
     }
+    listOfResults.setNbJobs(listJobResults_ptr->getNbJobs());
   }
   return 0;
 }

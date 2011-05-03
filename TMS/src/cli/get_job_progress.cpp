@@ -48,7 +48,7 @@ makeGetJobProgOp(string pgName,
 	   CONFIG,
 	   fjid);
   opt->add("jobOwner,u",
-	   "The queue to submit the job",
+	   "The owner of the job",
 	   CONFIG,
 	   fown);
 

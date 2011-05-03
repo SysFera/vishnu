@@ -3,23 +3,13 @@
 #
 
 find_path(TORQUE_INCLUDE_DIR
- pbs_ifl.h
+  NAMES pbs_ifl.h pbs_error.h
   paths
 	${TORQUE_DIR}/include
 	$ENV{TORQUE_DIR}/include
 	/usr/include
 	/usr/local/include
 	/opt/local/include
-)
-
-find_path(TORQUE_INCLUDE_DIR
- pbs_error.h
-  paths
-        ${TORQUE_DIR}/include
-        $ENV{TORQUE_DIR}/include
-        /usr/include
-        /usr/local/include
-        /opt/local/include
 )
 
 
@@ -31,7 +21,6 @@ find_library(TORQUE_LIB
 	/usr/lib
 	/usr/local/lib
 )
-
 
 if (TORQUE_INCLUDE_DIR AND  TORQUE_LIB)
   set(TORQUE_FOUND "Yes")
