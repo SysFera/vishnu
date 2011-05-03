@@ -35,8 +35,17 @@
 		
 	      <para> First version of the VISHNU user manual which concerns only the UMS package.</para></revdescription>
 	  </revision>
+	  
+	  <revision>
+	  <revnumber>2</revnumber>
+	  <date>03/05/2011</date>
+	  <authorinitials>SysFera</authorinitials>
+	  <revdescription>
+	      
+	    <para> Added details concerning the TMS package.</para></revdescription>
+	</revision>
 	</revhistory>
-      
+	
       <copyright>
               <year>2011</year>
               <holder>SysFera SAS</holder>
@@ -147,74 +156,91 @@ same conditions as regards security.</para>
    <section>
      <title> Installation procedure </title>
      
-     <para> 
-       This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
-       which must be installed before.
+      <para> 
+	This section details the main steps of the installation process, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
+	which must be installed before.
+	</para>
+    
+      <para> <emphasis role = "bold">Installation requirements:</emphasis></para>
+      <itemizedlist>
+	<listitem>
+	      <para> GCC V4.4.3 </para>
+	</listitem>
+	<listitem>
+	      <para> CMAKE V2.6 </para>
+	</listitem>
+	<listitem>
+	      <para> OMNIORB 4.1.4 </para>
+	</listitem>
+	<listitem>
+	  <para> SYSFERA-DS V2.7 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
+	</listitem>
+	<listitem>
+	      <para> BOOST V1.45 </para>
+	</listitem>
+	<listitem>
+	      <para> PYTHON V2.5 </para>
+	</listitem>
+	<listitem>
+	      <para> JAVA V1.6 </para>
+	</listitem>
+	<listitem>
+	      <para> SWIG V1.3 </para>
+	</listitem>
+	<listitem>
+	      <para> LIBCRYPT </para>
+	</listitem>
+      </itemizedlist>
+      
+      <para><emphasis role = "bold">Installation procedure:</emphasis></para>
+      
+      <section>
+      <title> From sources </title>
+      
+      <para>
+      <itemizedlist>
+	<listitem>
+	      <para> Download the VISHNU install sources </para>
+	</listitem>
+	<listitem>
+	      <para> Decompress it and go to the vishnu directory </para>
+	</listitem>
+	
+	<listitem>
+	      <para> Create a build directory and run CMake as follows: </para>
+	      <para>> mkdir build </para>
+	      <para>> cd build </para>
+	      <para> If your install directory is for example: /opt/vishnu </para>
+	      <para>> cmake -DCLIENT_ONLY=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu .. </para>
+	      <para>> make &amp;&amp; make install</para>
+	</listitem>
+	
+	<listitem>
+	      <para> <emphasis role="bold">To compile the UMS package : </emphasis></para>
+	      <para>> cmake -DCOMPILE_UMS=ON  -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para> 
+	</listitem>
+	
+	<listitem>
+	      <para> <emphasis role="bold">To compile the TMS package : </emphasis></para>
+	      <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
+	</listitem>
+      </itemizedlist>
       </para>
-  
-     <para> <emphasis role = "bold">Installation requirements:</emphasis></para>
-     <itemizedlist>
-       <listitem>
-	    <para> GCC V4.4.3 </para>
-      </listitem>
-       <listitem>
-	    <para> CMAKE V2.6 </para>
-      </listitem>
-      <listitem>
-	    <para> OMNIORB 4.1.4 </para>
-      </listitem>
-      <listitem>
-	<para> SYSFERA-DS V2.7 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
-      </listitem>
-      <listitem>
-	    <para> BOOST V1.45 </para>
-      </listitem>
-      <listitem>
-	    <para> PYTHON V2.5 </para>
-      </listitem>
-      <listitem>
-	    <para> JAVA V1.6 </para>
-      </listitem>
-      <listitem>
-	    <para> SWIG V1.3 </para>
-      </listitem>
-      <listitem>
-	    <para> LIBCRYPT </para>
-      </listitem>
-    </itemizedlist>
-    
-    <para><emphasis role = "bold">Installation procedure:</emphasis></para>
-    <para>
-     <itemizedlist>
-       <listitem>
-	    <para> Download the VISHNU install sources </para>
-      </listitem>
-      <listitem>
-	    <para> Decompress it and go to the vishnu directory </para>
-      </listitem>
       
-      <listitem>
-	    <para> Create a build directory and run CMake as follows: </para>
-	    <para>> mkdir build </para>
-	    <para>> cd build </para>
-	    <para> If your install directory is for example: /opt/vishnu </para>
-	    <para>> cmake -DCLIENT_ONLY=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu .. </para>
-	    <!--<para> For python: </para>
-	    <para>> cmake -DENABLE_PYTHON=1 -DCMAKE_INSTALL_PREFIX=/opt/vishnu .. </para>
-	    -->
-<!-- 	    <para> For installation: </para> -->
-	    <para>> make &amp;&amp; make install</para>
-      </listitem>
-      
-     </itemizedlist>
-   </para>
+    </section>   
     
-    
+    <section>
+     <title> From binaries package </title>
+   </section>   
+   
    </section>
    
    <section>
      <title> Sofware usage description </title>
     
+    <section><!-- UMS Package -->
+      <title> UMS package </title> 
+     
     <section>
       <title> User account creation </title>
       <para>
@@ -261,13 +287,6 @@ same conditions as regards security.</para>
 	In this mode, the session is automatically closed when the shell terminal is closed. It is important to note that the system makes it impossible to close a session while commands are running. In this case, a session with automatic close on disconnect changes the close mode to automatic close on timeout.
         </para>
 	</section>
-	
-        <!--<para>
-	The <emphasis role = "bold">vishnu_list_options</emphasis> command 
-	displays all options configured by the user such as the session close policy or the maximum inactivity delay for sessions. The <emphasis role = "bold">vishnu_list_sessions</emphasis> command
-	displays full information about sessions.
-	</para>
-	-->
       </section>
    
     <section>
@@ -313,6 +332,53 @@ same conditions as regards security.</para>
       </para>
     </section>
     
+    </section> <!-- UMS Package -->
+    
+    <section><!-- TMS Package -->
+      <title> TMS package </title> 
+    
+      <section>
+      <title> Job submission </title>
+      <para>
+	To submit a job via VISHNU on the batch scheduler of a specific machine, the users needs: an opened VISHNU session, 
+	a local user configuration registered on VISHNU and corresponding to an existing UNIX account on the specified machine and a script which describes 
+	the job to submit. In the current implementation of VISHNU two main kinds of directives can be used: TORQUE and LoadLeveler. 
+	In order to define the same script on different batch scheduler a generic script with a VISHNU directives can be used.
+	The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
+      </para>
+      <section>
+	<title> VISHNU generic script </title>
+	<para> The VISHNU generic script is defined as follows: </para>
+      </section> 
+    </section>
+    
+    <section>
+	<title> Job Cancellation </title>
+	<para> To cancel a job, The <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
+	of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all jobs of the user is cancelled. 
+	An admin can also cancel all job of all users of VISHNU.
+	</para>
+    </section> 
+    
+      <section>
+	<title> To get job output files results </title>
+	<para> VISHNU offers two ways to get the jobs results output files by using in the shell terminal : 
+	  <itemizedlist>
+	  <listitem>
+		<para> <emphasis role="bold">vishnu_get_completed_jobs_output</emphasis> or, </para>
+	  </listitem>
+	  
+	  <listitem>
+		<para> <emphasis role="bold">vishnu_get_job_output </emphasis> </para>
+	  </listitem>
+	</itemizedlist>
+	        
+	The difference between these commands 
+	to get job output files is respectively the possibility to get the output files of a specific job or to get the output files of all completed jobs. 
+	It is important to notice that all jobs submitted have two output files: the job results output file and a file containing the probable errors.
+	</para>
+    </section> 
+    </section>
     
     </section>
     
