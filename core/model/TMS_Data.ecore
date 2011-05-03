@@ -152,52 +152,52 @@
   <eClassifiers xsi:type="ecore:EClass" name="SubmitOptions" instanceTypeName="SubmitOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns a job name. The default is the path of job."/>
+        <details key="content" value="Assigns a job name. The default is the path of job"/>
         <details key="shortOption" value="n"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="queue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns the queue or class of the job."/>
+        <details key="content" value="Assigns the queue or class of the job"/>
         <details key="shortOption" value="q"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="wallTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="The maximum wall-clock time during which the job can run."/>
+        <details key="content" value="The maximum wall-clock time during which the job can run"/>
         <details key="shortOption" value="t"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="Is the memory size that the job requires."/>
+        <details key="content" value="Is the memory size that the job requires"/>
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbCpu" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="The number of cpu that the job requires."/>
+        <details key="content" value="The number of cpu that the job requires"/>
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbNodesAndCpuPerNode" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="The number of nodes and processors per node."/>
+        <details key="content" value="The number of nodes and processors per node"/>
         <details key="shortOption" value="N"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputPath" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns the path and file for job output."/>
+        <details key="content" value="Assigns the path and file for job output"/>
         <details key="shortOption" value="o"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorPath" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Assigns the path and file for job error."/>
+        <details key="content" value="Assigns the path and file for job error"/>
         <details key="shortOption" value="e"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -205,21 +205,21 @@
   <eClassifiers xsi:type="ecore:EClass" name="ListJobsOptions" instanceTypeName="ListJobsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="To list job which has this id."/>
+        <details key="content" value="To list job which has this id"/>
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbCpu" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="To list jobs which have this number of cpu."/>
+        <details key="content" value="To list jobs which have this number of cpu"/>
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromSubmitDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="List jobs submitted after this date (unix timestamp)."/>
+        <details key="content" value="List jobs submitted after this date (unix timestamp)"/>
         <details key="shortOption" value="d"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -232,14 +232,14 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="To list all jobs submitted by this owner."/>
+        <details key="content" value="To list all jobs submitted by this owner"/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//JobStatus"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="To list jobs which have this status."/>
+        <details key="content" value="To list jobs which have this status"/>
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -277,13 +277,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="ProgressOptions" instanceTypeName="ProgressOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the id of the job that the user wants to see the progression of."/>
+        <details key="content" value="Represents the id of the job that the user wants to see the progression."/>
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobOwner" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the owner of the job."/>
+        <details key="content" value="Represents the owner of the job"/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
