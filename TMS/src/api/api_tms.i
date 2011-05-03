@@ -9,26 +9,13 @@
 %module VISHNU_TMS
 
 %{
-#define SWIG_FILE_WITH_INIT
+#define SWIG_FILE_TMS_WITH_INIT
 #include "TMS_Data.hpp"
 #include "api_tms.hpp"
 %}
 
- // Include for exception handling
-%include "exception.i"
+%import "api_ums.i"
 
-// this includes the typemaps for STL strings
-%include "std_string.i"
-%include "std_except.i"
-
-
-// this includes the required type declarations for EMF4CPP
-// WARNING: some may be missing!
-%include "ecore/EObject.hpp"
-%include "ecorecpp/mapping/type_traits.hpp"
-%include "ecorecpp/mapping/out_ptr.hpp"
-%include "ecorecpp/mapping/EList.hpp"
-%include "ecore_forward.hpp"
 
 // All EMF includes (same as in UMS_Data.hpp)
 %include "TMS_Data_forward.hpp"
@@ -44,12 +31,10 @@
 %include "TMS_Data/Queue.hpp"
 %include "TMS_Data/SubmitOptions.hpp"
 
-// TODO make copy of object when using the push_back() method of EList
-// because this causes a segfault due to double free
 
 // Instantiate the template for all lists
 // the templates used within the list template must be instantiated first
-%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
+ //%template(EListPtr) ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject > >;
 %template(EJobList) ::ecorecpp::mapping::EList<::TMS_Data::Job>;
 %template(EProgressionList) ::ecorecpp::mapping::EList<::TMS_Data::Progression>;
 %template(EQueueList) ::ecorecpp::mapping::EList<::TMS_Data::Queue>;
@@ -115,9 +100,5 @@
 
 %include "api_tms.hpp"
 #ifdef SWIGPYTHON
-%include "VishnuException.hpp"
-%include "UserException.hpp"
-%include "SystemException.hpp"
 %include "TMSVishnuException.hpp"
-%include "UMSVishnuException.hpp"
 #endif
