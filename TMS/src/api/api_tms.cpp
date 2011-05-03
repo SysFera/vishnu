@@ -284,6 +284,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       jobResult = listJobResults_ptr->getResults().get(i);
       listOfResults.getResults().push_back(jobResult);
     }
+    listOfResults.setNbJobs(listJobResults_ptr->getNbJobs());
   }
   return 0;
 }
