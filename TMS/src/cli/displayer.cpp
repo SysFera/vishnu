@@ -12,6 +12,9 @@ displayAllJobOutput(TMS_Data::ListJobResults& j){
   for (unsigned int i = 0 ; i < j.getResults().size() ; i++){
     displayJobOutput(j.getResults().get(i));
   }
+  cout << endl;
+  cout << "The number of completed jobs output is: " << j.getNbJobs() << endl;
+  cout << endl;
 }
 
 void 
@@ -338,6 +341,8 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
 
   } 
 
+  os << endl;
+  os << "The number of queues is: " << lsQueues.getNbQueues() << std::endl;
   return os;
 }
 
@@ -426,7 +431,8 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   }
 
   os << endl;
-  os << "The number of jobs is: " << listJobs.getJobs().size() << std::endl; 
+  os << listJobs.getNbJobs() << " jobs in queue, " << listJobs.getNbRunningJobs() << " running, ";
+  os << listJobs.getNbWaitingJobs() << " waiting" << std::endl;  
   return os;
 }
 
@@ -542,6 +548,9 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 
   }
 
+  os << endl;
+  os << "The number jobs in queue is: " << listProgress.getNbJobs() << endl;
+ 
   return os;
 }
 

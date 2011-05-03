@@ -79,11 +79,11 @@ makeSubJobOp(string pgName,
 	   CONFIG,
 	   fnbNodeAndCpu);
   opt->add("outPutPath,o",
-	   "The outputh path of the job",
+	   "The outputh path on the remote machine of the job",
 	   CONFIG,
 	   foutput);
   opt->add("errorPath,e",
-	   "The path for the job errors",
+	   "The error path on the remote machine of the job",
 	   CONFIG,
 	   ferr);
 

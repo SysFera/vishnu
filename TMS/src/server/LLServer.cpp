@@ -31,8 +31,8 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   llJobId<< "." << (llJobInfo.step_list[0])->id.proc;
 
   job.setJobId(llJobId.str());
-  job.setOutputPath(std::string((llJobInfo.step_list[0])->out)) ;
-  job.setErrorPath(std::string((llJobInfo.step_list[0])->err));
+  job.setOutputPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->out)) ;
+  job.setErrorPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->err));
   job.setStatus(llJobInfo.step_list[0]->status);//A mapper en VISHNU status
   job.setJobName(std::string(llJobInfo.job_name));
   job.setSubmitDate((llJobInfo.step_list[0])->q_date);
@@ -163,7 +163,7 @@ int LLServer::getJobState(const std::string& jobId) {
   // Set the type of query
   queryObject = ll_query(JOBS);
   if(!queryObject) {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Query JOBS : ll_query() return NULL.\n");
+    return -1;
   }
 
   char* IDlist[2];

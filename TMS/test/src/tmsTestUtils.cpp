@@ -1,7 +1,18 @@
+#include <boost/assign/list_inserter.hpp>
+#include <boost/assign/list_of.hpp>
+#include <boost/assign/std/vector.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/process/all.hpp>
+#include <boost/scoped_ptr.hpp>
+#include <boost/test/unit_test.hpp>
+#include <boost/thread.hpp>
 #include "tmsTestUtils.hpp"
 using namespace std;
+namespace bp = boost::process;
 
-
+namespace ba = boost::assign;
+namespace bf = boost::filesystem;
+namespace bs = boost::system;
 
 VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UMS_Data::ConnectOptions& co):muid(uid),mupwd(upwd),mco(co),open(false){
 
@@ -33,7 +44,6 @@ bool operator== (const Job& lJob,const Job& rJob ){
         && (lJob.getOwner() == rJob.getOwner() ) 
         && (lJob.getJobQueue() == rJob.getJobQueue() ) 
         && (lJob.getWallClockLimit() == rJob.getWallClockLimit() ) 
-      //  && (lJob.getSubmitDate() == rJob.getSubmitDate() ) 
      
      
       );
@@ -45,3 +55,4 @@ bool operator== (const Job& lJob,const Job& rJob ){
 
 
 
+  
