@@ -52,7 +52,7 @@ solveCurMetric(diet_profile_t* pb){
     // Getting options
     IMS_Data::CurMetricOp_ptr curOp = NULL;
     if(!parseEmfObject(std::string(curOpSer), curOp)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_getProcesses: Process option object is not well built");
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getCurentMetricValue: Curent metric option object is not well built");
     }
     // Creating the process server with the options
     MetricServer met(userServer, curOp);
@@ -118,7 +118,7 @@ solveOldMetric(diet_profile_t* pb){
     // Getting options
     IMS_Data::MetricHistOp_ptr histOp = NULL;
     if(!parseEmfObject(std::string(histOpSer), histOp)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_getProcesses: Process option object is not well built");
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getMetricHistory: Metric history option object is not well built");
     }
     // Creating the process server with the options
     MetricServer met(userServer, histOp);
