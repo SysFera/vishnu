@@ -9,30 +9,33 @@ MetricServer::MetricServer(const UserServer session):msession(session){
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
 }
-MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp op):msession(session){
+MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op):msession(session){
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
+  mhop = op;
 }
-MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp op):msession(session){
+MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op):msession(session){
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
+  mcop = op;
 }
 MetricServer::~MetricServer(){
 }
-// TODO mvid
-int
-MetricServer::getUpFreq(){
-  string mvid = "1";
-  string req = "select * from vishnu where vishnuid='"+mvid+"'";  
 
-  return mfreq;
-}
 void
-MetricServer::setUpFreq(int freq){
-  mfreq = freq;
+MetricServer::setUpFreq(unsigned int freq){
+  string request = "update \"vishnu\" * set \"freq\"='"+convertToString(freq)+"' where \"vishnuid\"='";
+  request += convertToString(mvishnuId);
+  request += "'";
+  try{
+    mdatabase->process(request.c_str());
+  }catch(SystemException& e){
+    e.appendMsgComp("Failed to set frequency to "+convertToString(freq));
+    throw(e);
+  }
 }
 
-// TODO Finish the function
+
 void
 MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   string nmid;
@@ -47,7 +50,6 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   }
   // numerical index always in position 0 in tables
   nmid = result->get(0).at(0);
-
   // Filling values (If various in list, the latest is kept
   for (unsigned int i = 0 ; i < set->getMetric().size() ; i++){
     switch (set->getMetric().get(i)->getType()) {
@@ -68,7 +70,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 
   // Inserting the value
   string req = "insert into state(\"machine_nummachineid\", \"memory\", \"diskspace\", \"cpuload\", \"time\") values('"+nmid+"', '"+convertToString(mem)+"', '"+convertToString(disk)+"', '"+convertToString(cpu)+"', CURRENT_TIMESTAMP) ";
-
+  
   try{
     mdatabase->process(req.c_str());
   }catch(SystemException& e){
@@ -77,33 +79,27 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   }
 }
 
-int
+unsigned int
 MetricServer::checkUpFreq(){
   // TODO FIX MVISHNU ID
-  cout << " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " << endl;
   mvishnuId  = 1;
-  cout << " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 1" << endl;
   // Get the corresponding frequency
   string request = "select * from vishnu where vishnuid='";
   request += convertToString(mvishnuId);
   request += "'";
-  cout << " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 2" << endl;
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
-  cout << " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 3" << endl;
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVVISHNU, "Unknown VISHNU id");
   }
   vector<string> res;
-  cout << " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " << endl;
   res = result->get(0);
-  cout << " Value gottent: " << res.at(FREQPOS) << endl;
   // Updating the frequency value
   mfreq = convertToInt(res.at(FREQPOS));
   // Returning the new frequency value
   return mfreq;
 }
 
-// TODO Recuperer le temps avec boost
+
 IMS_Data::ListMetric*
 MetricServer::getCurMet(){
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
@@ -115,47 +111,57 @@ MetricServer::getCurMet(){
   double cpu;
   double mem;
   diet_estimate_cori_add_collector(EST_COLL_EASY,NULL);
-  res = diet_estimate_cori (vec, EST_ALLINFOS, EST_COLL_EASY, NULL);
 
+  diet_estimate_cori (vec, EST_FREESIZEDISK, EST_COLL_EASY, "./");
   disk = diet_est_get_system(vec, EST_FREESIZEDISK, -1); 
   met = ecoreFactory->createMetric();
   met->setType(3);
   met->setValue(disk);
-  mlistObject->getMetric().push_back(met);
+  if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
+    mlistObject->getMetric().push_back(met);
+  }
 
+  diet_estimate_cori (vec, EST_FREEMEM, EST_COLL_EASY, NULL);
   mem = diet_est_get_system(vec, EST_FREEMEM, -1); 
   met = ecoreFactory->createMetric();
   met->setType(5);
   met->setValue(mem);
-  mlistObject->getMetric().push_back(met);
+  if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
+    mlistObject->getMetric().push_back(met);
+  }
 
+  // TODO CHECK WHY -1 GOTTEN
+  diet_estimate_cori (vec, EST_AVGFREECPU, EST_COLL_EASY, NULL);
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
   met = ecoreFactory->createMetric();
   met->setType(1);
   met->setValue(cpu);
-  mlistObject->getMetric().push_back(met);
+  if (mcop->getMetricType() != 3 && mcop->getMetricType() != 5) {
+    mlistObject->getMetric().push_back(met);
+  }
 
   diet_destroy_estVect(vec) ;
+
   return mlistObject;
 }
 
 // TODO: Remove the constant values if possible !!!!!!!!!!!!
 IMS_Data::ListMetric*
 MetricServer::getHistMet(string machineId){
-  string request = "select * from state where \"machineid\"='"+machineId+"'";
+  string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid";
   vector<string>::iterator iter;
   vector<string> results = vector<string>();
 
-  IMS_Data::MetricType type = mhistOp.getType();
+  IMS_Data::MetricType type = mhop->getType();
 
-  if (mhistOp.getStartTime()>0) {
+  if (mhop->getStartTime()>0) {
     request += " AND \"timestamp\">'";
-    request += convertToString(mhistOp.getStartTime());
+    request += convertToString(mhop->getStartTime());
     request += "'";
   }
-  if (mhistOp.getEndTime()>0) {
+  if (mhop->getEndTime()>0) {
     request += " AND \"timestamp\"<'";
-    request += convertToString(mhistOp.getEndTime());
+    request += convertToString(mhop->getEndTime());
     request += "'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();

@@ -33,3 +33,8 @@ displayMetric(IMS_Data::Metric* m){
   cout << " value: " << m->getValue() << endl;
   cout << " time : " << m->getTime() << endl;
 }
+
+void
+displayFreq(int freq) {
+  cout << "The frequency of update of the history maker is " << freq << endl;
+}
