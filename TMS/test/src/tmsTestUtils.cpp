@@ -20,21 +20,27 @@ VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UM
 
 VishnuConnexion::~VishnuConnexion(){
   if(true==open){
-  BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
-  BOOST_TEST_MESSAGE("The session is closed");
+    try {
+      BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
+      BOOST_TEST_MESSAGE("The session is closed");
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 
 string VishnuConnexion::getConnexion(){
   try {
     BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
+    open=true;
+    BOOST_TEST_MESSAGE("The session is open");
+    return msession.getSessionKey();
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
   }
-  open=true;
-  BOOST_TEST_MESSAGE("The session is open");
-  return msession.getSessionKey();
+  return "";
 }
 
 
