@@ -109,10 +109,6 @@ private :
      * \brief The associated mutex
      */
     pthread_mutex_t mmutex;
-    /**
-     * \brief If the connection is right
-     */
-    bool misConnected;
   }pool_t;
   /////////////////////////////////
   // Attributes
@@ -141,10 +137,6 @@ private :
    * \brief The port to use
    */
   int mport;
-  /**
-   * \brief Store the results of the last request
-   */
-  std::vector<std::string> mres;
 
   /////////////////////////////////
   // Functions
