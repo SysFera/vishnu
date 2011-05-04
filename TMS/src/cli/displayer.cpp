@@ -431,7 +431,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   }
 
   os << endl;
-  os << listJobs.getNbJobs() << " jobs in queue, " << listJobs.getNbRunningJobs() << " running, ";
+  os << listJobs.getNbJobs() << " jobs, " << listJobs.getNbRunningJobs() << " running, ";
   os << listJobs.getNbWaitingJobs() << " waiting" << std::endl;  
   return os;
 }

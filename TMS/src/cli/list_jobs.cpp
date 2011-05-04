@@ -208,13 +208,12 @@ int main (int argc, char* argv[]){
 
     //convert the date in long format 
     if(opt->count("fromSubmitDate")){
-      jobOp.setFromSubmitDate(string_to_time_t(fromDate));
+      jobOp.setFromSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(fromDate)));
     }
 
     if(opt->count("toSubmitDate")){
-      jobOp.setToSubmitDate(convertUTCtimeINLocaltime(string_to_time_t(toDate)));
+      jobOp.setToSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(toDate)));
     }
-
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
