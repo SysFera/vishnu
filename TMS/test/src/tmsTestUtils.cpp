@@ -26,26 +26,30 @@ VishnuConnexion::~VishnuConnexion(){
 }
 
 string VishnuConnexion::getConnexion(){
-
-  BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
+  try {
+    BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
   open=true;
-   BOOST_TEST_MESSAGE("The session is open");
-   return msession.getSessionKey();
+  BOOST_TEST_MESSAGE("The session is open");
+  return msession.getSessionKey();
 }
 
 
 bool operator== (const Job& lJob,const Job& rJob ){
 
   return ( (lJob.getJobId() == rJob.getJobId())
-        && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())  
-        && (lJob.getJobPath() == rJob.getJobPath()) 
-        && (lJob.getJobName() == rJob.getJobName()) 
+        && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())
+        && (lJob.getJobPath() == rJob.getJobPath())
+        && (lJob.getJobName() == rJob.getJobName())
         && (lJob.getJobPrio() == rJob.getJobPrio())
-        && (lJob.getOwner() == rJob.getOwner() ) 
-        && (lJob.getJobQueue() == rJob.getJobQueue() ) 
-        && (lJob.getWallClockLimit() == rJob.getWallClockLimit() ) 
-     
-     
+        && (lJob.getOwner() == rJob.getOwner() )
+        && (lJob.getJobQueue() == rJob.getJobQueue() )
+        && (lJob.getWallClockLimit() == rJob.getWallClockLimit() )
+
+
       );
 
 
@@ -55,4 +59,4 @@ bool operator== (const Job& lJob,const Job& rJob ){
 
 
 
-  
+
