@@ -149,6 +149,15 @@ public:
   bool
   existuserId(std::string userId);
 
+   /**
+   * \brief Function to get the user account login 
+   * \param machineId The machine identifier of machine on which the user have a account
+   * \return the user account login 
+   */
+  std::string
+  getUserAccountLogin(const std::string& machineId);
+
+
 private:
 
   /////////////////////////////////
@@ -202,5 +211,6 @@ private:
    */
   std::string
   getMailContent(const UMS_Data::User& user, bool flagAdduser);
+
 };
 #endif

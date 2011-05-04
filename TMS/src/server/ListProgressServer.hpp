@@ -84,11 +84,7 @@ public:
     long startTime;
     long walltime;
 
-    TMS_Data::Job job;
-    JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
-    std::string acLogin = jobServer.getUserAccountLogin();
-
-    std::string machineName = jobServer.getMachineName();
+    std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();

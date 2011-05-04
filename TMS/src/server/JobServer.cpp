@@ -10,8 +10,9 @@
 #include "UserServer.hpp"
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
-#include "ServerTMS.hpp"
+#include "DbFactory.hpp"
 
+using namespace std;
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The machine identifier
@@ -24,6 +25,8 @@ JobServer::JobServer(const SessionServer& sessionServer,
                      const BatchType& batchType):
   msessionServer(sessionServer), mmachineId(machineId), mjob(job), mbatchType(batchType) {
 
+   DbFactory factory;
+   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
 /**
@@ -32,16 +35,21 @@ JobServer::JobServer(const SessionServer& sessionServer,
  * \param options the options to submit job
  * \return raises an exception on error
  */
-int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::SubmitOptions& options)
+int JobServer::submitJob(const std::string& scriptContent, 
+                         const TMS_Data::SubmitOptions& options,
+                         const int& vishnuId,
+                         const std::string& slaveDirectory)
 {
 
   msessionServer.check(); //To check the sessionKey
+ 
+  std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
-  std::string acLogin = getUserAccountLogin();
-  std::cout << "acLogin = " << acLogin << std::endl;
-
-  std::string machineName = getMachineName();
-  std::cout << "machineName = " << machineName << std::endl;
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(mmachineId);
+  MachineServer machineServer(machine); 
+  std::string machineName = machineServer.getMachineName();
+  delete machine;
 
   std::string jobSerialized ;
   std::string submitOptionsSerialized;
@@ -51,7 +59,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   ::ecorecpp::serializer::serializer jobSer(name);
 
   scriptPath = strdup("/tmp/job_scriptXXXXXX");
-  SSHJobExec().createTmpFile(scriptPath, scriptContent);
+  vishnu::createTmpFile(scriptPath, scriptContent);
 
   std::ofstream ofile(scriptPath);
   ofile << scriptContent;
@@ -61,9 +69,9 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
   SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, acLogin, machineName, "", mbatchType);
-  sshJobExec.sshexec("SUBMIT");
+  sshJobExec.sshexec(slaveDirectory, "SUBMIT");
 
-  SSHJobExec().deleteFile(scriptPath);
+  vishnu::deleteFile(scriptPath);
 
   std::string errorInfo = sshJobExec.getErrorInfo();
 
@@ -88,7 +96,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
   mjob.setSessionId(sessionId);
 
   std::string BatchJobId=mjob.getJobId();
-  std::string vishnuJobId = vishnu::getObjectId(ServerTMS::getInstance()->getInstance()->getVishnuId(), "jobcpt", "formatidjob", JOB, mmachineId);
+  std::string vishnuJobId = vishnu::getObjectId(vishnuId, "jobcpt", "formatidjob", JOB, mmachineId);
   mjob.setJobId(vishnuJobId);
 
   string scriptContentStr = std::string(scriptContent);
@@ -98,7 +106,6 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     pos = scriptContentStr.find("'");
   }
   
-  Database* databaseVishnu = ServerTMS::getInstance()->getDatabaseVishnu();
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
     "jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
@@ -115,7 +122,7 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
     +","+convertToString(mjob.getNbNodes())+",'"+mjob.getNbNodesAndCpuPerNode()+"')" ;
 
   std::cout << sqlInsert << std::endl;
-  databaseVishnu->process(sqlInsert); 
+  mdatabaseVishnu->process(sqlInsert); 
     
   return 0;
 }
@@ -124,11 +131,13 @@ int JobServer::submitJob(const std::string& scriptContent, const TMS_Data::Submi
  * \brief Function to cancel job
  * \return raises an exception on error
  */
-int JobServer::cancelJob()
+int JobServer::cancelJob(const std::string& slaveDirectory)
 {
 
   msessionServer.check(); //To check the sessionKey
 
+  std::string acLogin;
+  std::string machineName;
   std::string jobSerialized;
   std::string batchJobId;
   std::string initialJobId;
@@ -138,8 +147,13 @@ int JobServer::cancelJob()
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
 
-  std::string acLogin = getUserAccountLogin();
-  std::string machineName = getMachineName();
+  acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(mmachineId);
+  MachineServer machineServer(machine);
+  machineName = machineServer.getMachineName();
+  delete machine; 
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -162,7 +176,7 @@ int JobServer::cancelJob()
   } 
 
 
-  boost::scoped_ptr<DatabaseResult> sqlCancelResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlCancelRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlCancelResult(mdatabaseVishnu->getResult(sqlCancelRequest.c_str()));
   std::cout << "JobServer::cancelJob: " << sqlCancelRequest << std::endl;
   std::cout << "sqlCancelResult->getNbTuples()=" << sqlCancelResult->getNbTuples() << std::endl;
   if (sqlCancelResult->getNbTuples() != 0){
@@ -200,7 +214,7 @@ int JobServer::cancelJob()
       jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
       SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
-      sshJobExec.sshexec("CANCEL");
+      sshJobExec.sshexec(slaveDirectory, "CANCEL");
 
       std::string errorInfo = sshJobExec.getErrorInfo();
 
@@ -212,7 +226,7 @@ int JobServer::cancelJob()
       } else if(errorInfo.size()==0) {
 
         std::string sqlUpdatedRequest = "UPDATE job SET status=6 where jobId='"+jobId+"'";
-        ServerTMS::getInstance()->getDatabaseVishnu()->process(sqlUpdatedRequest.c_str());
+        mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
       }
     }
   } else {
@@ -246,7 +260,7 @@ TMS_Data::Job JobServer::getJobInfo() {
                                 "where vsession.numsessionid=job.vsession_numsessionid "
                                 " and status > 0 and status < 6 and job.submitMachineId='"+mmachineId+"' and jobId='"+mjob.getJobId()+"'";
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
   
   if (sqlResult->getNbTuples() != 0){
       results.clear();
@@ -314,55 +328,6 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
       message = errorInfo.substr(pos+1);
     }
   }
-}
-
-std::string JobServer::getUserAccountLogin() {
-
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-
-  std::string userId = (userServer.getData()).getUserId();
-  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
-  account->setMachineId(mmachineId);
-  account->setUserId(userId);
-  LocalAccountServer localAccount(account, msessionServer);
-
-  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-  machine->setMachineId(mmachineId);
-  MachineServer machineServer(machine);
-
-  //To get the database number id of the machine
-  std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
-  //To get the database number id of the user
-  std::string numUser = userServer.getAttribut("where userid='"+localAccount.getData()->getUserId()+"'");
-
-  std::string acLogin;
-  if ((numMachine.size() > 0) && (numUser.size() > 0)) {
-    acLogin = localAccount.getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "aclogin");
-  }
-
-  if(acLogin.size()==0) {
-    delete account;
-    delete machine;
-    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
-  }
-
-  delete account;
-  delete machine;
-  return acLogin;
-}
-
-std::string JobServer::getMachineName() {
-
-  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-  machine->setMachineId(mmachineId);
-  MachineServer machineServer(machine);
-
-  std::string  machineName = machineServer.getAttribut("where machineid='"+machineServer.getData()->getMachineId()+"'", "name");
-
-  delete machine;
-
-  return machineName;
 }
 
 /**
