@@ -17,6 +17,7 @@ include_directories(
   ${IMS_UTIL_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
+  ${IMS_CLIENT_PROXY_SOURCE_DIR}
 )
 
 add_library(vishnu-ims-api
