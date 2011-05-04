@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="TMS">
-    <services name="submitJob" description="submits job on a machine through the use of a script (scriptFilePath). " resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_PARAM ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
+    <services name="submitJob" description="submits a job on a machine through the use of a script (scriptFilePath)" resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_PARAM ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which the job must be submitted"/>
       <ports name="scriptFilePath" dataType="//@typeList/@types.0" description="The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit."/>
@@ -58,7 +58,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="Is the id of the machine on which  the jobs are been submitted"/>
       <ports name="listOfResults" direction="OUT" dataType="//@modules.0/@typeList/@types.7" description="Is the list of jobs results"/>
-      <ports name="outDir" dataType="//@typeList/@types.0" description="The output directory where the files will be stored (default is current directory)" optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
+      <ports name="outDir" dataType="//@typeList/@types.0" description="Specifies the output directory where the files will be stored (by default, the current directory)." optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
       <details key="description" value="This command allows getting the output files of all the completed jobs."/>
     </services>
