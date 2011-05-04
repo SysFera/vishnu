@@ -38,6 +38,12 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
+  // Environement option
+  opt->add("dietConfig,c",
+           "The diet config file",
+           ENV,
+           dietConfig);
+
   // All cli obligatory parameters
   opt->add("freq,f",
 	   "represents the id of the machine",
