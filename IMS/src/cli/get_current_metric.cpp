@@ -1,5 +1,5 @@
 /**
- * \file get_metric_history.cpp
+ * \file get_current_metric.cpp
  * This file defines the VISHNU command to get the metric history
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
@@ -23,10 +23,8 @@ using namespace vishnu;
 
 boost::shared_ptr<Options>
 makeGHMOp(string pgName, 
-	     boost::function1<void, long>& fstart,
-	     boost::function1<void, long>& fend,
 	  boost::function1<void, IMS_Data::MetricType>& ftype,
-	     string& dietConfig){
+	  string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -36,15 +34,6 @@ makeGHMOp(string pgName,
            dietConfig);
 
   // All cli options
-  opt->add("start,s",
-	   "The start time to get the history",
-	   CONFIG,
-	   fstart);
-
-  opt->add("end,e",
-	   "The end time to get the history",
-	   CONFIG,
-	   fend);
 
   opt->add("type,t",
 	   "The end time to get the history",
@@ -64,18 +53,16 @@ int main (int argc, char* argv[]){
   string mid;
 
   /********** EMF data ************/
-  IMS_Data::MetricHistOp op;
+  IMS_Data::CurMetricOp op;
 
   /******** Callback functions ******************/
-  boost::function1<void,long> fstart(boost::bind(&IMS_Data::MetricHistOp::setStartTime,boost::ref(op),_1));
-  boost::function1<void,long> fend(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
-  boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setType,boost::ref(op),_1));
+  boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::CurMetricOp::setMetricType,boost::ref(op),_1));
 
   /*********** Out parameters *********************/
   IMS_Data::ListMetric met;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], fstart, fend, ftype,  dietConfig);
+  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], ftype,  dietConfig);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -115,7 +102,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getMetricHistory(sessionKey, mid, met, op);
+      getMetricCurrentValue(sessionKey, mid, met, op);
     }
     displayListMetric(&met);
   } catch(VishnuException& e){// catch all Vishnu runtime error

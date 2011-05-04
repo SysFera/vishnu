@@ -97,8 +97,8 @@ int main(int argc, char* argv[], char* envp[]) {
   // History maker thread
   HM hm = HM();
   thread thr2(bind(&HM::run, &hm));
-  thr2.join();
-  thr1.join();
+//  thr2.join();
+//  thr1.join();
 
   // Initialize the DIET SeD
   if (!res) {
