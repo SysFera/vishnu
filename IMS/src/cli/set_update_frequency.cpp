@@ -1,5 +1,5 @@
 /**
- * \file get_metric_history.cpp
+ * \file set_update_frequency.cpp
  * This file defines the VISHNU command to get the metric history
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
@@ -12,47 +12,12 @@
 #include "api_ums.hpp"
 #include "api_ims.hpp"
 #include "sessionUtils.hpp"
-#include "displayer.hpp"
-#include <boost/bind.hpp>
 
-namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;
 
 
-boost::shared_ptr<Options>
-makeGHMOp(string pgName, 
-	     boost::function1<void, long>& fstart,
-	     boost::function1<void, long>& fend,
-	  boost::function1<void, IMS_Data::MetricType>& ftype,
-	     string& dietConfig){
-  boost::shared_ptr<Options> opt(new Options(pgName));
-
-  // Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-  // All cli options
-  opt->add("start,s",
-	   "The start time to get the history",
-	   CONFIG,
-	   fstart);
-
-  opt->add("end,e",
-	   "The end time to get the history",
-	   CONFIG,
-	   fend);
-
-  opt->add("type,t",
-	   "The end time to get the history",
-	   CONFIG,
-	   ftype);
-
-  return opt;
-}
 
 int main (int argc, char* argv[]){
   
@@ -61,28 +26,24 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
-  string mid;
+  string freq;
 
   /********** EMF data ************/
-  IMS_Data::MetricHistOp op;
+
 
   /******** Callback functions ******************/
-  boost::function1<void,long> fstart(boost::bind(&IMS_Data::MetricHistOp::setStartTime,boost::ref(op),_1));
-  boost::function1<void,long> fend(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
-  boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setType,boost::ref(op),_1));
 
   /*********** Out parameters *********************/
-  IMS_Data::ListMetric met;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], fstart, fend, ftype,  dietConfig);
+  boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // All cli obligatory parameters
-  opt->add("machineId,m",
+  opt->add("freq,f",
 	   "represents the id of the machine",
 	   HIDDEN,
-	   mid,1);
-  opt->setPosition("machineId",1);
+	   freq,1);
+  opt->setPosition("freq",1);
  
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -90,14 +51,14 @@ int main (int argc, char* argv[]){
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] machineId");  
+    helpUsage(*opt,"[options] freq");  
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] machineId");
+    helpUsage(*opt,"[options] freq");
     return 0;
   }
 
@@ -115,9 +76,8 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getMetricHistory(sessionKey, mid, met, op);
+      setUpdateFrequency(sessionKey, convertToInt(freq));
     }
-    displayListMetric(&met);
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);
@@ -133,3 +93,4 @@ int main (int argc, char* argv[]){
 
   return 0;
 }
+
