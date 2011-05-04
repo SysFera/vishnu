@@ -277,13 +277,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="ProgressOptions" instanceTypeName="ProgressOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the id of the job that the user wants to see the progression."/>
+        <details key="content" value="Specifies the id of the job whose progression the user wants to see."/>
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobOwner" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the owner of the job"/>
+        <details key="content" value="Specifies the owner of the job."/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
