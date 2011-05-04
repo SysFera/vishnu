@@ -8,8 +8,12 @@
 #include <iostream>
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
+#ifdef USE_POSTGRES
 #include "POSTGREDatabase.hpp"
+#endif
+#ifdef USE_MYSQL
 #include "MYSQLDatabase.hpp"
+#endif
 //#include "OracleDatabase.hpp"
 
 Database* DbFactory::mdb = NULL;
