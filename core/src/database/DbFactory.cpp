@@ -9,6 +9,7 @@
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
 #include "POSTGREDatabase.hpp"
+#include "MYSQLDatabase.hpp"
 //#include "OracleDatabase.hpp"
 
 Database* DbFactory::mdb = NULL;
@@ -36,6 +37,13 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
       break;
     case DbConfiguration::ORACLE:
     case DbConfiguration::MYSQL:
+      mdb = new MYSQLDatabase(config.getDbHost(),
+			      config.getDbUserName(),
+			      config.getDbUserPassword(),
+			      config.getDbName(),
+			      config.getDbPort()
+			      );
+      break;
     default:
       throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
   }
