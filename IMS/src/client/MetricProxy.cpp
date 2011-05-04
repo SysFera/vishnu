@@ -13,7 +13,7 @@ MetricProxy::setUpFreq(int freq) {
   diet_profile_t* profile = NULL;
   string sessionKey;
   char* errorInfo = NULL;
-  std::string serviceName = "int_setUpFreq";
+  std::string serviceName = "int_setUpdateFrequency";
   string msgErrorDiet;
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
@@ -48,7 +48,7 @@ MetricProxy::getUpFreq() {
   diet_profile_t* profile = NULL;
   string sessionKey;
   char* errorInfo = NULL;
-  std::string serviceName = "int_setUpFreq";
+  std::string serviceName = "int_getUpdateFrequency";
   int res;
   char* str = NULL;
   string msgErrorDiet;
