@@ -38,6 +38,13 @@ int main (int argc, char* argv[]){
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
+
+  // Environement option
+  opt->add("dietConfig,c",
+           "The diet config file",
+           ENV,
+           dietConfig);
+
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
