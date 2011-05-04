@@ -36,6 +36,8 @@
 #include "ListProgressServer.hpp"
 #include "JobOutputServer.hpp"
 
+#include "internalApi.hpp"
+
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 
 using namespace std;
