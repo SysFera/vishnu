@@ -35,7 +35,7 @@ namespace bfs= boost::filesystem;
 
 
 // The database, UMS and TMS SeD are launched by TMSSedFixture.
- 
+
 
 BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
@@ -66,39 +66,43 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions subOptions;
+    subOptions.setOutputPath(jobOutputPath);
+    subOptions.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions subOptions;
-  subOptions.setOutputPath(jobOutputPath);
-  subOptions.setErrorPath(jobErrorPath);
+    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
-  BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    // To check the success of submitJob function
 
-  // To check the success of submitJob function
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+    lsOptions.setJobId(jobInfo.getJobId());
+    BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
 
-  ListJobs lsJobs;
-  ListJobsOptions lsOptions;
-  lsOptions.setJobId(jobInfo.getJobId());
-  BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
+    BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( *(lsJobs.getJobs().get(0)) == jobInfo )  );
 
-  BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( *(lsJobs.getJobs().get(0)) == jobInfo )  );
+    BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************" << "\n ");
 
-  BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************" << "\n ");
+    // wait a few seconds and check the success of cancelling job
 
-  // wait a few seconds and check the success of cancelling job
+  // bpt::seconds sleepTime(5);
 
- // bpt::seconds sleepTime(5);
-
-  //boost::this_thread::sleep(sleepTime);
+    //boost::this_thread::sleep(sleepTime);
 
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -136,7 +140,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
   VishnuConnexion vc("root","vishnu_user");
 
-  // get the session key 
+  // get the session key
 
   string sessionKey=vc.getConnexion();
 
@@ -236,35 +240,39 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
-  BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    // now let cancel the job
 
-  // now let cancel the job
-
-// setting cancel job parameters
+  // setting cancel job parameters
 
 
-  BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
+    BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
 
-  // wait a few seconds and check the success of cancelling job
-  //bpt::seconds sleepTime(5);
-  // boost::this_thread::sleep(sleepTime);
-  // FIXME replace me by calling a list job function and checking the status
-  Job job;
-  BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),VishnuException  );
+    // wait a few seconds and check the success of cancelling job
+    //bpt::seconds sleepTime(5);
+    // boost::this_thread::sleep(sleepTime);
+    // FIXME replace me by calling a list job function and checking the status
+    Job job;
+    BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),VishnuException  );
 
-  BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************" << " \n");
 
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 
 }
 
@@ -283,28 +291,32 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
   string sessionKey=vc.getConnexion();
   string machineId="machine_1";
 
-  //Setting submitjob parameters
+  try {
+    //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
-  // now let cancel the job
+    // now let cancel the job
 
-  // setting cancel job parameters
+    // setting cancel job parameters
 
 
-  BOOST_CHECK_THROW(cancelJob("bad sessionKey ", machineId, jobInfo.getJobId()),VishnuException );
+    BOOST_CHECK_THROW(cancelJob("bad sessionKey ", machineId, jobInfo.getJobId()),VishnuException );
 
-  BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************" << " \n");
 
-// Clean up:  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-
+  // Clean up:  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 
@@ -324,26 +336,31 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
 
   string machineId="machine_1";
 
-  //Setting submitjob parameters
+  try {
+    //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
-  // now let try to cancel the job
+    // now let try to cancel the job
 
 
-  BOOST_CHECK_THROW(cancelJob(sessionKey, "bad machineId", jobInfo.getJobId()),VishnuException );
+    BOOST_CHECK_THROW(cancelJob(sessionKey, "bad machineId", jobInfo.getJobId()),VishnuException );
 
-  BOOST_TEST_MESSAGE("***********************  cancel a job: bad machine id  ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("***********************  cancel a job: bad machine id  ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+    //  Clean up: delete the submitted job
 
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 
 }
 
@@ -390,9 +407,9 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_JobId)
 
 //---------------------------------------------------------------------------
 
-// cancel a job: bad parameters: bad user id 
+// cancel a job: bad parameters: bad user id
 
-// FIX ME: I need two different UMS Local accounts for root and user_1  
+// FIX ME: I need two different UMS Local accounts for root and user_1
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 {
@@ -406,15 +423,16 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
 
   string machineId="machine_1";
 
-  //Setting submitjob parameters
+  try {
+    //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  BOOST_REQUIRE( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
+    BOOST_REQUIRE( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
 
   // now let cancel the job
 
@@ -423,16 +441,19 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
   // get another connexion for another user
 
 
-  VishnuConnexion vc2("user_1","toto");
+    VishnuConnexion vc2("user_1","toto");
 
-  // get his session key
+    // get his session key
 
-  sessionKey=vc2.getConnexion();
+    sessionKey=vc2.getConnexion();
 
-  BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()),VishnuException  );
+    BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()),VishnuException  );
 
-  BOOST_TEST_MESSAGE("***********************  cancel a job: bad user  id  ok!!!!*****************************" << " \n");
-
+    BOOST_TEST_MESSAGE("***********************  cancel a job: bad user  id  ok!!!!*****************************" << " \n");
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 
@@ -476,36 +497,40 @@ BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+    lsOptions.setJobId(jobInfo.getJobId());
+    BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
 
-  ListJobs lsJobs;
-  ListJobsOptions lsOptions;
-  lsOptions.setJobId(jobInfo.getJobId());
-  BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
+    Job job;
 
-  Job job;
+    BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),0  );
 
-  BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),0  );
+  // Check the success of getJobInfo function
 
-// Check the success of getJobInfo function
+    BOOST_CHECK( *(lsJobs.getJobs().get(0))== job) ;
 
-  BOOST_CHECK( *(lsJobs.getJobs().get(0))== job) ;
+    BOOST_TEST_MESSAGE("***********************  Get a job info: normal call ok!!!!*****************************" << " \n");
 
-  BOOST_TEST_MESSAGE("***********************  Get a job info: normal call ok!!!!*****************************" << " \n");
-
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //---------------------------------------------------------------------------
@@ -523,28 +548,35 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
   string sessionKey=vc.getConnexion();
   string machineId="machine_1";
 
-  //Setting submitjob parameters
+  try {
+    //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)== 0 );
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)== 0 );
 
-  // now let get the job information
+    // now let get the job information
 
-  // set the get the job information function parameters
+    // set the get the job information function parameters
 
-  Job job;
+    Job job;
 
-  BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", machineId, jobInfo.getJobId(), job),VishnuException );
+    BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", machineId, jobInfo.getJobId(), job),VishnuException );
 
-  BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //---------------------------------------------------------------------------
@@ -564,24 +596,29 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
 
   string machineId="machine_1";
 
-  //Setting submitjob parameters
+  try {
+    //Setting submitjob parameters
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobErrorPath);
-  options.setErrorPath(jobOutputPath);
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobErrorPath);
+    options.setErrorPath(jobOutputPath);
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
 
-  // setting get job information function parameters
-  Job job;
-  BOOST_CHECK_THROW(getJobInfo(sessionKey, "bad machineId", jobInfo.getJobId(),job),VishnuException );
+    // setting get job information function parameters
+    Job job;
+    BOOST_CHECK_THROW(getJobInfo(sessionKey, "bad machineId", jobInfo.getJobId(),job),VishnuException );
 
-  BOOST_TEST_MESSAGE("***********************  Get a job info: bad machine ID ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("***********************  Get a job info: bad machine ID ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 
@@ -638,33 +675,37 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-
-  ListJobs lsJobs;
-  ListJobsOptions lsOptions;
-  lsOptions.setJobId(jobInfo.getJobId());
-  BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+    lsOptions.setJobId(jobInfo.getJobId());
+    BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
 
 
-// Check the success of listJobs function
+  // Check the success of listJobs function
 
-  BOOST_CHECK(  *(lsJobs.getJobs().get(0))== jobInfo ) ;
+    BOOST_CHECK(  *(lsJobs.getJobs().get(0))== jobInfo ) ;
 
-  BOOST_TEST_MESSAGE("*********************** list a job info: normal call ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("*********************** list a job info: normal call ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -686,36 +727,40 @@ BOOST_AUTO_TEST_CASE( list_job_bad_sessionKey)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+  // lsOptions.setJobId(jobInfo.getJobId());
 
-  ListJobs lsJobs;
-  ListJobsOptions lsOptions;
- // lsOptions.setJobId(jobInfo.getJobId());
-
-  BOOST_CHECK_THROW(listJobs("bad sessionKey ", machineId,lsJobs,lsOptions),VishnuException  );
+    BOOST_CHECK_THROW(listJobs("bad sessionKey ", machineId,lsJobs,lsOptions),VishnuException  );
 
 
-  BOOST_TEST_MESSAGE("*********************** list a job info: bad sessionkey ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("*********************** list a job info: bad sessionkey ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
 
 
-//  list job : bad parameters: bad machineId 
+//  list job : bad parameters: bad machineId
 
 BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
 {
@@ -731,31 +776,35 @@ BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    ListJobs lsJobs;
+    ListJobsOptions lsOptions;
+    lsOptions.setJobId(jobInfo.getJobId());
 
-  ListJobs lsJobs;
-  ListJobsOptions lsOptions;
-  lsOptions.setJobId(jobInfo.getJobId());
-
-  BOOST_CHECK_THROW(listJobs(sessionKey, "bad machineId",lsJobs,lsOptions),VishnuException );
+    BOOST_CHECK_THROW(listJobs(sessionKey, "bad machineId",lsJobs,lsOptions),VishnuException );
 
 
 
-  BOOST_TEST_MESSAGE("*********************** list a job : bad machine id ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("*********************** list a job : bad machine id ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -789,54 +838,58 @@ BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-
-  // wait a few seconds and check the success of cancelling job
-  Job job;
-
-  getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-
-// ensure that the job is terminated
-
-  while (5!=job.getStatus()){
-
-    bpt::seconds sleepTime(5);
-    boost::this_thread::sleep(sleepTime);
+    // wait a few seconds and check the success of cancelling job
+    Job job;
 
     getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+
+  // ensure that the job is terminated
+
+    while (5!=job.getStatus()){
+
+      bpt::seconds sleepTime(5);
+      boost::this_thread::sleep(sleepTime);
+
+      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+    }
+
+    // Check the success of get jobs output function
+    JobResult outputInfos;
+
+    BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
+
+    bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
+
+    BOOST_CHECK( pathExist );
+
+    if (pathExist){
+      bfs::remove (bfs::path(outputInfos.getOutputPath()));
+      bfs::remove (bfs::path(outputInfos.getErrorPath()));
+    }
+    BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************" << " \n");
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
   }
-
-  // Check the success of get jobs output function
-  JobResult outputInfos;
-
-  BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
-
-  bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
-
-  BOOST_CHECK( pathExist );
-
-  if (pathExist){
-    bfs::remove (bfs::path(outputInfos.getOutputPath()));
-    bfs::remove (bfs::path(outputInfos.getErrorPath()));
-  }
-  BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************" << " \n");
 }
 
 
 //------------------------------------------------------------------------------------------------------------------------
 
-// get job out : bad parameters: bad sessionKey  
+// get job out : bad parameters: bad sessionKey
 
 BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
 {
@@ -852,32 +905,36 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    JobResult outputInfos;
 
-  JobResult outputInfos;
+    BOOST_CHECK_THROW(getJobOutput("bad sessionKey",machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),VishnuException  );
 
-  BOOST_CHECK_THROW(getJobOutput("bad sessionKey",machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),VishnuException  );
+    BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************" << " \n");
 
-  BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************" << " \n");
-
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //------------------------------------------------------------------------------------
 
-// get job out : bad parameters: bad machineId 
+// get job out : bad parameters: bad machineId
 
 
 BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
@@ -894,27 +951,31 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    JobResult outputInfos;
 
-  JobResult outputInfos;
+    BOOST_CHECK_THROW(getJobOutput(sessionKey,"bad machineId", jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),VishnuException  );
 
-  BOOST_CHECK_THROW(getJobOutput(sessionKey,"bad machineId", jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),VishnuException  );
+    BOOST_TEST_MESSAGE("*********************** get jobs output : bad machine id ok!!!!*****************************" << " \n");
 
-  BOOST_TEST_MESSAGE("*********************** get jobs output : bad machine id ok!!!!*****************************" << " \n");
-
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //------------------------------------------------------------------------------------
@@ -935,27 +996,31 @@ BOOST_AUTO_TEST_CASE( get_job_output_unterminated)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    JobResult outputInfos;
 
-  JobResult outputInfos;
+    BOOST_CHECK_THROW(getJobOutput(sessionKey,machineId, jobInfo.getJobId(),outputInfos, TMSWORKINGDIR),VishnuException  );
 
-  BOOST_CHECK_THROW(getJobOutput(sessionKey,machineId, jobInfo.getJobId(),outputInfos, TMSWORKINGDIR),VishnuException  );
+    BOOST_TEST_MESSAGE("*********************** get jobs output : unterminated ok!!!!*****************************" << " \n");
 
-  BOOST_TEST_MESSAGE("*********************** get jobs output : unterminated ok!!!!*****************************" << " \n");
-
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 
@@ -992,51 +1057,55 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-
-  // wait a few seconds and check the success of cancelling job
-  Job job;
-
-  getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-
-// ensure that the job is terminated
-
-  while (5!=job.getStatus()){
-
-    bpt::seconds sleepTime(5);
-    boost::this_thread::sleep(sleepTime);
+    // wait a few seconds and check the success of cancelling job
+    Job job;
 
     getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+
+  // ensure that the job is terminated
+
+    while (5!=job.getStatus()){
+
+      bpt::seconds sleepTime(5);
+      boost::this_thread::sleep(sleepTime);
+
+      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+    }
+
+    // Check the success of get completed jobs output function
+
+    ListJobResults listOfResults;
+
+    BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
+
+  bool pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
+
+    BOOST_CHECK( pathExist );
+
+    if (pathExist){
+      bfs::remove (bfs::path(listOfResults.getResults().get(0)->getOutputPath()));
+      bfs::remove (bfs::path(listOfResults.getResults().get(0)->getErrorPath() ));
+    }
+
+
+    BOOST_TEST_MESSAGE("*********************** get completed jobs output : normal call ok!!!!*****************************" << " \n");
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
   }
-
-  // Check the success of get completed jobs output function
-
-  ListJobResults listOfResults;
-
-  BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
-
- bool pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
-
-  BOOST_CHECK( pathExist );
-
-  if (pathExist){
-    bfs::remove (bfs::path(listOfResults.getResults().get(0)->getOutputPath()));
-    bfs::remove (bfs::path(listOfResults.getResults().get(0)->getErrorPath() ));
-  }
-
-
-  BOOST_TEST_MESSAGE("*********************** get completed jobs output : normal call ok!!!!*****************************" << " \n");
 }
 
 
@@ -1059,29 +1128,32 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_sessionKey)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
-
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
 
-  ListJobResults listOfResults;
+    ListJobResults listOfResults;
 
-  BOOST_CHECK_THROW(getCompletedJobsOutput("bad sessionKey",machineId, listOfResults, TMSWORKINGDIR),VishnuException  );
+    BOOST_CHECK_THROW(getCompletedJobsOutput("bad sessionKey",machineId, listOfResults, TMSWORKINGDIR),VishnuException  );
 
-  BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad sessionKey ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad sessionKey ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 //------------------------------------------------------------------------------------
@@ -1102,37 +1174,40 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
-
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
 
-  ListJobResults listOfResults;
+    ListJobResults listOfResults;
 
-  BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,"bad machineId",listOfResults, TMSWORKINGDIR),VishnuException  );
+    BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,"bad machineId",listOfResults, TMSWORKINGDIR),VishnuException  );
 
-  BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad machineId ok!!!!*****************************" << " \n");
+    BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad machineId ok!!!!*****************************" << " \n");
 
-//  Clean up: delete the submitted job
-  BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-
+  //  Clean up: delete the submitted job
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 
 BOOST_AUTO_TEST_SUITE_END()
 
-  
-  
-  
+
+
+
 
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -1160,66 +1235,70 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 
   string machineId="machine_1";
 
+  try {
+    //Setting submitjob parameters
 
-  //Setting submitjob parameters
+    const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
+    Job jobInfo;
+    SubmitOptions options;
+    options.setOutputPath(jobOutputPath);
+    options.setErrorPath(jobErrorPath);
 
-  const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
-  Job jobInfo;
-  SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-  BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
-
-  BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-
-
-  ListProgression listOfProgress;
-
-  ProgressOptions pgOptions;
-
-  pgOptions.setJobId(jobInfo.getJobId());
-
-  BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,listOfProgress, pgOptions),0);
-  
-  // Check the success of the get jobs progression function
-
-  BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId()); // && listOfProgress.getProgress().get(0)->getPercent()>0
-    //  && listOfProgress.getProgress().get(0)->getPercent()<=100   );
-  std::cout << "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent() << "\n";
-
-  Job job;
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
 
-  // ensure that the job is terminated
+    ListProgression listOfProgress;
 
-  getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+    ProgressOptions pgOptions;
 
-  while (4!=job.getStatus()){
+    pgOptions.setJobId(jobInfo.getJobId());
 
-    bpt::seconds sleepTime(1);
-    boost::this_thread::sleep(sleepTime);
+    BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,listOfProgress, pgOptions),0);
+
+    // Check the success of the get jobs progression function
+
+    BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId()); // && listOfProgress.getProgress().get(0)->getPercent()>0
+      //  && listOfProgress.getProgress().get(0)->getPercent()<=100   );
+    std::cout << "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent() << "\n";
+
+    Job job;
+
+
+    // ensure that the job is terminated
 
     getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+
+    while (4!=job.getStatus()){
+
+      bpt::seconds sleepTime(1);
+      boost::this_thread::sleep(sleepTime);
+
+      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+    }
+
+
+
+    ListProgression jobRunningProgress;
+
+    BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,jobRunningProgress, pgOptions),0);
+
+
+    // Check the success of the get jobs progression function
+
+    double epsilon;
+
+    BOOST_CHECK( jobRunningProgress.getProgress().get(0)->getPercent()>0);
+
+
+    std::cout << "jobRunningProgress.getProgress().get(0)->getPercent():" <<jobRunningProgress.getProgress().get(0)->getPercent() << "\n";
+
+    BOOST_TEST_MESSAGE("*********************** get jobs progression: normal call ok!!!!*****************************" << " \n");
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
   }
-
-
-
-  ListProgression jobRunningProgress;
-
-  BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,jobRunningProgress, pgOptions),0);
-
-
-  // Check the success of the get jobs progression function
-
-  double epsilon;
-
-  BOOST_CHECK( jobRunningProgress.getProgress().get(0)->getPercent()>0);
-
-
-  std::cout << "jobRunningProgress.getProgress().get(0)->getPercent():" <<jobRunningProgress.getProgress().get(0)->getPercent() << "\n";
-  
-  BOOST_TEST_MESSAGE("*********************** get jobs progression: normal call ok!!!!*****************************" << " \n");
 }
 
 
@@ -1307,31 +1386,36 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 
   ListQueues listofQueues;
 
-  BOOST_CHECK_EQUAL( listQueues(sessionKey, machineId, listofQueues),0);
-  bool success = false;
-  string name;
+  try {
+    BOOST_CHECK_EQUAL( listQueues(sessionKey, machineId, listofQueues),0);
+    bool success = false;
+    string name;
 
-  // check the successfull of list queues function
+    // check the successfull of list queues function
 
-  //  bpt::seconds sleepTime(120);
+    //  bpt::seconds sleepTime(120);
 
-  //boost::this_thread::sleep(sleepTime);
+    //boost::this_thread::sleep(sleepTime);
 
 
-  for (int i=0; i< listofQueues.getQueues().size(); ++i){
+    for (int i=0; i< listofQueues.getQueues().size(); ++i){
 
-    name=listofQueues.getQueues().get(i)->getName();
+      name=listofQueues.getQueues().get(i)->getName();
 
-    success =(name=="test_queue1" || name == "test_queue2") ;
+      success =(name=="test_queue1" || name == "test_queue2") ;
+    }
+    BOOST_CHECK(success);
+    //Delete the precedent created queues
+    // create queues
+    ostringstream delCommand;
+    delCommand << "qmgr";
+    delCommand << " ubuntu" <<  " < " << TMSSCRIPTSPATH << "/config_clean_queues.cfg";
+    system(delCommand.str().c_str());
+    //BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
   }
-  BOOST_CHECK(success);
-  //Delete the precedent created queues
-  // create queues
-  ostringstream delCommand;
-  delCommand << "qmgr";
-  delCommand << " ubuntu" <<  " < " << TMSSCRIPTSPATH << "/config_clean_queues.cfg";
-  system(delCommand.str().c_str());
-  //BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
 }
 
 
