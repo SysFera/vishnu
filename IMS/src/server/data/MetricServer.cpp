@@ -24,7 +24,9 @@ MetricServer::~MetricServer(){
 
 void
 MetricServer::setUpFreq(unsigned int freq){
-  string request = "update \"vishnu\" * set \"freq\"='"+convertToString(freq)+"' where \"vishnuid\"='";
+  // TODO FIX MVISHNU ID
+  mvishnuId  = 1;
+  string request = "update \"vishnu\" * set \"updatefreq\"='"+convertToString(freq)+"' where \"vishnuid\"='";
   request += convertToString(mvishnuId);
   request += "'";
   try{
