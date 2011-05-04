@@ -27,3 +27,9 @@ displayListMetric(IMS_Data::ListMetric* li);
  */
 void 
 displayMetric(IMS_Data::Metric* p);
+/**
+ * \brief To display the update frequency
+ * \param freq: The frequency to display
+ */
+void
+displayFreq(int freq);
