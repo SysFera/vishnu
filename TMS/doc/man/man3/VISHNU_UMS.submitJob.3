@@ -3,11 +3,11 @@
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: February 2011
-.\"    Manual: Python API Reference
+.\"    Manual: TMS Python API Reference
 .\"    Source: VISHNU 1.0
 .\"  Language: English
 .\"
-.TH "VISHNU_UMS\&.SUBMITJ" "3" "February 2011" "VISHNU 1.0" "Python API Reference"
+.TH "VISHNU_UMS\&.SUBMITJ" "3" "February 2011" "VISHNU 1.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU_UMS.submitJob \- submits job on a machine through the use of a script (scriptFilePath)\&.
+VISHNU_UMS.submitJob \- submits a job on a machine through the use of a script (scriptFilePath)
 .SH "SYNOPSIS"
 .HP \w'VISHNU_UMS\&.submitJob('u
 .BI "VISHNU_UMS\&.submitJob(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "scriptFilePath" ", Job\ " "jobInfo" ", SubmitOptions\ " "options\ =\ SubmitOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-The submission of job on a specific Batch scheduler associated to a machine is possible with this command\&. It allows you to describe a job in a script with the corresponding Batch scheduler directives or with the VISHNU generic directives for all Batch schedulers\&.
+This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -103,11 +103,11 @@ UMSVishnuException("The machine id is unknown" [32])
 .RS 4
 .RE
 .PP
-UMSVishnuException("Indicates that the batch scheduler type is not known" [101])
+UMSVishnuException("The batch scheduler type is unknown" [101])
 .RS 4
 .RE
 .PP
-UMSVishnuException("Indicates an error caused by the underlying batch scheduler" [102])
+UMSVishnuException("The batch scheduler indicates an error" [102])
 .RS 4
 .RE
 .PP
