@@ -17,7 +17,7 @@ static const int ERRCODE_INVCOMP = 5;
 static const int ERRCODE_INVMAPPER = 6;
 static const int ERRCODE_INVEXCEP = 7;
 static const int ERRCODE_INVDATA = 8;
-
+static const int ERRCODE_SSH = 9;
 
 /**
  * \brief This class represents the exception that are due to the system
