@@ -3,6 +3,7 @@ link_directories(${Boost_LIBRARY_DIRS}
                   ${IMS_CLI_SOURCE_DIR}
                   ${CLI_SOURCE_DIR}
 		  ${LIBRARY_OUTPUT_PATH}
+		  ${IMS_CLIENT_PROXY_SOURCE_DIR}
                 )
 
 include_directories(${Boost_INCLUDE_DIRS}
@@ -30,6 +31,9 @@ add_library(ims-utils-cli
 set(ALLCLI 
   get_processes
   get_history_metric
+  get_update_frequency
+  set_update_frequency
+  get_current_metric
   )
 
 #set the prefix of command
@@ -57,6 +61,7 @@ macro(genCli NAME )
                         utils-vishnu
                         vishnu-ims-api
                         vishnu-ums-api
+			ims-client-proxy
                         )
   install_targets(/bin/
                   ${CMDNAME}
