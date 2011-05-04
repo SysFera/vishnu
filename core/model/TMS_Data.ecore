@@ -205,54 +205,54 @@
   <eClassifiers xsi:type="ecore:EClass" name="ListJobsOptions" instanceTypeName="ListJobsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="To list job which has this id"/>
+        <details key="content" value="lists the job with the specified id"/>
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbCpu" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="To list jobs which have this number of cpu"/>
+        <details key="content" value="lists the jobs with the specified number of CPUs"/>
         <details key="shortOption" value="P"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromSubmitDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="List jobs submitted after this date (unix timestamp)"/>
+        <details key="content" value="lists the jobs submitted after the specified date (UNIX timestamp)"/>
         <details key="shortOption" value="d"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="toSubmitDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="List jobs submitted before this date (unix timestamp)"/>
+        <details key="content" value="lists jobs submitted before the specified date (UNIX timestamp)"/>
         <details key="shortOption" value="D"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="To list all jobs submitted by this owner"/>
+        <details key="content" value="lists the jobs submitted by the specified owner"/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//JobStatus"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="To list jobs which have this status"/>
+        <details key="content" value="lists the jobs with the specified status"/>
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="#//JobPriority"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="To list jobs which have this priority"/>
+        <details key="content" value="lists the jobs with the specified priority"/>
         <details key="shortOption" value="p"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="queue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="To list jobs which have this queue name."/>
+        <details key="content" value="the jobs with the specified queue name"/>
         <details key="shortOption" value="q"/>
       </eAnnotations>
     </eStructuralFeatures>
