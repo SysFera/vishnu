@@ -183,5 +183,10 @@ namespace vishnu {
     */
    time_t convertUTCtimeINLocaltime(const time_t& localtime);
 
+   /**
+    * \brief Function to localtime into UTC (seconds)
+    * \return the diffence time (seconds)
+    */
+   time_t convertLocaltimeINUTCtime(const time_t& localtime);
 }
 #endif // _UTILVISHNU_H_

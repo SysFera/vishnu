@@ -212,7 +212,7 @@ int main (int argc, char* argv[]){
     }
 
     if(opt->count("toSubmitDate")){
-      jobOp.setToSubmitDate(string_to_time_t(toDate));
+      jobOp.setToSubmitDate(convertUTCtimeINLocaltime(string_to_time_t(toDate)));
     }
 
 
@@ -231,7 +231,8 @@ int main (int argc, char* argv[]){
       listJobs(sessionKey, machineId, job, jobOp);
     }
 
-    if(jobOp.getJobId().size()==0 && jobOp.getNbCpu() <= 0 && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 ) {
+    if(jobOp.getOwner().size()==0 && jobOp.getJobId().size()==0  && jobOp.getNbCpu() <= 0 
+        && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 ) {
       std::cout << job << std::endl;
     } else {
       displayListJobs(job);
