@@ -36,6 +36,8 @@
 #include "ListProgressServer.hpp"
 #include "JobOutputServer.hpp"
 
+#include "internalApi.hpp"
+
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 
 using namespace std;
@@ -60,21 +62,12 @@ solveSubmitJob(diet_profile_t* pb) {
   int mapperkey;
   std::string cmd = "";
 
-  cout << "Solve submitJob " << endl;
-
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  cout << "************machineId=" << machineId << " ..." << endl;
   diet_string_get(diet_parameter(pb,2), &script_content, NULL);
-  cout << "************script_content=" << script_content << " ..." << endl;
   diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
-  cout << "************options=" << submitOptionsSerialized << " ..." << endl;
   diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
-  cout << "************job=" << jobSerialized << " ..." << endl;
 
-  std::cout << "The machine identifier is: " << ServerTMS::getInstance()->getMachineId() << std::endl;
-  std::cout << "The batch identifier is: " << ServerTMS::getInstance()->getBatchType() << std::endl;
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
   try {
@@ -98,7 +91,9 @@ solveSubmitJob(diet_profile_t* pb) {
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
-    jobServer.submitJob(script_content, *submitOptions);
+    int vishnuId = ServerTMS::getInstance()->getVishnuId();
+    std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
+    jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory);
     *job = jobServer.getData();
 
     const char* name = "solve_submitJob";
@@ -122,7 +117,6 @@ solveSubmitJob(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 
-  cout << " done" << endl;
   return 0;
 }
 
@@ -138,17 +132,9 @@ solveCancelJob(diet_profile_t* pb) {
   std::string cmd = "";
   std::string errorInfo ="";
 
-  cout << "Solve cancel " << endl;
-
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  cout << "************machineId=" << machineId << " ..." << endl;
   diet_string_get(diet_parameter(pb,2), &jobSerialized, NULL);
-  cout << "************job=" << jobSerialized << " ..." << endl;
-
-  std::cout << "Cancel: The machine identifier is: " << ServerTMS::getInstance()->getMachineId() << std::endl;
-  std::cout << "Cancel: The batch identifier is: " << ServerTMS::getInstance()->getBatchType() << std::endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
   TMS_Data::Job_ptr job = NULL;
@@ -167,7 +153,7 @@ solveCancelJob(diet_profile_t* pb) {
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
-    jobServer.cancelJob();
+    jobServer.cancelJob(ServerTMS::getInstance()->getSlaveDirectory());
 
     diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
@@ -180,10 +166,8 @@ solveCancelJob(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
-  cout << " done" << endl;
   return 0;
 }
 
