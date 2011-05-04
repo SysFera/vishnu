@@ -19,7 +19,7 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 			      IMS_Data::CurMetricOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);  
-  string name = "int_getCurMetric";
+  string name = "int_getMetricCurentValue";
   QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric> 
     query(op, sessionProxy, name, machineId);
 
@@ -157,7 +157,7 @@ vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);  
-  string name = "int_setUpFreq";
+  string name = "int_setUpdateFrequency";
 
   MetricProxy met(sessionProxy);
   met.setUpFreq(freq);
@@ -170,7 +170,7 @@ vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);  
-  string name = "int_setUpFreq";
+  string name = "int_getUpdateFrequency";
 
   MetricProxy met(sessionProxy);
   freq = met.getUpFreq();
