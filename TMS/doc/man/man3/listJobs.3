@@ -3,11 +3,11 @@
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: February 2011
-.\"    Manual: C++ API Reference
+.\"    Manual: TMS C++ API Reference
 .\"    Source: VISHNU 1.0
 .\"  Language: English
 .\"
-.TH "LISTJOBS" "3" "February 2011" "VISHNU 1.0" "C++ API Reference"
+.TH "LISTJOBS" "3" "February 2011" "VISHNU 1.0" "TMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -34,7 +34,7 @@ listJobs \- gets a list of all submitted jobs
 .BI "int vishnu::listJobs(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", ListJobs&\ " "listOfJobs" ", const\ ListJobsOptions&\ " "options\ =\ ListJobsOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows you to display the jobs submitted on the Batch scheduler of a specific machine\&.
+This command allows displaying the jobs submitted on a specific machine\*(Aqs batch scheduler\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -88,11 +88,11 @@ The following exceptions may be thrown:
 .RS 4
 .RE
 .PP
-"Indicates that the batch scheduler type is not known" [101]
+"The batch scheduler type is unknown" [101]
 .RS 4
 .RE
 .PP
-"Indicates an error caused by the underlying batch scheduler" [102]
+"The batch scheduler indicates an error" [102]
 .RS 4
 .RE
 .PP

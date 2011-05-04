@@ -3,11 +3,11 @@
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: February 2011
-.\"    Manual: Command reference
+.\"    Manual: TMS Command reference
 .\"    Source: VISHNU 1.0
 .\"  Language: English
 .\"
-.TH "VISHNU_GET_JOB_INFO" "1" "February 2011" "VISHNU 1.0" "Command reference"
+.TH "VISHNU_GET_JOB_INFO" "1" "February 2011" "VISHNU 1.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -34,7 +34,7 @@ vishnu_get_job_info \- gets information on a job from its id
 \fBvishnu_get_job_info\fR [\fB\-h\fR] \fImachineId\fR \fIjobId\fR
 .SH "DESCRIPTION"
 .PP
-This command allows you to get information about a specific job\&. It allows for example to get the status of the job\&.
+This command allows getting information about a specific job\&. It can return the job\*(Aqs status, for example\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -59,11 +59,11 @@ The following diagnostics may be issued on stderr and the command will return th
 .RS 4
 .RE
 .PP
-"Indicates that the batch scheduler type is not known" [101]
+"The batch scheduler type is unknown" [101]
 .RS 4
 .RE
 .PP
-"Indicates an error caused by the underlying batch scheduler" [102]
+"The batch scheduler indicates an error" [102]
 .RS 4
 .RE
 .PP
