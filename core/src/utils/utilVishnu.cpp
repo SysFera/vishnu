@@ -382,19 +382,35 @@ time_t vishnu::getCurrentTimeInUTC() {
   time_t localtime = string_to_time_t(to_simple_string(now));
 
   return std::time(&localtime);
+
 }
 
 /**
 * \brief Function to convert UTC time into localtime (seconds)
 * \return the correspondant localtime (seconds)
 */
-time_t vishnu::convertUTCtimeINLocaltime(const time_t& localtime) {
+time_t vishnu::convertUTCtimeINLocaltime(const time_t& utctime) {
 
   //the current time
   boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
 
   time_t currentTime = string_to_time_t(to_simple_string(now));
 
-  long diff = currentTime-std::time(&currentTime);
-  return (localtime+diff);
+  long diff = currentTime-std::time(0);
+  return (utctime+diff);
+}
+
+/**
+* \brief Function to localtime into UTC (seconds)
+* \return the diffence time (seconds)
+*/
+time_t vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
+
+  //the current time
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+
+  time_t currentTime = string_to_time_t(to_simple_string(now));
+
+  long diff = currentTime-std::time(0);
+  return (localtime-diff);
 }

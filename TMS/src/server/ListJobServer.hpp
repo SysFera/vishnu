@@ -153,6 +153,8 @@ public:
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
     int jobStatus ;
+    time_t submitDate;
+    time_t endDate;
     if (ListOfJobs->getNbTuples() != 0){
       for (size_t i = 0; i < ListOfJobs->getNbTuples(); ++i) {
         results.clear();
@@ -179,8 +181,12 @@ public:
           nbWaitingJobs++;
         }
         job->setStatus(jobStatus);
-        job->setSubmitDate(convertToTimeType(*(++ii)));
-        job->setEndDate(convertToTimeType(*(++ii)));
+        //convert the endDate into UTC date
+        submitDate = convertLocaltimeINUTCtime(convertToTimeType(*(++ii)));
+        job->setSubmitDate(submitDate);
+        //convert the endDate into UTC date
+        endDate = convertLocaltimeINUTCtime(convertToTimeType(*(++ii)));
+        job->setEndDate(endDate);
         job->setOwner(*(++ii));
         job->setJobQueue(*(++ii));
         job->setWallClockLimit(convertToInt(*(++ii)));
