@@ -110,20 +110,28 @@ MYSQLDatabase::getResult(string request) {
   MYSQL* lconn = getConnexion(reqPos);
   MYSQL_RES *res;
   MYSQL_ROW  row;
+  MYSQL_FIELD *field;
+  vector<vector<string> > results;
+  vector<string> attributesNames;
+  vector<string> tmp;
   int        size = mysql_num_fields(res);
   int        i;
-  string tmp;
+
   mres.clear();
   res = mysql_use_result (lconn);
+  while((field = mysql_fetch_field(res))) {
+    attributesNames.push_back(string(field->name));
+  }
   while ((row=mysql_fetch_row(res))){
     tmp.clear();
     for (i=0;i<size;i++){
-      tmp += string(row[i]);
+      tmp.push_back(string(row[i]));
     }
-    mres.push_back(tmp);
+    results.push_back(tmp);
   }
-  //  return mres;
-  return NULL;
+  releaseConnexion(reqPos);
+
+  return new DatabaseResult(results, attributesNames);
 }
 
 
