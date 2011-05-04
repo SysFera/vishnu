@@ -1381,7 +1381,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
   // create queues
   std::ostringstream createCommand;
   createCommand << "qmgr";
-  createCommand << " ubuntu" << " < " << TMSSCRIPTSPATH << "/config_queues_test.cfg";
+  createCommand << " " << TMSBATCHHOSTNAME << " < " << TMSSCRIPTSPATH << "/config_queues_test.cfg";
   system(createCommand.str().c_str());
 
   ListQueues listofQueues;
@@ -1409,7 +1409,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
     // create queues
     ostringstream delCommand;
     delCommand << "qmgr";
-    delCommand << " ubuntu" <<  " < " << TMSSCRIPTSPATH << "/config_clean_queues.cfg";
+    delCommand << " " << TMSBATCHHOSTNAME <<  " < " << TMSSCRIPTSPATH << "/config_clean_queues.cfg";
     system(delCommand.str().c_str());
     //BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************" << " \n");
   } catch (VishnuException& e) {
