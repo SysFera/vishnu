@@ -341,13 +341,13 @@ same conditions as regards security.</para>
       <section>
       <title> Job submission </title>
       <para>
-	To submit a job via VISHNU on the batch scheduler of a specific machine, the users needs: an opened VISHNU session, 
+	To submit a job via VISHNU on the batch scheduler of a specific machine, the users needs: an active VISHNU session, 
 	a local user configuration registered on VISHNU and corresponding to an existing UNIX account on the specified machine and a script which describes 
-	the job to submit. In the current implementation of VISHNU two main kinds of directives can be used: TORQUE and LoadLeveler. 
-	In order to define the same script on different batch scheduler a generic script with a VISHNU directives can be used.
+	the job to submit. In the current implementation of VISHNU two main kinds of batch scheduler's directives can be used: TORQUE and LoadLeveler. 
+	In order to use the same script on different batch scheduler a generic script with a VISHNU directives is used.
 	The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
-	To have a job information or a job progression status, the user can used respectively <emphasis role="bold">vishnu_get_job_info or 
-	vishnu_list_jobs commands </emphasis> 
+	To have a job information or a job progression status, the user can used respectively <emphasis role="bold"> vishnu_get_job_info </emphasis> or 
+	<emphasis role="bold"> vishnu_list_jobs commands </emphasis> 
 	and <emphasis role="bold">vishnu_get_job_progression commands</emphasis>. The job progression status is calculated according to the wall-clock time specified
 	by the user during the job submission.
       </para>
