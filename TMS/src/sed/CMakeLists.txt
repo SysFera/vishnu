@@ -29,7 +29,7 @@ include_directories(
 add_executable(tmssed
   tmssed
   ServerTMS
-  internalTMSAPI
+  internalApi
   MonitorTMS 
 )
 

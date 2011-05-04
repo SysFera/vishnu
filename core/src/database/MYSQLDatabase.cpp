@@ -33,7 +33,7 @@ int
 MYSQLDatabase::connect(){
   for (unsigned int i=0; i<MPOOLSIZE;i++) {
     if (!mysql_real_connect(&(mpool[i].mmysql), mhost.c_str(), musername.c_str(), mpwd.c_str(),
-			    mdatabase.c_str (), mport, NULL, 0)){
+			   mdatabase.c_str (), mport, NULL, 0)){
       throw SystemException(ERRCODE_DBERR, "Connexion problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
     }
   }
@@ -53,7 +53,6 @@ MYSQLDatabase::MYSQLDatabase(string hostname,
 			     string database,
 			     unsigned int port)
   : Database(), mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port) {
-  int i;
 
   for (unsigned int i=0;i<MPOOLSIZE;i++) {
     pthread_mutex_init(&(mpool[i].mmutex), NULL);
@@ -117,7 +116,6 @@ MYSQLDatabase::getResult(string request) {
   int        size = mysql_num_fields(res);
   int        i;
 
-  mres.clear();
   res = mysql_use_result (lconn);
   while((field = mysql_fetch_field(res))) {
     attributesNames.push_back(string(field->name));
