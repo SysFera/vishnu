@@ -94,6 +94,12 @@ public:
   std::string
   getPublicKey();
 
+  /**
+   * \brief Function to get the machine 
+   * \return The name of the machine 
+   */
+  std::string getMachineName();
+
 private:
   /////////////////////////////////
   // Attributes

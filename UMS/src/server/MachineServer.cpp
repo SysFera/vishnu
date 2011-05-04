@@ -273,3 +273,16 @@ std::string
 MachineServer::getPublicKey() {
   return msshpublickey;
 }
+
+/**
+* \brief Function to get the machine 
+* \return The name of the machine 
+*/
+std::string 
+MachineServer::getMachineName() {
+
+  std::string  machineName = getAttribut("where machineid='"+getData()->getMachineId()+"'", "name");
+
+  return machineName;
+}
+
