@@ -9,6 +9,7 @@
 #include "UserServer.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
+#include "LocalAccountServer.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 
@@ -633,4 +634,45 @@ UserServer::getMailContent(const UMS_Data::User& user, bool flagAdduser) {
     content.append("This is your new password: "+user.getPassword());
   }
   return content;
+}
+
+/**
+* \brief Function to get the user account login 
+* \param machineId The machine identifier of machine on which the user have a account
+* \return the user account login 
+*/
+std::string 
+UserServer::getUserAccountLogin(const std::string& machineId) {
+
+  init();
+
+  std::string userId = getData().getUserId();
+  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
+  account->setMachineId(machineId);
+  account->setUserId(userId);
+  LocalAccountServer localAccount(account, *msessionServer);
+
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(machineId);
+  MachineServer machineServer(machine);
+
+  //To get the database number id of the machine
+  std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
+  //To get the database number id of the user
+  std::string numUser = getAttribut("where userid='"+localAccount.getData()->getUserId()+"'");
+
+  std::string acLogin;
+  if ((numMachine.size() > 0) && (numUser.size() > 0)) {
+    acLogin = localAccount.getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "aclogin");
+  }
+
+  if(acLogin.size()==0) {
+    delete account;
+    delete machine;
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
+  }
+
+  delete account;
+  delete machine;
+  return acLogin;
 }
