@@ -117,7 +117,6 @@ MYSQLDatabase::getResult(string request) {
   int        size = mysql_num_fields(res);
   int        i;
 
-  mres.clear();
   res = mysql_use_result (lconn);
   while((field = mysql_fetch_field(res))) {
     attributesNames.push_back(string(field->name));
