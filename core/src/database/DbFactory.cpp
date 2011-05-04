@@ -39,9 +39,10 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
                                 config.getDbName(),
                                 config.getDbPort()
                                );
-      break;
 #endif
+      break;
     case DbConfiguration::ORACLE:
+      break;
     case DbConfiguration::MYSQL:
 #ifdef USE_MYSQL
       mdb = new MYSQLDatabase(config.getDbHost(),
@@ -50,10 +51,10 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
 			      config.getDbName(),
 			      config.getDbPort()
 			      );
-      break;
 #endif
-    default:
-      throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
+      break;
+  default:
+    throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
   }
   return mdb;
 }
