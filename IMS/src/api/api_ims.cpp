@@ -1,6 +1,7 @@
 #include "api_ims.hpp"
 #include "SessionProxy.hpp"
 #include "QueryProxy.hpp"
+#include "MetricProxy.hpp"
 
 int
 vishnu::exportCommands(const string sessionKey,
@@ -13,11 +14,24 @@ vishnu::exportCommands(const string sessionKey,
 
 int
 vishnu::getMetricCurrentValue(const string sessionKey,
-		      string machineId,
-		      IMS_Data::Metric& val,
-		      IMS_Data::CurMetricOp op)
+			      string machineId,
+			      IMS_Data::ListMetric& list,
+			      IMS_Data::CurMetricOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   SessionProxy sessionProxy(sessionKey);  
+  string name = "int_getCurMetric";
+  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric> 
+    query(op, sessionProxy, name, machineId);
+
+  IMS_Data::ListMetric_ptr li = query.list();
+
+  if(li != NULL) {
+    IMS_Data::Metric_ptr met;
+    for(unsigned int i = 0; i < li->getMetric().size(); i++) {
+      met = li->getMetric().get(i);
+      list.getMetric().push_back(met);
+    }
+  }
   return IMS_SUCCESS;
 }
 
@@ -142,6 +156,11 @@ int
 vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_setUpFreq";
+
+  MetricProxy met(sessionProxy);
+  met.setUpFreq(freq);
   return IMS_SUCCESS;
 }
 
@@ -150,6 +169,11 @@ int
 vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);  
+  string name = "int_setUpFreq";
+
+  MetricProxy met(sessionProxy);
+  freq = met.getUpFreq();
   return IMS_SUCCESS;
 }
 

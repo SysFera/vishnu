@@ -53,7 +53,7 @@ namespace vishnu {
   int
   getMetricCurrentValue(const string sessionKey,
 			string machineId,
-			IMS_Data::Metric& val,
+			IMS_Data::ListMetric& val,
 			IMS_Data::CurMetricOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 

@@ -27,33 +27,28 @@ public:
    * \param session: A session to use for the call
    * \param op: Options for the get metric history call
    */
-  MetricServer(const UserServer session, IMS_Data::MetricHistOp op);
+  MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op);
   /**
    * \brief Constructor
    * \param session: A session to use for the call
    * \param op: Options for the get current metric value call
    */
-  MetricServer(const UserServer session, IMS_Data::CurMetricOp op);
+  MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op);
   /**
    * \brief Destructor
    */
   ~MetricServer();
   /**
-   * \brief To get the frequency value
-   */
-  int
-  getUpFreq();
-  /**
    * \brief To set the update frequency value
    * \param freq: The new frequency value
    */
   void
-  setUpFreq(int freq);
+  setUpFreq(unsigned int freq);
   /**
    * \brief Update the mfreq member with the value from the database
    * \return The new mfreq value
    */
-  int
+  unsigned int
   checkUpFreq();
   /**
    * \brief Return the current metric values, gotten directly with CoRI
@@ -90,7 +85,7 @@ private:
   /**
    * \brief The update frequency
    */
-  int mfreq;
+  unsigned int mfreq;
   /**
    * \brief The session
    */
@@ -106,7 +101,11 @@ private:
   /**
    * \brief The options for the history of metrics
    */
-  IMS_Data::MetricHistOp mhistOp;
+  IMS_Data::MetricHistOp_ptr mhop;
+  /**
+   * \brief The options for the current metrics
+   */
+  IMS_Data::CurMetricOp_ptr mcop;
 };
 
 #endif
