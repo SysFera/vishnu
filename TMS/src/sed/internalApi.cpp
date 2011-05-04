@@ -83,11 +83,11 @@ solveSubmitJob(diet_profile_t* pb) {
     TMS_Data::SubmitOptions_ptr submitOptions = NULL;
 
     if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: Job object is not well built");
+      throw SystemException(ERRCODE_INVDATA, "solve_submitJob: Job object is not well built");
     }
 
     if(!vishnu::parseEmfObject(std::string(submitOptionsSerialized), submitOptions)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_submitJob: SubmitOptions object is not well built");
+      throw SystemException(ERRCODE_INVDATA, "solve_submitJob: SubmitOptions object is not well built");
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
@@ -149,7 +149,7 @@ solveCancelJob(diet_profile_t* pb) {
     cmd = mapper->finalize(mapperkey);
 
     if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solve_cancelJob: Job object is not well built");
+      SystemException(ERRCODE_INVDATA, "solve_cancelJob: Job object is not well built");
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
@@ -209,7 +209,7 @@ solveJobInfo(diet_profile_t* pb) {
 
     TMS_Data::Job_ptr job = NULL;
     if(!parseEmfObject(std::string(jobSerialized), job)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "solveJobOutPutGetResult: Job object is not well built");
+      throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: Job object is not well built");
     }
 
     JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
@@ -341,8 +341,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
     TMS_Data::JobResult_ptr jobResult = NULL;
     if(!parseEmfObject(std::string(jobResultSerialized), jobResult)) {
-      cout << "parseEmfObject returns NULL...." << endl;
-      return 1;
+      throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: jobResult object is not well built");
     }
 
     std::cout << "jobdId = " << jobResult->getJobId() << std::endl;
