@@ -136,9 +136,9 @@ public:
         BatchType batchType  = ServerTMS::getInstance()->getBatchType(); 
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
 
-        startTime = batchServer->getJobProgressInfo(batchJobId); 
+        startTime = batchServer->getJobStartTime(batchJobId); 
         if(startTime!=0) {
-          job->setStartTime(vishnu::convertUTCtimeINLocaltime(startTime));
+          job->setStartTime(startTime);
 
           if(status==5) {
             job->setPercent(100);  
