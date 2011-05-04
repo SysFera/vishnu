@@ -35,13 +35,16 @@ public:
    * \param options the options to submit job
    * \return raises an exception on error
    */
-	int submitJob(const std::string& scriptContent, const TMS_Data::SubmitOptions& options);
+	int submitJob(const std::string& scriptContent, 
+                const TMS_Data::SubmitOptions& options,
+                const int& vishnuId,
+                const std::string& slaveDirectory);
 
   /**
    * \brief Function to cancel job
    * \return raises an exception on error
    */
-	int cancelJob();
+	int cancelJob(const std::string& slaveDirectory);
 
   /**
    * \brief Function to get job information
@@ -55,18 +58,6 @@ public:
    */
   TMS_Data::Job getData();
 
-  /**
-   * \brief Function to get user account login
-   * \return The user acLogin 
-   */
-  std::string getUserAccountLogin();
-
-  /**
-   * \brief Function to get the name of the machine 
-   * \return The name of the machine 
-   */
-  std::string getMachineName();
-  
   /**
    * \brief Destructor
    */
@@ -89,7 +80,10 @@ public:
   SessionServer msessionServer;
   std::string mmachineId;
   BatchType mbatchType;
-
+  /**
+   * \brief An instance of vishnu database
+   */
+  Database *mdatabaseVishnu;
 };
 
 #endif

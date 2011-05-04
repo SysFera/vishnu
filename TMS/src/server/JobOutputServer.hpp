@@ -64,6 +64,10 @@ public:
   SessionServer msessionServer;
   std::string mmachineId;
   TMS_Data::ListJobResults_ptr mlistJobsResult;
+  /**
+   * \brief An instance of vishnu database
+   */
+  Database *mdatabaseVishnu;  
 };
 
 #endif
