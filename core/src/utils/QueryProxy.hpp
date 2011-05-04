@@ -204,6 +204,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   char* listObjectInString;
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.1" << std::endl;
 
   //If the query uses the machineId (machineId not null)
   if (mmachineId.size() != 0) {
@@ -212,22 +213,27 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   else {
     profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
   }
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.2" << std::endl;
 
   sessionKey = msessionProxy.getSessionKey();
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.3" << std::endl;
 
   const char* name = mserviceName.c_str();
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the mparameters object in to queryParmetersToString
   queryParmetersToString =  _ser.serialize(const_cast<QueryParameters_ptr>(&mparameters));
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.4" << std::endl;
   //IN Parameters
 
   if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
       msg += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msg);
     }
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.5" << std::endl;
 
   //If the query uses the machineId (machineId not null)
   if (mmachineId.size() != 0) {
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.6" << std::endl;
 
     if(diet_string_set(diet_parameter(profile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
       msg += "with machineId parameter "+mmachineId;
@@ -238,10 +244,12 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
       msg += "with queryParmetersToString parameter "+queryParmetersToString;
       raiseDietMsgException(msg);
     }
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.7" << std::endl;
 
     //OUT Parameters
     diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
     diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4.8" << std::endl;
 
     if(!diet_call(profile)) {
       if(diet_string_get(diet_parameter(profile,3), &listObjectInString, NULL)){
