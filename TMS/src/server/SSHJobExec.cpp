@@ -81,6 +81,7 @@ int SSHJobExec::sshexec(const std::string& slaveDirectory,
 
   std::ostringstream cmd;
   cmd << "ssh -l " << muser << " " << mhostname << " ";
+  cmd << " -o NoHostAuthenticationForLocalhost=yes ";
   cmd << slaveDirectory << "/tmsSlave ";
   cmd << action << " ";
   cmd << convertBatchTypeToString(mbatchType) << " ";
