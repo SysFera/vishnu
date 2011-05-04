@@ -82,12 +82,14 @@ public:
 
     time_t fromSubmitDate = static_cast<time_t>(options->getFromSubmitDate());
     if(fromSubmitDate != -1) {
+      fromSubmitDate = convertUTCtimeINLocaltime(fromSubmitDate);
       std::string submitDateStr =  boost::posix_time::to_simple_string(boost::posix_time::from_time_t(fromSubmitDate));
       addTimeRequest("submitDate", submitDateStr, sqlRequest, ">=");
     }
 
     time_t toSubmitDate = static_cast<time_t>(options->getToSubmitDate());
     if(toSubmitDate != -1) {
+      toSubmitDate = convertUTCtimeINLocaltime(toSubmitDate); 
       std::string submitDateStr =  boost::posix_time::to_simple_string(boost::posix_time::from_time_t(toSubmitDate));
       addTimeRequest("submitDate", submitDateStr, sqlRequest, "<=");
     }
@@ -147,7 +149,7 @@ public:
     msessionServer.check();
 
     processOptions(mparameters, sqlListOfJobs);
-    sqlListOfJobs.append(" order by jobId");
+    sqlListOfJobs.append(" order by submitDate");
 
     boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlListOfJobs.c_str()));
     long nbRunningJobs = 0;
