@@ -80,7 +80,7 @@ same conditions as regards security.</para>
     </para>
      <section>
       <title> T1.1 - Submit a job </title>
-   
+      <para><emphasis role = "italic"> Api command: submitjob</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -140,7 +140,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> T2.2 - Cancel a job </title>
-   
+      <para><emphasis role = "italic"> Api command: cancelJob</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -156,7 +156,7 @@ same conditions as regards security.</para>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
             </row>
-          </thead>s
+          </thead>
           <tbody>
             <row>
               <entry><para>T2.2-B</para></entry>
@@ -200,7 +200,7 @@ same conditions as regards security.</para>
     
      <section>
       <title> T2.1 - Get job information </title>
-   
+      <para><emphasis role = "italic"> Api command: getJobInfo</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -253,7 +253,7 @@ same conditions as regards security.</para>
     
      <section>
       <title> T2.5 - Get jobs progression </title>
-   
+	<para><emphasis role = "italic"> Api command: getJobProgress</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -306,7 +306,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> T2.6 - Get one job outputs </title>
-   
+	<para><emphasis role = "italic"> Api command: getJobsOutput</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -367,7 +367,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> T2.7 - Get all completed jobs outputs </title>
-   
+	<para><emphasis role = "italic"> Api command: getCompletedJobsOuput</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -414,7 +414,7 @@ same conditions as regards security.</para>
       
       <section>
       <title> T2.3 - List job queues </title>
-   
+      <para><emphasis role = "italic"> Api command: listQueues</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -461,7 +461,7 @@ same conditions as regards security.</para>
     
       <section>
       <title> T2.4 - List jobs </title>
-   
+      <para><emphasis role = "italic"> Api command: listJobs</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
