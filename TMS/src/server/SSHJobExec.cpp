@@ -82,6 +82,7 @@ int SSHJobExec::sshexec(const std::string& slaveDirectory,
   std::ostringstream cmd;
   cmd << "ssh -l " << muser << " " << mhostname << " ";
   cmd << " -o NoHostAuthenticationForLocalhost=yes ";
+  cmd << " -o PasswordAuthentication=no ";
   cmd << slaveDirectory << "/tmsSlave ";
   cmd << action << " ";
   cmd << convertBatchTypeToString(mbatchType) << " ";
@@ -104,13 +105,13 @@ int SSHJobExec::sshexec(const std::string& slaveDirectory,
     vishnu::deleteFile(errorPath.c_str());
     boost::filesystem::path stderrFile(stderrFilePath.c_str());
     if(!boost::filesystem::is_empty(stderrFile)) {
-      std::string stderrMsg = "SSHJobExec::sshexec: can't execute tmsSlave executable with ssh -l, the error are: \n";
       merrorInfo = vishnu::get_file_content(stderrFilePath);
-      stderrMsg.append(merrorInfo);
-      merrorInfo = stderrMsg;
+      if(merrorInfo.find("password")) {
+        merrorInfo.append("  You must copy the VISHNU publickey in your authorized_keys file.");
+      }
     }
     vishnu::deleteFile(stderrFilePath.c_str());
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, merrorInfo);
+    throw SystemException(ERRCODE_SSH, merrorInfo);
   }
 
   boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
@@ -123,7 +124,7 @@ int SSHJobExec::sshexec(const std::string& slaveDirectory,
       vishnu::deleteFile(jobUpdateSerializedPath.c_str());
       vishnu::deleteFile(errorPath.c_str());
       vishnu::deleteFile(stderrFilePath.c_str());
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "SSHJobExec::sshexec: job object is not well built");
+      throw SystemException(ERRCODE_INVDATA, "SSHJobExec::sshexec: job object is not well built");
     }
     ::ecorecpp::serializer::serializer _ser("job");
     mjobSerialized = strdup(_ser.serialize(job).c_str());
@@ -135,7 +136,6 @@ int SSHJobExec::sshexec(const std::string& slaveDirectory,
   if(!boost::filesystem::is_empty(errorFile)) {
     merrorInfo = vishnu::get_file_content(errorPath);
     merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-    std::cout << "merrorInfo = " << merrorInfo << std::endl;
   }
 
   if((mbatchType==LOADLEVELER) && (wellSubmitted==false)) {
@@ -148,7 +148,6 @@ int SSHJobExec::sshexec(const std::string& slaveDirectory,
       errorMsgSerialized << merrorInfo;
       merrorInfo = errorMsgSerialized.str();
       merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-      std::cout << "merrorInfo = " << merrorInfo << std::endl;
     }
   }
 
