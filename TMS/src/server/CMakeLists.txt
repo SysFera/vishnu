@@ -12,7 +12,7 @@ else (VISHNU_USE_TORQUE AND VISHNU_USE_LOADLEVELER)
   if (VISHNU_USE_TORQUE)
     set(UsedBatchServer TorqueServer)
     set(USED_BATCH_INCLUDE_DIR ${TORQUE_INCLUDE_DIR} ${UTILS_TORQUE_DIR})
-    set(USED_BATCH_LIB ${TORQUE_LIB})
+    set(USED_BATCH_LIB ${TORQUE_LIB} utils-torque)
   else (VISHNU_USE_TORQUE)
     if(VISHNU_USE_LOADLEVELER)
       set(UsedBatchServer LLServer)
@@ -71,5 +71,4 @@ target_link_libraries(tms-server
   ums-server
   utils-vishnu
   utils-server
-  utils-torque
 )
