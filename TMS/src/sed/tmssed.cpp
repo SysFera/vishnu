@@ -55,6 +55,9 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
+    if (interval < 0) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
+    }
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
@@ -75,7 +78,7 @@ int main(int argc, char* argv[], char* envp[]) {
     }
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
     if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
-      remoteBinDirectory = std::string(getenv("PWD"));
+      remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
     }
   } catch (UserException& e) {
     std::cerr << e.what() << std::endl;
