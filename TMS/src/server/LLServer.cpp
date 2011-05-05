@@ -541,8 +541,6 @@ int LLServer::convertTorqueStateToVishnuState(int state) {
       return 5;
     case STATE_HOLD:
       return 2;
-    case STATE_NOTQUEUED:
-      return 1;
     case STATE_DEFERRED:
       return 1;
     case STATE_SUBMISSION_ERR:
