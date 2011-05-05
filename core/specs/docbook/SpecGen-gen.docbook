@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<book
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
     <author>
       <personname>
@@ -65,6 +66,24 @@
             
           <para>Modified 1.2, 1.4, U1, U1.1, U1.3.3, U1.3.4, U1.3.5, U1.4, U1.5, U2, U3, U4, U4.1, U4.2, UA1, UA1.1, UA6.2, UA7, T1.2, T2.6.
               Added UA1.3 and modified 2.3.</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>05</revnumber>
+        <date>31/03/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+            
+          <para>Modified 4.2.6, UC IA2. Fix set threshold available in branch c, the threshold is the cpuload and not the number of processes</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>06</revnumber>
+        <date>21/04/2011</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>
+            Removed TA1. Added T1.7. Replaced T1.2 by T1.7.
+          </para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -1818,7 +1837,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T1.1 - Submit a job </para><para>T1.2 - Get job outputs asynchronously</para></entry>
+                <entry><para>T1.1 - Submit a job </para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -1870,55 +1889,6 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>T1.2 - Get job outputs asynchronously</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>T1.2 - Get job outputs asynchronously</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry><para>Output files of a user's jobs on a given machine are downloaded when any job is completed</para></entry>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry><para>User</para></entry>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry><para>- All the jobs submitted by the User on the machine are completed</para><para>- All the jobs submitted by the User on the machine are removed from the Batch Scheduler's internal database.</para></entry>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry><para>1. The User sends the request containing the machine id</para><para>2. The System registers the request</para><para>3. The System checks the running jobs submitted by the User on the machine</para><para>4. The System sends the job outputs for all completed jobs to the client host</para><para>5. If the number of jobs submitted by the User on the machine with a waiting, queued or running status is positive, the System waits during a period defined by the administrator (see TA1). If not, go to step 7</para><para>6. Go back to step 3</para><para>7. The User request is completed</para></entry>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry><para>2a The TMS server is unavailable</para><para>2b The underlying batch scheduler is unavailable</para></entry>
-              </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>T1 - Asynchronous command on a machine</para></entry>
-              </row>
-              <row>
-                <entry><para>Notes</para></entry>
-                <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
         <title>T2 - Synchronous command on a machine</title>
         <informaltable>
           <tgroup cols="2">
@@ -1957,7 +1927,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Extensions</para></entry>
-                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get job outputs synchronously</para><para>TA1 - Set machine refresh period</para><para>TA2 - Set machine environment</para></entry>
+                <entry><para>T2.1 - Get job information</para><para>T2.2 - Cancel a job</para><para>T2.3 - List job queues</para><para>T2.4 - List jobs</para><para>T2.5 - Get jobs progression</para><para>T2.6 - Get one job outputs </para><para>T2.7 - Get all completed jobs outputs </para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2193,13 +2163,13 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>T2.6 - Get job outputs synchronously</title>
+        <title>T2.6 - Get one job outputs </title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>T2.6 - Get job outputs synchronously</para></entry>
+                <entry><para>T2.6 - Get one job outputs </para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
@@ -2242,21 +2212,21 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
-        <title>TA1 - Set machine refresh period</title>
+        <title>T2.7 - Get all completed jobs outputs </title>
         <informaltable>
           <tgroup cols="2">
             <tbody>
               <row>
                 <entry><para>Title</para></entry>
-                <entry><para>TA1 - Set machine refresh period</para></entry>
+                <entry><para>T2.7 - Get all completed jobs outputs </para></entry>
               </row>
               <row>
                 <entry><para>Summary</para></entry>
-                <entry><para>The admin sets the refresh period of output and error file content that is used by the System when uploading the job outputs asynchronously (see T1.2).</para></entry>
+                <entry><para>Output files of a user's completed jobs on a given machine are downloaded</para></entry>
               </row>
               <row>
                 <entry><para>Actors</para></entry>
-                <entry><para>Admin</para></entry>
+                <entry><para>User</para></entry>
               </row>
               <row>
                 <entry><para>Precondition</para></entry>
@@ -2264,11 +2234,11 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- The refresh period value is stored by the system</para></entry>
+                <entry><para>- All the jobs submitted by the User on the machine are completed</para><para>- All the jobs submitted by the User on the machine are removed from the Batch Scheduler's internal database.</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. System saves the refresh period for the given machine.</para><para>2. System applies the refresh period to all current jobs and future requests</para></entry>
+                <entry><para>1. The User sends the request containing the machine id</para><para>2. The System registers the request</para><para>3. The System checks the running jobs submitted by the User on the machine</para><para>4. The System sends the job outputs for all completed jobs to the client host</para><para>6. The User request is completed</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -2276,7 +2246,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>1a. Refresh period value is too short (minimum value : see technical requirements)</para><para>  - System returns an error message</para></entry>
+                <entry><para>2a The TMS server is unavailable</para><para>2b The underlying batch scheduler is unavailable</para></entry>
               </row>
               <row>
                 <entry><para>Extension of</para></entry>
@@ -2285,51 +2255,6 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Notes</para></entry>
                 <entry><para>This use case defines behaviour(s) that is/are not defined in the </para><para>project initial requirements.</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>TA2 - Set machine environment</title>
-        <informaltable>
-          <tgroup cols="2">
-            <tbody>
-              <row>
-                <entry><para>Title</para></entry>
-                <entry><para>TA2 - Set machine environment</para></entry>
-              </row>
-              <row>
-                <entry><para>Summary</para></entry>
-                <entry><para>The admin sets an environment variable on a given machine</para></entry>
-              </row>
-              <row>
-                <entry><para>Actors</para></entry>
-                <entry><para>Admin</para></entry>
-              </row>
-              <row>
-                <entry><para>Precondition</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Postcondition</para></entry>
-                <entry><para>- Environment variable is set on the machine</para></entry>
-              </row>
-              <row>
-                <entry><para>Base sequence</para></entry>
-                <entry><para>1. The User sends the request containing the machine id and a string containing the environment variable assignments (semi-column separated list of assignments &lt;var_name>=&lt;var_value>)</para><para>2. The System saves the environment variable for the given machine.</para><para>3. The System applies the environment variable to all current jobs and future requests</para></entry>
-              </row>
-              <row>
-                <entry><para>Branch sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Exception sequence</para></entry>
-                <entry/>
-              </row>
-              <row>
-                <entry><para>Extension of</para></entry>
-                <entry><para>T2 - Synchronous command on a machine</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2682,6 +2607,51 @@ in order to avoid systematic authentification</para>
         </informaltable>
       </section>
       <section>
+        <title>I5. Get system info</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>I5. Get system info</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry><para>To get information on the system</para></entry>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry><para>1) The user calls to get the information about a machine given the id of the machine</para><para>2) The System gets the technical description of the machine (memory max, ram rax) from the database</para><para>3) The System returns these data to the user</para></entry>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry><para>1b) The machine id is invalid: an INVALID_PARAMETER error is returned</para><para>2b) The database is unavailable, a DATABASE_ERROR is returned</para></entry>
+              </row>
+              <row>
+                <entry><para>Extensions</para></entry>
+                <entry><para>U1.3 Execute synchronous request</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
         <title>IA1. Get the running processes</title>
         <informaltable>
           <tgroup cols="2">
@@ -2753,7 +2723,7 @@ in order to avoid systematic authentification</para>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
-                <entry><para>1b) The administrator calls to define the limit of RAM available to he user with a machine id, a threshold value and an admin id (admin responsible for the threshold)</para><para>2b) The System updates the database</para><para>------------------------</para><para>1c) The administrator calls to define the number of processes threshold on a machine with a machine id, a treshold value and an admin id (admin responsible for the threshold)</para><para>2c) The System updates the database</para></entry>
+                <entry><para>1b) The administrator calls to define the limit of RAM available to he user with a machine id, a threshold value and an admin id (admin responsible for the threshold)</para><para>2b) The System updates the database</para><para>------------------------</para><para>1c) The administrator calls to define the use of CPU threshold on a machine with a machine id, a treshold value and an admin id (admin responsible for the threshold)</para><para>2c) The System updates the database</para></entry>
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
@@ -3168,6 +3138,10 @@ in order to avoid systematic authentification</para>
               <row>
                 <entry><para>Exception sequence</para></entry>
                 <entry/>
+              </row>
+              <row>
+                <entry><para>Extension of</para></entry>
+                <entry><para>I5. Get system info</para></entry>
               </row>
             </tbody>
           </tgroup>
