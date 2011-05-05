@@ -140,14 +140,14 @@ public:
             job->setPercent(100);  
           } else {
             time_t currentTime = vishnu::getCurrentTimeInUTC();
-            double percent = 0;
+            int percent = 0;
             time_t gap = currentTime-startTime;
             if(walltime==0) {
                walltime = 60;
             }
 
             if(gap < walltime) {
-              percent = 100*(double(gap)/walltime);
+              percent = static_cast<int>(100*(double(gap)/walltime));
             } else {
               gap /= 2; 
               while(gap >= (walltime)) {
@@ -156,7 +156,7 @@ public:
               if(gap < walltime/2) {
                 gap = 3*walltime/4;
               } 
-              percent = 100*(double(gap)/walltime);
+              percent = static_cast<int>(100*(double(gap)/walltime));
             }
             job->setPercent(percent);
           } 

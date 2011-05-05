@@ -87,8 +87,7 @@ void Progression::_initialize()
         return _any;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__PERCENT:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::toAny(_any,
-                m_percent);
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_percent);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__STATUS:
@@ -139,7 +138,7 @@ void Progression::eSet(::ecore::EInt _featureID,
         return;
     case ::TMS_Data::TMS_DataPackage::PROGRESSION__PERCENT:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_percent);
     }
         return;

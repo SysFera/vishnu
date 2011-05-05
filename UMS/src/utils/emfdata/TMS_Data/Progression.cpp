@@ -181,15 +181,15 @@ void Progression::setEndTime(::ecore::ELong _endTime)
 #endif
 }
 
-::ecore::EDouble Progression::getPercent() const
+::ecore::EInt Progression::getPercent() const
 {
     return m_percent;
 }
 
-void Progression::setPercent(::ecore::EDouble _percent)
+void Progression::setPercent(::ecore::EInt _percent)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EDouble _old_percent = m_percent;
+    ::ecore::EInt _old_percent = m_percent;
 #endif
     m_percent = _percent;
 #ifdef ECORECPP_NOTIFICATION_API
