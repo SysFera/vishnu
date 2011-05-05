@@ -122,7 +122,7 @@ same conditions as regards security.</para>
           <para>Chapter 6 and Chapter 7 contain the C++ API reference respectively for UMS and TMS package.</para>
         </listitem>
         <listitem>
-          <para>Chapter 8 and Chapter 9 contains the Python API reference respectively for UMS and TMS package.</para>
+          <para>Chapter 8 and Chapter 9 contain the Python API reference respectively for UMS and TMS package.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -1609,6 +1609,10 @@ opened the session).</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Error invalid parameters&quot; [10]</term>
             <listitem/>
           </varlistentry>
@@ -2010,6 +2014,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2087,6 +2095,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -2152,6 +2164,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
@@ -3427,7 +3443,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3885,7 +3901,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3981,7 +3997,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4067,7 +4083,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5533,7 +5549,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6046,7 +6062,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6153,7 +6169,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6250,7 +6266,7 @@ opened the session).</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
