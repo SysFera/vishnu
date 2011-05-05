@@ -183,5 +183,16 @@ namespace vishnu {
     */
    time_t convertUTCtimeINLocaltime(const time_t& localtime);
 
+   /**
+    * \brief Function to localtime into UTC (seconds)
+    * \return the diffence time (seconds)
+    */
+   time_t convertLocaltimeINUTCtime(const time_t& localtime);
+
+   void createTmpFile(char* fileName, const std::string& file_content);
+
+   void createTmpFile(char* fileName);
+
+   int deleteFile(const char* fileName);
 }
 #endif // _UTILVISHNU_H_

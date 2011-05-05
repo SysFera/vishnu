@@ -8,7 +8,12 @@
 #include <iostream>
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
+#ifdef USE_POSTGRES
 #include "POSTGREDatabase.hpp"
+#endif
+#ifdef USE_MYSQL
+#include "MYSQLDatabase.hpp"
+#endif
 //#include "OracleDatabase.hpp"
 
 Database* DbFactory::mdb = NULL;
@@ -27,17 +32,29 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
   }
   switch (config.getDbType()){
     case DbConfiguration::POSTGRESQL :
+#ifdef USE_POSTGRES
       mdb = new POSTGREDatabase(config.getDbHost(),
                                 config.getDbUserName(),
                                 config.getDbUserPassword(),
                                 config.getDbName(),
                                 config.getDbPort()
                                );
+#endif
       break;
     case DbConfiguration::ORACLE:
+      break;
     case DbConfiguration::MYSQL:
-    default:
-      throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
+#ifdef USE_MYSQL
+      mdb = new MYSQLDatabase(config.getDbHost(),
+			      config.getDbUserName(),
+			      config.getDbUserPassword(),
+			      config.getDbName(),
+			      config.getDbPort()
+			      );
+#endif
+      break;
+  default:
+    throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
   }
   return mdb;
 }

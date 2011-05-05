@@ -25,16 +25,18 @@ class SSHJobExec {
                const std::string& key,
                BatchType batchType);
      
+    int sshexec(const std::string& slaveDirectory,
+                const std::string& cmd);
+
+    int copyFiles(const std::string& outputPath, 
+                  const std::string& errorPath, 
+                  const char* copyOfOutputPath, 
+                  const char* copyOfErrorPath);
+
     std::string getJobSerialized();
 
-    std::string getErrorInfo(); //Temporaire
-
-    int sshexec(const std::string& cmd);
-    int copyFiles(const std::string& outputPath, const std::string& errorPath , const char* copyOfOutputPath, const char* copyOfErrorPath);
-    void createTmpFile(char* outputFilePath, const std::string& file_content);
-    void createTmpFile(char* fileName);
-    int deleteFile(const char* fileName);
-
+    std::string getErrorInfo();
+    
     ~SSHJobExec();
 
   private:

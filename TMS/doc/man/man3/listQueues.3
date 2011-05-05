@@ -3,11 +3,11 @@
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: February 2011
-.\"    Manual: C++ API Reference
+.\"    Manual: TMS C++ API Reference
 .\"    Source: VISHNU 1.0
 .\"  Language: English
 .\"
-.TH "LISTQUEUES" "3" "February 2011" "VISHNU 1.0" "C++ API Reference"
+.TH "LISTQUEUES" "3" "February 2011" "VISHNU 1.0" "TMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,10 +31,10 @@
 listQueues \- gets queues information
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::listQueues('u
-.BI "int vishnu::listQueues(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", ListQueues&\ " "listofQueues" ");"
+.BI "int vishnu::listQueues(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", ListQueues&\ " "listofQueues" ", const\ string&\ " "queueName" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows you to display the status of queues of the Batch scheduler on a specific machine\&.
+This command displays the status of the queues of a specific machine\*(Aqs batch scheduler\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -50,6 +50,11 @@ Input argument\&. Is the id of the machine that the user wants to list queues\&.
 \fIlistofQueues\fR
 .RS 4
 Output argument\&. The list of queues\&.
+.RE
+.PP
+\fIqueueName\fR
+.RS 4
+Input argument\&. If it is given, listQueues gives information only of this queue\&.
 .RE
 .SH "EXCEPTIONS"
 .PP
@@ -83,11 +88,11 @@ The following exceptions may be thrown:
 .RS 4
 .RE
 .PP
-"Indicates that the batch scheduler type is not known" [101]
+"The batch scheduler type is unknown" [101]
 .RS 4
 .RE
 .PP
-"Indicates an error caused by the underlying batch scheduler" [102]
+"The batch scheduler indicates an error" [102]
 .RS 4
 .RE
 .PP
