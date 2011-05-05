@@ -4,7 +4,7 @@
 
 <book  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
    <info>
-      <title>TMS package tests Report</title>
+      <title>Tests report of TMS package</title>
       <productname>VISHNU</productname>
       <releaseinfo>1.0</releaseinfo>
       <date>May 2011</date>
@@ -58,8 +58,6 @@ same conditions as regards security.</para>
  
     <chapter>
     <title>Functional tests </title>
-    <section>
-      <title> Introduction </title>
       
       <para> The tests which follows have been done in the following environment: </para>
       <para><itemizedlist>
@@ -70,21 +68,19 @@ same conditions as regards security.</para>
             <para>OS used for the test : Ubuntu 10.10</para>
           </listitem>
 	  <listitem>
-            <para>Cmake : V2.6</para>
+            <para>Cmake version : V2.6</para>
           </listitem>
 	  <listitem>
-            <para>gcc : V4.3.3</para>
+            <para>gcc version : V4.3.3</para>
           </listitem>
 	  <listitem>
-            <para>DIET : V2.6.1</para>
+            <para>DIET version : V2.6.1</para>
           </listitem>
         </itemizedlist>
     </para>
-    </section>
-    
      <section>
-      <title> SubmitJob </title>
-   
+      <title> T1.1 - Submit a job </title>
+      <para><emphasis role = "italic"> Api command: submitjob</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -95,12 +91,12 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
             </row>
-          </thead>s
+          </thead>
           <tbody>
             <row>
               <entry><para>T1.1-B</para></entry>
@@ -143,8 +139,8 @@ same conditions as regards security.</para>
     </section>
     
     <section>
-      <title> cancelJob </title>
-   
+      <title> T2.2 - Cancel a job </title>
+      <para><emphasis role = "italic"> Api command: cancelJob</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -155,12 +151,12 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
             </row>
-          </thead>s
+          </thead>
           <tbody>
             <row>
               <entry><para>T2.2-B</para></entry>
@@ -203,8 +199,8 @@ same conditions as regards security.</para>
     </section>
     
      <section>
-      <title> getJobInfo </title>
-   
+      <title> T2.1 - Get job information </title>
+      <para><emphasis role = "italic"> Api command: getJobInfo</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -215,7 +211,7 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
@@ -256,8 +252,8 @@ same conditions as regards security.</para>
     </section>
     
      <section>
-      <title> getJobProgress </title>
-   
+      <title> T2.5 - Get jobs progression </title>
+	<para><emphasis role = "italic"> Api command: getJobProgress</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -268,7 +264,7 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
@@ -309,8 +305,8 @@ same conditions as regards security.</para>
     </section>
     
     <section>
-      <title> getJobsOutput </title>
-   
+      <title> T2.6 - Get one job outputs </title>
+	<para><emphasis role = "italic"> Api command: getJobsOutput</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -321,7 +317,7 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
@@ -370,8 +366,8 @@ same conditions as regards security.</para>
     </section>
     
     <section>
-      <title> getCompletedJobsOuput </title>
-   
+      <title> T2.7 - Get all completed jobs outputs </title>
+	<para><emphasis role = "italic"> Api command: getCompletedJobsOuput</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -382,7 +378,7 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
@@ -417,8 +413,8 @@ same conditions as regards security.</para>
     </section>
       
       <section>
-      <title> listQueues </title>
-   
+      <title> T2.3 - List job queues </title>
+      <para><emphasis role = "italic"> Api command: listQueues</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -429,7 +425,7 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>
@@ -464,8 +460,8 @@ same conditions as regards security.</para>
     </section>
     
       <section>
-      <title> listJobs </title>
-   
+      <title> T2.4 - List jobs </title>
+      <para><emphasis role = "italic"> Api command: listJobs</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -476,7 +472,7 @@ same conditions as regards security.</para>
           <thead>
             <row>
               <entry>ID test</entry>
-              <entry>Description</entry>
+              <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
               <entry>Error and remarks</entry>

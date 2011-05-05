@@ -33,7 +33,7 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   job.setJobId(llJobId.str());
   job.setOutputPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->out)) ;
   job.setErrorPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->err));
-  job.setStatus(llJobInfo.step_list[0]->status);//A mapper en VISHNU status
+  job.setStatus(convertTorqueStateToVishnuState(llJobInfo.step_list[0]->status));//A mapper en VISHNU status
   job.setJobName(std::string(llJobInfo.job_name));
   job.setSubmitDate((llJobInfo.step_list[0])->q_date);
   job.setOwner(std::string(llJobInfo.owner));
@@ -227,6 +227,8 @@ int LLServer::getJobState(const std::string& jobId) {
               return 5;
             case STATE_HOLD:
               return 2;
+            case STATE_NOTQUEUED:
+              return 1;
           }
 
           machine = (char*)"";
@@ -498,6 +500,61 @@ int LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, std:
   }
 
   return 0;
+}
+
+int LLServer::convertTorqueStateToVishnuState(int state) {
+  
+  switch(state) {
+    case STATE_IDLE:
+      return 3;
+    case STATE_RUNNING:
+      return 4;
+    case STATE_STARTING:
+      return 4;
+    case STATE_COMPLETE_PENDING:
+      return 4;
+    case STATE_REJECT_PENDING:
+      return 6;
+    case STATE_REMOVE_PENDING:
+      return 6;
+    case STATE_VACATE_PENDING:
+      return 3;
+    case STATE_VACATED:
+      return 3;
+    case STATE_REJECTED:
+      return 6;
+    case STATE_CANCELED:
+      return 6;
+    case STATE_REMOVED:
+      return 6;
+    case STATE_PENDING:
+      return 2 ;
+    case STATE_PREEMPTED:
+      return 3;
+    case STATE_PREEMPT_PENDING:
+      return 3;
+    case STATE_RESUME_PENDING:
+      return 3;
+    case STATE_COMPLETED:
+      return 5;
+    case STATE_TERMINATED:
+      return 5;
+    case STATE_HOLD:
+      return 2;
+    case STATE_NOTQUEUED:
+      return 1;
+    case STATE_DEFERRED:
+      return 1;
+    case STATE_SUBMISSION_ERR:
+      return 1;
+    case STATE_NOTQUEUED:
+      return 1;
+    case STATE_NOTRUN:
+      return 1;
+    default:
+      return 5;
+  }
+
 }
 
 LLServer::~LLServer() {
