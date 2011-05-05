@@ -13,7 +13,8 @@ using namespace std;
  * \brief Constructor
  * \param execConfig  the configuration of the program
  */
-DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) : mexecConfig(execConfig)
+DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) : mexecConfig(execConfig),
+mdbPort(0)
 {
 }
 
