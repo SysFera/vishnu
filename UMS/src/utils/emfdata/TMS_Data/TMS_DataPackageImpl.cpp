@@ -1186,7 +1186,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Progression__endTime->setDerived(false);
     m_Progression__endTime->setOrdered(true);
     m_Progression__percent->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEDouble());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Progression__percent->setName("percent");
     m_Progression__percent->setDefaultValueLiteral("0");
     m_Progression__percent->setLowerBound(0);
