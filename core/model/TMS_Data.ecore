@@ -331,7 +331,7 @@
         <details key="content" value="End date and time of the job (unix timestamp)"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percent" eType="ecore:EDataType Ecore.ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percent" eType="ecore:EDataType Ecore.ecore#//EInt"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="Represent the job progression. "/>
