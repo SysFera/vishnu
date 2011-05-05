@@ -97,11 +97,17 @@ public:
     }
   }
 
-  /***
+  /**
    * \brief To convert the script in a string
    */
   std::string
   scriptToString();
+
+  /**
+   * \brief To get the full path to the current executable
+   */
+  static std::string
+  getCurrentBinaryDir();
 
 protected:
   ConfigMap mconfig;

@@ -100,6 +100,12 @@ public:
    */
   std::string getMachineName();
 
+  /**
+   * \brief Function to check the machineId
+   * \return raises an exception 
+   */
+  void checkMachine();
+
 private:
   /////////////////////////////////
   // Attributes
