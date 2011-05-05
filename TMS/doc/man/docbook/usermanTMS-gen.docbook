@@ -56,7 +56,7 @@ same conditions as regards security.</para>
     <releaseinfo>1.0</releaseinfo>
   </info>
   <reference>
-    <title>Command reference</title>
+    <title>TMS Command reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>vishnu_submit_job</refentrytitle>
@@ -64,7 +64,7 @@ same conditions as regards security.</para>
       </refmeta>
       <refnamediv>
         <refname>vishnu_submit_job</refname>
-        <refpurpose>submits job on a machine through the use of a script (scriptFilePath). </refpurpose>
+        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-h</option></arg><arg
@@ -80,7 +80,7 @@ same conditions as regards security.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The submission of job on a specific Batch scheduler associated to a machine is possible with this command. It allows you to describe a job in a script with the corresponding Batch scheduler directives or with the VISHNU generic directives for all Batch schedulers. </para>
+        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -94,49 +94,49 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-n <replaceable>name</replaceable></option></term>
             <listitem>
-              <para>Assigns a job name. The default is the path of job..</para>
+              <para>Assigns a job name. The default is the path of job.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-q <replaceable>queue</replaceable></option></term>
             <listitem>
-              <para>Assigns the queue or class of the job..</para>
+              <para>Assigns the queue or class of the job.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-t <replaceable>wallTime</replaceable></option></term>
             <listitem>
-              <para>The maximum wall-clock time during which the job can run..</para>
+              <para>The maximum wall-clock time during which the job can run.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-m <replaceable>memory</replaceable></option></term>
             <listitem>
-              <para>Is the memory size that the job requires..</para>
+              <para>Is the memory size that the job requires.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-P <replaceable>nbCpu</replaceable></option></term>
             <listitem>
-              <para>The number of cpu that the job requires..</para>
+              <para>The number of cpu that the job requires.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-N <replaceable>nbNodesAndCpuPerNode</replaceable></option></term>
             <listitem>
-              <para>The number of nodes and processors per node..</para>
+              <para>The number of nodes and processors per node.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-o <replaceable>outputPath</replaceable></option></term>
             <listitem>
-              <para>Assigns the path and file for job output..</para>
+              <para>Assigns the path and file for job output.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-e <replaceable>errorPath</replaceable></option></term>
             <listitem>
-              <para>Assigns the path and file for job error..</para>
+              <para>Assigns the path and file for job error.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -169,11 +169,11 @@ same conditions as regards security.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -198,7 +198,7 @@ same conditions as regards security.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get information about a specific job. It allows for example to get the status of the job.</para>
+        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -235,11 +235,11 @@ same conditions as regards security.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -266,7 +266,7 @@ same conditions as regards security.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the progression status of a job based on the wallclock time specified by the user. </para>
+        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -280,13 +280,13 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-i <replaceable>jobId</replaceable></option></term>
             <listitem>
-              <para>Represents the id of the job that the user wants to see the progression of..</para>
+              <para>Specifies the id of the job whose progression the user wants to see..</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-u <replaceable>jobOwner</replaceable></option></term>
             <listitem>
-              <para>Represents the owner of the job..</para>
+              <para>Specifies the owner of the job..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -328,11 +328,11 @@ same conditions as regards security.</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_queues</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>queueName</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to display the status of  queues  of the Batch scheduler on a specific machine.</para>
+        <para>This command displays the status of the queues of a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -369,11 +369,11 @@ same conditions as regards security.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -406,7 +406,7 @@ same conditions as regards security.</para>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to display the jobs submitted on the Batch scheduler of a specific machine.</para>
+        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -420,51 +420,51 @@ same conditions as regards security.</para>
           <varlistentry>
             <term><option>-i <replaceable>jobId</replaceable></option></term>
             <listitem>
-              <para>To list job which has this id..</para>
+              <para>lists the job with the specified id.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-P <replaceable>nbCpu</replaceable></option></term>
             <listitem>
-              <para>To list jobs which have this number of cpu..</para>
+              <para>lists the jobs with the specified number of CPUs.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-d <replaceable>fromSubmitDate</replaceable></option></term>
             <listitem>
-              <para>List jobs submitted after this date (unix timestamp)..</para>
+              <para>lists the jobs submitted after the specified date (UNIX timestamp).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-D <replaceable>toSubmitDate</replaceable></option></term>
             <listitem>
-              <para>List jobs submitted before this date (unix timestamp).</para>
+              <para>lists jobs submitted before the specified date (UNIX timestamp).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-u <replaceable>owner</replaceable></option></term>
             <listitem>
-              <para>To list all jobs submitted by this owner..</para>
+              <para>lists the jobs submitted by the specified owner.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
-              <para>To list jobs which have this status..
+              <para>lists the jobs with the specified status.
 The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (SUBMITTED), 2 (QUEUED), 3 (WAITING), 4 (RUNNING), 5 (TERMINATED), 6 (CANCELLED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-p <replaceable>priority</replaceable></option></term>
             <listitem>
-              <para>To list jobs which have this priority.
+              <para>lists the jobs with the specified priority.
 The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW), 2 (LOW), 3 (NORMAL), 4 (HIGH), 5 (VERY_HIGH).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-q <replaceable>queue</replaceable></option></term>
             <listitem>
-              <para>To list jobs which have this queue name..</para>
+              <para>the jobs with the specified queue name.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -493,11 +493,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -523,7 +523,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the output files of a job.</para>
+        <para>This command allows getting a job's output files.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -566,15 +566,19 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Permission denied&quot; [104]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is not terminated&quot; [107]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -596,7 +600,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the output files of all  completed jobs.</para>
+        <para>This command allows getting the output files of all the completed jobs.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -610,7 +614,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><option>-o <replaceable>outDir</replaceable></option></term>
             <listitem>
-              <para>The output directory where the files will be stored (default is current directory).</para>
+              <para>Specifies the output directory where the files will be stored (by default, the current directory)..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -639,11 +643,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -668,7 +672,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to cancel a job submitted on the Batch scheduler of a specific machine.</para>
+        <para>This command allows canceling a job submitted on a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -705,15 +709,23 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Permission denied&quot; [104]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is already terminated&quot; [105]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is already canceled&quot; [106]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -721,7 +733,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
   </reference>
   <reference>
-    <title>C++ API Reference</title>
+    <title>TMS C++ API Reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>submitJob</refentrytitle>
@@ -729,14 +741,14 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>submitJob</refname>
-        <refpurpose>submits job on a machine through the use of a script (scriptFilePath). </refpurpose>
+        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The submission of job on a specific Batch scheduler associated to a machine is possible with this command. It allows you to describe a job in a script with the corresponding Batch scheduler directives or with the VISHNU generic directives for all Batch schedulers. </para>
+        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -810,11 +822,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -838,7 +850,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get information about a specific job. It allows for example to get the status of the job.</para>
+        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -902,11 +914,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -930,7 +942,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the progression status of a job based on the wallclock time specified by the user. </para>
+        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1006,11 +1018,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to display the status of  queues  of the Batch scheduler on a specific machine.</para>
+        <para>This command displays the status of the queues of a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1031,6 +1043,12 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><emphasis>listofQueues</emphasis></term>
             <listitem>
               <para>Output argument. The list of queues.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>queueName</emphasis></term>
+            <listitem>
+              <para>Input argument. If it is given, listQueues gives information only of this queue.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1068,11 +1086,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1096,7 +1114,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to display the jobs submitted on the Batch scheduler of a specific machine.</para>
+        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1160,11 +1178,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1188,7 +1206,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the output files of a job.</para>
+        <para>This command allows getting a job's output files.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1258,15 +1276,19 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Permission denied&quot; [104]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is not terminated&quot; [107]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1286,7 +1308,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the output files of all  completed jobs.</para>
+        <para>This command allows getting the output files of all the completed jobs.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1312,7 +1334,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><emphasis>outDir</emphasis></term>
             <listitem>
-              <para>Input argument. The output directory where the files will be stored (default is current directory).</para>
+              <para>Input argument. Specifies the output directory where the files will be stored (by default, the current directory)..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1350,11 +1372,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1378,7 +1400,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to cancel a job submitted on the Batch scheduler of a specific machine.</para>
+        <para>This command allows canceling a job submitted on a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1436,15 +1458,23 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates that the batch scheduler type is not known&quot; [101]</term>
+            <term>&quot;The batch scheduler type is unknown&quot; [101]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Indicates an error caused by the underlying batch scheduler&quot; [102]</term>
+            <term>&quot;The batch scheduler indicates an error&quot; [102]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Permission denied&quot; [104]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is already terminated&quot; [105]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The job is already canceled&quot; [106]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -1452,7 +1482,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
     </refentry>
   </reference>
   <reference>
-    <title>Python API Reference</title>
+    <title>TMS Python API Reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>VISHNU_UMS.submitJob</refentrytitle>
@@ -1460,14 +1490,14 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>VISHNU_UMS.submitJob</refname>
-        <refpurpose>submits job on a machine through the use of a script (scriptFilePath). </refpurpose>
+        <refpurpose>submits a job on a machine through the use of a script (scriptFilePath)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>The submission of job on a specific Batch scheduler associated to a machine is possible with this command. It allows you to describe a job in a script with the corresponding Batch scheduler directives or with the VISHNU generic directives for all Batch schedulers. </para>
+        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1552,11 +1582,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1580,7 +1610,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get information about a specific job. It allows for example to get the status of the job.</para>
+        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1655,11 +1685,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1683,7 +1713,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the progression status of a job based on the wallclock time specified by the user. </para>
+        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1770,11 +1800,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>VISHNU_UMS.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to display the status of  queues  of the Batch scheduler on a specific machine.</para>
+        <para>This command displays the status of the queues of a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1795,6 +1825,12 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><emphasis>listofQueues</emphasis></term>
             <listitem>
               <para>Output argument. The list of queues.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>queueName</emphasis></term>
+            <listitem>
+              <para>Input argument. If it is given, listQueues gives information only of this queue.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1843,11 +1879,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1871,7 +1907,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to display the jobs submitted on the Batch scheduler of a specific machine.</para>
+        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1946,11 +1982,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1974,7 +2010,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the output files of a job.</para>
+        <para>This command allows getting a job's output files.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2055,15 +2091,19 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The job is not terminated&quot; [107])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -2083,7 +2123,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to get the output files of all  completed jobs.</para>
+        <para>This command allows getting the output files of all the completed jobs.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2109,7 +2149,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><emphasis>outDir</emphasis></term>
             <listitem>
-              <para>Input argument. The output directory where the files will be stored (default is current directory).</para>
+              <para>Input argument. Specifies the output directory where the files will be stored (by default, the current directory)..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2158,11 +2198,11 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2186,7 +2226,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows you to cancel a job submitted on the Batch scheduler of a specific machine.</para>
+        <para>This command allows canceling a job submitted on a specific machine's batch scheduler.</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2255,15 +2295,23 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates that the batch scheduler type is not known&quot; [101])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler type is unknown&quot; [101])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UMSVishnuException(&quot;Indicates an error caused by the underlying batch scheduler&quot; [102])</term>
+            <term>UMSVishnuException(&quot;The batch scheduler indicates an error&quot; [102])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The job is already terminated&quot; [105])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The job is already canceled&quot; [106])</term>
             <listitem/>
           </varlistentry>
         </variablelist>

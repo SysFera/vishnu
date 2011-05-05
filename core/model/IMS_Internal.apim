@@ -10,7 +10,7 @@
     <services name="int_getMetricCurrentValue" description="Retrieve the current value of a metric on a machine">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine" shortOptionLetter=""/>
-      <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.5" description="Value of the metric"/>
+      <ports name="metricValue" direction="OUT" dataType="//@typeList/@types.10" description="Value of the metric" defaultValueLiteral=""/>
       <ports name="options" dataType="//@typeList/@types.14" description="Options" optional="true" shortOptionLetter="" defaultValueLiteral=""/>
     </services>
     <services name="int_getMetricHistory" description="Retrieve the history of values of a metric on a machine">

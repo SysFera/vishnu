@@ -11,8 +11,10 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <sstream>
+#include <sys/stat.h>
 
 #include "UserException.hpp"
+#include "SystemException.hpp"
 #include "TMS_Data.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
@@ -382,19 +384,76 @@ time_t vishnu::getCurrentTimeInUTC() {
   time_t localtime = string_to_time_t(to_simple_string(now));
 
   return std::time(&localtime);
+
 }
 
 /**
 * \brief Function to convert UTC time into localtime (seconds)
 * \return the correspondant localtime (seconds)
 */
-time_t vishnu::convertUTCtimeINLocaltime(const time_t& localtime) {
+time_t vishnu::convertUTCtimeINLocaltime(const time_t& utctime) {
 
   //the current time
   boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
 
   time_t currentTime = string_to_time_t(to_simple_string(now));
 
-  long diff = currentTime-std::time(&currentTime);
-  return (localtime+diff);
+  long diff = currentTime-std::time(0);
+  return (utctime+diff);
 }
+
+/**
+* \brief Function to localtime into UTC (seconds)
+* \return the diffence time (seconds)
+*/
+time_t vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
+
+  //the current time
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+
+  time_t currentTime = string_to_time_t(to_simple_string(now));
+
+  long diff = currentTime-std::time(0);
+  return (localtime-diff);
+}
+
+void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
+
+  int  file_descriptor = mkstemp( fileName ) ;
+  size_t file_size = file_content.size();
+  if( file_descriptor == -1 ) {
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot create new tmp file");
+  }
+
+  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
+     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have" 
+                                           " not been change on the path. This can lead to an error");
+  }
+
+  if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot write the content int to" 
+                                          "  new created file");
+  }
+
+  close(file_descriptor);
+}
+
+void vishnu::createTmpFile(char* fileName) {
+
+  int  file_descriptor = mkstemp( fileName ) ;
+  if( file_descriptor == -1 ) {
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot create new tmp file");
+  }
+
+  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH ) !=0) {
+     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have not been" 
+                                           "  change on the path. This can lead to an error");
+  }
+
+  close(file_descriptor);
+}
+
+int vishnu::deleteFile(const char* fileName) {
+    return unlink(fileName);
+}
+

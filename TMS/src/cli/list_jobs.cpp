@@ -208,13 +208,12 @@ int main (int argc, char* argv[]){
 
     //convert the date in long format 
     if(opt->count("fromSubmitDate")){
-      jobOp.setFromSubmitDate(string_to_time_t(fromDate));
+      jobOp.setFromSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(fromDate)));
     }
 
     if(opt->count("toSubmitDate")){
-      jobOp.setToSubmitDate(string_to_time_t(toDate));
+      jobOp.setToSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(toDate)));
     }
-
 
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
@@ -231,7 +230,8 @@ int main (int argc, char* argv[]){
       listJobs(sessionKey, machineId, job, jobOp);
     }
 
-    if(jobOp.getJobId().size()==0 && jobOp.getNbCpu() <= 0 && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 ) {
+    if(jobOp.getOwner().size()==0 && jobOp.getJobId().size()==0  && jobOp.getNbCpu() <= 0 
+        && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 ) {
       std::cout << job << std::endl;
     } else {
       displayListJobs(job);

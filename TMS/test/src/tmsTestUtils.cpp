@@ -20,32 +20,42 @@ VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UM
 
 VishnuConnexion::~VishnuConnexion(){
   if(true==open){
-  BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
-  BOOST_TEST_MESSAGE("The session is closed");
+    try {
+      BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
+      BOOST_TEST_MESSAGE("The session is closed");
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 
 string VishnuConnexion::getConnexion(){
-
-  BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
-  open=true;
-   BOOST_TEST_MESSAGE("The session is open");
-   return msession.getSessionKey();
+  try {
+    BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
+    open=true;
+    BOOST_TEST_MESSAGE("The session is open");
+    return msession.getSessionKey();
+  } catch (VishnuException& e) {
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+  return "";
 }
 
 
 bool operator== (const Job& lJob,const Job& rJob ){
 
   return ( (lJob.getJobId() == rJob.getJobId())
-        && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())  
-        && (lJob.getJobPath() == rJob.getJobPath()) 
-        && (lJob.getJobName() == rJob.getJobName()) 
+        && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())
+        && (lJob.getJobPath() == rJob.getJobPath())
+        && (lJob.getJobName() == rJob.getJobName())
         && (lJob.getJobPrio() == rJob.getJobPrio())
-        && (lJob.getOwner() == rJob.getOwner() ) 
-        && (lJob.getJobQueue() == rJob.getJobQueue() ) 
-        && (lJob.getWallClockLimit() == rJob.getWallClockLimit() ) 
-     
-     
+        && (lJob.getOwner() == rJob.getOwner() )
+        && (lJob.getJobQueue() == rJob.getJobQueue() )
+        && (lJob.getWallClockLimit() == rJob.getWallClockLimit() )
+
+
       );
 
 
@@ -55,4 +65,4 @@ bool operator== (const Job& lJob,const Job& rJob ){
 
 
 
-  
+
