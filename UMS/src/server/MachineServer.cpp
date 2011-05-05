@@ -286,3 +286,18 @@ MachineServer::getMachineName() {
   return machineName;
 }
 
+/**
+* \brief Function to check the machineId
+* \return raises an exception 
+*/
+void MachineServer::checkMachine() {
+
+  if(getAttribut("where machineid='"+mmachine->getMachineId()+"'").size()==0){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, mmachine->getMachineId()+" does not exist among the defined" 
+                                                                 " machines by VISHNU System");
+  }
+  if(getAttribut("where status=1 and  machineid='"+mmachine->getMachineId()+"'").size() == 0) {
+    throw UMSVishnuException(ERRCODE_MACHINE_LOCKED);
+  }
+}
+
