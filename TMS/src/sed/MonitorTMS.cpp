@@ -9,6 +9,7 @@
 #include "ServerTMS.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
+#include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "MonitorTMS.hpp"
 
@@ -50,7 +51,7 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
   mmachineId = machineId;
   mbatchType = batchType;
 
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
+  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
   try {
     /*connection to the database*/
