@@ -10,10 +10,7 @@
 #include "UserServer.hpp"
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
-#include "ServerTMS.hpp"
-
-//Just a test
-#include "JobServer.hpp"
+#include "DbFactory.hpp"
 
 /**
  * \param session The object which encapsulates the session information
@@ -25,6 +22,8 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 msessionServer(sessionServer), mmachineId(machineId)
 {
   mlistJobsResult = NULL;
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
 /**
@@ -39,6 +38,8 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
   msessionServer(sessionServer), mmachineId(machineId), mjobResult(jobResult)
 {
   mlistJobsResult = NULL;
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
 }
 /**
  * \brief Function to get the job results
@@ -51,6 +52,8 @@ JobOutputServer::getJobOutput() {
   //To check the sessionKey
   msessionServer.check();
 
+  std::string acLogin;
+  std::string machineName;
   std::string outputPath;
   std::string errorPath;
   std::string owner;
@@ -60,16 +63,16 @@ JobOutputServer::getJobOutput() {
   //To get the output and error path of the job
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and jobId='"+mjobResult.getJobId()+"'";
-  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
- 
-  TMS_Data::Job job;
-  JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
-  std::string acLogin = jobServer.getUserAccountLogin();
-  std::cout << "acLogin = " << acLogin << std::endl;
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
-  std::string machineName = jobServer.getMachineName();
-  std::cout << "machineName = " << machineName << std::endl;
- 
+  acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(mmachineId);
+  MachineServer machineServer(machine);
+  machineName = machineServer.getMachineName();
+  delete machine;
+
   if (sqlResult->getNbTuples() != 0){ 
     results.clear();
     results = sqlResult->get(0);
@@ -101,14 +104,13 @@ JobOutputServer::getJobOutput() {
     char* copyOfOutputPath = strdup("/tmp/job_outputPathXXXXXX");
     char* copyOfErrorPath = strdup("/tmp/job_errorPathXXXXXX");
 
-    SSHJobExec().createTmpFile(copyOfOutputPath);
-    SSHJobExec().createTmpFile(copyOfErrorPath);
-
-    std::cout << "outputPath = " << outputPath << std::endl;
-    std::cout << "errorPath = " << errorPath << std::endl;
+    vishnu::createTmpFile(copyOfOutputPath);
+    vishnu::createTmpFile(copyOfErrorPath);
 
     SSHJobExec sshJobExec(NULL, "", "", acLogin, machineName, "", UNDEFINED);
     if(sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)){
+      vishnu::deleteFile(copyOfOutputPath);
+      vishnu::deleteFile(copyOfErrorPath);
       throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::copyFiles: problem to get the output or error file on this user local account"); 
     }
 
@@ -127,11 +129,14 @@ JobOutputServer::getCompletedJobsOutput() {
    //To check the sessionKey
   msessionServer.check();
 
-  TMS_Data::Job job;
-  JobServer jobServer(msessionServer, mmachineId, job, UNDEFINED);
-  std::string acLogin = jobServer.getUserAccountLogin();
-  std::string machineName = jobServer.getMachineName();
+  std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(mmachineId);
+  MachineServer machineServer(machine);
+  std::string machineName = machineServer.getMachineName();
+  delete machine;
+ 
   std::string outputPath;
   std::string errorPath;
   std::string jobId;
@@ -145,7 +150,7 @@ JobOutputServer::getCompletedJobsOutput() {
   //To get the output and error path of all jobs
   std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status from vsession, job where"
                            " vsession.numsessionid=job.vsession_numsessionid and owner='"+acLogin+"'";
-  boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
   if (sqlResult->getNbTuples() != 0){
     for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
@@ -175,12 +180,8 @@ JobOutputServer::getCompletedJobsOutput() {
         char* copyOfOutputPath = strdup("/tmp/job_outputPathXXXXXX");
         char* copyOfErrorPath = strdup("/tmp/job_errorPathXXXXXX");
 
-        SSHJobExec().createTmpFile(copyOfOutputPath);
-        SSHJobExec().createTmpFile(copyOfErrorPath);
-
-        std::cout << "outputPath before = " << outputPath << std::endl;
-        std::cout << "errorPath before  = " << errorPath << std::endl;
-        std::cout << "jobId = " << jobId << std::endl;
+        vishnu::createTmpFile(copyOfOutputPath);
+        vishnu::createTmpFile(copyOfErrorPath);
 
         SSHJobExec sshJobExec(NULL, "", "", acLogin, machineName, "", UNDEFINED);
         if(!sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)) {;
@@ -190,6 +191,9 @@ JobOutputServer::getCompletedJobsOutput() {
           out->setErrorPath(std::string(copyOfErrorPath));
 
           mlistJobsResult->getResults().push_back(out);
+        } else {
+          vishnu::deleteFile(copyOfOutputPath);
+          vishnu::deleteFile(copyOfErrorPath); 
         }
       }
     }
