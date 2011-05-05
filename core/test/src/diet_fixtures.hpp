@@ -319,11 +319,11 @@ public:
     }
     ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
     ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
-
+#ifndef DEBUG_TESTS
     // redirect output to /dev/null
     ctx.streams[bp::stdout_id] = bp::behavior::null();
     ctx.streams[bp::stderr_id] = bp::behavior::null();
-
+#endif
 
     // setup SeD arguments
     std::vector<std::string> args = ba::list_of(std::string(config));
