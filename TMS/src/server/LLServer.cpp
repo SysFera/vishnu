@@ -33,7 +33,7 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   job.setJobId(llJobId.str());
   job.setOutputPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->out)) ;
   job.setErrorPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->err));
-  job.setStatus(convertTorqueStateToVishnuState(llJobInfo.step_list[0]->status));//A mapper en VISHNU status
+  job.setStatus(convertLLStateToVishnuState(llJobInfo.step_list[0]->status));
   job.setJobName(std::string(llJobInfo.job_name));
   job.setSubmitDate((llJobInfo.step_list[0])->q_date);
   job.setOwner(std::string(llJobInfo.owner));
@@ -42,7 +42,7 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   job.setEndDate(-1);
   job.setGroupName(std::string((llJobInfo.step_list[0])->group_name));
   job.setJobDescription(std::string((llJobInfo.step_list[0])->comment));
-  job.setJobPrio((llJobInfo.step_list[0])->prio);//WARNING: a convertir en VISHNU PRIORITY TYPE
+  job.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[0])->prio));
   job.setMemLimit(llJobInfo.step_list[0]->limits64.memlock_soft_limit);
   job.setNbCpus(llJobInfo.step_list[0]->limits.cpu_soft_limit);
   job.setNbNodes(llJobInfo.step_list[0]->limits.core_soft_limit);
@@ -502,7 +502,7 @@ int LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, std:
   return 0;
 }
 
-int LLServer::convertTorqueStateToVishnuState(int state) {
+int LLServer::convertLLStateToVishnuState(int state) {
   
   switch(state) {
     case STATE_IDLE:
@@ -541,8 +541,6 @@ int LLServer::convertTorqueStateToVishnuState(int state) {
       return 5;
     case STATE_HOLD:
       return 2;
-    case STATE_NOTQUEUED:
-      return 1;
     case STATE_DEFERRED:
       return 1;
     case STATE_SUBMISSION_ERR:
@@ -555,6 +553,21 @@ int LLServer::convertTorqueStateToVishnuState(int state) {
       return 5;
   }
 
+}
+
+int LLServer::convertLLPrioToVishnuPrio(const int& prio) {
+
+  if(prio < -50) {
+    return 1;
+  } else if(prio > -50  <= 0) {
+    return 2;
+  } else if(prio > 0 && prio <= 50) {
+    return 3;
+  } else if(prio > 50 && prio <= 100) {
+     return 4;
+  } else if(prio > 100) {
+     return 5;
+  }
 }
 
 LLServer::~LLServer() {
