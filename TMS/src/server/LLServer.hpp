@@ -30,7 +30,9 @@ private:
 
   int processOptions(const char* scriptPath, const TMS_Data::SubmitOptions& options);
 
-  int convertTorqueStateToVishnuState(int state);
+  int convertLLStateToVishnuState(int state);
+
+  int convertLLPrioToVishnuPrio(const int& prio);
 
   int computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, std::map<std::string, int>& que);
   /**
