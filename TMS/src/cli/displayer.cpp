@@ -452,7 +452,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
   long startTime;
   long endTime;
   int status;
-  double percent;
+  int percent;
   boost::posix_time::ptime pt;
 
   std::string jobIdHead = "Job id";
