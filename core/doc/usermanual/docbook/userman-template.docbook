@@ -115,7 +115,7 @@ same conditions as regards security.</para>
           <para>Chapter 6 and Chapter 7 contain the C++ API reference respectively for UMS and TMS package.</para>
         </listitem>
 	<listitem>
-          <para>Chapter 8 and Chapter 9 contains the Python API reference respectively for UMS and TMS package.</para>
+          <para>Chapter 8 and Chapter 9 contain the Python API reference respectively for UMS and TMS package.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -341,84 +341,81 @@ same conditions as regards security.</para>
       <section>
       <title> Job submission </title>
       <para>
-	To submit a job via VISHNU on the batch scheduler of a specific machine, the users needs: an opened VISHNU session, 
-	a local user configuration registered on VISHNU and corresponding to an existing UNIX account on the specified machine and a script which describes 
-	the job to submit. In the current implementation of VISHNU two main kinds of directives can be used: TORQUE and LoadLeveler. 
-	In order to define the same script on different batch scheduler a generic script with a VISHNU directives can be used.
+	To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
+	a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
+	the job to submit. In the current implementation of VISHNU, it is possible to use the directives for two batch schedulers: TORQUE and LoadLeveler.
+	In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
-	To have a job information or a job progression status, the user can used respectively <emphasis role="bold">vishnu_get_job_info or 
-	vishnu_list_jobs commands </emphasis> 
-	and <emphasis role="bold">vishnu_get_job_progression commands</emphasis>. The job progression status is calculated according to the wall-clock time specified
-	by the user during the job submission.
+	To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 
+	<emphasis role="bold"> vishnu_list_jobs</emphasis>, 
+	and for a job's progression status, <emphasis role="bold"> the vishnu_get_job_progression</emphasis> command is used. The job's progression status is calculated according to the wall-clock time specified
+	by the user during the job's submission.
       </para>
       <section>
 	<title> VISHNU generic script </title>
-	<para> The key words of a VISHNU generic script starts with the special character <emphasis role="bold">%</emphasis>. For example, to specify 
-	       a job name, the user have to use the following directive in her script : <emphasis role="bold">%vishnuJob_name</emphasis>. 
-	       This is the list of possible generic directives:
+	<para> The key words of a VISHNU generic script start with the special character <emphasis role="bold">%</emphasis>. For example, to specify 
+	       a job's name, users have to use the following directive in their scripts: <emphasis role="bold">%vishnuJob_name</emphasis>. 
+	       The possible generic directives are:
 	</para>
 	
 	<para>  
 	    <itemizedlist>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnugroup</emphasis>: specifies the group name, </para>
+		    <para><emphasis role="bold">%vishnugroup</emphasis>: specifies the group's name,</para>
 	      </listitem>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnujob_name</emphasis>: specifies the job name, </para>
+		    <para><emphasis role="bold">%vishnujob_name</emphasis>: specifies the job's name,</para>
 	      </listitem>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnuoutput</emphasis>: specifies the path of the job ouput file, </para>
+		    <para><emphasis role="bold">%vishnuoutput</emphasis>: specifies the path of the job's ouput file,</para>
 	      </listitem>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnuerror</emphasis>: specifies the path of file containing the probable which have occured during the job execution, </para>
+		    <para><emphasis role="bold">%vishnuerror</emphasis>: specifies the path of the file containing the problems that occured during the job's execution,</para>
 	      </listitem>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnuwallclocklimit</emphasis>: specified an estimated time of the job execution, </para>
+		    <para><emphasis role="bold">%vishnuwallclocklimit</emphasis>: specifies the estimated time for the job's execution,</para>
 	      </listitem>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnunotify_user</emphasis>: specifies the mail adress of the job owner in order to receive a notification when the 
+		    <para><emphasis role="bold">%vishnunotify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
 		    job is completed, 
 		    </para>
 	      </listitem>
 	      <listitem>
-		    <para><emphasis role="bold">%vishnuqueue</emphasis>: specifies the queue where the job will be submitted. It is possible to have 
+		    <para><emphasis role="bold">%vishnuqueue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
 		    the batch scheduler's queues by using the <emphasis role="bold">vishnu_list_queues</emphasis> command.
 		    </para>
 	      </listitem>
 	    </itemizedlist>
       </para>
       <para>
-	It is important to notice that the user can also used directly the directives of the batch scheduler specified: TORQUE or LoadLeveler after the 
-	generic directives.
+	It is important to note that the user can also add directives specific to a batch scheduler (TORQUE or LoadLeveler). Such specific directives must be added directly after the generic directives.
       </para>
       </section> 
     </section>
     
     <section>
 	<title> Job Cancellation </title>
-	<para> To cancel a job, The <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
-	of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all jobs of the user is cancelled. 
-	An admin can also cancel all job of all users of VISHNU.
+	<para> To cancel a job, the <emphasis role="bold">vishnu_cancel_job</emphasis> command is used with the VISHNU identifer 
+	of the job to cancel. When the identifer of the job is <emphasis role="italic">all</emphasis>, all of the user's jobs are cancelled. 
+	An admin can also cancel all the jobs of all the users of VISHNU.
 	</para>
     </section> 
     
       <section>
 	<title> Job output files </title>
-	<para> VISHNU offers two ways to get the jobs results output files by using in the shell terminal : 
+	<para> VISHNU offers two commands, to be used in a shell terminal, to get the result output files for a job: 
 	  <itemizedlist>
 	  
 	   <listitem>
-		<para> <emphasis role="bold">vishnu_get_job_output </emphasis> or,</para>
+		<para> <emphasis role="bold">vishnu_get_job_output</emphasis> or,</para>
 	  </listitem>
 	    
 	  <listitem>
 		<para> <emphasis role="bold">vishnu_get_completed_jobs_output</emphasis> </para>
 	  </listitem>
 	</itemizedlist>        
-	The difference between these commands 
-	to get job output files is respectively the possibility to get the output files of a specific job or to get the output files of all completed jobs. 
-	It is important to notice that all jobs submitted have two output files: the job results output file and a file containing the probable errors which have occured
-	during the job execution. The path where there is the job output files is specified during the job submission.
+	The former gives the output files for a specific job while the latter gives the output files for all the completed jobs.
+	It is important to note that all submitted jobs have two output files: one with the job's results, one (possibly empty) with the errors that occurred during the job's execution. The path of the job's output files is specified during the job's submission.
 	</para>
     </section> 
     </section>
@@ -427,7 +424,7 @@ same conditions as regards security.</para>
     
    <section>
      <title> Troubleshooting functions </title>
-     <para> <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by making a connection to VISHNU using 
+     <para> The <emphasis role = "italic">"There is no session in this terminal"</emphasis> error can be solved by connecting to VISHNU using 
      the <emphasis role = "bold">vishnu_connect</emphasis> command.
    </para>
   </section>
