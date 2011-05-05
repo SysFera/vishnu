@@ -88,36 +88,33 @@ int main(int argc, char* argv[], char* envp[]) {
   pid = fork();
 
   if (pid > 0) {
-    //Initialize the TMS Server
-    boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
-    res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
+    
+    try {
+      //Initialize the TMS Server
+      boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
+      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
 
-    //A remettre dans le fichier util server
-    {
       UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
       UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
       machine->setMachineId(machineId);
-      MachineServer machineServer(machine);
-      if(machineServer.getAttribut("where machineid='"+machineId+"'").size()==0){
-        delete machine;
-        std::cerr << "Error: The machine of id " << machineId << " does not exist among the defined machines by VISHNU System" << std::endl;
-        exit(1);
-      }
-      if(machineServer.getAttribut("where status=1 and  machineid='"+machineId+"'").size() == 0) {
-        delete machine;
-        std::cerr << "Error: The machine of id " << machineId << " is locked" << std::endl;
-        exit(1);
-      }
-    }
 
-    // Initialize the DIET SeD
-    if (!res) {
-      diet_print_service_table();
-      res = diet_SeD(dietConfigFile.c_str(), argc, argv);
-    } else {
-      std::cerr << "There was a problem during services initialization" << std::endl;
+      MachineServer machineServer(machine);
+      machineServer.checkMachine();
+      delete machine;
+
+      // Initialize the DIET SeD
+      if (!res) {
+        diet_print_service_table();
+        res = diet_SeD(dietConfigFile.c_str(), argc, argv);
+      } else {
+        std::cerr << "There was a problem during services initialization" << std::endl;
+        exit(1);
+      }
+    } catch (VishnuException& e) {
+      std::cerr << e.what() << std::endl;
       exit(1);
     }
+
   }  else if (pid == 0) {
     // Initialize the TMS Monitor (Opens a connection to the database)
     MonitorTMS monitor(interval);
