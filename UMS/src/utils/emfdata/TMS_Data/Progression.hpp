@@ -128,12 +128,12 @@ namespace TMS_Data
          * \brief To get the percent
          * \return The percent attribute value
          **/
-        ::ecore::EDouble getPercent() const;
+        ::ecore::EInt getPercent() const;
         /**
          * \brief To set the percent
          * \param _percent The percent value
          **/
-        void setPercent(::ecore::EDouble _percent);
+        void setPercent(::ecore::EInt _percent);
 
         /**
          * \brief To get the status
@@ -181,7 +181,7 @@ namespace TMS_Data
 
         ::ecore::ELong m_endTime;
 
-        ::ecore::EDouble m_percent;
+        ::ecore::EInt m_percent;
 
         ::TMS_Data::JobStatus m_status;
 
