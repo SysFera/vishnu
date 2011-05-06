@@ -190,7 +190,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
   l = ac->getWallTime();
   if (l>0){
     res += " -t ";
-    res += convertToString(l);
+    res += convertWallTimeToString(l);
   }
   l = ac->getMemory();
   if (l>0){
@@ -307,14 +307,14 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
   }
   l = j->getFromSubmitDate();
   if (l>0){
-    pt = boost::posix_time::from_time_t(l);
+    pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
     u = boost::posix_time::to_simple_string(pt);
     res += " -d ";
     res += u;
   }
   l = j->getToSubmitDate();
   if (l>0){
-    pt = boost::posix_time::from_time_t(l);
+    pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
     u = boost::posix_time::to_simple_string(pt);
     res += " -D ";
     res += u;
