@@ -136,14 +136,17 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   TMS_Data::ListJobs* listJobs_ptr = query.list();
 
   if(listJobs_ptr != NULL) {
-    TMS_Data::Job_ptr job;
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listJobs_ptr->getJobs().size(); i++) {
-      job = listJobs_ptr->getJobs().get(i);
+      TMS_Data::Job_ptr job = ecoreFactory->createJob();
+      //To copy the content and not the pointer
+      *job = *listJobs_ptr->getJobs().get(i);
       listOfJobs.getJobs().push_back(job);
     }
     listOfJobs.setNbJobs(listJobs_ptr->getJobs().size());
     listOfJobs.setNbRunningJobs(listJobs_ptr->getNbRunningJobs());
     listOfJobs.setNbWaitingJobs(listJobs_ptr->getNbWaitingJobs());
+    delete listJobs_ptr;
   }
   return 0;
 }
@@ -175,12 +178,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   TMS_Data::ListProgression* listProgression_ptr = query.list();
 
   if(listProgression_ptr != NULL) {
-    TMS_Data::Progression_ptr progression;
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listProgression_ptr->getProgress().size(); i++) {
-      progression = listProgression_ptr->getProgress().get(i);
+      TMS_Data::Progression_ptr progression = ecoreFactory->createProgression();
+       //To copy the content and not the pointer
+      *progression = *listProgression_ptr->getProgress().get(i);
       listOfProgress.getProgress().push_back(progression);
     }
     listOfProgress.setNbJobs(listProgression_ptr->getProgress().size());
+    delete listProgression_ptr;
   }
   return 0;
 }
@@ -212,12 +218,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   TMS_Data::ListQueues* listQueues_ptr = query.listWithParamsString();
 
   if(listQueues_ptr != NULL) {
-    TMS_Data::Queue_ptr queue;
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listQueues_ptr->getQueues().size(); i++) {
-      queue = listQueues_ptr->getQueues().get(i);
+      TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+      //To copy the content and not the pointer
+      *queue = *listQueues_ptr->getQueues().get(i);
       listofQueues.getQueues().push_back(queue);
     }
     listofQueues.setNbQueues(listQueues_ptr->getQueues().size());
+    delete listQueues_ptr;
   }
   return 0;
 
@@ -253,7 +262,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 }
 
 /**
-* \brief The getCompletedJobsOutput() function gets standard output and error output files 
+* \brief The getCompletedJobsOutput() function gets standard output and error output files
 * of completed jobs (applies only once for each job)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
@@ -279,12 +288,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutPutProxy.getAllJobsOutPut();
 
   if(listJobResults_ptr != NULL) {
-    TMS_Data::JobResult_ptr jobResult;
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
-      jobResult = listJobResults_ptr->getResults().get(i);
+      TMS_Data::JobResult_ptr jobResult = ecoreFactory->createJobResult();
+      //To copy the content and not the pointer
+      *jobResult = *listJobResults_ptr->getResults().get(i);
       listOfResults.getResults().push_back(jobResult);
     }
     listOfResults.setNbJobs(listJobResults_ptr->getNbJobs());
+    delete listJobResults_ptr;
   }
   return 0;
 }

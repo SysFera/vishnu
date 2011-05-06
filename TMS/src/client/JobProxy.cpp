@@ -106,6 +106,7 @@ JobProxy::submitJob(const std::string scriptContent,
 
   mjob = *job_ptr;
 
+  delete job_ptr;
   diet_profile_free(profile);
   return 0;
 }
@@ -239,9 +240,9 @@ JobProxy::getJobInfo() {
   parseEmfObject(std::string(jobInString), job_ptr);
 
   mjob = *job_ptr;
+  delete job_ptr;
 
   diet_profile_free(profile);
-  
   return mjob;
 }
 
