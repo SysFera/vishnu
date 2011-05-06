@@ -73,6 +73,8 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
+  diet_profile_free(profile);
+
   return 0;
 }
 

@@ -204,6 +204,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   //To parse Session object serialized
   parseEmfObject(std::string(sessionInString), session_ptr, "Error by receiving Session object serialized");
   msession = *session_ptr;
+  delete session_ptr;
 
   if(key!=NULL) {
     delete [] key;
@@ -271,6 +272,8 @@ int SessionProxy::close()
 
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  diet_profile_free(profile);
 
   return 0;
 }
