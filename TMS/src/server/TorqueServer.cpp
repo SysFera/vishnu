@@ -1,3 +1,11 @@
+/**
+ * \file TorqueServer.hpp
+ * \brief This file contains the VISHNU TorqueServer class.
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date April 2011
+ */
+
+
 #include <vector>
 #include <sstream>
 
@@ -17,11 +25,25 @@ extern "C" {
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief Constructor
+ */
 TorqueServer::TorqueServer():BatchServer() {
   serverOut[0] = '\0'; //serveur par defaut
 }
 
-int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
+/**
+ * \brief Function to submit Torque job
+ * \param scriptPath the path to the script containing the job characteristique
+ * \param options the options to submit job
+ * \param job The job data structure
+ * \param envp The list of environment variables used by Torque submission function 
+ * \return raises an exception on error
+ */
+int 
+TorqueServer::submit(const char* scriptPath, 
+                     const TMS_Data::SubmitOptions& options, 
+                     TMS_Data::Job& job, char** envp) {
 
   char destination[PBS_MAXDEST];
   char scriptTmp[MAXPATHLEN + 1] = "";
@@ -94,7 +116,6 @@ int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& 
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, submit_error.str());
   }
 
-  //pbs_disconnect(connect);
   unlink(scriptTmp);
 
   struct batch_status *p_status = pbs_statjob(connect, jobId, NULL, NULL);
@@ -109,7 +130,15 @@ int TorqueServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& 
   return 0;
 }
 
-void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::vector<std::string>&cmdsOptions) {
+/**
+ * \brief Function to treat the submission options
+ * \param options the object which contains the SubmitOptions options values
+ * \param cmdsOptions The list of the option value
+ * \return raises an exception on error
+ */
+void 
+TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, 
+                             std::vector<std::string>&cmdsOptions) {
 
   if(options.getName().size()!=0){
     cmdsOptions.push_back("-N");
@@ -156,12 +185,27 @@ void TorqueServer::processOptions(const TMS_Data::SubmitOptions& options, std::v
 
 }
 
-int TorqueServer::cancel(const char* jobId) {
+/**
+ * \brief Function to cancel job
+ * \param jobId the identifier of the job to cancel
+ * \return raises an exception on error
+ */
+int
+TorqueServer::cancel(const char* jobId) {
   char remoteServer[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   return pbs_cancel(jobId, remoteServer);
 }
 
-int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLocal) {
+/**
+ * \brief Function to cancel job on remote machine
+ * \param remoteServer the name of the remote server
+ * \param isLocal is the remoteServer is local
+ * \return raises an exception on error
+ */
+int 
+TorqueServer::pbs_cancel(const char* jobId, 
+                         char remoteServer[], 
+                         bool isLocal) {
 
   char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];  
   char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
@@ -230,7 +274,13 @@ int TorqueServer::pbs_cancel(const char* jobId, char remoteServer[], bool isLoca
   return 0;
 }
 
-int TorqueServer::getJobState(const std::string& jobId) {
+/**
+ * \brief Function to get the status of the job
+ * \param jobId the identifier of the job 
+ * \return -1 if the job is unknown or server not  unavailable 
+ */
+int 
+TorqueServer::getJobState(const std::string& jobId) {
 
   int connect;
   struct batch_status *p_status = NULL;
@@ -274,7 +324,13 @@ int TorqueServer::getJobState(const std::string& jobId) {
 return state;
 }
 
-time_t TorqueServer::getJobStartTime(const std::string& jobId) {
+/**
+ * \brief Function to get the start time of the job
+ * \param jobId the identifier of the job 
+ * \return 0 if the job is unknown or server not  unavailable
+ */
+time_t 
+TorqueServer::getJobStartTime(const std::string& jobId) {
 
   int connect;
   struct batch_status *p_status = NULL;
@@ -320,7 +376,13 @@ time_t TorqueServer::getJobStartTime(const std::string& jobId) {
 return startTime;
 } 
 
-int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
+/**
+ * \brief Function to convert the Torque state into VISHNU state 
+ * \param state the state to convert
+ * \return VISHNU state 
+ */
+int 
+TorqueServer::convertTorqueStateToVishnuState(std::string state) {
 
   if(state.compare("T")==0) {
     return 1; //SUBMITTED
@@ -342,7 +404,13 @@ int TorqueServer::convertTorqueStateToVishnuState(std::string state) {
   
 }
 
-int TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
+/**
+ * \brief Function to convert the Torque priority into VISHNU priority
+ * \param prio the priority to convert
+ * \return VISHNU state 
+ */
+int 
+TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
 
   if(prio < -512) {
     return 1;
@@ -357,6 +425,12 @@ int TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
   } 
 }
 
+/**
+ * \brief Function To fill the info concerning a job
+ * \fn void fillJobInfo(TMS_Data::Job_ptr job, struct batch_status *p)
+ * \param job: The job to fill
+ * \param p: The batch status structure containing the job info
+ */
 void
 TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   struct attrl *a;
@@ -534,6 +608,11 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
 }
 
 
+/**
+ * \brief Function to request the status of queues 
+ * \param optQueueName (optional) the name of the queue to request 
+ * \return The requested status in to ListQueues data structure 
+ */
 TMS_Data::ListQueues*
 TorqueServer::listQueues(const std::string& OptqueueName) { 
 
@@ -681,6 +760,9 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
   return mlistQueues;
 }
 
+/**
+ * \brief Destructor
+ */
 TorqueServer::~TorqueServer() {
 }
 
