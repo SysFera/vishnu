@@ -5,12 +5,10 @@
  */
 
 
-//UMS Headers
-#include "UMS_Data.hpp"
+//UMS forward Headers
 #include "UMS_Data_forward.hpp"
 
-// TMS Headers
-#include "TMS_Data.hpp"
+// TMS forward Headers
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
@@ -48,8 +46,6 @@ BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
 BOOST_AUTO_TEST_SUITE(submit_a_job)
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   // submit a job: normal call
 
@@ -72,8 +68,6 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
     const std::string scriptFilePath= TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions subOptions;
-    subOptions.setOutputPath(jobOutputPath);
-    subOptions.setErrorPath(jobErrorPath);
 
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
@@ -149,7 +143,7 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_machineId)
 
   const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
   Job jobInfo;
-SubmitOptions subOptions;
+  SubmitOptions subOptions;
   BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,subOptions),VishnuException );
 
   BOOST_TEST_MESSAGE("***********************  submit a job: bad machine ID ok!!!!*****************************" << " \n");
@@ -177,8 +171,6 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_bad_script_content)
   const std::string scriptFilePath="/home/ibrahima/Brouillon/bad_torque_script";
   Job jobInfo;
   SubmitOptions options;
-  options.setOutputPath(jobOutputPath);
-  options.setErrorPath(jobErrorPath);
 
   BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
 
@@ -221,9 +213,6 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(cancel_a_job)
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
-
   // cancel a job: normal call
 
 BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
@@ -246,8 +235,6 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
@@ -297,8 +284,6 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_sessionKey)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
@@ -342,8 +327,6 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_machineId)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
@@ -429,8 +412,6 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_bad_userId)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
 
@@ -478,8 +459,6 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( get_job_information)
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt";
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   //  get job information: normal call
 
@@ -503,8 +482,6 @@ BOOST_AUTO_TEST_CASE( get_job_information_normal_call)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -554,8 +531,6 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_sessionKey)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)== 0 );
 
@@ -602,8 +577,6 @@ BOOST_AUTO_TEST_CASE( get_job_information_bad_machineId)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobErrorPath);
-    options.setErrorPath(jobOutputPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
 
@@ -656,8 +629,6 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( list_jobs)
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   //  list job : normal call
 
@@ -681,8 +652,6 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -733,8 +702,6 @@ BOOST_AUTO_TEST_CASE( list_job_bad_sessionKey)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -782,8 +749,6 @@ BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -817,9 +782,6 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( get_job_output)
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
-
 
 //  get jobs output: normal call
 
@@ -844,8 +806,6 @@ BOOST_AUTO_TEST_CASE( get_job_output_normal_call)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -911,8 +871,6 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_sessionKey)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -957,8 +915,6 @@ BOOST_AUTO_TEST_CASE( get_job_output_bad_machineId)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -1002,8 +958,6 @@ BOOST_AUTO_TEST_CASE( get_job_output_unterminated)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -1035,12 +989,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( get_Completed_Jobs_output )
 
-  const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-  const string jobErrorPath = TMSWORKINGDIR "/error.txt";
-
   //get Completed Jobs output : normal call
-
-
 
 
 BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
@@ -1063,8 +1012,6 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -1090,9 +1037,14 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
     ListJobResults listOfResults;
 
     BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
+ 
+    bool pathExist=false;
 
-  bool pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
+    if (listOfResults.getNbJobs()>0){
 
+      pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
+    }
+    
     BOOST_CHECK( pathExist );
 
     if (pathExist){
@@ -1134,8 +1086,6 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_sessionKey)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -1180,8 +1130,6 @@ BOOST_AUTO_TEST_CASE( get_completed_job_output_bad_machineId)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -1215,8 +1163,6 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( get_Jobs_progression )
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   //get Jobs progression : normal call
 
@@ -1241,8 +1187,6 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
     const std::string scriptFilePath=TMSSCRIPTSPATH "/fast_torque_script";
     Job jobInfo;
     SubmitOptions options;
-    options.setOutputPath(jobOutputPath);
-    options.setErrorPath(jobErrorPath);
 
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
@@ -1259,9 +1203,9 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 
     // Check the success of the get jobs progression function
 
-    BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId()); // && listOfProgress.getProgress().get(0)->getPercent()>0
-      //  && listOfProgress.getProgress().get(0)->getPercent()<=100   );
-    std::cout << "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent() << "\n";
+    BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId()); 
+    
+    BOOST_TEST_MESSAGE( "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent() << "\n");
 
     Job job;
 
@@ -1278,6 +1222,9 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
       getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
     }
 
+    // sleep a few seconds and check the progress again
+    bpt::seconds sleepTime(3);
+    boost::this_thread::sleep(sleepTime);
 
 
     ListProgression jobRunningProgress;
@@ -1287,12 +1234,10 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 
     // Check the success of the get jobs progression function
 
-    double epsilon;
-
     BOOST_CHECK( jobRunningProgress.getProgress().get(0)->getPercent()>0);
 
 
-    std::cout << "jobRunningProgress.getProgress().get(0)->getPercent():" <<jobRunningProgress.getProgress().get(0)->getPercent() << "\n";
+    BOOST_TEST_MESSAGE( "jobRunningProgress.getProgress().get(0)->getPercent():" << jobRunningProgress.getProgress().get(0)->getPercent() << "\n");
 
     BOOST_TEST_MESSAGE("*********************** get jobs progression: normal call ok!!!!*****************************" << " \n");
   } catch (VishnuException& e) {
@@ -1359,8 +1304,6 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( list_job_queues )
 
-const string jobOutputPath = TMSWORKINGDIR "/output.txt" ;
-const string jobErrorPath = TMSWORKINGDIR "/error.txt";
 
   //list job queues : normal call
 
@@ -1402,7 +1345,9 @@ BOOST_AUTO_TEST_CASE( list_job_queues_normal_call)
 
       name=listofQueues.getQueues().get(i)->getName();
 
-      success =(name=="test_queue1" || name == "test_queue2") ;
+      if (name=="test_queue1" || name == "test_queue2"){
+        success =true ;
+      }
     }
     BOOST_CHECK(success);
     //Delete the precedent created queues
@@ -1456,7 +1401,6 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 
   ListQueues listofQueues;
 
-
   BOOST_CHECK_THROW(listQueues(sessionKey, "bad machineId", listofQueues),VishnuException  );
 
   BOOST_TEST_MESSAGE("*********************** list job queues : bad machineId ok!!!!*****************************" << " \n");
@@ -1466,5 +1410,5 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 BOOST_AUTO_TEST_SUITE_END()
 
 
-  // THE END
+// THE END
 
