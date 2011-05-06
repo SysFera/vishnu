@@ -2,14 +2,13 @@
  * \file ListProgressServer.hpp
  * \brief This file contains the VISHNU ListProgressServer class.
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * \date February 2011
+ * \date April 2011
  */
 #ifndef _LIST_PROGRESS_SERVER_
 #define _LIST_PROGRESS_SERVER_
 
 #include <string>
 #include <vector>
-#include <list>
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <boost/date_time/local_time/local_time.hpp>
@@ -34,7 +33,6 @@ class ListProgressServer: public QueryServer<TMS_Data::ProgressOptions, TMS_Data
 public:
 
   /**
-   * \fn ListProgressServer(const SessionServer session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param machineId The identifier of the machine on which the jobs whill be listed  
    * \brief Constructor, raises an exception on error
@@ -68,12 +66,6 @@ public:
   TMS_Data::ListProgression*
   list() {
     
-    /*BatchFactory factory;
-    BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-    BatchServer* batchServer = factory.getBatchServerInstance(batchType);
-    mlistObject = batchServer->getJobProgress(*mparameters);
-    delete batchServer;
-    */
     //To check the sessionKey
     msessionServer.check();
 
