@@ -416,7 +416,7 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of getCompletedJobsOuput</para></entry>
               <entry><para>The job output files of all completed jobs are returned</para></entry>
               <entry><para>The job output files of all completed jobs are returned</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para> 0 and remarks : failure when the script's execution is very fast</para></entry>
             </row>
             <row>
              <entry><para>T2.7-E1</para></entry>
