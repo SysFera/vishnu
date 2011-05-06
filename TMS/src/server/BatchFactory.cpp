@@ -16,14 +16,13 @@
 
 /**
  * \brief Constructor
- * \fn BatchFactory()
  */
 BatchFactory::BatchFactory() {
 
 }
 
 /**
- * \brief Function to create a batchServer. The batchServer created depends on the type parameter
+ * \brief Function to create a batchServer.
  * \param batchType The type of batchServer to create
  */
 BatchServer*
@@ -53,7 +52,6 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
 
 /**
  * \brief Destructor
- * \fn ~BatchFactory()
  */
 BatchFactory::~BatchFactory() {
 
