@@ -94,6 +94,8 @@ int ConfigurationProxy::save()
   ofile << configurationToSave;
   ofile.close();
 
+  diet_profile_free(profile);
+
   return 0;
 }
 
@@ -166,6 +168,8 @@ int ConfigurationProxy::restore(bool fromFile)
   if(fromFile && (configurationInString!=NULL)) {
     delete [] configurationInString;
   }
+
+  diet_profile_free(profile);
 
   return 0;
 }
