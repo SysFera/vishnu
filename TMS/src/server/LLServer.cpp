@@ -11,11 +11,25 @@
 using namespace vishnu;
 using namespace std;
 
+/**
+ * \brief Constructor
+ */
 LLServer::LLServer():BatchServer() {
  mlistQueues = NULL;
 }
 
-int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& options, TMS_Data::Job& job, char** envp) {
+/**
+ * \brief Function to submit LL job
+ * \param scriptPath the path to the script containing the job characteristique
+ * \param options the options to submit job
+ * \param job The job data structure
+ * \param envp The list of environment variables used by LL submission function 
+ * \return raises an exception on error
+ */
+int 
+LLServer::submit(const char* scriptPath, 
+                 const TMS_Data::SubmitOptions& options, 
+                 TMS_Data::Job& job, char** envp) {
 
   //Puts the options values into the scriptPath
   processOptions(scriptPath, options);
@@ -52,21 +66,34 @@ int LLServer::submit(const char* scriptPath, const TMS_Data::SubmitOptions& opti
   return 0;
 }
 
-int LLServer::cancel(const char* jobId) { 
+/**
+ * \brief Function to cancel job
+ * \param jobId the identifier of the job to cancel
+ * \return raises an exception on error
+ */
+int 
+LLServer::cancel(const char* jobId) { 
 
   std::ostringstream cmd;
-  std::string  cancelCommand="llcancel"; //The correct value
+  std::string  cancelCommand="llcancel"; 
   
   cmd << cancelCommand << " " << jobId;
-  if(system((cmd.str()).c_str())) { //A remplacer par excec
-    std::cerr << "LLServer::cancel: can't cancel this job" << std::endl;
+  if(system((cmd.str()).c_str())) { 
     return -1;;//error messages are written to stderr, VISHNU redirects these messages into a file
   }
  
  return 0; 
 }
 
-int LLServer::processOptions(const char* scriptPath, const TMS_Data::SubmitOptions& options) {
+/**
+ * \brief Function to treat the submission options
+ * \param scriptPath The job script path
+ * \param options the object which contains the SubmitOptions options values
+ * \return raises an exception on error
+ */
+int 
+LLServer::processOptions(const char* scriptPath, 
+                         const TMS_Data::SubmitOptions& options) {
 
   std::string content = vishnu::get_file_content(scriptPath); 
   std::string optionLineToInsert;
@@ -102,7 +129,15 @@ int LLServer::processOptions(const char* scriptPath, const TMS_Data::SubmitOptio
 
 }
 
-int LLServer::insertOptionLine(const std::string& optionLineToInsert, std::string& content) {
+/**
+ * \brief Function to insert option into string 
+ * \param optionLineToInsert the option to insert 
+ * \param content The buffer containing the inserted option
+ * \return raises an exception on error
+ */
+int
+LLServer::insertOptionLine(const std::string& optionLineToInsert, 
+                           std::string& content) {
 
   size_t pos = 0;
   size_t posLastDirective = 0;
@@ -140,7 +175,13 @@ int LLServer::insertOptionLine(const std::string& optionLineToInsert, std::strin
   }
 }
 
-int LLServer::getJobState(const std::string& jobId) {
+/**
+ * \brief Function to get the status of the job
+ * \param jobId the identifier of the job 
+ * \return -1 if the job is unknown or server not  unavailable 
+ */
+int
+LLServer::getJobState(const std::string& jobId) {
  
   LL_job jobInfo;
   LL_element *queryObject;
@@ -257,7 +298,13 @@ int LLServer::getJobState(const std::string& jobId) {
  return -1; 
 }
 
-time_t LLServer::getJobStartTime(const std::string& jobId) { 
+/**
+ * \brief Function to get the start time of the job
+ * \param jobId the identifier of the job 
+ * \return 0 if the job is unknown or server not  unavailable
+ */
+time_t 
+LLServer::getJobStartTime(const std::string& jobId) { 
 
   LL_job jobInfo;
   LL_element *queryObject;
@@ -316,7 +363,13 @@ time_t LLServer::getJobStartTime(const std::string& jobId) {
   return 0;
 }
 
-TMS_Data::ListQueues* LLServer::listQueues(const std::string& optQueueName) {
+/**
+ * \brief Function to request the status of queues 
+ * \param optQueueName (optional) the name of the queue to request 
+ * \return The requested status in to ListQueues data structure 
+ */
+TMS_Data::ListQueues* 
+LLServer::listQueues(const std::string& optQueueName) {
 
   LL_element *queryObject;
   LL_element  *queryInfos;
@@ -422,7 +475,15 @@ TMS_Data::ListQueues* LLServer::listQueues(const std::string& optQueueName) {
   return mlistQueues;
 }
 
-int LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, std::map<std::string, int>& que) {
+/**
+ * \brief Function to compute the number of running and waiting jobs of each queue 
+ * \param run contains the number of running jobs of each queue 
+ * \param que contains the number of waiting jobs of each queue
+ * \return raises an exception on error
+ */
+int 
+LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, 
+                                       std::map<std::string, int>& que) {
 
   LL_element *queryObject;
   LL_element *queryInfos;
@@ -502,7 +563,13 @@ int LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, int>& run, std:
   return 0;
 }
 
-int LLServer::convertLLStateToVishnuState(int state) {
+/**
+ * \brief Function to convert the LL state into VISHNU state 
+ * \param state the state to convert
+ * \return VISHNU state 
+ */
+int 
+LLServer::convertLLStateToVishnuState(int state) {
   
   switch(state) {
     case STATE_IDLE:
@@ -555,7 +622,13 @@ int LLServer::convertLLStateToVishnuState(int state) {
 
 }
 
-int LLServer::convertLLPrioToVishnuPrio(const int& prio) {
+/**
+ * \brief Function to convert the LL priority into VISHNU priority
+ * \param prio the priority to convert
+ * \return VISHNU state 
+ */
+int 
+LLServer::convertLLPrioToVishnuPrio(const int& prio) {
 
   if(prio < -50) {
     return 1;
@@ -570,5 +643,8 @@ int LLServer::convertLLPrioToVishnuPrio(const int& prio) {
   }
 }
 
+/**
+ * \brief List of jobs
+ */
 LLServer::~LLServer() {
 }
