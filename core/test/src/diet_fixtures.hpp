@@ -129,9 +129,11 @@ public:
     ctx.env["ORBsupportBooststrapAgent"] = "1";
     ctx.env["ORBInitRef"] = ORB_INIT_REF;
 
+#ifndef DEBUG_TESTS
     // redirect output to /dev/null
     ctx.streams[bp::stdout_id] = bp::behavior::null();
     ctx.streams[bp::stderr_id] = bp::behavior::null();
+#endif
 
     // setup omniNames arguments
     std::vector<std::string> args = ba::list_of("-always")
@@ -195,10 +197,11 @@ public:
     ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
     ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
+#ifndef DEBUG_TESTS
     // redirect output to /dev/null
     ctx.streams[bp::stdout_id] = bp::behavior::null();
     ctx.streams[bp::stderr_id] = bp::behavior::null();
-
+#endif
 
     // setup dietAGent arguments
     std::vector<std::string> args = ba::list_of(config);
