@@ -33,6 +33,8 @@ public:
    * \brief Function to submit job
    * \param scriptContent the content of the script
    * \param options the options to submit job
+   * \param vishnuId The VISHNU identifier
+   * \param slaveDirectory the path to the TMS slave executable
    * \return raises an exception on error
    */
 	int submitJob(const std::string& scriptContent, 
@@ -42,6 +44,7 @@ public:
 
   /**
    * \brief Function to cancel job
+   * \param slaveDirectory the path to the TMS slave executable
    * \return raises an exception on error
    */
 	int cancelJob(const std::string& slaveDirectory);
@@ -66,6 +69,13 @@ public:
 
   private:
 
+  /**
+   * \brief Function to scan VISHNU error message 
+   * \param errorInfo the error information to scan
+   * \param The code The code of the error
+   * \param message The message associeted to the error code
+   * \return raises an exception on erroor
+   */
   void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
   
   /**
@@ -76,10 +86,26 @@ public:
    */
   long long convertToTimeType(std::string date);  
 
+  /**
+   * \brief job data structure 
+   */ 
   TMS_Data::Job mjob;
+
+  /**
+   * \brief The object which encapsulates the session information 
+   */
   SessionServer msessionServer;
+
+  /**
+   * \brief The machine identifier 
+   */   
   std::string mmachineId;
+  
+  /**
+   * \brief The type of the batch scheduler 
+   */
   BatchType mbatchType;
+  
   /**
    * \brief An instance of vishnu database
    */

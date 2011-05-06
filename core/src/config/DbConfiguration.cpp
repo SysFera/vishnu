@@ -13,7 +13,8 @@ using namespace std;
  * \brief Constructor
  * \param execConfig  the configuration of the program
  */
-DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) : mexecConfig(execConfig)
+DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) : mexecConfig(execConfig),
+mdbPort(0)
 {
 }
 
@@ -38,11 +39,6 @@ void DbConfiguration::check() throw (UserException)
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBNAME, mdbName);
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBUSERNAME, mdbUserName);
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBPASSWORD, mdbPassword);
-  mexecConfig.getConfigValue<int>(vishnu::INTERVALMONITOR, mIntervalMonitor);
-
-  if (mIntervalMonitor < 0) {
-   throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
-  }
 
 }
 
