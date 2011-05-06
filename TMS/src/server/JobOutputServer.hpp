@@ -45,7 +45,7 @@ public:
   getJobOutput();  
 
   /**
-   * \brief Function to get the job results
+   * \brief Function to get the all completed jobs results
    * \param jobId The Id of the
    * \return The lits of job results data structure
    */
@@ -59,11 +59,27 @@ public:
   
 
   private:
-
+ 
+  /**
+   * \brief job results data structure 
+   */ 
   TMS_Data::JobResult mjobResult;
+ 
+  /**
+   * \brief The object which encapsulates the session information 
+   */ 
   SessionServer msessionServer;
+ 
+  /**
+   * \brief The machine identifier 
+   */ 
   std::string mmachineId;
+ 
+  /**                   
+   * \brief The lits of job results data structure 
+   */ 
   TMS_Data::ListJobResults_ptr mlistJobsResult;
+  
   /**
    * \brief An instance of vishnu database
    */
