@@ -33,6 +33,8 @@ JobServer::JobServer(const SessionServer& sessionServer,
  * \brief Function to submit job
  * \param scriptContent the content of the script
  * \param options the options to submit job
+ * \param vishnuId The VISHNU identifier
+ * \param slaveDirectory the path to the TMS slave executable
  * \return raises an exception on error
  */
 int JobServer::submitJob(const std::string& scriptContent, 
@@ -129,6 +131,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 /**
  * \brief Function to cancel job
+ * \param slaveDirectory the path to the TMS slave executable
  * \return raises an exception on error
  */
 int JobServer::cancelJob(const std::string& slaveDirectory)
@@ -310,10 +313,11 @@ TMS_Data::Job JobServer::getData()
 }
 
 /**
- * \brief Function to scan the error message
- * \param errorInfo The error message to scan
- * \param code The code of errorInfo
- * \param message The message of errorInfo
+ * \brief Function to scan VISHNU error message 
+ * \param errorInfo the error information to scan
+ * \param The code The code of the error
+ * \param message The message associeted to the error code
+ * \return raises an exception on erroor
  */
 void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::string& message) {
 
@@ -332,7 +336,6 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
 
 /**
  * \brief Function to convert a given date into correspondant long value
- * \fn long long convertToTimeType(std::string date)
  * \param date The date to convert
  * \return The converted value
  */
