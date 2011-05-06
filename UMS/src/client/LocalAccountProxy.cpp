@@ -92,6 +92,8 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
+  diet_profile_free(profile);
+
   return 0;
 }
 
@@ -163,6 +165,8 @@ int LocalAccountProxy::deleteLocalAccount()
 
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  diet_profile_free(profile);
 
   return 0;
 }
