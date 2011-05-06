@@ -101,6 +101,9 @@ int UserProxy::add(UMS_Data::User& user)
   parseEmfObject(std::string(userInString), user_ptr, "Error by receiving User object serialized");
   user = *user_ptr;
   muser = user;
+  delete user_ptr;
+
+  diet_profile_free(profile);
 
   return 0;
 }
@@ -154,6 +157,8 @@ int UserProxy::update(const UMS_Data::User& user)
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
+  diet_profile_free(profile);
+
   return 0;
 }
 
@@ -200,6 +205,8 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  diet_profile_free(profile);
 
   return 0;
 }
@@ -250,6 +257,8 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
+
+  diet_profile_free(profile);
 
   return 0;
 }
@@ -304,6 +313,8 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   /*To set the temporary password*/
   muser.setUserId(user.getUserId());
   muser.setPassword(std::string(tmpPassword));
+
+  diet_profile_free(profile);
 
   return 0;
 }
