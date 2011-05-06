@@ -9,6 +9,8 @@
 #include "POSTGREDatabase.hpp"
 #include "SystemException.hpp"
 
+using namespace std;
+
 /**
  * \brief Function to process the request in the database
  * \fn    int process(std::string request)
@@ -54,14 +56,16 @@ POSTGREDatabase::connect(){
   for (i=0;i<POOLSIZE;i++) {
     if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
       std::ostringstream out;
-      out << mport;
       if (mport < 0) {
         throw SystemException(ERRCODE_DBCONN, "The port value is incorrect");
+      } else if (mport != 0) {
+        out << mport;
       }
-
       // Make a connection to the database
-      mpool[i].mconn = PQsetdbLogin(mhost.c_str(), "", "",
+      mpool[i].mconn = PQsetdbLogin(mhost.c_str(),
                                     out.str().c_str(),
+                                    "",
+                                    "",
                                     mdatabase.c_str(),
                                     musername.c_str(),
                                     mpwd.c_str());

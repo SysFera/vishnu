@@ -123,6 +123,11 @@ JobOutputServer::getJobOutput() {
   return mjobResult;
 }
 
+/**
+ * \brief Function to get the all completed jobs results
+ * \param jobId The Id of the
+ * \return The lits of job results data structure
+ */
 TMS_Data::ListJobResults_ptr
 JobOutputServer::getCompletedJobsOutput() {
 
