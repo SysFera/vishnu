@@ -390,26 +390,31 @@ vishnu::saveConfiguration(const std::string& sessionKey,
   if(!res) {
     UMS_Data::Configuration *configData = configurationProxy.getData();
     if(configData!=NULL) {
-      UMS_Data::User_ptr user;
+      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
       //To set the user list
       for(unsigned int i = 0; i < configData->getListConfUsers().size(); i++) {
-        user = configData->getListConfUsers().get(i);
+        UMS_Data::User_ptr user = ecoreFactory->createUser();
+        //To copy the content and not the pointer
+        *user = *configData->getListConfUsers().get(i);
         config.getListConfUsers().push_back(user);
       }
       //To set the machine list
-      UMS_Data::Machine_ptr machine;
       for(unsigned int i = 0; i < configData->getListConfMachines().size(); i++) {
-        machine = configData->getListConfMachines().get(i);
+        UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+        //To copy the content and not the pointer
+        *machine = *configData->getListConfMachines().get(i);
         config.getListConfMachines().push_back(machine);
       }
       //To set the LocalAccounts list
-      UMS_Data::LocalAccount_ptr localAccount;
       for(unsigned int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
-        localAccount = configData->getListConfLocalAccounts().get(i);
+        UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
+        //To copy the content and not the pointer
+        *localAccount = *configData->getListConfLocalAccounts().get(i);
         config.getListConfLocalAccounts().push_back(localAccount);
       }
       config.setFilePath(configData->getFilePath());
 
+      delete configData;
     }
   }
 
@@ -511,11 +516,14 @@ vishnu::listSessions(const std::string& sessionKey,
   UMS_Data::ListSessions* listSession_ptr = query.list();
 
   if(listSession_ptr!=NULL) {
-    UMS_Data::Session_ptr session;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listSession_ptr->getSessions().size(); i++) {
-      session = listSession_ptr->getSessions().get(i);
+      UMS_Data::Session_ptr session = ecoreFactory->createSession();
+      //To copy the content and not the pointer
+      *session = *listSession_ptr->getSessions().get(i);
       listSession.getSessions().push_back(session);
     }
+    delete  listSession_ptr;
   }
 
   return 0;
@@ -542,11 +550,14 @@ vishnu::listLocalAccount(const std::string& sessionKey,
   UMS_Data::ListLocalAccounts* listLocalAcc_ptr = query.list();
 
   if(listLocalAcc_ptr!=NULL) {
-    UMS_Data::LocalAccount_ptr account;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
-      account = listLocalAcc_ptr->getAccounts().get(i);
+      UMS_Data::LocalAccount_ptr account = ecoreFactory->createLocalAccount();
+      //To copy the content and not the pointer
+      *account = *listLocalAcc_ptr->getAccounts().get(i);
       listLocalAcc.getAccounts().push_back(account);
     }
+    delete listLocalAcc_ptr;
   }
 
   return 0;
@@ -573,11 +584,14 @@ vishnu::listMachine(const std::string& sessionKey,
   UMS_Data::ListMachines* listMachine_ptr = query.list();
 
   if(listMachine_ptr!=NULL) {
-    UMS_Data::Machine_ptr machine;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
-      machine = listMachine_ptr->getMachines().get(i);
+      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+      //To copy the content and not the pointer
+      *machine = *listMachine_ptr->getMachines().get(i);
       listMachine.getMachines().push_back(machine);
     }
+    delete listMachine_ptr;
   }
   return 0;
 }
@@ -602,11 +616,14 @@ vishnu::listHistoryCmd(const std::string& sessionKey,
   UMS_Data::ListCommands* listCommands_ptr = query.list();
 
   if(listCommands_ptr!=NULL) {
-    UMS_Data::Command_ptr command;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
-      command = listCommands_ptr->getCommands().get(i);
+      UMS_Data::Command_ptr command = ecoreFactory->createCommand();
+      //To copy the content and not the pointer
+      *command = *listCommands_ptr->getCommands().get(i);
       listCommands.getCommands().push_back(command);
     }
+    delete listCommands_ptr;
   }
 
   return 0;
@@ -632,11 +649,14 @@ vishnu::listOptions(const std::string& sessionKey,
   UMS_Data::ListOptionsValues* listOptValues_ptr = query.list();
 
   if(listOptValues_ptr!=NULL) {
-    UMS_Data::OptionValue_ptr optionValue;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
-      optionValue = listOptValues_ptr->getOptionValues().get(i);
+      UMS_Data::OptionValue_ptr optionValue = ecoreFactory->createOptionValue();
+      //To copy the content and not the pointer
+      *optionValue = *listOptValues_ptr->getOptionValues().get(i);
       listOptValues.getOptionValues().push_back(optionValue);
     }
+    delete listOptValues_ptr;
   }
 
   return 0;
@@ -661,11 +681,14 @@ vishnu::listUsers(const std::string& sessionKey,
   UMS_Data::ListUsers* listUsers_ptr = query.listWithParamsString();
 
   if(listUsers_ptr!=NULL) {
-    UMS_Data::User_ptr user;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     for(unsigned int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
-      user = listUsers_ptr->getUsers().get(i);
+      UMS_Data::User_ptr user = ecoreFactory->createUser();
+      //To copy the content and not the pointer
+      *user = *listUsers_ptr->getUsers().get(i);
       listUsers.getUsers().push_back(user);
     }
+    delete listUsers_ptr;
   }
 
   return 0;
