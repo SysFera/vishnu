@@ -22,7 +22,7 @@ using namespace vishnu;
 
 
 boost::shared_ptr<Options>
-makeGHMOp(string pgName, 
+makeGCMOp(string pgName, 
 	  boost::function1<void, IMS_Data::MetricType>& ftype,
 	  string& dietConfig){
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -62,7 +62,7 @@ int main (int argc, char* argv[]){
   IMS_Data::ListMetric met;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], ftype,  dietConfig);
+  boost::shared_ptr<Options> opt = makeGCMOp(argv[0], ftype,  dietConfig);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
