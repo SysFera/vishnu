@@ -70,8 +70,8 @@ int JobServer::submitJob(const std::string& scriptContent,
   submitOptionsSerialized = optSer.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-  SSHJobExec sshJobExec(scriptPath, jobSerialized, submitOptionsSerialized, acLogin, machineName, "", mbatchType);
-  sshJobExec.sshexec(slaveDirectory, "SUBMIT");
+  SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
+  sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
   vishnu::deleteFile(scriptPath);
 
@@ -84,7 +84,7 @@ int JobServer::submitJob(const std::string& scriptContent,
      throw TMSVishnuException(code, message);
   }
 
-  std::string updateJobSerialized = sshJobExec.getJobSerialized().c_str();
+  std::string updateJobSerialized = sshJobExec.getJobSerialized();
   TMS_Data::Job_ptr job = NULL;
   if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
@@ -195,7 +195,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
         throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
       }
 
-      iter++;
+      ++iter;
       status = convertToInt(*iter);
       if(status==5) {
         throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
@@ -204,10 +204,10 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
         throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
       }
       
-      iter++;
+      ++iter;
       jobId = *iter;
 
-      iter++;
+      ++iter;
       batchJobId = *iter;
 
       mjob.setJobId(batchJobId); //To reset the jobId
@@ -216,7 +216,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
       ::ecorecpp::serializer::serializer jobSer(name);
       jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-      SSHJobExec sshJobExec(NULL, jobSerialized, "", acLogin, machineName, "", mbatchType);
+      SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized);
       sshJobExec.sshexec(slaveDirectory, "CANCEL");
 
       std::string errorInfo = sshJobExec.getErrorInfo();

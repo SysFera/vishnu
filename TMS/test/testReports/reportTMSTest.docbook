@@ -120,7 +120,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -180,7 +180,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -240,7 +240,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -293,7 +293,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -328,6 +328,7 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
+      <para> <emphasis role = "bold"> Remarks T2.5-B </emphasis>: when the job is not on running state, there is no progression. </para>
     </section>
     
     <section>
@@ -346,7 +347,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -416,7 +417,7 @@ same conditions as regards security.</para>
               <entry><para>Normal execution of getCompletedJobsOuput</para></entry>
               <entry><para>The job output files of all completed jobs are returned</para></entry>
               <entry><para>The job output files of all completed jobs are returned</para></entry>
-              <entry><para>0</para></entry>
+              <entry><para> 0 </para></entry>
             </row>
             <row>
              <entry><para>T2.7-E1</para></entry>
@@ -436,6 +437,7 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
+      <para> <emphasis role = "bold"> Remarks T2.7-B </emphasis>: there is a failure when the script's execution is very fast (under one seconds). </para>
     </section>
       
       <section>
@@ -454,7 +456,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -501,7 +503,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
@@ -701,5 +703,181 @@ same conditions as regards security.</para>
       </tgroup>
       </informaltable>
   </chapter>
+  
+    
+  <chapter>
+    <title>Performance tests </title>
+    
+     <informaltable frame="all">
+      <tgroup cols="6">
+       <tbody>
+            <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Date</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>VISHNU execution time</para>
+               </entry>
+	       <entry>
+                  <para>SSH execution time</para>
+               </entry>
+            </row>
+            <row>
+               <entry>
+                  <para>CDP-3.1-submitJob</para>
+               </entry>
+               <entry>
+                  <para>05/05/11</para>
+               </entry>
+               <entry>
+                  <para>comparison with " ssh localhost qsub " </para>
+               </entry>
+               <entry>
+                  <para>submitJob</para>
+               </entry>
+               <entry>
+                  <para>0,30s</para>
+               </entry>
+	       <entry>
+                  <para>0,17s</para>
+               </entry>
+            </row>   
+	    <row>
+               <entry>
+                  <para>CDP-3.1-cancelJob</para>
+               </entry>
+               <entry>
+                  <para>05/05/11</para>
+               </entry>
+               <entry>
+                  <para>comparison with " ssh localhost qsub " </para>
+               </entry>
+               <entry>
+                  <para>cancelJob</para>
+               </entry>
+               <entry>
+                  <para>0,25s</para>
+               </entry>
+	       <entry>
+                  <para>0,21s</para>
+               </entry>
+            </row>   
+	    <row>
+               <entry>
+                  <para>CDP-3.1-listJobs</para>
+               </entry>
+               <entry>
+                  <para>05/05/11</para>
+               </entry>
+               <entry>
+                  <para>comparison with " ssh localhost qstat " </para>
+               </entry>
+               <entry>
+                  <para>listJobs</para>
+               </entry>
+               <entry>
+                  <para>0,08s</para>
+               </entry>
+	       <entry>
+                  <para>0,17s</para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-3.2.1-listQueues</para>
+               </entry>
+               <entry>
+                  <para>05/05/11</para>
+               </entry>
+               <entry>
+                  <para>execution time less than "ssh localhost qstat -Q" </para>
+               </entry>
+               <entry>
+                  <para>listQueues</para>
+               </entry>
+               <entry>
+                  <para>0,10s</para>
+               </entry>
+	       <entry>
+                  <para>0,16s</para>
+               </entry>
+            </row>
+	  </tbody>    
+      </tgroup>
+      </informaltable>
+      
+      <informaltable frame="all">
+      <tgroup cols="5">
+       <tbody>    
+	    <row>
+               <entry>
+                  <para>ID test</para>
+               </entry>
+               <entry>
+                  <para>Date</para>
+               </entry>
+               <entry>
+                  <para>Test description</para>
+               </entry>
+               <entry>
+                  <para>Command(s) tested</para>
+               </entry>
+               <entry>
+                  <para>Memory comsumption</para>
+               </entry>
+            </row>
+	    
+	      <row>
+               <entry>
+                  <para>CDP-3.2.2-submitJob</para>
+               </entry>
+               <entry>
+                  <para>05/05/11</para>
+               </entry>
+               <entry>
+                  <para>memory consumption</para>
+               </entry>
+               <entry>
+                  <para>submitJob</para>
+               </entry>
+               <entry>
+                  <para></para>
+               </entry>
+            </row>
+	    
+	    <row>
+               <entry>
+                  <para>CDP-Memserver</para>
+               </entry>
+               <entry>
+                  <para>05/05/11</para>
+               </entry>
+               <entry>
+                  <para>Memory consumption of tms server running during 24 hours</para>
+               </entry>
+               <entry>
+                  <para>Tms server</para>
+               </entry>
+               <entry>
+                  <para>2%</para>
+               </entry>
+            </row>
+	    
+	</tbody>    
+      </tgroup>
+      </informaltable>
+	    
+  </chapter>
+  
   
 </book>
