@@ -789,7 +789,7 @@ int get_script(
   char  s[MAX_LINE_LEN + 1];
   char *sopt;
   int   exec = FALSE;
-  char *cont;
+  char *cont = NULL;
   char  tmp_name[] = "/tmp/pbs_submit.XXXXXX";
   FILE *TMP_FILE;
   char *in;
@@ -1857,25 +1857,12 @@ int parse_file(
   char *pc;
   char *pdepend;
 
-  FILE *fP = NULL;
-
-  char tmp_name[] = "/tmp/pbs_submit.XXXXXX";
-  char tmp_name2[] = "/tmp/pbs_submit.XXXXXX";
-
-  char cline[4096];
   char tmpLine[1024];
-
-  char  flag;  /* submitfilter flag character */
-  char *vptr;  /* submitfilter flag value */
-
-  char tmpResources[4096] = "";
-  char *cP;
 
   char *ptr;
 
   struct stat sfilter;
 
-  int tmpfd;
   int nitems;
   char search_string[256];
 
@@ -1976,56 +1963,6 @@ int parse_file(
 
           pc = optarg;
 
-          /* OLD FORMAT:  -c { n | s | c | c=X }
-           * New format: -c [ { <old format items> | <new items> } ',' ]
-           * new items: none | shutdown | checkpoint | name=xyz | dir=xyz | interval=X
-           */
-#if 0
-
-          if (strlen(optarg) == 1)
-            {
-            if ((*pc != 'n') && (*pc != 's') && (*pc != 'c'))
-              {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -c value\n");
-              errflg++;
-
-              break;
-              }
-            }
-          else
-            {
-            if (strncmp(optarg, "c=", 2) != 0)
-              {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -c value\n");
-              errflg++;
-
-              break;
-              }
-
-            pc += 2;
-
-            if (*pc == '\0')
-              {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -c value\n");
-
-              errflg++;
-
-              break;
-              }
-
-            while (isdigit(*pc))
-              pc++;
-
-            if (*pc != '\0')
-              {
-              sprintf(PBS_ERROR_MSG, "pbs_submit: illegal -c value\n");
-              errflg++;
-
-              break;
-              }
-            }
-
-#else
           nitems = csv_length(optarg);
 
           for (i = 0; i < nitems; i++)
@@ -2052,7 +1989,6 @@ int parse_file(
               }
             }
 
-#endif
           set_attr(&attrib, ATTR_c, optarg);
           }  /* END if_cmd_line() */
 
@@ -3233,7 +3169,6 @@ int pbs_prepare_script(
   char *s_n_out;                      /* server part of destination */
   /* server:port to send request to */
   int   connect;                      /* return from pbs_connect */
-  char *errmsg;                       /* return from pbs_geterrmsg */
 
   struct stat statbuf;
 
@@ -3244,8 +3179,6 @@ int pbs_prepare_script(
 
   char *submit_args_str = NULL;       /* buffer to hold args */
   int   argi, argslen = 0;
-  int   idx;
-  int   have_intr_cmd = FALSE;
 
   initialize_pbs_error_msg(PBS_ERROR_MSG);
 
