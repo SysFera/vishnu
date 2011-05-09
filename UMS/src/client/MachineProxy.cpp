@@ -85,6 +85,9 @@ int MachineProxy::add()
   parseEmfObject(std::string(machineInString), machine_ptr, "Error by receiving Machine object serialized");
 
   mmachine = *machine_ptr;
+  delete machine_ptr;
+
+  diet_profile_free(profile);
 
   return 0;
 
@@ -142,6 +145,8 @@ int MachineProxy::update()
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
+  diet_profile_free(profile);
+
   return 0;
 }
 
@@ -187,6 +192,8 @@ int MachineProxy::deleteMachine()
 
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
+  
+  diet_profile_free(profile);
 
   return 0;
 }
