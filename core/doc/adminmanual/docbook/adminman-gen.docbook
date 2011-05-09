@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin)+CPP(admin)+PYTHON(admin)">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin)">
   <info>
     <author>
       <personname>
@@ -57,6 +57,16 @@
         <revdescription>
           
         <para>Ajout des web services</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>05/05/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          
+          
+          
+        <para>Réécriture du lancement avec fichier de configuration</para><para>Ajout d'un paragraphre pour le sendmail</para><para>Ajout de l'administration de TMS</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -117,6 +127,12 @@
           <para>SQL : Langage de requêtes sur les bases de données</para>
         </listitem>
         <listitem>
+          <para>TMS : Task Management Service</para>
+        </listitem>
+        <listitem>
+          <para>UMS : User Management Service</para>
+        </listitem>
+        <listitem>
           <para>WS : Web Services</para>
         </listitem>
       </itemizedlist>
@@ -143,7 +159,13 @@
             <para>Client UMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD UMS. </para>
           </listitem>
           <listitem>
+            <para>Client TMS : Cela désigne les classes intermédiaires permettant un accès à distance aux services du SeD TMS. </para>
+          </listitem>
+          <listitem>
             <para>Préfrontale : Cela désigne une machine mise avant la(les) frontale(s) des calculateurs. </para>
+          </listitem>
+          <listitem>
+            <para>SeD TMS : Cela désigne le programme contenant et exécutant les services du module TMS. </para>
           </listitem>
           <listitem>
             <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. 
@@ -197,17 +219,40 @@
         <listitem>
           <para>Python version 2.x x>=5 (Option)</para>
         </listitem>
+        <listitem>
+          <para>Torque ou LoadLeveler</para>
+        </listitem>
       </itemizedlist>
     </section>
     <section>
       <title> Compilation des sources </title>
-      <para>Vishnu utilise CMake comme système de construction et se conforme aux 
+      <para>VISHNU utilise CMake comme système de construction et se conforme aux 
 pratiques communèment admises.
-	Il y a quatre options principales utilisables :
+	Il y a neufs options principales utilisables :
 	<itemizedlist>
           <listitem>
             <para>
+	      BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut). 
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
 	      CLIENT_ONLY, qui permet de ne compiler que les éléments clients si le flag est activé (OFF par défaut). 
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+	      CMAKE_INSTALL_PREFIX, répertoire d'installation (/usr/local par défaut sur les plateformes *nix)
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). TMS a besoin d'UMS au préalable.
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+	      COMPILE_UMS, comme le module UMS si le flag est activé (OFF par défaut). 
 	    </para>
           </listitem>
           <listitem>
@@ -222,13 +267,18 @@ pratiques communèment admises.
           </listitem>
           <listitem>
             <para>
-	      CMAKE_INSTALL_PREFIX, répertoire d'installation (/usr/local par défaut sur les plateformes *nix)
+	      VISHNU_USE_LOADLEVELER, compile le SeD TMS pour load leveler (OFF par défaut).
+	    </para>
+          </listitem>
+          <listitem>
+            <para>
+	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut).
 	    </para>
           </listitem>
         </itemizedlist></para>
       <para>
-Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API 
-  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:</para>
+	  Par exemple, pour compiler VISHNU (clients et serveurs) avec l'API 
+	  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:</para>
       <itemizedlist>
         <listitem>
           <para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
@@ -243,7 +293,8 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
           <para>2. générer le Makefile</para>
         </listitem>
         <listitem>
-          <para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu</para>
+          <para>$ cmake -DENABLE_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ 
+	      -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</para>
         </listitem>
         <listitem>
           <para>3. lancer la compilation avec 2 jobs</para>
@@ -315,19 +366,19 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
           adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
         </listitem>
         <listitem>
-          <para>Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
+          <para><emphasis role="bold">Vérification</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
             sur l'adresse 'http://localhost:8080/jbossws' (ou 'http://adresseIP:8080/jbossws') et vérifier que la page affiche bien la version
             du module web services (jbossws-cxf-3.3.1.GA).</para>
         </listitem>
       </itemizedlist>
     </section>
     <section>
-      <title>Installation du module UMS WS dans JBoss</title>
+      <title>Installation des module WS dans JBoss</title>
       <section>
         <title>Fichiers à installer</title>
         <itemizedlist>
           <listitem>
-            <para>VishnuLib-1.0-SNAPSHOT.jar
+            <para>VISHNULib-1.0-SNAPSHOT.jar
               <itemizedlist>
                 <listitem>
                   <para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para>
@@ -342,7 +393,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
                   <para>Compilation (si nécessaire)
                     <itemizedlist>
                       <listitem>
-                        <para>Aller dans le répertoire VishnuLib</para>
+                        <para>Aller dans le répertoire VISHNULib</para>
                       </listitem>
                       <listitem>
                         <para>Faire 'mvn install' (peut être long la première fois)</para>
@@ -372,7 +423,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
                   <para>Compilation (si nécessaire)
                     <itemizedlist>
                       <listitem>
-                        <para>Aller dans le répertoire WSAPI, avoir le jar VishnuLib-1.0-SNAPSHOT.jar de déjà fait</para>
+                        <para>Aller dans le répertoire WSAPI, avoir le jar VISHNULib-1.0-SNAPSHOT.jar de déjà fait</para>
                       </listitem>
                       <listitem>
                         <para>Faire 'mvn install' (peut être long la première fois)</para>
@@ -396,7 +447,22 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
                   <para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU UMS avec l'option ENABLE_JAVA.</para>
                 </listitem>
                 <listitem>
-                  <para>Le fichier est normalement installé par le package VISHNU UMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para>
+                  <para>Le fichier est installé par défaut par le package VISHNU UMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para>
+                </listitem>
+                <listitem>
+                  <para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem>
+            <para>libVISHNU_TMS.so
+              <itemizedlist>
+                <listitem>
+                  <para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant le module VISHNU TMS avec l'option ENABLE_JAVA.</para>
+                </listitem>
+                <listitem>
+                  <para>Le fichier est installé par défaut par le package VISHNU TMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para>
                 </listitem>
                 <listitem>
                   <para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para>
@@ -421,16 +487,16 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
         </itemizedlist>
       </section>
       <section>
-        <title>Lancement du serveur JBoss avec le module WS UMS</title>
+        <title>Lancement du serveur JBoss avec le module WS</title>
         <itemizedlist>
           <listitem>
             <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh 
               (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
           </listitem>
           <listitem>
-            <para>Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
+            <para><emphasis role="bold">Vérification</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
               sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le 
-                &quot;service endPoint&quot; : <emphasis role="bold">VishnuUMSPortImpl</emphasis> est actif.</para>
+                &quot;service endPoint&quot; : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para>
           </listitem>
         </itemizedlist>
       </section>
@@ -440,7 +506,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
     <title>Déploiement de VISHNU</title>
     <section>
       <title>Lancement sur un même réseau</title>
-      <para>Le module UMS peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
+      <para>Les modules UMS et TMS peuvent être lancés soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
       <orderedlist>
@@ -454,7 +520,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
           <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
             <itemizedlist>
               <listitem>
-                <para> 'traceLevel = 1' : Le niveau de verbosité du master agent, cette valeur peut être entre 1 et 10 compris. </para>
+                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
               </listitem>
               <listitem>
                 <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
@@ -466,14 +532,14 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS sur la préfrontale. Un exemple de commande de lancement est : './umssed ~/myClient_server/mathOp/SeD.cfg 1 pg localhost vishnu_user vishnu_user ~/Bureau/sendmail.py'
+          <para>Lancer le SeD UMS sur la préfrontale. La commande de lancement est : './umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
               <listitem>
                 <para>
-                  '~/myClient_server/mathOp/SeD.cfg' : le chemin jusqu'au fichier de configuration du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
+                  'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
                   <itemizedlist>
                     <listitem>
-                      <para>'traceLevel = 10' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 1 et 10 compris.</para>
+                      <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
                     </listitem>
                     <listitem>
                       <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
@@ -482,38 +548,61 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
                 </para>
               </listitem>
               <listitem>
-                <para> '1' : L'id de VISHNU à utiliser dans la DB, une seule est utilisable actuellement .</para>
+                <para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB, une seule est utilisable actuellement .</para>
               </listitem>
               <listitem>
-                <para> 'pg' : Pour utiliser une base postgrel. Actuellement la base oracle n'est pas utilisable.</para>
+                <para> 'databaseType=postgresql' : Pour utiliser une base postgrel. Actuellement les bases oracle et mysql ne sont pas utilisables.</para>
               </listitem>
               <listitem>
                 <para>
-                  'localhost' : La DB à utiliser.
+                  'databaseHost=localhost' : L'hôte contenant la base de données.
                 </para>
               </listitem>
               <listitem>
-                <para> 'vishnu_user' (le premier) : Le nom d'utilisateur pour se connecter à la DB.</para>
+                <para>'databaseName=vishnu' : Le nom de la base de données</para>
               </listitem>
               <listitem>
-                <para> 'vishnu_user' (le second) : Le mot de passe pour se connecter à la DB.</para>
+                <para> 'databaseUserName=vishnu_user' : Le nom d'utilisateur pour se connecter à la DB.</para>
               </listitem>
               <listitem>
-                <para> '~/Bureau/sendmail.py' : Le script à utiliser pour envoyer les mails. Il sera fourni avec le module UMS.</para>
+                <para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
+              </listitem>
+              <listitem>
+                <para> 'sendmailScriptPath=/home/keo/Bureau/sendmail.py' : Le script à utiliser pour envoyer les mails. Il sera fourni avec le module UMS.</para>
               </listitem>
             </itemizedlist>
           </para>
         </listitem>
         <listitem>
           <para>
-            Le module UMS de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
+	    Sur la frontale contenant torque, il faut que le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de torque soient lancés. 
+	  </para>
+        </listitem>
+        <listitem>
+          <para>Lancer le SeD TMS sur la frontale contenant torque. La commande de lancement est : './tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec en plus:
+	    <itemizedlist>
+              <listitem>
+                <para>'intervalMonitor = 1' : La fréquence en seconde de mise à jour des données dans la base concernant les états des jobs</para>
+              </listitem>
+              <listitem>
+                <para>'batchSchedulerType=TORQUE' : Le type du batch scheduler auquel le SeD se connectera</para>
+              </listitem>
+              <listitem>
+                <para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé</para>
+              </listitem>
+            </itemizedlist>
+	  </para>
+        </listitem>
+        <listitem>
+          <para>
+            Les modules UMS et TMS de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS et TMS.
           </para>
         </listitem>
       </orderedlist>
     </section>
     <section>
       <title>Lancement sur plusieurs réseaux</title>
-      <para>Le module UMS peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
+      <para>Un module VISHNU peut être lancé soit manuellement, soit en utilisant l'outil GoDIET : un logiciel de lancement pour Sysfera-DS depuis une machine d'administration.
         On suppose dans la suite que le MA est sur le même réseau que l'omniNames et le SeD sur un autre réseau, séparés par un pare-feu</para>
       <para><emphasis role="bold">NOTE: l'outil GoDIET sera disponible lors de la livraison finale du projet VISHNU</emphasis></para>
       <para>Pour une vue générale de l'architecture du système VISHNU, se référer au document [ARCH], chapitre 4 ('Technical Architecture').</para>
@@ -615,7 +704,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
           <para> Lancer le MA avec son fichier de configuration sur le même réseau que le service de nommage : 'dietAgent config.cfg'. Voir la figure 4.2 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
             <itemizedlist>
               <listitem>
-                <para> 'traceLevel = 1' : Le niveau de verbosité du master agent, cette valeur peut être entre 1 et 10 compris. </para>
+                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
               </listitem>
               <listitem>
                 <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
@@ -627,77 +716,72 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/myClient_server/mathOp/SeD.cfg 1 pg localhost vishnu_user vishnu_user ~/Bureau/sendmail.py'
-            <itemizedlist>
-              <listitem>
-                <para>
-                  '~/myClient_server/mathOp/SeD.cfg' : le chemin jusqu'au fichier de configuration du SeD. Voir la figure 4.2 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
-                  <itemizedlist>
-                    <listitem>
-                      <para>'traceLevel = 10' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 1 et 10 compris.</para>
-                    </listitem>
-                    <listitem>
-                      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question.</para>
-                    </listitem>
-                  </itemizedlist>
-                </para>
-              </listitem>
-              <listitem>
-                <para> '1' : L'id de VISHNU à utiliser dans la DB, une seule est utilisable actuellement .</para>
-              </listitem>
-              <listitem>
-                <para> 'pg' : Pour utiliser une base postgrel. Actuellement la base oracle n'est pas utilisable.</para>
-              </listitem>
-              <listitem>
-                <para>
-                  'localhost' : La DB à utiliser.
-                </para>
-              </listitem>
-              <listitem>
-                <para> 'vishnu_user' (le premier) : Le nom d'utilisateur pour se connecter à la DB.</para>
-              </listitem>
-              <listitem>
-                <para> 'vishnu_user' (le second) : Le mot de passe pour se connecter à la DB.</para>
-              </listitem>
-              <listitem>
-                <para> '~/Bureau/sendmail.py' : Le script à utiliser pour envoyer les mails. Il sera fourni avec le module UMS.</para>
-              </listitem>
-            </itemizedlist>
+          <para>Lancer le SeD, par exemple un UMS sur l'autre sous réseau. Un exemple de commande de lancement est : './umssed ~/ums_sed.cfg'. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
           </para>
         </listitem>
         <listitem>
           <para>
-            Le module UMS de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
+            Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS.
           </para>
         </listitem>
       </orderedlist>
     </section>
     <section>
-      <title>Exemples de fichiers de configuration</title>
-      <figure>
-        <title>Fichier de configuration de MA</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="image/png/MA.png" align="center"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-      <figure>
-        <title>Fichier de configuration exemple de SeD</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="image/png/SED.png" align="center"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-      <figure>
-        <title>Fichier de configuration exemple de forwarder</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="image/png/forwarder.png" align="center"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
+      <title>Exemple de fichier de configuration d'un MA</title>
+      <programlisting>
+	traceLevel = 0
+	name = MA0
+	agentType = DIET_MASTER_AGENT
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier de configuration pour un SeD DIET (le champs dietConfigFile)</title>
+      <programlisting>
+	traceLevel = 0
+	parentName = MA0
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier de configuration d'un SeD UMS </title>
+      <programlisting>
+	# Configuration of the VISHNU UMS SeD
+	dietConfigFile=/usr/local/etc/SeD.cfg
+	vishnuId=1
+	databaseType=postgresql
+	databaseHost=localhost
+	databaseName=vishnu
+	databaseUserName=vishnu_user
+	databaseUserPassword=vishnu_user
+	sendmailScriptPath=/home/keo/Bureau/sendmail.py
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier de configuration d'un SeD TMS </title>
+      <programlisting>
+	# Configuration of the VISHNU TMS SeD
+	dietConfigFile=/usr/local/etc/SeD.cfg
+	vishnuId=1
+	databaseType=postgresql
+	databaseHost=localhost
+	databaseName=vishnu
+	databaseUserName=vishnu_user
+	databaseUserPassword=vishnu_user
+	sendmailScriptPath=/home/keo/Bureau/sendmail.py
+	# Configuration propres à TMS
+	batchSchedulerType=TORQUE
+	vishnuMachineId=machine_1
+	intervalMonitor = 1
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier d'un forwarder </title>
+      <programlisting>
+	# accept everything from everyone
+	accept:.*
+
+	# reject its own ip
+	reject:192\.168\.1\.6
+      </programlisting>
     </section>
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
@@ -853,7 +937,7 @@ Par exemple, pour compiler Vishnu (clients et serveurs) avec l'API
     </section>
   </chapter>
   <reference>
-    <title>Command reference</title>
+    <title>UMS Command reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>vishnu_add_user</refentrytitle>
@@ -1712,7 +1796,7 @@ that option using the vishnu_configure_option command.</para>
     </refentry>
   </reference>
   <reference>
-    <title>C++ API Reference</title>
+    <title>UMS C++ API Reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>addUser</refentrytitle>
@@ -1754,19 +1838,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1842,19 +1926,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1930,19 +2014,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2016,19 +2100,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2096,19 +2180,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2170,19 +2254,19 @@ After restoring, the vishnu database is re-initialized.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2242,19 +2326,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2322,19 +2406,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2402,19 +2486,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2484,19 +2568,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2565,19 +2649,19 @@ that option using the vishnu_configure_option command.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Internal Error: SysDS service failure&quot; [1]</term>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database returned an error&quot; [2]</term>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Database connection failure&quot; [3]</term>
+            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: System call failure&quot; [4]</term>
+            <term>&quot;Vishnu not available (System)&quot; [4]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2605,7 +2689,7 @@ that option using the vishnu_configure_option command.</para>
     </refentry>
   </reference>
   <reference>
-    <title>Python API Reference</title>
+    <title>UMS Python API Reference</title>
     <refentry>
       <refmeta>
         <refentrytitle>VISHNU_UMS.addUser</refentrytitle>
@@ -2658,19 +2742,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2757,19 +2841,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2856,19 +2940,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2953,19 +3037,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3044,19 +3128,19 @@ and password are sent to the user by email.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3129,19 +3213,19 @@ After restoring, the vishnu database is re-initialized.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3212,19 +3296,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3303,19 +3387,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3394,19 +3478,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3487,19 +3571,19 @@ have to add it to the authorized keys of their own account on the machine.</para
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3579,19 +3663,19 @@ that option using the vishnu_configure_option command.</para>
         <para>The following exceptions may be thrown: </para>
         <variablelist>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: SysDS service failure&quot; [1])</term>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database returned an error&quot; [2])</term>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Database connection failure&quot; [3])</term>
+            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: System call failure&quot; [4])</term>
+            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
