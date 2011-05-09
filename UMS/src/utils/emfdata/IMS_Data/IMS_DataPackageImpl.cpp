@@ -620,7 +620,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_CurMetricOpEClass->setInterface(false);
     m_CurMetricOp__metricType->setEType(m_MetricTypeEEnum);
     m_CurMetricOp__metricType->setName("metricType");
-    m_CurMetricOp__metricType->setDefaultValueLiteral("");
+    m_CurMetricOp__metricType->setDefaultValueLiteral("0");
     m_CurMetricOp__metricType->setLowerBound(0);
     m_CurMetricOp__metricType->setUpperBound(1);
     m_CurMetricOp__metricType->setTransient(false);

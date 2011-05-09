@@ -167,7 +167,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CurMetricOp" instanceTypeName="CurMetricOp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType"
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="The type of the metric"/>
         <details key="shortOption" value="t"/>
