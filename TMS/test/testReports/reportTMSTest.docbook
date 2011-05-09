@@ -716,9 +716,6 @@ same conditions as regards security.</para>
                   <para>ID test</para>
                </entry>
                <entry>
-                  <para>Date</para>
-               </entry>
-               <entry>
                   <para>Test description</para>
                </entry>
                <entry>
@@ -730,13 +727,13 @@ same conditions as regards security.</para>
 	       <entry>
                   <para>SSH execution time</para>
                </entry>
+	       <entry>
+                  <para>Results</para>
+               </entry>
             </row>
             <row>
                <entry>
                   <para>CDP-3.1-submitJob</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
                </entry>
                <entry>
                   <para>comparison with " ssh localhost qsub " </para>
@@ -750,13 +747,13 @@ same conditions as regards security.</para>
 	       <entry>
                   <para>0,17s</para>
                </entry>
+	       <entry>
+                  <para>Failure</para>
+               </entry>
             </row>   
 	    <row>
                <entry>
                   <para>CDP-3.1-cancelJob</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
                </entry>
                <entry>
                   <para>comparison with " ssh localhost qsub " </para>
@@ -770,13 +767,13 @@ same conditions as regards security.</para>
 	       <entry>
                   <para>0,21s</para>
                </entry>
+	       <entry>
+                  <para>Failure</para>
+               </entry>
             </row>   
 	    <row>
                <entry>
                   <para>CDP-3.1-listJobs</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
                </entry>
                <entry>
                   <para>comparison with " ssh localhost qstat " </para>
@@ -790,14 +787,14 @@ same conditions as regards security.</para>
 	       <entry>
                   <para>0,17s</para>
                </entry>
+	       <entry>
+                  <para>Success</para>
+               </entry>
             </row>
 	    
 	    <row>
                <entry>
                   <para>CDP-3.2.1-listQueues</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
                </entry>
                <entry>
                   <para>execution time less than "ssh localhost qstat -Q" </para>
@@ -810,6 +807,9 @@ same conditions as regards security.</para>
                </entry>
 	       <entry>
                   <para>0,16s</para>
+               </entry>
+	       <entry>
+                  <para>Success</para>
                </entry>
             </row>
 	  </tbody>    
@@ -824,9 +824,6 @@ same conditions as regards security.</para>
                   <para>ID test</para>
                </entry>
                <entry>
-                  <para>Date</para>
-               </entry>
-               <entry>
                   <para>Test description</para>
                </entry>
                <entry>
@@ -835,14 +832,14 @@ same conditions as regards security.</para>
                <entry>
                   <para>Memory comsumption</para>
                </entry>
+	       <entry>
+                  <para>Results</para>
+               </entry>
             </row>
 	    
 	      <row>
                <entry>
                   <para>CDP-3.2.2-submitJob</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
                </entry>
                <entry>
                   <para>memory consumption</para>
@@ -853,14 +850,14 @@ same conditions as regards security.</para>
                <entry>
                   <para></para>
                </entry>
+	       <entry>
+                  <para></para>
+               </entry>
             </row>
 	    
 	    <row>
                <entry>
                   <para>CDP-Memserver</para>
-               </entry>
-               <entry>
-                  <para>05/05/11</para>
                </entry>
                <entry>
                   <para>Memory consumption of tms server running during 24 hours</para>
@@ -869,7 +866,10 @@ same conditions as regards security.</para>
                   <para>Tms server</para>
                </entry>
                <entry>
-                  <para>2%</para>
+                  <para></para>
+               </entry>
+	       <entry>
+                  <para></para>
                </entry>
             </row>
 	    
