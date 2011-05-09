@@ -157,6 +157,10 @@ same conditions as regards security.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;Error invalid parameters&quot; [10]</term>
             <listitem/>
           </varlistentry>
@@ -558,6 +562,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -635,6 +643,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
@@ -700,6 +712,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <title>DIAGNOSTICS</title>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
           <varlistentry>
             <term>&quot;The sessionKey is expired. The session is closed.&quot; [29]</term>
             <listitem/>
@@ -806,7 +822,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1264,7 +1280,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1360,7 +1376,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1446,7 +1462,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <term>&quot;Vishnu not available (SSH error)&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1566,7 +1582,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2079,7 +2095,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2186,7 +2202,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2283,7 +2299,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <term>SystemException(&quot;Vishnu not available (SSH error)&quot; [9])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
