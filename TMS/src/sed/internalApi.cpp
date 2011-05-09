@@ -314,7 +314,6 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
   char* ID3 = NULL;
   char* jobResultSerialized = NULL;
   char* moutDir = NULL;
-  char* jobResultOutSerialized;
   std::string empty = "";
   std::string errorInfo;
   std::string finishError ="";

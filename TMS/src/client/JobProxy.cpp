@@ -27,7 +27,7 @@ JobProxy::JobProxy(const SessionProxy& session,
 * \return raises an exception on error
 */
 int
-JobProxy::submitJob(const std::string scriptContent,
+JobProxy::submitJob(const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
 
   diet_profile_t* profile = NULL;
@@ -181,7 +181,6 @@ JobProxy::getJobInfo() {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* optionsToString = NULL;
   char* jobToString = NULL;
   char* jobInString = NULL;
   char* errorInfo = NULL;

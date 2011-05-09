@@ -290,8 +290,8 @@ TorqueServer::getJobState(const std::string& jobId) {
   char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
 
-  strcpy(tmsJobId, strdup(jobId.c_str()));
-  if (get_server(tmsJobId, tmsJobIdOut, serverOut))
+  //strcpy(tmsJobId, strdup(jobId.c_str()));
+  if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
   {
     std::ostringstream jobIdError;
     jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
@@ -340,8 +340,8 @@ TorqueServer::getJobStartTime(const std::string& jobId) {
   char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
 
-  strcpy(tmsJobId, strdup(jobId.c_str()));
-  if (get_server(tmsJobId, tmsJobIdOut, serverOut))
+  //strcpy(tmsJobId, strdup(jobId.c_str()));
+  if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
   {
     std::ostringstream jobIdError;
     jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
@@ -434,7 +434,6 @@ TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
 void
 TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   struct attrl *a;
-  char* trunc_str;
   size_t pos_found;
   string str;
 
@@ -661,11 +660,8 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
 
   pbs_disconnect(connect);
 
-  int nbqueue = 0;
   int nbRunningJobs = 0; 
   int nbJobsInQueue = 0;
-  int tot_nbRunningJobs  = 0;
-  int tot_nbJobsInQueue  = 0;
   struct batch_status *p;
   struct attrl *a;
 
