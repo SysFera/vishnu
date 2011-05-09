@@ -37,7 +37,7 @@ namespace bfs= boost::filesystem;
 
 BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
-
+/*
 
 //Test category 1
 
@@ -626,6 +626,7 @@ BOOST_AUTO_TEST_SUITE_END()
 //------------------------------------------------------------------------------------------------------------------------
 
 // T2.4 : list jobs
+*/
 
 BOOST_AUTO_TEST_SUITE( list_jobs)
 
@@ -650,27 +651,61 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
     //Setting submitjob parameters
 
     const std::string scriptFilePath=TMSSCRIPTSPATH "/torque_script";
-    Job jobInfo;
+    Job firstJob;
     SubmitOptions options;
 
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath,firstJob,options)==0  );
 
-    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    BOOST_TEST_MESSAGE("************ The first job identifier is " << firstJob.getJobId() );
+    
+    // submit a second job
+    
+    Job secondJob;
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath,secondJob,options)==0  );
+
+    BOOST_TEST_MESSAGE("************ The second job identifier is " << secondJob.getJobId() );
+
 
     ListJobs lsJobs;
     ListJobsOptions lsOptions;
-    lsOptions.setJobId(jobInfo.getJobId());
+    //lsOptions.setJobId(jobInfo.getJobId());
+    // retrieve the two last submitted jobs
+    bool found= false;
+    bool foundFisrtJob= false;
+    bool foundSecondJob= false;
+
     BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
 
 
   // Check the success of listJobs function
 
-    BOOST_CHECK(  *(lsJobs.getJobs().get(0))== jobInfo ) ;
+    int i=0;
+  
+    while ( ( false==found ) && ( i < lsJobs.getNbJobs()) ){
+
+      if(firstJob==*(lsJobs.getJobs().get(i))){
+      foundFisrtJob= true;
+      }
+       
+       
+      if(secondJob==*(lsJobs.getJobs().get(i))){
+     foundSecondJob=true;
+      }
+
+      found= (foundSecondJob && foundSecondJob);
+
+      i++;
+    }   
+
+
+    
+    BOOST_CHECK( found ) ;
 
     BOOST_TEST_MESSAGE("*********************** list a job info: normal call ok!!!!*****************************" << " \n");
 
-  //  Clean up: delete the submitted job
-    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+  //  Clean up: delete the submitted jobs
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, firstJob.getJobId())==0  );
+    BOOST_REQUIRE(cancelJob(sessionKey, machineId, secondJob.getJobId())==0  );
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
@@ -774,7 +809,7 @@ BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
 
 BOOST_AUTO_TEST_SUITE_END()
 
-
+/*
 
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -1405,7 +1440,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 
 
 BOOST_AUTO_TEST_SUITE_END()
-
+*/
 
 // THE END
 

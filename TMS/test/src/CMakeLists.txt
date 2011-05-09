@@ -47,19 +47,19 @@ include(TMSTestingMacros)
 tms_test_setup()
 tms_test(tms_automTest)
 
-#add_executable(stresser
-#  stress.cpp)
+add_executable(tms_stresser
+ tms_stress.cpp)
 
-#target_link_libraries( stresser
-#  ${DIET_CLIENT_LIB}
-#  ${DIET_SERVER_LIB}
-#  ${LIBPQ_LIB}
-#  #  ${CLI_SOURCE_DIR}
-#  ${Boost_LIBRARIES}
-#  emf4cpp-UMS_Data
-#  database-vishnu
-  #  exception-vishnu
-  #  vishnu-ums-api
-  #  ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries( tms_stresser
+ ${DIET_CLIENT_LIB}
+  ${DIET_SERVER_LIB}
+  ${LIBPQ_LIB}
+  ${Boost_LIBRARIES}
+  emf4cpp-UMS_Data
+  emf4cpp-TMS_Data
+  database-vishnu
+    exception-vishnu
+    vishnu-ums-api
+    vishnu-tms-api)
 
 add_subdirectory( sql )
