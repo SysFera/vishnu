@@ -139,21 +139,19 @@ public:
             }
 
             if(gap < walltime) {
-              percent = static_cast<int>(100*(double(gap)/walltime));
-            } else {
-              gap /= 2; 
-              while(gap >= (walltime)) {
-                gap /= 2;
+              double ratio =  100*(double(gap)/walltime);
+              if(ratio > 0.0 && ratio <= 1.0) {
+                percent = 1;
+              } else {
+                percent = static_cast<int>(ratio);
               }
-              if(gap < walltime/2) {
-                gap = 3*walltime/4;
-              } 
-              percent = static_cast<int>(100*(double(gap)/walltime));
+            } else {
+              percent = 99;
             }
             job->setPercent(percent);
           } 
         } else {
-          job->setPercent(0.0);
+          job->setPercent(0);
         }
         mlistObject->getProgress().push_back(job); 
       }

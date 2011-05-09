@@ -78,14 +78,14 @@ JobOutputServer::getJobOutput() {
     results = sqlResult->get(0);
     iter = results.begin();
     outputPath = *iter;
-    iter++;
+    ++iter;
     errorPath = *iter;
-    iter++;
+    ++iter;
     owner = *iter;
     if(owner.compare(acLogin)!=0) {
       throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of this job because it is for an other owner");
     } 
-    iter++;
+    ++iter;
     status = convertToInt(*iter);
     if(status < 5) {
       throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED);
@@ -107,7 +107,7 @@ JobOutputServer::getJobOutput() {
     vishnu::createTmpFile(copyOfOutputPath);
     vishnu::createTmpFile(copyOfErrorPath);
 
-    SSHJobExec sshJobExec(NULL, "", "", acLogin, machineName, "", UNDEFINED);
+    SSHJobExec sshJobExec(acLogin, machineName);
     if(sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)){
       vishnu::deleteFile(copyOfOutputPath);
       vishnu::deleteFile(copyOfErrorPath);
@@ -165,11 +165,11 @@ JobOutputServer::getCompletedJobsOutput() {
       iter = results.begin();
 
       jobId = *iter;
-      iter++;
+      ++iter;
       outputPath = *iter;
-      iter++;
+      ++iter;
       errorPath = *iter;
-      iter++;
+      ++iter;
       status = convertToInt(*iter);
      
       size_t pos1 = outputPath.find(":"); 
@@ -188,7 +188,7 @@ JobOutputServer::getCompletedJobsOutput() {
         vishnu::createTmpFile(copyOfOutputPath);
         vishnu::createTmpFile(copyOfErrorPath);
 
-        SSHJobExec sshJobExec(NULL, "", "", acLogin, machineName, "", UNDEFINED);
+        SSHJobExec sshJobExec(acLogin, machineName);
         if(!sshJobExec.copyFiles(outputPath, errorPath , copyOfOutputPath, copyOfErrorPath)) {;
 
           out->setJobId(jobId);

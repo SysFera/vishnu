@@ -18,7 +18,7 @@
  * \brief Constructor
  */
 BatchFactory::BatchFactory() {
-
+  mbatchServer = NULL;
 }
 
 /**
@@ -48,6 +48,13 @@ BatchFactory::getBatchServerInstance(BatchType batchType) {
   }
 
   return mbatchServer;
+}
+
+/**
+ * \brief Function to free a batchServer instance.
+ */
+void BatchFactory::freeBatchServerInstance() {
+   delete mbatchServer;
 }
 
 /**
