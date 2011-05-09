@@ -860,6 +860,7 @@ int get_script(
         sprintf(PBS_ERROR_MSG, "pbs_submit: error writing to filter stdin\n");
 
         fclose(filter_pipe);
+        free(filter_pipe);
         unlink(tmp_name2);
 
         return(3);
@@ -867,6 +868,7 @@ int get_script(
       }
 
     rc = pclose(filter_pipe);
+    free(filter_pipe);
 
     if (WEXITSTATUS(rc) == (unsigned char)SUBMIT_FILTER_ADMIN_REJECT_CODE)
       {
@@ -1018,7 +1020,7 @@ int get_script(
     }
 
   strcpy(script, tmp_name);
-
+  
   return 0;
   }  /* END get_script() */
 
@@ -3080,8 +3082,9 @@ int load_config(
 
   if ((fread(config_buf, BufSize, 1, config_stream) <= 0) && (ferror(config_stream) != 0))
     {
+    free(config_stream);
     /* FAILURE */
-
+    
     return(1);
     }
 
@@ -3097,6 +3100,7 @@ int load_config(
       }
     }   /* END while ((ptr = strchr(ptr,'#')) != NULL) */
 
+  free(config_stream);
   /* SUCCESS */
 
   return 0;
@@ -3315,6 +3319,7 @@ int pbs_prepare_script(
       if (getgrgid(getgid()) == NULL)
       {
         sprintf(PBS_ERROR_MSG, "pbs_submit: cannot validate submit group.\n");
+        free(submit_args_str); 
         return 1;
       }
     }
