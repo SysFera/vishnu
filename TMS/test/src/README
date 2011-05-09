@@ -1,0 +1,53 @@
+How to set up TMS testing environnement in project root CMakeList:
+
+ Firstable, you have to enable the "BUILD_TESTING" flag in root CMakeList.txt.
+
+
+I) BATCH Section
+
+Theses test cases support only TORQUE Batch server. 
+
+So Set the  VISNHU_USE_TORQUE flag and set the variable TEST_BATCH_SERVER_HOSTNAME to the
+the name of machine in which the BATCH server is running.
+
+
+II) Database Section
+Set These variables
+
+TEST_DB_HOST: the name of the machine where the database is located
+
+TEST_DB_NAME: the name of the database
+
+TEST_DB_TYPE: the type of the database (only two database is supported:
+postgresql, mysql )
+
+
+TEST_DB_LOGIN: a database user login
+TEST_DB_PASSWORD: a database user password.
+
+
+
+III) USERS section
+
+
+We need at least two vishnu users with two different local accounts. 
+
+// The vishnu root user must have an admin privilege in the Batch server
+// machine. Set his login an his ssh private key path
+
+TEST_ROOT_LOGIN: ""
+TEST_ROOT_SSHKEY: ""
+
+
+// The vishnu admin user does not necessary have any privilege on Batch server
+// machine. Set his login an his ssh private key path
+
+TEST_ADMIN_LOGIN: ""
+TEST_ADMIN_SSHKEY: ""
+
+
+// This user is a normal vishnu user.
+// machine. Set his login an his ssh private key path
+
+TEST_USER_LOGIN: ""
+TEST_USER_SSHKEY: ""
