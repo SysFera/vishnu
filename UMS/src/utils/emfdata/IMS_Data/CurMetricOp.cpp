@@ -30,7 +30,8 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-CurMetricOp::CurMetricOp()
+CurMetricOp::CurMetricOp() :
+    m_metricType(0)
 {
 
     /*PROTECTED REGION ID(CurMetricOpImpl__CurMetricOpImpl) START*/
