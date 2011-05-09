@@ -2,7 +2,7 @@
  * \file SSHJobExec.hpp
  * \brief This file presents the implementation of the SSHJobExec.
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * \date April 
+ * \date April
 */
 
 #ifndef _SSHJobExec_H_
@@ -12,7 +12,7 @@
 #include "utilVishnu.hpp"
 
 /**
- * \class SSHJobExec 
+ * \class SSHJobExec
  * \brief SSHJobExec class implementation
  */
 class SSHJobExec {
@@ -20,31 +20,31 @@ class SSHJobExec {
   public:
 
      /**
-     * \brief Constructor 
+     * \brief Constructor
      * \param user the user login
-     * \param hostname the hostname of the machine 
+     * \param hostname the hostname of the machine
      * \param batchType the type of the batch scheduler
      * \param jobSerialized the job serialized
      * \param submitOptionsSerialized the job options serialized
      * \param sskey the ssh private key path
      */
-    SSHJobExec(const std::string& user, 
+    SSHJobExec(const std::string& user,
                const std::string& hostname,
                const BatchType& batchType = UNDEFINED,
                const std::string& jobSerialized = "",
                const std::string& submitOptionsSerialized="",
                const std::string& ssKey="");
-    
+
      /**
-     * \brief Function to execute command by using ssh 
+     * \brief Function to execute command by using ssh
      * \param slaveDirectory the path to the command executable
      * \param serviceName the name of the service to execute
      * \param script_path the path to script to submit
      * \return raises an exception on error
      */
-    int 
+    int
     sshexec(const std::string& slaveDirectory,
-            const std::string& serviceName, 
+            const std::string& serviceName,
             const std::string& script_path="");
 
     /**
@@ -52,66 +52,72 @@ class SSHJobExec {
      * \param outputPath the output path to get
      * \param errorPath the error path to get
      * \param copyOfOutputPath the copy of the outputPath
-     * \param copyOfErrorPath the copy of errorPath 
+     * \param copyOfErrorPath the copy of errorPath
      * \return raises an exception on error
-     */ 
-    int 
-    copyFiles(const std::string& outputPath, 
-              const std::string& errorPath, 
-              const char* copyOfOutputPath, 
+     */
+    int
+    copyFiles(const std::string& outputPath,
+              const std::string& errorPath,
+              const char* copyOfOutputPath,
               const char* copyOfErrorPath);
 
-     
+
     /**
      * \brief Function to return the job serialized content
-     * \return  job serialized content 
+     * \return  job serialized content
      */
-    std::string 
+    std::string
     getJobSerialized();
 
      /**
-     * \brief Function to return the error message of a service 
+     * \brief Function to return the error message of a service
      * \return error message information
      */
-    std::string 
+    std::string
     getErrorInfo();
 
     /**
      * \brief Destructor
-     */    
+     */
     ~SSHJobExec();
 
   private:
-    
+
     /**
      * \brief Function to convert the batch type to string
      * \param BatchType the batch type to convert
-     * \return the converted batch type 
+     * \return the converted batch type
      */
     std::string convertBatchTypeToString(BatchType batchType);
+
+    /**
+     * \brief Function to check the parameters before launching ssh
+     * \exception SystemException
+     */
+    void checkSshParams();
 
     /**
      * \brief The job serialized
      */
     std::string mjobSerialized;
-   
+
     /**
-     * \brief The job options serialized 
+     * \brief The job options serialized
      */
     std::string msubmitOptionsSerialized;
-   
+
     /**
-     * \brief The type of the batch scheduler 
+     * \brief The type of the batch scheduler
      */
     BatchType mbatchType;
-   
+
     /**
-     * \brief The message erroro occured during execution of a service 
+     * \brief The message erroro occured during execution of a service
      */
     std::string merrorInfo;
 
     /**
-     * \brief The user login 
+     * \brief The user login
      */
     std::string muser;
 
@@ -121,7 +127,7 @@ class SSHJobExec {
     std::string mhostname;
 
     /**
-     * \brief The ssh private key path 
+     * \brief The ssh private key path
      */
     std::string msshKey;
 };
