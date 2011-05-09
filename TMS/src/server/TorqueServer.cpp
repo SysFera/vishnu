@@ -222,9 +222,6 @@ TorqueServer::pbs_cancel(const char* jobId,
     }
   }
 
-  std::cout << "tmsJobIdOut " << tmsJobIdOut << std::endl;
-  std::cout << "serverOut=" << serverOut << std::endl;
-  
   if(isLocal) {
      connect = cnt2server(serverOut);
   } else {
@@ -287,14 +284,12 @@ TorqueServer::getJobState(const std::string& jobId) {
   struct attrl *a;
   int state = 5; //TERMINATED
 
-  char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
 
-  strcpy(tmsJobId, strdup(jobId.c_str()));
-  if (get_server(tmsJobId, tmsJobIdOut, serverOut))
+  if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
   {
     std::ostringstream jobIdError;
-    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
+    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
   } else {
     serverOut[0] = '\0';
@@ -337,14 +332,12 @@ TorqueServer::getJobStartTime(const std::string& jobId) {
   struct attrl *a;
   time_t startTime = 0; 
 
-  char tmsJobId[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
 
-  strcpy(tmsJobId, strdup(jobId.c_str()));
-  if (get_server(tmsJobId, tmsJobIdOut, serverOut))
+  if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
   {
     std::ostringstream jobIdError;
-    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
+    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
   } else {
     serverOut[0] = '\0';
@@ -434,7 +427,6 @@ TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
 void
 TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   struct attrl *a;
-  char* trunc_str;
   size_t pos_found;
   string str;
 
@@ -661,11 +653,8 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
 
   pbs_disconnect(connect);
 
-  int nbqueue = 0;
   int nbRunningJobs = 0; 
   int nbJobsInQueue = 0;
-  int tot_nbRunningJobs  = 0;
-  int tot_nbJobsInQueue  = 0;
   struct batch_status *p;
   struct attrl *a;
 

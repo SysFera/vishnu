@@ -95,7 +95,7 @@ MonitorTMS::run() {
 
         iter = tmp.begin();
         jobId = *iter;
-        iter++;
+        ++iter;
         batchJobId = *iter;
         BatchFactory factory;
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType));
