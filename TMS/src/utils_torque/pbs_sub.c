@@ -1019,7 +1019,7 @@ int get_script(
 
   strcpy(script, tmp_name);
 
-  return(0);
+  return 0;
   }  /* END get_script() */
 
 
@@ -1719,7 +1719,8 @@ state3:         /* No value - get it from pbs_submit environment */
 
       if (job_env == NULL)
         {
-        return(FALSE);
+          free(job_env); 
+          return(FALSE);
         }
       }
 
@@ -1752,6 +1753,7 @@ state4:         /* goto label - Value specified */
 
       if (job_env == NULL)
         {
+         free(job_env);
         return(FALSE);
         }
       }
@@ -1804,6 +1806,7 @@ final:
         if (job_env == NULL)
           {
           *s = '='; /* restore our existing environ */
+           free(job_env);
 
           return(FALSE);
           }
@@ -3096,7 +3099,7 @@ int load_config(
 
   /* SUCCESS */
 
-  return(0);
+  return 0;
   }  /* END load_config() */
 
 
