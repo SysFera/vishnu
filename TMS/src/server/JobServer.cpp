@@ -195,7 +195,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
         throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
       }
 
-      iter++;
+      ++iter;
       status = convertToInt(*iter);
       if(status==5) {
         throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
