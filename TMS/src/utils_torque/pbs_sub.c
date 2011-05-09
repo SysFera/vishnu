@@ -108,7 +108,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <grp.h>
-#include "csv.h"
 
 #ifdef sun
 #include <sys/stream.h>
@@ -130,6 +129,7 @@
 #include "net_connect.h"
 #include "log.h"
 #include "port_forwarding.h"
+#include "csv.h"
 
 #include "pbs_sub.h"
 
@@ -859,7 +859,6 @@ int get_script(
         {
         sprintf(PBS_ERROR_MSG, "pbs_submit: error writing to filter stdin\n");
 
-        fclose(filter_pipe);
         unlink(tmp_name2);
 
         return(3);
@@ -931,8 +930,9 @@ int get_script(
     {
     sprintf(PBS_ERROR_MSG, "pbs_submit: could not create copy of script %s\n",
             tmp_name);
-
+    
     unlink(tmp_name);
+    close(tmpfd);
 
     return(4);
     }
@@ -1803,12 +1803,12 @@ final:
 
         job_env = (char *)realloc(job_env, len);
 
-        if (job_env == NULL)
+        /*if (job_env == NULL)
           {
-          *s = '='; /* restore our existing environ */
+          *s = '='; // restore our existing environ 
 
           return(FALSE);
-          }
+          }*/
         }
 
       strcat(job_env, ",");
@@ -1965,6 +1965,55 @@ int parse_file(
 
           pc = optarg;
 
+          /* OLD FORMAT:  -c { n | s | c | c=X }
+           * New format: -c [ { <old format items> | <new items> } ',' ]
+           * new items: none | shutdown | checkpoint | name=xyz | dir=xyz | interval=X
+           */
+#if 0
+
+          if (strlen(optarg) == 1)
+          {
+            if ((*pc != 'n') && (*pc != 's') && (*pc != 'c'))
+            {
+              fprintf(stderr, "qsub: illegal -c value\n");
+              errflg++;
+
+              break;
+            }
+          }
+          else
+          {
+            if (strncmp(optarg, "c=", 2) != 0)
+            {
+              fprintf(stderr, "qsub: illegal -c value\n");
+              errflg++;
+
+              break;
+            }
+
+            pc += 2;
+
+            if (*pc == '\0')
+            {
+              fprintf(stderr, "qsub: illegal -c value\n");
+
+              errflg++;
+
+              break;
+            }
+            while (isdigit(*pc))
+              pc++;
+
+            if (*pc != '\0')
+            {
+              fprintf(stderr, "qsub: illegal -c value\n");
+              errflg++;
+
+              break;
+            }
+          }
+
+#else
           nitems = csv_length(optarg);
 
           for (i = 0; i < nitems; i++)
@@ -1991,6 +2040,7 @@ int parse_file(
               }
             }
 
+#endif
           set_attr(&attrib, ATTR_c, optarg);
           }  /* END if_cmd_line() */
 
@@ -3079,6 +3129,7 @@ int load_config(
 
   if ((fread(config_buf, BufSize, 1, config_stream) <= 0) && (ferror(config_stream) != 0))
     {
+     fclose(config_stream);
     /* FAILURE */
     
     return(1);
@@ -3096,6 +3147,7 @@ int load_config(
       }
     }   /* END while ((ptr = strchr(ptr,'#')) != NULL) */
 
+   fclose(config_stream);
   /* SUCCESS */
 
   return 0;
@@ -3361,6 +3413,12 @@ int pbs_prepare_script(
       "      [-W otherattributes=value...] [-v variable_list] [-V ] [-x] [-X] [-z] [script]\n";
 
     sprintf(PBS_ERROR_MSG,"%s%s", usage, usage2);
+    
+    if (submit_args_str != NULL)
+    {
+      free(submit_args_str);
+    }
+
     return 2;
   }
 
