@@ -36,7 +36,7 @@ class JobProxy {
   * \return raises an exception on error
   */
   int
-  submitJob(const std::string scriptContent,
+  submitJob(const std::string& scriptContent,
             const TMS_Data::SubmitOptions& options);
 
   

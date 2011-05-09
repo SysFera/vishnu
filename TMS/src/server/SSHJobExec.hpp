@@ -19,38 +19,33 @@ class SSHJobExec {
 
   public:
 
-    /**
-     * \brief Constructor
-     */
-    SSHJobExec();
-
      /**
      * \brief Constructor 
-     * \param scriptPath the path to the script containing the job characteristique
-     * \param jobSerialized the job serialized
-     * \param submitOptionsSerialized the job options serialized
      * \param user the user login
      * \param hostname the hostname of the machine 
-     * \param key the private key
      * \param batchType the type of the batch scheduler
+     * \param jobSerialized the job serialized
+     * \param submitOptionsSerialized the job options serialized
+     * \param sskey the ssh private key path
      */
-    SSHJobExec(char* script_path, 
-               const std::string& jobSerialized, 
-               const std::string& submitOptionsSerialized,
-               const std::string& user, 
+    SSHJobExec(const std::string& user, 
                const std::string& hostname,
-               const std::string& key,
-               BatchType batchType);
+               const BatchType& batchType = UNDEFINED,
+               const std::string& jobSerialized = "",
+               const std::string& submitOptionsSerialized="",
+               const std::string& ssKey="");
     
      /**
      * \brief Function to execute command by using ssh 
      * \param slaveDirectory the path to the command executable
-     * \param cmd the arguments of the command 
+     * \param serviceName the name of the service to execute
+     * \param script_path the path to script to submit
      * \return raises an exception on error
      */
     int 
     sshexec(const std::string& slaveDirectory,
-                const std::string& cmd);
+            const std::string& serviceName, 
+            const std::string& script_path="");
 
     /**
      * \brief Function to copy files from remote machine
@@ -62,28 +57,73 @@ class SSHJobExec {
      */ 
     int 
     copyFiles(const std::string& outputPath, 
-                  const std::string& errorPath, 
-                  const char* copyOfOutputPath, 
-                  const char* copyOfErrorPath);
+              const std::string& errorPath, 
+              const char* copyOfOutputPath, 
+              const char* copyOfErrorPath);
 
+     
+    /**
+     * \brief Function to return the job serialized content
+     * \return  job serialized content 
+     */
     std::string 
     getJobSerialized();
 
+     /**
+     * \brief Function to return the error message of a service 
+     * \return error message information
+     */
     std::string 
     getErrorInfo();
-    
+
+    /**
+     * \brief Destructor
+     */    
     ~SSHJobExec();
 
   private:
+    
+    /**
+     * \brief Function to convert the batch type to string
+     * \param BatchType the batch type to convert
+     * \return the converted batch type 
+     */
     std::string convertBatchTypeToString(BatchType batchType);
-    char*  mscript_path;
+
+    /**
+     * \brief The job serialized
+     */
     std::string mjobSerialized;
+   
+    /**
+     * \brief The job options serialized 
+     */
     std::string msubmitOptionsSerialized;
+   
+    /**
+     * \brief The type of the batch scheduler 
+     */
     BatchType mbatchType;
+   
+    /**
+     * \brief The message erroro occured during execution of a service 
+     */
     std::string merrorInfo;
+
+    /**
+     * \brief The user login 
+     */
     std::string muser;
-    std::string msshKey;
+
+    /**
+     * \brief The hostname of the machine
+     */
     std::string mhostname;
+
+    /**
+     * \brief The ssh private key path 
+     */
+    std::string msshKey;
 };
 
 #endif
