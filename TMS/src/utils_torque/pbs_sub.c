@@ -932,7 +932,6 @@ int get_script(
             tmp_name);
     
     unlink(tmp_name);
-    close(tmpfd);
 
     return(4);
     }
