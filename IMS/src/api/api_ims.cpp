@@ -18,17 +18,13 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 			      IMS_Data::ListMetric& list,
 			      IMS_Data::CurMetricOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@1" << endl;
-  SessionProxy sessionProxy(sessionKey);  
-  cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" << endl;
+
+  SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricCurentValue";
-  cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@3" << endl;
   QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric> 
     query(op, sessionProxy, name, machineId);
-  cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@4" << endl;
 
   IMS_Data::ListMetric_ptr li = query.list();
-  cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@5" << endl;
 
   if(li != NULL) {
     IMS_Data::Metric_ptr met;
@@ -46,6 +42,7 @@ vishnu::getMetricHistory(const string sessionKey,
 		 IMS_Data::ListMetric& list,
 		 IMS_Data::MetricHistOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
   SessionProxy sessionProxy(sessionKey);  
   string name = "int_getMetricHistory";
   QueryProxy<IMS_Data::MetricHistOp, IMS_Data::ListMetric> 
