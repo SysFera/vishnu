@@ -2,7 +2,7 @@
  * \file SSHJobExec.cpp
  * \brief This file presents the implementation of the SSHJobExec.
  * \author Daouda Traore (daouda.traore@sysfera.com)
- * \date April 
+ * \date April
 */
 
 #include <iostream>
@@ -28,9 +28,9 @@
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 
 /**
- * \brief Constructor 
+ * \brief Constructor
  * \param user the user login
- * \param hostname the hostname of the machine 
+ * \param hostname the hostname of the machine
  * \param batchType the type of the batch scheduler
  * \param jobSerialized the job serialized
  * \param submitOptionsSerialized the job options serialized
@@ -50,33 +50,50 @@ SSHJobExec::SSHJobExec(const std::string& user,
 
 /**
  * \brief Function to return the job serialized content
- * \return  job serialized content 
+ * \return  job serialized content
  */
-std::string 
+std::string
 SSHJobExec::getJobSerialized() {
  return mjobSerialized;
 }
 
 /**
- * \brief Function to return the error message of a service 
+ * \brief Function to return the error message of a service
  * \return error message information
  */
-std::string 
+std::string
 SSHJobExec::getErrorInfo() {
  return merrorInfo;
 }
 
 /**
- * \brief Function to execute command by using ssh 
+ * \brief Function to check the parameters before launching ssh
+ * \exception SystemException
+ */
+void
+SSHJobExec::checkSshParams() {
+  if (muser.empty()) {
+    throw SystemException(ERRCODE_SSH, "User login is empty");
+  }
+  if (mhostname.empty()) {
+    throw SystemException(ERRCODE_SSH, "Server hostname is empty");
+  }
+}
+
+
+/**
+ * \brief Function to execute command by using ssh
  * \param slaveDirectory the path to the command executable
  * \param serviceName the name of the service to execute
  * \param script_path the path to script to submit
  * \return raises an exception on error
  */
-int 
-SSHJobExec::sshexec(const std::string& slaveDirectory, 
+int
+SSHJobExec::sshexec(const std::string& slaveDirectory,
                         const std::string& serviceName,
                         const std::string& script_path) {
+
+  checkSshParams();
 
   std::string jobSerializedPath;
   std::string submitOptionsSerializedPath;
@@ -180,7 +197,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 /**
  * \brief Function to convert the batch type to string
  * \param BatchType the batch type to convert
- * \return the converted batch type 
+ * \return the converted batch type
  */
 std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
 
@@ -199,13 +216,13 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
  * \param outputPath the output path to get
  * \param errorPath the error path to get
  * \param copyOfOutputPath the copy of the outputPath
- * \param copyOfErrorPath the copy of errorPath 
+ * \param copyOfErrorPath the copy of errorPath
  * \return raises an exception on error
  */
-int 
-SSHJobExec::copyFiles(const std::string& outputPath, 
+int
+SSHJobExec::copyFiles(const std::string& outputPath,
                       const std::string& errorPath,
-                      const char* copyOfOutputPath, 
+                      const char* copyOfOutputPath,
                       const char* copyOfErrorPath) {
 
   std::ostringstream cmd1;
