@@ -226,13 +226,15 @@ SSHJobExec::copyFiles(const std::string& outputPath,
                       const char* copyOfErrorPath) {
 
   std::ostringstream cmd1;
-  cmd1 << "scp " << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
+  cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no "; 
+  cmd1 << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
   if(system((cmd1.str()).c_str())) { //A REMPLACER PAR exec
     return -1;
   }
 
   std::ostringstream cmd2;
-  cmd2 << "scp " << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
+  cmd2 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
+  cmd2 << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
   if(system((cmd2.str()).c_str())) { //A REMPLACER PAR exec
     return -1;
   }
