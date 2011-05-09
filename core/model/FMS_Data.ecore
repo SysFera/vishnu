@@ -13,16 +13,12 @@
     <eLiterals name="REGULAR" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringList" instanceTypeName="StringList">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listOfStrings" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strings" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="the dynamic list of strings."/>
       </eAnnotations>
     </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LongList" instanceTypeName="LongList">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listOfLongs" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Status" instanceTypeName="Status">
     <eLiterals name="INPROGRESS"/>
@@ -31,7 +27,7 @@
     <eLiterals name="FAILED" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StatusList" instanceTypeName="StatusList">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listOfStatus" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" upperBound="-1"
         eType="#//Status"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FileStat" instanceTypeName="FileStat">
@@ -91,7 +87,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CopyFileOptions" instanceTypeName="CopyFileOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="CpFileOptions" instanceTypeName="CpFileOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRecursive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="Description">
         <details key="content" value="It specifies when the copy is recursive (case of directory) or not."/>
@@ -160,7 +156,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FileStatList" instanceTypeName="FileStatList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listOfFileStat" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fileStats" upperBound="-1"
         eType="#//FileStat" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="list of inodes."/>
@@ -245,10 +241,34 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FileTransferList" instanceTypeName="FileTransferList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listOfFileTransfer" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fileTransfers" upperBound="-1"
         eType="#//FileTransfer" containment="true">
       <eAnnotations source="Description">
         <details key="content" value="list of file transfers."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HeadOfFileOptions" instanceTypeName="HeadOfFileOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nline" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="Description">
+        <details key="content" value="the number of line to get"/>
+        <details key="shortOption" value="n"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TailOfFileOptions" instanceTypeName="TailOfFileOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nline" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="Description">
+        <details key="content" value="the number of line to get"/>
+        <details key="shortOption" value="n"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="chModOptions" instanceTypeName="chModOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="the file permission access in octal system"/>
+        <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
