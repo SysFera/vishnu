@@ -51,3 +51,9 @@ TEST_ADMIN_SSHKEY: ""
 
 TEST_USER_LOGIN: ""
 TEST_USER_SSHKEY: ""
+
+
+so you can compile the Test and run the command:
+
+
+./tms_automTest --log_level= all 
