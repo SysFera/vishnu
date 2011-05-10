@@ -13,6 +13,7 @@ cvs -d <login>@graal.ens-lyon.fr:/home/CVS/graal/ co -d <destination_name> GRAAL
  DIET_USE_LOG = ON
 * Si le log service n'est pas trouvé, remplir $log_include_dir avec le repertoire d'installation et $log_library avec <install>/lib/libLogForwarderUtils.so
 * Compiler et installer DIET
+* Attention, bien utilisé une version de diet plus récente que le 9 mai 2011, un service utilisé par IMS a été ajouté dans l'API server
 
 
 // VISHNU
@@ -21,7 +22,7 @@ git checkout IMS_dvl
 * Compiler avec le flag COMPILE_IMS=ON
 * Regler les librairies si nécessaire
 * Compiler
-* Lancer ims sed
+* Lancer ims sed, le meme fichier de config que UMS peut etre utilisé
 
 
 //////////////////////////////////////////////////////////////////////////////
