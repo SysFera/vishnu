@@ -104,7 +104,7 @@ namespace vishnu {
    * \return int : an error code
    */
   int 
-  setSystemThreshold(const int sessionKey,
+  setSystemThreshold(const string sessionKey,
 		     IMS_Data::Threshold threshold)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -116,7 +116,7 @@ namespace vishnu {
    * \return int : an error code
    */
   int 
-  getSystemThreshold(const int sessionKey,
+  getSystemThreshold(const string sessionKey,
 		     IMS_Data::ListThreshold& list,
 		     IMS_Data::ThresholdOp op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
@@ -128,7 +128,7 @@ namespace vishnu {
    * \return int : an error code
    */
   int
-  defineUserIdentifier(const int sessionKey,
+  defineUserIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -139,7 +139,7 @@ namespace vishnu {
    * \return int : an error code
    */
   int
-  defineMachineIdentifier(const int sessionKey,
+  defineMachineIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -150,7 +150,7 @@ namespace vishnu {
    * \return int : an error code
    */
   int
-  defineJobIdentifier(const int sessionKey,
+  defineJobIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
@@ -161,7 +161,7 @@ namespace vishnu {
    * \return int : an error code
    */
   int
-  defineTransferIdentifier(const int sessionKey,
+  defineTransferIdentifier(const string sessionKey,
 		       string fmt)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
