@@ -51,15 +51,15 @@ Threshold::~Threshold()
 
 // Attributes
 
-::ecore::EDouble Threshold::getValue() const
+::ecore::ELong Threshold::getValue() const
 {
     return m_value;
 }
 
-void Threshold::setValue(::ecore::EDouble _value)
+void Threshold::setValue(::ecore::ELong _value)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EDouble _old_value = m_value;
+    ::ecore::ELong _old_value = m_value;
 #endif
     m_value = _value;
 #ifdef ECORECPP_NOTIFICATION_API
