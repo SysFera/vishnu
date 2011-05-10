@@ -26,7 +26,6 @@
 </div>
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <h1>UMS/src/cli/utils.hpp File Reference</h1>  </div>
@@ -40,23 +39,8 @@
 
 <p><a href="utils_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45a">ErrorType</a> { <a class="el" href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45aabad8b7d8b1e3d216b3bebda060e141c0">PARAMERROR</a>, 
-<a class="el" href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45aac2843be4c176551ae93267dc258fd5d3">EXECERROR</a>
- }</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>a convenient type to classify error type </p>
- <a href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45a">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#af509b9dd94dd558746a6d3e04fa653a8">helpUsage</a> (const <a class="el" href="classOptions.html">Options</a> &amp;opt, const std::string &amp;signature)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">helper function to display help about a specific command  <a href="#af509b9dd94dd558746a6d3e04fa653a8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#abeb391e2dfb181bfd74c264072c6443d">errorUsage</a> (const std::string &amp;cli, const std::string &amp;errMsg, const <a class="el" href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45a">ErrorType</a> &amp;err=PARAMERROR)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">helper function to display error about a specific command  <a href="#abeb391e2dfb181bfd74c264072c6443d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#a288ac39ba8d8adc8afd1b1d502377405">usage</a> (const <a class="el" href="classOptions.html">Options</a> &amp;opt, const std::string &amp;mess, const std::string &amp;ewhat)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper function to display information (error or usage) about a specific command.  <a href="#a288ac39ba8d8adc8afd1b1d502377405"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#a1a9d575146744af073ca796687534de5">checkVishnuConfig</a> (const <a class="el" href="classOptions.html">Options</a> &amp;opt)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A helper function which check if VISHNU_CONFIG_FILE is set.  <a href="#a1a9d575146744af073ca796687534de5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6636b2b73728278e57c8de74eacf3ea4"></a><!-- doxytag: member="utils.hpp::printSuccessMessage" ref="a6636b2b73728278e57c8de74eacf3ea4" args="()" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8hpp.html#a6636b2b73728278e57c8de74eacf3ea4">printSuccessMessage</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to print success message. <br/></td></tr>
@@ -90,145 +74,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>this file contains a declaration of helper functions used by the command line interface </p>
 <dl class="author"><dt><b>Authors:</b></dt><dd>Daouda Traore (<a href="mailto:daouda.traore@sysfera.com">daouda.traore@sysfera.com</a>) and Ibrahima Cisse (<a href="mailto:ibrahima.cisse@sysfera.com">ibrahima.cisse@sysfera.com</a>) </dd></dl>
-<hr/><h2>Enumeration Type Documentation</h2>
-<a class="anchor" id="ab0df38968e4f03a3f1f6d6df0f31f45a"></a><!-- doxytag: member="utils.hpp::ErrorType" ref="ab0df38968e4f03a3f1f6d6df0f31f45a" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45a">ErrorType</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>a convenient type to classify error type </p>
-<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="ab0df38968e4f03a3f1f6d6df0f31f45aabad8b7d8b1e3d216b3bebda060e141c0"></a><!-- doxytag: member="PARAMERROR" ref="ab0df38968e4f03a3f1f6d6df0f31f45aabad8b7d8b1e3d216b3bebda060e141c0" args="" -->PARAMERROR</em>&nbsp;</td><td>
-<p>for any invalid parameter error </p>
-</td></tr>
-<tr><td valign="top"><em><a class="anchor" id="ab0df38968e4f03a3f1f6d6df0f31f45aac2843be4c176551ae93267dc258fd5d3"></a><!-- doxytag: member="EXECERROR" ref="ab0df38968e4f03a3f1f6d6df0f31f45aac2843be4c176551ae93267dc258fd5d3" args="" -->EXECERROR</em>&nbsp;</td><td>
-<p>for any runtime error </p>
-</td></tr>
-</table>
-</dd>
-</dl>
-
-</div>
-</div>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a1a9d575146744af073ca796687534de5"></a><!-- doxytag: member="utils.hpp::checkVishnuConfig" ref="a1a9d575146744af073ca796687534de5" args="(const Options &amp;opt)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void checkVishnuConfig </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOptions.html">Options</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>opt</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>A helper function which check if VISHNU_CONFIG_FILE is set. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>opt,:</em>&nbsp;</td><td>describes all options allowed by the command </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl><dt><b>Exceptions:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>raise</em>&nbsp;</td><td>a runtime exception if the VISHNU_CONFIG_FILE is not set </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="abeb391e2dfb181bfd74c264072c6443d"></a><!-- doxytag: member="utils.hpp::errorUsage" ref="abeb391e2dfb181bfd74c264072c6443d" args="(const std::string &amp;cli, const std::string &amp;errMsg, const ErrorType &amp;err=PARAMERROR)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void errorUsage </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>cli</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>errMsg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="utils_8hpp.html#ab0df38968e4f03a3f1f6d6df0f31f45a">ErrorType</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>err</em> = <code>PARAMERROR</code></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>helper function to display error about a specific command </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>cli</em>&nbsp;</td><td>:The name of the command </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>errMsg,:</em>&nbsp;</td><td>The error message to display </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>err</em>&nbsp;</td><td>: The error type </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="af509b9dd94dd558746a6d3e04fa653a8"></a><!-- doxytag: member="utils.hpp::helpUsage" ref="af509b9dd94dd558746a6d3e04fa653a8" args="(const Options &amp;opt, const std::string &amp;signature)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void helpUsage </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOptions.html">Options</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>opt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>signature</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>helper function to display help about a specific command </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>opt,:</em>&nbsp;</td><td>describes all options allowed by the command </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>signature,:</em>&nbsp;</td><td>defines the usage of the command </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a842d29fcc4a18e3df54799bfe2559d1d"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a842d29fcc4a18e3df54799bfe2559d1d" args="(std::ostream &amp;os, UMS_Data::ListOptionsValues &amp;lsOptions)" -->
+<a class="anchor" id="a23bc3b997503e3e179ce7824caf8b9ab"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a23bc3b997503e3e179ce7824caf8b9ab" args="(std::ostream &amp;os, const UMS_Data::Session_ptr &amp;session)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -241,8 +88,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UMS_Data::ListOptionsValues &amp;&nbsp;</td>
-          <td class="paramname"> <em>lsOptions</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::Session_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>session</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -253,126 +100,15 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a list of options. </p>
+<p>Helper function to display a session. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the list will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>lsOptions,:</em>&nbsp;</td><td>The list to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>An output stream in which the session will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session,:</em>&nbsp;</td><td>The session to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the list of options has been printed </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a8d47a1fc191be0bcaaa75c2ef2aaa24a"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a8d47a1fc191be0bcaaa75c2ef2aaa24a" args="(std::ostream &amp;os, const UMS_Data::OptionValue_ptr &amp;optionValue)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&nbsp;</td>
-          <td class="paramname"> <em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const UMS_Data::OptionValue_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>optionValue</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Helper function to display an option value. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the option value will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>optionValue,:</em>&nbsp;</td><td>The option value to display </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the option value has been printed </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac0ab9b7087e81b34d44e96624f2fe808"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="ac0ab9b7087e81b34d44e96624f2fe808" args="(std::ostream &amp;os, const UMS_Data::User_ptr &amp;user)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&nbsp;</td>
-          <td class="paramname"> <em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const UMS_Data::User_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>user</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Helper function to display a user. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the user will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>user,:</em>&nbsp;</td><td>The user to display </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the user has been printed </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="af52097d3ca43d66de877be2de334b2a2"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="af52097d3ca43d66de877be2de334b2a2" args="(std::ostream &amp;os, const UMS_Data::Command_ptr &amp;command)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&nbsp;</td>
-          <td class="paramname"> <em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const UMS_Data::Command_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>command</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Helper function to display a command. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the command will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>command,:</em>&nbsp;</td><td>The command to display </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the command has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the session has been printed </dd></dl>
 
 </div>
 </div>
@@ -413,7 +149,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 
 </div>
 </div>
-<a class="anchor" id="a4848c3c727920b58b2c8ea3e99dd7f5f"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a4848c3c727920b58b2c8ea3e99dd7f5f" args="(std::ostream &amp;os, const UMS_Data::Machine_ptr &amp;machine)" -->
+<a class="anchor" id="ac0ab9b7087e81b34d44e96624f2fe808"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="ac0ab9b7087e81b34d44e96624f2fe808" args="(std::ostream &amp;os, const UMS_Data::User_ptr &amp;user)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -426,8 +162,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const UMS_Data::Machine_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>machine</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::User_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>user</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -438,15 +174,15 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a machine. </p>
+<p>Helper function to display a user. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the machine will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>machine,:</em>&nbsp;</td><td>The machine to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the user will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user,:</em>&nbsp;</td><td>The user to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the machine has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the user has been printed </dd></dl>
 
 </div>
 </div>
@@ -487,7 +223,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 
 </div>
 </div>
-<a class="anchor" id="a2a4e4278d35e12b33b324f50631ea1eb"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a2a4e4278d35e12b33b324f50631ea1eb" args="(std::ostream &amp;os, const UMS_Data::LocalAccount_ptr &amp;account)" -->
+<a class="anchor" id="a8d47a1fc191be0bcaaa75c2ef2aaa24a"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a8d47a1fc191be0bcaaa75c2ef2aaa24a" args="(std::ostream &amp;os, const UMS_Data::OptionValue_ptr &amp;optionValue)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -500,8 +236,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const UMS_Data::LocalAccount_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>account</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::OptionValue_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>optionValue</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -512,52 +248,15 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a local account. </p>
+<p>Helper function to display an option value. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the local account will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>account,:</em>&nbsp;</td><td>The local account to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the option value will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>optionValue,:</em>&nbsp;</td><td>The option value to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the local account has been printed </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aea7af2fc33f3de9727cb591ee7871e1a"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="aea7af2fc33f3de9727cb591ee7871e1a" args="(std::ostream &amp;os, UMS_Data::ListLocalAccounts &amp;lsLocalAccounts)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&nbsp;</td>
-          <td class="paramname"> <em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UMS_Data::ListLocalAccounts &amp;&nbsp;</td>
-          <td class="paramname"> <em>lsLocalAccounts</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Helper function to display a list of local accounts. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the list will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>lsLocalAccounts,:</em>&nbsp;</td><td>The list to display </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the list of local accounts has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the option value has been printed </dd></dl>
 
 </div>
 </div>
@@ -635,7 +334,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 
 </div>
 </div>
-<a class="anchor" id="a23bc3b997503e3e179ce7824caf8b9ab"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a23bc3b997503e3e179ce7824caf8b9ab" args="(std::ostream &amp;os, const UMS_Data::Session_ptr &amp;session)" -->
+<a class="anchor" id="af52097d3ca43d66de877be2de334b2a2"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="af52097d3ca43d66de877be2de334b2a2" args="(std::ostream &amp;os, const UMS_Data::Command_ptr &amp;command)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -648,8 +347,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const UMS_Data::Session_ptr &amp;&nbsp;</td>
-          <td class="paramname"> <em>session</em></td><td>&nbsp;</td>
+          <td class="paramtype">const UMS_Data::Command_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>command</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -660,15 +359,163 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 </div>
 <div class="memdoc">
 
-<p>Helper function to display a session. </p>
+<p>Helper function to display a command. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>An output stream in which the session will be printed </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>session,:</em>&nbsp;</td><td>The session to display </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the command will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>command,:</em>&nbsp;</td><td>The command to display </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the session has been printed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the command has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4848c3c727920b58b2c8ea3e99dd7f5f"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a4848c3c727920b58b2c8ea3e99dd7f5f" args="(std::ostream &amp;os, const UMS_Data::Machine_ptr &amp;machine)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const UMS_Data::Machine_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>machine</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display a machine. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the machine will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machine,:</em>&nbsp;</td><td>The machine to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the machine has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a842d29fcc4a18e3df54799bfe2559d1d"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a842d29fcc4a18e3df54799bfe2559d1d" args="(std::ostream &amp;os, UMS_Data::ListOptionsValues &amp;lsOptions)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UMS_Data::ListOptionsValues &amp;&nbsp;</td>
+          <td class="paramname"> <em>lsOptions</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display a list of options. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the list will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>lsOptions,:</em>&nbsp;</td><td>The list to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the list of options has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2a4e4278d35e12b33b324f50631ea1eb"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="a2a4e4278d35e12b33b324f50631ea1eb" args="(std::ostream &amp;os, const UMS_Data::LocalAccount_ptr &amp;account)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const UMS_Data::LocalAccount_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>account</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display a local account. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the local account will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>account,:</em>&nbsp;</td><td>The local account to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the local account has been printed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aea7af2fc33f3de9727cb591ee7871e1a"></a><!-- doxytag: member="utils.hpp::operator&lt;&lt;" ref="aea7af2fc33f3de9727cb591ee7871e1a" args="(std::ostream &amp;os, UMS_Data::ListLocalAccounts &amp;lsLocalAccounts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UMS_Data::ListLocalAccounts &amp;&nbsp;</td>
+          <td class="paramname"> <em>lsLocalAccounts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function to display a list of local accounts. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>os,:</em>&nbsp;</td><td>The output stream in which the list will be printed </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>lsLocalAccounts,:</em>&nbsp;</td><td>The list to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The output stream in which the list of local accounts has been printed </dd></dl>
 
 </div>
 </div>
@@ -708,52 +555,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 
 </div>
 </div>
-<a class="anchor" id="a288ac39ba8d8adc8afd1b1d502377405"></a><!-- doxytag: member="utils.hpp::usage" ref="a288ac39ba8d8adc8afd1b1d502377405" args="(const Options &amp;opt, const std::string &amp;mess, const std::string &amp;ewhat)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int usage </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOptions.html">Options</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>opt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>mess</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>ewhat</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
 </div>
-<div class="memdoc">
-
-<p>Helper function to display information (error or usage) about a specific command. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>opt</em>&nbsp;</td><td>:describes all options allowed by the command </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>mess,:</em>&nbsp;</td><td>The help usage message to display </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>ewhat</em>&nbsp;</td><td>: The error message to display </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 if an help is required or 1 if an error must me displayed </dd></dl>
-
-</div>
-</div>
-</div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

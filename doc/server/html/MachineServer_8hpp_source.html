@@ -42,7 +42,7 @@
 <a name="l00018"></a>00018 <span class="preprocessor">#include &quot;<a class="code" href="SessionServer_8hpp.html" title="This file presents the Class which manipulates VISHNU sessions on server side.">SessionServer.hpp</a>&quot;</span>
 <a name="l00019"></a>00019 <span class="preprocessor">#include &quot;UMS_Data.hpp&quot;</span>
 <a name="l00020"></a>00020 <span class="preprocessor">#include &quot;UMS_Data_forward.hpp&quot;</span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="utilVishnu_8hpp.html" title="This file presents the utils functions of the vishnu system.">utilVishnu.hpp</a>&quot;</span>
+<a name="l00021"></a>00021 
 <a name="l00022"></a>00022 
 <a name="l00023"></a>00023 <span class="keyword">using namespace </span>vishnu;
 <a name="l00024"></a>00024 
@@ -52,33 +52,37 @@
 <a name="l00032"></a>00032 <span class="keyword">public</span>:
 <a name="l00038"></a>00038   <a class="code" href="classMachineServer.html" title="MachineServer class implementation.">MachineServer</a>(UMS_Data::Machine*&amp; machine);
 <a name="l00045"></a>00045   <a class="code" href="classMachineServer.html" title="MachineServer class implementation.">MachineServer</a>(UMS_Data::Machine*&amp; machine, <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a>&amp; session);
-<a name="l00051"></a>00051   <span class="keywordtype">int</span>
-<a name="l00052"></a>00052   add();
-<a name="l00058"></a>00058   <span class="keywordtype">int</span>
-<a name="l00059"></a>00059   update();
-<a name="l00065"></a>00065   <span class="keywordtype">int</span>
-<a name="l00066"></a>00066   <a class="code" href="namespacevishnu.html#abdd14f47db308fc03655149ac7d93199" title="Function to remove a machine from VISHNU.">deleteMachine</a>();
-<a name="l00071"></a>00071   ~<a class="code" href="classMachineServer.html" title="MachineServer class implementation.">MachineServer</a>();
-<a name="l00077"></a>00077   UMS_Data::Machine*
-<a name="l00078"></a>00078   getData();
-<a name="l00086"></a>00086   std::string
-<a name="l00087"></a>00087   getAttribut(std::string condition, std::string attrname = <span class="stringliteral">&quot;nummachineid&quot;</span>);
-<a name="l00093"></a>00093   std::string
-<a name="l00094"></a>00094   getPublicKey();
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="keyword">private</span>:
-<a name="l00098"></a>00098   <span class="comment">// Attributes</span>
-<a name="l00100"></a>00100 <span class="comment"></span>
-<a name="l00103"></a><a class="code" href="classMachineServer.html#a48d96e37c0b86de1627eabfab0a16f3a">00103</a>   UMS_Data::Machine *mmachine;
-<a name="l00107"></a><a class="code" href="classMachineServer.html#a8ad620f122d53ed6114e1a9924857694">00107</a>   <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> msessionServer;
-<a name="l00111"></a><a class="code" href="classMachineServer.html#ae4205cd70c90227760b0c799b67b9f02">00111</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *mdatabaseVishnu;
-<a name="l00115"></a><a class="code" href="classMachineServer.html#af5b160283015cb15b5da6a4658a06f92">00115</a>   std::string msshpublickey;
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117 };
-<a name="l00118"></a>00118 <span class="preprocessor">#endif</span>
+<a name="l00052"></a>00052   <span class="keywordtype">int</span>
+<a name="l00053"></a>00053   add(<span class="keywordtype">int</span> vishnuId);
+<a name="l00059"></a>00059   <span class="keywordtype">int</span>
+<a name="l00060"></a>00060   update();
+<a name="l00066"></a>00066   <span class="keywordtype">int</span>
+<a name="l00067"></a>00067   <a class="code" href="namespacevishnu.html#abdd14f47db308fc03655149ac7d93199" title="Function to remove a machine from VISHNU.">deleteMachine</a>();
+<a name="l00072"></a>00072   ~<a class="code" href="classMachineServer.html" title="MachineServer class implementation.">MachineServer</a>();
+<a name="l00078"></a>00078   UMS_Data::Machine*
+<a name="l00079"></a>00079   getData();
+<a name="l00087"></a>00087   std::string
+<a name="l00088"></a>00088   getAttribut(std::string condition, std::string attrname = <span class="stringliteral">&quot;nummachineid&quot;</span>);
+<a name="l00094"></a>00094   std::string
+<a name="l00095"></a>00095   getPublicKey();
+<a name="l00096"></a>00096 
+<a name="l00101"></a>00101   std::string getMachineName();
+<a name="l00102"></a>00102 
+<a name="l00107"></a>00107   <span class="keywordtype">void</span> checkMachine();
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 <span class="keyword">private</span>:
+<a name="l00111"></a>00111   <span class="comment">// Attributes</span>
+<a name="l00113"></a>00113 <span class="comment"></span>
+<a name="l00116"></a><a class="code" href="classMachineServer.html#a48d96e37c0b86de1627eabfab0a16f3a">00116</a>   UMS_Data::Machine *mmachine;
+<a name="l00120"></a><a class="code" href="classMachineServer.html#a8ad620f122d53ed6114e1a9924857694">00120</a>   <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> msessionServer;
+<a name="l00124"></a><a class="code" href="classMachineServer.html#ae4205cd70c90227760b0c799b67b9f02">00124</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *mdatabaseVishnu;
+<a name="l00128"></a><a class="code" href="classMachineServer.html#af5b160283015cb15b5da6a4658a06f92">00128</a>   std::string msshpublickey;
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130 };
+<a name="l00131"></a>00131 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

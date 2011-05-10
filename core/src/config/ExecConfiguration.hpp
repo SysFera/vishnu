@@ -16,7 +16,7 @@
 #include "UserException.hpp"
 
 /**
- * \class simple_cast_trait
+ * \class simple_cast_traits
  * \brief traits class used by simple cast that sets zero_value
  * by default to 0, specialize for each type that requires.
  */
@@ -26,6 +26,9 @@ public:
   static const T zero_value = 0;
 };
 
+/**
+ * \brief A specialization of the simple_cast_traits class for string type
+ */
 template <>
 class simple_cast_traits<std::string> {
 public:

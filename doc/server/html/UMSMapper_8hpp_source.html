@@ -88,96 +88,91 @@
 <a name="l00185"></a>00185   code(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code = 0);
 <a name="l00186"></a>00186 
 <a name="l00193"></a>00193   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00194"></a>00194   finalize(<span class="keywordtype">int</span> key);
+<a name="l00194"></a>00194   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
 <a name="l00195"></a>00195 
-<a name="l00202"></a>00202   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
-<a name="l00203"></a>00203   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205 
-<a name="l00206"></a>00206 <span class="keyword">protected</span>:
-<a name="l00207"></a>00207 <span class="keyword">private</span>:
-<a name="l00208"></a>00208 
-<a name="l00216"></a>00216   <span class="keywordtype">string</span>
-<a name="l00217"></a>00217   decodeClose(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00218"></a>00218 
-<a name="l00226"></a>00226   <span class="keywordtype">string</span>
-<a name="l00227"></a>00227   decodeAddUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00228"></a>00228 
-<a name="l00236"></a>00236   <span class="keywordtype">string</span>
-<a name="l00237"></a>00237   decodeUpUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00238"></a>00238 
-<a name="l00246"></a>00246   <span class="keywordtype">string</span>
-<a name="l00247"></a>00247   decodeDelUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00248"></a>00248 
-<a name="l00256"></a>00256   <span class="keywordtype">string</span>
-<a name="l00257"></a>00257   decodeChangePwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00258"></a>00258 
-<a name="l00266"></a>00266   <span class="keywordtype">string</span>
-<a name="l00267"></a>00267   decodeResetPwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00268"></a>00268 
-<a name="l00276"></a>00276   <span class="keywordtype">string</span>
-<a name="l00277"></a>00277   decodeAddAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00278"></a>00278 
-<a name="l00286"></a>00286   <span class="keywordtype">string</span>
-<a name="l00287"></a>00287   decodeUpAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00288"></a>00288   
-<a name="l00296"></a>00296   <span class="keywordtype">string</span>
-<a name="l00297"></a>00297   decodeDelAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00298"></a>00298   
-<a name="l00306"></a>00306   <span class="keywordtype">string</span>
-<a name="l00307"></a>00307   decodeSaveConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00308"></a>00308 
-<a name="l00316"></a>00316   <span class="keywordtype">string</span>
-<a name="l00317"></a>00317   decodeRestoreConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00318"></a>00318 
-<a name="l00326"></a>00326   <span class="keywordtype">string</span>
-<a name="l00327"></a>00327   decodeAddM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00328"></a>00328 
-<a name="l00336"></a>00336   <span class="keywordtype">string</span>
-<a name="l00337"></a>00337   decodeUpM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00338"></a>00338 
-<a name="l00346"></a>00346   <span class="keywordtype">string</span>
-<a name="l00347"></a>00347   decodeDelM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00348"></a>00348 
-<a name="l00356"></a>00356   <span class="keywordtype">string</span>
-<a name="l00357"></a>00357   decodeListAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00358"></a>00358 
-<a name="l00366"></a>00366   <span class="keywordtype">string</span>
-<a name="l00367"></a>00367   decodeListM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00368"></a>00368 
-<a name="l00376"></a>00376   <span class="keywordtype">string</span>
-<a name="l00377"></a>00377   decodeListH(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00378"></a>00378 
-<a name="l00386"></a>00386   <span class="keywordtype">string</span>
-<a name="l00387"></a>00387   decodeListOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00388"></a>00388 
-<a name="l00396"></a>00396   <span class="keywordtype">string</span>
-<a name="l00397"></a>00397   decodeListUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00398"></a>00398 
-<a name="l00406"></a>00406   <span class="keywordtype">string</span>
-<a name="l00407"></a>00407   decodeListSession(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00408"></a>00408 
-<a name="l00416"></a>00416   <span class="keywordtype">string</span>
-<a name="l00417"></a>00417   decodeConfDefaultOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00418"></a>00418 
-<a name="l00426"></a>00426   <span class="keywordtype">string</span>
-<a name="l00427"></a>00427   decodeConfOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
-<a name="l00428"></a>00428 
-<a name="l00436"></a>00436   <span class="keywordtype">void</span>
-<a name="l00437"></a>00437   findSeparator(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; s, vector&lt;int&gt;&amp; vec);
-<a name="l00438"></a>00438   
-<a name="l00445"></a>00445   <span class="keywordtype">string</span>
-<a name="l00446"></a>00446   getU(<span class="keywordtype">string</span> serial);
-<a name="l00447"></a>00447 
-<a name="l00454"></a>00454   <span class="keywordtype">string</span>
-<a name="l00455"></a>00455   getUupdate(<span class="keywordtype">string</span> serial);
-<a name="l00456"></a>00456 };
-<a name="l00457"></a>00457 
-<a name="l00458"></a>00458 
-<a name="l00459"></a>00459 <span class="preprocessor">#endif</span>
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197 <span class="keyword">protected</span>:
+<a name="l00198"></a>00198 <span class="keyword">private</span>:
+<a name="l00199"></a>00199 
+<a name="l00207"></a>00207   <span class="keywordtype">string</span>
+<a name="l00208"></a>00208   decodeClose(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00209"></a>00209 
+<a name="l00217"></a>00217   <span class="keywordtype">string</span>
+<a name="l00218"></a>00218   decodeAddUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00219"></a>00219 
+<a name="l00227"></a>00227   <span class="keywordtype">string</span>
+<a name="l00228"></a>00228   decodeUpUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00229"></a>00229 
+<a name="l00237"></a>00237   <span class="keywordtype">string</span>
+<a name="l00238"></a>00238   decodeDelUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00239"></a>00239 
+<a name="l00247"></a>00247   <span class="keywordtype">string</span>
+<a name="l00248"></a>00248   decodeChangePwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00249"></a>00249 
+<a name="l00257"></a>00257   <span class="keywordtype">string</span>
+<a name="l00258"></a>00258   decodeResetPwd(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00259"></a>00259 
+<a name="l00267"></a>00267   <span class="keywordtype">string</span>
+<a name="l00268"></a>00268   decodeAddAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00269"></a>00269 
+<a name="l00277"></a>00277   <span class="keywordtype">string</span>
+<a name="l00278"></a>00278   decodeUpAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00279"></a>00279   
+<a name="l00287"></a>00287   <span class="keywordtype">string</span>
+<a name="l00288"></a>00288   decodeDelAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00289"></a>00289   
+<a name="l00297"></a>00297   <span class="keywordtype">string</span>
+<a name="l00298"></a>00298   decodeSaveConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00299"></a>00299 
+<a name="l00307"></a>00307   <span class="keywordtype">string</span>
+<a name="l00308"></a>00308   decodeRestoreConf(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00309"></a>00309 
+<a name="l00317"></a>00317   <span class="keywordtype">string</span>
+<a name="l00318"></a>00318   decodeAddM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00319"></a>00319 
+<a name="l00327"></a>00327   <span class="keywordtype">string</span>
+<a name="l00328"></a>00328   decodeUpM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00329"></a>00329 
+<a name="l00337"></a>00337   <span class="keywordtype">string</span>
+<a name="l00338"></a>00338   decodeDelM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00339"></a>00339 
+<a name="l00347"></a>00347   <span class="keywordtype">string</span>
+<a name="l00348"></a>00348   decodeListAcc(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00349"></a>00349 
+<a name="l00357"></a>00357   <span class="keywordtype">string</span>
+<a name="l00358"></a>00358   decodeListM(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00359"></a>00359 
+<a name="l00367"></a>00367   <span class="keywordtype">string</span>
+<a name="l00368"></a>00368   decodeListH(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00369"></a>00369 
+<a name="l00377"></a>00377   <span class="keywordtype">string</span>
+<a name="l00378"></a>00378   decodeListOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00379"></a>00379 
+<a name="l00387"></a>00387   <span class="keywordtype">string</span>
+<a name="l00388"></a>00388   decodeListUser(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00389"></a>00389 
+<a name="l00397"></a>00397   <span class="keywordtype">string</span>
+<a name="l00398"></a>00398   decodeListSession(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00399"></a>00399 
+<a name="l00407"></a>00407   <span class="keywordtype">string</span>
+<a name="l00408"></a>00408   decodeConfDefaultOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00409"></a>00409 
+<a name="l00417"></a>00417   <span class="keywordtype">string</span>
+<a name="l00418"></a>00418   decodeConfOp(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00419"></a>00419 
+<a name="l00420"></a>00420   
+<a name="l00427"></a>00427   <span class="keywordtype">string</span>
+<a name="l00428"></a>00428   getU(<span class="keywordtype">string</span> serial);
+<a name="l00429"></a>00429 
+<a name="l00436"></a>00436   <span class="keywordtype">string</span>
+<a name="l00437"></a>00437   getUupdate(<span class="keywordtype">string</span> serial);
+<a name="l00438"></a>00438 };
+<a name="l00439"></a>00439 
+<a name="l00440"></a>00440 
+<a name="l00441"></a>00441 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

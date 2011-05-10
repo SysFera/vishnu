@@ -32,7 +32,7 @@ void \hyperlink{classQueryServer_ae560033d0f8aac38f1feaa59f37305c8}{addCondition
 \begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}where condition\char`\"{} to a given request. \item\end{DoxyCompactList}\item 
 {\footnotesize template$<$class T $>$ }\\void \hyperlink{classQueryServer_afdb77d4186ae47e469a1eb19bc8a7722}{addIntegerCondition} (const std::string \&name, T \&value, std::string \&request)
 \begin{DoxyCompactList}\small\item\em Function to add sql resquest \char`\"{}where condition\char`\"{} which contain an integer value to a given request. \item\end{DoxyCompactList}\item 
-long \hyperlink{classQueryServer_af7d3974b4a4c06e7dc92809cb37f5027}{convertToTimeType} (std::string date)
+long long \hyperlink{classQueryServer_a3b2becf9f1ae6ca1d0097d7400997aa8}{convertToTimeType} (std::string date)
 \begin{DoxyCompactList}\small\item\em Function to convert a given date into correspondant long value. \item\end{DoxyCompactList}\item 
 void \hyperlink{classQueryServer_a0f5faaf9f4be79361b2eb15e14480a7d}{checkUserId} (std::string userId)
 \begin{DoxyCompactList}\small\item\em Function to check if a given user identifier exists. \item\end{DoxyCompactList}\item 
@@ -48,6 +48,13 @@ void \hyperlink{classQueryServer_a358f371f74bcb2dd3e789bd20d0cb672}{checkStatus}
 \begin{DoxyCompactList}\small\item\em Function to check a status value. \item\end{DoxyCompactList}\item 
 void \hyperlink{classQueryServer_a73cc37f1e18f4e5028d8f4d68b9b148f}{checkClosePolicy} (const int \&closePolicy)
 \begin{DoxyCompactList}\small\item\em Function to check a close policy value. \item\end{DoxyCompactList}\item 
+\hypertarget{classQueryServer_add7b3dc1799367f27cf0160a5ac63ecf}{
+void {\bfseries checkJobId} (std::string jobId)}
+\label{classQueryServer_add7b3dc1799367f27cf0160a5ac63ecf}
+
+\item 
+void \hyperlink{classQueryServer_ad0f0f43c901920be7fb7a3719bb782ba}{checkQueueName} (std::string queueName)
+\begin{DoxyCompactList}\small\item\em Function to check if a given queue exists. \item\end{DoxyCompactList}\item 
 \hypertarget{classQueryServer_ac1522f625d161ff74da960d37c1b58d1}{
 virtual \hyperlink{classQueryServer_ac1522f625d161ff74da960d37c1b58d1}{$\sim$QueryServer} ()}
 \label{classQueryServer_ac1522f625d161ff74da960d37c1b58d1}
@@ -278,12 +285,28 @@ Function to check if a given option name exists.
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
+\hypertarget{classQueryServer_ad0f0f43c901920be7fb7a3719bb782ba}{
+\index{QueryServer@{QueryServer}!checkQueueName@{checkQueueName}}
+\index{checkQueueName@{checkQueueName}!QueryServer@{QueryServer}}
+\subsubsection[{checkQueueName}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkQueueName (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ queueName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classQueryServer_ad0f0f43c901920be7fb7a3719bb782ba}
+
+
+Function to check if a given queue exists. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em queueName}]the name of the queue \end{DoxyParams}
 \hypertarget{classQueryServer_aab30c247fe7f71f28ef30d28d78b23e2}{
 \index{QueryServer@{QueryServer}!checkSessionId@{checkSessionId}}
 \index{checkSessionId@{checkSessionId}!QueryServer@{QueryServer}}
 \subsubsection[{checkSessionId}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ void {\bf QueryServer}$<$ QueryParameters, ListObject $>$::checkSessionId (
 \begin{DoxyParamCaption}
-\item[{std::string}]{ sessionId}
+\item[{std::string}]{ jobId}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classQueryServer_aab30c247fe7f71f28ef30d28d78b23e2}
@@ -291,9 +314,11 @@ raises an exception on error
 
 Function to check if a given session identifier exists. 
 
+Function to check if a given job identifier exists.
+
 
 \begin{DoxyParams}{Parameters}
-\item[{\em sessionId}]the session identifier \end{DoxyParams}
+\item[{\em sessionId}]the session identifier\item[{\em jobId}]the job identifier \end{DoxyParams}
 \hypertarget{classQueryServer_a358f371f74bcb2dd3e789bd20d0cb672}{
 \index{QueryServer@{QueryServer}!checkStatus@{checkStatus}}
 \index{checkStatus@{checkStatus}!QueryServer@{QueryServer}}
@@ -329,15 +354,15 @@ Function to check if a given user identifier exists.
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
-\hypertarget{classQueryServer_af7d3974b4a4c06e7dc92809cb37f5027}{
+\hypertarget{classQueryServer_a3b2becf9f1ae6ca1d0097d7400997aa8}{
 \index{QueryServer@{QueryServer}!convertToTimeType@{convertToTimeType}}
 \index{convertToTimeType@{convertToTimeType}!QueryServer@{QueryServer}}
-\subsubsection[{convertToTimeType}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ long {\bf QueryServer}$<$ QueryParameters, ListObject $>$::convertToTimeType (
+\subsubsection[{convertToTimeType}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters, class ListObject$>$ long long {\bf QueryServer}$<$ QueryParameters, ListObject $>$::convertToTimeType (
 \begin{DoxyParamCaption}
 \item[{std::string}]{ date}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classQueryServer_af7d3974b4a4c06e7dc92809cb37f5027}
+\label{classQueryServer_a3b2becf9f1ae6ca1d0097d7400997aa8}
 
 
 Function to convert a given date into correspondant long value. 
@@ -366,7 +391,7 @@ The the name of the query command line
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_acc12358ea99501ac83097ed65570b3c0}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a8ddf0e769f4a7582bf818e599a2a8f6e}{ListOptionsValuesServer}, and \hyperlink{classListSessionsServer_addba2aae3573750b1dc32220ec88dc94}{ListSessionsServer}.
+Implemented in \hyperlink{classListCommandsServer_ae51f623d61d994481bdc0e77025b1cd3}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_acc12358ea99501ac83097ed65570b3c0}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_a1009395b555efa83eac39fa139a3625b}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a8ddf0e769f4a7582bf818e599a2a8f6e}{ListOptionsValuesServer}, \hyperlink{classListSessionsServer_addba2aae3573750b1dc32220ec88dc94}{ListSessionsServer}, \hyperlink{classListJobServer_ae4efce66451934990d0575d1b8151378}{ListJobServer}, and \hyperlink{classListProgressServer_a9fefff901176f068962ab31ae42c25aa}{ListProgressServer}.
 
 \hypertarget{classQueryServer_a2ad0f3f1b75e6f0705a9edbe4bab76b0}{
 \index{QueryServer@{QueryServer}!list@{list}}
@@ -388,10 +413,10 @@ raises an exception on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_aab1471d2b577b25471f12652b6e78b31}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a193d667fd5fa247300cebd4af85785d6}{ListOptionsValuesServer}, and \hyperlink{classListSessionsServer_a2ce41ba3a29999d9ef1799c990d29b29}{ListSessionsServer}.
+Implemented in \hyperlink{classListCommandsServer_ae256dad4b7cb57e73dd3dc2c5dcb3e7b}{ListCommandsServer}, \hyperlink{classListLocalAccountsServer_aab1471d2b577b25471f12652b6e78b31}{ListLocalAccountsServer}, \hyperlink{classListMachinesServer_abbaceb388d6ad47bc9e82a3f33e978a3}{ListMachinesServer}, \hyperlink{classListOptionsValuesServer_a193d667fd5fa247300cebd4af85785d6}{ListOptionsValuesServer}, \hyperlink{classListSessionsServer_a2ce41ba3a29999d9ef1799c990d29b29}{ListSessionsServer}, \hyperlink{classListJobServer_abd6c94b777cdce434fafb95b5b9fc764}{ListJobServer}, and \hyperlink{classListProgressServer_a5d3eddd164119897299006b9940845ae}{ListProgressServer}.
 
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
-UMS/src/server/\hyperlink{QueryServer_8hpp}{QueryServer.hpp}\end{DoxyCompactItemize}
+core/src/utils/\hyperlink{QueryServer_8hpp}{QueryServer.hpp}\end{DoxyCompactItemize}

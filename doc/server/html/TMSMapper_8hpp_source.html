@@ -40,31 +40,77 @@
 <a name="l00016"></a>00016 
 <a name="l00017"></a>00017 <span class="keyword">using namespace </span>std;
 <a name="l00018"></a>00018 
-<a name="l00023"></a><a class="code" href="classTMSMapper.html">00023</a> <span class="keyword">class </span><a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a> : <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>{
-<a name="l00024"></a>00024 <span class="keyword">public</span> :
-<a name="l00031"></a>00031   <a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a>(<a class="code" href="classMapperRegistry.html" title="Registry of all the mapper.">MapperRegistry</a>* reg, <span class="keywordtype">string</span> name);
-<a name="l00036"></a>00036   <a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a>();
-<a name="l00042"></a>00042   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00043"></a>00043   registerMapper();
-<a name="l00044"></a>00044 
-<a name="l00050"></a>00050   <span class="keyword">virtual</span> <span class="keywordtype">int</span> 
-<a name="l00051"></a>00051   unregisterMapper();
-<a name="l00052"></a>00052 
-<a name="l00060"></a>00060   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00061"></a>00061   getCommand(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; key,<span class="keywordtype">string</span>&amp; command);
-<a name="l00062"></a>00062 
-<a name="l00070"></a>00070   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
-<a name="l00071"></a>00071   getKey(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">int</span>&amp; key);
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073 <span class="keyword">protected</span>:
-<a name="l00074"></a>00074 <span class="keyword">private</span>:
-<a name="l00075"></a>00075 };
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 <span class="preprocessor">#endif</span>
+<a name="l00022"></a><a class="code" href="TMSMapper_8hpp.html#a2d28e40c3107ce191b0b9ac485fcab0a">00022</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#a2d28e40c3107ce191b0b9ac485fcab0a" title="Submit job key.">VISHNU_SUBMITJOB</a>               = 1;
+<a name="l00026"></a><a class="code" href="TMSMapper_8hpp.html#ad6d18121ff7721a531f2557f69110682">00026</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#ad6d18121ff7721a531f2557f69110682" title="Get job info key.">VISHNU_GETJOBINFO</a>              = 2;
+<a name="l00030"></a><a class="code" href="TMSMapper_8hpp.html#ac51fa42271369aa98d3229851a6fbbf8">00030</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#ac51fa42271369aa98d3229851a6fbbf8" title="Get job progress key.">VISHNU_GETJOBPROG</a>              = 3;
+<a name="l00034"></a><a class="code" href="TMSMapper_8hpp.html#a4f9e6c1290026de6ca10846bc557ca81">00034</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#a4f9e6c1290026de6ca10846bc557ca81" title="List queues key.">VISHNU_LISTQUEUES</a>              = 4;
+<a name="l00038"></a><a class="code" href="TMSMapper_8hpp.html#afaeac86f5b9056ab23ea7a3340a185fb">00038</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#afaeac86f5b9056ab23ea7a3340a185fb" title="List jobs key.">VISHNU_LISTJOBS</a>                = 5;
+<a name="l00042"></a><a class="code" href="TMSMapper_8hpp.html#af0a818b6d0d0898d4293ef4e7c036dae">00042</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#af0a818b6d0d0898d4293ef4e7c036dae" title="Get job output key.">VISHNU_GETJOBOUTPUT</a>            = 6;
+<a name="l00046"></a><a class="code" href="TMSMapper_8hpp.html#aeef9922d6c50bc8acc6a04b4e7a1f3da">00046</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#aeef9922d6c50bc8acc6a04b4e7a1f3da" title="Get all job output key.">VISHNU_GETCOMPLETEDJOB</a>         = 7;
+<a name="l00050"></a><a class="code" href="TMSMapper_8hpp.html#a335d920f8cbe459441a10aa3c1bdad21">00050</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="TMSMapper_8hpp.html#a335d920f8cbe459441a10aa3c1bdad21" title="Cancel key.">VISHNU_CANCEL</a>                  = 8;
+<a name="l00051"></a>00051 
+<a name="l00056"></a><a class="code" href="classTMSMapper.html">00056</a> <span class="keyword">class </span><a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a> : <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>{
+<a name="l00057"></a>00057 <span class="keyword">public</span> :
+<a name="l00064"></a>00064   <a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a>(<a class="code" href="classMapperRegistry.html" title="Registry of all the mapper.">MapperRegistry</a>* reg, <span class="keywordtype">string</span> name);
+<a name="l00069"></a>00069   <a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a>();
+<a name="l00074"></a>00074   ~<a class="code" href="classTMSMapper.html" title="Mapper implementation for the TMS module.">TMSMapper</a>();
+<a name="l00080"></a>00080   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00081"></a>00081   registerMapper();
+<a name="l00082"></a>00082 
+<a name="l00088"></a>00088   <span class="keyword">virtual</span> <span class="keywordtype">int</span> 
+<a name="l00089"></a>00089   unregisterMapper();
+<a name="l00090"></a>00090 
+<a name="l00098"></a>00098   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00099"></a>00099   getCommand(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; key,<span class="keywordtype">string</span>&amp; command);
+<a name="l00100"></a>00100 
+<a name="l00108"></a>00108   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00109"></a>00109   getKey(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">int</span>&amp; key);
+<a name="l00110"></a>00110 
+<a name="l00118"></a>00118   <span class="keyword">virtual</span> <span class="keywordtype">int</span>
+<a name="l00119"></a>00119   code(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code = 0);
+<a name="l00120"></a>00120 
+<a name="l00127"></a>00127   <span class="keyword">virtual</span> <span class="keywordtype">string</span>
+<a name="l00128"></a>00128   decode (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130 <span class="keyword">protected</span>:
+<a name="l00131"></a>00131 <span class="keyword">private</span>:
+<a name="l00139"></a>00139   <span class="keywordtype">string</span>
+<a name="l00140"></a>00140   decodeSubmit(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00141"></a>00141   
+<a name="l00149"></a>00149   <span class="keywordtype">string</span>
+<a name="l00150"></a>00150   decodeProg(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00151"></a>00151 
+<a name="l00159"></a>00159   <span class="keywordtype">string</span>
+<a name="l00160"></a>00160   decodeQueue(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00161"></a>00161 
+<a name="l00169"></a>00169   <span class="keywordtype">string</span>
+<a name="l00170"></a>00170   decodeListJob(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00171"></a>00171 
+<a name="l00179"></a>00179   <span class="keywordtype">string</span>
+<a name="l00180"></a>00180   decodeOutput(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00181"></a>00181 
+<a name="l00189"></a>00189   <span class="keywordtype">string</span>
+<a name="l00190"></a>00190   decodeCompletedJob(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00191"></a>00191 
+<a name="l00199"></a>00199   <span class="keywordtype">string</span>
+<a name="l00200"></a>00200   decodeCancel(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00201"></a>00201 
+<a name="l00209"></a>00209   <span class="keywordtype">string</span>
+<a name="l00210"></a>00210   decodeGetPeriod(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00211"></a>00211 
+<a name="l00219"></a>00219   <span class="keywordtype">string</span>
+<a name="l00220"></a>00220   decodeSetPeriod(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00221"></a>00221 
+<a name="l00229"></a>00229   <span class="keywordtype">string</span>
+<a name="l00230"></a>00230   decodeJobInfo(vector&lt;int&gt; separator, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; msg);
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232 };
+<a name="l00233"></a>00233 
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
