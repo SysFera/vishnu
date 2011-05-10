@@ -71,7 +71,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   }
 
   // Inserting the value
-  string req = "insert into state(\"machine_nummachineid\", \"memory\", \"diskspace\", \"cpuload\", \"time\") values('"+nmid+"', '"+convertToString(mem)+"', '"+convertToString(disk)+"', '"+convertToString(cpu)+"', CURRENT_TIMESTAMP) ";
+  string req = "insert into state(\"machine_nummachineid\", \"memory\", \"diskspace\", \"cpuload\", \"time\") values('"+nmid+"', '"+convertToString(static_cast<int>(mem))+"', '"+convertToString(static_cast<int>(disk))+"', '"+convertToString(static_cast<int>(cpu))+"', CURRENT_TIMESTAMP) ";
   
   try{
     mdatabase->process(req.c_str());
@@ -102,23 +102,26 @@ MetricServer::checkUpFreq(){
 }
 
 
+// TODO SET TIME
 IMS_Data::ListMetric*
 MetricServer::getCurMet(){
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
   estVector_t vec = diet_new_estVect();
   IMS_Data::Metric_ptr met;
-  double res;
   double disk;
   double cpu;
   double mem;
+  time_t time;
+
   diet_estimate_cori_add_collector(EST_COLL_EASY,NULL);
 
   diet_estimate_cori (vec, EST_FREESIZEDISK, EST_COLL_EASY, "./");
   disk = diet_est_get_system(vec, EST_FREESIZEDISK, -1); 
   met = ecoreFactory->createMetric();
   met->setType(3);
-  met->setValue(disk);
+  met->setValue(static_cast<int>(disk));
+  met->setTime(time);
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -127,7 +130,8 @@ MetricServer::getCurMet(){
   mem = diet_est_get_system(vec, EST_FREEMEM, -1); 
   met = ecoreFactory->createMetric();
   met->setType(5);
-  met->setValue(mem);
+  met->setValue(static_cast<int>(mem));
+  met->setTime(time);
   if (mcop->getMetricType() != 1 && mcop->getMetricType() != 3) {
     mlistObject->getMetric().push_back(met);
   }
@@ -137,7 +141,8 @@ MetricServer::getCurMet(){
   cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
   met = ecoreFactory->createMetric();
   met->setType(1);
-  met->setValue(cpu);
+  met->setValue(static_cast<int>(cpu));
+  met->setTime(time);
   if (mcop->getMetricType() != 3 && mcop->getMetricType() != 5) {
     mlistObject->getMetric().push_back(met);
   }
@@ -156,15 +161,14 @@ MetricServer::getHistMet(string machineId){
 
   IMS_Data::MetricType type = mhop->getType();
 
+  // TODO BAD COMPARISON CHANGE IT
   if (mhop->getStartTime()>0) {
-    request += " AND \"timestamp\">'";
+    request += " AND EXTRACT( epoch FROM  time ) >";
     request += convertToString(mhop->getStartTime());
-    request += "'";
   }
   if (mhop->getEndTime()>0) {
-    request += " AND \"timestamp\"<'";
+    request += " AND EXTRACT( epoch FROM  time ) <";
     request += convertToString(mhop->getEndTime());
-    request += "'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();

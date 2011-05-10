@@ -68,7 +68,7 @@ ServerIMS::init(int vishnuId,
   msendmailScriptPath = sendmailScriptPath;
 
   DbFactory factory;
-
+  string mid;
   mvishnuId = vishnuId;
 
   string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
@@ -80,6 +80,12 @@ ServerIMS::init(int vishnuId,
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
+    static const int hostsize = 200;
+    char hostname[hostsize];
+    if (gethostname(hostname, hostsize-1)==-1){
+      throw SystemException(ERRCODE_SYSTEM, "Cannot get hostname to check process");
+    }
+    mid = getMidFromHost(hostname);
 
     /*Mapper registration*/
     mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
@@ -121,7 +127,7 @@ ServerIMS::init(int vishnuId,
 
   /* solveCurMetric */
 
-  mprofile = diet_profile_desc_alloc(SRV[1], 2, 2, 4);
+  mprofile = diet_profile_desc_alloc((SRV[1]+mid).c_str(), 2, 2, 4);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
