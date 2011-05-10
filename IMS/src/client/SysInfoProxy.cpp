@@ -92,7 +92,8 @@ SysInfoProxy::getSystemInfo(IMS_Data::ListSysInfo& listSysInfo,
     IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     for(unsigned int i = 0; i < li->getSysInfo().size(); i++) {
       IMS_Data::SystemInfo_ptr systemInfo = ecoreFactory->createSystemInfo();
-      systemInfo = li->getSysInfo().get(i);
+       //To copy the content and not the pointer
+      *systemInfo = *li->getSysInfo().get(i);
       listSysInfo.getSysInfo().push_back(systemInfo);
     }
     delete li;

@@ -35,6 +35,7 @@ set(ALLCLI
   set_update_frequency
   get_current_metric
   set_system_info
+  get_system_info
   )
 
 #set the prefix of command
