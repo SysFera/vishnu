@@ -28,6 +28,7 @@
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <h1>Mapper Class Reference</h1>  </div>
@@ -79,6 +80,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To end a command, delete it from the map and get its value.  <a href="#a568fcb8dba98cb9d37700972ef5d8df0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMapper.html#a5e51b9148704b25e26e5ec48bd643a0b">decode</a> (const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get, from a coded string, the CPP command that made it.  <a href="#a5e51b9148704b25e26e5ec48bd643a0b"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMapper.html#ae19b072bc022475bc6c9e9943d4851f4">findSeparator</a> (const string &amp;s, vector&lt; int &gt; &amp;vec)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To find all the separator in the string s and fill the vector with their position in the string.  <a href="#ae19b072bc022475bc6c9e9943d4851f4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a694827c3dd2b369e3fe5cce6945a46e6"></a><!-- doxytag: member="Mapper::mreg" ref="a694827c3dd2b369e3fe5cce6945a46e6" args="" -->
@@ -188,7 +193,7 @@ pthread_mutex_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el"
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>if param code = 0, the assigned code to add other element to the same item, otherwize return 0 </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classUMSMapper.html#af5aec06e19b9b242645cf1abc2d6dad0">UMSMapper</a>.</p>
+<p>Reimplemented in <a class="el" href="classIMSMapper.html#ac972651946c18f94bc683654462ccecd">IMSMapper</a>, <a class="el" href="classTMSMapper.html#aae46d8055ecfe88e485be237a37f1f24">TMSMapper</a>, and <a class="el" href="classUMSMapper.html#af5aec06e19b9b242645cf1abc2d6dad0">UMSMapper</a>.</p>
 
 </div>
 </div>
@@ -217,7 +222,7 @@ pthread_mutex_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el"
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The CPP command </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classUMSMapper.html#a09302a31b4cc2698d0e0d563988fb7c3">UMSMapper</a>.</p>
+<p>Reimplemented in <a class="el" href="classTMSMapper.html#accb3c964a3f3cb147d1678d0efaeabb0">TMSMapper</a>, and <a class="el" href="classUMSMapper.html#a09302a31b4cc2698d0e0d563988fb7c3">UMSMapper</a>.</p>
 
 </div>
 </div>
@@ -231,7 +236,7 @@ pthread_mutex_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el"
           <td class="paramtype">int&nbsp;</td>
           <td class="paramname"> <em>key</em></td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline, virtual]</code></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -246,7 +251,42 @@ pthread_mutex_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el"
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The coded value of the command </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classUMSMapper.html#a831047c74368517e2164acc872ecb288">UMSMapper</a>.</p>
+</div>
+</div>
+<a class="anchor" id="ae19b072bc022475bc6c9e9943d4851f4"></a><!-- doxytag: member="Mapper::findSeparator" ref="ae19b072bc022475bc6c9e9943d4851f4" args="(const string &amp;s, vector&lt; int &gt; &amp;vec)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mapper::findSeparator </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; int &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>vec</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To find all the separator in the string s and fill the vector with their position in the string. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>s</em>&nbsp;</td><td>The string to find the separator </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vec</em>&nbsp;</td><td>A vector containing the position of the separator in the string s (OUT) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The cli like close command </dd></dl>
 
 </div>
 </div>
@@ -372,7 +412,7 @@ pthread_mutex_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el"
 <li>core/src/registry/<a class="el" href="Mapper_8hpp_source.html">Mapper.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:41 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

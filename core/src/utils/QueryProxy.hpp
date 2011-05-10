@@ -158,7 +158,8 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
 /**
 * \fn QueryProxy(const QueryParameters& params,
 *                const SessionProxy& session,
-*                const std::string& serviceName)
+*                const std::string& serviceName,
+*                 const std::string& machineId )
 * \param params The object which encapsulates the information of queryProxy options
 * \param session The object which encapsulates the session information (ex: identifier of the session)
 * \param serviceName The name of the service to call
