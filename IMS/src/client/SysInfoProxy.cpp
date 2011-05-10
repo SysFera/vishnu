@@ -36,8 +36,6 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
 
-
-  std::cout << "**********test1************" << std::endl;
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
   if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
@@ -47,8 +45,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
 
   const char* name = "setSystemInfo";
   ::ecorecpp::serializer::serializer _ser(name);
-  std::cout << "**********test2************" << std::endl;
-  //To serialize the options object
+  //To serialize the options object in to optionsInString
   systemInfoToString =  strdup(_ser.serialize(const_cast<IMS_Data::SystemInfo_ptr>(&systemInfo)).c_str());
 
   if (diet_string_set(diet_parameter(profile,1), strdup(systemInfoToString.c_str()),  DIET_VOLATILE)) {
@@ -56,7 +53,6 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  std::cout << "**********test3************" << std::endl;
   //OUT Parameters
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
