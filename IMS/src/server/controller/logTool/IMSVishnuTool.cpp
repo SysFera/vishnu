@@ -145,6 +145,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      break;
 	    } // End else if ims
 	  }// end for
+	  //TODO UNCOMMENT WHEN BUG FIXED
 //	  for (unsigned j = service_number ; j>0 ; j--) {
 //	    diet_profile_desc_free(tab+j-1);
 //	  }
