@@ -76,7 +76,9 @@ same conditions as regards security.</para>
     
   <chapter>
     <title> Introduction </title>
-    
+     <para>Author of the test code : Ibrahima CISSE</para>
+     <para>Author of the test report : Eugène PAMBA CAPO-CHICHI</para>
+     
      <para> The tests which follows have been done in the following environment: </para>
       <para><itemizedlist>
 	  <listitem>
@@ -96,6 +98,9 @@ same conditions as regards security.</para>
           </listitem>
 	  <listitem>
 	   <para> Batch scheduler : TORQUE V2.5 </para>
+	 </listitem>
+	 <listitem>
+	   <para> RAM memory : 4Gb </para>
 	 </listitem>
         </itemizedlist>
     </para>
@@ -485,6 +490,9 @@ same conditions as regards security.</para>
           </tbody>
         </tgroup>
       </informaltable>
+      <para> <emphasis role = "bold"> Remarks T2.3-B </emphasis>: to make this test, you must have administrator rights on the batch scheduler for adding
+      a new queue. 
+      </para>
     </section>
     
       <section>
@@ -575,7 +583,7 @@ same conditions as regards security.</para>
                   <para>submitJob</para>
                </entry>
                <entry>
-                  <para>normal job submission</para>
+                  <para>Success - normal job submission</para>
                </entry>
                <entry/>
             </row>
@@ -614,7 +622,7 @@ same conditions as regards security.</para>
                </entry>
 	       
                <entry>
-                  <para> failure with the corresponding error message</para>
+                  <para> Success - the corresponding error message is returned </para>
                </entry>
                
             </row>
@@ -662,7 +670,7 @@ same conditions as regards security.</para>
                   <para>submitJob</para>
                </entry>
                <entry>
-                  <para>normal execution of all commands launched</para>
+                  <para>Success - normal execution of all commands launched</para>
                </entry>
             </row>   
 	    <row>
@@ -673,13 +681,13 @@ same conditions as regards security.</para>
                   <para>05/05/11</para>
                </entry>
                <entry>
-                  <para>Simultaneous launch of 100 commands</para>
+                  <para>Success - Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
                   <para>listJobs</para>
                </entry>
                <entry>
-                  <para>normal execution of all commands launched</para>
+                  <para>Success - normal execution of all commands launched</para>
                </entry>
             </row>   
 	    <row>
@@ -696,7 +704,7 @@ same conditions as regards security.</para>
                   <para>listQueues</para>
                </entry>
                <entry>
-                  <para>normal execution of all commands launched</para>
+                  <para>Success - normal execution of all commands launched</para>
                </entry>
             </row>
 	  </tbody>    
@@ -848,10 +856,10 @@ same conditions as regards security.</para>
                   <para>submitJob</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>0,8% of the RAM memory</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Success</para>
                </entry>
             </row>
 	    
@@ -863,13 +871,13 @@ same conditions as regards security.</para>
                   <para>Memory consumption of tms server running during 24 hours</para>
                </entry>
                <entry>
-                  <para>Tms server</para>
+                  <para>tms server</para>
                </entry>
                <entry>
-                  <para></para>
+                  <para>0,7% of the RAM memory</para>
                </entry>
 	       <entry>
-                  <para></para>
+                  <para>Success</para>
                </entry>
             </row>
 	    

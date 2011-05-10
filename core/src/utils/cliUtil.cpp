@@ -1,5 +1,5 @@
 #include "cliUtil.hpp"
-
+#include "vishnu_version.hpp"
 using namespace std;
 /**
  * \brief helper function to display help about a specific command 
@@ -9,6 +9,7 @@ using namespace std;
 void 
 helpUsage (const Options& opt,const string& signature){
 
+cout << "\nVersion: " << VISHNU_VERSION << "\n";
   cout << "\nUsage: " << opt.getConfiguration()->getPgName()<<" " << signature <<"\n\n";
   cout <<opt<< endl;
 }
