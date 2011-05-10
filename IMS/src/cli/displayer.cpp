@@ -4,14 +4,14 @@
 using namespace std;
 using namespace vishnu;
 
-void 
+void
 displayListProc(IMS_Data::ListProcesses* li){
   for (unsigned int i = 0 ; i < li->getProcess().size() ; i++){
     displayProc(li->getProcess().get(i));
   }
 }
 
-void 
+void
 displayProc(IMS_Data::Process* p){
   cout << " ------------------------ " << endl;
   cout << " Vishnu name : " << p->getProcessName() << endl;
@@ -19,14 +19,14 @@ displayProc(IMS_Data::Process* p){
   cout << " Machine id  : " << p->getMachineId() << endl;
 }
 
-void 
+void
 displayListMetric(IMS_Data::ListMetric* li){
   for (unsigned int i = 0 ; i < li->getMetric().size() ; i++){
     displayMetric(li->getMetric().get(i));
   }
 }
 
-void 
+void
 displayMetric(IMS_Data::Metric* m){
   string type;
   switch(m->getType()){
@@ -51,4 +51,21 @@ displayMetric(IMS_Data::Metric* m){
 void
 displayFreq(int freq) {
   cout << "The frequency of update of the history maker is " << freq << endl;
+}
+
+
+void
+displaySystemInfo(IMS_Data::SystemInfo* sysInfo){
+  cout << " ------------------------ " << endl;
+  cout << " machineId : " << sysInfo->getMachineId() << endl;
+  cout << " Disk space: " << sysInfo->getDiskSpace() << endl;
+  cout << " Memory : " << sysInfo->getMemory() << endl;
+}
+
+
+void
+displayListSysInfo(IMS_Data::ListSysInfo* li) {
+  for (unsigned int i = 0 ; i < li->getSysInfo().size() ; i++){
+    displaySystemInfo(li->getSysInfo().get(i));
+  }
 }
