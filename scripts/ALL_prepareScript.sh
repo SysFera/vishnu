@@ -125,7 +125,6 @@ cp -r TMS/src/cli $path/TMS/src
 cp -r TMS/src/client $path/TMS/src
 cp -r TMS/src/sed $path/TMS/src
 cp -r TMS/src/server $path/TMS/src
-cp -r TMS/src/utils $path/TMS/src
 cp -r TMS/src/utils_torque $path/TMS/src
 cp -r TMS/src/slave $path/TMS/src
 
@@ -133,6 +132,7 @@ cp -r TMS/src/slave $path/TMS/src
 mkdir $path/TMS/test
 mkdir $path/TMS/test/src
 cp -r TMS/test/src/sql $path/TMS/test/src
+cp -r TMS/test/src/scripts $path/TMS/test/src
 cp TMS/test/src/*pp $path/TMS/test/src
 cp TMS/test/src/config.h.in $path/TMS/test/src
 cp TMS/test/src/CMakeLists.txt $path/TMS/test/src
