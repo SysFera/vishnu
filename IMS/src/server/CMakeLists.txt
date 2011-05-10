@@ -37,7 +37,8 @@ add_library(ims-server STATIC
   data/MetricServer.cpp
   data/ExportServer.cpp
   data/ShellExporter.cpp
-
+  data/ObjectIdServer.cpp
+  data/SysInfoServer.cpp
 )
 
 target_link_libraries(ims-server
