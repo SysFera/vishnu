@@ -11,6 +11,7 @@
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
+#include "BatchConvertor.hpp"
 
 using namespace std;
 /**
@@ -61,11 +62,18 @@ int JobServer::submitJob(const std::string& scriptContent,
   ::ecorecpp::serializer::serializer jobSer(name);
 
   scriptPath = strdup("/tmp/job_scriptXXXXXX");
-  vishnu::createTmpFile(scriptPath, scriptContent);
 
-  std::ofstream ofile(scriptPath);
-  ofile << scriptContent;
-  ofile.close();
+  std::string convertedScript;
+  boost::shared_ptr<BatchConvertor> bc(vishnuJobConvertor(mbatchType, scriptContent)); 
+  if(bc->scriptIsGeneric()) {
+    std::string genScript = bc->getJobDescriptor();
+    convertedScript = genScript;
+    std::cout << convertedScript  << std::endl;
+  } else {
+    convertedScript = scriptContent;
+  }  
+
+  vishnu::createTmpFile(scriptPath, convertedScript);
 
   submitOptionsSerialized = optSer.serialize(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
   jobSerialized =  jobSer.serialize(const_cast<TMS_Data::Job_ptr>(&mjob));
@@ -87,7 +95,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string updateJobSerialized = sshJobExec.getJobSerialized();
   TMS_Data::Job_ptr job = NULL;
   if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "JobServer::submitJob : job object is not well built");
+    throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
   delete job;
@@ -101,7 +109,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string vishnuJobId = vishnu::getObjectId(vishnuId, "jobcpt", "formatidjob", JOB, mmachineId);
   mjob.setJobId(vishnuJobId);
 
-  string scriptContentStr = std::string(scriptContent);
+  string scriptContentStr = std::string(convertedScript);
   size_t pos = scriptContentStr.find("'");
   while(pos!=std::string::npos) {
     scriptContentStr.replace(pos, 1, " ");
@@ -123,7 +131,6 @@ int JobServer::submitJob(const std::string& scriptContent,
     +convertToString(mjob.getMemLimit())
     +","+convertToString(mjob.getNbNodes())+",'"+mjob.getNbNodesAndCpuPerNode()+"')" ;
 
-  std::cout << sqlInsert << std::endl;
   mdatabaseVishnu->process(sqlInsert); 
     
   return 0;
@@ -180,8 +187,6 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
 
   boost::scoped_ptr<DatabaseResult> sqlCancelResult(mdatabaseVishnu->getResult(sqlCancelRequest.c_str()));
-  std::cout << "JobServer::cancelJob: " << sqlCancelRequest << std::endl;
-  std::cout << "sqlCancelResult->getNbTuples()=" << sqlCancelResult->getNbTuples() << std::endl;
   if (sqlCancelResult->getNbTuples() != 0){
     for (size_t i = 0; i < sqlCancelResult->getNbTuples(); ++i) {
       results.clear();

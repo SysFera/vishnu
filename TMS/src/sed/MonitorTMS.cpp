@@ -103,14 +103,11 @@ MonitorTMS::run() {
         if(state!=-1) {
           sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
          
-          //std::cout << "MonitorTMS::run(): " << sqlUpdatedRequest << std::endl;
-
           mdatabaseVishnu->process(sqlUpdatedRequest.c_str()); 
 
           if(state==5) {
             sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
             mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-            std::cout << "MonitorTMS::run(): " << sqlUpdatedRequest << std::endl;
           }
         }
       }
@@ -119,7 +116,6 @@ MonitorTMS::run() {
 
   } catch (VishnuException& e) {
     string errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo = " << errorInfo << std::endl;
   }
   return 0;
 }

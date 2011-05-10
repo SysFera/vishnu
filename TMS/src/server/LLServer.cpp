@@ -152,7 +152,6 @@ LLServer::insertOptionLine(const std::string& optionLineToInsert,
       size_t pos1 = line.find("#");
       size_t pos2 = line.find("@");
       if((pos1!=string::npos) && (pos2!=string::npos)) {
-        std::cout << line << std::endl;
         std::string space = line.substr(pos1+1, pos2-pos1-1);
         size_t spaceSize = space.size();
         int i = 0;

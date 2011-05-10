@@ -677,7 +677,6 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
     while(a!=NULL)
     {
 
-      std::cout << "==============a->name=" << a->name << std::endl;
       if(a->name!=NULL) {
         if(!strcmp(a->name, ATTR_start)) {
           if(*a->value == 'T') {
@@ -686,7 +685,6 @@ TorqueServer::listQueues(const std::string& OptqueueName) {
             queue->setState(1); // STARTED = 'S';
           }
         }  else if(!strcmp(a->name, ATTR_count)) { 
-          //std::cout << "a->value=" << a->value << std::endl;
           // a->value=Transit:X Queued:X Held:X Waiting:W Running:X Exiting:X            
           std::string str = std::string(a->value);
           size_t found = 0;
