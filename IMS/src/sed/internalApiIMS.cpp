@@ -16,13 +16,13 @@
 using namespace std;
 using namespace vishnu;
 
-int 
+int
 solveExport(diet_profile_t* pb){
   return 0;
 }
 
 // TODO FAIRE CE SERVICE COMME NOMME
-int 
+int
 solveCurMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *curOpSer = NULL;
@@ -88,7 +88,7 @@ solveCurMetric(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveOldMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *histOpSer = NULL;
@@ -156,7 +156,7 @@ solveOldMetric(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solvePS(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *processOpSer = NULL;
@@ -222,47 +222,72 @@ solvePS(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetSysInfo(diet_profile_t* pb){
+
+  //TODO: cli/client already done
+  char* sessionKey = NULL;
+  char* SystemInfo = NULL;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &SystemInfo, NULL);
+  cout << "************SystemInfo=" << SystemInfo << " ..." << endl;
+
+  string  errorInfo = "";
+  if (diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE)) {
+      cerr << "diet_string_set error" << endl;
+    return 1;
+  }
+
+  cout << " done" << endl;
+  return 0;
+
+
+
+
+
+
+
   return 0;
 }
 
-int 
+int
 solveSetThreshold(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveGetThreshold(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetUID(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetJID(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetTID(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetMID(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveLoadShed(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetUpFreq(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char* freq = NULL;
@@ -271,7 +296,7 @@ solveSetUpFreq(diet_profile_t* pb){
   int mapperkey;
   string cmd;
   char *freqSer   = NULL;
-  
+
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &freq,NULL);
@@ -312,7 +337,7 @@ solveSetUpFreq(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveGetUpFreq(diet_profile_t* pb){
   char *sessionKey   = NULL;
   string error;
@@ -365,18 +390,63 @@ solveGetUpFreq(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveRestart(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveStop(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveGetSysInfo(diet_profile_t* pb){
+
+  char* sessionKey = NULL;
+  char* machineId = NULL;
+  char* SystemInfo = NULL;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &SystemInfo, NULL);
+  cout << "************SystemInfoOptions=" << SystemInfo << " ..." << endl;
+
+  string  errorInfo = "";
+
+
+ IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+ IMS_Data::SystemInfo_ptr sys = ecoreFactory->createSystemInfo();
+
+
+  sys->setDiskSpace(40);
+  sys->setMemory(30);
+  sys->setMachineId("Paco");
+
+  IMS_Data::ListSysInfo li;
+
+  li.getSysInfo().push_back(sys);
+
+  const char* name = "test";
+  ::ecorecpp::serializer::serializer _ser(name);
+
+  std::string listToString =  strdup(_ser.serialize(const_cast<IMS_Data::ListSysInfo_ptr>(&li)).c_str());
+
+  if (diet_string_set(diet_parameter(pb,2), strdup(listToString.c_str()), DIET_VOLATILE)) {
+      cerr << "diet_string_set error" << endl;
+    return 1;
+  }
+
+  if (diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE)) {
+      cerr << "diet_string_set error" << endl;
+    return 1;
+  }
+
+  cout << " done" << endl;
+  return 0;
+
+
+
   return 0;
 }
 
