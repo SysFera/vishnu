@@ -76,9 +76,9 @@ PRIMARY KEY(numuserid),
 CREATE TABLE state (
   numstateid SERIAL  NOT NULL ,
   machine_nummachineid INTEGER   NOT NULL ,
-  memory REAL    ,
-  diskspace REAL    ,
-  cpuload REAL    ,
+  memory integer    ,
+  diskspace integer    ,
+  cpuload integer    ,
   time TIMESTAMP      ,
 PRIMARY KEY(numstateid),
   FOREIGN KEY(machine_nummachineid)
