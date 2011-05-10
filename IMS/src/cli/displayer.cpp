@@ -28,8 +28,22 @@ displayListMetric(IMS_Data::ListMetric* li){
 
 void 
 displayMetric(IMS_Data::Metric* m){
+  string type;
+  switch(m->getType()){
+  case 1 :
+    type = "CPU use ";
+    break;
+  case 3 :
+    type = "Diskspace used ";
+    break;
+  case 5 :
+    type = "Memory used ";
+    break;
+  default:
+    type = "unknown ";
+  }
   cout << " ------------------------ " << endl;
-  cout << " type : " << m->getType() << endl;
+  cout << " type : " << type << endl;
   cout << " value: " << m->getValue() << endl;
   cout << " time : " << m->getTime() << endl;
 }
