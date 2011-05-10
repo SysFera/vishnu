@@ -327,7 +327,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Metric__type->setDerived(false);
     m_Metric__type->setOrdered(true);
     m_Metric__value->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEDouble());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Metric__value->setName("value");
     m_Metric__value->setDefaultValueLiteral("");
     m_Metric__value->setLowerBound(0);
@@ -341,7 +341,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Metric__value->setDerived(false);
     m_Metric__value->setOrdered(true);
     m_Metric__time->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Metric__time->setName("time");
     m_Metric__time->setDefaultValueLiteral("");
     m_Metric__time->setLowerBound(0);
@@ -702,7 +702,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_ThresholdEClass->setAbstract(false);
     m_ThresholdEClass->setInterface(false);
     m_Threshold__value->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEDouble());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Threshold__value->setName("value");
     m_Threshold__value->setDefaultValueLiteral("");
     m_Threshold__value->setLowerBound(0);
