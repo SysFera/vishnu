@@ -66,7 +66,7 @@ void
 IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
   // DIET call parameters
   int service_number;
-  diet_profile_desc_t *tab;
+  diet_profile_desc_t **tab;
 
   // For each message
   for (CORBA::ULong i=0; i<msg.length(); i++){
@@ -108,7 +108,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	  // Looking in the list of services of the sed to authentify it
 	  for (unsigned int j = 0 ; j < service_number ; j++) {
 	    // If ums sed
-	    if (string(tab[j].path).compare("sessionConnect")==0){
+	    if (string(tab[j]->path).compare("sessionConnect")==0){
 	      log.append(msg[i].tag);
 	      log.append(":");
 	      //msg
@@ -120,7 +120,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      break;
 	    }
 	    // else If tms sed
-	    else if ((string(tab[j].path)).find("jobSubmit")!=string::npos) {
+	    else if ((string(tab[j]->path)).find("jobSubmit")!=string::npos) {
 	      log.append(msg[i].tag);
 	      log.append(":");
 	      //msg
@@ -132,7 +132,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      break;
 	    }
 	    // else if IMS sed
-	    else if (string(tab[j].path).compare("int_getProcesses")==0) {
+	    else if (string(tab[j]->path).compare("int_getProcesses")==0) {
 	      log.append(msg[i].tag);
 	      log.append(":");
 	      //msg
@@ -145,10 +145,10 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	      break;
 	    } // End else if ims
 	  }// end for
-	  //TODO UNCOMMENT WHEN BUG FIXED
-//	  for (unsigned j = service_number ; j>0 ; j--) {
-//	    diet_profile_desc_free(tab+j-1);
-//	  }
+	  for (unsigned j = 0 ; j<service_number ; j++) {
+	    diet_profile_desc_free(tab[j]);
+	  }
+	  free(tab);
 	}catch ( SystemException& e){
 	  throw (e);
 	}
