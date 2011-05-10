@@ -46,6 +46,12 @@
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#ad6fa4a9f170c815854162c1e3b3b53f3">QueryProxy</a> (const QueryParameters &amp;params, const <a class="el" href="classSessionProxy.html">SessionProxy</a> &amp;session, const std::string &amp;serviceName)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#ad6fa4a9f170c815854162c1e3b3b53f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae92822516e13ef06702b563fd7b3b6e8"></a><!-- doxytag: member="QueryProxy::QueryProxy" ref="ae92822516e13ef06702b563fd7b3b6e8" args="(const QueryParameters &amp;params, const SessionProxy &amp;session, const std::string &amp;serviceName, const std::string &amp;machineId)" -->
+&nbsp;</td><td class="memItemRight" valign="bottom"><b>QueryProxy</b> (const QueryParameters &amp;params, const <a class="el" href="classSessionProxy.html">SessionProxy</a> &amp;session, const std::string &amp;serviceName, const std::string &amp;machineId)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#a78d4f01c14cf9970055099613efa29c6">setMachineId</a> (const std::string &amp;machineId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to change or reset the machineId.  <a href="#a78d4f01c14cf9970055099613efa29c6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#ab4f8c0a551ae3ed4d4fa966c864cf648">getMachineId</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the machineId used by the query.  <a href="#ab4f8c0a551ae3ed4d4fa966c864cf648"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">ListObject *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#a23e516962073ad50a0375ff3c38cb77a">list</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list <a class="el" href="classQueryProxy.html" title="QueryProxy class implementation.">QueryProxy</a> information.  <a href="#a23e516962073ad50a0375ff3c38cb77a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">ListObject *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#ab6debbf7fbc67c4928c16b4ed4d94be8">listWithParamsString</a> ()</td></tr>
@@ -75,6 +81,9 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3dcf0bbbaee6e544e4ab0ce839eaa44"></a><!-- doxytag: member="QueryProxy::mlistObject" ref="af3dcf0bbbaee6e544e4ab0ce839eaa44" args="" -->
 ListObject *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#af3dcf0bbbaee6e544e4ab0ce839eaa44">mlistObject</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The Object containing query information. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af10336949a511239a1f280cb01e69e1f"></a><!-- doxytag: member="QueryProxy::mmachineId" ref="af10336949a511239a1f280cb01e69e1f" args="" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#af10336949a511239a1f280cb01e69e1f">mmachineId</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The id of the machine used by the query. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <h3>template&lt;class QueryParameters, class ListObject&gt;<br/>
@@ -120,7 +129,11 @@ template&lt;class QueryParameters , class ListObject &gt; </div>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of queryProxy options </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the service to call</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of queryProxy options </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the service to call </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>The identifier of the machine in which the query will be done </td></tr>
   </table>
   </dd>
 </dl>
@@ -128,6 +141,28 @@ template&lt;class QueryParameters , class ListObject &gt; </div>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ab4f8c0a551ae3ed4d4fa966c864cf648"></a><!-- doxytag: member="QueryProxy::getMachineId" ref="ab4f8c0a551ae3ed4d4fa966c864cf648" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class QueryParameters , class ListObject &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classQueryProxy.html">QueryProxy</a>&lt; QueryParameters, ListObject &gt;::getMachineId </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the machineId used by the query. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the id of the machine used by the query </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a23e516962073ad50a0375ff3c38cb77a"></a><!-- doxytag: member="QueryProxy::list" ref="a23e516962073ad50a0375ff3c38cb77a" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -176,11 +211,40 @@ raises an exception on error </dd></dl>
 
 </div>
 </div>
+<a class="anchor" id="a78d4f01c14cf9970055099613efa29c6"></a><!-- doxytag: member="QueryProxy::setMachineId" ref="a78d4f01c14cf9970055099613efa29c6" args="(const std::string &amp;machineId)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class QueryParameters , class ListObject &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classQueryProxy.html">QueryProxy</a>&lt; QueryParameters, ListObject &gt;::setMachineId </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineId</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to change or reset the machineId. </p>
+<p>Function to reset the machineId.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>the</em>&nbsp;</td><td>id of the machine used by the query </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>UMS/src/client/<a class="el" href="QueryProxy_8hpp_source.html">QueryProxy.hpp</a></li>
+<li>core/src/utils/<a class="el" href="QueryProxy_8hpp_source.html">QueryProxy.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:41 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

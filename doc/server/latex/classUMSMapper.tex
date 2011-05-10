@@ -42,8 +42,6 @@ virtual int \hyperlink{classUMSMapper_a1a8e2189e1770c426387e391dc75dce9}{getKey}
 \begin{DoxyCompactList}\small\item\em To get the key corresponding to a command. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classUMSMapper_af5aec06e19b9b242645cf1abc2d6dad0}{code} (const string \&cmd, unsigned int code=0)
 \begin{DoxyCompactList}\small\item\em Function to add an element to code. \item\end{DoxyCompactList}\item 
-virtual string \hyperlink{classUMSMapper_a831047c74368517e2164acc872ecb288}{finalize} (int key)
-\begin{DoxyCompactList}\small\item\em To end a command, delete it from the map and get its value. \item\end{DoxyCompactList}\item 
 virtual string \hyperlink{classUMSMapper_a09302a31b4cc2698d0e0d563988fb7c3}{decode} (const string \&msg)
 \begin{DoxyCompactList}\small\item\em To get, from a coded string, the cli like command that made it. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
@@ -93,8 +91,6 @@ string \hyperlink{classUMSMapper_ad157fb31bec53a8c140fb2e2d60465b3}{decodeConfDe
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
 string \hyperlink{classUMSMapper_ac1f47841882d3f85b8820ab836789036}{decodeConfOp} (vector$<$ int $>$ separator, const string \&msg)
 \begin{DoxyCompactList}\small\item\em To decode the add user call sequence of the string returned by finalize. \item\end{DoxyCompactList}\item 
-void \hyperlink{classUMSMapper_a25dfdb771965482f87d2dea0cf206996}{findSeparator} (const string \&s, vector$<$ int $>$ \&vec)
-\begin{DoxyCompactList}\small\item\em To find all the separator in the string s and fill the vector with their position in the string. \item\end{DoxyCompactList}\item 
 string \hyperlink{classUMSMapper_a60bb02d794c885f5e0feae133af7058d}{getU} (string serial)
 \begin{DoxyCompactList}\small\item\em To deserialize the serial string, make a user objet, and get the values in the same string. \item\end{DoxyCompactList}\item 
 string \hyperlink{classUMSMapper_aadfd01766b31dfe8b40710b8b3bb432c}{getUupdate} (string serial)
@@ -611,49 +607,6 @@ To decode the add user call sequence of the string returned by finalize.
 \item[{\em separator}]A vector containing the position of the separator in the message msg \item[{\em msg}]The message to decode \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The cli like update user command 
-\end{DoxyReturn}
-\hypertarget{classUMSMapper_a831047c74368517e2164acc872ecb288}{
-\index{UMSMapper@{UMSMapper}!finalize@{finalize}}
-\index{finalize@{finalize}!UMSMapper@{UMSMapper}}
-\subsubsection[{finalize}]{\setlength{\rightskip}{0pt plus 5cm}string UMSMapper::finalize (
-\begin{DoxyParamCaption}
-\item[{int}]{ key}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classUMSMapper_a831047c74368517e2164acc872ecb288}
-
-
-To end a command, delete it from the map and get its value. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em key}]The entry in the map to get an remove \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The coded value of the command 
-\end{DoxyReturn}
-
-
-Reimplemented from \hyperlink{classMapper_a568fcb8dba98cb9d37700972ef5d8df0}{Mapper}.
-
-\hypertarget{classUMSMapper_a25dfdb771965482f87d2dea0cf206996}{
-\index{UMSMapper@{UMSMapper}!findSeparator@{findSeparator}}
-\index{findSeparator@{findSeparator}!UMSMapper@{UMSMapper}}
-\subsubsection[{findSeparator}]{\setlength{\rightskip}{0pt plus 5cm}void UMSMapper::findSeparator (
-\begin{DoxyParamCaption}
-\item[{const string \&}]{ s, }
-\item[{vector$<$ int $>$ \&}]{ vec}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classUMSMapper_a25dfdb771965482f87d2dea0cf206996}
-
-
-To find all the separator in the string s and fill the vector with their position in the string. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em s}]The string to find the separator \item[{\em vec}]A vector containing the position of the separator in the string s (OUT) \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The cli like close command 
 \end{DoxyReturn}
 \hypertarget{classUMSMapper_abf93114fd8a822d7d1b342686e2d32f9}{
 \index{UMSMapper@{UMSMapper}!getCommand@{getCommand}}

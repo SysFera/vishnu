@@ -8,19 +8,16 @@ This file contains client utils functions for VISHNU client Proxy classes.
 
 
 {\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$cstring$>$}\par
 {\ttfamily \#include $<$iostream$>$}\par
 {\ttfamily \#include $<$sstream$>$}\par
-{\ttfamily \#include \char`\"{}SystemException.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}utilClient.hpp\char`\"{}}\par
 {\ttfamily \#include \char`\"{}UMSVishnuException.hpp\char`\"{}}\par
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{utilsClient_8hpp_a7117fd9479ada58240ab2638a677f5ed}{errMsg} (const std::string \&msg)
 \begin{DoxyCompactList}\small\item\em Function to print an error message and the line and file where this error has been occured. \item\end{DoxyCompactList}\item 
-void \hyperlink{utilsClient_8hpp_a4724b68263580fa43892c050b81a24ff}{raiseDietMsgException} (const std::string \&msg)
-\begin{DoxyCompactList}\small\item\em Function to spread error message to C++ API, Python API, Web service API and command line program. \item\end{DoxyCompactList}\item 
-void \hyperlink{utilsClient_8hpp_aa5e3ca42e1ddfaebc2d40a2dc1779354}{raiseExceptionIfNotEmptyMsg} (const std::string \&msg)
-\begin{DoxyCompactList}\small\item\em Function to split the receiving message into error code and message error. \item\end{DoxyCompactList}\item 
 void \hyperlink{utilsClient_8hpp_af94e0eed13dfb2a6cdf83f9caa499217}{checkIfTextIsEmpty} (const std::string \&text, const std::string \&compMsg, const int \&execpetionType)
 \begin{DoxyCompactList}\small\item\em Function to check if a text is empty. \item\end{DoxyCompactList}\item 
 void \hyperlink{utilsClient_8hpp_a52c2b37b718b5ae048173ce797a0271b}{checkEmail} (const std::string \&mail)
@@ -93,35 +90,3 @@ Function to print an error message and the line and file where this error has be
 
 \begin{DoxyParams}{Parameters}
 \item[{\em msg}]to print \end{DoxyParams}
-\hypertarget{utilsClient_8hpp_a4724b68263580fa43892c050b81a24ff}{
-\index{utilsClient.hpp@{utilsClient.hpp}!raiseDietMsgException@{raiseDietMsgException}}
-\index{raiseDietMsgException@{raiseDietMsgException}!utilsClient.hpp@{utilsClient.hpp}}
-\subsubsection[{raiseDietMsgException}]{\setlength{\rightskip}{0pt plus 5cm}void raiseDietMsgException (
-\begin{DoxyParamCaption}
-\item[{const std::string \&}]{ msg}
-\end{DoxyParamCaption}
-)}}
-\label{utilsClient_8hpp_a4724b68263580fa43892c050b81a24ff}
-
-
-Function to spread error message to C++ API, Python API, Web service API and command line program. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em msg}]to spread \end{DoxyParams}
-\hypertarget{utilsClient_8hpp_aa5e3ca42e1ddfaebc2d40a2dc1779354}{
-\index{utilsClient.hpp@{utilsClient.hpp}!raiseExceptionIfNotEmptyMsg@{raiseExceptionIfNotEmptyMsg}}
-\index{raiseExceptionIfNotEmptyMsg@{raiseExceptionIfNotEmptyMsg}!utilsClient.hpp@{utilsClient.hpp}}
-\subsubsection[{raiseExceptionIfNotEmptyMsg}]{\setlength{\rightskip}{0pt plus 5cm}void raiseExceptionIfNotEmptyMsg (
-\begin{DoxyParamCaption}
-\item[{const std::string \&}]{ msg}
-\end{DoxyParamCaption}
-)}}
-\label{utilsClient_8hpp_aa5e3ca42e1ddfaebc2d40a2dc1779354}
-
-
-Function to split the receiving message into error code and message error. 
-
-
-\begin{DoxyParams}{Parameters}
-\item[{\em msg}]to split \end{DoxyParams}

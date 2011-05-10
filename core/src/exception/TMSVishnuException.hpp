@@ -1,5 +1,5 @@
 /**
- * \file TMSVishnuException.hh
+ * \file TMSVishnuException.hpp
  * \brief This file defines the TMS sub class for the Vishnu exceptions.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  */
@@ -17,7 +17,9 @@ static const int ERRCODE_ALREADY_TERMINATED = 105;
 static const int ERRCODE_ALREADY_CANCELED = 106;
 static const int ERRCODE_JOB_IS_NOT_TERMINATED = 107;
 
-
+/**
+ * \brief This class allows to treat an error specific to  TMS Module
+ */ 
 class TMSVishnuException: public UserException{
 
   public:
@@ -28,12 +30,12 @@ class TMSVishnuException: public UserException{
   TMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn UMSVishnuException()
+   * \fn TMSVishnuException()
    */
   TMSVishnuException(const TMSVishnuException& e);
   /**
    * \brief Constructor
-   * \fn UMSVishnuException()
+   * \fn TMSVishnuException()
    */
   TMSVishnuException(int msg, std::string msgComp= "");
   /**

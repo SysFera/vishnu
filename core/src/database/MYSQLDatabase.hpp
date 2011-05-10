@@ -1,5 +1,5 @@
 /**
- * \file MYSQLDatabase.hh
+ * \file MYSQLDatabase.hpp
  * \brief This file presents a SQL database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10
@@ -20,7 +20,6 @@ public :
   static const int DATABASENOTCONNECTED = -1;
   /**
    * \brief Function to process the request in the database
-   * \fn    int createDatabase()
    * \param request The request to process
    * \return 0 on success, an error code otherwise
    */
@@ -58,7 +57,6 @@ public :
   ~MYSQLDatabase();
   /**
    * \brief To set the db to use
-   * \fn int setDb(std::string db)
    * \param db The database to use
    * \return 0 on success, an error code otherwise
    */

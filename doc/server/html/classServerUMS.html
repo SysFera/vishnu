@@ -46,12 +46,12 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a6c582b60ba1b73edef1ea5ebb920ff40">getVishnuId</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the vishnuId.  <a href="#a6c582b60ba1b73edef1ea5ebb920ff40"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#aa82fd34438d581fb1a3915db6d8a9bb9">getSendmailScriptPath</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the path to the sendmail script.  <a href="#aa82fd34438d581fb1a3915db6d8a9bb9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#ae3bce55074cf688f585d6a46a9aabe23">init</a> (int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword, std::string sendmailScriptPath)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS server.  <a href="#ae3bce55074cf688f585d6a46a9aabe23"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#af5943e226e5d3122ae98771f34cbef79">getVishnuId</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the vishnuId.  <a href="#af5943e226e5d3122ae98771f34cbef79"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#aa8e658cdcdb326d25460948e5f5b91b9">getSendmailScriptPath</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the path to the sendmail script.  <a href="#aa8e658cdcdb326d25460948e5f5b91b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a56a5c740db9e9c1b3e28fa4d0b05546b">init</a> (int vishnuId, <a class="el" href="classDbConfiguration.html">DbConfiguration</a> dbConfig, std::string sendmailScriptPath)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS server.  <a href="#a56a5c740db9e9c1b3e28fa4d0b05546b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d94c92a660ecfda2930894dd4b772bf"></a><!-- doxytag: member="ServerUMS::~ServerUMS" ref="a9d94c92a660ecfda2930894dd4b772bf" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a9d94c92a660ecfda2930894dd4b772bf">~ServerUMS</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
@@ -65,6 +65,9 @@ Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89fc4380f08f2cda6044c930d48db2cd"></a><!-- doxytag: member="ServerUMS::ServerUMS" ref="a89fc4380f08f2cda6044c930d48db2cd" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a89fc4380f08f2cda6044c930d48db2cd">ServerUMS</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, private because class is singleton. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6dd2c841388e54a78db283792169a06"></a><!-- doxytag: member="ServerUMS::operator=" ref="ac6dd2c841388e54a78db283792169a06" args="(const ServerUMS &amp;)" -->
+<a class="el" href="classServerUMS.html">ServerUMS</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#ac6dd2c841388e54a78db283792169a06">operator=</a> (const <a class="el" href="classServerUMS.html">ServerUMS</a> &amp;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">operator= <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afada4a5788f967573d0bebdd86fa27fc"></a><!-- doxytag: member="ServerUMS::msendmailScriptPath" ref="afada4a5788f967573d0bebdd86fa27fc" args="" -->
@@ -81,11 +84,26 @@ Static Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a335a3efc65ca8b808598602338ee9a4d"></a><!-- doxytag: member="ServerUMS::minstance" ref="a335a3efc65ca8b808598602338ee9a4d" args="" -->
 static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a335a3efc65ca8b808598602338ee9a4d">minstance</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The singleton reference. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11a17725463181a532676702f62cdb93"></a><!-- doxytag: member="ServerUMS::mdatabaseVishnu" ref="a11a17725463181a532676702f62cdb93" args="" -->
+static <a class="el" href="classDatabase.html">Database</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a11a17725463181a532676702f62cdb93">mdatabaseVishnu</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classDatabase.html" title="This class describes a database.">Database</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aefad961b7f63eb2d32fb771398ba8dd4"></a><!-- doxytag: member="ServerUMS::mmapper" ref="aefad961b7f63eb2d32fb771398ba8dd4" args="" -->
+static <a class="el" href="classUMSMapper.html">UMSMapper</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#aefad961b7f63eb2d32fb771398ba8dd4">mmapper</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0958c3e6486323ed251dfb4d89f1f8c"></a><!-- doxytag: member="ServerUMS::mmapperTMS" ref="ac0958c3e6486323ed251dfb4d89f1f8c" args="" -->
+static <a class="el" href="classTMSMapper.html">TMSMapper</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#ac0958c3e6486323ed251dfb4d89f1f8c">mmapperTMS</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ed7c3e2bbaa7880bd86d5dac578fea7"></a><!-- doxytag: member="ServerUMS::mmapperFMS" ref="a8ed7c3e2bbaa7880bd86d5dac578fea7" args="" -->
+static <a class="el" href="classFMSMapper.html">FMSMapper</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a8ed7c3e2bbaa7880bd86d5dac578fea7">mmapperFMS</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e8811f540a3e375794657a1d310d950"></a><!-- doxytag: member="ServerUMS::mmapperIMS" ref="a1e8811f540a3e375794657a1d310d950" args="" -->
+static <a class="el" href="classIMSMapper.html">IMSMapper</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServerUMS.html#a1e8811f540a3e375794657a1d310d950">mmapperIMS</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instance of <a class="el" href="classUMSMapper.html" title="Mapper implementation for the UMS module.">UMSMapper</a>. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This class describes the UMS server. </p>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aa82fd34438d581fb1a3915db6d8a9bb9"></a><!-- doxytag: member="ServerUMS::getSendmailScriptPath" ref="aa82fd34438d581fb1a3915db6d8a9bb9" args="()" -->
+<a class="anchor" id="aa8e658cdcdb326d25460948e5f5b91b9"></a><!-- doxytag: member="ServerUMS::getSendmailScriptPath" ref="aa8e658cdcdb326d25460948e5f5b91b9" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -94,7 +112,7 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div>
@@ -105,7 +123,7 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
 
 </div>
 </div>
-<a class="anchor" id="a6c582b60ba1b73edef1ea5ebb920ff40"></a><!-- doxytag: member="ServerUMS::getVishnuId" ref="a6c582b60ba1b73edef1ea5ebb920ff40" args="()" -->
+<a class="anchor" id="af5943e226e5d3122ae98771f34cbef79"></a><!-- doxytag: member="ServerUMS::getVishnuId" ref="af5943e226e5d3122ae98771f34cbef79" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -114,7 +132,7 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div>
@@ -125,7 +143,7 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
 
 </div>
 </div>
-<a class="anchor" id="ae3bce55074cf688f585d6a46a9aabe23"></a><!-- doxytag: member="ServerUMS::init" ref="ae3bce55074cf688f585d6a46a9aabe23" args="(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword, std::string sendmailScriptPath)" -->
+<a class="anchor" id="a56a5c740db9e9c1b3e28fa4d0b05546b"></a><!-- doxytag: member="ServerUMS::init" ref="a56a5c740db9e9c1b3e28fa4d0b05546b" args="(int vishnuId, DbConfiguration dbConfig, std::string sendmailScriptPath)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -138,26 +156,8 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>dbType</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>dbHost</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>dbUsername</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>dbPassword</em>, </td>
+          <td class="paramtype"><a class="el" href="classDbConfiguration.html">DbConfiguration</a>&nbsp;</td>
+          <td class="paramname"> <em>dbConfig</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -177,11 +177,8 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
 <p>To initialize the UMS server. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The password of the root user vishnu_user for the connection with the database </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbType</em>&nbsp;</td><td>The type of the database (POSTGREDB|ORACLEDB) </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbHost</em>&nbsp;</td><td>The host of the database server </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbUsername</em>&nbsp;</td><td>The name of the database user on the server </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbPassword</em>&nbsp;</td><td>The password of the database user on the server </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dbConfig</em>&nbsp;</td><td>The configuration of the database </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sendmailScriptPath</em>&nbsp;</td><td>The path to the script for sending emails </td></tr>
   </table>
   </dd>
@@ -194,7 +191,7 @@ static <a class="el" href="classServerUMS.html">ServerUMS</a> *&nbsp;</td><td cl
 <li>UMS/src/sed/<a class="el" href="ServerUMS_8hpp_source.html">ServerUMS.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:41 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

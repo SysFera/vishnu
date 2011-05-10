@@ -52,11 +52,9 @@ namespace vishnu {
 
   /**
   * \brief The cancelJob function cancels a job from its id
-  * \fn int cancelJob(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, std::string& infoMsg)
   * \param sessionKey : The session key
   * \param machineId : The id of the machine
   * \param jobId : The Id of the job
-  * \param infoMsg : The information message
   * \return int : an error code
   */
   int

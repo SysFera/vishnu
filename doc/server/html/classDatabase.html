@@ -45,8 +45,9 @@ Inheritance diagram for Database:</div>
  <div class="center">
   <img src="classDatabase.png" usemap="#Database_map" alt=""/>
   <map id="Database_map" name="Database_map">
-<area href="classOracleDatabase.html" alt="OracleDatabase" shape="rect" coords="0,56,123,80"/>
-<area href="classPOSTGREDatabase.html" alt="POSTGREDatabase" shape="rect" coords="133,56,256,80"/>
+<area href="classMYSQLDatabase.html" alt="MYSQLDatabase" shape="rect" coords="0,56,123,80"/>
+<area href="classOracleDatabase.html" alt="OracleDatabase" shape="rect" coords="133,56,256,80"/>
+<area href="classPOSTGREDatabase.html" alt="POSTGREDatabase" shape="rect" coords="266,56,389,80"/>
 </map>
 </div>
 
@@ -62,14 +63,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set the name of the database to use.  <a href="#aeba15395d2a36faf73dcb995695b9204"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classDatabaseResult.html">DatabaseResult</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a30f002bf9752a54c2a056abc1b8bb4d4">getResult</a> (std::string request)=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the result of a select request.  <a href="#a30f002bf9752a54c2a056abc1b8bb4d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84d399a2ad58d69daab9b05330e1316d"></a><!-- doxytag: member="Database::~Database" ref="a84d399a2ad58d69daab9b05330e1316d" args="()" -->
+virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a84d399a2ad58d69daab9b05330e1316d">~Database</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4703c80e6969d33565ea340f768fdadf"></a><!-- doxytag: member="Database::Database" ref="a4703c80e6969d33565ea340f768fdadf" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a4703c80e6969d33565ea340f768fdadf">Database</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84d399a2ad58d69daab9b05330e1316d"></a><!-- doxytag: member="Database::~Database" ref="a84d399a2ad58d69daab9b05330e1316d" args="()" -->
-virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a84d399a2ad58d69daab9b05330e1316d">~Database</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#adca650f8a5db531ff1fb85aaef25e711">disconnect</a> ()=0</td></tr>
@@ -96,7 +97,7 @@ Private Member Functions</h2></td></tr>
 <p>To make a connection to the database. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classOracleDatabase.html#a4a93e348aa699fb34d62edc64dc8d5fd">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a758b0d66ddda58296932242533000846">POSTGREDatabase</a>.</p>
+<p>Implemented in <a class="el" href="classMYSQLDatabase.html#a3e0dc34a2b20ff76e5fa39cbe340c5d7">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#a4a93e348aa699fb34d62edc64dc8d5fd">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a758b0d66ddda58296932242533000846">POSTGREDatabase</a>.</p>
 
 </div>
 </div>
@@ -118,7 +119,7 @@ Private Member Functions</h2></td></tr>
 <p>To disconnect from the database. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classOracleDatabase.html#a9839467588dcecbdb4c4582903379346">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#af026bcf159590b97226d829bddb8e00a">POSTGREDatabase</a>.</p>
+<p>Implemented in <a class="el" href="classMYSQLDatabase.html#a4dc57bd6bec47b4e0c19163c1d6c7fbe">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#a9839467588dcecbdb4c4582903379346">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#af026bcf159590b97226d829bddb8e00a">POSTGREDatabase</a>.</p>
 
 </div>
 </div>
@@ -147,7 +148,7 @@ Private Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>An object which encapsulates the database results </dd></dl>
 
-<p>Implemented in <a class="el" href="classOracleDatabase.html#a399070863f94605bc2e520c968e3edbe">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a4be2769e7d13be7f139b540ffb3a4760">POSTGREDatabase</a>.</p>
+<p>Implemented in <a class="el" href="classMYSQLDatabase.html#a4e3804ff11f44b3e5770932c8351ea92">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#a399070863f94605bc2e520c968e3edbe">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a4be2769e7d13be7f139b540ffb3a4760">POSTGREDatabase</a>.</p>
 
 </div>
 </div>
@@ -176,7 +177,7 @@ Private Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classOracleDatabase.html#ae6515239e0f313896f21b3ec267acdd9">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a0371d887a489418bed525acb0d9c5eb3">POSTGREDatabase</a>.</p>
+<p>Implemented in <a class="el" href="classMYSQLDatabase.html#ae43c4557f43b775f26817082f4913d81">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#ae6515239e0f313896f21b3ec267acdd9">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#a0371d887a489418bed525acb0d9c5eb3">POSTGREDatabase</a>.</p>
 
 </div>
 </div>
@@ -205,7 +206,7 @@ Private Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classOracleDatabase.html#a937a096b286c4e6738ea5d314aabe109">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#acadff2a3649a40b323eb7711e0d705cf">POSTGREDatabase</a>.</p>
+<p>Implemented in <a class="el" href="classMYSQLDatabase.html#a884c0742ea2d4d44d8c177144f5279ef">MYSQLDatabase</a>, <a class="el" href="classOracleDatabase.html#a937a096b286c4e6738ea5d314aabe109">OracleDatabase</a>, and <a class="el" href="classPOSTGREDatabase.html#acadff2a3649a40b323eb7711e0d705cf">POSTGREDatabase</a>.</p>
 
 </div>
 </div>
@@ -213,7 +214,7 @@ Private Member Functions</h2></td></tr>
 <li>core/src/database/<a class="el" href="Database_8hpp_source.html">Database.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:11 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

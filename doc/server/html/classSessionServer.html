@@ -68,6 +68,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to save the date of the last connection.  <a href="#a479f3e2aee3b4c5009e8f496612ae9bc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDatabaseResult.html">DatabaseResult</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSessionServer.html#a21db5603b7a91581d5860d1b24f38cd5">getSessionToclosebyTimeout</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the list of sessions with close on timeout mode to close.  <a href="#a21db5603b7a91581d5860d1b24f38cd5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSessionServer.html#a97647ee61a04b91e9b220fb0700910b7">check</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to make a complete checking of the session key.  <a href="#a97647ee61a04b91e9b220fb0700910b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSessionServer.html#ab1a59010af4f2e4f9ad19c078a38e1b0">finish</a> (std::string cmdDescription, <a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a> cmdType, <a class="el" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ad">CmdStatus</a> cmdStatus, std::string newVishnuObjectID=&quot;&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to finalize the service.  <a href="#ab1a59010af4f2e4f9ad19c078a38e1b0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSessionServer.html#a2e33c0fefafc3cf9256a031b648fe20d">generateSessionKey</a> (std::string salt)</td></tr>
@@ -151,6 +155,26 @@ UMS_Data::Session&nbsp;</td><td class="memItemRight" valign="bottom"><a class="e
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a97647ee61a04b91e9b220fb0700910b7"></a><!-- doxytag: member="SessionServer::check" ref="a97647ee61a04b91e9b220fb0700910b7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SessionServer::check </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to make a complete checking of the session key. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a988e014536e580c59c920bc55d201f24"></a><!-- doxytag: member="SessionServer::close" ref="a988e014536e580c59c920bc55d201f24" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -266,6 +290,57 @@ UMS_Data::Session&nbsp;</td><td class="memItemRight" valign="bottom"><a class="e
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if the session key (or sessionId) exists else false </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab1a59010af4f2e4f9ad19c078a38e1b0"></a><!-- doxytag: member="SessionServer::finish" ref="ab1a59010af4f2e4f9ad19c078a38e1b0" args="(std::string cmdDescription, CmdType cmdType, CmdStatus cmdStatus, std::string newVishnuObjectID=&quot;&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SessionServer::finish </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>cmdDescription</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a>&nbsp;</td>
+          <td class="paramname"> <em>cmdType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ad">CmdStatus</a>&nbsp;</td>
+          <td class="paramname"> <em>cmdStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>newVishnuObjectID</em> = <code>&quot;&quot;</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to finalize the service. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cmdDescritpion</em>&nbsp;</td><td>The description of the command </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cmdType</em>&nbsp;</td><td>The type of the command (UMS, TMS, FMS, IMS) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cmdStatus</em>&nbsp;</td><td>The status of the command </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>newVishnuObjectID</em>&nbsp;</td><td>the new vishnu object Id </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
 </div>
 </div>
@@ -613,7 +688,7 @@ UMS_Data::Session&nbsp;</td><td class="memItemRight" valign="bottom"><a class="e
 <li>UMS/src/server/<a class="el" href="SessionServer_8hpp_source.html">SessionServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:41 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

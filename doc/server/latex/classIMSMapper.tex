@@ -34,7 +34,9 @@ virtual int \hyperlink{classIMSMapper_a688bf20409385a8c7505164153d243ac}{unregis
 virtual int \hyperlink{classIMSMapper_a25a97459b750bf8204178b9a18637113}{getCommand} (const int \&key, string \&command)
 \begin{DoxyCompactList}\small\item\em To get the command corresponding to a key. \item\end{DoxyCompactList}\item 
 virtual int \hyperlink{classIMSMapper_a762164cb091f97d2a4698de59cc66cb5}{getKey} (const string \&command, int \&key)
-\begin{DoxyCompactList}\small\item\em To get the key corresponding to a command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To get the key corresponding to a command. \item\end{DoxyCompactList}\item 
+virtual int \hyperlink{classIMSMapper_ac972651946c18f94bc683654462ccecd}{code} (const string \&cmd, unsigned int code=0)
+\begin{DoxyCompactList}\small\item\em Function to add an element to code. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -61,6 +63,30 @@ Constructor.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classIMSMapper_ac972651946c18f94bc683654462ccecd}{
+\index{IMSMapper@{IMSMapper}!code@{code}}
+\index{code@{code}!IMSMapper@{IMSMapper}}
+\subsubsection[{code}]{\setlength{\rightskip}{0pt plus 5cm}int IMSMapper::code (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{ cmd, }
+\item[{unsigned int}]{ code = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classIMSMapper_ac972651946c18f94bc683654462ccecd}
+
+
+Function to add an element to code. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em cmd}]The string to add \item[{\em code}]If 0, the code is created, otherwize it is the key in the map to add the string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if param code = 0, the assigned code to add other element to the same item, otherwize return 0 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classMapper_a915f9829fd340b2b0978323b90eda360}{Mapper}.
+
 \hypertarget{classIMSMapper_a25a97459b750bf8204178b9a18637113}{
 \index{IMSMapper@{IMSMapper}!getCommand@{getCommand}}
 \index{getCommand@{getCommand}!IMSMapper@{IMSMapper}}

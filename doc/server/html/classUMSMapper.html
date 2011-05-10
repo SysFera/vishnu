@@ -70,8 +70,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the key corresponding to a command.  <a href="#a1a8e2189e1770c426387e391dc75dce9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#af5aec06e19b9b242645cf1abc2d6dad0">code</a> (const string &amp;cmd, unsigned int code=0)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add an element to code.  <a href="#af5aec06e19b9b242645cf1abc2d6dad0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a831047c74368517e2164acc872ecb288">finalize</a> (int key)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To end a command, delete it from the map and get its value.  <a href="#a831047c74368517e2164acc872ecb288"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a09302a31b4cc2698d0e0d563988fb7c3">decode</a> (const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get, from a coded string, the cli like command that made it.  <a href="#a09302a31b4cc2698d0e0d563988fb7c3"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
@@ -120,8 +118,6 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#ad157fb31bec53a8c140fb2e2d60465b3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#ac1f47841882d3f85b8820ab836789036">decodeConfOp</a> (vector&lt; int &gt; separator, const string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To decode the add user call sequence of the string returned by finalize.  <a href="#ac1f47841882d3f85b8820ab836789036"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a25dfdb771965482f87d2dea0cf206996">findSeparator</a> (const string &amp;s, vector&lt; int &gt; &amp;vec)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To find all the separator in the string s and fill the vector with their position in the string.  <a href="#a25dfdb771965482f87d2dea0cf206996"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#a60bb02d794c885f5e0feae133af7058d">getU</a> (string serial)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To deserialize the serial string, make a user objet, and get the values in the same string.  <a href="#a60bb02d794c885f5e0feae133af7058d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMSMapper.html#aadfd01766b31dfe8b40710b8b3bb432c">getUupdate</a> (string serial)</td></tr>
@@ -1049,72 +1045,6 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a831047c74368517e2164acc872ecb288"></a><!-- doxytag: member="UMSMapper::finalize" ref="a831047c74368517e2164acc872ecb288" args="(int key)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">string UMSMapper::finalize </td>
-          <td>(</td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>key</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>To end a command, delete it from the map and get its value. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>The entry in the map to get an remove </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The coded value of the command </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classMapper.html#a568fcb8dba98cb9d37700972ef5d8df0">Mapper</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a25dfdb771965482f87d2dea0cf206996"></a><!-- doxytag: member="UMSMapper::findSeparator" ref="a25dfdb771965482f87d2dea0cf206996" args="(const string &amp;s, vector&lt; int &gt; &amp;vec)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void UMSMapper::findSeparator </td>
-          <td>(</td>
-          <td class="paramtype">const string &amp;&nbsp;</td>
-          <td class="paramname"> <em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">vector&lt; int &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>vec</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>To find all the separator in the string s and fill the vector with their position in the string. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>s</em>&nbsp;</td><td>The string to find the separator </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>vec</em>&nbsp;</td><td>A vector containing the position of the separator in the string s (OUT) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The cli like close command </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="abf93114fd8a822d7d1b342686e2d32f9"></a><!-- doxytag: member="UMSMapper::getCommand" ref="abf93114fd8a822d7d1b342686e2d32f9" args="(const int &amp;key, string &amp;command)" -->
 <div class="memitem">
 <div class="memproto">
@@ -1291,7 +1221,7 @@ Private Member Functions</h2></td></tr>
 <li>core/src/registry/<a class="el" href="UMSMapper_8hpp_source.html">UMSMapper.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:13 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -89,14 +89,14 @@
 <a name="l00091"></a>00091       <a class="code" href="classQueryServer.html#a908157c12cbf775d0dd7f270e0f291fe">addOptionRequest</a>(<span class="stringliteral">&quot;vsessionid&quot;</span>, options-&gt;getSessionId(), sqlRequest);
 <a name="l00092"></a>00092     }
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094     <span class="keywordtype">long</span> startDate = options-&gt;getStartDateOption();
+<a name="l00094"></a>00094     time_t startDate = <span class="keyword">static_cast&lt;</span>time_t<span class="keyword">&gt;</span>(options-&gt;getStartDateOption());
 <a name="l00095"></a>00095     <span class="keywordflow">if</span>(startDate!=-1) {
 <a name="l00096"></a>00096       pt =  boost::posix_time::from_time_t(startDate);
 <a name="l00097"></a>00097       std::string startDateStr =  boost::posix_time::to_simple_string(pt);
 <a name="l00098"></a>00098       <a class="code" href="classQueryServer.html#a43a6aa8774b5a781bb3c5777eb557a24">addTimeRequest</a>(<span class="stringliteral">&quot;starttime&quot;</span>, startDateStr, sqlRequest, <span class="stringliteral">&quot;&gt;=&quot;</span>);
 <a name="l00099"></a>00099     }
 <a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="keywordtype">long</span> endDate = options-&gt;getEndDateOption();
+<a name="l00101"></a>00101     time_t endDate = <span class="keyword">static_cast&lt;</span>time_t<span class="keyword">&gt;</span>(options-&gt;getEndDateOption());
 <a name="l00102"></a>00102     <span class="keywordflow">if</span>(endDate!=-1) {
 <a name="l00103"></a>00103       pt =  boost::posix_time::from_time_t(endDate);
 <a name="l00104"></a>00104       std::string endDateStr =  boost::posix_time::to_simple_string(pt);
@@ -106,100 +106,122 @@
 <a name="l00108"></a>00108 
 <a name="l00115"></a><a class="code" href="classListCommandsServer.html#ae256dad4b7cb57e73dd3dc2c5dcb3e7b">00115</a>   UMS_Data::ListCommands* <a class="code" href="classListCommandsServer.html#ae256dad4b7cb57e73dd3dc2c5dcb3e7b" title="Function to list commands information.">list</a>()
 <a name="l00116"></a>00116   {
-<a name="l00117"></a>00117     <a class="code" href="classDatabaseResult.html" title="This class describes the object which encapsulates the database results.">DatabaseResult</a> *ListOfCommands;
-<a name="l00118"></a>00118     std::string sqlListOfCommands;
-<a name="l00119"></a>00119     std::vector&lt;std::string&gt;::iterator ii;
-<a name="l00120"></a>00120     std::vector&lt;std::string&gt; results;
-<a name="l00121"></a>00121     std::string description;
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123     <span class="comment">//MAPPER CREATION</span>
-<a name="l00124"></a>00124     <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>* mapper = <a class="code" href="classMapperRegistry.html#a8bf1cd8b9de66c62ede81c2b0c018790" title="To get a mapper registry.">MapperRegistry::getInstance</a>()-&gt;<a class="code" href="classMapperRegistry.html#aff1042d6b0d087579370b90580c8d159" title="To get a mapper.">getMapper</a>(UMSMAPPERNAME);
+<a name="l00117"></a>00117     std::string sqlListOfCommands;
+<a name="l00118"></a>00118     std::vector&lt;std::string&gt;::iterator ii;
+<a name="l00119"></a>00119     std::vector&lt;std::string&gt; results;
+<a name="l00120"></a>00120     std::string description;
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122     sqlListOfCommands = <span class="stringliteral">&quot;SELECT ctype, vsessionid, name, description, starttime, endtime, command.status from &quot;</span>
+<a name="l00123"></a>00123                          <span class="stringliteral">&quot; vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and &quot;</span>
+<a name="l00124"></a>00124                          <span class="stringliteral">&quot; vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid&quot;</span>;
 <a name="l00125"></a>00125 
-<a name="l00126"></a>00126     sqlListOfCommands = <span class="stringliteral">&quot;SELECT ctype, vsessionid, name, description, starttime, endtime, userid from &quot;</span>
-<a name="l00127"></a>00127                          <span class="stringliteral">&quot; vsession, clmachine, command, users where vsession.numsessionid=command.vsession_numsessionid and &quot;</span>
-<a name="l00128"></a>00128                          <span class="stringliteral">&quot; vsession.clmachine_numclmachineid=clmachine.numclmachineid and  vsession.users_numuserid=users.numuserid&quot;</span>;
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+<a name="l00128"></a>00128     <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a> = ecoreFactory-&gt;createListCommands();
 <a name="l00129"></a>00129 
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-<a name="l00132"></a>00132     <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a> = ecoreFactory-&gt;createListCommands();
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134     <span class="comment">//Creation of the object user</span>
-<a name="l00135"></a>00135     <a class="code" href="classUserServer.html" title="UserServer class implementation.">UserServer</a> userServer = <a class="code" href="classUserServer.html" title="UserServer class implementation.">UserServer</a>(<a class="code" href="classQueryServer.html#aca7fcfb763b77c52c23a587f698caf50" title="The SessionServer object containing the encrypted identifier of the session generated by VISHNU...">msessionServer</a>);
-<a name="l00136"></a>00136     userServer.<a class="code" href="classUserServer.html#a0aad281d77ffbe98423f3275884781c1" title="Function to initialize user data for constructor with sessionServer.">init</a>();
-<a name="l00137"></a>00137     <span class="comment">//if the user exists</span>
-<a name="l00138"></a>00138     <span class="keywordflow">if</span> (userServer.<a class="code" href="classUserServer.html#a26ccae7a3b8ee7e62e2224312119aece" title="Function to check user on database.">exist</a>()) {
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140       <a class="code" href="classListCommandsServer.html#a796730b81d44caa578bef2ea89362755" title="Function to treat the ListCommandsServer options.">processOptions</a>(userServer, <a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>, sqlListOfCommands);
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142       <span class="comment">//To get the list of commands from the database</span>
-<a name="l00143"></a>00143       ListOfCommands = <a class="code" href="classQueryServer.html#ad6deb85a0f4526edbdfd97269f2acec5" title="An instance of vishnu database.">mdatabaseVishnu</a>-&gt;<a class="code" href="classDatabase.html#a30f002bf9752a54c2a056abc1b8bb4d4" title="To get the result of a select request.">getResult</a>(sqlListOfCommands.c_str());
-<a name="l00144"></a>00144       <span class="keywordflow">if</span> (ListOfCommands-&gt;<a class="code" href="classDatabaseResult.html#a6b425ff8cd457025a473afdc1e4d1535" title="To get the number of tuples.">getNbTuples</a>() != 0){
-<a name="l00145"></a>00145         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; ListOfCommands-&gt;<a class="code" href="classDatabaseResult.html#a6b425ff8cd457025a473afdc1e4d1535" title="To get the number of tuples.">getNbTuples</a>(); ++i) {
-<a name="l00146"></a>00146           results.clear();
-<a name="l00147"></a>00147           results = ListOfCommands-&gt;<a class="code" href="classDatabaseResult.html#af129f9b5cced14a65917ca0d86f77ffc" title="To get a specific results using its position.">get</a>(i);
-<a name="l00148"></a>00148           ii = results.begin();
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150           UMS_Data::Command_ptr command = ecoreFactory-&gt;createCommand();
-<a name="l00151"></a>00151           command-&gt;setCommandId(<a class="code" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a" title="To convert the command type in string.">convertCmdType</a>(static_cast&lt;CmdType&gt;(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*ii))));
-<a name="l00152"></a>00152           command-&gt;setSessionId(*(++ii));
-<a name="l00153"></a>00153           command-&gt;setMachineId(*(++ii));
+<a name="l00130"></a>00130     <span class="comment">//Creation of the object user</span>
+<a name="l00131"></a>00131     <a class="code" href="classUserServer.html" title="UserServer class implementation.">UserServer</a> userServer = <a class="code" href="classUserServer.html" title="UserServer class implementation.">UserServer</a>(<a class="code" href="classQueryServer.html#aca7fcfb763b77c52c23a587f698caf50" title="The SessionServer object containing the encrypted identifier of the session generated by VISHNU...">msessionServer</a>);
+<a name="l00132"></a>00132     userServer.<a class="code" href="classUserServer.html#a0aad281d77ffbe98423f3275884781c1" title="Function to initialize user data for constructor with sessionServer.">init</a>();
+<a name="l00133"></a>00133     <span class="comment">//if the user exists</span>
+<a name="l00134"></a>00134     <span class="keywordflow">if</span> (userServer.<a class="code" href="classUserServer.html#a26ccae7a3b8ee7e62e2224312119aece" title="Function to check user on database.">exist</a>()) {
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136       <a class="code" href="classListCommandsServer.html#a796730b81d44caa578bef2ea89362755" title="Function to treat the ListCommandsServer options.">processOptions</a>(userServer, <a class="code" href="classQueryServer.html#a4cf1497aa9c56864e8119645ccc42dc7" title="The pointer to the QueryParameters information.">mparameters</a>, sqlListOfCommands);
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138       sqlListOfCommands.append(<span class="stringliteral">&quot; order by starttime&quot;</span>);
+<a name="l00139"></a>00139       <span class="comment">//To get the list of commands from the database</span>
+<a name="l00140"></a>00140       boost::scoped_ptr&lt;DatabaseResult&gt; ListOfCommands (<a class="code" href="classQueryServer.html#ad6deb85a0f4526edbdfd97269f2acec5" title="An instance of vishnu database.">mdatabaseVishnu</a>-&gt;<a class="code" href="classDatabase.html#a30f002bf9752a54c2a056abc1b8bb4d4" title="To get the result of a select request.">getResult</a>(sqlListOfCommands.c_str()));
+<a name="l00141"></a>00141       <span class="keywordflow">if</span> (ListOfCommands-&gt;getNbTuples() != 0){
+<a name="l00142"></a>00142         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; ListOfCommands-&gt;getNbTuples(); ++i) {
+<a name="l00143"></a>00143           results.clear();
+<a name="l00144"></a>00144           results = ListOfCommands-&gt;get(i);
+<a name="l00145"></a>00145           ii = results.begin();
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147           UMS_Data::Command_ptr command = ecoreFactory-&gt;createCommand();
+<a name="l00148"></a>00148           <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532" title="The type of the command.">CmdType</a> currentCmdType = <span class="keyword">static_cast&lt;</span><a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532" title="The type of the command.">CmdType</a><span class="keyword">&gt;</span>(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*ii));
+<a name="l00149"></a>00149           command-&gt;setCommandId(<a class="code" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a" title="To convert the command type in string.">convertCmdType</a>(static_cast&lt;CmdType&gt;(currentCmdType)));
+<a name="l00150"></a>00150           command-&gt;setSessionId(*(++ii));
+<a name="l00151"></a>00151           command-&gt;setMachineId(*(++ii));
+<a name="l00152"></a>00152           <span class="comment">//MAPPER CREATION</span>
+<a name="l00153"></a>00153           <a class="code" href="classMapper.html" title="Generic mapper.">Mapper</a>* mapper = <a class="code" href="classMapperRegistry.html#a8bf1cd8b9de66c62ede81c2b0c018790" title="To get a mapper registry.">MapperRegistry::getInstance</a>()-&gt;<a class="code" href="classMapperRegistry.html#aff1042d6b0d087579370b90580c8d159" title="To get a mapper.">getMapper</a>(convertypetoMapperName(currentCmdType));
 <a name="l00154"></a>00154           description = mapper-&gt;<a class="code" href="classMapper.html#a5e51b9148704b25e26e5ec48bd643a0b" title="To get, from a coded string, the CPP command that made it.">decode</a>(*(++ii));
 <a name="l00155"></a>00155           command-&gt;setCmdDescription(description);
-<a name="l00156"></a>00156           command-&gt;setCmdStartTime(<a class="code" href="classQueryServer.html#af7d3974b4a4c06e7dc92809cb37f5027">convertToTimeType</a>(*(++ii)));
-<a name="l00157"></a>00157           command-&gt;setCmdEndTime(<a class="code" href="classQueryServer.html#af7d3974b4a4c06e7dc92809cb37f5027">convertToTimeType</a>(*(++ii)));
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159           <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getCommands().push_back(command);
-<a name="l00160"></a>00160         }
-<a name="l00161"></a>00161     }
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163   }
-<a name="l00164"></a>00164   <span class="keywordflow">else</span> {
-<a name="l00165"></a>00165       <a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a> e (ERRCODE_UNKNOWN_USER);
-<a name="l00166"></a>00166       <span class="keywordflow">throw</span> e;
-<a name="l00167"></a>00167   }
-<a name="l00168"></a>00168   <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
-<a name="l00169"></a>00169   }
-<a name="l00170"></a>00170 
-<a name="l00176"></a><a class="code" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3">00176</a>   std::string <a class="code" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3" title="Function to get the name of the ListCommandsServer command line.">getCommandName</a>()
-<a name="l00177"></a>00177   {
-<a name="l00178"></a>00178     <span class="keywordflow">return</span> <a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd" title="The name of the ListCommandsServer command line.">mcommandName</a>;
-<a name="l00179"></a>00179   }
-<a name="l00180"></a>00180 
-<a name="l00187"></a><a class="code" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a">00187</a>   std::string <a class="code" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a" title="To convert the command type in string.">convertCmdType</a>(<a class="code" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844" title="The type of the command.">CmdType</a> type) {
-<a name="l00188"></a>00188 
-<a name="l00189"></a>00189     std::string cmd;
-<a name="l00190"></a>00190     <span class="keywordflow">switch</span>(type) {
-<a name="l00191"></a>00191       <span class="keywordflow">case</span> <a class="code" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844aac5e7750cb4051d27aadbfd97878bb93">UMS</a> :
-<a name="l00192"></a>00192          cmd = <span class="stringliteral">&quot;UMS&quot;</span>;
-<a name="l00193"></a>00193          <span class="keywordflow">break</span>;
-<a name="l00194"></a>00194       <span class="keywordflow">case</span> <a class="code" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844a8ab7d2437fdcb262d58574673056f161">TMS</a> :
-<a name="l00195"></a>00195          cmd = <span class="stringliteral">&quot;TMS&quot;</span>;
-<a name="l00196"></a>00196          <span class="keywordflow">break</span>;
-<a name="l00197"></a>00197       <span class="keywordflow">case</span> <a class="code" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844ab8648adc2eaed0d54c5c1e1d2f96d5b3">FMS</a> :
-<a name="l00198"></a>00198          cmd = <span class="stringliteral">&quot;FMS&quot;</span>;
-<a name="l00199"></a>00199          <span class="keywordflow">break</span>;
-<a name="l00200"></a>00200       <span class="keywordflow">case</span> <a class="code" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844a28bfcc2453fa0a5542a3b6653f852cbe">IMS</a> :
-<a name="l00201"></a>00201          cmd = <span class="stringliteral">&quot;IMS&quot;</span>;
-<a name="l00202"></a>00202          <span class="keywordflow">break</span>;
-<a name="l00203"></a>00203     }
-<a name="l00204"></a>00204     <span class="keywordflow">return</span> cmd;
-<a name="l00205"></a>00205   }
-<a name="l00206"></a>00206 
-<a name="l00211"></a><a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad">00211</a>   <a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad" title="Destructor, raises an exception on error.">~ListCommandsServer</a>()
-<a name="l00212"></a>00212   {
-<a name="l00213"></a>00213   }
-<a name="l00214"></a>00214 
-<a name="l00215"></a>00215   <span class="keyword">private</span>:
+<a name="l00156"></a>00156           command-&gt;setCmdStartTime(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++ii)));
+<a name="l00157"></a>00157           command-&gt;setCmdEndTime(<a class="code" href="classQueryServer.html#a3b2becf9f1ae6ca1d0097d7400997aa8">convertToTimeType</a>(*(++ii)));
+<a name="l00158"></a>00158           command-&gt;setStatus(<a class="code" href="namespacevishnu.html#ac1899fb2792ddd63a003a06081fc9066" title="Function to convert a string to int.">convertToInt</a>(*(++ii)));
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160           <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>-&gt;getCommands().push_back(command);
+<a name="l00161"></a>00161         }
+<a name="l00162"></a>00162     }
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164   }
+<a name="l00165"></a>00165   <span class="keywordflow">else</span> {
+<a name="l00166"></a>00166       <a class="code" href="classUMSVishnuException.html" title="Specialisation of the user exception for the UMS module.">UMSVishnuException</a> e (ERRCODE_UNKNOWN_USER);
+<a name="l00167"></a>00167       <span class="keywordflow">throw</span> e;
+<a name="l00168"></a>00168   }
+<a name="l00169"></a>00169   <span class="keywordflow">return</span> <a class="code" href="classQueryServer.html#a6b31d48f2ebadfe86d71999efde3679e" title="The Object containing query information.">mlistObject</a>;
+<a name="l00170"></a>00170   }
+<a name="l00171"></a>00171 
+<a name="l00177"></a><a class="code" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3">00177</a>   std::string <a class="code" href="classListCommandsServer.html#ae51f623d61d994481bdc0e77025b1cd3" title="Function to get the name of the ListCommandsServer command line.">getCommandName</a>()
+<a name="l00178"></a>00178   {
+<a name="l00179"></a>00179     <span class="keywordflow">return</span> <a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd" title="The name of the ListCommandsServer command line.">mcommandName</a>;
+<a name="l00180"></a>00180   }
+<a name="l00181"></a>00181 
+<a name="l00188"></a><a class="code" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a">00188</a>   std::string <a class="code" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a" title="To convert the command type in string.">convertCmdType</a>(<a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532" title="The type of the command.">CmdType</a> type) {
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190     std::string cmd;
+<a name="l00191"></a>00191     <span class="keywordflow">switch</span>(type) {
+<a name="l00192"></a>00192       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">UMS</a> :
+<a name="l00193"></a>00193          cmd = <span class="stringliteral">&quot;UMS&quot;</span>;
+<a name="l00194"></a>00194          <span class="keywordflow">break</span>;
+<a name="l00195"></a>00195       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">TMS</a> :
+<a name="l00196"></a>00196          cmd = <span class="stringliteral">&quot;TMS&quot;</span>;
+<a name="l00197"></a>00197          <span class="keywordflow">break</span>;
+<a name="l00198"></a>00198       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">FMS</a> :
+<a name="l00199"></a>00199          cmd = <span class="stringliteral">&quot;FMS&quot;</span>;
+<a name="l00200"></a>00200          <span class="keywordflow">break</span>;
+<a name="l00201"></a>00201       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">IMS</a> :
+<a name="l00202"></a>00202          cmd = <span class="stringliteral">&quot;IMS&quot;</span>;
+<a name="l00203"></a>00203          <span class="keywordflow">break</span>;
+<a name="l00204"></a>00204     }
+<a name="l00205"></a>00205     <span class="keywordflow">return</span> cmd;
+<a name="l00206"></a>00206   }
+<a name="l00207"></a>00207 
+<a name="l00214"></a>00214   std::string
+<a name="l00215"></a>00215   convertypetoMapperName(<a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532" title="The type of the command.">CmdType</a> type) {
 <a name="l00216"></a>00216 
-<a name="l00218"></a>00218   <span class="comment">// Attributes</span>
-<a name="l00220"></a>00220 <span class="comment"></span>
-<a name="l00224"></a><a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd">00224</a>   std::string <a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd" title="The name of the ListCommandsServer command line.">mcommandName</a>;
-<a name="l00225"></a>00225 };
-<a name="l00226"></a>00226 
-<a name="l00227"></a>00227 <span class="preprocessor">#endif</span>
+<a name="l00217"></a>00217     std::string mapperName;
+<a name="l00218"></a>00218     <span class="keywordflow">switch</span>(type) {
+<a name="l00219"></a>00219       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532aef0c4900387b5f9b2dd3b69461496076">UMS</a> :
+<a name="l00220"></a>00220          mapperName = UMSMAPPERNAME;
+<a name="l00221"></a>00221          <span class="keywordflow">break</span>;
+<a name="l00222"></a>00222       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532ac3d2bb0714b1648919ed78505187593e">TMS</a> :
+<a name="l00223"></a>00223          mapperName = TMSMAPPERNAME;
+<a name="l00224"></a>00224          <span class="keywordflow">break</span>;
+<a name="l00225"></a>00225       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a704905f0ffb93e17cd67290254367070">FMS</a> :
+<a name="l00226"></a>00226          mapperName = FMSMAPPERNAME;
+<a name="l00227"></a>00227          <span class="keywordflow">break</span>;
+<a name="l00228"></a>00228       <span class="keywordflow">case</span> <a class="code" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532a018268bc806e44e84514c2c4f8cb7e71">IMS</a> :
+<a name="l00229"></a>00229          mapperName = IMSMAPPERNAME;
+<a name="l00230"></a>00230          <span class="keywordflow">break</span>;
+<a name="l00231"></a>00231     }
+<a name="l00232"></a>00232     <span class="keywordflow">return</span> mapperName;
+<a name="l00233"></a>00233   }
+<a name="l00234"></a>00234 
+<a name="l00239"></a><a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad">00239</a>   <a class="code" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad" title="Destructor, raises an exception on error.">~ListCommandsServer</a>()
+<a name="l00240"></a>00240   {
+<a name="l00241"></a>00241   }
+<a name="l00242"></a>00242 
+<a name="l00243"></a>00243   <span class="keyword">private</span>:
+<a name="l00244"></a>00244 
+<a name="l00246"></a>00246   <span class="comment">// Attributes</span>
+<a name="l00248"></a>00248 <span class="comment"></span>
+<a name="l00252"></a><a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd">00252</a>   std::string <a class="code" href="classListCommandsServer.html#a4587e9f6bf59c8fe3bc0b9635e8880fd" title="The name of the ListCommandsServer command line.">mcommandName</a>;
+<a name="l00253"></a>00253 };
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

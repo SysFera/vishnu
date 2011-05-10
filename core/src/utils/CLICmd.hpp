@@ -18,26 +18,26 @@ using namespace std;
 class CLICmd{
 private :
   /**
-   * The argc value
+   * \brief The argc value
    */
   int    		     margc;
   /**
-   * The argv value
+   * \brief The argv value
    */
   char** 		     margv;
   /**
-   * Ther diet config file
+   * \brief Ther diet config file
    */
   string 		     mdietConfig;
   /**
-   * The option of the call
+   * \brief The option of the call
    */
   boost::shared_ptr<Options> mop;
 protected:
 public:
   /**
    * \brief To get all the parameters for the C++ API call
-   * \fn int parse(string s)
+   * \fn int parse(const func1 & s)
    * \param s: The environment
    * \retrun An error code depending on the success of the call
    */

@@ -33,7 +33,7 @@
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define _MONITORUMS_H_</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
 <a name="l00011"></a>00011 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="internalApi_8hpp.html" title="This file presents the internal api of UMS.">internalApi.hpp</a>&quot;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;internalApi.hpp&quot;</span>
 <a name="l00013"></a>00013 
 <a name="l00018"></a><a class="code" href="classMonitorUMS.html">00018</a> <span class="keyword">class </span><a class="code" href="classMonitorUMS.html" title="This class describes the UMS Monitor.">MonitorUMS</a> {
 <a name="l00019"></a>00019 <span class="keyword">public</span> :
@@ -41,24 +41,24 @@
 <a name="l00026"></a>00026 
 <a name="l00031"></a>00031   <a class="code" href="classMonitorUMS.html#a4dd94f7d4a5cfafb4c668cde6f231e3e" title="Destructor.">~MonitorUMS</a>();
 <a name="l00032"></a>00032 
-<a name="l00043"></a>00043   <span class="keywordtype">void</span>
-<a name="l00044"></a>00044   <a class="code" href="classMonitorUMS.html#aab02ba843105bb0abcfe34fa12ecaa59" title="To initialize the UMS monitor with individual parameters instead of configuration file...">init</a>(<span class="keywordtype">int</span> vishnuId, <span class="keywordtype">int</span> dbType, std::string dbHost, std::string dbUsername, std::string dbPassword);
-<a name="l00045"></a>00045 
-<a name="l00051"></a>00051   <span class="keywordtype">int</span>
-<a name="l00052"></a>00052   <a class="code" href="classMonitorUMS.html#aa4e9d26960b0519c7bfd4e470d1fc0a7" title="To launch the UMS Monitor.">run</a>();
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054 <span class="keyword">private</span> :
-<a name="l00055"></a>00055 
-<a name="l00057"></a>00057   <span class="comment">// Attributes</span>
-<a name="l00059"></a>00059 <span class="comment"></span>
-<a name="l00063"></a><a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5">00063</a>   <span class="keywordtype">int</span> <a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5" title="The interval in seconds to check the database.">minterval</a>;
-<a name="l00067"></a><a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e">00067</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e" title="An instance of vishnu database.">mdatabaseVishnu</a>;
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 };
-<a name="l00070"></a>00070 <span class="preprocessor">#endif // MONITORUMS</span>
+<a name="l00039"></a>00039   <span class="keywordtype">void</span>
+<a name="l00040"></a>00040   <a class="code" href="classMonitorUMS.html#a14c0a0e214e1c3dd306314474d6a3ff8" title="To initialize the UMS monitor with individual parameters instead of configuration file...">init</a>(<span class="keywordtype">int</span> vishnuId, <a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> dbConfig);
+<a name="l00041"></a>00041 
+<a name="l00047"></a>00047   <span class="keywordtype">int</span>
+<a name="l00048"></a>00048   <a class="code" href="classMonitorUMS.html#aa4e9d26960b0519c7bfd4e470d1fc0a7" title="To launch the UMS Monitor.">run</a>();
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 <span class="keyword">private</span> :
+<a name="l00051"></a>00051 
+<a name="l00053"></a>00053   <span class="comment">// Attributes</span>
+<a name="l00055"></a>00055 <span class="comment"></span>
+<a name="l00059"></a><a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5">00059</a>   <span class="keywordtype">int</span> <a class="code" href="classMonitorUMS.html#a1d5bb8d46af814421bd426bca2ea19b5" title="The interval in seconds to check the database.">minterval</a>;
+<a name="l00063"></a><a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e">00063</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classMonitorUMS.html#ac1d6be2c23b3b81a2a06e2547f0aa34e" title="An instance of vishnu database.">mdatabaseVishnu</a>;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 };
+<a name="l00066"></a>00066 <span class="preprocessor">#endif // MONITORUMS</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

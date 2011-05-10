@@ -41,9 +41,10 @@
 <code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;sstream&gt;</code><br/>
 <code>#include &lt;boost/foreach.hpp&gt;</code><br/>
-<code>#include &lt;boost/archive/text_iarchive.hpp&gt;</code><br/>
-<code>#include &lt;boost/archive/text_oarchive.hpp&gt;</code><br/>
+<code>#include &lt;boost/archive/binary_iarchive.hpp&gt;</code><br/>
+<code>#include &lt;boost/archive/binary_oarchive.hpp&gt;</code><br/>
 <code>#include &lt;boost/serialization/list.hpp&gt;</code><br/>
+<code>#include &lt;boost/serialization/nvp.hpp&gt;</code><br/>
 
 <p><a href="sessionUtils_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -77,10 +78,41 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Another function to store last session open.  <a href="#af74f199202d5f3c6530d187229fba3d0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="sessionUtils_8hpp.html#a75cb918af5ef4da1c42114cc433ac24f">getLastSessionKey</a> (int ppid)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the last session key.  <a href="#a75cb918af5ef4da1c42114cc433ac24f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="sessionUtils_8hpp.html#afcf5268e99579b60306a5aa21af435d7">removeBadSessionKeyFromFile</a> (int ppid)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To remove the bad session keys stored in the session file.  <a href="#afcf5268e99579b60306a5aa21af435d7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="sessionUtils_8hpp.html#ad6ace2ec1dd5a5ba311aa49db7eb4b00">checkBadSessionKeyError</a> (const <a class="el" href="classVishnuException.html">VishnuException</a> &amp;e)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A helper function which check if an given exception represents a bad sessionKey.  <a href="#ad6ace2ec1dd5a5ba311aa49db7eb4b00"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This file contains a declaration of class to handle a storage of session key. </p>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="ad6ace2ec1dd5a5ba311aa49db7eb4b00"></a><!-- doxytag: member="sessionUtils.hpp::checkBadSessionKeyError" ref="ad6ace2ec1dd5a5ba311aa49db7eb4b00" args="(const VishnuException &amp;e)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool checkBadSessionKeyError </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classVishnuException.html">VishnuException</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>e</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>A helper function which check if an given exception represents a bad sessionKey. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>e,:</em>&nbsp;</td><td>a given <a class="el" href="classVishnuException.html" title="This class represents the root of all the exception of the system.">VishnuException</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>: true if it's a bad session key or false otherwhise </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aaca31098f5494c62c5b33c95d74ae102"></a><!-- doxytag: member="sessionUtils.hpp::getAllSessions" ref="aaca31098f5494c62c5b33c95d74ae102" args="(const std::string &amp;terminal)" -->
 <div class="memitem">
 <div class="memproto">
@@ -232,6 +264,32 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="afcf5268e99579b60306a5aa21af435d7"></a><!-- doxytag: member="sessionUtils.hpp::removeBadSessionKeyFromFile" ref="afcf5268e99579b60306a5aa21af435d7" args="(int ppid)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void removeBadSessionKeyFromFile </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>ppid</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To remove the bad session keys stored in the session file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>ppid</em>&nbsp;</td><td>: The process identifier of the terminal in which the session had been open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="af765ba0d97fc2960174a666aaf87f26b"></a><!-- doxytag: member="sessionUtils.hpp::removeLastSession" ref="af765ba0d97fc2960174a666aaf87f26b" args="(const std::string &amp;terminal)" -->
 <div class="memitem">
 <div class="memproto">
@@ -302,42 +360,6 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ae3f37a11728af1a93673b029668dc6e0"></a><!-- doxytag: member="sessionUtils.hpp::storeLastSession" ref="ae3f37a11728af1a93673b029668dc6e0" args="(const SessionEntry &amp;session, const std::string &amp;terminal)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void storeLastSession </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classSessionEntry.html">SessionEntry</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>terminal</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>To store a the current session running in a terminal in the file. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>: the current session </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>terminal,:</em>&nbsp;</td><td>The terminal in which the session is running </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="af74f199202d5f3c6530d187229fba3d0"></a><!-- doxytag: member="sessionUtils.hpp::storeLastSession" ref="af74f199202d5f3c6530d187229fba3d0" args="(const std::string &amp;sessionKey, int closePolicy, int ppid)" -->
 <div class="memitem">
 <div class="memproto">
@@ -381,8 +403,44 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ae3f37a11728af1a93673b029668dc6e0"></a><!-- doxytag: member="sessionUtils.hpp::storeLastSession" ref="ae3f37a11728af1a93673b029668dc6e0" args="(const SessionEntry &amp;session, const std::string &amp;terminal)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void storeLastSession </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classSessionEntry.html">SessionEntry</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>session</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>terminal</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<div class="memdoc">
+
+<p>To store a the current session running in a terminal in the file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>: the current session </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>terminal,:</em>&nbsp;</td><td>The terminal in which the session is running </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

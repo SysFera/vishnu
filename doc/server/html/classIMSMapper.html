@@ -64,6 +64,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the command corresponding to a key.  <a href="#a25a97459b750bf8204178b9a18637113"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIMSMapper.html#a762164cb091f97d2a4698de59cc66cb5">getKey</a> (const string &amp;command, int &amp;key)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the key corresponding to a command.  <a href="#a762164cb091f97d2a4698de59cc66cb5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIMSMapper.html#ac972651946c18f94bc683654462ccecd">code</a> (const string &amp;cmd, unsigned int code=0)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add an element to code.  <a href="#ac972651946c18f94bc683654462ccecd"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p><a class="el" href="classMapper.html" title="Generic mapper.">Mapper</a> implementation for the IMS module. </p>
@@ -105,6 +107,45 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ac972651946c18f94bc683654462ccecd"></a><!-- doxytag: member="IMSMapper::code" ref="ac972651946c18f94bc683654462ccecd" args="(const string &amp;cmd, unsigned int code=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int IMSMapper::code </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>code</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to add an element to code. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cmd</em>&nbsp;</td><td>The string to add </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>code</em>&nbsp;</td><td>If 0, the code is created, otherwize it is the key in the map to add the string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>if param code = 0, the assigned code to add other element to the same item, otherwize return 0 </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classMapper.html#a915f9829fd340b2b0978323b90eda360">Mapper</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a25a97459b750bf8204178b9a18637113"></a><!-- doxytag: member="IMSMapper::getCommand" ref="a25a97459b750bf8204178b9a18637113" args="(const int &amp;key, string &amp;command)" -->
 <div class="memitem">
 <div class="memproto">
@@ -227,7 +268,7 @@ Public Member Functions</h2></td></tr>
 <li>core/src/registry/<a class="el" href="IMSMapper_8hpp_source.html">IMSMapper.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:11 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

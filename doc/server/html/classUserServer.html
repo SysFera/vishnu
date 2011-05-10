@@ -50,16 +50,16 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#a5b19188b031a3ab5fc40cabc2a097b1d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a2a8ac1a46357a5fb7d10ea741b534b3d">UserServer</a> (<a class="el" href="classSessionServer.html">SessionServer</a> sessionServer)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#a2a8ac1a46357a5fb7d10ea741b534b3d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a05207b09729ba075b82abe57908ccff1">add</a> (UMS_Data::User *&amp;user)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add a new VISHNU user.  <a href="#a05207b09729ba075b82abe57908ccff1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a86ac31bb630ea859c06bc1127eea2c9a">add</a> (UMS_Data::User *&amp;user, int vishnuId, std::string sendmailScriptPath)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add a new VISHNU user.  <a href="#a86ac31bb630ea859c06bc1127eea2c9a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a6653ef686b1622001ca6b211da5d9f3b">update</a> (UMS_Data::User *user)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to update user information.  <a href="#a6653ef686b1622001ca6b211da5d9f3b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#acb26d67e359123b9b4b80fa007d37423">deleteUser</a> (UMS_Data::User user)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to delete VISHNU user.  <a href="#acb26d67e359123b9b4b80fa007d37423"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a63b49fc59574e8b81fde104f09a4585e">changePassword</a> (std::string newPassword)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to change VISHNU user password.  <a href="#a63b49fc59574e8b81fde104f09a4585e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a3fc3db7042acf71dcb73c4c7924a9d1c">resetPassword</a> (UMS_Data::User &amp;user)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to change VISHNU user password.  <a href="#a3fc3db7042acf71dcb73c4c7924a9d1c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#ad25cf22ec48e1519df9fd68b1d66a36d">resetPassword</a> (UMS_Data::User &amp;user, std::string sendmailScriptPath)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to change VISHNU user password.  <a href="#ad25cf22ec48e1519df9fd68b1d66a36d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12cc28c2c2c5b3c88d2f760c97bd088d"></a><!-- doxytag: member="UserServer::~UserServer" ref="a12cc28c2c2c5b3c88d2f760c97bd088d" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a12cc28c2c2c5b3c88d2f760c97bd088d">~UserServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
@@ -78,12 +78,14 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get user information from the database vishnu.  <a href="#aaabcde0c694987b990a3ba1af445f718"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#ac61e9715aa922ad746ecd8f788130834">existuserId</a> (std::string userId)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check a userId.  <a href="#ac61e9715aa922ad746ecd8f788130834"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a9ad90b441d2caa41be086f046bc58d62">getUserAccountLogin</a> (const std::string &amp;machineId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the user account login.  <a href="#a9ad90b441d2caa41be086f046bc58d62"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a61f17775588f641c30035349e5e8bfef">generatePassword</a> (std::string value1, std::string value2)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to generate a password.  <a href="#a61f17775588f641c30035349e5e8bfef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a6b7dc36a39371743c079635fdc1fcdbe">sendMailToUser</a> (const UMS_Data::User &amp;user, std::string content, std::string subject)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to send an email to the user.  <a href="#a6b7dc36a39371743c079635fdc1fcdbe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#ac4e5db25963346be0bc57f5b61a1ad59">sendMailToUser</a> (const UMS_Data::User &amp;user, std::string content, std::string subject, std::string sendmailScriptPath)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to send an email to the user.  <a href="#ac4e5db25963346be0bc57f5b61a1ad59"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUserServer.html#a4896a5d7bd51b8ad24cf6864ba400487">getMailContent</a> (const UMS_Data::User &amp;user, bool flagAdduser)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the email content.  <a href="#a4896a5d7bd51b8ad24cf6864ba400487"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -190,7 +192,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a05207b09729ba075b82abe57908ccff1"></a><!-- doxytag: member="UserServer::add" ref="a05207b09729ba075b82abe57908ccff1" args="(UMS_Data::User *&amp;user)" -->
+<a class="anchor" id="a86ac31bb630ea859c06bc1127eea2c9a"></a><!-- doxytag: member="UserServer::add" ref="a86ac31bb630ea859c06bc1127eea2c9a" args="(UMS_Data::User *&amp;user, int vishnuId, std::string sendmailScriptPath)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -198,9 +200,24 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
           <td class="memname">int UserServer::add </td>
           <td>(</td>
           <td class="paramtype">UMS_Data::User *&amp;&nbsp;</td>
-          <td class="paramname"> <em>user</em></td>
-          <td>&nbsp;)&nbsp;</td>
+          <td class="paramname"> <em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>vishnuId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>sendmailScriptPath</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
         </tr>
       </table>
 </div>
@@ -210,6 +227,8 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>The user data structure </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sendmailScriptPath</em>&nbsp;</td><td>The path to the script for sending emails </td></tr>
   </table>
   </dd>
 </dl>
@@ -456,6 +475,33 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
+<a class="anchor" id="a9ad90b441d2caa41be086f046bc58d62"></a><!-- doxytag: member="UserServer::getUserAccountLogin" ref="a9ad90b441d2caa41be086f046bc58d62" args="(const std::string &amp;machineId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string UserServer::getUserAccountLogin </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineId</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the user account login. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>The machine identifier of machine on which the user have a account </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the user account login </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a7dab9117c2ca5a706bb674e43b183255"></a><!-- doxytag: member="UserServer::isAdmin" ref="a7dab9117c2ca5a706bb674e43b183255" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -513,7 +559,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
-<a class="anchor" id="a3fc3db7042acf71dcb73c4c7924a9d1c"></a><!-- doxytag: member="UserServer::resetPassword" ref="a3fc3db7042acf71dcb73c4c7924a9d1c" args="(UMS_Data::User &amp;user)" -->
+<a class="anchor" id="ad25cf22ec48e1519df9fd68b1d66a36d"></a><!-- doxytag: member="UserServer::resetPassword" ref="ad25cf22ec48e1519df9fd68b1d66a36d" args="(UMS_Data::User &amp;user, std::string sendmailScriptPath)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -521,9 +567,18 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
           <td class="memname">int UserServer::resetPassword </td>
           <td>(</td>
           <td class="paramtype">UMS_Data::User &amp;&nbsp;</td>
-          <td class="paramname"> <em>user</em></td>
-          <td>&nbsp;)&nbsp;</td>
+          <td class="paramname"> <em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>sendmailScriptPath</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
         </tr>
       </table>
 </div>
@@ -533,6 +588,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>The user data structure </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sendmailScriptPath</em>&nbsp;</td><td>The path to the script for sending emails </td></tr>
   </table>
   </dd>
 </dl>
@@ -540,7 +596,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
-<a class="anchor" id="a6b7dc36a39371743c079635fdc1fcdbe"></a><!-- doxytag: member="UserServer::sendMailToUser" ref="a6b7dc36a39371743c079635fdc1fcdbe" args="(const UMS_Data::User &amp;user, std::string content, std::string subject)" -->
+<a class="anchor" id="ac4e5db25963346be0bc57f5b61a1ad59"></a><!-- doxytag: member="UserServer::sendMailToUser" ref="ac4e5db25963346be0bc57f5b61a1ad59" args="(const UMS_Data::User &amp;user, std::string content, std::string subject, std::string sendmailScriptPath)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -560,7 +616,13 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>subject</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>subject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>sendmailScriptPath</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -577,6 +639,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
     <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>the user to whom send the email </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>content</em>&nbsp;</td><td>the body of the email </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>subject</em>&nbsp;</td><td>the subject of the email </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sendmailScriptPath</em>&nbsp;</td><td>The path to the script for sending emails </td></tr>
   </table>
   </dd>
 </dl>
@@ -615,7 +678,7 @@ UMS_Data::User&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>UMS/src/server/<a class="el" href="UserServer_8hpp_source.html">UserServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:14 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

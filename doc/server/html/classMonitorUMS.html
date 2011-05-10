@@ -48,8 +48,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dd94f7d4a5cfafb4c668cde6f231e3e"></a><!-- doxytag: member="MonitorUMS::~MonitorUMS" ref="a4dd94f7d4a5cfafb4c668cde6f231e3e" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#a4dd94f7d4a5cfafb4c668cde6f231e3e">~MonitorUMS</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#aab02ba843105bb0abcfe34fa12ecaa59">init</a> (int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS monitor with individual parameters instead of configuration file.  <a href="#aab02ba843105bb0abcfe34fa12ecaa59"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#a14c0a0e214e1c3dd306314474d6a3ff8">init</a> (int vishnuId, <a class="el" href="classDbConfiguration.html">DbConfiguration</a> dbConfig)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To initialize the UMS monitor with individual parameters instead of configuration file.  <a href="#a14c0a0e214e1c3dd306314474d6a3ff8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitorUMS.html#aa4e9d26960b0519c7bfd4e470d1fc0a7">run</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To launch the UMS Monitor.  <a href="#aa4e9d26960b0519c7bfd4e470d1fc0a7"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -91,12 +91,12 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aab02ba843105bb0abcfe34fa12ecaa59"></a><!-- doxytag: member="MonitorUMS::init" ref="aab02ba843105bb0abcfe34fa12ecaa59" args="(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)" -->
+<a class="anchor" id="a14c0a0e214e1c3dd306314474d6a3ff8"></a><!-- doxytag: member="MonitorUMS::init" ref="a14c0a0e214e1c3dd306314474d6a3ff8" args="(int vishnuId, DbConfiguration dbConfig)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int MonitorUMS::init </td>
+          <td class="memname">void MonitorUMS::init </td>
           <td>(</td>
           <td class="paramtype">int&nbsp;</td>
           <td class="paramname"> <em>vishnuId</em>, </td>
@@ -104,26 +104,8 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>dbType</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>dbHost</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>dbUsername</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>dbPassword</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="classDbConfiguration.html">DbConfiguration</a>&nbsp;</td>
+          <td class="paramname"> <em>dbConfig</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -138,10 +120,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The password of the root user vishnu_user for the connection with the database </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbType</em>&nbsp;</td><td>The type of the database (POSTGREDB|ORACLEDB) </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbHost</em>&nbsp;</td><td>The host of the database server </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbUsername</em>&nbsp;</td><td>The name of the database user on the server </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dbPassword</em>&nbsp;</td><td>The password of the database user on the server </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dbConfig</em>&nbsp;</td><td>The configuration of the database </td></tr>
   </table>
   </dd>
 </dl>
@@ -173,7 +152,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <li>UMS/src/sed/<a class="el" href="MonitorUMS_8hpp_source.html">MonitorUMS.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:41 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
