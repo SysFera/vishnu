@@ -28,12 +28,13 @@ add_library(ims-utils-cli
  )
 #declare all command lines provided
 
-set(ALLCLI 
+set(ALLCLI
   get_processes
   get_history_metric
   get_update_frequency
   set_update_frequency
   get_current_metric
+  set_system_info
   )
 
 #set the prefix of command

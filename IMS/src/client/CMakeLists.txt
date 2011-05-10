@@ -1,4 +1,4 @@
- 
+
 link_directories(
  ${VISHNU_EXCEPTION_INCLUDE_DIR}
 )
@@ -21,6 +21,7 @@ include_directories(
 
 add_library(ims-client-proxy STATIC
   MetricProxy.cpp
+  SysInfoProxy.cpp
 )
 
 target_link_libraries(ims-client-proxy
