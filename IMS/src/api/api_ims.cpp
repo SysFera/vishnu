@@ -2,6 +2,7 @@
 #include "SessionProxy.hpp"
 #include "QueryProxy.hpp"
 #include "MetricProxy.hpp"
+#include "SysInfoProxy.hpp"
 
 int
 vishnu::exportCommands(const string sessionKey,
@@ -21,7 +22,7 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricCurentValue";
-  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric> 
+  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric>
     query(op, sessionProxy, name, machineId);
 
   IMS_Data::ListMetric_ptr li = query.list();
@@ -43,9 +44,9 @@ vishnu::getMetricHistory(const string sessionKey,
 		 IMS_Data::MetricHistOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
-  SessionProxy sessionProxy(sessionKey);  
+  SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricHistory";
-  QueryProxy<IMS_Data::MetricHistOp, IMS_Data::ListMetric> 
+  QueryProxy<IMS_Data::MetricHistOp, IMS_Data::ListMetric>
     query(op, sessionProxy, name, machineId);
 
   IMS_Data::ListMetric_ptr li = query.list();
@@ -68,9 +69,9 @@ vishnu::getProcesses(const string sessionKey,
 	     IMS_Data::ProcessOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
-  SessionProxy sessionProxy(sessionKey);  
+  SessionProxy sessionProxy(sessionKey);
   string name = "int_getProcesses";
-  QueryProxy<IMS_Data::ProcessOp, IMS_Data::ListProcesses> 
+  QueryProxy<IMS_Data::ProcessOp, IMS_Data::ListProcesses>
     query(op, sessionProxy, name);
 
   IMS_Data::ListProcesses_ptr li = query.list();
@@ -92,11 +93,16 @@ int
 vishnu::setSystemInfo(const string sessionKey,
 	      IMS_Data::SystemInfo sys)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  SysInfoProxy sysInfo(sessionProxy);
+  sysInfo.setSystemInfo(sys);
+
   return IMS_SUCCESS;
 }
 
 
-int 
+int
 vishnu::setSystemThreshold(const int sessionKey,
 		   IMS_Data::Threshold threshold)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
@@ -104,7 +110,7 @@ vishnu::setSystemThreshold(const int sessionKey,
 }
 
 
-int 
+int
 vishnu::getSystemThreshold(const int sessionKey,
 		   IMS_Data::ListThreshold& list,
 		   IMS_Data::ThresholdOp op)
@@ -158,7 +164,7 @@ int
 vishnu::setUpdateFrequency(const string sessionKey,
 		   int freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);  
+  SessionProxy sessionProxy(sessionKey);
   string name = "int_setUpdateFrequency";
 
   MetricProxy met(sessionProxy);
@@ -171,7 +177,7 @@ int
 vishnu::getUpdateFrequency(const string sessionKey,
 		   int& freq)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
-  SessionProxy sessionProxy(sessionKey);  
+  SessionProxy sessionProxy(sessionKey);
   string name = "int_getUpdateFrequency";
 
   MetricProxy met(sessionProxy);
@@ -193,6 +199,11 @@ vishnu::getSystemInfo(const string sessionKey,
 	      IMS_Data::ListSysInfo& list,
 	      IMS_Data::SysInfoOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  SysInfoProxy sysInfo(sessionProxy);
+  sysInfo.getSystemInfo(list, op);
+
   return IMS_SUCCESS;
 }
 
