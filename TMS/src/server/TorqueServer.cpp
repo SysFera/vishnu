@@ -14,7 +14,6 @@ extern "C" {
 #include "pbs_error.h"
 #include "cmds.h"
 #include "pbs_sub.h"
-#include "net_connect.h"
 }
 
 #include "TorqueServer.hpp"

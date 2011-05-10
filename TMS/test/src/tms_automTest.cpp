@@ -37,7 +37,7 @@ namespace bfs= boost::filesystem;
 
 BOOST_GLOBAL_FIXTURE(TMSSeDFixture)
 
-/*
+
 
 //Test category 1
 
@@ -626,7 +626,7 @@ BOOST_AUTO_TEST_SUITE_END()
 //------------------------------------------------------------------------------------------------------------------------
 
 // T2.4 : list jobs
-*/
+
 
 BOOST_AUTO_TEST_SUITE( list_jobs)
 
@@ -809,7 +809,7 @@ BOOST_AUTO_TEST_CASE( list_job_bad_machineId)
 
 BOOST_AUTO_TEST_SUITE_END()
 
-/*
+
 
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -1440,7 +1440,7 @@ BOOST_AUTO_TEST_CASE( list_job_queues_bad_machineId)
 
 
 BOOST_AUTO_TEST_SUITE_END()
-*/
+
 
 // THE END
 
