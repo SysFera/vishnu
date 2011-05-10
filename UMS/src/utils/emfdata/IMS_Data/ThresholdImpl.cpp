@@ -57,8 +57,7 @@ void Threshold::_initialize()
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::toAny(_any,
-                m_value);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_value);
     }
         return _any;
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__MACHINEID:
@@ -85,7 +84,7 @@ void Threshold::eSet(::ecore::EInt _featureID,
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
                 m_value);
     }
         return;
@@ -111,7 +110,7 @@ void Threshold::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EDouble >::is_set(
+        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
                 m_value);
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__MACHINEID:
         return m_machineId != "";

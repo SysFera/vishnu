@@ -76,15 +76,15 @@ void Metric::setType(::IMS_Data::MetricType _type)
 #endif
 }
 
-::ecore::EDouble Metric::getValue() const
+::ecore::ELong Metric::getValue() const
 {
     return m_value;
 }
 
-void Metric::setValue(::ecore::EDouble _value)
+void Metric::setValue(::ecore::ELong _value)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EDouble _old_value = m_value;
+    ::ecore::ELong _old_value = m_value;
 #endif
     m_value = _value;
 #ifdef ECORECPP_NOTIFICATION_API
@@ -102,15 +102,15 @@ void Metric::setValue(::ecore::EDouble _value)
 #endif
 }
 
-::ecore::EInt Metric::getTime() const
+::ecore::ELong Metric::getTime() const
 {
     return m_time;
 }
 
-void Metric::setTime(::ecore::EInt _time)
+void Metric::setTime(::ecore::ELong _time)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EInt _old_time = m_time;
+    ::ecore::ELong _old_time = m_time;
 #endif
     m_time = _time;
 #ifdef ECORECPP_NOTIFICATION_API

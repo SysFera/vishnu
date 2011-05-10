@@ -72,12 +72,12 @@ namespace IMS_Data
          * \brief To get the value
          * \return The value attribute value
          **/
-        ::ecore::EDouble getValue() const;
+        ::ecore::ELong getValue() const;
         /**
          * \brief To set the value
          * \param _value The value value
          **/
-        void setValue(::ecore::EDouble _value);
+        void setValue(::ecore::ELong _value);
 
         /**
          * \brief To get the machineId
@@ -126,7 +126,7 @@ namespace IMS_Data
     protected:
         // Attributes
 
-        ::ecore::EDouble m_value;
+        ::ecore::ELong m_value;
 
         ::ecore::EString m_machineId;
 
