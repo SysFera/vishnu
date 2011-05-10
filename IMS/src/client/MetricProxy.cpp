@@ -8,6 +8,9 @@ using namespace vishnu;
 MetricProxy::MetricProxy(const SessionProxy& session): msessionProxy(session) {
 }
 
+MetricProxy::~MetricProxy() {
+}
+
 void
 MetricProxy::setUpFreq(int freq) {
   diet_profile_t* profile = NULL;

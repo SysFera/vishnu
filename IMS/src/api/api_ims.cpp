@@ -3,6 +3,7 @@
 #include "QueryProxy.hpp"
 #include "MetricProxy.hpp"
 #include "SysInfoProxy.hpp"
+#include "ObjectIdProxy.hpp"
 
 int
 vishnu::exportCommands(const string sessionKey,
@@ -103,7 +104,7 @@ vishnu::setSystemInfo(const string sessionKey,
 
 
 int
-vishnu::setSystemThreshold(const int sessionKey,
+vishnu::setSystemThreshold(const string sessionKey,
 		   IMS_Data::Threshold threshold)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
   return IMS_SUCCESS;
@@ -111,7 +112,7 @@ vishnu::setSystemThreshold(const int sessionKey,
 
 
 int
-vishnu::getSystemThreshold(const int sessionKey,
+vishnu::getSystemThreshold(const string sessionKey,
 		   IMS_Data::ListThreshold& list,
 		   IMS_Data::ThresholdOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
@@ -120,33 +121,53 @@ vishnu::getSystemThreshold(const int sessionKey,
 
 
 int
-vishnu::defineUserIdentifier(const int sessionKey,
+vishnu::defineUserIdentifier(const string sessionKey,
 		     string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+  string name = "int_defineUserIdentifier";
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setUID(fmt);
   return IMS_SUCCESS;
 }
 
 
 int
-vishnu::defineMachineIdentifier(const int sessionKey,
+vishnu::defineMachineIdentifier(const string sessionKey,
 			string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+  string name = "int_defineMachineIdentifier";
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setMID(fmt);
   return IMS_SUCCESS;
 }
 
 
 int
-vishnu::defineJobIdentifier(const int sessionKey,
+vishnu::defineJobIdentifier(const string sessionKey,
 		    string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+  string name = "int_defineJobIdentifier";
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setTID(fmt);
   return IMS_SUCCESS;
 }
 
 
 int
-vishnu::defineTransferIdentifier(const int sessionKey,
+vishnu::defineTransferIdentifier(const string sessionKey,
 			 string fmt)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+  string name = "int_defineTransferIdentifier";
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setFID(fmt);
   return IMS_SUCCESS;
 }
 
