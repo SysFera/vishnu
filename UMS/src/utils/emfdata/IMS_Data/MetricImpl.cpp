@@ -63,13 +63,12 @@ void Metric::_initialize()
         return _any;
     case ::IMS_Data::IMS_DataPackage::METRIC__VALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::toAny(_any,
-                m_value);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_value);
     }
         return _any;
     case ::IMS_Data::IMS_DataPackage::METRIC__TIME:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_time);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_time);
     }
         return _any;
 
@@ -90,13 +89,13 @@ void Metric::eSet(::ecore::EInt _featureID,
         return;
     case ::IMS_Data::IMS_DataPackage::METRIC__VALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
                 m_value);
     }
         return;
     case ::IMS_Data::IMS_DataPackage::METRIC__TIME:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
                 m_time);
     }
         return;
@@ -113,10 +112,10 @@ void Metric::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::IMS_Data::MetricType >::is_set(
                 m_type);
     case ::IMS_Data::IMS_DataPackage::METRIC__VALUE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EDouble >::is_set(
+        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
                 m_value);
     case ::IMS_Data::IMS_DataPackage::METRIC__TIME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_time);
+        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(m_time);
 
     }
     throw "Error";
