@@ -5,8 +5,6 @@ if (NOT CLIENT_ONLY)
   add_subdirectory(slave)
 endif (NOT CLIENT_ONLY)
 
-add_subdirectory(utils)
 add_subdirectory(api)
 add_subdirectory(client)
 add_subdirectory(cli)
-#add_subdirectory(test_client)
