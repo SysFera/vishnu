@@ -1,3 +1,11 @@
+/**
+ * \file slave.cpp
+ * \brief This file contains the VISHNU TMS slave main function.
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date April 2011
+ */
+
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -30,6 +38,12 @@ using namespace std;
 using namespace vishnu;
 
 
+/**
+ * \brief To show how to use the slave
+ * \fn int usage(char* cmd)
+ * \param cmd The name of the program
+ * \return Always 1
+ */
 void usage(char* cmd) {
   cerr << "Usage: " << cmd << "COMMANDE_TYPE[SUBMIT] <BatchType> <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>";
   cerr << " <SubmitOptionsSerializedPath> <job_script_path>" << endl;
@@ -38,14 +52,13 @@ void usage(char* cmd) {
   exit(EXIT_FAILURE);
 }
 
-/*
- * MAIN
- *
- * @param argc
- * @param argv
- *   argv[0] :
+/**
+ * \brief The main function
+ * \param argc Number of parameter
+ * \param argv List of argument
+ * \param envp Array of environment variables
+ * \return The result of the diet sed call
  */
-
 int
 main(int argc, char* argv[], char* envp[])
 {

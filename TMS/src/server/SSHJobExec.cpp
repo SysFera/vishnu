@@ -131,7 +131,6 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
   cmd << " 2> " << stderrFilePath;
 
-  std::cout << cmd.str() << std::endl;
   if(system((cmd.str()).c_str())) { //A REMPLACER PAR exec
     std::cerr << "can't execute " << cmd.str() << std::endl;
     vishnu::deleteFile(jobSerializedPath.c_str());

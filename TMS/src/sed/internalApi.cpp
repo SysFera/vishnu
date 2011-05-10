@@ -112,7 +112,6 @@ solveSubmitJob(diet_profile_t* pb) {
       }
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
-      std::cout << "errorInfo=" << errorInfo << std::endl;
       diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -191,11 +190,8 @@ solveJobInfo(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  cout << "************machineId=" << machineId << " ..." << endl;
   diet_string_get(diet_parameter(pb,2), &jobSerialized, NULL);
-  cout << "************JobSerialized=" << jobSerialized << " ..." << endl;
 
   SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
@@ -232,7 +228,6 @@ solveJobInfo(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
@@ -257,8 +252,6 @@ solveListOfQueues(diet_profile_t* pb) {
   std::string finishError ="";
   int mapperkey;
   std::string cmd = "";
-
-  cout << "Solve ListQueues " << endl;
 
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
@@ -299,7 +292,6 @@ solveListOfQueues(diet_profile_t* pb) {
     diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
 
-  cout << " done" << endl;
   return 0;
 }
 
@@ -343,8 +335,6 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
       throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: jobResult object is not well built");
     }
 
-    std::cout << "jobdId = " << jobResult->getJobId() << std::endl;
-
     JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
     TMS_Data::JobResult result = jobOutputServer.getJobOutput();
     //OUT Parameter
@@ -374,7 +364,6 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
 
     std::string outputPath = "error.txt";
@@ -414,11 +403,8 @@ solveGenerique(diet_profile_t* pb) {
 
   //IN Parameters
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  cout << "************sessionKey=" << sessionKey << " ..." << endl;
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
-  cout << "************machineId=" << machineId << " ..." << endl;
   diet_string_get(diet_parameter(pb,2), &optionValueSerialized, NULL);
-  cout << "************optionValueSerialized=" << optionValueSerialized << " ..." << endl;
 
   SessionServer sessionServer  = SessionServer(std::string(sessionKey));
 
@@ -493,8 +479,6 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
   std::string cmd;
   std::string finishError ="";
 
-  cout << "Solve jobOutPutGetAllResult " << endl;
-
   diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
   diet_string_get(diet_parameter(pb,1), &machineId, NULL);
   diet_string_get(diet_parameter(pb,2), &moutDir, NULL);
@@ -525,7 +509,6 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     std::string outputPath;
     std::string errorPath;
     TMS_Data::JobResult_ptr jobResult = NULL;
-    std::cout << "completedJobsOutput->getResults().size()=" << completedJobsOutput->getResults().size() << std::endl;
     for(size_t i = 0; i < completedJobsOutput->getResults().size(); i++) {
       jobResult = completedJobsOutput->getResults().get(i);
       outputPath = jobResult->getOutputPath();
@@ -547,7 +530,6 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    std::cout << "errorInfo=" << errorInfo << std::endl;
     diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
 
@@ -560,7 +542,6 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 
     dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID, 0);
   }
-  cout << " done" << endl;
   return 0;
 }
 

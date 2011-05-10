@@ -1,3 +1,10 @@
+/**
+ * \file tmssed.cpp
+ * \brief This file contains the VISHNU TMS sed main function.
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date April 2011
+ */
+
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
