@@ -106,3 +106,4 @@ SysInfoProxy::getSystemInfo(IMS_Data::ListSysInfo& listSysInfo,
 */
 SysInfoProxy::~SysInfoProxy() {
 }
+

@@ -36,6 +36,10 @@ set(ALLCLI
   get_current_metric
   set_system_info
   get_system_info
+  define_user_format
+  define_machine_format
+  define_file_format
+  define_task_format
   )
 
 #set the prefix of command

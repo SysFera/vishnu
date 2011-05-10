@@ -1,6 +1,6 @@
 /**
  * \file MetricProxy.hpp
- * \brief This file defines the metrics interaction with the database
+ * \brief This file defines the metrics proxy
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 19/04/11
  */
@@ -22,6 +22,10 @@ public:
    * \param The session connected
    */
   MetricProxy(const SessionProxy& session);
+  /**
+   * \brief Destructor
+   */
+  ~MetricProxy();
   /**
    * \brief To set the update frequency of the history maker
    * \param freq: The new frequency to set
