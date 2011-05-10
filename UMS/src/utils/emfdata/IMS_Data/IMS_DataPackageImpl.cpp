@@ -395,7 +395,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_SystemInfo__memory->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_SystemInfo__memory->setName("memory");
-    m_SystemInfo__memory->setDefaultValueLiteral("");
+    m_SystemInfo__memory->setDefaultValueLiteral("0");
     m_SystemInfo__memory->setLowerBound(0);
     m_SystemInfo__memory->setUpperBound(1);
     m_SystemInfo__memory->setTransient(false);
@@ -409,7 +409,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_SystemInfo__diskSpace->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_SystemInfo__diskSpace->setName("diskSpace");
-    m_SystemInfo__diskSpace->setDefaultValueLiteral("");
+    m_SystemInfo__diskSpace->setDefaultValueLiteral("0");
     m_SystemInfo__diskSpace->setLowerBound(0);
     m_SystemInfo__diskSpace->setUpperBound(1);
     m_SystemInfo__diskSpace->setTransient(false);
