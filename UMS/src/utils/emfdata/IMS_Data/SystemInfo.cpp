@@ -30,7 +30,8 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-SystemInfo::SystemInfo()
+SystemInfo::SystemInfo() :
+    m_memory(0), m_diskSpace(0)
 {
 
     /*PROTECTED REGION ID(SystemInfoImpl__SystemInfoImpl) START*/
