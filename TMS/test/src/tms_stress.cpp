@@ -25,9 +25,10 @@ void stress(int cpt,const string& sessionKey, const string& machineId ){
 
     cout << " In loop : " <<  i << endl;
 
-    submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions) ;
+    ListQueues listofQueues;
 
-    cancelJob(sessionKey,machineId,jobInfo.getJobId());
+    listQueues(sessionKey, machineId, listofQueues);
+
   }
   vishnuFinalize();
 }
@@ -66,8 +67,8 @@ int main(int argc, char** argv){
   int cpt;
   int i;
   string             	  key  = ""       ;
-  string 	     	  pwd  = "admin"  ;
-  string 	     	  uid  = "admin_1";
+  string 	     	  pwd  = "vishnu_user"  ;
+  string 	     	  uid  = "root";
   ConnectOptions 	  cop  ;
   Session                 sess ;
 
@@ -75,14 +76,16 @@ int main(int argc, char** argv){
 
   cop.setClosePolicy(2);  
 
-  vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
   try{
+
+    vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
     connect    (uid, pwd, sess, cop );
   }
   catch(VishnuException& e){
 
     std::cout << e.what() << std::endl;
 
+    return 1;
   }
   vishnuFinalize();
 
