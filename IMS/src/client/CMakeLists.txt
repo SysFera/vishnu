@@ -21,6 +21,7 @@ include_directories(
 
 add_library(ims-client-proxy STATIC
   MetricProxy.cpp
+  ObjectIdProxy.cpp
   SysInfoProxy.cpp
 )
 
