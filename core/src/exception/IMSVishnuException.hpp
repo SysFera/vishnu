@@ -1,5 +1,5 @@
 /**
- * \file IMSVishnuException.hh
+ * \file IMSVishnuException.hpp
  * \brief This file defines the IMS sub class for the Vishnu exceptions.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  */
@@ -12,7 +12,9 @@
 static const int ERRCODE_INVPROCESS = 301;
 static const int ERRCODE_INVVISHNU = 302;
 
-
+/**
+ * \brief This class allows to treat an error specific to IMS Module
+ */
 class IMSVishnuException: public UserException{
 
   public:
@@ -23,12 +25,12 @@ class IMSVishnuException: public UserException{
   IMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn UMSVishnuException()
+   * \fn IMSVishnuException()
    */
   IMSVishnuException(const IMSVishnuException& e);
   /**
    * \brief Constructor
-   * \fn UMSVishnuException()
+   * \fn IMSVishnuException()
    */
   IMSVishnuException(int msg, std::string msgComp= "");
   /**

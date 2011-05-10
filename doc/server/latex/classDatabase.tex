@@ -27,7 +27,12 @@ virtual int \hyperlink{classDatabase_aed0ada648871f841cfbe08bc1ee1bf92}{connect}
 virtual int \hyperlink{classDatabase_aeba15395d2a36faf73dcb995695b9204}{setDatabase} (std::string db)=0
 \begin{DoxyCompactList}\small\item\em To set the name of the database to use. \item\end{DoxyCompactList}\item 
 virtual \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{getResult} (std::string request)=0
-\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To get the result of a select request. \item\end{DoxyCompactList}\item 
+\hypertarget{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{
+virtual \hyperlink{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{$\sim$Database} ()}
+\label{classDatabase_a84d399a2ad58d69daab9b05330e1316d}
+
+\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -35,12 +40,7 @@ virtual \hyperlink{classDatabaseResult}{DatabaseResult} $\ast$ \hyperlink{classD
 \hyperlink{classDatabase_a4703c80e6969d33565ea340f768fdadf}{Database} ()}
 \label{classDatabase_a4703c80e6969d33565ea340f768fdadf}
 
-\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
-\hypertarget{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{
-virtual \hyperlink{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{$\sim$Database} ()}
-\label{classDatabase_a84d399a2ad58d69daab9b05330e1316d}
-
-\begin{DoxyCompactList}\small\item\em Destructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -70,7 +70,7 @@ raises an exception on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_a3e0dc34a2b20ff76e5fa39cbe340c5d7}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a4a93e348aa699fb34d62edc64dc8d5fd}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a758b0d66ddda58296932242533000846}{POSTGREDatabase}.
 
 \hypertarget{classDatabase_adca650f8a5db531ff1fb85aaef25e711}{
 \index{Database@{Database}!disconnect@{disconnect}}
@@ -90,7 +90,7 @@ raises an exception on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_a4dc57bd6bec47b4e0c19163c1d6c7fbe}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a9839467588dcecbdb4c4582903379346}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_af026bcf159590b97226d829bddb8e00a}{POSTGREDatabase}.
 
 \hypertarget{classDatabase_a30f002bf9752a54c2a056abc1b8bb4d4}{
 \index{Database@{Database}!getResult@{getResult}}
@@ -113,7 +113,7 @@ An object which encapsulates the database results
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_a4e3804ff11f44b3e5770932c8351ea92}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a399070863f94605bc2e520c968e3edbe}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a4be2769e7d13be7f139b540ffb3a4760}{POSTGREDatabase}.
 
 \hypertarget{classDatabase_a41881436b79aac5f4d8e179056564de1}{
 \index{Database@{Database}!process@{process}}
@@ -136,7 +136,7 @@ raises an exception on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_ae43c4557f43b775f26817082f4913d81}{MYSQLDatabase}, \hyperlink{classOracleDatabase_ae6515239e0f313896f21b3ec267acdd9}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_a0371d887a489418bed525acb0d9c5eb3}{POSTGREDatabase}.
 
 \hypertarget{classDatabase_aeba15395d2a36faf73dcb995695b9204}{
 \index{Database@{Database}!setDatabase@{setDatabase}}
@@ -159,7 +159,7 @@ raises an exception on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{POSTGREDatabase}.
+Implemented in \hyperlink{classMYSQLDatabase_a884c0742ea2d4d44d8c177144f5279ef}{MYSQLDatabase}, \hyperlink{classOracleDatabase_a937a096b286c4e6738ea5d314aabe109}{OracleDatabase}, and \hyperlink{classPOSTGREDatabase_acadff2a3649a40b323eb7711e0d705cf}{POSTGREDatabase}.
 
 
 

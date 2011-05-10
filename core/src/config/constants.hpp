@@ -30,6 +30,9 @@ namespace vishnu {
     INTERVALMONITOR
   } param_type_t;
 
+  /**
+   * \brief A convenient data type to store a parameter
+   */
   struct param_t
   {
     param_type_t key;

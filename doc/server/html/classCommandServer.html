@@ -49,8 +49,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#a1ed27508bf43e78ab53b9c8d1d6abcd7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandServer.html#a577cacdfa0a6542d39b8f399ff575ecf">getCommand</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the command description.  <a href="#a577cacdfa0a6542d39b8f399ff575ecf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandServer.html#a365b35bdba349be4d2b33a9b4e3001ba">record</a> (<a class="el" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844">CmdType</a> cmdType, std::string startTime=&quot;CURRENT_TIMESTAMP&quot;, std::string endTime=&quot;CURRENT_TIMESTAMP&quot;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to record the command on the database.  <a href="#a365b35bdba349be4d2b33a9b4e3001ba"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandServer.html#aa1ac01df3897b29b78a961bec8a2534b">record</a> (<a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a> cmdType, <a class="el" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ad">vishnu::CmdStatus</a> cmdStatus, std::string newVishnuObjectID=&quot; &quot;, std::string startTime=&quot;CURRENT_TIMESTAMP&quot;, std::string endTime=&quot;CURRENT_TIMESTAMP&quot;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to record the command on the database.  <a href="#aa1ac01df3897b29b78a961bec8a2534b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandServer.html#a8561a54ddb732b7d13f1ddde8bacde53">isRunning</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if commands are running.  <a href="#a8561a54ddb732b7d13f1ddde8bacde53"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89f1d55bb111f7954d022e0c63d3b87f"></a><!-- doxytag: member="CommandServer::~CommandServer" ref="a89f1d55bb111f7954d022e0c63d3b87f" args="()" -->
@@ -174,15 +174,27 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
-<a class="anchor" id="a365b35bdba349be4d2b33a9b4e3001ba"></a><!-- doxytag: member="CommandServer::record" ref="a365b35bdba349be4d2b33a9b4e3001ba" args="(CmdType cmdType, std::string startTime=&quot;CURRENT_TIMESTAMP&quot;, std::string endTime=&quot;CURRENT_TIMESTAMP&quot;)" -->
+<a class="anchor" id="aa1ac01df3897b29b78a961bec8a2534b"></a><!-- doxytag: member="CommandServer::record" ref="aa1ac01df3897b29b78a961bec8a2534b" args="(CmdType cmdType, vishnu::CmdStatus cmdStatus, std::string newVishnuObjectID=&quot; &quot;, std::string startTime=&quot;CURRENT_TIMESTAMP&quot;, std::string endTime=&quot;CURRENT_TIMESTAMP&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int CommandServer::record </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="CommandServer_8hpp.html#a7ae3a49efad67c34030ecbed1d947844">CmdType</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a>&nbsp;</td>
           <td class="paramname"> <em>cmdType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacevishnu.html#a5513f86dabac3cd717c915498a7679ad">vishnu::CmdStatus</a>&nbsp;</td>
+          <td class="paramname"> <em>cmdStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>newVishnuObjectID</em> = <code>&quot;&nbsp;&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -209,6 +221,8 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>cmdType</em>&nbsp;</td><td>The type of the command (UMS, TMS, FMS, IMS) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cmdStatus</em>&nbsp;</td><td>The status of the command </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>newVishnuObjectID</em>&nbsp;</td><td>the new vishnu object Id </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>startTime</em>&nbsp;</td><td>The start time of command </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>endTime</em>&nbsp;</td><td>The end time of command </td></tr>
   </table>
@@ -222,7 +236,7 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <li>UMS/src/server/<a class="el" href="CommandServer_8hpp_source.html">CommandServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:11 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

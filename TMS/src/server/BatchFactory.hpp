@@ -1,5 +1,5 @@
 /**
- * \file BatchFactory.cpp
+ * \file BatchFactory.hpp
  * \brief This file implements the batch factory
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April
@@ -11,6 +11,10 @@
 #include "utilVishnu.hpp"
 #include "BatchServer.hpp"
 
+/**
+ * \class BatchFactory
+ * \brief A factory class to manage the life of BatchServer instance
+ */
 class BatchFactory
 {
 

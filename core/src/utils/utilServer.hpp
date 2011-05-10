@@ -1,5 +1,5 @@
 /**
- * \file utilVishnu.cpp
+ * \file utilServer.hpp
  * \brief This file implements the utils functions of the vishnu system
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date 15/02/2011
@@ -60,7 +60,7 @@ namespace vishnu {
     FILETRANSFERT = 3  /*!< For the file tranfers*/
   } IdType;
   /**
-   * \enum cmdStatus
+   * \enum CmdStatus
    * \brief The status of the command execution
    */
   typedef enum{

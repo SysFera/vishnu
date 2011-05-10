@@ -1,5 +1,5 @@
 /**
-* \file JobOutPutProxy.cpp
+* \file JobOutPutProxy.hpp
 * \brief This file contains the VISHNU JobOutPutProxy class.
 * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
 * \date March 2011

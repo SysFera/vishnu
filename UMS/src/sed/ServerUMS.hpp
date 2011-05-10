@@ -63,7 +63,7 @@ public :
 
   /**
   * \brief To get the vishnuId
-  * \fn int getVishnuId()
+  * \fn int getVishnuId()const
   * \return the path of the configuration file
   */
   int
@@ -71,7 +71,7 @@ public :
 
   /**
   * \brief To get the path to the sendmail script
-  * \fn std::string getSendmailScriptPath()
+  * \fn std::string getSendmailScriptPath() const
   * \return the path of the configuration file
   */
   std::string

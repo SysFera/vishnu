@@ -35,9 +35,10 @@
 <p>This file contains client utils functions for VISHNU client Proxy classes.  
 <a href="#_details">More...</a></p>
 <code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;cstring&gt;</code><br/>
 <code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;sstream&gt;</code><br/>
-<code>#include &quot;<a class="el" href="SystemException_8hpp_source.html">SystemException.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="utilClient_8hpp_source.html">utilClient.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="UMSVishnuException_8hpp_source.html">UMSVishnuException.hpp</a>&quot;</code><br/>
 
 <p><a href="utilsClient_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -46,10 +47,6 @@
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilsClient_8hpp.html#a7117fd9479ada58240ab2638a677f5ed">errMsg</a> (const std::string &amp;msg)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to print an error message and the line and file where this error has been occured.  <a href="#a7117fd9479ada58240ab2638a677f5ed"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilsClient_8hpp.html#a4724b68263580fa43892c050b81a24ff">raiseDietMsgException</a> (const std::string &amp;msg)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to spread error message to C++ API, Python API, Web service API and command line program.  <a href="#a4724b68263580fa43892c050b81a24ff"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilsClient_8hpp.html#aa5e3ca42e1ddfaebc2d40a2dc1779354">raiseExceptionIfNotEmptyMsg</a> (const std::string &amp;msg)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to split the receiving message into error code and message error.  <a href="#aa5e3ca42e1ddfaebc2d40a2dc1779354"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilsClient_8hpp.html#af94e0eed13dfb2a6cdf83f9caa499217">checkIfTextIsEmpty</a> (const std::string &amp;text, const std::string &amp;compMsg, const int &amp;execpetionType)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check if a text is empty.  <a href="#af94e0eed13dfb2a6cdf83f9caa499217"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilsClient_8hpp.html#a52c2b37b718b5ae048173ce797a0271b">checkEmail</a> (const std::string &amp;mail)</td></tr>
@@ -162,60 +159,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4724b68263580fa43892c050b81a24ff"></a><!-- doxytag: member="utilsClient.hpp::raiseDietMsgException" ref="a4724b68263580fa43892c050b81a24ff" args="(const std::string &amp;msg)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void raiseDietMsgException </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>msg</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
 </div>
-<div class="memdoc">
-
-<p>Function to spread error message to C++ API, Python API, Web service API and command line program. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>msg</em>&nbsp;</td><td>to spread </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="aa5e3ca42e1ddfaebc2d40a2dc1779354"></a><!-- doxytag: member="utilsClient.hpp::raiseExceptionIfNotEmptyMsg" ref="aa5e3ca42e1ddfaebc2d40a2dc1779354" args="(const std::string &amp;msg)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void raiseExceptionIfNotEmptyMsg </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>msg</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Function to split the receiving message into error code and message error. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>msg</em>&nbsp;</td><td>to split </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -33,28 +33,30 @@
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define _DBFACTORY_H_</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
 <a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="Database_8hpp.html" title="This file presents an abstract database.">Database.hpp</a>&quot;</span>
-<a name="l00012"></a>00012 
-<a name="l00016"></a>00016 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> POSTGREDB = 2;
-<a name="l00020"></a>00020 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ORACLEDB = 3;
-<a name="l00021"></a>00021 
-<a name="l00026"></a><a class="code" href="classDbFactory.html">00026</a> <span class="keyword">class </span><a class="code" href="classDbFactory.html" title="Database factory.">DbFactory</a>{
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">public</span> :
-<a name="l00033"></a>00033   <a class="code" href="classDbFactory.html#ac47baec65bb6d6f591b2fb033bd7c193" title="Constructor.">DbFactory</a>();
-<a name="l00038"></a>00038   <a class="code" href="classDbFactory.html#a138084f15091e839a3952c4fe0ccd374" title="Destructor.">~DbFactory</a>();
-<a name="l00050"></a>00050   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a>*
-<a name="l00051"></a>00051   <a class="code" href="classDbFactory.html#ac7826a5f8b460e3447bdeb3a2634f809" title="Function to create a database. The database created depends on the type parameter.">getDatabaseInstance</a>(<span class="keywordtype">int</span> type = -1, std::string host = <span class="stringliteral">&quot;&quot;</span>, std::string user = <span class="stringliteral">&quot;&quot;</span>, std::string pwd = <span class="stringliteral">&quot;&quot;</span>, std::string db = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> port = 0);
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 <span class="keyword">private</span> :
-<a name="l00057"></a><a class="code" href="classDbFactory.html#a24e38965baa1ac4f84c80d719c47ae9d">00057</a>   <span class="keyword">static</span> <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a>* <a class="code" href="classDbFactory.html#a24e38965baa1ac4f84c80d719c47ae9d" title="The unique instance of the database.">mdb</a>;
-<a name="l00058"></a>00058 };
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 <span class="preprocessor">#endif // _DBFACTORY_H_</span>
-<a name="l00062"></a>00062 <span class="preprocessor"></span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="DbConfiguration_8hpp.html" title="This file contains the declaration of the DbConfiguration class.">DbConfiguration.hpp</a>&quot;</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 
+<a name="l00019"></a><a class="code" href="classDbFactory.html">00019</a> <span class="keyword">class </span><a class="code" href="classDbFactory.html" title="Database factory.">DbFactory</a>{
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021 <span class="keyword">public</span> :
+<a name="l00026"></a>00026   <a class="code" href="classDbFactory.html#ac47baec65bb6d6f591b2fb033bd7c193" title="Constructor.">DbFactory</a>();
+<a name="l00031"></a>00031   <a class="code" href="classDbFactory.html#a138084f15091e839a3952c4fe0ccd374" title="Destructor.">~DbFactory</a>();
+<a name="l00037"></a>00037   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a>*
+<a name="l00038"></a>00038   <a class="code" href="classDbFactory.html#a89ba3d52c600515207220dc16f2a9563" title="Function to create a database from a configuration.">createDatabaseInstance</a>(<a class="code" href="classDbConfiguration.html" title="Contains the configuration parameters for the Vishnu database.">DbConfiguration</a> dbConfig);
+<a name="l00039"></a>00039 
+<a name="l00044"></a>00044   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a>*
+<a name="l00045"></a>00045   <a class="code" href="classDbFactory.html#aaf6d28cd7e9c189ed4574de3f9a49370" title="Get the single instance of the database.">getDatabaseInstance</a>();
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047 <span class="keyword">private</span> :
+<a name="l00051"></a><a class="code" href="classDbFactory.html#a24e38965baa1ac4f84c80d719c47ae9d">00051</a>   <span class="keyword">static</span> <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a>* <a class="code" href="classDbFactory.html#a24e38965baa1ac4f84c80d719c47ae9d" title="The unique instance of the database.">mdb</a>;
+<a name="l00052"></a>00052 };
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="preprocessor">#endif // _DBFACTORY_H_</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:10 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

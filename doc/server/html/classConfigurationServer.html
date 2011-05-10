@@ -50,8 +50,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#a0d37dc5d1d5a5e865f2a28b83fa60840"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a7d414b228146e93359137729e0dc7c08">save</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to save a VISHNU configuration.  <a href="#a7d414b228146e93359137729e0dc7c08"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#afc429d2da8da6523dd5e61ee91fc087c">restore</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to restore a VISHNU configuration.  <a href="#afc429d2da8da6523dd5e61ee91fc087c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#ad77b3755e8b45cd283c6047c36a8a921">restore</a> (int vishnuId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to restore a VISHNU configuration.  <a href="#ad77b3755e8b45cd283c6047c36a8a921"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1c4ad2e0b6be6c2d44beaffe0eb9ec8"></a><!-- doxytag: member="ConfigurationServer::~ConfigurationServer" ref="af1c4ad2e0b6be6c2d44beaffe0eb9ec8" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#af1c4ad2e0b6be6c2d44beaffe0eb9ec8">~ConfigurationServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor. <br/></td></tr>
@@ -59,10 +59,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get <a class="el" href="classConfiguration.html" title="Standard configuration class.">Configuration</a> data structure.  <a href="#ae1ce593072e5a6828128c5c80758604c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a500cedb52aeaa3eb1b1f308783380375">userToSql</a> (UMS_Data::User_ptr user)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of users from a VISHNU configuration.  <a href="#a500cedb52aeaa3eb1b1f308783380375"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a4bafc7113ec51d2e371a9af35881967b">machineToSql</a> (UMS_Data::Machine_ptr machine)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of machines from a VISHNU configuration.  <a href="#a4bafc7113ec51d2e371a9af35881967b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#adfcf50dc485096fe1d109142d0acaaa2">userToSql</a> (UMS_Data::User_ptr user, int vishnuId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of users from a VISHNU configuration.  <a href="#adfcf50dc485096fe1d109142d0acaaa2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a6899508cf595a37a05d90b9efe8c9358">machineToSql</a> (UMS_Data::Machine_ptr machine, int vishnuId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of machines from a VISHNU configuration.  <a href="#a6899508cf595a37a05d90b9efe8c9358"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfigurationServer.html#a10dc6a2581fce8e24144f9f49e08d58f">machineDescToSql</a> (UMS_Data::Machine_ptr machine)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the sql code of machines description from a VISHNU configuration.  <a href="#a10dc6a2581fce8e24144f9f49e08d58f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -190,7 +190,7 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a class="anchor" id="a4bafc7113ec51d2e371a9af35881967b"></a><!-- doxytag: member="ConfigurationServer::machineToSql" ref="a4bafc7113ec51d2e371a9af35881967b" args="(UMS_Data::Machine_ptr machine)" -->
+<a class="anchor" id="a6899508cf595a37a05d90b9efe8c9358"></a><!-- doxytag: member="ConfigurationServer::machineToSql" ref="a6899508cf595a37a05d90b9efe8c9358" args="(UMS_Data::Machine_ptr machine, int vishnuId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -198,9 +198,18 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
           <td class="memname">std::string ConfigurationServer::machineToSql </td>
           <td>(</td>
           <td class="paramtype">UMS_Data::Machine_ptr&nbsp;</td>
-          <td class="paramname"> <em>machine</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td class="paramname"> <em>machine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>vishnuId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -209,7 +218,7 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 <p>Function to get the sql code of machines from a VISHNU configuration. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>machine</em>&nbsp;</td><td>The machine object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -217,14 +226,15 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a class="anchor" id="afc429d2da8da6523dd5e61ee91fc087c"></a><!-- doxytag: member="ConfigurationServer::restore" ref="afc429d2da8da6523dd5e61ee91fc087c" args="()" -->
+<a class="anchor" id="ad77b3755e8b45cd283c6047c36a8a921"></a><!-- doxytag: member="ConfigurationServer::restore" ref="ad77b3755e8b45cd283c6047c36a8a921" args="(int vishnuId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int ConfigurationServer::restore </td>
           <td>(</td>
-          <td class="paramname"></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>vishnuId</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
         </tr>
@@ -233,6 +243,12 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 <div class="memdoc">
 
 <p>Function to restore a VISHNU configuration. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
 
 </div>
@@ -257,7 +273,7 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a class="anchor" id="a500cedb52aeaa3eb1b1f308783380375"></a><!-- doxytag: member="ConfigurationServer::userToSql" ref="a500cedb52aeaa3eb1b1f308783380375" args="(UMS_Data::User_ptr user)" -->
+<a class="anchor" id="adfcf50dc485096fe1d109142d0acaaa2"></a><!-- doxytag: member="ConfigurationServer::userToSql" ref="adfcf50dc485096fe1d109142d0acaaa2" args="(UMS_Data::User_ptr user, int vishnuId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -265,9 +281,18 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
           <td class="memname">std::string ConfigurationServer::userToSql </td>
           <td>(</td>
           <td class="paramtype">UMS_Data::User_ptr&nbsp;</td>
-          <td class="paramname"> <em>user</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td class="paramname"> <em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>vishnuId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -277,6 +302,7 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>The user object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -288,7 +314,7 @@ UMS_Data::Configuration *&nbsp;</td><td class="memItemRight" valign="bottom"><a 
 <li>UMS/src/server/<a class="el" href="ConfigurationServer_8hpp_source.html">ConfigurationServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:40 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:11 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

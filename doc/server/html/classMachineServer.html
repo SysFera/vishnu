@@ -47,8 +47,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#a067dab7512c1882721579dea892a5f8c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#ac65f4c23f95852a0725a0561b276f383">MachineServer</a> (UMS_Data::Machine *&amp;machine, <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#ac65f4c23f95852a0725a0561b276f383"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#ad70b95ea991526066056bf81c016c8fc">add</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add a new VISHNU machine.  <a href="#ad70b95ea991526066056bf81c016c8fc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#a9b8152eefc63abc02a3d15419ce91dd6">add</a> (int vishnuId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to add a new VISHNU machine.  <a href="#a9b8152eefc63abc02a3d15419ce91dd6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#a06dcfd04b484d41b54554978c45b73c8">update</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to update a VISHNU machine.  <a href="#a06dcfd04b484d41b54554978c45b73c8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#a0efa7bde46c67e38e973705363c3d8a1">deleteMachine</a> ()</td></tr>
@@ -62,6 +62,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get machine information from the database vishnu.  <a href="#a14afc6c4424dd26be8cc0843aac3f2f3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#a75c136bdf1d210f19b5794f7c7ccd948">getPublicKey</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the content of the public ssh key.  <a href="#a75c136bdf1d210f19b5794f7c7ccd948"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#a8ae5d6597c53a2507d2f1e63f8b30865">getMachineName</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the machine.  <a href="#a8ae5d6597c53a2507d2f1e63f8b30865"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMachineServer.html#aaf07e7d2fa553c63b75e2b6e9aaf762e">checkMachine</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the machineId.  <a href="#aaf07e7d2fa553c63b75e2b6e9aaf762e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48d96e37c0b86de1627eabfab0a16f3a"></a><!-- doxytag: member="MachineServer::mmachine" ref="a48d96e37c0b86de1627eabfab0a16f3a" args="" -->
@@ -143,12 +147,39 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad70b95ea991526066056bf81c016c8fc"></a><!-- doxytag: member="MachineServer::add" ref="ad70b95ea991526066056bf81c016c8fc" args="()" -->
+<a class="anchor" id="a9b8152eefc63abc02a3d15419ce91dd6"></a><!-- doxytag: member="MachineServer::add" ref="a9b8152eefc63abc02a3d15419ce91dd6" args="(int vishnuId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int MachineServer::add </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>vishnuId</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to add a new VISHNU machine. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>vishnuId</em>&nbsp;</td><td>The identifier of the vishnu instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aaf07e7d2fa553c63b75e2b6e9aaf762e"></a><!-- doxytag: member="MachineServer::checkMachine" ref="aaf07e7d2fa553c63b75e2b6e9aaf762e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MachineServer::checkMachine </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -158,8 +189,8 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div>
 <div class="memdoc">
 
-<p>Function to add a new VISHNU machine. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+<p>Function to check the machineId. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception </dd></dl>
 
 </div>
 </div>
@@ -240,6 +271,26 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a class="anchor" id="a8ae5d6597c53a2507d2f1e63f8b30865"></a><!-- doxytag: member="MachineServer::getMachineName" ref="a8ae5d6597c53a2507d2f1e63f8b30865" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string MachineServer::getMachineName </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to get the machine. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The name of the machine </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a75c136bdf1d210f19b5794f7c7ccd948"></a><!-- doxytag: member="MachineServer::getPublicKey" ref="a75c136bdf1d210f19b5794f7c7ccd948" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +335,7 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <li>UMS/src/server/<a class="el" href="MachineServer_8hpp_source.html">MachineServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:57:41 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:12 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
