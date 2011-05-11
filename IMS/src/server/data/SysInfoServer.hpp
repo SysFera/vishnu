@@ -25,6 +25,7 @@ public:
   /**
    * \brief Constructor
    * \param session: A session to use for the call
+   * \param op: The option of the sysinfo
    */
   SysInfoServer(const UserServer session, IMS_Data::SysInfoOp op);
   /**
@@ -33,6 +34,7 @@ public:
   ~SysInfoServer();
   /**
    * \brief To get system information
+   * \return A list of system info
    */
   IMS_Data::ListSysInfo_ptr
   getSysInfo();
