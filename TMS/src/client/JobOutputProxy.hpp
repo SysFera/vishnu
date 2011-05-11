@@ -1,6 +1,6 @@
 /**
-* \file JobOutPutProxy.hpp
-* \brief This file contains the VISHNU JobOutPutProxy class.
+* \file JobOutputProxy.hpp
+* \brief This file contains the VISHNU JobOutputProxy class.
 * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
 * \date March 2011
 */
@@ -13,24 +13,23 @@
 #include "MachineProxy.hpp"
 
 /**
- * \class JobOutPutProxy
- * \brief JobOutPutProxy class implementation
+ * \class JobOutputProxy
+ * \brief JobOutputProxy class implementation
  */
 
-class JobOutPutProxy {
+class JobOutputProxy {
 
 public:
 
   /**
   * \param session The object which encapsulates the session information
-  * \param machine The object which encapsulates the machine information
-  * \param jobResult The job results data structure
+  * \param machineId The machine identifier where has been submitted
   * \param outDir The output directory where the files will be stored 
   * (default is current directory) 
   * \brief Constructor, raises an exception on error
   */
 	explicit
-	JobOutPutProxy( const SessionProxy& session,
+	JobOutputProxy( const SessionProxy& session,
                   const std::string& machineId,
                   const std::string& outDir);
 
@@ -53,7 +52,7 @@ public:
   /**
   * \brief Destructor, raises an exception on error
   */
-  ~JobOutPutProxy();
+  ~JobOutputProxy();
 
 private:
 
@@ -70,6 +69,9 @@ private:
   */
   std::string mmachineId;
 
+  /**
+  * \brief The output directory where the files will be stored
+  */ 
   std::string moutDir;
 };
 

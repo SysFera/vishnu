@@ -30,8 +30,8 @@ static const char* SERVICES[NB_SRV] = {
   "getListOfJobs_",
   "getJobsProgression_",
   "getListOfQueues_",
-  "jobOutPutGetResult_",
-  "jobOutPutGetAllResult_"
+  "jobOutputGetResult_",
+  "jobOutputGetCompletedJobs_"
 };
 
 /**
@@ -52,7 +52,6 @@ public :
 
   /**
    * \brief to get the VishnuId
-   * \fn int getvishnuid()
    * \return the path of the configuration file
    */
   int
@@ -85,6 +84,7 @@ public :
    * \param machineId the id of the machine
    * \param batchType the type of batch scheduler
    * \param slaveBinDir  the directory that contains the slave binary
+   * \return raises an exception on error
    */
   int
   init(int vishnuId,
@@ -95,7 +95,6 @@ public :
 
   /**
    * \brief Destructor, raises an exception on error
-   * \fn ~ServerTMS()
    */
   ~ServerTMS();
 

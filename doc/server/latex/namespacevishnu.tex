@@ -137,21 +137,17 @@ time\_\-t \hyperlink{namespacevishnu_a912b9d87fc92812a07bb7f6dce8dcb85}{convertU
 \begin{DoxyCompactList}\small\item\em Function to convert UTC time into localtime (seconds). \item\end{DoxyCompactList}\item 
 time\_\-t \hyperlink{namespacevishnu_a7607f0891ab382dcb2343a36d9b25190}{convertLocaltimeINUTCtime} (const time\_\-t \&localtime)
 \begin{DoxyCompactList}\small\item\em Function to localtime into UTC (seconds). \item\end{DoxyCompactList}\item 
-\hypertarget{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}{
-void {\bfseries createTmpFile} (char $\ast$fileName, const std::string \&file\_\-content)}
-\label{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}
+void \hyperlink{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}{createTmpFile} (char $\ast$fileName, const std::string \&file\_\-content)
+\begin{DoxyCompactList}\small\item\em Function to create temporary file. \item\end{DoxyCompactList}\item 
+void \hyperlink{namespacevishnu_a18002572e5b0039069544475365f335d}{createTmpFile} (char $\ast$fileName)
+\begin{DoxyCompactList}\small\item\em Function to create temporary file. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_adccbbcf352ca9471d210e9d801c73e2d}{deleteFile} (const char $\ast$fileName)
+\begin{DoxyCompactList}\small\item\em Function to delete file. \item\end{DoxyCompactList}\item 
+\hypertarget{namespacevishnu_ab0ea8ccb86c430f6a602374c82f66d2e}{
+void \hyperlink{namespacevishnu_ab0ea8ccb86c430f6a602374c82f66d2e}{printSuccessMessage} ()}
+\label{namespacevishnu_ab0ea8ccb86c430f6a602374c82f66d2e}
 
-\item 
-\hypertarget{namespacevishnu_a18002572e5b0039069544475365f335d}{
-void {\bfseries createTmpFile} (char $\ast$fileName)}
-\label{namespacevishnu_a18002572e5b0039069544475365f335d}
-
-\item 
-\hypertarget{namespacevishnu_adccbbcf352ca9471d210e9d801c73e2d}{
-int {\bfseries deleteFile} (const char $\ast$fileName)}
-\label{namespacevishnu_adccbbcf352ca9471d210e9d801c73e2d}
-
-\item 
+\begin{DoxyCompactList}\small\item\em Function to print success message. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ac58b058a6a467a21f7eb21192617c90f}{connect} (const std::string \&userId, const std::string \&password, UMS\_\-Data::Session \&session, const UMS\_\-Data::ConnectOptions \&connectOpt=UMS\_\-Data::ConnectOptions())  throw (UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em Function to open a session. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_ae120231ba899d68724dc972374206745}{reconnect} (const std::string \&userId, const std::string \&password, const std::string \&sessionId, UMS\_\-Data::Session \&session)  throw (UserException, SystemException)
@@ -217,17 +213,11 @@ int \hyperlink{namespacevishnu_a4461c3e9d86e9c507436655056a1b660}{getJobInfo} (c
 \begin{DoxyCompactList}\small\item\em The getJobInfo function gets information on a job from its id. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a6244690b88aff21355c382318bffff14}{listJobs} (const std::string \&sessionKey, const std::string \&machineId, ListJobs \&listOfJobs, const ListJobsOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The listJobs function gets a list of all submitted jobs. \item\end{DoxyCompactList}\item 
-\hypertarget{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}{
-int {\bfseries getJobProgress} (const std::string \&sessionKey, const std::string \&machineId, ListProgression \&listOfProgress, const ProgressOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)}
-\label{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}
-
-\item 
-\hypertarget{namespacevishnu_ada2d98155cffa475261261fb33f7e873}{
-int {\bfseries listQueues} (const std::string \&sessionKey, const std::string \&machineId, ListQueues \&listofQueues, const std::string \&queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)}
-\label{namespacevishnu_ada2d98155cffa475261261fb33f7e873}
-
-\item 
-int \hyperlink{namespacevishnu_a3704331e613274a94da950cbc50edcb8}{getJobOutput} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId, JobResult \&outputInfos, const std::string \&outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+int \hyperlink{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}{getJobProgress} (const std::string \&sessionKey, const std::string \&machineId, ListProgression \&listOfProgress, const ProgressOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em The getJobProgress function gets the progression status of jobs. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ada2d98155cffa475261261fb33f7e873}{listQueues} (const std::string \&sessionKey, const std::string \&machineId, ListQueues \&listofQueues, const std::string \&queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em The listQueues function gets queues information. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6e0b3df33a91bd16cdadf3ac428fcf0e}{getJobOutput} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId, JobResult \&outputInfo, const std::string \&outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The getJobOutput function gets outputPath and errorPath of a job from its id. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_aaedc4b5676f0c8e47f333316cff0b0a8}{getCompletedJobsOutput} (const std::string \&sessionKey, const std::string \&machineId, ListJobResults \&listOfResults, const std::string \&outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The \hyperlink{namespacevishnu_aaedc4b5676f0c8e47f333316cff0b0a8}{getCompletedJobsOutput()} function gets standard output and error output files of completed jobs (applies only once for each job). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -682,6 +672,39 @@ Function a given walltime into string.
 \begin{DoxyReturn}{Returns}
 the walltime converted to string 
 \end{DoxyReturn}
+\hypertarget{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}{
+\index{vishnu@{vishnu}!createTmpFile@{createTmpFile}}
+\index{createTmpFile@{createTmpFile}!vishnu@{vishnu}}
+\subsubsection[{createTmpFile}]{\setlength{\rightskip}{0pt plus 5cm}void vishnu::createTmpFile (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ fileName, }
+\item[{const std::string \&}]{ file\_\-content}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a33f3fca5bc294663e2863c1abc1da5c8}
+
+
+Function to create temporary file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em fileName}]The name of the file to create \item[{\em file\_\-content}]The content of the file \end{DoxyParams}
+\hypertarget{namespacevishnu_a18002572e5b0039069544475365f335d}{
+\index{vishnu@{vishnu}!createTmpFile@{createTmpFile}}
+\index{createTmpFile@{createTmpFile}!vishnu@{vishnu}}
+\subsubsection[{createTmpFile}]{\setlength{\rightskip}{0pt plus 5cm}void vishnu::createTmpFile (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ fileName}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_a18002572e5b0039069544475365f335d}
+
+
+Function to create temporary file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em fileName}]The name of the file to create \end{DoxyParams}
 \hypertarget{namespacevishnu_a6315b6f5e86d48f4c75dc73d08348edf}{
 \index{vishnu@{vishnu}!cryptPassword@{cryptPassword}}
 \index{cryptPassword@{cryptPassword}!vishnu@{vishnu}}
@@ -702,6 +725,22 @@ To crypt a password.
 \begin{DoxyReturn}{Returns}
 The crypted password 
 \end{DoxyReturn}
+\hypertarget{namespacevishnu_adccbbcf352ca9471d210e9d801c73e2d}{
+\index{vishnu@{vishnu}!deleteFile@{deleteFile}}
+\index{deleteFile@{deleteFile}!vishnu@{vishnu}}
+\subsubsection[{deleteFile}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::deleteFile (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ fileName}
+\end{DoxyParamCaption}
+)}}
+\label{namespacevishnu_adccbbcf352ca9471d210e9d801c73e2d}
+
+
+Function to delete file. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em fileName}]The name of the file to create \end{DoxyParams}
 \hypertarget{namespacevishnu_a2b51028779571b21c45a2a75cd362c59}{
 \index{vishnu@{vishnu}!deleteLocalAccount@{deleteLocalAccount}}
 \index{deleteLocalAccount@{deleteLocalAccount}!vishnu@{vishnu}}
@@ -901,7 +940,7 @@ The getJobInfo function gets information on a job from its id.
 \begin{DoxyReturn}{Returns}
 int : an error code 
 \end{DoxyReturn}
-\hypertarget{namespacevishnu_a3704331e613274a94da950cbc50edcb8}{
+\hypertarget{namespacevishnu_a6e0b3df33a91bd16cdadf3ac428fcf0e}{
 \index{vishnu@{vishnu}!getJobOutput@{getJobOutput}}
 \index{getJobOutput@{getJobOutput}!vishnu@{vishnu}}
 \subsubsection[{getJobOutput}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::getJobOutput (
@@ -909,11 +948,11 @@ int : an error code
 \item[{const std::string \&}]{ sessionKey, }
 \item[{const std::string \&}]{ machineId, }
 \item[{const std::string \&}]{ jobId, }
-\item[{JobResult \&}]{ outputInfos, }
+\item[{JobResult \&}]{ outputInfo, }
 \item[{const std::string \&}]{ outDir = {\ttfamily std::string()}}
 \end{DoxyParamCaption}
 )  throw ({\bf UMSVishnuException}, {\bf TMSVishnuException}, {\bf UserException}, {\bf SystemException})}}
-\label{namespacevishnu_a3704331e613274a94da950cbc50edcb8}
+\label{namespacevishnu_a6e0b3df33a91bd16cdadf3ac428fcf0e}
 
 
 The getJobOutput function gets outputPath and errorPath of a job from its id. 
@@ -921,6 +960,28 @@ The getJobOutput function gets outputPath and errorPath of a job from its id.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em sessionKey}]: The session key \item[{\em machineId}]: The id of the machine \item[{\em jobId}]: The Id of the job \item[{\em outputInfo}]: The Job object containing the job output information (ex: outputPath and errorPath) of the job to submit \item[{\em outDir}]: The output directory where the files will be stored (default is current directory) \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int : an error code 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}{
+\index{vishnu@{vishnu}!getJobProgress@{getJobProgress}}
+\index{getJobProgress@{getJobProgress}!vishnu@{vishnu}}
+\subsubsection[{getJobProgress}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::getJobProgress (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ machineId, }
+\item[{ListProgression \&}]{ listOfProgress, }
+\item[{const ProgressOptions \&}]{ options}
+\end{DoxyParamCaption}
+)  throw ({\bf UMSVishnuException}, {\bf TMSVishnuException}, {\bf UserException}, {\bf SystemException})}}
+\label{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}
+
+
+The getJobProgress function gets the progression status of jobs. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]: The session key \item[{\em machineId}]: Is the id of the machine to get the jobs progression. \item[{\em listOfProgress}]: Is the object containing jobs progression information \item[{\em options}]: Is an object containing the available options jobs for progression . \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 int : an error code 
 \end{DoxyReturn}
@@ -1287,6 +1348,28 @@ Function to list the options of the user.
 \item[{\em sessionKey}]is the encrypted identifier of the session generated by VISHNU \item[{\em listOptValues}]is an object which encapsulates the list of options \item[{\em options}]allows to list a specific option or all default options values or for an admin to list options of a specific user \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
+\end{DoxyReturn}
+\hypertarget{namespacevishnu_ada2d98155cffa475261261fb33f7e873}{
+\index{vishnu@{vishnu}!listQueues@{listQueues}}
+\index{listQueues@{listQueues}!vishnu@{vishnu}}
+\subsubsection[{listQueues}]{\setlength{\rightskip}{0pt plus 5cm}int vishnu::listQueues (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{ sessionKey, }
+\item[{const std::string \&}]{ machineId, }
+\item[{ListQueues \&}]{ listofQueues, }
+\item[{const std::string \&}]{ queueName = {\ttfamily std::string()}}
+\end{DoxyParamCaption}
+)  throw ({\bf UMSVishnuException}, {\bf TMSVishnuException}, {\bf UserException}, {\bf SystemException})}}
+\label{namespacevishnu_ada2d98155cffa475261261fb33f7e873}
+
+
+The listQueues function gets queues information. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em sessionKey}]: The session key \item[{\em machineId}]: The id of the machine \item[{\em listofQueues}]: The list of queues \item[{\em queueName}]The option value, if it is given, listQueues gives information only of this queue \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int : an error code 
 \end{DoxyReturn}
 \hypertarget{namespacevishnu_adaf9c8ca47f577cf1a0c9effe7bd9c52}{
 \index{vishnu@{vishnu}!listSessions@{listSessions}}

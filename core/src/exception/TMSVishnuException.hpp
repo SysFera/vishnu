@@ -31,12 +31,13 @@ class TMSVishnuException: public UserException{
   TMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn TMSVishnuException()
+   * \param e the object to copy
    */
   TMSVishnuException(const TMSVishnuException& e);
   /**
    * \brief Constructor
-   * \fn TMSVishnuException()
+   * \param msg the exception code
+   * \param msgComp The complementary message
    */
   TMSVishnuException(int msg, std::string msgComp= "");
   /**

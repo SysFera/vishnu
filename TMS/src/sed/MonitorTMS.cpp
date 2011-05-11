@@ -1,8 +1,9 @@
 /**
 * \file MonitorTMS.cpp
 * \brief This file presents the implementation of the TMS Monitor
-* \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
-* \date 31/01/2001
+* \authors Daouda Traore (daouda.traore@sysfera.com) and
+* Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+* \date April
 */
 
 #include <boost/scoped_ptr.hpp>
@@ -15,7 +16,6 @@
 
 /**
 * \brief Constructor, raises an exception on error
-* \fn ServerTMS(std::string cfg)
 * \param interval The interval to check the database
 */
 MonitorTMS::MonitorTMS(int interval) {
@@ -36,11 +36,12 @@ MonitorTMS::~MonitorTMS() {
 
 
 /**
-* \brief To initialize the TMS monitor with individual parameters instead of configuration file
-* \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
-* \param vishnuId The password of the root user vishnu_user for the connection with the database
-* \param dbConfig The configuration of the database
-* \return raises an execption
+ * \brief To initialize the TMS monitor with individual parameters instead of configuration file
+ * \param vishnuId The password of the root user vishnu_user for the connection with the database
+ * \param dbConfig The configuration of the database
+ * \param machineId The machine identifier
+ * \param batchType The batch scheduler type
+ * \return raises an execption
 */
 void
 MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& machineId, const BatchType& batchType) {
@@ -70,7 +71,6 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
 
 /**
 * \brief To launch the TMS Monitor
-* \fn int run()
 * \return raises an exception
 */
 int

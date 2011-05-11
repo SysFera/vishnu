@@ -39,7 +39,7 @@ public:
    * \brief To get all the parameters for the C++ API call
    * \fn int parse(const func1 & s)
    * \param s: The environment
-   * \retrun An error code depending on the success of the call
+   * \return An error code depending on the success of the call
    */
   int parse(const func1 & s);
   /**

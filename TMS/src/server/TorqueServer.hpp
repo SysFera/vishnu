@@ -80,6 +80,7 @@ class TorqueServer : public BatchServer
    
     /**
      * \brief Function to cancel job on remote machine
+     * \param jobId The identifier of the job
      * \param remoteServer the name of the remote server
      * \param isLocal is the remoteServer is local
      * \return raises an exception on error
@@ -117,7 +118,6 @@ class TorqueServer : public BatchServer
 
     /**
      * \brief Function To fill the info concerning a job
-     * \fn void fillJobInfo(TMS_Data::Job_ptr job, struct batch_status *p)
      * \param job: The job to fill
      * \param p: The batch status structure containing the job info
      */
@@ -138,7 +138,7 @@ class TorqueServer : public BatchServer
      */
     TMS_Data::ListQueues_ptr mlistQueues; 
     /**
-     * Server to connect
+     * \brief The name of the server to connect
      */
     char serverOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
     /**
