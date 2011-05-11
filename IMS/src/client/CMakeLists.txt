@@ -23,6 +23,7 @@ add_library(ims-client-proxy STATIC
   MetricProxy.cpp
   ObjectIdProxy.cpp
   SysInfoProxy.cpp
+  ThresholdProxy.cpp
 )
 
 target_link_libraries(ims-client-proxy

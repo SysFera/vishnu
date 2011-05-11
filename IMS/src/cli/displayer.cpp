@@ -69,3 +69,54 @@ displayListSysInfo(IMS_Data::ListSysInfo* li) {
     displaySystemInfo(li->getSysInfo().get(i));
   }
 }
+
+
+/**
+ * \brief  function to convert the type of metric into string
+ * \param metricType: The type of metric
+ * \return The converted state value
+ */
+std::string
+convertMetricToString(const int& metricType) {
+
+  switch(metricType) {
+    case -1:
+      return "ALL";
+    case 0:
+      return "UNDEFINED";
+    case 1:
+      return "CPUUSE";
+    case 2:
+      return "DISKSPACE";
+    case 3:
+      return "FREEDISKSPACE";
+    case 4:
+      return "MEMORY";
+    case 5:
+      return "FREEMORY";
+    case 6:
+      return "CPUNBR";
+    default:
+      return "UNDEFINED";
+  }
+}
+
+
+
+void
+displaySystemThreshold(IMS_Data::Threshold* systemThreshold) {
+  cout << " ------------------------ " << endl;
+  cout << " machineId : " << systemThreshold->getMachineId() << endl;
+  cout << " value : " << systemThreshold->getValue() << endl;
+  cout << " handler : " << systemThreshold->getHandler() << endl;
+  cout << " type : " << convertMetricToString(systemThreshold->getType()) << endl;
+}
+
+
+void
+displayListSysThreshold(IMS_Data::ListThreshold* li) {
+  for (unsigned int i = 0 ; i < li->getThreshold().size() ; i++){
+    displaySystemThreshold(li->getThreshold().get(i));
+  }
+}
+

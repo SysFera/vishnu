@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include <string>
-#include "SysInfoProxy.hpp"
+#include "ThresholdProxy.hpp"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "QueryProxy.hpp"
@@ -12,24 +12,24 @@ using namespace vishnu;
 * \param session The object which encapsulates the session information
 * \brief Constructor
 */
-SysInfoProxy::SysInfoProxy(const SessionProxy& session): msessionProxy(session) {
+ThresholdProxy::ThresholdProxy(const SessionProxy& session): msessionProxy(session) {
 }
 
 
 /**
-* \brief Function to set a system information
-* \param systemInfo the system information
+* \brief Function to set a system threshold
+* \param systemThreshold the system threshold
 * \return raises an exception on error
 */
 void
-SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
+ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* errorInfo = NULL;
-  std::string systemInfoToString;
+  std::string objectToString;
 
-  std::string serviceName = "int_setSystemInfo";
+  std::string serviceName = "int_setSystemThreshold";
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
@@ -41,12 +41,12 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  const char* name = "setSystemInfo";
+  const char* name = "setSystemThreshold";
   ::ecorecpp::serializer::serializer _ser(name);
   //To serialize the options object in to optionsInString
-  systemInfoToString =  strdup(_ser.serialize(const_cast<IMS_Data::SystemInfo_ptr>(&systemInfo)).c_str());
+  objectToString =  strdup(_ser.serialize(const_cast<IMS_Data::Threshold_ptr>(&systemThreshold)).c_str());
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(systemInfoToString.c_str()),  DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), strdup(objectToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -70,29 +70,29 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   diet_profile_free(profile);
 }
 
- /**
-* \brief Function to get a system information
-* \param options the options data structure to get system information
-* \param listSysInfo the list of system information returned
+/**
+* \brief Function to get a system threshold
+* \param options the options data structure to get system threshold
+* \param listSysThreshold the list of system threshold returned
 * \return raises an exception on error
 */
 int
-SysInfoProxy::getSystemInfo(IMS_Data::ListSysInfo& listSysInfo,
-                            const IMS_Data::SysInfoOp& options) {
+ThresholdProxy::getSystemThreshold(IMS_Data::ListThreshold& listSysThreshold,
+                   const IMS_Data::ThresholdOp& options) {
 
-  std::string name = "int_getSystemInfo";
-  QueryProxy<IMS_Data::SysInfoOp, IMS_Data::ListSysInfo>
+  std::string name = "int_getSystemThreshold";
+  QueryProxy<IMS_Data::ThresholdOp, IMS_Data::ListThreshold>
   query(options, msessionProxy, name);
 
-  IMS_Data::ListSysInfo_ptr li = query.list();
+  IMS_Data::ListThreshold_ptr li = query.list();
 
   if(li != NULL) {
     IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
-    for(unsigned int i = 0; i < li->getSysInfo().size(); i++) {
-      IMS_Data::SystemInfo_ptr systemInfo = ecoreFactory->createSystemInfo();
+    for(unsigned int i = 0; i < li->getThreshold().size(); i++) {
+      IMS_Data::Threshold_ptr threshold = ecoreFactory->createThreshold();
        //To copy the content and not the pointer
-      *systemInfo = *li->getSysInfo().get(i);
-      listSysInfo.getSysInfo().push_back(systemInfo);
+      *threshold = *li->getThreshold().get(i);
+      listSysThreshold.getThreshold().push_back(threshold);
     }
     delete li;
   }
@@ -102,6 +102,6 @@ SysInfoProxy::getSystemInfo(IMS_Data::ListSysInfo& listSysInfo,
 /**
 * \brief Destructor
 */
-SysInfoProxy::~SysInfoProxy() {
-}
+ThresholdProxy::~ThresholdProxy() {
 
+}
