@@ -1,9 +1,8 @@
 /**
- * \file get_system_info.cpp
+ * \file set_system_threshold.cpp
  * This file defines the VISHNU command to get the metric history
  * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
-
 
 
 #include "CLICmd.hpp"
@@ -13,34 +12,9 @@
 #include "api_ums.hpp"
 #include "api_ims.hpp"
 #include "sessionUtils.hpp"
-#include <boost/bind.hpp>
-#include "displayer.hpp"
-
 
 using namespace std;
 using namespace vishnu;
-
-boost::shared_ptr<Options>
-makeGetystemInfoOpt(string pgName,
-                  boost::function1<void, string>& fMachineId,
-                  string& dietConfig) {
-
-  boost::shared_ptr<Options> opt(new Options(pgName));
-
-  // Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-   opt->add("machineId,m",
-            "represents the id of the machine",
-            CONFIG,
-            fMachineId);
-
-  return opt;
-}
-
 
 int main (int argc, char* argv[]){
 
@@ -49,33 +23,70 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
-
+  string machineId;
+  string handler;
+  int value;
+  IMS_Data::MetricType type;
    /********** EMF data ************/
-  IMS_Data::SysInfoOp sysInfoOp;
-
-  /******** Callback functions ******************/
-  boost::function1<void,string> fMachineId (boost::bind(&IMS_Data::SysInfoOp::setMachineId,boost::ref(sysInfoOp),_1));
-
-  /*********** Out parameters *********************/
-  IMS_Data::ListSysInfo listSysInfo;
+  IMS_Data::Threshold systemThreshold;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeGetystemInfoOpt(argv[0], fMachineId, dietConfig);
+
+
+  /**************** Describe options *************/
+  boost::shared_ptr<Options> opt(new Options(argv[0]));
+
+  //Environement option
+  opt->add("dietConfig,c",
+           "The diet config file",
+           ENV,
+           dietConfig);
+
+  opt->add("machineId,i",
+            "represents the id of the machine",
+            HIDDEN,
+            machineId,1);
+  opt->setPosition("machineId",1);
+
+  opt->add("value,v",
+            "represents the value of the threshold",
+            HIDDEN,
+            value,1);
+  opt->setPosition("value",1);
+
+  opt->add("type,t",
+            "represents the type of the threshold",
+            HIDDEN,
+            type,1);
+  opt->setPosition("type",1);
+
+  opt->add( "handler,u",
+            "represents the userId of the administrator that handles the threshold",
+            HIDDEN,
+            handler,1);
+  opt->setPosition("handler",1);
+
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
 
+  //To set the corresponding values to the object systemThreshold
+  systemThreshold.setMachineId(machineId);
+  systemThreshold.setValue(value);
+  systemThreshold.setType(type);
+  systemThreshold.setHandler(handler);
+
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] ");
+    helpUsage(*opt,"machineId value type handler");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options]");
+    helpUsage(*opt,"machineId value type handler");
     return 0;
   }
 
@@ -93,8 +104,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getSystemInfo(sessionKey, listSysInfo, sysInfoOp);
-      displayListSysInfo(&listSysInfo);
+      setSystemThreshold(sessionKey, systemThreshold);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";

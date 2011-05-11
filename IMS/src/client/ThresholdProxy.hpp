@@ -1,22 +1,22 @@
 /**
-  * \file SysInfoProxy.hpp
+  * \file ThresholdProxy.hpp
   * \brief This file contains the VISHNU SysInfoProxy class.
   * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
   * \date March 2011
   */
 
-#ifndef _SYSINFO_PROXY_H
-#define _SYSINFO_PROXY_H
+#ifndef _THRESHOLD_PROXY_H
+#define _THRESHOLD_PROXY_H
 
 #include "IMS_Data.hpp"
 #include "SessionProxy.hpp"
 #include "MachineProxy.hpp"
 
 /**
- * \class SysInfoProxy
- * \brief SysInfoProxy class implementation
+ * \class ThresholdProxy
+ * \brief ThresholdProxy class implementation
  */
-class SysInfoProxy {
+class ThresholdProxy {
 
   public:
 
@@ -24,30 +24,30 @@ class SysInfoProxy {
   * \param session The object which encapsulates the session information
   * \brief Constructor
   */
-  explicit SysInfoProxy(const SessionProxy& session);
+  explicit ThresholdProxy(const SessionProxy& session);
 
  /**
-  * \brief Function to set a system information
-  * \param systemInfo the system information
+  * \brief Function to set a system threshold
+  * \param systemThreshold the system threshold
   * \return raises an exception on error
   */
   void
-  setSystemInfo(IMS_Data::SystemInfo systemInfo);
+  setSystemThreshold(IMS_Data::Threshold systemThreshold);
 
   /**
-  * \brief Function to get a system information
-  * \param options the options data structure to get system information
-  * \param listSysInfo the list of system information returned
+  * \brief Function to get a system threshold
+  * \param options the options data structure to get system threshold
+  * \param listSysThreshold the list of system threshold returned
   * \return raises an exception on error
   */
   int
-  getSystemInfo(IMS_Data::ListSysInfo& listSysInfo,
-                const IMS_Data::SysInfoOp& options);
+  getSystemThreshold(IMS_Data::ListThreshold& listSysThreshold,
+                const IMS_Data::ThresholdOp& options);
 
   /**
     * \brief Destructor, raises an exception on error
     */
-  ~SysInfoProxy();
+  ~ThresholdProxy();
 
   private:
 
@@ -59,6 +59,5 @@ class SysInfoProxy {
   * \brief The object to manipulate the session data
   */
   SessionProxy msessionProxy;
-
 };
-#endif //_SYSINFO_PROXY_H
+#endif //_THRESHOLD_PROXY_H
