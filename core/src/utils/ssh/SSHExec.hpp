@@ -23,12 +23,8 @@ public:
           const std::string& userName,
           const std::string& password, const std::string& publicKey,
           const std::string& privateKey);
-  
-  const int& getLastExecStatus() const;
-  
-  std::pair<std::string, std::string> exec(const std::string& cmd) const;
-  void copyFrom(const std::string& file, const std::string& src) const;
-  void copyTo(const std::string& file, const std::string& dest) const;
+
+  SSHResult* exec(const std::string& cmd) const;
 };
 
 #endif // end sshexec
