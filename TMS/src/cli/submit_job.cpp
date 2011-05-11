@@ -174,6 +174,7 @@ int main (int argc, char* argv[]){
       submitJob(sessionKey, machineId, scriptPath, job, subOp);
     }
     displaySubmit(job);
+    printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);
