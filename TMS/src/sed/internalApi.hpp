@@ -1,5 +1,5 @@
 /**
-* \file internalAPI.hpp
+* \file internalApi.hpp
 * \brief This file presents the the implementation of the TMS internalAPI.
 * \author Daouda Traore (daouda.traore@sysfera.com)
 * \date April
