@@ -186,6 +186,8 @@ std::string convertJobStateToString(const int& state) {
       return "TERMINATED";
     case 6:
       return "CANCELLED";
+    case 7:
+      return "DOWNLOADED";
     default:
       return "UNDEFINED"; 
   }

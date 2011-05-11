@@ -121,6 +121,7 @@
       <resultCodes name="ERRCODE_ALREADY_TERMINATED" description="The job is already terminated" value="105"/>
       <resultCodes name="ERRCODE_ALREADY_CANCELED" description="The job is already canceled" value="106"/>
       <resultCodes name="ERRCODE_JOB_IS_NOT_TERMINATED" description="The job is not terminated" value="107"/>
+      <resultCodes name="ERRCODE_ALREADY_DOWNLOADED" description="The job is already downloaded" value="108"/>
     </resultCodeList>
   </modules>
   <envVariableList>

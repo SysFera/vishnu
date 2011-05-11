@@ -93,6 +93,9 @@ JobOutputServer::getJobOutput() {
     if(status==6) {
       throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
     }
+    if(status==7) {
+      throw TMSVishnuException(ERRCODE_ALREADY_DOWNLOADED);
+    }
   } else {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -116,6 +119,9 @@ JobOutputServer::getJobOutput() {
 
     mjobResult.setOutputPath(std::string(copyOfOutputPath));
     mjobResult.setErrorPath(std::string(copyOfErrorPath));
+
+    std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+mjobResult.getJobId()+"'";
+    mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
   } else {
       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -196,6 +202,9 @@ JobOutputServer::getCompletedJobsOutput() {
           out->setErrorPath(std::string(copyOfErrorPath));
 
           mlistJobsResult->getResults().push_back(out);
+
+          std::string sqlUpdatedRequest = "UPDATE job SET status=7 where jobId='"+jobId+"'";
+          mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
         } else {
           vishnu::deleteFile(copyOfOutputPath);
           vishnu::deleteFile(copyOfErrorPath); 

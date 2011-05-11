@@ -122,10 +122,3 @@ operator<<(std::ostream& os, ListJobs& listJobs);
 std::ostream&
 operator<<(std::ostream& os, ListProgression& listProgress);
 
-/**
- * \brief Function to print success message 
- */
-inline void printSuccessMessage() {
-  std::cout << "The service was performed successfully" << std::endl;
-}
-
