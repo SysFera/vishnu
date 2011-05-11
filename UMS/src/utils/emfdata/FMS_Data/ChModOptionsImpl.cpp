@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * FMS_Data/chModOptionsImpl.cpp
+ * FMS_Data/ChModOptionsImpl.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "chModOptions.hpp"
+#include "ChModOptions.hpp"
 #include <FMS_Data/FMS_DataPackage.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -28,18 +28,18 @@
 
 using namespace ::FMS_Data;
 
-/*PROTECTED REGION ID(chModOptionsImpl.cpp) START*/
+/*PROTECTED REGION ID(ChModOptionsImpl.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
-void chModOptions::_initialize()
+void ChModOptions::_initialize()
 {
     // Supertypes
 
     // Rerefences
 
-    /*PROTECTED REGION ID(chModOptionsImpl__initialize) START*/
+    /*PROTECTED REGION ID(ChModOptionsImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -49,7 +49,7 @@ void chModOptions::_initialize()
 
 
 // EObject
-::ecore::EJavaObject chModOptions::eGet(::ecore::EInt _featureID,
+::ecore::EJavaObject ChModOptions::eGet(::ecore::EInt _featureID,
         ::ecore::EBoolean _resolve)
 {
     ::ecore::EJavaObject _any;
@@ -65,7 +65,7 @@ void chModOptions::_initialize()
     throw "Error";
 }
 
-void chModOptions::eSet(::ecore::EInt _featureID,
+void ChModOptions::eSet(::ecore::EInt _featureID,
         ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
@@ -81,7 +81,7 @@ void chModOptions::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-::ecore::EBoolean chModOptions::eIsSet(::ecore::EInt _featureID)
+::ecore::EBoolean ChModOptions::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -93,7 +93,7 @@ void chModOptions::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-void chModOptions::eUnset(::ecore::EInt _featureID)
+void ChModOptions::eUnset(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -102,7 +102,7 @@ void chModOptions::eUnset(::ecore::EInt _featureID)
     throw "Error";
 }
 
-::ecore::EClass_ptr chModOptions::_eClass()
+::ecore::EClass_ptr ChModOptions::_eClass()
 {
     static ::ecore::EClass_ptr
             _eclass =

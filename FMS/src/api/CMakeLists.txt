@@ -8,8 +8,8 @@ INCLUDE_DIRECTORIES(
   ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_DATA_DIR}
-  ${TMS_EMF_DATA_DIR}
-  ${TMS_DATA_DIR}
+  ${FMS_EMF_DATA_DIR}
+  ${FMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${CLIENT_PROXY_SOURCE_DIR}
@@ -30,7 +30,8 @@ TARGET_LINK_LIBRARIES(vishnu-fms-api
   emf4cpp-UMS_Data
   exception-vishnu
   ums-client-proxy
-  fms-client-proxy
+  #  fms-client-proxy
+  emf4cpp-FMS_Data # FIXME when fms-client-proxy will be available
   utils-vishnu
 )
 
