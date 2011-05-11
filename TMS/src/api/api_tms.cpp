@@ -12,7 +12,6 @@
 
 /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
-  * \fn int submitJob(const std::string& sessionKey, const std::string& machineId, const std::string& scriptFilePath, Job& jobInfo, const SubmitOptions& options)
   * \param sessionKey : The session key
   * \param machineId : Is the id of the machine on which the job must be submitted
   * \param scriptFilePath : The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.
@@ -49,7 +48,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 /**
 * \brief The cancelJob function cancels a job from its id
-* \fn int cancelJob(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, std::string& infoMsg)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param jobId : The Id of the job
@@ -77,7 +75,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 /**
 * \brief The listJobs function gets a list of all submitted jobs
 bInfo function gets information on a job from its id
-* \fn int getJobInfo(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, Job& jobInfos)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param jobId : The id of the job
@@ -106,7 +103,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 /**
 * \brief The listJobs function gets a list of all submitted jobs
-* \fn int listJobs(const std::string& sessionKey, const std::string& machineId, ListJobs& listOfJobs, const ListJobsOptions& options)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param listOfJobs : The constructed object list of jobs
@@ -153,7 +149,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 /**
 * \brief The getJobProgress function gets the progression status of jobs
-* \fn int getJobProgress(const std::string& sessionKey, const std::string& machineId, Progression& progress, const ProgressOptions& options)
 * \param sessionKey : The session key
 * \param machineId : Is the id of the machine to get the jobs progression.
 * \param listOfProgress : Is the object containing jobs progression information
@@ -193,7 +188,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 /**
 * \brief The listQueues function gets queues information
-* \fn int listQueues(const std::string& sessionKey, const std::string& machineId, ListQueues& listofQueues)
 * \param sessionKey : The session key
 * \param machineId : The id of the machine
 * \param listofQueues : The list of queues
@@ -245,7 +239,7 @@ int
 vishnu::getJobOutput(const std::string& sessionKey,
               const std::string& machineId,
               const std::string& jobId,
-              JobResult& outputInfos,
+              JobResult& outputInfo,
               const std::string& outDir)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
@@ -254,9 +248,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   }
 
   SessionProxy sessionProxy(sessionKey);
-  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId, outDir);
+  JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
 
-  outputInfos = jobOutPutProxy.getJobOutPut(jobId);
+  outputInfos = jobOutputProxy.getJobOutPut(jobId);
 
   return 0;
 }
@@ -283,9 +277,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   JobResult outputInfos;
-  JobOutPutProxy jobOutPutProxy(sessionProxy, machineId, outDir);
+  JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
 
-  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutPutProxy.getAllJobsOutPut();
+  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutputProxy.getAllJobsOutPut();
 
   if(listJobResults_ptr != NULL) {
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();

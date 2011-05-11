@@ -189,10 +189,23 @@ namespace vishnu {
     */
    time_t convertLocaltimeINUTCtime(const time_t& localtime);
 
+   /**
+    * \brief Function to create temporary file
+    * \param fileName The name of the file to create
+    * \param file_content The content of the file
+    */ 
    void createTmpFile(char* fileName, const std::string& file_content);
 
+   /**
+    * \brief Function to create temporary file
+    * \param fileName The name of the file to create
+    */
    void createTmpFile(char* fileName);
 
+   /**
+    * \brief Function to delete file
+    * \param fileName The name of the file to create
+    */
    int deleteFile(const char* fileName);
 
    /**

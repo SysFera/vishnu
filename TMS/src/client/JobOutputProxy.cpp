@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "JobOutPutProxy.hpp"
+#include "JobOutputProxy.hpp"
 #include "utilClient.hpp"
 #include "DIET_Dagda.h"
 #include <boost/filesystem.hpp>
@@ -17,7 +17,7 @@ using namespace vishnu;
 * (default is current directory)
 * \brief Constructor
 */
-JobOutPutProxy::JobOutPutProxy( const SessionProxy& session,
+JobOutputProxy::JobOutputProxy( const SessionProxy& session,
                   const std::string& machineId,
                   const std::string& outDir)
 :msessionProxy(session), mmachineId(machineId), moutDir(outDir) {
@@ -30,7 +30,7 @@ JobOutPutProxy::JobOutPutProxy( const SessionProxy& session,
 */
 //TMS_Data::JobResult_ptr
 TMS_Data::JobResult
-JobOutPutProxy::getJobOutPut(const std::string& jobId) {
+JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
@@ -47,7 +47,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 
   jobResult.setJobId(jobId);
 
-  std::string serviceName = "jobOutPutGetResult_";
+  std::string serviceName = "jobOutputGetResult_";
   serviceName.append(mmachineId);
 
   profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
@@ -150,7 +150,7 @@ JobOutPutProxy::getJobOutPut(const std::string& jobId) {
 */
 //TODO: faire un try catch Vishnu exception pour nettoyer l'id Dadga dans le catch puis throw e;
 TMS_Data::ListJobResults_ptr
-JobOutPutProxy::getAllJobsOutPut() {
+JobOutputProxy::getAllJobsOutPut() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* listJobResultInString = NULL;
@@ -160,7 +160,7 @@ JobOutPutProxy::getAllJobsOutPut() {
   char* IDContainer = NULL;
   diet_container_t content;
 
-  std::string serviceName = "jobOutPutGetAllResult_";
+  std::string serviceName = "jobOutputGetCompletedJobs_";
   serviceName.append(mmachineId);
 
   profile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
@@ -266,5 +266,5 @@ JobOutPutProxy::getAllJobsOutPut() {
 * \brief Destructor
 */
 
-JobOutPutProxy::~JobOutPutProxy() {
+JobOutputProxy::~JobOutputProxy() {
 }

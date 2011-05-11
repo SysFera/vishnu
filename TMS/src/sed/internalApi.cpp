@@ -1,5 +1,5 @@
 /**
- * \file internalTMSAPI.cpp
+ * \file TMS/src/sed/internalApi.cpp
  * \brief This file contains the VISHNU internal TMS API function.
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April 2011
@@ -43,10 +43,11 @@ namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 using namespace std;
 using namespace vishnu;
 
-/*
- * SOLVE FUNCTIONS
+/**
+ * \brief Function to solve the jobSubmit service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
  */
-/* submitJob */
 int
 solveSubmitJob(diet_profile_t* pb) {
 
@@ -119,7 +120,11 @@ solveSubmitJob(diet_profile_t* pb) {
   return 0;
 }
 
-/* cancelJob */
+/**
+ * \brief Function to solve the jobCancel service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveCancelJob(diet_profile_t* pb) {
 
@@ -171,7 +176,7 @@ solveCancelJob(diet_profile_t* pb) {
 }
 
 /**
- * \brief Function to solve the service solveGenerique
+ * \brief Function to solve the jobInfo service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -235,11 +240,11 @@ solveJobInfo(diet_profile_t* pb) {
   return 0;
 }
 
-
-/*
- * SOLVE FUNCTIONS
+/**
+ * \brief Function to solve the getListOfQueues service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
  */
-/* listQueues */
 int
 solveListOfQueues(diet_profile_t* pb) {
 
@@ -295,8 +300,11 @@ solveListOfQueues(diet_profile_t* pb) {
   return 0;
 }
 
-
-/* jobOutPutGetResult */
+/**
+ * \brief Function to solve the jobOutPutGetResult service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveJobOutPutGetResult(diet_profile_t* pb) {
 
@@ -382,11 +390,10 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 }
 
 /**
-* \brief Function to solve the service solveGenerique
-* \fn int solveGenerique(diet_profile_t* pb)
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
+ * \brief Function to solve the generic query service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 template <class QueryParameters, class List, class QueryType>
 int
 solveGenerique(diet_profile_t* pb) {
@@ -454,18 +461,31 @@ solveGenerique(diet_profile_t* pb) {
   return 0;
 }
 
-
+/**
+ * \brief Function to solve the getListOfJobs service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveGetListOfJobs(diet_profile_t* pb) {
   return solveGenerique<TMS_Data::ListJobsOptions, TMS_Data::ListJobs, ListJobServer >(pb);
 }
 
+/**
+ * \brief Function to solve the getJobsProgression service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveGetListOfJobsProgression(diet_profile_t* pb) {
   return solveGenerique<TMS_Data::ProgressOptions, TMS_Data::ListProgression, ListProgressServer >(pb);
 }
 
-/* JobOutPutGetCompletedJobsOutput */
+/**
+ * \brief Function to solve the jobOutputGetCompletedJobs service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 

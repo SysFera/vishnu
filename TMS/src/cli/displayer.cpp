@@ -7,6 +7,10 @@
 using namespace std;
 using namespace vishnu;
 
+/**
+ * \brief To display the output of all job
+ * \param j: the list of jobs output to display
+ */
 void 
 displayAllJobOutput(TMS_Data::ListJobResults& j){
   for (unsigned int i = 0 ; i < j.getResults().size() ; i++){
@@ -17,6 +21,10 @@ displayAllJobOutput(TMS_Data::ListJobResults& j){
   cout << endl;
 }
 
+/**
+ * \brief To display the output of a job
+ * \param j: the job output result
+ */
 void 
 displayJobOutput(TMS_Data::JobResult_ptr j){
   cout << " ------------------------ " << endl;
@@ -26,6 +34,11 @@ displayJobOutput(TMS_Data::JobResult_ptr j){
   cout << endl;
 }
 
+/**
+ * \brief To display the job info
+ * \fn void displayJob(Job& j)
+ * \param j: The job to display the info
+ */
 void 
 displayJob(TMS_Data::Job& j){
 
@@ -68,6 +81,11 @@ displayJob(TMS_Data::Job& j){
   cout << endl;
 }
 
+/**
+ * \brief To display the job info in a list
+ * \fn void displayJobProgress(ListProgression& j)
+ * \param j: The progression to display the info
+ */
 void 
 displayJobProgress(ListProgression& j){
   for (unsigned int i = 0 ; i < j.getProgress().size() ; i++){
@@ -75,6 +93,11 @@ displayJobProgress(ListProgression& j){
   }
 }
 
+/**
+ * \brief To display the job info
+ * \fn void displayJobProgress(Progression& p)
+ * \param p: The progression to display the info
+ */
 void
 displayProgress(Progression& p){
 
@@ -101,11 +124,11 @@ displayProgress(Progression& p){
   cout << endl;
 }
 
-void 
-displayRefreshPeriod(int& j){
-  cout << "The refresh period is " << j << " seconds " << endl;
-}
-
+/**
+ * \brief To display the list of jobs
+ * \fn void displayListJobs(ListJobs& j)
+ * \param j: The list of job to display 
+ */
 void 
 displayListJobs(ListJobs& j){
   for (unsigned int i = 0 ; i < j.getJobs().size() ; i++){
@@ -113,14 +136,23 @@ displayListJobs(ListJobs& j){
   }  
 }
 
-void 
+/**
+ * \brief To display the queues info
+ * \fn void displayQueues(ListQueues& j)
+ * \param j: The list of queues to display the info
+ */
+void
 displayQueues(ListQueues& j){
-  for (unsigned int i = 0 ; i < j.getQueues().size() ; i++){
+ for (unsigned int i = 0 ; i < j.getQueues().size() ; i++){
     displayQueue(*(j.getQueues().get(i)));
-  }  
-}
+  }
+};
 
-
+/**
+ * \brief To display the info about a queue
+ * \fn void displayQueues(ListQueues& j)
+ * \param j: The list of queues to display the info
+ */
 void
 displayQueue(Queue& q){
 
@@ -158,7 +190,11 @@ displayQueue(Queue& q){
   cout << " Description : " << q.getDescription() << endl;
 }
 
-
+/**
+ * \brief To display some basic job info after submit
+ * \fn void displaySubmit(TMS_Data::Job job)
+ * \param job: The job to submit data
+ */
 void
 displaySubmit(TMS_Data::Job job){
   cout << "Job Id     : " << job.getJobId() << endl;
