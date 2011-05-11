@@ -26,10 +26,6 @@
     <eLiterals name="CANCELLED" value="2"/>
     <eLiterals name="FAILED" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StatusList" instanceTypeName="StatusList">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" upperBound="-1"
-        eType="#//Status"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FileStat" instanceTypeName="FileStat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
@@ -264,7 +260,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="chModOptions" instanceTypeName="chModOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="ChModOptions" instanceTypeName="ChModOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="the file permission access in octal system"/>

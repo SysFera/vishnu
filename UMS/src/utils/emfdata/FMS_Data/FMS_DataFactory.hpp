@@ -51,11 +51,6 @@ namespace FMS_Data
          */
         virtual StringList_ptr createStringList();
         /**
-         * \brief Creates a new object of class StatusList
-         * \return Pointer to the object
-         */
-        virtual StatusList_ptr createStatusList();
-        /**
          * \brief Creates a new object of class FileStat
          * \return Pointer to the object
          */
@@ -111,10 +106,10 @@ namespace FMS_Data
          */
         virtual TailOfFileOptions_ptr createTailOfFileOptions();
         /**
-         * \brief Creates a new object of class chModOptions
+         * \brief Creates a new object of class ChModOptions
          * \return Pointer to the object
          */
-        virtual chModOptions_ptr createchModOptions();
+        virtual ChModOptions_ptr createChModOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)
