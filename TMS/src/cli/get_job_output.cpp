@@ -105,7 +105,7 @@ int main (int argc, char* argv[]){
 
     //displayJobOutput(out);
       displayJobOutput(&jobResult);
-
+      printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);

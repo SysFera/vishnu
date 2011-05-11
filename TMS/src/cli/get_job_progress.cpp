@@ -125,7 +125,7 @@ int main (int argc, char* argv[]){
     } else {
       displayJobProgress(prog);
     }
-
+    printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);
