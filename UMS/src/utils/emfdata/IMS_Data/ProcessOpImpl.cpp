@@ -87,8 +87,7 @@ void ProcessOp::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::PROCESSOP__MACHINEID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_machineId);
+        return m_machineId != "";
 
     }
     throw "Error";

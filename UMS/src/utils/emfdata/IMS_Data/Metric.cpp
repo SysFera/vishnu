@@ -30,7 +30,8 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-Metric::Metric()
+Metric::Metric() :
+    m_type(0), m_value(0), m_time(0)
 {
 
     /*PROTECTED REGION ID(MetricImpl__MetricImpl) START*/
