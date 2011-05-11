@@ -88,7 +88,8 @@ makeListJobOp(string pgName,
      " 3 or W: for WAITING job\n"
      " 4 or R: for RUNNING job\n"
      " 5 or T: for TERMINATED job\n"
-     " 6 or C: for CANCELED job",
+     " 6 or C: for CANCELED job\n"
+     " 7 or D: for DOWNLOADED job",
 	   CONFIG,
 	   status);
   opt->add("priority,p",
@@ -188,6 +189,9 @@ int main (int argc, char* argv[]){
             break;
           case 'C' :
             status = 6;
+            break;
+          case 'D' :
+            status = 7;
             break;
           default:
             std::cerr << "Unknown job status " << statusStr << std::endl;

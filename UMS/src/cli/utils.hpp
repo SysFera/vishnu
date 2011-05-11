@@ -12,13 +12,6 @@
 #include <iostream>
 class Options;
 
-/**
- * \brief Function to print success message 
- */
-inline void printSuccessMessage() {
-  std::cout << "The service was performed successfully" << std::endl;
-}
-
 
 /**
  * \brief Display a '-' caracter 

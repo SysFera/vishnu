@@ -325,7 +325,7 @@ long vishnu::convertStringToWallTime(const std::string& walltime) {
 void
 vishnu::checkJobStatus(const int& status) {
 
-  if ((status < -1) || (status > 7)) {
+  if ((status < -1) || (status > 8)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The status value is incorrect");
   }
 }
