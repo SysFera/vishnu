@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 Threshold::Threshold() :
-    m_machineId(""), m_handler("")
+    m_value(0), m_machineId(""), m_type(0), m_handler("")
 {
 
     /*PROTECTED REGION ID(ThresholdImpl__ThresholdImpl) START*/
