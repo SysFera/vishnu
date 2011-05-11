@@ -29,8 +29,6 @@ set(FMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FMS_DataFactoryImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StringList.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StringListImpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StatusList.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StatusListImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStatImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CpFileOptions.cpp
@@ -53,8 +51,8 @@ set(FMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptionsImpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/chModOptions.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/chModOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptionsImpl.cpp
    )
    
 set(FMS_Data_HEADERS
@@ -63,7 +61,6 @@ set(FMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FMS_DataPackage.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FMS_DataFactory.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StringList.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StatusList.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStat.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CpFileOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsDirOptions.hpp
@@ -75,7 +72,7 @@ set(FMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransferList.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/chModOptions.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptions.hpp
    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data.hpp DESTINATION include/emf4cpp/)
@@ -83,7 +80,6 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data_forward.hpp DESTINATION inclu
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FMS_DataFactory.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FMS_DataPackage.hpp DESTINATION include/emf4cpp/FMS_Data)   
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StringList.hpp DESTINATION include/emf4cpp/FMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/StatusList.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileStat.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/CpFileOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/LsDirOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
@@ -95,7 +91,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransfer.hpp DESTINATION 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/FileTransferList.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/HeadOfFileOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/TailOfFileOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/chModOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/FMS_Data/ChModOptions.hpp DESTINATION include/emf4cpp/FMS_Data)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} /home/ibrahima/Projets/ProjetEDF/Vishnu/core/deps/emf_bin/../include/emf4cpp /home/ibrahima/Projets/ProjetEDF/Vishnu/core/deps/emf_bin/../include/emf4cpp)
 

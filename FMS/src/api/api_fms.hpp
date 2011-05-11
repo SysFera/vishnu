@@ -6,19 +6,27 @@
 
 #ifndef API_FMS_HPP
 #define API_FMS_HPP
+
 // C++ Headers
 #include <string>
-#include <pthread.h>
 
+//Vishnu Headers
+#include "QueryProxy.hpp"
+#include "UtilsProxy.hpp"
+#include "UserException.hpp"
+#include "UMSVishnuException.hpp"
+#include "FMSVishnuException.hpp"
+#include "utilVishnu.hpp"
 
-//Boost Headers
-#include <boost/thread.hpp>
+//FMS data forward declarations
+#include <FMS_Data_forward.hpp>
+
 
 // Namespaces area
+using namespace std;
 using namespace FMS_Data;
 
 namespace vishnu{
-
 
   /**
    * \brief create a new remote file
@@ -27,10 +35,8 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    createFile(const string& sessionKey,const string& path,)
+    createFile(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
-
-
 
   /**
    * \brief change the group of a file
@@ -61,7 +67,7 @@ namespace vishnu{
    * \param options contains the options 
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyFile(const string& sessionKey,const string& src, const string& dest, const CopyFileOptions& options)
+  int copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -96,7 +102,7 @@ namespace vishnu{
    * \param dirContent  the directory content
    * \return 0 if everything is OK, another value otherwise
    */
-  int listDir(const string& sessionKey,const string& path, FileStatList& dirContent,const ListDirOptions& options)
+  int listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -106,7 +112,7 @@ namespace vishnu{
    * \param options: contains the properties for the new directory (like permission mode to use)
    * \return 0 if everything is OK, another value otherwise
    */
-  int createDir(const string& sessionKey,const string& path,const CreateDirOptions& options)
+  int createDir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -159,7 +165,7 @@ namespace vishnu{
    * \param contentOfFile  an user-allocated buffer to store the result
    * \return 0 if everything is OK, another value otherwise
    */
-  int tailOFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
+  int tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -191,7 +197,7 @@ namespace vishnu{
    moveAsyncFile)
    \return 0 if everything is OK, another value otherwise
    */
-  int listFileTransfers(const string& sessionKey, const LsTransferOptions options)
+  int listFileTransfers(const string& sessionKey, const LsTransferOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 

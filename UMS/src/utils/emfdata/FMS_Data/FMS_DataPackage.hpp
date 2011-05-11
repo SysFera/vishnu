@@ -49,7 +49,7 @@ namespace FMS_Data
         // IDs for classifiers
 
         /**
-         * \brief Constant for chModOptions class
+         * \brief Constant for ChModOptions class
          */
         static const int CHMODOPTIONS = 0;
 
@@ -109,29 +109,24 @@ namespace FMS_Data
         static const int STATUS = 11;
 
         /**
-         * \brief Constant for StatusList class
-         */
-        static const int STATUSLIST = 12;
-
-        /**
          * \brief Constant for StopTransferOptions class
          */
-        static const int STOPTRANSFEROPTIONS = 13;
+        static const int STOPTRANSFEROPTIONS = 12;
 
         /**
          * \brief Constant for StringList class
          */
-        static const int STRINGLIST = 14;
+        static const int STRINGLIST = 13;
 
         /**
          * \brief Constant for TailOfFileOptions class
          */
-        static const int TAILOFFILEOPTIONS = 15;
+        static const int TAILOFFILEOPTIONS = 14;
 
         /**
          * \brief Constant for TransferCommand class
          */
-        static const int TRANSFERCOMMAND = 16;
+        static const int TRANSFERCOMMAND = 15;
 
         /**
          * \brief Constant for STRINGLIST__STRINGS feature
@@ -139,204 +134,199 @@ namespace FMS_Data
         static const int STRINGLIST__STRINGS = 0;
 
         /**
-         * \brief Constant for STATUSLIST__STATUS feature
-         */
-        static const int STATUSLIST__STATUS = 1;
-
-        /**
          * \brief Constant for FILESTAT__PATH feature
          */
-        static const int FILESTAT__PATH = 2;
+        static const int FILESTAT__PATH = 1;
 
         /**
          * \brief Constant for FILESTAT__OWNER feature
          */
-        static const int FILESTAT__OWNER = 3;
+        static const int FILESTAT__OWNER = 2;
 
         /**
          * \brief Constant for FILESTAT__GROUP feature
          */
-        static const int FILESTAT__GROUP = 4;
+        static const int FILESTAT__GROUP = 3;
 
         /**
          * \brief Constant for FILESTAT__PERMS feature
          */
-        static const int FILESTAT__PERMS = 5;
+        static const int FILESTAT__PERMS = 4;
 
         /**
          * \brief Constant for FILESTAT__UID feature
          */
-        static const int FILESTAT__UID = 6;
+        static const int FILESTAT__UID = 5;
 
         /**
          * \brief Constant for FILESTAT__GID feature
          */
-        static const int FILESTAT__GID = 7;
+        static const int FILESTAT__GID = 6;
 
         /**
          * \brief Constant for FILESTAT__SIZE feature
          */
-        static const int FILESTAT__SIZE = 8;
+        static const int FILESTAT__SIZE = 7;
 
         /**
          * \brief Constant for FILESTAT__ATIME feature
          */
-        static const int FILESTAT__ATIME = 9;
+        static const int FILESTAT__ATIME = 8;
 
         /**
          * \brief Constant for FILESTAT__MTIME feature
          */
-        static const int FILESTAT__MTIME = 10;
+        static const int FILESTAT__MTIME = 9;
 
         /**
          * \brief Constant for FILESTAT__CTIME feature
          */
-        static const int FILESTAT__CTIME = 11;
+        static const int FILESTAT__CTIME = 10;
 
         /**
          * \brief Constant for FILESTAT__TYPE feature
          */
-        static const int FILESTAT__TYPE = 12;
+        static const int FILESTAT__TYPE = 11;
 
         /**
          * \brief Constant for CPFILEOPTIONS__ISRECURSIVE feature
          */
-        static const int CPFILEOPTIONS__ISRECURSIVE = 13;
+        static const int CPFILEOPTIONS__ISRECURSIVE = 12;
 
         /**
          * \brief Constant for CPFILEOPTIONS__TRCOMMAND feature
          */
-        static const int CPFILEOPTIONS__TRCOMMAND = 14;
+        static const int CPFILEOPTIONS__TRCOMMAND = 13;
 
         /**
          * \brief Constant for LSDIROPTIONS__LONGFORMAT feature
          */
-        static const int LSDIROPTIONS__LONGFORMAT = 15;
+        static const int LSDIROPTIONS__LONGFORMAT = 14;
 
         /**
          * \brief Constant for LSDIROPTIONS__ALLFILES feature
          */
-        static const int LSDIROPTIONS__ALLFILES = 16;
+        static const int LSDIROPTIONS__ALLFILES = 15;
 
         /**
          * \brief Constant for MVFILEOPTIONS__TRCOMMAND feature
          */
-        static const int MVFILEOPTIONS__TRCOMMAND = 17;
+        static const int MVFILEOPTIONS__TRCOMMAND = 16;
 
         /**
          * \brief Constant for LSTRANSFEROPTIONS__TRANSFERID feature
          */
-        static const int LSTRANSFEROPTIONS__TRANSFERID = 18;
+        static const int LSTRANSFEROPTIONS__TRANSFERID = 17;
 
         /**
          * \brief Constant for LSTRANSFEROPTIONS__FROMMACHINEID feature
          */
-        static const int LSTRANSFEROPTIONS__FROMMACHINEID = 19;
+        static const int LSTRANSFEROPTIONS__FROMMACHINEID = 18;
 
         /**
          * \brief Constant for LSTRANSFEROPTIONS__USERID feature
          */
-        static const int LSTRANSFEROPTIONS__USERID = 20;
+        static const int LSTRANSFEROPTIONS__USERID = 19;
 
         /**
          * \brief Constant for LSTRANSFEROPTIONS__STATUS feature
          */
-        static const int LSTRANSFEROPTIONS__STATUS = 21;
+        static const int LSTRANSFEROPTIONS__STATUS = 20;
 
         /**
          * \brief Constant for FILESTATLIST__FILESTATS feature
          */
-        static const int FILESTATLIST__FILESTATS = 22;
+        static const int FILESTATLIST__FILESTATS = 21;
 
         /**
          * \brief Constant for STOPTRANSFEROPTIONS__TRANSFERID feature
          */
-        static const int STOPTRANSFEROPTIONS__TRANSFERID = 23;
+        static const int STOPTRANSFEROPTIONS__TRANSFERID = 22;
 
         /**
          * \brief Constant for STOPTRANSFEROPTIONS__FROMMACHINEID feature
          */
-        static const int STOPTRANSFEROPTIONS__FROMMACHINEID = 24;
+        static const int STOPTRANSFEROPTIONS__FROMMACHINEID = 23;
 
         /**
          * \brief Constant for STOPTRANSFEROPTIONS__USERID feature
          */
-        static const int STOPTRANSFEROPTIONS__USERID = 25;
+        static const int STOPTRANSFEROPTIONS__USERID = 24;
 
         /**
          * \brief Constant for FILETRANSFER__TRANSFERID feature
          */
-        static const int FILETRANSFER__TRANSFERID = 26;
+        static const int FILETRANSFER__TRANSFERID = 25;
 
         /**
          * \brief Constant for FILETRANSFER__STATUS feature
          */
-        static const int FILETRANSFER__STATUS = 27;
+        static const int FILETRANSFER__STATUS = 26;
 
         /**
          * \brief Constant for FILETRANSFER__USERID feature
          */
-        static const int FILETRANSFER__USERID = 28;
+        static const int FILETRANSFER__USERID = 27;
 
         /**
          * \brief Constant for FILETRANSFER__CLIENTMACHINEID feature
          */
-        static const int FILETRANSFER__CLIENTMACHINEID = 29;
+        static const int FILETRANSFER__CLIENTMACHINEID = 28;
 
         /**
          * \brief Constant for FILETRANSFER__SOURCEMACHINEID feature
          */
-        static const int FILETRANSFER__SOURCEMACHINEID = 30;
+        static const int FILETRANSFER__SOURCEMACHINEID = 29;
 
         /**
          * \brief Constant for FILETRANSFER__DESTINATIONMACHINEID feature
          */
-        static const int FILETRANSFER__DESTINATIONMACHINEID = 31;
+        static const int FILETRANSFER__DESTINATIONMACHINEID = 30;
 
         /**
          * \brief Constant for FILETRANSFER__SOURCEFILEPATH feature
          */
-        static const int FILETRANSFER__SOURCEFILEPATH = 32;
+        static const int FILETRANSFER__SOURCEFILEPATH = 31;
 
         /**
          * \brief Constant for FILETRANSFER__DESTINATIONFILEPATH feature
          */
-        static const int FILETRANSFER__DESTINATIONFILEPATH = 33;
+        static const int FILETRANSFER__DESTINATIONFILEPATH = 32;
 
         /**
          * \brief Constant for FILETRANSFER__SIZE feature
          */
-        static const int FILETRANSFER__SIZE = 34;
+        static const int FILETRANSFER__SIZE = 33;
 
         /**
          * \brief Constant for FILETRANSFER__START_TIME feature
          */
-        static const int FILETRANSFER__START_TIME = 35;
+        static const int FILETRANSFER__START_TIME = 34;
 
         /**
          * \brief Constant for FILETRANSFER__TRCOMMAND feature
          */
-        static const int FILETRANSFER__TRCOMMAND = 36;
+        static const int FILETRANSFER__TRCOMMAND = 35;
 
         /**
          * \brief Constant for FILETRANSFERLIST__FILETRANSFERS feature
          */
-        static const int FILETRANSFERLIST__FILETRANSFERS = 37;
+        static const int FILETRANSFERLIST__FILETRANSFERS = 36;
 
         /**
          * \brief Constant for HEADOFFILEOPTIONS__NLINE feature
          */
-        static const int HEADOFFILEOPTIONS__NLINE = 38;
+        static const int HEADOFFILEOPTIONS__NLINE = 37;
 
         /**
          * \brief Constant for TAILOFFILEOPTIONS__NLINE feature
          */
-        static const int TAILOFFILEOPTIONS__NLINE = 39;
+        static const int TAILOFFILEOPTIONS__NLINE = 38;
 
         /**
          * \brief Constant for CHMODOPTIONS__MODE feature
          */
-        static const int CHMODOPTIONS__MODE = 40;
+        static const int CHMODOPTIONS__MODE = 39;
 
         // EClassifiers methods
 
@@ -357,12 +347,6 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EEnum_ptr getStatus();
-
-        /**
-         * \brief Returns the reflective object for class StatusList
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EClass_ptr getStatusList();
 
         /**
          * \brief Returns the reflective object for class FileStat
@@ -437,7 +421,7 @@ namespace FMS_Data
         virtual ::ecore::EClass_ptr getTailOfFileOptions();
 
         /**
-         * \brief Returns the reflective object for class chModOptions
+         * \brief Returns the reflective object for class ChModOptions
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getChModOptions();
@@ -449,12 +433,6 @@ namespace FMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getStringList__strings();
-
-        /**
-         * \brief Returns the reflective object for feature status of class StatusList
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getStatusList__status();
 
         /**
          * \brief Returns the reflective object for feature path of class FileStat
@@ -685,10 +663,10 @@ namespace FMS_Data
         virtual ::ecore::EAttribute_ptr getTailOfFileOptions__nline();
 
         /**
-         * \brief Returns the reflective object for feature mode of class chModOptions
+         * \brief Returns the reflective object for feature mode of class ChModOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getchModOptions__mode();
+        virtual ::ecore::EAttribute_ptr getChModOptions__mode();
 
     protected:
 
@@ -705,11 +683,6 @@ namespace FMS_Data
          * \brief The instance for the class StringList
          */
         ::ecore::EClass_ptr m_StringListEClass;
-
-        /**
-         * \brief The instance for the class StatusList
-         */
-        ::ecore::EClass_ptr m_StatusListEClass;
 
         /**
          * \brief The instance for the class FileStat
@@ -767,7 +740,7 @@ namespace FMS_Data
         ::ecore::EClass_ptr m_TailOfFileOptionsEClass;
 
         /**
-         * \brief The instance for the class chModOptions
+         * \brief The instance for the class ChModOptions
          */
         ::ecore::EClass_ptr m_ChModOptionsEClass;
 
@@ -797,11 +770,6 @@ namespace FMS_Data
          * \brief The instance for the feature strings of class StringList
          */
         ::ecore::EAttribute_ptr m_StringList__strings;
-
-        /**
-         * \brief The instance for the feature status of class StatusList
-         */
-        ::ecore::EAttribute_ptr m_StatusList__status;
 
         /**
          * \brief The instance for the feature path of class FileStat
@@ -994,9 +962,9 @@ namespace FMS_Data
         ::ecore::EAttribute_ptr m_TailOfFileOptions__nline;
 
         /**
-         * \brief The instance for the feature mode of class chModOptions
+         * \brief The instance for the feature mode of class ChModOptions
          */
-        ::ecore::EAttribute_ptr m_chModOptions__mode;
+        ::ecore::EAttribute_ptr m_ChModOptions__mode;
 
     };
 

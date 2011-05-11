@@ -20,8 +20,10 @@ option(ENABLE_ORACLE OFF "compile with the oracle support. Deprecated")
 option(ENABLE_MYSQL OFF "compile with the mysql support.")
 option(COMPILE_UMS OFF "compile the module UMS")
 option(COMPILE_TMS OFF "compile the module TMS")
+option(COMPILE_FMS OFF "compile the module FMS")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
+
 # FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
 include(CMakeDependentOption)
 cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
@@ -188,6 +190,16 @@ set(IMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/api)
 set(IMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/src/sed)
 set(IMS_UTIL_DIR ${VISHNU_SOURCE_DIR}/IMS/src/utils)
 
+#FMS
+set(FMS_EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata)
+set(FMS_DATA_DIR ${VISHNU_SOURCE_DIR}/UMS/src/utils/emfdata/FMS_Data)
+set(FMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/client)
+set(FMS_SERVER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/server)
+set(FMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/api)
+set(FMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/sed)
+set(FMS_UTIL_DIR ${VISHNU_SOURCE_DIR}/FMS/src/utils)
+
+
 
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
@@ -233,6 +245,12 @@ if(COMPILE_IMS)
   ADD_DEFINITIONS( -DHAVE_CORI )
   add_subdirectory(IMS/src)
 endif (COMPILE_IMS)
+
+if(COMPILE_FMS)
+  add_subdirectory(FMS/src/api)
+  add_subdirectory(FMS/src/cli)
+endif (COMPILE_FMS)
+
 
 if (BUILD_TESTING)
   set( TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
