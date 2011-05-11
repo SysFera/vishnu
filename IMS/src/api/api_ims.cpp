@@ -4,7 +4,7 @@
 #include "MetricProxy.hpp"
 #include "SysInfoProxy.hpp"
 #include "ObjectIdProxy.hpp"
-
+#include "ThresholdProxy.hpp"
 int
 vishnu::exportCommands(const string sessionKey,
 	       const string oldSessionId,
@@ -23,7 +23,7 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricCurentValue"+machineId;
-  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric> 
+  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric>
     query(op, sessionProxy, name, machineId);
 
   IMS_Data::ListMetric_ptr li = query.list();
@@ -107,6 +107,11 @@ int
 vishnu::setSystemThreshold(const string sessionKey,
 		   IMS_Data::Threshold threshold)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  ThresholdProxy thresholdProxy(sessionProxy);
+  thresholdProxy.setSystemThreshold(threshold);
+
   return IMS_SUCCESS;
 }
 
@@ -116,6 +121,11 @@ vishnu::getSystemThreshold(const string sessionKey,
 		   IMS_Data::ListThreshold& list,
 		   IMS_Data::ThresholdOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  ThresholdProxy thresholdProxy(sessionProxy);
+  thresholdProxy.getSystemThreshold(list, op);
+
   return IMS_SUCCESS;
 }
 
