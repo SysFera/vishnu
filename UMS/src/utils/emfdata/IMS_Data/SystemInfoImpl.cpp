@@ -114,8 +114,7 @@ void SystemInfo::eSet(::ecore::EInt _featureID,
     case ::IMS_Data::IMS_DataPackage::SYSTEMINFO__DISKSPACE:
         return m_diskSpace != 0;
     case ::IMS_Data::IMS_DataPackage::SYSTEMINFO__MACHINEID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_machineId);
+        return m_machineId != "";
 
     }
     throw "Error";
