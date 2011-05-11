@@ -194,5 +194,13 @@ namespace vishnu {
    void createTmpFile(char* fileName);
 
    int deleteFile(const char* fileName);
+
+   /**
+    * \brief Function to print success message 
+    */
+   inline void printSuccessMessage() {
+     std::cout << "The service was performed successfully" << std::endl;
+   }
+
 }
 #endif // _UTILVISHNU_H_

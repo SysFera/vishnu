@@ -128,9 +128,6 @@ int BatchConvertor::parseFile(std::string& errorMessage) {
          mjobDescriptor.push_back (make_pair(key,line));
        }
        else{
-         /*if(ba::ends_with(line, "\\")) {
-           std::cout << "line11=" << line << endl;
-         };*/
          continue;
        }
      } 
