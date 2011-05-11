@@ -40,6 +40,8 @@ set(ALLCLI
   define_machine_format
   define_file_format
   define_task_format
+  set_system_threshold
+  get_system_threshold
   )
 
 #set the prefix of command
