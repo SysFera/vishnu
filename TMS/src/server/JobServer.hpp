@@ -20,9 +20,10 @@ class JobServer
  
 public:
 	/**
-  * \param session The object which encapsulates the session information
-  * \param machineid The machine identifier 
+  * \param sessionServer The object which encapsulates the session information
+  * \param machineId The machine identifier 
   * \param job The job data structure
+  * \param batchType The batch scheduler type
   * \brief Constructor
   */
   explicit JobServer(const SessionServer& sessionServer,
@@ -72,7 +73,7 @@ public:
   /**
    * \brief Function to scan VISHNU error message 
    * \param errorInfo the error information to scan
-   * \param The code The code of the error
+   * \param code The code The code of the error
    * \param message The message associeted to the error code
    * \return raises an exception on erroor
    */

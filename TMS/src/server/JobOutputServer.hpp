@@ -20,16 +20,16 @@ class JobOutputServer
  
 public:
    /**
-   * \param session The object which encapsulates the session information
-   * \param machineid The machine identifier 
+   * \param sessionServer The object which encapsulates the session information
+   * \param machineId The machine identifier 
    * \brief Constructor
    */
   JobOutputServer(const SessionServer& sessionServer,
                   const std::string& machineId);
 
   /**
-   * \param session The object which encapsulates the session information
-   * \param machineid The machine identifier 
+   * \param sessionServer The object which encapsulates the session information
+   * \param machineId The machine identifier 
    * \param jobResult The job result data structure
    * \brief Constructor
    */
@@ -38,7 +38,6 @@ public:
                   const TMS_Data::JobResult& jobResult);
   /**
    * \brief Function to get the job results
-   * \param jobId The Id of the
    * \return The job results data structure
    */
   TMS_Data::JobResult
@@ -46,7 +45,6 @@ public:
 
   /**
    * \brief Function to get the all completed jobs results
-   * \param jobId The Id of the
    * \return The lits of job results data structure
    */
   TMS_Data::ListJobResults_ptr

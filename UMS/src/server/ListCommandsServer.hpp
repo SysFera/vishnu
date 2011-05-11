@@ -208,7 +208,7 @@ public:
   /**
    * \brief To convert the command type to the corresponding Mapper name
    * \fn std::string convertCmdType(CmdType type)
-   * \param type The type to convert
+   * \param CmdType The type to convert
    * \return The corresponding mapper name
    */
   std::string

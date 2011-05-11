@@ -167,12 +167,15 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert UTC time into localtime (seconds).  <a href="#a912b9d87fc92812a07bb7f6dce8dcb85"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a7607f0891ab382dcb2343a36d9b25190">convertLocaltimeINUTCtime</a> (const time_t &amp;localtime)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to localtime into UTC (seconds).  <a href="#a7607f0891ab382dcb2343a36d9b25190"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33f3fca5bc294663e2863c1abc1da5c8"></a><!-- doxytag: member="vishnu::createTmpFile" ref="a33f3fca5bc294663e2863c1abc1da5c8" args="(char *fileName, const std::string &amp;file_content)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>createTmpFile</b> (char *fileName, const std::string &amp;file_content)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18002572e5b0039069544475365f335d"></a><!-- doxytag: member="vishnu::createTmpFile" ref="a18002572e5b0039069544475365f335d" args="(char *fileName)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>createTmpFile</b> (char *fileName)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adccbbcf352ca9471d210e9d801c73e2d"></a><!-- doxytag: member="vishnu::deleteFile" ref="adccbbcf352ca9471d210e9d801c73e2d" args="(const char *fileName)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>deleteFile</b> (const char *fileName)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a33f3fca5bc294663e2863c1abc1da5c8">createTmpFile</a> (char *fileName, const std::string &amp;file_content)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to create temporary file.  <a href="#a33f3fca5bc294663e2863c1abc1da5c8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a18002572e5b0039069544475365f335d">createTmpFile</a> (char *fileName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to create temporary file.  <a href="#a18002572e5b0039069544475365f335d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#adccbbcf352ca9471d210e9d801c73e2d">deleteFile</a> (const char *fileName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to delete file.  <a href="#adccbbcf352ca9471d210e9d801c73e2d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0ea8ccb86c430f6a602374c82f66d2e"></a><!-- doxytag: member="vishnu::printSuccessMessage" ref="ab0ea8ccb86c430f6a602374c82f66d2e" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ab0ea8ccb86c430f6a602374c82f66d2e">printSuccessMessage</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to print success message. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ac58b058a6a467a21f7eb21192617c90f">connect</a> (const std::string &amp;userId, const std::string &amp;password, UMS_Data::Session &amp;session, const UMS_Data::ConnectOptions &amp;connectOpt=UMS_Data::ConnectOptions())  throw (UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to open a session.  <a href="#ac58b058a6a467a21f7eb21192617c90f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ae120231ba899d68724dc972374206745">reconnect</a> (const std::string &amp;userId, const std::string &amp;password, const std::string &amp;sessionId, UMS_Data::Session &amp;session)  throw (UserException, SystemException)</td></tr>
@@ -236,12 +239,12 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobInfo function gets information on a job from its id.  <a href="#a4461c3e9d86e9c507436655056a1b660"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6244690b88aff21355c382318bffff14">listJobs</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobs &amp;listOfJobs, const ListJobsOptions &amp;options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The listJobs function gets a list of all submitted jobs.  <a href="#a6244690b88aff21355c382318bffff14"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cfe834ba44e65437afa5c324ef03fd3"></a><!-- doxytag: member="vishnu::getJobProgress" ref="a6cfe834ba44e65437afa5c324ef03fd3" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>getJobProgress</b> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada2d98155cffa475261261fb33f7e873"></a><!-- doxytag: member="vishnu::listQueues" ref="ada2d98155cffa475261261fb33f7e873" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListQueues &amp;listofQueues, const std::string &amp;queueName=std::string())" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>listQueues</b> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListQueues &amp;listofQueues, const std::string &amp;queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a3704331e613274a94da950cbc50edcb8">getJobOutput</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId, JobResult &amp;outputInfos, const std::string &amp;outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobOutput function gets outputPath and errorPath of a job from its id.  <a href="#a3704331e613274a94da950cbc50edcb8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6cfe834ba44e65437afa5c324ef03fd3">getJobProgress</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobProgress function gets the progression status of jobs.  <a href="#a6cfe834ba44e65437afa5c324ef03fd3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ada2d98155cffa475261261fb33f7e873">listQueues</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListQueues &amp;listofQueues, const std::string &amp;queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The listQueues function gets queues information.  <a href="#ada2d98155cffa475261261fb33f7e873"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a6e0b3df33a91bd16cdadf3ac428fcf0e">getJobOutput</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId, JobResult &amp;outputInfo, const std::string &amp;outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The getJobOutput function gets outputPath and errorPath of a job from its id.  <a href="#a6e0b3df33a91bd16cdadf3ac428fcf0e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aaedc4b5676f0c8e47f333316cff0b0a8">getCompletedJobsOutput</a> (const std::string &amp;sessionKey, const std::string &amp;machineId, ListJobResults &amp;listOfResults, const std::string &amp;outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The <a class="el" href="namespacevishnu.html#aaedc4b5676f0c8e47f333316cff0b0a8" title="The getCompletedJobsOutput() function gets standard output and error output files of completed jobs (...">getCompletedJobsOutput()</a> function gets standard output and error output files of completed jobs (applies only once for each job).  <a href="#aaedc4b5676f0c8e47f333316cff0b0a8"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
@@ -931,6 +934,68 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a33f3fca5bc294663e2863c1abc1da5c8"></a><!-- doxytag: member="vishnu::createTmpFile" ref="a33f3fca5bc294663e2863c1abc1da5c8" args="(char *fileName, const std::string &amp;file_content)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vishnu::createTmpFile </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>file_content</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to create temporary file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fileName</em>&nbsp;</td><td>The name of the file to create </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>file_content</em>&nbsp;</td><td>The content of the file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a18002572e5b0039069544475365f335d"></a><!-- doxytag: member="vishnu::createTmpFile" ref="a18002572e5b0039069544475365f335d" args="(char *fileName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vishnu::createTmpFile </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>fileName</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to create temporary file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fileName</em>&nbsp;</td><td>The name of the file to create </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a6315b6f5e86d48f4c75dc73d08348edf"></a><!-- doxytag: member="vishnu::cryptPassword" ref="a6315b6f5e86d48f4c75dc73d08348edf" args="(const std::string &amp;salt, const std::string password)" -->
 <div class="memitem">
 <div class="memproto">
@@ -965,6 +1030,32 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The crypted password </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="adccbbcf352ca9471d210e9d801c73e2d"></a><!-- doxytag: member="vishnu::deleteFile" ref="adccbbcf352ca9471d210e9d801c73e2d" args="(const char *fileName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::deleteFile </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fileName</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to delete file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fileName</em>&nbsp;</td><td>The name of the file to create </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1350,7 +1441,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a3704331e613274a94da950cbc50edcb8"></a><!-- doxytag: member="vishnu::getJobOutput" ref="a3704331e613274a94da950cbc50edcb8" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId, JobResult &amp;outputInfos, const std::string &amp;outDir=std::string())" -->
+<a class="anchor" id="a6e0b3df33a91bd16cdadf3ac428fcf0e"></a><!-- doxytag: member="vishnu::getJobOutput" ref="a6e0b3df33a91bd16cdadf3ac428fcf0e" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, const std::string &amp;jobId, JobResult &amp;outputInfo, const std::string &amp;outDir=std::string())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1376,7 +1467,7 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">JobResult &amp;&nbsp;</td>
-          <td class="paramname"> <em>outputInfos</em>, </td>
+          <td class="paramname"> <em>outputInfo</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1401,6 +1492,57 @@ template&lt;class T &gt; </div>
     <tr><td valign="top"></td><td valign="top"><em>jobId</em>&nbsp;</td><td>: The Id of the job </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>outputInfo</em>&nbsp;</td><td>: The Job object containing the job output information (ex: outputPath and errorPath) of the job to submit </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>outDir</em>&nbsp;</td><td>: The output directory where the files will be stored (default is current directory) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6cfe834ba44e65437afa5c324ef03fd3"></a><!-- doxytag: member="vishnu::getJobProgress" ref="a6cfe834ba44e65437afa5c324ef03fd3" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListProgression &amp;listOfProgress, const ProgressOptions &amp;options)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::getJobProgress </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ListProgression &amp;&nbsp;</td>
+          <td class="paramname"> <em>listOfProgress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ProgressOptions &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classTMSVishnuException.html">TMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The getJobProgress function gets the progression status of jobs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>: The session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>: Is the id of the machine to get the jobs progression. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>listOfProgress</em>&nbsp;</td><td>: Is the object containing jobs progression information </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>: Is an object containing the available options jobs for progression . </td></tr>
   </table>
   </dd>
 </dl>
@@ -2069,6 +2211,57 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ada2d98155cffa475261261fb33f7e873"></a><!-- doxytag: member="vishnu::listQueues" ref="ada2d98155cffa475261261fb33f7e873" args="(const std::string &amp;sessionKey, const std::string &amp;machineId, ListQueues &amp;listofQueues, const std::string &amp;queueName=std::string())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vishnu::listQueues </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sessionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ListQueues &amp;&nbsp;</td>
+          <td class="paramname"> <em>listofQueues</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>queueName</em> = <code>std::string()</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td>  throw (<a class="el" href="classUMSVishnuException.html">UMSVishnuException</a>, <a class="el" href="classTMSVishnuException.html">TMSVishnuException</a>, <a class="el" href="classUserException.html">UserException</a>, <a class="el" href="classSystemException.html">SystemException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The listQueues function gets queues information. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sessionKey</em>&nbsp;</td><td>: The session key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>: The id of the machine </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>listofQueues</em>&nbsp;</td><td>: The list of queues </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>queueName</em>&nbsp;</td><td>The option value, if it is given, listQueues gives information only of this queue </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int : an error code </dd></dl>
 
 </div>
 </div>
@@ -2750,7 +2943,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 15:04:14 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Wed May 11 2011 18:43:42 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -26,7 +26,7 @@ class SSHJobExec {
      * \param batchType the type of the batch scheduler
      * \param jobSerialized the job serialized
      * \param submitOptionsSerialized the job options serialized
-     * \param sskey the ssh private key path
+     * \param ssKey the ssh private key path
      */
     SSHJobExec(const std::string& user,
                const std::string& hostname,
@@ -85,14 +85,14 @@ class SSHJobExec {
 
     /**
      * \brief Function to convert the batch type to string
-     * \param BatchType the batch type to convert
+     * \param batchType the batch type to convert
      * \return the converted batch type
      */
     std::string convertBatchTypeToString(BatchType batchType);
 
     /**
      * \brief Function to check the parameters before launching ssh
-     * \exception SystemException
+     * \return raises an exception on error
      */
     void checkSshParams();
 

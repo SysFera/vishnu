@@ -45,7 +45,7 @@
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.3"/>
       <details key="description" value="This command allows displaying the jobs submitted on a specific machine's batch scheduler."/>
     </services>
-    <services name="getJobOutput" description="gets standard output and error output files of a job given its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_JOB_IS_NOT_TERMINATED ERRCODE_SSH">
+    <services name="getJobOutput" description="gets standard output and error output files of a job given its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_JOB_IS_NOT_TERMINATED ERRCODE_SSH ERRCODE_ALREADY_DOWNLOADED">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="gets outputPath and errorPath of a job from its id"/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
