@@ -42,6 +42,7 @@ set(ALLCLI
   define_task_format
   set_system_threshold
   get_system_threshold
+  restart
   )
 
 #set the prefix of command
