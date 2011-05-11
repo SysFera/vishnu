@@ -44,10 +44,9 @@ public:
    mmachineId = machineId;
   }
   /**
-   * \fn ListProgressServer(const UMS_Data::ListSessionOptions_ptr params,
-   *                        const SessionServer& session)
    * \param params The object which encapsulates the information of ListProgressServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
+   * \param machineId The identifier of the machine on which the job has been submitted
    * \brief Constructor, raises an exception on error
    */
   ListProgressServer(TMS_Data::ProgressOptions_ptr params, const SessionServer& session, const std::string& machineId):
@@ -59,7 +58,6 @@ public:
 
   /**
    * \brief Function to list sessions information
-   * \fn UMS_Data::ListSessions* list()
    * \return The pointer to the UMS_Data::ListSessions containing sessions information
    * \return raises an exception on error
    */
@@ -166,7 +164,6 @@ public:
 
   /**
    * \brief Function to get the name of the ListProgressServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListProgressServer command line
    */
   std::string getCommandName()
@@ -175,7 +172,6 @@ public:
   }
 
   /**
-   * \fn ~ListProgressServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListProgressServer()

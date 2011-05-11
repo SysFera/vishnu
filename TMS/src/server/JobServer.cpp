@@ -11,13 +11,14 @@
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
-#include "BatchConvertor.hpp"
+#include "ScriptGenConvertor.hpp"
 
 using namespace std;
 /**
- * \param session The object which encapsulates the session information
+ * \param sessionServer The object which encapsulates the session information
  * \param machineId The machine identifier
  * \param job The job data structure
+ * \param batchType The batch scheduler type
  * \brief Constructor
  */
 JobServer::JobServer(const SessionServer& sessionServer,
@@ -64,10 +65,11 @@ int JobServer::submitJob(const std::string& scriptContent,
   scriptPath = strdup("/tmp/job_scriptXXXXXX");
 
   std::string convertedScript;
-  boost::shared_ptr<BatchConvertor> bc(vishnuJobConvertor(mbatchType, scriptContent)); 
-  if(bc->scriptIsGeneric()) {
-    std::string genScript = bc->getJobDescriptor();
+  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent)); 
+  if(scriptConvertor->scriptIsGeneric()) {
+    std::string genScript = scriptConvertor->getConvertedScript();
     convertedScript = genScript;
+    std::cout << convertedScript << std::endl; 
   } else {
     convertedScript = scriptContent;
   }  
@@ -319,7 +321,7 @@ TMS_Data::Job JobServer::getData()
 /**
  * \brief Function to scan VISHNU error message 
  * \param errorInfo the error information to scan
- * \param The code The code of the error
+ * \param code The code The code of the error
  * \param message The message associeted to the error code
  * \return raises an exception on erroor
  */

@@ -26,7 +26,6 @@ class ListJobServer: public QueryServer<TMS_Data::ListJobsOptions, TMS_Data::Lis
 public:
 
   /**
-   * \fn ListJobServer(const SessionServer session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param machineId The identifier of the machine in which the jobs will be listed
    * \brief Constructor, raises an exception on error
@@ -37,8 +36,6 @@ public:
    mmachineId = machineId;
   }
   /**
-   * \fn ListJobServer(const UMS_Data::ListSessionOptions_ptr params,
-   *                        const SessionServer& session)
    * \param params The object which encapsulates the information of ListJobServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param machineId The identifier of the machine in which the jobs will be listed
@@ -52,8 +49,6 @@ public:
 
   /**
    * \brief Function to treat the listJobServer options
-   * \fn void processOptions(const UMS_Data::ListSessionOptions_ptr& options,
-   *                         std::string& sqlRequest)
    * \param options the object which contains the ListJobServer options values
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
@@ -131,7 +126,6 @@ public:
 
   /**
    * \brief Function to list sessions information
-   * \fn UMS_Data::ListSessions* list()
    * \return The pointer to the UMS_Data::ListSessions containing sessions information
    * \return raises an exception on error
    */
@@ -216,7 +210,6 @@ public:
 
   /**
    * \brief Function to get the name of the ListJobServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListJobServer command line
    */
   std::string getCommandName()
@@ -225,7 +218,6 @@ public:
   }
 
   /**
-   * \fn ~ListJobServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListJobServer()

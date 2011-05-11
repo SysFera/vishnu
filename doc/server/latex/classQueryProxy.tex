@@ -16,11 +16,8 @@
 \item 
 \hyperlink{classQueryProxy_ad6fa4a9f170c815854162c1e3b3b53f3}{QueryProxy} (const QueryParameters \&params, const \hyperlink{classSessionProxy}{SessionProxy} \&session, const std::string \&serviceName)
 \begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
-\hypertarget{classQueryProxy_ae92822516e13ef06702b563fd7b3b6e8}{
-{\bfseries QueryProxy} (const QueryParameters \&params, const \hyperlink{classSessionProxy}{SessionProxy} \&session, const std::string \&serviceName, const std::string \&machineId)}
-\label{classQueryProxy_ae92822516e13ef06702b563fd7b3b6e8}
-
-\item 
+\hyperlink{classQueryProxy_ae92822516e13ef06702b563fd7b3b6e8}{QueryProxy} (const QueryParameters \&params, const \hyperlink{classSessionProxy}{SessionProxy} \&session, const std::string \&serviceName, const std::string \&machineId)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
 void \hyperlink{classQueryProxy_a78d4f01c14cf9970055099613efa29c6}{setMachineId} (const std::string \&machineId)
 \begin{DoxyCompactList}\small\item\em Function to change or reset the machineId. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classQueryProxy_ab4f8c0a551ae3ed4d4fa966c864cf648}{getMachineId} () const 
@@ -100,7 +97,26 @@ Constructor, raises an exception on error.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em params}]The object which encapsulates the information of queryProxy options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em serviceName}]The name of the service to call\item[{\em params}]The object which encapsulates the information of queryProxy options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em serviceName}]The name of the service to call \item[{\em machineId}]The identifier of the machine in which the query will be done \end{DoxyParams}
+\item[{\em params}]The object which encapsulates the information of queryProxy options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em serviceName}]The name of the service to call \end{DoxyParams}
+\hypertarget{classQueryProxy_ae92822516e13ef06702b563fd7b3b6e8}{
+\index{QueryProxy@{QueryProxy}!QueryProxy@{QueryProxy}}
+\index{QueryProxy@{QueryProxy}!QueryProxy@{QueryProxy}}
+\subsubsection[{QueryProxy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class QueryParameters , class ListObject $>$ {\bf QueryProxy}$<$ QueryParameters, ListObject $>$::{\bf QueryProxy} (
+\begin{DoxyParamCaption}
+\item[{const QueryParameters \&}]{ params, }
+\item[{const {\bf SessionProxy} \&}]{ session, }
+\item[{const std::string \&}]{ serviceName, }
+\item[{const std::string \&}]{ machineId}
+\end{DoxyParamCaption}
+)}}
+\label{classQueryProxy_ae92822516e13ef06702b563fd7b3b6e8}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of queryProxy options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em serviceName}]The name of the service to call \item[{\em machineId}]The identifier of the machine in which the query will be done \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -169,11 +185,11 @@ raises an exception on error
 
 Function to change or reset the machineId. 
 
-Function to reset the machineId.
+Function to reset machineId.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em the}]id of the machine used by the query \end{DoxyParams}
+\item[{\em the}]id of the machine used by the query\item[{\em machineId}]The identifier of the machine in which the query will be done \end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

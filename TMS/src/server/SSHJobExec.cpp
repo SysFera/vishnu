@@ -34,7 +34,7 @@ const std::string TMS_SERVER_FILES_DIR="/tmp";
  * \param batchType the type of the batch scheduler
  * \param jobSerialized the job serialized
  * \param submitOptionsSerialized the job options serialized
- * \param sskey the ssh private key path
+ * \param ssKey the ssh private key path
  */
 SSHJobExec::SSHJobExec(const std::string& user,
                        const std::string& hostname,
@@ -68,7 +68,7 @@ SSHJobExec::getErrorInfo() {
 
 /**
  * \brief Function to check the parameters before launching ssh
- * \exception SystemException
+ * \return raises an exception on error
  */
 void
 SSHJobExec::checkSshParams() {

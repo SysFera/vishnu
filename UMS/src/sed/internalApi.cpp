@@ -1,5 +1,5 @@
 /**
-* \file internalApi.cpp
+* \file UMS/src/sed/internalApi.cpp
 * \brief This file implements the internal api of UMS
 * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
 * \date 31/01/2011

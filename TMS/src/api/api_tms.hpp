@@ -26,15 +26,13 @@
 
 //TMS include
 #include "JobProxy.hpp"
-#include "TMSMachineProxy.hpp"
-#include "JobOutPutProxy.hpp"
+#include "JobOutputProxy.hpp"
 
 using namespace TMS_Data;
 
 namespace vishnu {
   /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
-  * \fn int submitJob(const std::string& sessionKey, const std::string& machineId, const std::string& scriptFilePath, Job& jobInfo, const SubmitOptions& options)
   * \param sessionKey : The session key
   * \param machineId : Is the id of the machine on which the job must be submitted
   * \param scriptFilePath : The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.
@@ -65,7 +63,6 @@ namespace vishnu {
 
   /**
   * \brief The getJobInfo function gets information on a job from its id
-  * \fn int getJobInfo(const std::string& sessionKey, const std::string& machineId, const std::string& jobId, Job& jobInfos)
   * \param sessionKey : The session key
   * \param machineId : The id of the machine
   * \param jobId : The id of the job
@@ -81,7 +78,6 @@ namespace vishnu {
 
   /**
   * \brief The listJobs function gets a list of all submitted jobs
-  * \fn int listJobs(const std::string& sessionKey, const std::string& machineId, ListJobs& listOfJobs, const ListJobsOptions& options)
   * \param sessionKey : The session key
   * \param machineId : The id of the machine
   * \param listOfJobs : The constructed object list of jobs
@@ -97,7 +93,6 @@ namespace vishnu {
 
   /**
   * \brief The getJobProgress function gets the progression status of jobs
-  * \fn int getJobProgress(const std::string& sessionKey, const std::string& machineId, Progression& progress, const ProgressOptions& options)
   * \param sessionKey : The session key
   * \param machineId : Is the id of the machine to get the jobs progression.
   * \param listOfProgress : Is the object containing jobs progression information
@@ -113,7 +108,6 @@ namespace vishnu {
 
   /**
   * \brief The listQueues function gets queues information
-  * \fn int listQueues(const std::string& sessionKey, const std::string& machineId, ListQueues& listofQueues)
   * \param sessionKey : The session key
   * \param machineId : The id of the machine
   * \param listofQueues : The list of queues
@@ -141,7 +135,7 @@ namespace vishnu {
   getJobOutput(const std::string& sessionKey,
                const std::string& machineId,
                const std::string& jobId,
-               JobResult& outputInfos,
+               JobResult& outputInfo,
                const std::string& outDir = std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
