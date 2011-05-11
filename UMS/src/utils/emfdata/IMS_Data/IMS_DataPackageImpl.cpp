@@ -319,7 +319,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_MetricEClass->setInterface(false);
     m_Metric__type->setEType(m_MetricTypeEEnum);
     m_Metric__type->setName("type");
-    m_Metric__type->setDefaultValueLiteral("");
+    m_Metric__type->setDefaultValueLiteral("0");
     m_Metric__type->setLowerBound(0);
     m_Metric__type->setUpperBound(1);
     m_Metric__type->setTransient(false);
@@ -333,7 +333,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Metric__value->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Metric__value->setName("value");
-    m_Metric__value->setDefaultValueLiteral("");
+    m_Metric__value->setDefaultValueLiteral("0");
     m_Metric__value->setLowerBound(0);
     m_Metric__value->setUpperBound(1);
     m_Metric__value->setTransient(false);
@@ -347,7 +347,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Metric__time->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Metric__time->setName("time");
-    m_Metric__time->setDefaultValueLiteral("");
+    m_Metric__time->setDefaultValueLiteral("0");
     m_Metric__time->setLowerBound(0);
     m_Metric__time->setUpperBound(1);
     m_Metric__time->setTransient(false);
@@ -427,7 +427,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_SystemInfo__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SystemInfo__machineId->setName("machineId");
-    m_SystemInfo__machineId->setDefaultValueLiteral("");
+    m_SystemInfo__machineId->setDefaultValueLiteral("" "");
     m_SystemInfo__machineId->setLowerBound(0);
     m_SystemInfo__machineId->setUpperBound(1);
     m_SystemInfo__machineId->setTransient(false);
@@ -445,7 +445,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Process__processName->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Process__processName->setName("processName");
-    m_Process__processName->setDefaultValueLiteral("");
+    m_Process__processName->setDefaultValueLiteral("" "");
     m_Process__processName->setLowerBound(0);
     m_Process__processName->setUpperBound(1);
     m_Process__processName->setTransient(false);
@@ -459,7 +459,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Process__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Process__machineId->setName("machineId");
-    m_Process__machineId->setDefaultValueLiteral("");
+    m_Process__machineId->setDefaultValueLiteral("" "");
     m_Process__machineId->setLowerBound(0);
     m_Process__machineId->setUpperBound(1);
     m_Process__machineId->setTransient(false);
@@ -473,7 +473,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Process__dietId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Process__dietId->setName("dietId");
-    m_Process__dietId->setDefaultValueLiteral("");
+    m_Process__dietId->setDefaultValueLiteral("" "");
     m_Process__dietId->setLowerBound(0);
     m_Process__dietId->setUpperBound(1);
     m_Process__dietId->setTransient(false);
@@ -486,7 +486,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Process__dietId->setOrdered(true);
     m_Process__state->setEType(m_ProcessStateEEnum);
     m_Process__state->setName("state");
-    m_Process__state->setDefaultValueLiteral("");
+    m_Process__state->setDefaultValueLiteral("0");
     m_Process__state->setLowerBound(0);
     m_Process__state->setUpperBound(1);
     m_Process__state->setTransient(false);
@@ -500,7 +500,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Process__timestamp->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Process__timestamp->setName("timestamp");
-    m_Process__timestamp->setDefaultValueLiteral("");
+    m_Process__timestamp->setDefaultValueLiteral("0");
     m_Process__timestamp->setLowerBound(0);
     m_Process__timestamp->setUpperBound(1);
     m_Process__timestamp->setTransient(false);
@@ -514,7 +514,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Process__script->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Process__script->setName("script");
-    m_Process__script->setDefaultValueLiteral("");
+    m_Process__script->setDefaultValueLiteral("" "");
     m_Process__script->setLowerBound(0);
     m_Process__script->setUpperBound(1);
     m_Process__script->setTransient(false);
@@ -594,7 +594,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_RestartOp__vishnuConf->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_RestartOp__vishnuConf->setName("vishnuConf");
-    m_RestartOp__vishnuConf->setDefaultValueLiteral("");
+    m_RestartOp__vishnuConf->setDefaultValueLiteral("" "");
     m_RestartOp__vishnuConf->setLowerBound(0);
     m_RestartOp__vishnuConf->setUpperBound(1);
     m_RestartOp__vishnuConf->setTransient(false);
@@ -642,7 +642,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_ProcessOp__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_ProcessOp__machineId->setName("machineId");
-    m_ProcessOp__machineId->setDefaultValueLiteral("");
+    m_ProcessOp__machineId->setDefaultValueLiteral("" "");
     m_ProcessOp__machineId->setLowerBound(0);
     m_ProcessOp__machineId->setUpperBound(1);
     m_ProcessOp__machineId->setTransient(false);
@@ -660,7 +660,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_ThresholdOp__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_ThresholdOp__machineId->setName("machineId");
-    m_ThresholdOp__machineId->setDefaultValueLiteral("");
+    m_ThresholdOp__machineId->setDefaultValueLiteral("" "");
     m_ThresholdOp__machineId->setLowerBound(0);
     m_ThresholdOp__machineId->setUpperBound(1);
     m_ThresholdOp__machineId->setTransient(false);
@@ -673,7 +673,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_ThresholdOp__machineId->setOrdered(true);
     m_ThresholdOp__metricType->setEType(m_MetricTypeEEnum);
     m_ThresholdOp__metricType->setName("metricType");
-    m_ThresholdOp__metricType->setDefaultValueLiteral("");
+    m_ThresholdOp__metricType->setDefaultValueLiteral("0");
     m_ThresholdOp__metricType->setLowerBound(0);
     m_ThresholdOp__metricType->setUpperBound(1);
     m_ThresholdOp__metricType->setTransient(false);
@@ -708,7 +708,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Threshold__value->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Threshold__value->setName("value");
-    m_Threshold__value->setDefaultValueLiteral("");
+    m_Threshold__value->setDefaultValueLiteral("0");
     m_Threshold__value->setLowerBound(0);
     m_Threshold__value->setUpperBound(1);
     m_Threshold__value->setTransient(false);
@@ -735,7 +735,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_Threshold__machineId->setOrdered(true);
     m_Threshold__type->setEType(m_MetricTypeEEnum);
     m_Threshold__type->setName("type");
-    m_Threshold__type->setDefaultValueLiteral("");
+    m_Threshold__type->setDefaultValueLiteral("0");
     m_Threshold__type->setLowerBound(0);
     m_Threshold__type->setUpperBound(1);
     m_Threshold__type->setTransient(false);
@@ -767,7 +767,7 @@ IMS_DataPackage::IMS_DataPackage()
     m_SysInfoOp__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SysInfoOp__machineId->setName("machineId");
-    m_SysInfoOp__machineId->setDefaultValueLiteral("");
+    m_SysInfoOp__machineId->setDefaultValueLiteral("" "");
     m_SysInfoOp__machineId->setLowerBound(0);
     m_SysInfoOp__machineId->setUpperBound(1);
     m_SysInfoOp__machineId->setTransient(false);

@@ -99,8 +99,7 @@ void RestartOp::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_vishnuConf);
+        return m_vishnuConf != "";
     case ::IMS_Data::IMS_DataPackage::RESTARTOP__SEDTYPE:
         return m_sedType != 0;
 

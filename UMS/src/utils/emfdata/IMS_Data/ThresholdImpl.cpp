@@ -122,13 +122,11 @@ void Threshold::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_value);
+        return m_value != 0;
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__MACHINEID:
         return m_machineId != "";
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__TYPE:
-        return ::ecorecpp::mapping::set_traits< ::IMS_Data::MetricType >::is_set(
-                m_type);
+        return m_type != 0;
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
         return m_handler != "";
 
