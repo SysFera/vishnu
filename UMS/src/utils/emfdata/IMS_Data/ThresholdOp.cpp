@@ -30,7 +30,8 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-ThresholdOp::ThresholdOp()
+ThresholdOp::ThresholdOp() :
+    m_machineId(""), m_metricType(0)
 {
 
     /*PROTECTED REGION ID(ThresholdOpImpl__ThresholdOpImpl) START*/
