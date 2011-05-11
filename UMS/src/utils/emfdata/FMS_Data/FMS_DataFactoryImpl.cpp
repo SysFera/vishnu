@@ -20,7 +20,6 @@
 #include <FMS_Data/FMS_DataFactory.hpp>
 #include <FMS_Data/FMS_DataPackage.hpp>
 #include <FMS_Data/StringList.hpp>
-#include <FMS_Data/StatusList.hpp>
 #include <FMS_Data/FileStat.hpp>
 #include <FMS_Data/CpFileOptions.hpp>
 #include <FMS_Data/LsDirOptions.hpp>
@@ -32,7 +31,7 @@
 #include <FMS_Data/FileTransferList.hpp>
 #include <FMS_Data/HeadOfFileOptions.hpp>
 #include <FMS_Data/TailOfFileOptions.hpp>
-#include <FMS_Data/chModOptions.hpp>
+#include <FMS_Data/ChModOptions.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -50,8 +49,6 @@ FMS_DataFactory::FMS_DataFactory()
     {
     case FMS_DataPackage::STRINGLIST:
         return createStringList();
-    case FMS_DataPackage::STATUSLIST:
-        return createStatusList();
     case FMS_DataPackage::FILESTAT:
         return createFileStat();
     case FMS_DataPackage::CPFILEOPTIONS:
@@ -75,7 +72,7 @@ FMS_DataFactory::FMS_DataFactory()
     case FMS_DataPackage::TAILOFFILEOPTIONS:
         return createTailOfFileOptions();
     case FMS_DataPackage::CHMODOPTIONS:
-        return createchModOptions();
+        return createChModOptions();
     default:
         throw "IllegalArgumentException";
     }
@@ -153,10 +150,6 @@ StringList_ptr FMS_DataFactory::createStringList()
 {
     return new StringList();
 }
-StatusList_ptr FMS_DataFactory::createStatusList()
-{
-    return new StatusList();
-}
 FileStat_ptr FMS_DataFactory::createFileStat()
 {
     return new FileStat();
@@ -201,8 +194,8 @@ TailOfFileOptions_ptr FMS_DataFactory::createTailOfFileOptions()
 {
     return new TailOfFileOptions();
 }
-chModOptions_ptr FMS_DataFactory::createchModOptions()
+ChModOptions_ptr FMS_DataFactory::createChModOptions()
 {
-    return new chModOptions();
+    return new ChModOptions();
 }
 
