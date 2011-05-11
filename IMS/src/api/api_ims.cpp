@@ -5,6 +5,8 @@
 #include "SysInfoProxy.hpp"
 #include "ObjectIdProxy.hpp"
 #include "ThresholdProxy.hpp"
+#include "ProcessCtlProxy.hpp"
+
 int
 vishnu::exportCommands(const string sessionKey,
 	       const string oldSessionId,
@@ -185,8 +187,13 @@ vishnu::defineTransferIdentifier(const string sessionKey,
 int
 vishnu::loadShed(const string sessionKey,
 	 string machineId,
-	 IMS_Data::LoadShedType)
+	 IMS_Data::LoadShedType loadShedType)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  ProcessCtlProxy processCtlProxy(sessionProxy, machineId);
+  processCtlProxy.loadShed(loadShedType);
+
   return IMS_SUCCESS;
 }
 
@@ -221,6 +228,11 @@ int
 vishnu::stop(const string sessionKey,
      IMS_Data::Process proc)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  ProcessCtlProxy processCtlProxy(sessionProxy);
+  processCtlProxy.stop(proc);
+
   return IMS_SUCCESS;
 }
 
@@ -244,6 +256,11 @@ vishnu::restart(const string sessionKey,
 	string machineId,
 	IMS_Data::RestartOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  SessionProxy sessionProxy(sessionKey);
+  ProcessCtlProxy processCtlProxy(sessionProxy, machineId);
+  processCtlProxy.restart(op);
+
   return IMS_SUCCESS;
 }
 

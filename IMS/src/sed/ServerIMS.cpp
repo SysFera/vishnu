@@ -290,7 +290,7 @@ ServerIMS::init(int vishnuId,
 
   /* solveRestart */
 
-  mprofile = diet_profile_desc_alloc(SRV[14], 3, 3, 4);
+  mprofile = diet_profile_desc_alloc(SRV[14], 2, 2, 3);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
