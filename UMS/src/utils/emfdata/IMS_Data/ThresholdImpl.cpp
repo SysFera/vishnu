@@ -72,6 +72,12 @@ void Threshold::_initialize()
                 m_type);
     }
         return _any;
+    case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_handler);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -100,6 +106,12 @@ void Threshold::eSet(::ecore::EInt _featureID,
                 _newValue, m_type);
     }
         return;
+    case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_handler);
+    }
+        return;
 
     }
     throw "Error";
@@ -117,6 +129,8 @@ void Threshold::eSet(::ecore::EInt _featureID,
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__TYPE:
         return ::ecorecpp::mapping::set_traits< ::IMS_Data::MetricType >::is_set(
                 m_type);
+    case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
+        return m_handler != "";
 
     }
     throw "Error";
