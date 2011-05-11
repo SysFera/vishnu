@@ -45,12 +45,12 @@
       </revision>
       <revision>
         <revnumber>4</revnumber>
-        <date>05/05/2011</date>
-        <authorinitials>K. COULOMB</authorinitials>
+        <date>11/05/2011</date>
+        <authorinitials>K. COULOMB, B.ISNARD</authorinitials>
         <revdescription>
-          <para>Réécriture du lancement avec fichier de configuration</para>
-          <para>Ajout d'un paragraphre pour le sendmail</para>
-          <para>Ajout de l'administration de TMS</para>
+          <para>Réécriture du lancement avec fichier de configuration.</para>
+          <para>Ajout d'un paragraphe pour le sendmail.</para>
+          <para>Ajout de l'administration de TMS.</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -173,50 +173,69 @@
     <title>Installation à partir des sources</title>
     <section>
       <title>Prérequis</title>
+      <para>Les logiciels suivants doivent être installés sur le système, avec les fichiers de développement (paquets -dev):</para>
       <itemizedlist>
-	<listitem>
-	  <para>GCC version 4.4.3 minimum</para>
-	</listitem>
-	<listitem>
-	  <para>CMAKE version 2.6 minimum</para>
-	</listitem>
-	<listitem>
-	  <para>BOOST version 1.45 minimum</para>
-	</listitem>
-	<listitem>
-	  <para>OMNIORB version 4.1.4</para>
-	</listitem>
-	<listitem>
-	  <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
-	</listitem>
-	<listitem>
-	  <para>libcrypt</para>
-	</listitem>
-	<listitem>
-	  <para>SWIG 1.3 (SWIG 2 n'est pas compatible)</para>
-	</listitem>
-	<listitem>
-	  <para>SSH</para>
-	</listitem>
-	<listitem>
-	  <para>Sysfera-DS (DIET uniquement pour l'instant, version 2.7 minimum)</para>
-	</listitem>
-	<listitem>
-	  <para>JAVA version 1.6  (Option)</para>
-	</listitem>
-	<listitem>
-          <para>Python version 2.x x>=5 (Option)</para>
-	</listitem>
-	<listitem>
-          <para>Torque ou LoadLeveler</para>
-	</listitem>
+        <listitem>
+          <para>Dépendances requises pour tous les modules VISHNU:</para>
+          <itemizedlist>
+            <listitem>
+              <para>GCC version 4.4.3 minimum</para>
+            </listitem>
+            <listitem>
+              <para>CMAKE version 2.6 minimum</para>
+            </listitem>
+            <listitem>
+              <para>BOOST version 1.45 minimum</para>
+            </listitem>
+            <listitem>
+              <para>OMNIORB version 4.1.4</para>
+            </listitem>
+            <listitem>
+              <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+            </listitem>
+            <listitem>
+              <para>libcrypt</para>
+            </listitem>
+            <listitem>
+              <para>SSH</para>
+            </listitem>
+            <listitem>
+              <para>Sysfera-DS (DIET version 2.7 minimum)</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Dépendances requises pour le module TMS:</para>
+          <itemizedlist>
+            <listitem>
+              <para>Torque API v3.2.6</para>
+            </listitem>
+            <listitem>
+              <para>ou IBM LoadLeveler API</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Dépendances optionnelles:</para>
+          <itemizedlist>
+            <listitem>
+              <para>SWIG 1.3.40 (SWIG 2 n'est pas compatible)</para>
+            </listitem>
+            <listitem>
+              <para>JAVA SDK version 1.6</para>
+            </listitem>
+            <listitem>
+              <para>Python version 2.x x>=5</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
       </itemizedlist>
     </section><!-- end prerequis -->
     <section>
       <title> Compilation des sources </title>
       <para>VISHNU utilise CMake comme système de construction et se conforme aux 
-pratiques communèment admises.
-	Il y a neufs options principales utilisables :
+pratiques communément admises.
+	Les options principales utilisables sont les suivantes:
 	<itemizedlist>
 	  <listitem>
 	    <para>
@@ -235,12 +254,13 @@ pratiques communèment admises.
 	  </listitem>
 	  <listitem>
 	    <para>
-	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). TMS a besoin d'UMS au préalable.
+	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON et
+              l'une des options VISHNU_USE_TORQUE ou VISHNU_USE_LOADLEVELER doit être à ON.
 	    </para>
 	  </listitem>
 	  <listitem>
 	    <para>
-	      COMPILE_UMS, comme le module UMS si le flag est activé (OFF par défaut). 
+	      COMPILE_UMS, compile le module UMS si le flag est activé (OFF par défaut). 
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -338,7 +358,7 @@ pratiques communèment admises.
           adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
         </listitem>
         <listitem>
-          <para><emphasis role="bold">Vérification</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
+          <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
             sur l'adresse 'http://localhost:8080/jbossws' (ou 'http://adresseIP:8080/jbossws') et vérifier que la page affiche bien la version
             du module web services (jbossws-cxf-3.3.1.GA).</para> 
         </listitem>
@@ -424,7 +444,7 @@ pratiques communèment admises.
               (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
          </listitem>
           <listitem>
-            <para><emphasis role="bold">Vérification</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
+            <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
               sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le 
                 "service endPoint" : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para> 
           </listitem>
@@ -447,7 +467,7 @@ pratiques communèment admises.
           <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est 'omniNames -start' pour la première fois, sinon 'omniNames' suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
         </listitem>
         <listitem>
-          <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
+          <para> Lancer le MA avec son fichier de configuration : 'dietAgent config.cfg'. Voir la figure 4.1 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes : 
             <itemizedlist>
               <listitem>
                 <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
@@ -462,7 +482,7 @@ pratiques communèment admises.
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS sur la préfrontale. La commande de lancement est : './umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
+          <para>Lancer le SeD UMS avec './umssed ~/ums_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.2 pour un exemple de configuration. Les paramètres à fournir correspondent à:
             <itemizedlist>
               <listitem>
                 <para>
@@ -478,14 +498,14 @@ pratiques communèment admises.
                 </para>
               </listitem>
               <listitem>
-                <para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB, une seule est utilisable actuellement .</para>
+                <para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB (valeur '1' par défaut) .</para>
               </listitem>
               <listitem>
-                <para> 'databaseType=postgresql' : Pour utiliser une base postgrel. Actuellement les bases oracle et mysql ne sont pas utilisables.</para>
+                <para> 'databaseType=postgresql' : Pour utiliser une base postgreSQL. Actuellement les bases de type Oracle ou MySQL ne sont pas supportées.</para>
               </listitem>
               <listitem>
                 <para>
-                  'databaseHost=localhost' : L'hôte contenant la base de données.
+                  'databaseHost=localhost' : Le nom DNS du serveur de bases de données, ou 'localhost' si la base est locale.
                 </para>
               </listitem>
 	      <listitem>
@@ -498,34 +518,35 @@ pratiques communèment admises.
                 <para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
               </listitem>
               <listitem>
-                <para> 'sendmailScriptPath=/home/keo/Bureau/sendmail.py' : Le script à utiliser pour envoyer les mails. Il sera fourni avec le module UMS.</para>
+                <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
+                  dans le sous-répertoire sbin/ du répertoire d'installation.</para>
               </listitem>
             </itemizedlist>
           </para>
         </listitem>
         <listitem>
 	  <para>
-	    Sur la frontale contenant torque, il faut que le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de torque soient lancés. 
+	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque. 
 	  </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD TMS sur la frontale contenant torque. La commande de lancement est : './tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec en plus:
+          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : './tmssed ~/tms_sed.cfg'. Le paramètre est un fichier de configuration VISHNU. Voir la figure 4.3 pour un exemple de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus:
 	    <itemizedlist>
 	      <listitem>
-		<para>'intervalMonitor = 1' : La fréquence en seconde de mise à jour des données dans la base concernant les états des jobs</para>
+		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
 	      </listitem>
 	      <listitem>
-		<para>'batchSchedulerType=TORQUE' : Le type du batch scheduler auquel le SeD se connectera</para>
+		<para>'batchSchedulerType=TORQUE' : Le type du batch scheduler utilisé.</para>
 	      </listitem>
 	      <listitem>
-		<para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé</para>
+		<para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
 	      </listitem>
 	    </itemizedlist>
 	  </para>
 	</listitem>
         <listitem>
           <para>
-            Les modules UMS et TMS de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS et TMS.
+            Les modules UMS et TMS de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS et TMS (voir le manuel de l'utilisateur VISHNU).
           </para>
         </listitem>
       </orderedlist>
@@ -646,14 +667,14 @@ pratiques communèment admises.
       </programlisting>
     </section>
     <section>
-      <title>Exemple de fichier de configuration pour un SeD DIET (le champs dietConfigFile)</title>
+      <title>Exemple de fichier de configuration pour un SeD DIET</title>
       <programlisting>
 	traceLevel = 0
 	parentName = MA0
       </programlisting>
     </section>
     <section>
-      <title>Exemple de fichier de configuration d'un SeD UMS </title>
+      <title>Exemple de fichier de configuration d'un SeD UMS</title>
       <programlisting>
 	# Configuration of the VISHNU UMS SeD
 	dietConfigFile=/usr/local/etc/SeD.cfg
@@ -663,7 +684,7 @@ pratiques communèment admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
-	sendmailScriptPath=/home/keo/Bureau/sendmail.py
+        sendmailScriptPath=/usr/local/sbin/sendmail.py
       </programlisting>
     </section>
     <section>
@@ -677,7 +698,7 @@ pratiques communèment admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
-	sendmailScriptPath=/home/keo/Bureau/sendmail.py
+        sendmailScriptPath=/usr/local/sbin/sendmail.py
 	# Configuration propres à TMS
 	batchSchedulerType=TORQUE
 	vishnuMachineId=machine_1
@@ -693,6 +714,49 @@ pratiques communèment admises.
 	# reject its own ip
 	reject:192\.168\.1\.6
       </programlisting>
+    </section>
+    <section>
+      <title>Configuration de l'envoi des emails par VISHNU</title>
+      <para>Le processus UMS SeD utilise le fichier 'sendmail.py' (fourni dans l'installation VISHNU, dans le sous-répertoire sbin/)
+        pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
+        de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
+        fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
+      <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py:</para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="15cm"/>
+          <thead>
+            <row>
+              <entry>Option</entry>
+              <entry>Ligne du script sendmail.py à modifier</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>login</para></entry>
+              <entry><programlisting>parser.add_option("--login", dest="login", help="", default="[login_utilisateur]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>password</para></entry>
+              <entry><programlisting>parser.add_option("--password", dest="password", help="smtp password", default="[password_utilisateur]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>hostname</para></entry>
+              <entry><programlisting>parser.add_option("--hostname", dest="host", help="smtp host", default="[nom_serveur_SMTP]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>port</para></entry>
+              <entry><programlisting>parser.add_option("--port", dest="port", help="smtp port [default: 25]", type=int, default="[no_port]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>SSL</para></entry>
+              <entry><programlisting>parser.add_option("--ssl", action="store_true", dest="use_ssl", help="enable ssl support [default: %default - default port: 587
+]", default=True)</programlisting></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </section>
     <section>
       <title>Test d'exécution d'un service depuis une machine client par shell</title>
