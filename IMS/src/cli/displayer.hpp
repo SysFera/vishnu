@@ -42,10 +42,31 @@ void
 displaySystemInfo(IMS_Data::SystemInfo* sysInfo);
 
 /**
- * \brief To display the list of system info
+ * \brief To display the list of system information
  * \param li: The list of system information to display
  */
 void
 displayListSysInfo(IMS_Data::ListSysInfo* li);
 
+/**
+ * \brief  function to convert the type of metric into string
+ * \param metricType: The type of metric
+ * \return The converted state value
+ */
+std::string
+convertMetricToString(const int& metricType);
+
+/**
+* \brief To display a system threshold
+* \param systemThreshold: The system threshold to display
+*/
+void
+displaySystemThreshold(IMS_Data::Threshold* systemThreshold);
+
+/**
+ * \brief To display the list of system threshold
+ * \param li: The list of system threshold to display
+ */
+void
+displayListSysThreshold(IMS_Data::ListThreshold* li);
 
