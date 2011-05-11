@@ -5,7 +5,7 @@
 #include "DIET_data.h"
 #include "DIET_server.h"
 
-MetricServer::MetricServer(const UserServer session):msession(session){
+MetricServer::MetricServer(const UserServer session):msession(session) {
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
 }
