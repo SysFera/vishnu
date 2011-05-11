@@ -245,6 +245,10 @@ IMS_DataPackage::IMS_DataPackage()
     m_Threshold__type->setFeatureID(
             ::IMS_Data::IMS_DataPackage::THRESHOLD__TYPE);
     m_ThresholdEClass->getEStructuralFeatures().push_back(m_Threshold__type);
+    m_Threshold__handler = new ::ecore::EAttribute();
+    m_Threshold__handler->setFeatureID(
+            ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER);
+    m_ThresholdEClass->getEStructuralFeatures().push_back(m_Threshold__handler);
 
     // SysInfoOp
     m_SysInfoOpEClass = new ::ecore::EClass();
@@ -742,6 +746,20 @@ IMS_DataPackage::IMS_DataPackage()
     m_Threshold__type->setUnique(true);
     m_Threshold__type->setDerived(false);
     m_Threshold__type->setOrdered(true);
+    m_Threshold__handler->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Threshold__handler->setName("handler");
+    m_Threshold__handler->setDefaultValueLiteral("" "");
+    m_Threshold__handler->setLowerBound(0);
+    m_Threshold__handler->setUpperBound(1);
+    m_Threshold__handler->setTransient(false);
+    m_Threshold__handler->setVolatile(false);
+    m_Threshold__handler->setChangeable(true);
+    m_Threshold__handler->setUnsettable(false);
+    m_Threshold__handler->setID(false);
+    m_Threshold__handler->setUnique(true);
+    m_Threshold__handler->setDerived(false);
+    m_Threshold__handler->setOrdered(true);
     // SysInfoOp
     m_SysInfoOpEClass->setName("SysInfoOp");
     m_SysInfoOpEClass->setAbstract(false);
@@ -1216,6 +1234,10 @@ IMS_DataPackage::IMS_DataPackage()
 ::ecore::EAttribute_ptr IMS_DataPackage::getThreshold__type()
 {
     return m_Threshold__type;
+}
+::ecore::EAttribute_ptr IMS_DataPackage::getThreshold__handler()
+{
+    return m_Threshold__handler;
 }
 ::ecore::EAttribute_ptr IMS_DataPackage::getSysInfoOp__machineId()
 {

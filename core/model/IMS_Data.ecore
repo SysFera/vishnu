@@ -224,6 +224,12 @@
         <details key="content" value="The type of the threshold"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="handler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="content" value="The userId of the admin responsible for handling the threshold problems"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ProcessState" instanceTypeName="ProcessState">
     <eAnnotations source="Description">
