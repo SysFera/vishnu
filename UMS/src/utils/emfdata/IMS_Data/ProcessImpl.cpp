@@ -147,23 +147,17 @@ void Process::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::PROCESS__PROCESSNAME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_processName);
+        return m_processName != "";
     case ::IMS_Data::IMS_DataPackage::PROCESS__MACHINEID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_machineId);
+        return m_machineId != "";
     case ::IMS_Data::IMS_DataPackage::PROCESS__DIETID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_dietId);
+        return m_dietId != "";
     case ::IMS_Data::IMS_DataPackage::PROCESS__STATE:
-        return ::ecorecpp::mapping::set_traits< ::IMS_Data::ProcessState >::is_set(
-                m_state);
+        return m_state != 0;
     case ::IMS_Data::IMS_DataPackage::PROCESS__TIMESTAMP:
-        return ::ecorecpp::mapping::set_traits< ::ecore::ELong >::is_set(
-                m_timestamp);
+        return m_timestamp != 0;
     case ::IMS_Data::IMS_DataPackage::PROCESS__SCRIPT:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_script);
+        return m_script != "";
 
     }
     throw "Error";
