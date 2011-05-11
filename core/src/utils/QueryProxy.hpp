@@ -138,9 +138,7 @@ class QueryProxy
 };
 
 /**
- * \fn QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params,
- *                const SessionProxy& session,
- const std::string& serviceName)
+ * \brief A Constructor of the QueryProxy template class
  * \param params The object which encapsulates the information of queryProxy options
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \param serviceName The name of the service to call
@@ -156,10 +154,7 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
 }
 
 /**
-* \fn QueryProxy(const QueryParameters& params,
-*                const SessionProxy& session,
-*                const std::string& serviceName,
-*                 const std::string& machineId )
+ * \brief Another constructor of the QueryProxy template class
 * \param params The object which encapsulates the information of queryProxy options
 * \param session The object which encapsulates the session information (ex: identifier of the session)
 * \param serviceName The name of the service to call
@@ -394,7 +389,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::listWithParamsString()
 }
 
 /**
- * \fn QueryProxy<QueryParameters, ListObject>::~QueryProxy()
+ * \brief A default destructor for QueryProxy
  * \brief Destructor, raises an exception on error
  */
   template <class QueryParameters, class ListObject>
