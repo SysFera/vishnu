@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * FMS_Data/chModOptions.hpp
+ * FMS_Data/ChModOptions.hpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -18,8 +18,8 @@
  */
 
 /**
- * \file chModOptions.hpp
- * \brief The chModOptions class
+ * \file ChModOptions.hpp
+ * \brief The ChModOptions class
  * \author Generated file
  * \date 31/03/2011
  */
@@ -34,7 +34,7 @@
 
 #include <ecore/EObject.hpp>
 
-/*PROTECTED REGION ID(chModOptions_pre) START*/
+/*PROTECTED REGION ID(ChModOptions_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
@@ -43,21 +43,21 @@ namespace FMS_Data
 {
 
     /**
-     * \class chModOptions
-     * \brief Implementation of the chModOptions class
+     * \class ChModOptions
+     * \brief Implementation of the ChModOptions class
      */
-    class chModOptions: public virtual ::ecore::EObject
+    class ChModOptions: public virtual ::ecore::EObject
 
     {
     public:
         /**
-         * \brief The default constructor for chModOptions
+         * \brief The default constructor for ChModOptions
          */
-        chModOptions();
+        ChModOptions();
         /**
-         * \brief The destructor for chModOptions
+         * \brief The destructor for ChModOptions
          */
-        virtual ~chModOptions();
+        virtual ~ChModOptions();
 
         /**
          * \brief Internal method
@@ -82,7 +82,7 @@ namespace FMS_Data
         // References
 
 
-        /*PROTECTED REGION ID(chModOptions) START*/
+        /*PROTECTED REGION ID(ChModOptions) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -96,7 +96,7 @@ namespace FMS_Data
         virtual void eUnset(::ecore::EInt _featureID);
         virtual ::ecore::EClass_ptr _eClass();
 
-        /*PROTECTED REGION ID(chModOptionsImpl) START*/
+        /*PROTECTED REGION ID(ChModOptionsImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
