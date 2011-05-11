@@ -101,7 +101,11 @@ public:
       //To add the number of the cpu to the request
       addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
     } else {
-      sqlRequest.append(" and status < 5 "); 
+       if (options->getJobId().size() == 0) { 
+         sqlRequest.append(" and status < 5 "); 
+       } else {
+         sqlRequest.append(" and status < 6 ");
+       }
     }
 
     //To check the job priority
@@ -203,6 +207,8 @@ public:
       mlistObject->setNbJobs(mlistObject->getJobs().size());
       mlistObject->setNbRunningJobs(nbRunningJobs);
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
+    } else {
+
     }
     return mlistObject;
   }
