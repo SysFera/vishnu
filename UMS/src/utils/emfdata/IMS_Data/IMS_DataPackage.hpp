@@ -289,14 +289,19 @@ namespace IMS_Data
         static const int THRESHOLD__TYPE = 27;
 
         /**
+         * \brief Constant for THRESHOLD__HANDLER feature
+         */
+        static const int THRESHOLD__HANDLER = 28;
+
+        /**
          * \brief Constant for SYSINFOOP__MACHINEID feature
          */
-        static const int SYSINFOOP__MACHINEID = 28;
+        static const int SYSINFOOP__MACHINEID = 29;
 
         /**
          * \brief Constant for LISTSYSINFO__SYSINFO feature
          */
-        static const int LISTSYSINFO__SYSINFO = 29;
+        static const int LISTSYSINFO__SYSINFO = 30;
 
         // EClassifiers methods
 
@@ -591,6 +596,12 @@ namespace IMS_Data
         virtual ::ecore::EAttribute_ptr getThreshold__type();
 
         /**
+         * \brief Returns the reflective object for feature handler of class Threshold
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getThreshold__handler();
+
+        /**
          * \brief Returns the reflective object for feature machineId of class SysInfoOp
          * \return A pointer to the reflective object
          */
@@ -859,6 +870,11 @@ namespace IMS_Data
          * \brief The instance for the feature type of class Threshold
          */
         ::ecore::EAttribute_ptr m_Threshold__type;
+
+        /**
+         * \brief The instance for the feature handler of class Threshold
+         */
+        ::ecore::EAttribute_ptr m_Threshold__handler;
 
         /**
          * \brief The instance for the feature machineId of class SysInfoOp
