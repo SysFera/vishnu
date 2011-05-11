@@ -101,6 +101,17 @@ namespace IMS_Data
          **/
         void setType(::IMS_Data::MetricType _type);
 
+        /**
+         * \brief To get the handler
+         * \return The handler attribute value
+         **/
+        ::ecore::EString const& getHandler() const;
+        /**
+         * \brief To set the handler
+         * \param _handler The handler value
+         **/
+        void setHandler(::ecore::EString const& _handler);
+
         // References
 
 
@@ -131,6 +142,8 @@ namespace IMS_Data
         ::ecore::EString m_machineId;
 
         ::IMS_Data::MetricType m_type;
+
+        ::ecore::EString m_handler;
 
         // References
 
