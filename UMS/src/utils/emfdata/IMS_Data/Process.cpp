@@ -30,7 +30,9 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-Process::Process()
+Process::Process() :
+    m_processName(""), m_machineId(""), m_dietId(""), m_state(0),
+            m_timestamp(0), m_script("")
 {
 
     /*PROTECTED REGION ID(ProcessImpl__ProcessImpl) START*/

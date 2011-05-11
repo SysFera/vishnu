@@ -30,7 +30,8 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-SysInfoOp::SysInfoOp()
+SysInfoOp::SysInfoOp() :
+    m_machineId("")
 {
 
     /*PROTECTED REGION ID(SysInfoOpImpl__SysInfoOpImpl) START*/

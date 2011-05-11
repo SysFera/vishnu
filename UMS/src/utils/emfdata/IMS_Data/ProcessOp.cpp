@@ -30,7 +30,8 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-ProcessOp::ProcessOp()
+ProcessOp::ProcessOp() :
+    m_machineId("")
 {
 
     /*PROTECTED REGION ID(ProcessOpImpl__ProcessOpImpl) START*/
