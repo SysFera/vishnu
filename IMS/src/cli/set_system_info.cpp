@@ -1,7 +1,7 @@
 /**
- * \file set_update_frequency.cpp
+ * \file set_system_info.cpp
  * This file defines the VISHNU command to get the metric history
- * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
 
 
@@ -70,10 +70,10 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeSystemInfoOpt(argv[0], fMemory, fDiskSpace, dietConfig);
 
-  opt->add("machineId,i",
-     "represents the id of the machine",
-     HIDDEN,
-     machineId,1);
+  opt->add( "machineId,i",
+            "represents the id of the machine",
+            HIDDEN,
+            machineId,1);
 
   opt->setPosition("machineId",1);
 
