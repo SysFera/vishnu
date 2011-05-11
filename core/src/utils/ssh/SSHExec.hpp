@@ -1,5 +1,11 @@
-#ifndef SSHEXEC_HH
-#define SSHEXEC_HH
+/**
+ * \file SSHExec.hpp
+ * \brief This file implements the SSH execution
+ * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
+ * \date 11/05/2011
+ */
+#ifndef __SSHEXEC__HH__
+#define __SSHEXEC__HH__
 
 #include <string>
 #include <utility>
