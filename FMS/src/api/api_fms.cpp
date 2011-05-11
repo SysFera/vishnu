@@ -1,11 +1,9 @@
-/** \file api_fms.hpp
+/** \file api_fms.cpp
  * \brief This file contains the VISHNU api functions for FMS package.
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  * \date MAY 2011
  */
 
-#ifndef API_FMS_HPP
-#define API_FMS_HPP
 // C++ Headers
 #include <string>
 #include <pthread.h>
@@ -14,11 +12,14 @@
 //Boost Headers
 #include <boost/thread.hpp>
 
-// Namespaces area
-using namespace FMS_Data{ }
+// FMS Headers
+#include <api_fms.hpp>
 
-namespace vishnu{
+//FMS Data Headers
+#include <FMS_Data.hpp>
 
+using namespace FMS_Data;
+using namespace std;
 
   /**
    * \brief create a new remote file
@@ -27,10 +28,8 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    createFile(const string& sessionKey,const string& path,)
+    vishnu::createFile(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
-
-
 
   /**
    * \brief change the group of a file
@@ -40,7 +39,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    chGrp(const string& sessionKey,const string& path, const string& group)
+    vishnu::chGrp(const string& sessionKey,const string& path, const string& group)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -50,7 +49,7 @@ namespace vishnu{
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int chMod(const string& sessionKey,const string& path, const ChModOptions& options)
+  int vishnu::chMod(const string& sessionKey,const string& path, const ChModOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -61,7 +60,7 @@ namespace vishnu{
    * \param options contains the options 
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyFile(const string& sessionKey,const string& src, const string& dest, const CopyFileOptions& options)
+  int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -74,7 +73,7 @@ namespace vishnu{
    * \param options contains options used to perform the file transfer
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
+  int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
@@ -86,7 +85,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the maximum number of lines to get)
    * \return 0 if everything is OK, another value otherwise
    */
-  int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
+  int vishnu::headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -96,7 +95,7 @@ namespace vishnu{
    * \param dirContent  the directory content
    * \return 0 if everything is OK, another value otherwise
    */
-  int listDir(const string& sessionKey,const string& path, StringList& dirContent,const ListDirOptions& options)
+  int vishnu::listDir(const string& sessionKey,const string& path, StringList& dirContent,const LsDirOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -105,7 +104,7 @@ namespace vishnu{
    * \param path: the directory path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int createDir(const string& sessionKey,const string& path)
+  int vishnu::createDir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -116,7 +115,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options)
+  int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest, const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -128,7 +127,7 @@ namespace vishnu{
    * \param transferInfo 
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
+  int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
       const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
@@ -137,7 +136,7 @@ namespace vishnu{
    * \param path    the file path using host:path format
    \return 0 if everything is OK, another value otherwise
    */
-  int removeFile(const string& sessionKey,const string& path)
+  int vishnu::removeFile(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -146,7 +145,7 @@ namespace vishnu{
    * \param path    the directory path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int removeDir(const string& sessionKey,const string& path)
+  int vishnu::removeDir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -158,7 +157,7 @@ namespace vishnu{
    * \param contentOfFile  an user-allocated buffer to store the result
    * \return 0 if everything is OK, another value otherwise
    */
-  int tailOFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
+  int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -168,9 +167,8 @@ namespace vishnu{
    * \param :  a buffer to store the informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int getFilesInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
+  int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
-
 
   /**
    * \brief cancel a file transfer
@@ -179,7 +177,7 @@ namespace vishnu{
    *          moveAsyncFile )
    \return 0 if everything is OK, another value otherwise
    */
-  int stopFileTransfer(const string& sessionKey,const StopTransferOptions& options)
+  int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
 
@@ -190,12 +188,11 @@ namespace vishnu{
    moveAsyncFile)
    \return 0 if everything is OK, another value otherwise
    */
-  int listFileTransfers(const string& sessionKey, const LsTransferOptions options)
+  int vishnu::listFileTransfers(const string& sessionKey, const LsTransferOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
 
 
 
-}
 
-#endif
+
