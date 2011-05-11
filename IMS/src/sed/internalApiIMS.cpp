@@ -14,6 +14,7 @@
 #include "data/MetricServer.hpp"
 #include "data/ObjectIdServer.hpp"
 #include "data/SysInfoServer.hpp"
+#include "data/ThresholdServer.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -47,13 +48,13 @@ solveCurMetric(diet_profile_t* pb){
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_current_metric");
-    mapper->code(std::string(mid), mapperkey);
-    mapper->code(std::string(curOpSer), mapperkey);
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(curOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
     IMS_Data::CurMetricOp_ptr curOp = NULL;
-    if(!parseEmfObject(std::string(curOpSer), curOp)) {
+    if(!parseEmfObject(string(curOpSer), curOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getCurentMetricValue: Curent metric option object is not well built");
     }
     // Creating the process server with the options
@@ -113,13 +114,13 @@ solveOldMetric(diet_profile_t* pb){
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_history_metric");
-    mapper->code(std::string(mid), mapperkey);
-    mapper->code(std::string(histOpSer), mapperkey);
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(histOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
     IMS_Data::MetricHistOp_ptr histOp = NULL;
-    if(!parseEmfObject(std::string(histOpSer), histOp)) {
+    if(!parseEmfObject(string(histOpSer), histOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getMetricHistory: Metric history option object is not well built");
     }
     // Creating the process server with the options
@@ -179,12 +180,12 @@ solvePS(diet_profile_t* pb){
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_processes");
-    mapper->code(std::string(processOpSer), mapperkey);
+    mapper->code(string(processOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
     IMS_Data::ProcessOp_ptr processOp = NULL;
-    if(!parseEmfObject(std::string(processOpSer), processOp)) {
+    if(!parseEmfObject(string(processOpSer), processOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getProcesses: Process option object is not well built");
     }
 
@@ -280,12 +281,122 @@ solveSetSysInfo(diet_profile_t* pb){
 }
 
 int
-solveSetThreshold(diet_profile_t* pb){
+solveGetThreshold(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char *treeOpSer = NULL;
+  char *treeSer   = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &treeOpSer,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_system_info");
+    mapper->code(string(treeOpSer), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Getting options
+    IMS_Data::ThresholdOp_ptr treeOp = NULL;
+    if(!parseEmfObject(string(treeOpSer), treeOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getThreshold: threshold option object is not well built");
+    }
+
+    // Creating the process server with the options
+    ThresholdServer tree(userServer, *treeOp);
+
+    // Listing the processes
+    IMS_Data::ListThreshold* res;
+    res = tree.getThreshold();
+
+    // Serializing the results
+    const char* name = "solve_getThreshold";
+    ::ecorecpp::serializer::serializer _ser(name);
+    treeSer = strdup(_ser.serialize(const_cast<IMS_Data::ListThreshold_ptr>(res)).c_str());
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), treeSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
 int
-solveGetThreshold(diet_profile_t* pb){
+solveSetThreshold(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* tree = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *treeSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &tree,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    // Getting options
+    IMS_Data::Threshold_ptr treeinf = NULL;
+    if(!parseEmfObject(string(tree), treeinf)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
+    }
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_set_system_info");
+    mapper->code(string(tree), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ThresholdServer treeser(userServer);
+    
+    // Listing the old metric
+    treeser.setThreshold(treeinf);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
@@ -628,12 +739,12 @@ solveGetSysInfo(diet_profile_t* pb){
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_system_info");
-    mapper->code(std::string(sysOpSer), mapperkey);
+    mapper->code(string(sysOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
     IMS_Data::SysInfoOp_ptr sysOp = NULL;
-    if(!parseEmfObject(std::string(sysOpSer), sysOp)) {
+    if(!parseEmfObject(string(sysOpSer), sysOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getSysInfo: sys info option object is not well built");
     }
 
