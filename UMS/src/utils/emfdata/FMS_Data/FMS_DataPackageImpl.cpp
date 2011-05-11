@@ -59,16 +59,6 @@ FMS_DataPackage::FMS_DataPackage()
     m_StringListEClass->getEStructuralFeatures().push_back(
             m_StringList__strings);
 
-    // StatusList
-    m_StatusListEClass = new ::ecore::EClass();
-    m_StatusListEClass->setClassifierID(STATUSLIST);
-    m_StatusListEClass->setEPackage(this);
-    getEClassifiers().push_back(m_StatusListEClass);
-    m_StatusList__status = new ::ecore::EAttribute();
-    m_StatusList__status->setFeatureID(
-            ::FMS_Data::FMS_DataPackage::STATUSLIST__STATUS);
-    m_StatusListEClass->getEStructuralFeatures().push_back(m_StatusList__status);
-
     // FileStat
     m_FileStatEClass = new ::ecore::EClass();
     m_FileStatEClass->setClassifierID(FILESTAT);
@@ -309,16 +299,16 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptionsEClass->getEStructuralFeatures().push_back(
             m_TailOfFileOptions__nline);
 
-    // chModOptions
+    // ChModOptions
     m_ChModOptionsEClass = new ::ecore::EClass();
     m_ChModOptionsEClass->setClassifierID(CHMODOPTIONS);
     m_ChModOptionsEClass->setEPackage(this);
     getEClassifiers().push_back(m_ChModOptionsEClass);
-    m_chModOptions__mode = new ::ecore::EAttribute();
-    m_chModOptions__mode->setFeatureID(
+    m_ChModOptions__mode = new ::ecore::EAttribute();
+    m_ChModOptions__mode->setFeatureID(
             ::FMS_Data::FMS_DataPackage::CHMODOPTIONS__MODE);
     m_ChModOptionsEClass->getEStructuralFeatures().push_back(
-            m_chModOptions__mode);
+            m_ChModOptions__mode);
 
     // Create enums
 
@@ -369,23 +359,6 @@ FMS_DataPackage::FMS_DataPackage()
     m_StringList__strings->setUnique(true);
     m_StringList__strings->setDerived(false);
     m_StringList__strings->setOrdered(true);
-    // StatusList
-    m_StatusListEClass->setName("StatusList");
-    m_StatusListEClass->setAbstract(false);
-    m_StatusListEClass->setInterface(false);
-    m_StatusList__status->setEType(m_StatusEEnum);
-    m_StatusList__status->setName("status");
-    m_StatusList__status->setDefaultValueLiteral("");
-    m_StatusList__status->setLowerBound(0);
-    m_StatusList__status->setUpperBound(-1);
-    m_StatusList__status->setTransient(false);
-    m_StatusList__status->setVolatile(false);
-    m_StatusList__status->setChangeable(true);
-    m_StatusList__status->setUnsettable(false);
-    m_StatusList__status->setID(false);
-    m_StatusList__status->setUnique(true);
-    m_StatusList__status->setDerived(false);
-    m_StatusList__status->setOrdered(true);
     // FileStat
     m_FileStatEClass->setName("FileStat");
     m_FileStatEClass->setAbstract(false);
@@ -954,24 +927,24 @@ FMS_DataPackage::FMS_DataPackage()
     m_TailOfFileOptions__nline->setUnique(true);
     m_TailOfFileOptions__nline->setDerived(false);
     m_TailOfFileOptions__nline->setOrdered(true);
-    // chModOptions
-    m_ChModOptionsEClass->setName("chModOptions");
+    // ChModOptions
+    m_ChModOptionsEClass->setName("ChModOptions");
     m_ChModOptionsEClass->setAbstract(false);
     m_ChModOptionsEClass->setInterface(false);
-    m_chModOptions__mode->setEType(
+    m_ChModOptions__mode->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_chModOptions__mode->setName("mode");
-    m_chModOptions__mode->setDefaultValueLiteral("");
-    m_chModOptions__mode->setLowerBound(0);
-    m_chModOptions__mode->setUpperBound(1);
-    m_chModOptions__mode->setTransient(false);
-    m_chModOptions__mode->setVolatile(false);
-    m_chModOptions__mode->setChangeable(true);
-    m_chModOptions__mode->setUnsettable(false);
-    m_chModOptions__mode->setID(false);
-    m_chModOptions__mode->setUnique(true);
-    m_chModOptions__mode->setDerived(false);
-    m_chModOptions__mode->setOrdered(true);
+    m_ChModOptions__mode->setName("mode");
+    m_ChModOptions__mode->setDefaultValueLiteral("");
+    m_ChModOptions__mode->setLowerBound(0);
+    m_ChModOptions__mode->setUpperBound(1);
+    m_ChModOptions__mode->setTransient(false);
+    m_ChModOptions__mode->setVolatile(false);
+    m_ChModOptions__mode->setChangeable(true);
+    m_ChModOptions__mode->setUnsettable(false);
+    m_ChModOptions__mode->setID(false);
+    m_ChModOptions__mode->setUnique(true);
+    m_ChModOptions__mode->setDerived(false);
+    m_ChModOptions__mode->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1133,10 +1106,6 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_StatusEEnum;
 }
-::ecore::EClass_ptr FMS_DataPackage::getStatusList()
-{
-    return m_StatusListEClass;
-}
 ::ecore::EClass_ptr FMS_DataPackage::getFileStat()
 {
     return m_FileStatEClass;
@@ -1193,10 +1162,6 @@ FMS_DataPackage::FMS_DataPackage()
 ::ecore::EAttribute_ptr FMS_DataPackage::getStringList__strings()
 {
     return m_StringList__strings;
-}
-::ecore::EAttribute_ptr FMS_DataPackage::getStatusList__status()
-{
-    return m_StatusList__status;
 }
 ::ecore::EAttribute_ptr FMS_DataPackage::getFileStat__path()
 {
@@ -1350,8 +1315,8 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_TailOfFileOptions__nline;
 }
-::ecore::EAttribute_ptr FMS_DataPackage::getchModOptions__mode()
+::ecore::EAttribute_ptr FMS_DataPackage::getChModOptions__mode()
 {
-    return m_chModOptions__mode;
+    return m_ChModOptions__mode;
 }
 

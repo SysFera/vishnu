@@ -58,10 +58,6 @@ namespace FMS_Data
     class StringList;
     typedef StringList* StringList_ptr;
 
-    // StatusList
-    class StatusList;
-    typedef StatusList* StatusList_ptr;
-
     // FileStat
     class FileStat;
     typedef FileStat* FileStat_ptr;
@@ -106,9 +102,9 @@ namespace FMS_Data
     class TailOfFileOptions;
     typedef TailOfFileOptions* TailOfFileOptions_ptr;
 
-    // chModOptions
-    class chModOptions;
-    typedef chModOptions* chModOptions_ptr;
+    // ChModOptions
+    class ChModOptions;
+    typedef ChModOptions* ChModOptions_ptr;
 
     // Package & Factory
     class FMS_DataFactory;
