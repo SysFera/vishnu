@@ -1,5 +1,5 @@
 /**
- * \file get_system_info.cpp
+ * \file get_system_threshold.cpp
  * This file defines the VISHNU command to get the metric history
  * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
@@ -21,8 +21,9 @@ using namespace std;
 using namespace vishnu;
 
 boost::shared_ptr<Options>
-makeGetystemInfoOpt(string pgName,
+makeGetystemThresholdOpt(string pgName,
                   boost::function1<void, string>& fMachineId,
+                  boost::function1<void, IMS_Data::MetricType>& fType,
                   string& dietConfig) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -33,10 +34,15 @@ makeGetystemInfoOpt(string pgName,
            ENV,
            dietConfig);
 
-   opt->add("machineId,m",
+  opt->add("machineId,m",
             "represents the id of the machine",
             CONFIG,
             fMachineId);
+
+  opt->add("metricType,t",
+            "the type of the metric",
+            CONFIG,
+            fType);
 
   return opt;
 }
@@ -51,16 +57,17 @@ int main (int argc, char* argv[]){
   string sessionKey;
 
    /********** EMF data ************/
-  IMS_Data::SysInfoOp sysInfoOp;
+  IMS_Data::ThresholdOp thresholdOp;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> fMachineId (boost::bind(&IMS_Data::SysInfoOp::setMachineId,boost::ref(sysInfoOp),_1));
+  boost::function1<void,string> fMachineId (boost::bind(&IMS_Data::ThresholdOp::setMachineId,boost::ref(thresholdOp),_1));
+  boost::function1<void,IMS_Data::MetricType> fType (boost::bind(&IMS_Data::ThresholdOp::setMetricType,boost::ref(thresholdOp),_1));
 
   /*********** Out parameters *********************/
-  IMS_Data::ListSysInfo listSysInfo;
+  IMS_Data::ListThreshold listThreshold;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeGetystemInfoOpt(argv[0], fMachineId, dietConfig);
+  boost::shared_ptr<Options> opt=makeGetystemThresholdOpt(argv[0], fMachineId, fType, dietConfig);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
@@ -93,8 +100,8 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      getSystemInfo(sessionKey, listSysInfo, sysInfoOp);
-      displayListSysInfo(&listSysInfo);
+      getSystemThreshold(sessionKey, listThreshold, thresholdOp);
+      displayListSysThreshold(&listThreshold);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
