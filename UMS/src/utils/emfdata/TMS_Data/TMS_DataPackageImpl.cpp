@@ -1618,6 +1618,16 @@ TMS_DataPackage::TMS_DataPackage()
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }
 
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // ALREADY_DOWNLOAD
+        _el->setName("ALREADY_DOWNLOAD");
+        _el->setValue(7);
+        _el->setLiteral("ALREADY_DOWNLOAD");
+        _el->setEEnum(m_JobStatusEEnum);
+        m_JobStatusEEnum->getELiterals().push_back(_el);
+    }
+
     // QueuePriority
     m_QueuePriorityEEnum->setName("QueuePriority");
     m_QueuePriorityEEnum->setSerializable(true);
