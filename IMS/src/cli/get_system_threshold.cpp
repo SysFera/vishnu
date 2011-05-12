@@ -1,6 +1,6 @@
 /**
  * \file get_system_threshold.cpp
- * This file defines the VISHNU command to get the metric history
+ * This file defines the VISHNU command to get the system threshold
  * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
 

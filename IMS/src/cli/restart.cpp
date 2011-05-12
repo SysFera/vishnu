@@ -1,6 +1,6 @@
 /**
  * \file set_system_info.cpp
- * This file defines the VISHNU command to get the metric history
+ * This file defines the VISHNU command to restart a vishnu process
  * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
 
@@ -111,7 +111,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-     restart(sessionKey, machineId, restartOp);
+      restart(sessionKey, machineId, restartOp);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
