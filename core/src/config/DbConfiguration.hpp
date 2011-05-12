@@ -18,6 +18,9 @@ class DbConfiguration {
 
 public:
 
+  /**
+   * \brief The database type 
+   */
   typedef enum {
     POSTGRESQL,
     ORACLE,

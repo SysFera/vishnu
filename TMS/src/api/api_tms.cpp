@@ -244,7 +244,7 @@ vishnu::getJobOutput(const std::string& sessionKey,
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The derectory "+outDir+" does not exist");
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The directory "+outDir+" does not exist");
   }
 
   SessionProxy sessionProxy(sessionKey);

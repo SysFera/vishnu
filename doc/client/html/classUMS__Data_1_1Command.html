@@ -81,6 +81,10 @@ virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the cmdEndTime.  <a href="#a8ce2ee67b02e572490af6a803129d85b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMS__Data_1_1Command.html#a5b75d77a48a6384a7cb0a3c0ebde745b">setCmdEndTime</a> (::ecore::ELong _cmdEndTime)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set the cmdEndTime.  <a href="#a5b75d77a48a6384a7cb0a3c0ebde745b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">::UMS_Data::CommandStatusType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMS__Data_1_1Command.html#ab850acaeb0a87305e1f9e3b6a653c28f">getStatus</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To get the status.  <a href="#ab850acaeb0a87305e1f9e3b6a653c28f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUMS__Data_1_1Command.html#a076d0296621fbea38cf9fb50663e28fc">setStatus</a> (::UMS_Data::CommandStatusType _status)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To set the status.  <a href="#a076d0296621fbea38cf9fb50663e28fc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07a8cb4e04bb1257bd15d87e2ab3a278"></a><!-- doxytag: member="UMS_Data::Command::eGet" ref="a07a8cb4e04bb1257bd15d87e2ab3a278" args="(::ecore::EInt _featureID,::ecore::EBoolean _resolve)" -->
 virtual ::ecore::EJavaObject&nbsp;</td><td class="memItemRight" valign="bottom"><b>eGet</b> (::ecore::EInt _featureID,::ecore::EBoolean _resolve)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a383fa0384266578fbf4592d4005c466c"></a><!-- doxytag: member="UMS_Data::Command::eSet" ref="a383fa0384266578fbf4592d4005c466c" args="(::ecore::EInt _featureID,::ecore::EJavaObject const &amp;_newValue)" -->
@@ -105,6 +109,8 @@ Protected Attributes</h2></td></tr>
 ::ecore::ELong&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_cmdStartTime</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7a1a49d616927212d67747e62e1bd99"></a><!-- doxytag: member="UMS_Data::Command::m_cmdEndTime" ref="ac7a1a49d616927212d67747e62e1bd99" args="" -->
 ::ecore::ELong&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_cmdEndTime</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8525fe54dca6ed9a7b1eaed13bde09ef"></a><!-- doxytag: member="UMS_Data::Command::m_status" ref="a8525fe54dca6ed9a7b1eaed13bde09ef" args="" -->
+::UMS_Data::CommandStatusType&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_status</b></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Implementation of the <a class="el" href="classUMS__Data_1_1Command.html" title="Implementation of the Command class.">Command</a> class. </p>
@@ -226,6 +232,26 @@ Protected Attributes</h2></td></tr>
 
 <p>To get the sessionId. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The sessionId attribute value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab850acaeb0a87305e1f9e3b6a653c28f"></a><!-- doxytag: member="UMS_Data::Command::getStatus" ref="ab850acaeb0a87305e1f9e3b6a653c28f" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">::UMS_Data::CommandStatusType UMS_Data::Command::getStatus </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To get the status. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The status attribute value </dd></dl>
 
 </div>
 </div>
@@ -385,11 +411,37 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a076d0296621fbea38cf9fb50663e28fc"></a><!-- doxytag: member="UMS_Data::Command::setStatus" ref="a076d0296621fbea38cf9fb50663e28fc" args="(::UMS_Data::CommandStatusType _status)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UMS_Data::Command::setStatus </td>
+          <td>(</td>
+          <td class="paramtype">::UMS_Data::CommandStatusType&nbsp;</td>
+          <td class="paramname"> <em>_status</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To set the status. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>_status</em>&nbsp;</td><td>The status value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>UMS/src/utils/emfdata/UMS_Data/<a class="el" href="Command_8hpp_source.html">Command.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 17:58:43 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:41 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -22,8 +22,8 @@ using namespace boost::gregorian;
 
 
 /**
-* \enum CmdType
-* \brief The type of the command
+* \enum BatchType
+* \brief The type of the Batch
 */
 typedef enum {
   TORQUE = 0,/*!< For TORQUE batch type */
@@ -120,7 +120,7 @@ namespace vishnu {
   * \brief Function to move file
   * \param src: the path of the file to move
   * \param dest: the destination where the file will be moved
-  * \param file: the name of the file in dest
+  * \param filename: the name of the file in dest
   * \return raises an exception on error
   */
   int
@@ -165,7 +165,7 @@ namespace vishnu {
 
    /**
     * \brief Function to check the job nbNodesAndCpuPerNode
-    * \param nbNodesAndNbCpuPerNode the number of nodes and cpu per node
+    * \param nbNodesAndCpuPerNode the number of nodes and cpu per node
     * \return raises an exception on error
     */
    void
@@ -179,12 +179,14 @@ namespace vishnu {
 
    /**
     * \brief Function to convert UTC time into localtime (seconds)
+    * \param localtime the local time
     * \return the correspondant localtime (seconds)
     */
    time_t convertUTCtimeINLocaltime(const time_t& localtime);
 
    /**
     * \brief Function to localtime into UTC (seconds)
+    * \param localtime the local time
     * \return the diffence time (seconds)
     */
    time_t convertLocaltimeINUTCtime(const time_t& localtime);
@@ -205,6 +207,7 @@ namespace vishnu {
    /**
     * \brief Function to delete file
     * \param fileName The name of the file to create
+    * \return 0 in case of success, another value otherwise 
     */
    int deleteFile(const char* fileName);
 

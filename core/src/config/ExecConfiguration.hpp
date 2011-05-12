@@ -23,6 +23,9 @@
 template <typename T>
 class simple_cast_traits {
 public:
+  /**
+   * \brief To store the zero value
+   */
   static const T zero_value = 0;
 };
 
@@ -32,6 +35,9 @@ public:
 template <>
 class simple_cast_traits<std::string> {
 public:
+  /**
+   * \brief To store the empty string
+   */
   static const std::string zero_value ;
 };
 
@@ -113,6 +119,11 @@ public:
   getCurrentBinaryDir();
 
 protected:
+
+  /**
+   * \brief To store the configuration map
+   */
+
   ConfigMap mconfig;
 };
 
