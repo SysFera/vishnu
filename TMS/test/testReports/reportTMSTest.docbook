@@ -413,7 +413,7 @@ same conditions as regards security.</para>
               <entry>Description of the test cases</entry>
               <entry>Output expected</entry>
               <entry>Output gotten</entry>
-              <entry>Error and remarks</entry>
+              <entry>Error</entry>
             </row>
           </thead>
           <tbody>
