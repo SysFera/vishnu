@@ -133,7 +133,7 @@ public:
   check();
   /**
   * \brief Function to finalize the service
-  * \param cmdDescritpion The description of the command
+  * \param cmdDescription The description of the command
   * \param cmdType The type of the command (UMS, TMS, FMS, IMS)
   * \param cmdStatus The status of the command
   * \param newVishnuObjectID the new vishnu object Id
