@@ -151,23 +151,14 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
 }
 
 /**
-<<<<<<< HEAD
  * \brief Another constructor of the QueryProxy template class
-* \param params The object which encapsulates the information of queryProxy options
-* \param session The object which encapsulates the session information (ex: identifier of the session)
-* \param serviceName The name of the service to call
-* \param machineId The identifier of the machine in which the query will be done
-* \brief Constructor, raises an exception on error
-*/
-
-=======
  * \param params The object which encapsulates the information of queryProxy options
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \param serviceName The name of the service to call
  * \param machineId The identifier of the machine in which the query will be done
  * \brief Constructor, raises an exception on error
  */
->>>>>>> abe4bf42273b9f77629ba311e1c0cdf300bbf5c9
+
 template <class QueryParameters, class ListObject>
 QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session,
     const std::string& serviceName, const std::string& machineId):
