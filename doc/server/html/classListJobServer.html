@@ -52,14 +52,14 @@ Inheritance diagram for ListJobServer:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca3cea95317efb694e70d98353ad9e15"></a><!-- doxytag: member="ListJobServer::ListJobServer" ref="aca3cea95317efb694e70d98353ad9e15" args="(const SessionServer session, std::string machineId)" -->
-&nbsp;</td><td class="memItemRight" valign="bottom"><b>ListJobServer</b> (const <a class="el" href="classSessionServer.html">SessionServer</a> session, std::string machineId)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a201cfa0d8b9c3fbedc1224a3a5fbeaa5"></a><!-- doxytag: member="ListJobServer::ListJobServer" ref="a201cfa0d8b9c3fbedc1224a3a5fbeaa5" args="(TMS_Data::ListJobsOptions_ptr params, const SessionServer &amp;session, std::string machineId)" -->
-&nbsp;</td><td class="memItemRight" valign="bottom"><b>ListJobServer</b> (TMS_Data::ListJobsOptions_ptr params, const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session, std::string machineId)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee4778e1bc0d87018454dcfb9cd5a915"></a><!-- doxytag: member="ListJobServer::processOptions" ref="aee4778e1bc0d87018454dcfb9cd5a915" args="(const TMS_Data::ListJobsOptions_ptr &amp;options, std::string &amp;sqlRequest)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>processOptions</b> (const TMS_Data::ListJobsOptions_ptr &amp;options, std::string &amp;sqlRequest)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListJobs *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListJobServer.html#abd6c94b777cdce434fafb95b5b9fc764">list</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list sessions information.  <a href="#abd6c94b777cdce434fafb95b5b9fc764"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListJobServer.html#aca3cea95317efb694e70d98353ad9e15">ListJobServer</a> (const <a class="el" href="classSessionServer.html">SessionServer</a> session, std::string machineId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#aca3cea95317efb694e70d98353ad9e15"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListJobServer.html#a201cfa0d8b9c3fbedc1224a3a5fbeaa5">ListJobServer</a> (TMS_Data::ListJobsOptions_ptr params, const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session, std::string machineId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#a201cfa0d8b9c3fbedc1224a3a5fbeaa5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListJobServer.html#aee4778e1bc0d87018454dcfb9cd5a915">processOptions</a> (const TMS_Data::ListJobsOptions_ptr &amp;options, std::string &amp;sqlRequest)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to treat the listJobServer options.  <a href="#aee4778e1bc0d87018454dcfb9cd5a915"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListJobs *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListJobServer.html#a88da8c8e36fce6142758dc5779e0adae">list</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list sessions information.  <a href="#a88da8c8e36fce6142758dc5779e0adae"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListJobServer.html#ae4efce66451934990d0575d1b8151378">getCommandName</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the name of the <a class="el" href="classListJobServer.html" title="ListJobServer class implementation.">ListJobServer</a> command line.  <a href="#ae4efce66451934990d0575d1b8151378"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf137539e02fc0d6f0d288d1b76cd58b"></a><!-- doxytag: member="ListJobServer::~ListJobServer" ref="abf137539e02fc0d6f0d288d1b76cd58b" args="()" -->
@@ -76,6 +76,86 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p><a class="el" href="classListJobServer.html" title="ListJobServer class implementation.">ListJobServer</a> class implementation. </p>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aca3cea95317efb694e70d98353ad9e15"></a><!-- doxytag: member="ListJobServer::ListJobServer" ref="aca3cea95317efb694e70d98353ad9e15" args="(const SessionServer session, std::string machineId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ListJobServer::ListJobServer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classSessionServer.html">SessionServer</a>&nbsp;</td>
+          <td class="paramname"> <em>session</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>machineId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor, raises an exception on error. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>The identifier of the machine in which the jobs will be listed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a201cfa0d8b9c3fbedc1224a3a5fbeaa5"></a><!-- doxytag: member="ListJobServer::ListJobServer" ref="a201cfa0d8b9c3fbedc1224a3a5fbeaa5" args="(TMS_Data::ListJobsOptions_ptr params, const SessionServer &amp;session, std::string machineId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ListJobServer::ListJobServer </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::ListJobsOptions_ptr&nbsp;</td>
+          <td class="paramname"> <em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>session</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>machineId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor, raises an exception on error. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of <a class="el" href="classListJobServer.html" title="ListJobServer class implementation.">ListJobServer</a> options </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>The identifier of the machine in which the jobs will be listed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ae4efce66451934990d0575d1b8151378"></a><!-- doxytag: member="ListJobServer::getCommandName" ref="ae4efce66451934990d0575d1b8151378" args="()" -->
 <div class="memitem">
@@ -99,12 +179,12 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
-<a class="anchor" id="abd6c94b777cdce434fafb95b5b9fc764"></a><!-- doxytag: member="ListJobServer::list" ref="abd6c94b777cdce434fafb95b5b9fc764" args="()" -->
+<a class="anchor" id="a88da8c8e36fce6142758dc5779e0adae"></a><!-- doxytag: member="ListJobServer::list" ref="a88da8c8e36fce6142758dc5779e0adae" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">UMS_Data::ListSessions * ListJobServer::list </td>
+          <td class="memname">TMS_Data::ListJobs* ListJobServer::list </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -123,11 +203,48 @@ raises an exception on error </dd></dl>
 
 </div>
 </div>
+<a class="anchor" id="aee4778e1bc0d87018454dcfb9cd5a915"></a><!-- doxytag: member="ListJobServer::processOptions" ref="aee4778e1bc0d87018454dcfb9cd5a915" args="(const TMS_Data::ListJobsOptions_ptr &amp;options, std::string &amp;sqlRequest)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ListJobServer::processOptions </td>
+          <td>(</td>
+          <td class="paramtype">const TMS_Data::ListJobsOptions_ptr &amp;&nbsp;</td>
+          <td class="paramname"> <em>options</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>sqlRequest</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to treat the listJobServer options. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>options</em>&nbsp;</td><td>the object which contains the <a class="el" href="classListJobServer.html" title="ListJobServer class implementation.">ListJobServer</a> options values </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sqlRequest</em>&nbsp;</td><td>the sql data base request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>TMS/src/server/<a class="el" href="ListJobServer_8hpp_source.html">ListJobServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:25 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:41 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -16,9 +16,9 @@ Program configuration based on key/value pairs stored in a file.
 \item 
 void \hyperlink{classExecConfiguration_acc0689c976ae6c48f88b3156bea802c1}{initFromFile} (std::string filePath)  throw (UserException)
 \begin{DoxyCompactList}\small\item\em Initialize from a file. \item\end{DoxyCompactList}\item 
-{\footnotesize template$<$typename T $>$ }\\bool \hyperlink{classExecConfiguration_a6642ffe0f41262c3b0188723c2c7ee14}{getConfigValue} (vishnu::param\_\-type\_\-t param, T \&value) const 
+{\footnotesize template$<$typename T $>$ }\\bool \hyperlink{classExecConfiguration_a6642ffe0f41262c3b0188723c2c7ee14}{getConfigValue} (\hyperlink{namespacevishnu_afa06c1bb0b3442d83acb7650e8df75d1}{vishnu::param\_\-type\_\-t} param, T \&value) const 
 \begin{DoxyCompactList}\small\item\em Get the value of a configuration parameter. \item\end{DoxyCompactList}\item 
-{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classExecConfiguration_abbfae5b4cf60595866016107c66e02ee}{getRequiredConfigValue} (vishnu::param\_\-type\_\-t param, T \&value) const   throw (UserException)
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classExecConfiguration_abbfae5b4cf60595866016107c66e02ee}{getRequiredConfigValue} (\hyperlink{namespacevishnu_afa06c1bb0b3442d83acb7650e8df75d1}{vishnu::param\_\-type\_\-t} param, T \&value) const   throw (UserException)
 \begin{DoxyCompactList}\small\item\em Check and get the value of a configuration parameter. \item\end{DoxyCompactList}\item 
 \hypertarget{classExecConfiguration_a051728d6c1118fa523ac71e6b64abecc}{
 std::string \hyperlink{classExecConfiguration_a051728d6c1118fa523ac71e6b64abecc}{scriptToString} ()}
@@ -37,10 +37,10 @@ static std::string \hyperlink{classExecConfiguration_a5b75f4ac72fdd73d570f019f13
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classExecConfiguration_aa09f42121a169812bfe051606a94ae8c}{
-\hyperlink{CommonParser_8hpp_a807e1daad5bfd9469080d93211df5dc1}{ConfigMap} {\bfseries mconfig}}
+\hyperlink{CommonParser_8hpp_a807e1daad5bfd9469080d93211df5dc1}{ConfigMap} \hyperlink{classExecConfiguration_aa09f42121a169812bfe051606a94ae8c}{mconfig}}
 \label{classExecConfiguration_aa09f42121a169812bfe051606a94ae8c}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To store the configuration map. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -52,7 +52,7 @@ Program configuration based on key/value pairs stored in a file.
 \index{getConfigValue@{getConfigValue}!ExecConfiguration@{ExecConfiguration}}
 \subsubsection[{getConfigValue}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ bool ExecConfiguration::getConfigValue (
 \begin{DoxyParamCaption}
-\item[{vishnu::param\_\-type\_\-t}]{ param, }
+\item[{{\bf vishnu::param\_\-type\_\-t}}]{ param, }
 \item[{T \&}]{ value}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
@@ -72,7 +72,7 @@ param has been set or not
 \index{getRequiredConfigValue@{getRequiredConfigValue}!ExecConfiguration@{ExecConfiguration}}
 \subsubsection[{getRequiredConfigValue}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void ExecConfiguration::getRequiredConfigValue (
 \begin{DoxyParamCaption}
-\item[{vishnu::param\_\-type\_\-t}]{ param, }
+\item[{{\bf vishnu::param\_\-type\_\-t}}]{ param, }
 \item[{T \&}]{ value}
 \end{DoxyParamCaption}
 ) const  throw ({\bf UserException})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}

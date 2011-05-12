@@ -20,22 +20,18 @@ class IMSVishnuException: public UserException{
   public:
   /**
    * \brief Default constructor
-   * \fn IMSVishnuException()
    */
   IMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn IMSVishnuException()
    */
   IMSVishnuException(const IMSVishnuException& e);
   /**
    * \brief Constructor
-   * \fn IMSVishnuException()
    */
   IMSVishnuException(int msg, std::string msgComp= "");
   /**
    * \brief Default constructor
-   * \fn ~IMSVishnuException()
    */
   ~IMSVishnuException() throw (){};
 

@@ -19,11 +19,8 @@ This class describes the g server.
 \label{classServerTMS_a1930e69c73d6b558023a105ad5fcc26f}
 
 \begin{DoxyCompactList}\small\item\em To get the unique instance of the database. \item\end{DoxyCompactList}\item 
-\hypertarget{classServerTMS_a5fac8b45cc0ae90d910d3c132bb5109f}{
-int {\bfseries getVishnuId} () const }
-\label{classServerTMS_a5fac8b45cc0ae90d910d3c132bb5109f}
-
-\item 
+int \hyperlink{classServerTMS_a5fac8b45cc0ae90d910d3c132bb5109f}{getVishnuId} () const 
+\begin{DoxyCompactList}\small\item\em to get the VishnuId \item\end{DoxyCompactList}\item 
 \hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016ea}{BatchType} \hyperlink{classServerTMS_a60ed1874cf24873ad1ed23dedf4b8a52}{getBatchType} ()
 \begin{DoxyCompactList}\small\item\em To get the batchType. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classServerTMS_af752c2bd0207bf83128f31736137dca5}{getMachineId} ()
@@ -158,6 +155,22 @@ To get the slave binary directory.
 \begin{DoxyReturn}{Returns}
 path to the binary tmsSlave 
 \end{DoxyReturn}
+\hypertarget{classServerTMS_a5fac8b45cc0ae90d910d3c132bb5109f}{
+\index{ServerTMS@{ServerTMS}!getVishnuId@{getVishnuId}}
+\index{getVishnuId@{getVishnuId}!ServerTMS@{ServerTMS}}
+\subsubsection[{getVishnuId}]{\setlength{\rightskip}{0pt plus 5cm}int ServerTMS::getVishnuId (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classServerTMS_a5fac8b45cc0ae90d910d3c132bb5109f}
+
+
+to get the VishnuId 
+
+\begin{DoxyReturn}{Returns}
+the path of the configuration file 
+\end{DoxyReturn}
 \hypertarget{classServerTMS_a0321b85dc1b8b14aa773ad4b535c33ce}{
 \index{ServerTMS@{ServerTMS}!init@{init}}
 \index{init@{init}!ServerTMS@{ServerTMS}}
@@ -178,6 +191,9 @@ To initialize the TMS Server class.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em vishnuId}]The identifier of the vishnu instance \item[{\em dbConfig}]The configuration of the database \item[{\em machineId}]the id of the machine \item[{\em batchType}]the type of batch scheduler \item[{\em slaveBinDir}]the directory that contains the slave binary \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

@@ -79,8 +79,8 @@ Private Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the Torque state into VISHNU state.  <a href="#a5fb51c751187a2bd49598aee2b0e3b18"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a2427d2d3c69cf28f779d22396383e4d4">convertTorquePrioToVishnuPrio</a> (const int &amp;prio)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the Torque priority into VISHNU priority.  <a href="#a2427d2d3c69cf28f779d22396383e4d4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0411b4c5d842efabc66e9a5db39cceba"></a><!-- doxytag: member="TorqueServer::fillJobInfo" ref="a0411b4c5d842efabc66e9a5db39cceba" args="(TMS_Data::Job &amp;job, struct batch_status *p)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>fillJobInfo</b> (TMS_Data::Job &amp;job, struct batch_status *p)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#a0411b4c5d842efabc66e9a5db39cceba">fillJobInfo</a> (TMS_Data::Job &amp;job, struct batch_status *p)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function To fill the info concerning a job.  <a href="#a0411b4c5d842efabc66e9a5db39cceba"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3fa1d5687b1c0776c3f6f59aea8bc04"></a><!-- doxytag: member="TorqueServer::mjobs" ref="ad3fa1d5687b1c0776c3f6f59aea8bc04" args="" -->
@@ -92,7 +92,9 @@ TMS_Data::Job_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada6a31f5672ecf7297dfac26ed62e19a"></a><!-- doxytag: member="TorqueServer::mlistQueues" ref="ada6a31f5672ecf7297dfac26ed62e19a" args="" -->
 TMS_Data::ListQueues_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a">mlistQueues</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">ListQueues returned. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">serverOut</a> [PBS_MAXSERVERNAME+PBS_MAXPORTNUM+2]</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae798d6ea4f01fc4336756a0cba5a644c"></a><!-- doxytag: member="TorqueServer::serverOut" ref="ae798d6ea4f01fc4336756a0cba5a644c" args="[PBS_MAXSERVERNAME+PBS_MAXPORTNUM+2]" -->
+char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">serverOut</a> [PBS_MAXSERVERNAME+PBS_MAXPORTNUM+2]</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The name of the server to connect. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addd31a54497c49a5ef552e96a0682518"></a><!-- doxytag: member="TorqueServer::mprog" ref="addd31a54497c49a5ef552e96a0682518" args="" -->
 TMS_Data::ListProgression_ptr&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTorqueServer.html#addd31a54497c49a5ef552e96a0682518">mprog</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A progression object. <br/></td></tr>
@@ -180,6 +182,42 @@ TMS_Data::ListProgression_ptr&nbsp;</td><td class="memItemRight" valign="bottom"
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>VISHNU state </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0411b4c5d842efabc66e9a5db39cceba"></a><!-- doxytag: member="TorqueServer::fillJobInfo" ref="a0411b4c5d842efabc66e9a5db39cceba" args="(TMS_Data::Job &amp;job, struct batch_status *p)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TorqueServer::fillJobInfo </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::Job &amp;&nbsp;</td>
+          <td class="paramname"> <em>job</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct batch_status *&nbsp;</td>
+          <td class="paramname"> <em>p</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function To fill the info concerning a job. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>job,:</em>&nbsp;</td><td>The job to fill </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>p,:</em>&nbsp;</td><td>The batch status structure containing the job info </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -304,6 +342,7 @@ TMS_Data::ListProgression_ptr&nbsp;</td><td class="memItemRight" valign="bottom"
 <p>Function to cancel job on remote machine. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>jobId</em>&nbsp;</td><td>The identifier of the job </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>remoteServer</em>&nbsp;</td><td>the name of the remote server </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>isLocal</em>&nbsp;</td><td>is the remoteServer is local </td></tr>
   </table>
@@ -403,26 +442,11 @@ TMS_Data::ListProgression_ptr&nbsp;</td><td class="memItemRight" valign="bottom"
 
 </div>
 </div>
-<hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="ae798d6ea4f01fc4336756a0cba5a644c"></a><!-- doxytag: member="TorqueServer::serverOut" ref="ae798d6ea4f01fc4336756a0cba5a644c" args="[PBS_MAXSERVERNAME+PBS_MAXPORTNUM+2]" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char <a class="el" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">TorqueServer::serverOut</a>[PBS_MAXSERVERNAME+PBS_MAXPORTNUM+2]<code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Server to connect </p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>TMS/src/server/<a class="el" href="TorqueServer_8hpp_source.html">TorqueServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:27 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:43 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
