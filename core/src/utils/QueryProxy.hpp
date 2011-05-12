@@ -60,7 +60,7 @@ class QueryProxy
 
     /**
      * \brief Function to change or reset the machineId
-     * \param the id of the machine used by the query
+     * \param machineId the id of the machine used by the query
      */
     void
     setMachineId(const std::string& machineId);
