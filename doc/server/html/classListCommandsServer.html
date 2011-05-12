@@ -64,8 +64,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the name of the <a class="el" href="classListCommandsServer.html" title="ListCommandsServer class implementation.">ListCommandsServer</a> command line.  <a href="#ae51f623d61d994481bdc0e77025b1cd3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListCommandsServer.html#af253d25c235222b5872c31e590869a7a">convertCmdType</a> (<a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a> type)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To convert the command type in string.  <a href="#af253d25c235222b5872c31e590869a7a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ce3767fe37e769c0e3402ed0574dbb8"></a><!-- doxytag: member="ListCommandsServer::convertypetoMapperName" ref="a6ce3767fe37e769c0e3402ed0574dbb8" args="(CmdType type)" -->
-std::string&nbsp;</td><td class="memItemRight" valign="bottom"><b>convertypetoMapperName</b> (<a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a> type)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListCommandsServer.html#a6ce3767fe37e769c0e3402ed0574dbb8">convertypetoMapperName</a> (<a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a> type)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">To convert the command type to the corresponding <a class="el" href="classMapper.html" title="Generic mapper.">Mapper</a> name.  <a href="#a6ce3767fe37e769c0e3402ed0574dbb8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afad26228bcf19880e8280e2bf5a54cad"></a><!-- doxytag: member="ListCommandsServer::~ListCommandsServer" ref="afad26228bcf19880e8280e2bf5a54cad" args="()" -->
 &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListCommandsServer.html#afad26228bcf19880e8280e2bf5a54cad">~ListCommandsServer</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor, raises an exception on error. <br/></td></tr>
@@ -158,17 +158,36 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <div class="memdoc">
 
 <p>To convert the command type in string. </p>
-<p>To convert the command type to the corresponding <a class="el" href="classMapper.html" title="Generic mapper.">Mapper</a> name.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>type</em>&nbsp;</td><td>The type to convert </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The corresponding string</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The corresponding string </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6ce3767fe37e769c0e3402ed0574dbb8"></a><!-- doxytag: member="ListCommandsServer::convertypetoMapperName" ref="a6ce3767fe37e769c0e3402ed0574dbb8" args="(CmdType type)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ListCommandsServer::convertypetoMapperName </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">CmdType</a>&nbsp;</td>
+          <td class="paramname"> <em>type</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>To convert the command type to the corresponding <a class="el" href="classMapper.html" title="Generic mapper.">Mapper</a> name. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>CmdType</em>&nbsp;</td><td>The type to convert </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>type</em>&nbsp;</td><td>The type to convert </td></tr>
   </table>
   </dd>
 </dl>
@@ -270,7 +289,7 @@ raises an exception on error </dd></dl>
 <li>UMS/src/server/<a class="el" href="ListCommandsServer_8hpp_source.html">ListCommandsServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed May 11 2011 18:43:39 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 16:22:23 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

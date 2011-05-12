@@ -72,7 +72,7 @@ namespace vishnu {
   * \enum CmdType
   * \brief The type of the command
   */
-  typedef enum CmdType{
+  typedef enum{
     UMS = 0,/*!< For UMS command type */
     TMS = 1,/*!< For TMS command type */
     FMS = 2,/*!< For FMS command type */
@@ -88,6 +88,7 @@ namespace vishnu {
    * \brief To register the server in the database
    * \param type: The type of the SeD
    * \param config: The configuration of the executable
+   * \return 0 if the function succeeds or another value otherwise
    */
   int
   registerSeD(std::string type, ExecConfiguration config);

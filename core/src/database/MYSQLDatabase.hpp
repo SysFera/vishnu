@@ -17,13 +17,12 @@
  */
 class MYSQLDatabase : public Database{
 public :
-  static const int DATABASENOTCONNECTED = -1;
   /**
    * \brief Function to process the request in the database
    * \param request The request to process
    * \return 0 on success, an error code otherwise
    */
-  int 
+  int
   process(std::string request);
   /**
   * \brief To make a connection to the database
@@ -144,7 +143,7 @@ private :
    * \fn disconnect()
    * \return 0 on success, an error code otherwise
    */
-  int 
+  int
   disconnect();
 };
 
