@@ -45,32 +45,32 @@
 <a name="l00036"></a>00036   <a class="code" href="classJobOutputServer.html#a7093321f66f882ee0ce050c466821779" title="Constructor.">JobOutputServer</a>(<span class="keyword">const</span> <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a>&amp; sessionServer,
 <a name="l00037"></a>00037                   <span class="keyword">const</span> std::string&amp; machineId,
 <a name="l00038"></a>00038                   <span class="keyword">const</span> TMS_Data::JobResult&amp; jobResult);
-<a name="l00044"></a>00044   TMS_Data::JobResult
-<a name="l00045"></a>00045   <a class="code" href="classJobOutputServer.html#abe73e8c2b4f274f1e58f2955e6b132c7" title="Function to get the job results.">getJobOutput</a>();  
-<a name="l00046"></a>00046 
-<a name="l00052"></a>00052   TMS_Data::ListJobResults_ptr
-<a name="l00053"></a>00053   <a class="code" href="classJobOutputServer.html#a35f5427690f05f53b574da3585d878c9" title="Function to get the all completed jobs results.">getCompletedJobsOutput</a>();
-<a name="l00054"></a>00054 
-<a name="l00058"></a>00058   <a class="code" href="classJobOutputServer.html#a77adf82f3387f2386f409e02cd5f6d25" title="Destructor.">~JobOutputServer</a>(); 
-<a name="l00059"></a>00059   
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061   <span class="keyword">private</span>:
-<a name="l00062"></a>00062  
-<a name="l00066"></a><a class="code" href="classJobOutputServer.html#a57b5a88791b2dec58d747d59f5dd7866">00066</a>   TMS_Data::JobResult <a class="code" href="classJobOutputServer.html#a57b5a88791b2dec58d747d59f5dd7866" title="job results data structure">mjobResult</a>;
-<a name="l00067"></a>00067  
-<a name="l00071"></a><a class="code" href="classJobOutputServer.html#a1267984244f5f2877924c8223caea895">00071</a>   <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> <a class="code" href="classJobOutputServer.html#a1267984244f5f2877924c8223caea895" title="The object which encapsulates the session information.">msessionServer</a>;
-<a name="l00072"></a>00072  
-<a name="l00076"></a><a class="code" href="classJobOutputServer.html#a8cd05c2f0fa890d2373c557b96925e30">00076</a>   std::string <a class="code" href="classJobOutputServer.html#a8cd05c2f0fa890d2373c557b96925e30" title="The machine identifier.">mmachineId</a>;
-<a name="l00077"></a>00077  
-<a name="l00081"></a><a class="code" href="classJobOutputServer.html#a30eaf288d2f24e1f94a106f249c0c43f">00081</a>   TMS_Data::ListJobResults_ptr <a class="code" href="classJobOutputServer.html#a30eaf288d2f24e1f94a106f249c0c43f" title="The lits of job results data structure.">mlistJobsResult</a>;
-<a name="l00082"></a>00082   
-<a name="l00086"></a><a class="code" href="classJobOutputServer.html#a24ca587db04f84fb89bcc07399bf8f96">00086</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classJobOutputServer.html#a24ca587db04f84fb89bcc07399bf8f96" title="An instance of vishnu database.">mdatabaseVishnu</a>;  
-<a name="l00087"></a>00087 };
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089 <span class="preprocessor">#endif</span>
+<a name="l00043"></a>00043   TMS_Data::JobResult
+<a name="l00044"></a>00044   <a class="code" href="classJobOutputServer.html#abe73e8c2b4f274f1e58f2955e6b132c7" title="Function to get the job results.">getJobOutput</a>();  
+<a name="l00045"></a>00045 
+<a name="l00050"></a>00050   TMS_Data::ListJobResults_ptr
+<a name="l00051"></a>00051   <a class="code" href="classJobOutputServer.html#a35f5427690f05f53b574da3585d878c9" title="Function to get the all completed jobs results.">getCompletedJobsOutput</a>();
+<a name="l00052"></a>00052 
+<a name="l00056"></a>00056   <a class="code" href="classJobOutputServer.html#a77adf82f3387f2386f409e02cd5f6d25" title="Destructor.">~JobOutputServer</a>(); 
+<a name="l00057"></a>00057   
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059   <span class="keyword">private</span>:
+<a name="l00060"></a>00060  
+<a name="l00064"></a><a class="code" href="classJobOutputServer.html#a57b5a88791b2dec58d747d59f5dd7866">00064</a>   TMS_Data::JobResult <a class="code" href="classJobOutputServer.html#a57b5a88791b2dec58d747d59f5dd7866" title="job results data structure">mjobResult</a>;
+<a name="l00065"></a>00065  
+<a name="l00069"></a><a class="code" href="classJobOutputServer.html#a1267984244f5f2877924c8223caea895">00069</a>   <a class="code" href="classSessionServer.html" title="UserServer class implementation.">SessionServer</a> <a class="code" href="classJobOutputServer.html#a1267984244f5f2877924c8223caea895" title="The object which encapsulates the session information.">msessionServer</a>;
+<a name="l00070"></a>00070  
+<a name="l00074"></a><a class="code" href="classJobOutputServer.html#a8cd05c2f0fa890d2373c557b96925e30">00074</a>   std::string <a class="code" href="classJobOutputServer.html#a8cd05c2f0fa890d2373c557b96925e30" title="The machine identifier.">mmachineId</a>;
+<a name="l00075"></a>00075  
+<a name="l00079"></a><a class="code" href="classJobOutputServer.html#a30eaf288d2f24e1f94a106f249c0c43f">00079</a>   TMS_Data::ListJobResults_ptr <a class="code" href="classJobOutputServer.html#a30eaf288d2f24e1f94a106f249c0c43f" title="The lits of job results data structure.">mlistJobsResult</a>;
+<a name="l00080"></a>00080   
+<a name="l00084"></a><a class="code" href="classJobOutputServer.html#a24ca587db04f84fb89bcc07399bf8f96">00084</a>   <a class="code" href="classDatabase.html" title="This class describes a database.">Database</a> *<a class="code" href="classJobOutputServer.html#a24ca587db04f84fb89bcc07399bf8f96" title="An instance of vishnu database.">mdatabaseVishnu</a>;  
+<a name="l00085"></a>00085 };
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:24 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:40 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

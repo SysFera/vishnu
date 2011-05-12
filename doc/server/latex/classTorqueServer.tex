@@ -51,11 +51,8 @@ int \hyperlink{classTorqueServer_a5fb51c751187a2bd49598aee2b0e3b18}{convertTorqu
 \begin{DoxyCompactList}\small\item\em Function to convert the Torque state into VISHNU state. \item\end{DoxyCompactList}\item 
 int \hyperlink{classTorqueServer_a2427d2d3c69cf28f779d22396383e4d4}{convertTorquePrioToVishnuPrio} (const int \&prio)
 \begin{DoxyCompactList}\small\item\em Function to convert the Torque priority into VISHNU priority. \item\end{DoxyCompactList}\item 
-\hypertarget{classTorqueServer_a0411b4c5d842efabc66e9a5db39cceba}{
-void {\bfseries fillJobInfo} (TMS\_\-Data::Job \&job, struct batch\_\-status $\ast$p)}
-\label{classTorqueServer_a0411b4c5d842efabc66e9a5db39cceba}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classTorqueServer_a0411b4c5d842efabc66e9a5db39cceba}{fillJobInfo} (TMS\_\-Data::Job \&job, struct batch\_\-status $\ast$p)
+\begin{DoxyCompactList}\small\item\em Function To fill the info concerning a job. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -74,8 +71,11 @@ TMS\_\-Data::ListQueues\_\-ptr \hyperlink{classTorqueServer_ada6a31f5672ecf7297d
 \label{classTorqueServer_ada6a31f5672ecf7297dfac26ed62e19a}
 
 \begin{DoxyCompactList}\small\item\em ListQueues returned. \item\end{DoxyCompactList}\item 
-char \hyperlink{classTorqueServer_ae798d6ea4f01fc4336756a0cba5a644c}{serverOut} \mbox{[}PBS\_\-MAXSERVERNAME+PBS\_\-MAXPORTNUM+2\mbox{]}
-\item 
+\hypertarget{classTorqueServer_ae798d6ea4f01fc4336756a0cba5a644c}{
+char \hyperlink{classTorqueServer_ae798d6ea4f01fc4336756a0cba5a644c}{serverOut} \mbox{[}PBS\_\-MAXSERVERNAME+PBS\_\-MAXPORTNUM+2\mbox{]}}
+\label{classTorqueServer_ae798d6ea4f01fc4336756a0cba5a644c}
+
+\begin{DoxyCompactList}\small\item\em The name of the server to connect. \item\end{DoxyCompactList}\item 
 \hypertarget{classTorqueServer_addd31a54497c49a5ef552e96a0682518}{
 TMS\_\-Data::ListProgression\_\-ptr \hyperlink{classTorqueServer_addd31a54497c49a5ef552e96a0682518}{mprog}}
 \label{classTorqueServer_addd31a54497c49a5ef552e96a0682518}
@@ -148,6 +148,23 @@ Function to convert the Torque state into VISHNU state.
 \begin{DoxyReturn}{Returns}
 VISHNU state 
 \end{DoxyReturn}
+\hypertarget{classTorqueServer_a0411b4c5d842efabc66e9a5db39cceba}{
+\index{TorqueServer@{TorqueServer}!fillJobInfo@{fillJobInfo}}
+\index{fillJobInfo@{fillJobInfo}!TorqueServer@{TorqueServer}}
+\subsubsection[{fillJobInfo}]{\setlength{\rightskip}{0pt plus 5cm}void TorqueServer::fillJobInfo (
+\begin{DoxyParamCaption}
+\item[{TMS\_\-Data::Job \&}]{ job, }
+\item[{struct batch\_\-status $\ast$}]{ p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTorqueServer_a0411b4c5d842efabc66e9a5db39cceba}
+
+
+Function To fill the info concerning a job. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em job,:}]The job to fill \item[{\em p,:}]The batch status structure containing the job info \end{DoxyParams}
 \hypertarget{classTorqueServer_accebe9545525e72a67d3c684665c9264}{
 \index{TorqueServer@{TorqueServer}!getJobStartTime@{getJobStartTime}}
 \index{getJobStartTime@{getJobStartTime}!TorqueServer@{TorqueServer}}
@@ -234,7 +251,7 @@ Function to cancel job on remote machine.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em remoteServer}]the name of the remote server \item[{\em isLocal}]is the remoteServer is local \end{DoxyParams}
+\item[{\em jobId}]The identifier of the job \item[{\em remoteServer}]the name of the remote server \item[{\em isLocal}]is the remoteServer is local \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -285,14 +302,6 @@ raises an exception on error
 Implements \hyperlink{classBatchServer_a078c0f8605e770c02b8eca0351526f59}{BatchServer}.
 
 
-
-\subsection{Member Data Documentation}
-\hypertarget{classTorqueServer_ae798d6ea4f01fc4336756a0cba5a644c}{
-\index{TorqueServer@{TorqueServer}!serverOut@{serverOut}}
-\index{serverOut@{serverOut}!TorqueServer@{TorqueServer}}
-\subsubsection[{serverOut}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf TorqueServer::serverOut}\mbox{[}PBS\_\-MAXSERVERNAME+PBS\_\-MAXPORTNUM+2\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classTorqueServer_ae798d6ea4f01fc4336756a0cba5a644c}
-Server to connect 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 

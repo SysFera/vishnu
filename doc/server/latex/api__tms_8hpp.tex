@@ -21,8 +21,7 @@ This file contains the VISHNU api functions for TMS package.
 {\ttfamily \#include \char`\"{}TMSVishnuException.hpp\char`\"{}}\par
 {\ttfamily \#include \char`\"{}utilVishnu.hpp\char`\"{}}\par
 {\ttfamily \#include \char`\"{}JobProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}TMSMachineProxy.hpp\char`\"{}}\par
-{\ttfamily \#include \char`\"{}JobOutPutProxy.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}JobOutputProxy.hpp\char`\"{}}\par
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -43,17 +42,11 @@ int \hyperlink{namespacevishnu_a4461c3e9d86e9c507436655056a1b660}{vishnu::getJob
 \begin{DoxyCompactList}\small\item\em The getJobInfo function gets information on a job from its id. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_a6244690b88aff21355c382318bffff14}{vishnu::listJobs} (const std::string \&sessionKey, const std::string \&machineId, ListJobs \&listOfJobs, const ListJobsOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The listJobs function gets a list of all submitted jobs. \item\end{DoxyCompactList}\item 
-\hypertarget{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}{
-int {\bfseries vishnu::getJobProgress} (const std::string \&sessionKey, const std::string \&machineId, ListProgression \&listOfProgress, const ProgressOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)}
-\label{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}
-
-\item 
-\hypertarget{namespacevishnu_ada2d98155cffa475261261fb33f7e873}{
-int {\bfseries vishnu::listQueues} (const std::string \&sessionKey, const std::string \&machineId, ListQueues \&listofQueues, const std::string \&queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)}
-\label{namespacevishnu_ada2d98155cffa475261261fb33f7e873}
-
-\item 
-int \hyperlink{namespacevishnu_a3704331e613274a94da950cbc50edcb8}{vishnu::getJobOutput} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId, JobResult \&outputInfos, const std::string \&outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+int \hyperlink{namespacevishnu_a6cfe834ba44e65437afa5c324ef03fd3}{vishnu::getJobProgress} (const std::string \&sessionKey, const std::string \&machineId, ListProgression \&listOfProgress, const ProgressOptions \&options)  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em The getJobProgress function gets the progression status of jobs. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_ada2d98155cffa475261261fb33f7e873}{vishnu::listQueues} (const std::string \&sessionKey, const std::string \&machineId, ListQueues \&listofQueues, const std::string \&queueName=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
+\begin{DoxyCompactList}\small\item\em The listQueues function gets queues information. \item\end{DoxyCompactList}\item 
+int \hyperlink{namespacevishnu_a6e0b3df33a91bd16cdadf3ac428fcf0e}{vishnu::getJobOutput} (const std::string \&sessionKey, const std::string \&machineId, const std::string \&jobId, JobResult \&outputInfo, const std::string \&outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The getJobOutput function gets outputPath and errorPath of a job from its id. \item\end{DoxyCompactList}\item 
 int \hyperlink{namespacevishnu_aaedc4b5676f0c8e47f333316cff0b0a8}{vishnu::getCompletedJobsOutput} (const std::string \&sessionKey, const std::string \&machineId, ListJobResults \&listOfResults, const std::string \&outDir=std::string())  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException)
 \begin{DoxyCompactList}\small\item\em The \hyperlink{namespacevishnu_aaedc4b5676f0c8e47f333316cff0b0a8}{getCompletedJobsOutput()} function gets standard output and error output files of completed jobs (applies only once for each job). \item\end{DoxyCompactList}\end{DoxyCompactItemize}

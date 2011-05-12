@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
-* \file internalApi.hpp
-=======
 * \file TMS/src/sed/internalApi.hpp
->>>>>>> abe4bf42273b9f77629ba311e1c0cdf300bbf5c9
 * \brief This file presents the the implementation of the TMS internalAPI.
 * \author Daouda Traore (daouda.traore@sysfera.com)
 * \date April
