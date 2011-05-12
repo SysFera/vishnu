@@ -64,36 +64,36 @@
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079   <span class="keyword">private</span>:
 <a name="l00080"></a>00080    
-<a name="l00087"></a>00087     <span class="keywordtype">int</span>
-<a name="l00088"></a>00088     <a class="code" href="classTorqueServer.html#a8f155d04ceea433de756c98225c053b8" title="Function to cancel job on remote machine.">pbs_cancel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* jobId, 
-<a name="l00089"></a>00089                <span class="keywordtype">char</span> remoteServer[], 
-<a name="l00090"></a>00090                <span class="keywordtype">bool</span> isLocal=<span class="keyword">true</span>);
-<a name="l00091"></a>00091 
-<a name="l00098"></a>00098     <span class="keywordtype">void</span>
-<a name="l00099"></a>00099     <a class="code" href="classTorqueServer.html#a71cd2623e75c3615f16766204f8ef37b" title="Function to treat the submission options.">processOptions</a>(<span class="keyword">const</span> TMS_Data::SubmitOptions&amp; options, 
-<a name="l00100"></a>00100                    std::vector&lt;std::string&gt;&amp; cmdsOptions);
-<a name="l00101"></a>00101 
-<a name="l00107"></a>00107     <span class="keywordtype">int</span>
-<a name="l00108"></a>00108     <a class="code" href="classTorqueServer.html#a5fb51c751187a2bd49598aee2b0e3b18" title="Function to convert the Torque state into VISHNU state.">convertTorqueStateToVishnuState</a>(std::string state); 
-<a name="l00109"></a>00109 
-<a name="l00115"></a>00115     <span class="keywordtype">int</span>
-<a name="l00116"></a>00116     <a class="code" href="classTorqueServer.html#a2427d2d3c69cf28f779d22396383e4d4" title="Function to convert the Torque priority into VISHNU priority.">convertTorquePrioToVishnuPrio</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; prio); 
-<a name="l00117"></a>00117 
+<a name="l00088"></a>00088     <span class="keywordtype">int</span>
+<a name="l00089"></a>00089     <a class="code" href="classTorqueServer.html#a8f155d04ceea433de756c98225c053b8" title="Function to cancel job on remote machine.">pbs_cancel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* jobId, 
+<a name="l00090"></a>00090                <span class="keywordtype">char</span> remoteServer[], 
+<a name="l00091"></a>00091                <span class="keywordtype">bool</span> isLocal=<span class="keyword">true</span>);
+<a name="l00092"></a>00092 
+<a name="l00099"></a>00099     <span class="keywordtype">void</span>
+<a name="l00100"></a>00100     <a class="code" href="classTorqueServer.html#a71cd2623e75c3615f16766204f8ef37b" title="Function to treat the submission options.">processOptions</a>(<span class="keyword">const</span> TMS_Data::SubmitOptions&amp; options, 
+<a name="l00101"></a>00101                    std::vector&lt;std::string&gt;&amp; cmdsOptions);
+<a name="l00102"></a>00102 
+<a name="l00108"></a>00108     <span class="keywordtype">int</span>
+<a name="l00109"></a>00109     <a class="code" href="classTorqueServer.html#a5fb51c751187a2bd49598aee2b0e3b18" title="Function to convert the Torque state into VISHNU state.">convertTorqueStateToVishnuState</a>(std::string state); 
+<a name="l00110"></a>00110 
+<a name="l00116"></a>00116     <span class="keywordtype">int</span>
+<a name="l00117"></a>00117     <a class="code" href="classTorqueServer.html#a2427d2d3c69cf28f779d22396383e4d4" title="Function to convert the Torque priority into VISHNU priority.">convertTorquePrioToVishnuPrio</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; prio); 
+<a name="l00118"></a>00118 
 <a name="l00124"></a>00124     <span class="keywordtype">void</span>
-<a name="l00125"></a>00125     fillJobInfo(TMS_Data::Job &amp;job, 
+<a name="l00125"></a>00125     <a class="code" href="classTorqueServer.html#a0411b4c5d842efabc66e9a5db39cceba" title="Function To fill the info concerning a job.">fillJobInfo</a>(TMS_Data::Job &amp;job, 
 <a name="l00126"></a>00126                 <span class="keyword">struct</span> batch_status *p);
 <a name="l00127"></a>00127 
 <a name="l00131"></a><a class="code" href="classTorqueServer.html#ad3fa1d5687b1c0776c3f6f59aea8bc04">00131</a>     TMS_Data::ListJobs_ptr <a class="code" href="classTorqueServer.html#ad3fa1d5687b1c0776c3f6f59aea8bc04" title="List of jobs returned.">mjobs</a>;
 <a name="l00135"></a><a class="code" href="classTorqueServer.html#a4cd336ecc71dec247367e6b26a52efab">00135</a>     TMS_Data::Job_ptr <a class="code" href="classTorqueServer.html#a4cd336ecc71dec247367e6b26a52efab" title="Job returned.">mjob</a>;
 <a name="l00139"></a><a class="code" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a">00139</a>     TMS_Data::ListQueues_ptr <a class="code" href="classTorqueServer.html#ada6a31f5672ecf7297dfac26ed62e19a" title="ListQueues returned.">mlistQueues</a>; 
-<a name="l00143"></a><a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">00143</a>     <span class="keywordtype">char</span> <a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">serverOut</a>[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+<a name="l00143"></a><a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c">00143</a>     <span class="keywordtype">char</span> <a class="code" href="classTorqueServer.html#ae798d6ea4f01fc4336756a0cba5a644c" title="The name of the server to connect.">serverOut</a>[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
 <a name="l00147"></a><a class="code" href="classTorqueServer.html#addd31a54497c49a5ef552e96a0682518">00147</a>     TMS_Data::ListProgression_ptr <a class="code" href="classTorqueServer.html#addd31a54497c49a5ef552e96a0682518" title="A progression object.">mprog</a>;
 <a name="l00148"></a>00148 };
 <a name="l00149"></a>00149 
 <a name="l00150"></a>00150 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:24 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:40 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

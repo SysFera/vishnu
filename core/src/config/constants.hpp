@@ -5,6 +5,9 @@
 #include <string>
 
 namespace vishnu {
+  /**
+   * \brief Define a constant type
+   */
   typedef enum {
     NONE_PARAMETER,
     BOOL_PARAMETER,
@@ -13,6 +16,10 @@ namespace vishnu {
     STRING_PARAMETER,
     ADDRESS_PARAMETER
   } c_type_t ;
+
+/**
+ * \brief Define a parameter type
+ */
 
   typedef enum {
     DIETCONFIGFILE=0,
@@ -35,11 +42,28 @@ namespace vishnu {
    */
   struct param_t
   {
-    param_type_t key;
+    /**
+     * \brief key to retrieve the parameter 
+     */
+    param_type_t key; 
+
+
+    /**
+     * \brief the value of the parameter
+     */
     const std::string value;
-    c_type_t type;
+
+   /**
+    * \brief the type of the parameter
+    */
+
+    c_type_t type; 
+
   };
 
+  /**
+   * \brief An arry to store all paraeters
+   */
   extern param_t params[];
 }
 

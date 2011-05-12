@@ -21,6 +21,11 @@
  */
 class FileParser {
 private:
+
+  /**
+   * @brief To store the options
+   */
+
     mutable OptionMap options_;
 public:
     /**

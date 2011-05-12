@@ -22,12 +22,9 @@ Inheritance diagram for ListProgressServer:\begin{figure}[H]
 \item 
 \hyperlink{classListProgressServer_a49042d8db19b90501711398c913d4b31}{ListProgressServer} (const \hyperlink{classSessionServer}{SessionServer} session, const std::string \&machineId)
 \begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
-\hypertarget{classListProgressServer_ab2de6df88e4616749465a398ae3f7c44}{
-{\bfseries ListProgressServer} (TMS\_\-Data::ProgressOptions\_\-ptr params, const \hyperlink{classSessionServer}{SessionServer} \&session, const std::string \&machineId)}
-\label{classListProgressServer_ab2de6df88e4616749465a398ae3f7c44}
-
-\item 
-TMS\_\-Data::ListProgression $\ast$ \hyperlink{classListProgressServer_a5d3eddd164119897299006b9940845ae}{list} ()
+\hyperlink{classListProgressServer_ab2de6df88e4616749465a398ae3f7c44}{ListProgressServer} (TMS\_\-Data::ProgressOptions\_\-ptr params, const \hyperlink{classSessionServer}{SessionServer} \&session, const std::string \&machineId)
+\begin{DoxyCompactList}\small\item\em Constructor, raises an exception on error. \item\end{DoxyCompactList}\item 
+TMS\_\-Data::ListProgression $\ast$ \hyperlink{classListProgressServer_a638132aca020d8168e5185df47e881f0}{list} ()
 \begin{DoxyCompactList}\small\item\em Function to list sessions information. \item\end{DoxyCompactList}\item 
 std::string \hyperlink{classListProgressServer_a9fefff901176f068962ab31ae42c25aa}{getCommandName} ()
 \begin{DoxyCompactList}\small\item\em Function to get the name of the \hyperlink{classListProgressServer}{ListProgressServer} command line. \item\end{DoxyCompactList}\item 
@@ -72,6 +69,24 @@ Constructor, raises an exception on error.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em machineId}]The identifier of the machine on which the jobs whill be listed \end{DoxyParams}
+\hypertarget{classListProgressServer_ab2de6df88e4616749465a398ae3f7c44}{
+\index{ListProgressServer@{ListProgressServer}!ListProgressServer@{ListProgressServer}}
+\index{ListProgressServer@{ListProgressServer}!ListProgressServer@{ListProgressServer}}
+\subsubsection[{ListProgressServer}]{\setlength{\rightskip}{0pt plus 5cm}ListProgressServer::ListProgressServer (
+\begin{DoxyParamCaption}
+\item[{TMS\_\-Data::ProgressOptions\_\-ptr}]{ params, }
+\item[{const {\bf SessionServer} \&}]{ session, }
+\item[{const std::string \&}]{ machineId}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classListProgressServer_ab2de6df88e4616749465a398ae3f7c44}
+
+
+Constructor, raises an exception on error. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em params}]The object which encapsulates the information of \hyperlink{classListProgressServer}{ListProgressServer} options \item[{\em session}]The object which encapsulates the session information (ex: identifier of the session) \item[{\em machineId}]The identifier of the machine on which the job has been submitted \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
@@ -95,15 +110,15 @@ The the name of the \hyperlink{classListProgressServer}{ListProgressServer} comm
 
 Implements \hyperlink{classQueryServer_ad6b15831bd35508c3b5a393062d6e206}{QueryServer$<$ TMS\_\-Data::ProgressOptions, TMS\_\-Data::ListProgression $>$}.
 
-\hypertarget{classListProgressServer_a5d3eddd164119897299006b9940845ae}{
+\hypertarget{classListProgressServer_a638132aca020d8168e5185df47e881f0}{
 \index{ListProgressServer@{ListProgressServer}!list@{list}}
 \index{list@{list}!ListProgressServer@{ListProgressServer}}
-\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}UMS\_\-Data::ListSessions $\ast$ ListProgressServer::list (
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}TMS\_\-Data::ListProgression$\ast$ ListProgressServer::list (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
-\label{classListProgressServer_a5d3eddd164119897299006b9940845ae}
+\label{classListProgressServer_a638132aca020d8168e5185df47e881f0}
 
 
 Function to list sessions information. 

@@ -34,14 +34,8 @@ std::string \hyperlink{classSSHJobExec_abf06bf930962ce64176116514620a20d}{getErr
 \item 
 std::string \hyperlink{classSSHJobExec_a7299a222321c1ca1e32db976b1df79a2}{convertBatchTypeToString} (\hyperlink{utilVishnu_8hpp_a864d748e7097d176552dd4c7635016ea}{BatchType} batchType)
 \begin{DoxyCompactList}\small\item\em Function to convert the batch type to string. \item\end{DoxyCompactList}\item 
-\hypertarget{classSSHJobExec_a259bd8021df6638c9dff43ebe416f25d}{
-void \hyperlink{classSSHJobExec_a259bd8021df6638c9dff43ebe416f25d}{checkSshParams} ()}
-\label{classSSHJobExec_a259bd8021df6638c9dff43ebe416f25d}
-
-\begin{DoxyCompactList}\small\item\em Function to check the parameters before launching ssh 
-\begin{DoxyExceptions}{Exceptions}
-\item[{\em SystemException.}]\end{DoxyExceptions}
-\item\end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classSSHJobExec_a259bd8021df6638c9dff43ebe416f25d}{checkSshParams} ()
+\begin{DoxyCompactList}\small\item\em Function to check the parameters before launching ssh. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -106,10 +100,26 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em user}]the user login \item[{\em hostname}]the hostname of the machine \item[{\em batchType}]the type of the batch scheduler \item[{\em jobSerialized}]the job serialized \item[{\em submitOptionsSerialized}]the job options serialized \item[{\em sskey}]the ssh private key path \end{DoxyParams}
+\item[{\em user}]the user login \item[{\em hostname}]the hostname of the machine \item[{\em batchType}]the type of the batch scheduler \item[{\em jobSerialized}]the job serialized \item[{\em submitOptionsSerialized}]the job options serialized \item[{\em ssKey}]the ssh private key path \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classSSHJobExec_a259bd8021df6638c9dff43ebe416f25d}{
+\index{SSHJobExec@{SSHJobExec}!checkSshParams@{checkSshParams}}
+\index{checkSshParams@{checkSshParams}!SSHJobExec@{SSHJobExec}}
+\subsubsection[{checkSshParams}]{\setlength{\rightskip}{0pt plus 5cm}void SSHJobExec::checkSshParams (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSSHJobExec_a259bd8021df6638c9dff43ebe416f25d}
+
+
+Function to check the parameters before launching ssh. 
+
+\begin{DoxyReturn}{Returns}
+raises an exception on error 
+\end{DoxyReturn}
 \hypertarget{classSSHJobExec_a7299a222321c1ca1e32db976b1df79a2}{
 \index{SSHJobExec@{SSHJobExec}!convertBatchTypeToString@{convertBatchTypeToString}}
 \index{convertBatchTypeToString@{convertBatchTypeToString}!SSHJobExec@{SSHJobExec}}
@@ -125,7 +135,7 @@ Function to convert the batch type to string.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em BatchType}]the batch type to convert \end{DoxyParams}
+\item[{\em batchType}]the batch type to convert \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the converted batch type 
 \end{DoxyReturn}

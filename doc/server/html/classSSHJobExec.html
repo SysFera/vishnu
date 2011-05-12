@@ -61,16 +61,8 @@ Public Member Functions</h2></td></tr>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSSHJobExec.html#a7299a222321c1ca1e32db976b1df79a2">convertBatchTypeToString</a> (<a class="el" href="utilVishnu_8hpp.html#a864d748e7097d176552dd4c7635016ea">BatchType</a> batchType)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to convert the batch type to string.  <a href="#a7299a222321c1ca1e32db976b1df79a2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a259bd8021df6638c9dff43ebe416f25d"></a><!-- doxytag: member="SSHJobExec::checkSshParams" ref="a259bd8021df6638c9dff43ebe416f25d" args="()" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSSHJobExec.html#a259bd8021df6638c9dff43ebe416f25d">checkSshParams</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the parameters before launching ssh </p>
-<dl><dt><b>Exceptions:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>SystemException.</em>&nbsp;</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSSHJobExec.html#a259bd8021df6638c9dff43ebe416f25d">checkSshParams</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to check the parameters before launching ssh.  <a href="#a259bd8021df6638c9dff43ebe416f25d"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa39f12bb8b7bf5f64dcdf2ac4b1b7247"></a><!-- doxytag: member="SSHJobExec::mjobSerialized" ref="aa39f12bb8b7bf5f64dcdf2ac4b1b7247" args="" -->
@@ -155,7 +147,7 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
     <tr><td valign="top"></td><td valign="top"><em>batchType</em>&nbsp;</td><td>the type of the batch scheduler </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>jobSerialized</em>&nbsp;</td><td>the job serialized </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>submitOptionsSerialized</em>&nbsp;</td><td>the job options serialized </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>sskey</em>&nbsp;</td><td>the ssh private key path </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ssKey</em>&nbsp;</td><td>the ssh private key path </td></tr>
   </table>
   </dd>
 </dl>
@@ -163,6 +155,26 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a259bd8021df6638c9dff43ebe416f25d"></a><!-- doxytag: member="SSHJobExec::checkSshParams" ref="a259bd8021df6638c9dff43ebe416f25d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SSHJobExec::checkSshParams </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function to check the parameters before launching ssh. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>raises an exception on error </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a7299a222321c1ca1e32db976b1df79a2"></a><!-- doxytag: member="SSHJobExec::convertBatchTypeToString" ref="a7299a222321c1ca1e32db976b1df79a2" args="(BatchType batchType)" -->
 <div class="memitem">
 <div class="memproto">
@@ -182,7 +194,7 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Function to convert the batch type to string. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>BatchType</em>&nbsp;</td><td>the batch type to convert </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>batchType</em>&nbsp;</td><td>the batch type to convert </td></tr>
   </table>
   </dd>
 </dl>
@@ -329,7 +341,7 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <li>TMS/src/server/<a class="el" href="SSHJobExec_8hpp_source.html">SSHJobExec.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:27 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:42 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
