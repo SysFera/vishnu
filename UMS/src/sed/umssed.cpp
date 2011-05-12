@@ -10,22 +10,6 @@
 #include <boost/scoped_ptr.hpp>
 
 using namespace vishnu;
-/**
- * \mainpage UMS
- *
- * <center><b>UMS is the module that deals with the authentication of the users and the machines in the VISHNU infrastructure</b></center>
- *
- * \image html logoSysFera.jpg
- *
- * \authors CAPOCHICHI Eugene
- * \authors CISSE      Ibrahima
- * \authors COULOMB    Kevin
- * \authors ISNARD     Benjamin
- * \authors TRAORE     Daouda
- *
- * \file umssed.cpp
- * \brief The main function offering the set of services
- */
 
 /**
  * \brief To show how to use the sed

@@ -197,6 +197,7 @@ TorqueServer::cancel(const char* jobId) {
 
 /**
  * \brief Function to cancel job on remote machine
+ * \param jobId The identifier of the job
  * \param remoteServer the name of the remote server
  * \param isLocal is the remoteServer is local
  * \return raises an exception on error

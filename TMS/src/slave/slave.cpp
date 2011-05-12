@@ -109,8 +109,6 @@ main(int argc, char* argv[], char* envp[])
   jobSerializedPath = argv[3];
   slaveErrorPath = argv[4];
   os1 << argv[0] << " " << action << " " << batchTypeStr << " " << jobSerializedPath << " " << slaveErrorPath << " ";
-  //Just to verify command line
-  std::cout << os1.str() << os2.str() << std::endl;
 
   TMS_Data::Job_ptr job = NULL;
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
@@ -161,12 +159,8 @@ main(int argc, char* argv[], char* envp[])
     std::ofstream os_error(slaveErrorPath);
     os_error << errorInfo;
     os_error.close();
-    std::cout << errorInfo << std::endl;
   } catch (std::exception& e) {
     std::string errorInfo = e.what();
-    std::cout << errorInfo << std::endl;
-    //os_error << errorInfo;
-    //os_error.close();
   }
 
   delete job;

@@ -429,24 +429,6 @@ same conditions as regards security.</para>
    </para>
   </section>
  </chapter> <!-- PART 1 : VISHNU Presentation -->
-
- 
- <chapter><!-- PART 2 : Quick start guide -->
-  <title>VISHNU interfaces quick start guide</title>
-  
-  <section>
-    <title>Command-line interface</title>
-  </section>
-  
-  <section>
-    <title>C++ API</title>
-  </section>
-  
-  <section>
-    <title>Python API</title>
-  </section>
-  
- </chapter><!-- PART 2 : Quick start guide -->
   
 </book>
 
