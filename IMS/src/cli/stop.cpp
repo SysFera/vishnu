@@ -1,6 +1,6 @@
 /**
- * \file set_system_threshold.cpp
- * This file defines the VISHNU command to set the system threshold
+ * \file stop.cpp
+ * This file defines the VISHNU command to stop a vishnu process
  * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
 
@@ -12,9 +12,34 @@
 #include "api_ums.hpp"
 #include "api_ims.hpp"
 #include "sessionUtils.hpp"
+#include <boost/bind.hpp>
+
 
 using namespace std;
 using namespace vishnu;
+
+boost::shared_ptr<Options>
+makeStopOpt(string pgName,
+            boost::function1<void, string>& fDietId,
+            string& dietConfig) {
+
+  boost::shared_ptr<Options> opt(new Options(pgName));
+
+  // Environement option
+  opt->add("dietConfig,c",
+           "The diet config file",
+           ENV,
+           dietConfig);
+
+    // All cli options
+   opt->add("dietId,d",
+            "The diet id of the process",
+            CONFIG,
+            fDietId);
+
+  return opt;
+}
+
 
 int main (int argc, char* argv[]){
 
@@ -24,47 +49,36 @@ int main (int argc, char* argv[]){
   string dietConfig;
   string sessionKey;
   string machineId;
-  string handler;
-  int value;
-  IMS_Data::MetricType type;
+  string processName;
+
    /********** EMF data ************/
-  IMS_Data::Threshold systemThreshold;
+  IMS_Data::Process process;
+
+  /******** Callback functions ******************/
+  boost::function1<void, string> fDietId (boost::bind(&IMS_Data::Process::setDietId,boost::ref(process),_1));
+
+  /*********** Out parameters *********************/
 
   /**************** Describe options *************/
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(new Options(argv[0]));
+  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fDietId, dietConfig);
 
-  //Environement option
-  opt->add("dietConfig,c",
-           "The diet config file",
-           ENV,
-           dietConfig);
-
-  opt->add("machineId,i",
+  opt->add( "machineId,i",
             "represents the id of the machine",
             HIDDEN,
             machineId,1);
+
   opt->setPosition("machineId",1);
 
-  opt->add("value,v",
-            "represents the value of the threshold",
+  opt->add( "processName,p",
+            "represents the name of the process",
             HIDDEN,
-            value,1);
-  opt->setPosition("value",1);
+            processName,1);
 
-  opt->add("type,t",
-            "represents the type of the threshold",
-            HIDDEN,
-            type,1);
-  opt->setPosition("type",1);
+  opt->setPosition("processName",1);
 
-  opt->add( "handler,u",
-            "represents the userId of the administrator that handles the threshold",
-            HIDDEN,
-            handler,1);
-  opt->setPosition("handler",1);
 
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
@@ -72,21 +86,18 @@ int main (int argc, char* argv[]){
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
 
-  //To set the corresponding values to the object systemThreshold
-  systemThreshold.setMachineId(machineId);
-  systemThreshold.setValue(value);
-  systemThreshold.setType(type);
-  systemThreshold.setHandler(handler);
+  process.setMachineId(machineId);
+  process.setProcessName(processName);
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"machineId value type handler");
+    helpUsage(*opt,"[options] processName machineId");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"machineId value type handler");
+    helpUsage(*opt,"[options] processName machineId");
     return 0;
   }
 
@@ -104,7 +115,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      setSystemThreshold(sessionKey, systemThreshold);
+      stop(sessionKey, process);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
