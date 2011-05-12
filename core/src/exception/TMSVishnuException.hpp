@@ -16,6 +16,7 @@ static const int ERRCODE_PERMISSION_DENIED = 104;
 static const int ERRCODE_ALREADY_TERMINATED = 105;
 static const int ERRCODE_ALREADY_CANCELED = 106;
 static const int ERRCODE_JOB_IS_NOT_TERMINATED = 107;
+static const int ERRCODE_ALREADY_DOWNLOADED = 108;
 
 /**
  * \brief This class allows to treat an error specific to  TMS Module
@@ -30,12 +31,13 @@ class TMSVishnuException: public UserException{
   TMSVishnuException();
   /**
    * \brief Copy constructor
-   * \fn TMSVishnuException()
+   * \param e the object to copy
    */
   TMSVishnuException(const TMSVishnuException& e);
   /**
    * \brief Constructor
-   * \fn TMSVishnuException()
+   * \param msg the exception code
+   * \param msgComp The complementary message
    */
   TMSVishnuException(int msg, std::string msgComp= "");
   /**

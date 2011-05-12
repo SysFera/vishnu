@@ -254,7 +254,6 @@ public:
 
   /**
    * \brief Function to check if a given job identifier exists
-   * \fn void checkSessionId(std::string jobId)
    * \param jobId the job identifier
    */
   void
@@ -267,7 +266,6 @@ public:
   }
   /**
    * \brief Function to check if a given queue exists
-   * \fn void checkQueueName(std::string queueName)
    * \param queueName the name of the queue
    */
   void
@@ -278,9 +276,8 @@ public:
        throw UserException(ERRCODE_INVALID_PARAM, "This queue name is unknwon");
     }
   }
-  //TODO: faire template pour méthode check
+ 
   /**
-   * \fn ~QueryServer()
    * \brief Destructor, raises an exception on error
    */
   virtual ~QueryServer()

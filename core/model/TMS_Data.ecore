@@ -273,6 +273,7 @@
     <eLiterals name="RUNNING" value="4"/>
     <eLiterals name="TERMINATED" value="5" literal="TERMINATED"/>
     <eLiterals name="CANCELLED" value="6" literal="CANCELLED"/>
+    <eLiterals name="ALREADY_DOWNLOADED" value="7" literal="ALREADY_DOWNLOADED"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProgressOptions" instanceTypeName="ProgressOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">

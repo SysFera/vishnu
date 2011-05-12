@@ -1851,8 +1851,9 @@ int parse_file(
 
         break;
 
-      case 'c':
-
+      case 'c': //TODO: to check pbs version in this case
+ 
+      #if 0
         if_cmd_line(c_opt)
           {
           c_opt = passet;
@@ -1877,7 +1878,7 @@ int parse_file(
            * New format: -c [ { <old format items> | <new items> } ',' ]
            * new items: none | shutdown | checkpoint | name=xyz | dir=xyz | interval=X
            */
-#if 0
+#if 0 
 
           if (strlen(optarg) == 1)
           {
@@ -1951,7 +1952,7 @@ int parse_file(
 #endif
           set_attr(&attrib, ATTR_c, optarg);
           }  /* END if_cmd_line() */
-
+#endif
         break;
 
       case 'C':
@@ -2084,20 +2085,21 @@ int parse_file(
             errflg++;
             }
           }
-
         break;
         
 #if !defined(PBS_NO_POSIX_VIOLATION)
       
-      case 'f':
-      
-        if_cmd_line(f_opt)
+      case 'f': //TODO: to check pbs version in this case
+     
+        #if 0 
+          if_cmd_line(f_opt)
           {
           f_opt = passet;
           
           set_attr(&attrib, ATTR_f, "TRUE");
           }
-          
+        #endif
+
         break;
       
 #endif
@@ -2471,15 +2473,15 @@ int parse_file(
 
 #if !defined(PBS_NO_POSIX_VIOLATION)
 
-      case 'P':
-
+      case 'P': //TODO: to check pbs version in this case
+       #if 0
         if (strlen(optarg) > 0)
           {
           char *user;
           char *group;
           char *colon;
 
-          /* make sure this is the super user */
+          // make sure this is the super user *
           if (geteuid() != (uid_t)0)
             {
             sprintf(PBS_ERROR_MSG, "pbs_submit: Must be the super user to submit a proxy job\n");
@@ -2504,7 +2506,7 @@ int parse_file(
 
           errflg++;
           }
-
+    #endif 
         break;
 
 #endif /* PBS_NO_POSIX_VIOLATION */
@@ -2833,13 +2835,14 @@ int parse_file(
               set_attr(&attrib,ATTR_umask,valuewd);
               }
             }
-          else if (!strcmp(keyword, ATTR_f))
+#if 0
+          else if (!strcmp(keyword, ATTR_f)) //TODO: to check pbs version in this case
             {
             
             switch (valuewd[0])
               {
             
-              /*accept 1, TRUE,true,YES,yes, 0, FALSE, false, NO, no */
+              /* accept 1, TRUE,true,YES,yes, 0, FALSE, false, NO, no */
               case 1:
               case 'T':
               case 't':
@@ -2864,6 +2867,7 @@ int parse_file(
               }
               
             }
+#endif
           else
             {
             /* generic job attribute specified */
@@ -2984,13 +2988,16 @@ set_opt_defaults(void)
     else
       set_attr(&attrib, ATTR_r, "FALSE");
     }
-  if (f_opt == FALSE)
+  
+  if (f_opt == FALSE) //TODO: to check pbs vesrion in this case
+#if 0  
     {
     if (fault_tolerant_by_default)
       set_attr(&attrib, ATTR_f, "TRUE");
     else
       set_attr(&attrib, ATTR_f, "FALSE");
     }
+#endif
   return;
   }  /* END set_opt_defaults() */
 

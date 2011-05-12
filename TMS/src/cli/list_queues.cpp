@@ -100,6 +100,7 @@ main (int argc, char* argv[]){
     } else {
       std::cout << queue << std::endl;
     }
+    printSuccessMessage();
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
     errorUsage(argv[0], msg,EXECERROR);

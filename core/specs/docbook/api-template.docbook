@@ -86,9 +86,11 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Updates to TMS:
-            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED status of JobStatus Enum. Added UNDEFINED priority of JobPriority Enum.
+            Removed functions getMachineRefreshPeriod and setMachineRefreshPeriod. Added UNDEFINED and ALREADY_DOWNLOADED status of JobStatus Enum. 
+            Added UNDEFINED priority of JobPriority Enum.
             Removed of outputPah and errorPath of ListJobsOptions. Removed scriptContent in Job class. 
-            Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED in exception list. Modified values of JobPriority Enum.  Modified values of            QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority.
+            Added ERRCODE_ALREADY_TERMINATED, ERRCODE_ALREADY_CANCELED, ERRCODE_JOB_IS_NOT_TERMINATED, ERRCODE_ALREADY_DOWNLOADED in exception list. 
+            Modified values of JobPriority Enum.  Modified values of QueuePriority and QueueStatus. Added UNDEFINED priority of QueuePriority.
           </para>
         </revdescription>
         </revision>

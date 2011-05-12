@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
 * \file internalApi.hpp
+=======
+* \file TMS/src/sed/internalApi.hpp
+>>>>>>> abe4bf42273b9f77629ba311e1c0cdf300bbf5c9
 * \brief This file presents the the implementation of the TMS internalAPI.
 * \author Daouda Traore (daouda.traore@sysfera.com)
 * \date April
@@ -12,16 +16,24 @@
  * SOLVE FUNCTIONS
  */
 
-/* submitJob */
+/**
+ * \brief Function to solve the jobSubmit service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveSubmitJob(diet_profile_t* pb);
 
-/* cancelJob */
+/**
+ * \brief Function to solve the jobCancel service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveCancelJob(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the service solveGenerique
+ * \brief Function to solve the jobInfo service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -29,8 +41,7 @@ int
 solveJobInfo(diet_profile_t* pb);
 
 /**
-* \brief Function to solve the service solveGenerique
-* \fn    int solveGenerique(diet_profile_t* pb)
+* \brief Function to solve the generic query service 
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
@@ -38,23 +49,44 @@ template <class QueryParameters, class List, class QueryType>
 int
 solveGenerique(diet_profile_t* pb);
 
-/* getListOfJobs */
+/**
+ * \brief Function to solve the getListOfJobs service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveGetListOfJobs(diet_profile_t* pb);
 
-/* listJobsProgression */
+/**
+ * \brief Function to solve the getJobsProgression service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveGetListOfJobsProgression(diet_profile_t* pb);
 
-/* listQueues */
+/**
+ * \brief Function to solve the getListOfQueues service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveListOfQueues(diet_profile_t* pb);
 
-/* jobOutPutGetResult */
+/**
+ * \brief Function to solve the jobOutPutGetResult service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveJobOutPutGetResult(diet_profile_t* pb);
 
-/* JobOutPutGetCompletedJobsOutput */
+/**
+ * \brief Function to solve the jobOutputGetCompletedJobs service 
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveJobOutPutGetCompletedJobs(diet_profile_t* pb);
+
 #endif
