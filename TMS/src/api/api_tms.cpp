@@ -250,7 +250,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
 
-  outputInfos = jobOutputProxy.getJobOutPut(jobId);
+  outputInfo = jobOutputProxy.getJobOutPut(jobId);
 
   return 0;
 }
