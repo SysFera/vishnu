@@ -1,6 +1,6 @@
 /**
  * \file set_system_info.cpp
- * This file defines the VISHNU command to get the metric history
+ * This file defines the VISHNU command to set the system information
  * \author Eugène PAMBA CAPO-CHICHI(eugene.capochichi@sysfera.com)
  */
 

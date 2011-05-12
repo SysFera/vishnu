@@ -43,6 +43,7 @@ set(ALLCLI
   set_system_threshold
   get_system_threshold
   restart
+  stop
   )
 
 #set the prefix of command
