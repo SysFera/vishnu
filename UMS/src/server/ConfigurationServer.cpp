@@ -240,6 +240,7 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 /**
  * \brief Function to get the sql code of machines from a VISHNU configuration
  * \fn std::string machineToSql(UMS_Data::Machine_ptr machine, int vishnuId)
+ * \param machine The machine object
  * \param vishnuId The identifier of the vishnu instance
  * \return the sql code containing the sql code of machines
  */
