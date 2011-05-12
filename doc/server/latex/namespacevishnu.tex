@@ -12,18 +12,10 @@ This naspace contains utils functions of the vishnu system.
 \item 
 struct \hyperlink{structvishnu_1_1param__t}{param\_\-t}
 \begin{DoxyCompactList}\small\item\em A convenient data type to store a parameter. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Typedefs}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{namespacevishnu_aa9f7b1a9e7fc3aba12ccdcb3094469ba}{
-typedef enum \hyperlink{namespacevishnu_a89462b396eca68c9c1a94a06d2f39532}{vishnu::CmdType} {\bfseries CmdType}}
-\label{namespacevishnu_aa9f7b1a9e7fc3aba12ccdcb3094469ba}
-
-\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum {\bfseries c\_\-type\_\-t} \{ \par
+enum \hyperlink{namespacevishnu_ad8abe82f8ea57792411b26b9ed15287e}{c\_\-type\_\-t} \{ \par
 {\bfseries NONE\_\-PARAMETER}, 
 {\bfseries BOOL\_\-PARAMETER}, 
 {\bfseries INT\_\-PARAMETER}, 
@@ -32,8 +24,8 @@ enum {\bfseries c\_\-type\_\-t} \{ \par
 {\bfseries STRING\_\-PARAMETER}, 
 {\bfseries ADDRESS\_\-PARAMETER}
  \}
-\item 
-enum {\bfseries param\_\-type\_\-t} \{ \par
+\begin{DoxyCompactList}\small\item\em Define a constant type. \item\end{DoxyCompactList}\item 
+enum \hyperlink{namespacevishnu_afa06c1bb0b3442d83acb7650e8df75d1}{param\_\-type\_\-t} \{ \par
 {\bfseries DIETCONFIGFILE} = 0, 
 {\bfseries VISHNUID}, 
 {\bfseries DBTYPE}, 
@@ -51,7 +43,7 @@ enum {\bfseries param\_\-type\_\-t} \{ \par
 \par
 {\bfseries INTERVALMONITOR}
  \}
-\item 
+\begin{DoxyCompactList}\small\item\em Define a parameter type. \item\end{DoxyCompactList}\item 
 enum \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1}{IdType} \{ \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1a18985dc599467035432920df9bcb2e8b}{MACHINE} =  0, 
 \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898}{USER} =  1, 
 \hyperlink{namespacevishnu_aff8a694c2bc2b55465a31b4bf00f58c1ac6a371f14311f16f9f476b7db284ac4f}{JOB} =  2, 
@@ -225,10 +217,10 @@ int \hyperlink{namespacevishnu_aaedc4b5676f0c8e47f333316cff0b0a8}{getCompletedJo
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{namespacevishnu_a1ca7d1d1baf7cebd2530d93b9f064bd9}{
-\hyperlink{structvishnu_1_1param__t}{param\_\-t} {\bfseries params} \mbox{[}$\,$\mbox{]}}
+\hyperlink{structvishnu_1_1param__t}{param\_\-t} \hyperlink{namespacevishnu_a1ca7d1d1baf7cebd2530d93b9f064bd9}{params} \mbox{[}$\,$\mbox{]}}
 \label{namespacevishnu_a1ca7d1d1baf7cebd2530d93b9f064bd9}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em An arry to store all paraeters. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -441,7 +433,7 @@ Function to check the job nbNodesAndCpuPerNode.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em nbNodesAndNbCpuPerNode}]the number of nodes and cpu per node \end{DoxyParams}
+\item[{\em nbNodesAndCpuPerNode}]the number of nodes and cpu per node \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -577,6 +569,9 @@ raises an exception on error
 
 Function to localtime into UTC (seconds). 
 
+
+\begin{DoxyParams}{Parameters}
+\item[{\em localtime}]the local time \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the diffence time (seconds) 
 \end{DoxyReturn}
@@ -650,6 +645,9 @@ the string version of val
 
 Function to convert UTC time into localtime (seconds). 
 
+
+\begin{DoxyParams}{Parameters}
+\item[{\em localtime}]the local time \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 the correspondant localtime (seconds) 
 \end{DoxyReturn}
@@ -741,6 +739,9 @@ Function to delete file.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em fileName}]The name of the file to create \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 in case of success, another value otherwise 
+\end{DoxyReturn}
 \hypertarget{namespacevishnu_a2b51028779571b21c45a2a75cd362c59}{
 \index{vishnu@{vishnu}!deleteLocalAccount@{deleteLocalAccount}}
 \index{deleteLocalAccount@{deleteLocalAccount}!vishnu@{vishnu}}
@@ -1430,7 +1431,7 @@ Function to move file.
 
 
 \begin{DoxyParams}{Parameters}
-\item[{\em src,:}]the path of the file to move \item[{\em dest,:}]the destination where the file will be moved \item[{\em file,:}]the name of the file in dest \end{DoxyParams}
+\item[{\em src,:}]the path of the file to move \item[{\em dest,:}]the destination where the file will be moved \item[{\em filename,:}]the name of the file in dest \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 raises an exception on error 
 \end{DoxyReturn}
@@ -1494,6 +1495,9 @@ To register the server in the database.
 
 \begin{DoxyParams}{Parameters}
 \item[{\em type,:}]The type of the SeD \item[{\em config,:}]The configuration of the executable \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the function succeeds or another value otherwise 
+\end{DoxyReturn}
 \hypertarget{namespacevishnu_a11f16b7501b8814c491d13431409051c}{
 \index{vishnu@{vishnu}!resetPassword@{resetPassword}}
 \index{resetPassword@{resetPassword}!vishnu@{vishnu}}
