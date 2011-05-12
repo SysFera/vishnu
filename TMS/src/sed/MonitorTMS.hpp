@@ -2,7 +2,7 @@
  * \file MonitorTMS.hpp
  * \brief This file presents the implementation of the TMS Monitor
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
- * \date 31/01/2001
+ * \date April
 */
 
 #ifndef _MONITORTMS_H_
@@ -19,7 +19,6 @@ class MonitorTMS {
 public :
   /**
    * \brief Constructor, raises an exception on error
-   * \fn MonitorTMS(int interval)
    * \param interval The interval in seconds to check the database
    */
   MonitorTMS(int interval = 1);
@@ -32,9 +31,10 @@ public :
 
    /**
    * \brief To initialize the TMS monitor with individual parameters instead of configuration file
-   * \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
    * \param vishnuId The password of the root user vishnu_user for the connection with the database
    * \param dbConfig The configuration of the database
+   * \param machineId The machine identifier
+   * \param batchType The batch scheduler type
    * \return raises an execption
    */
   void
@@ -42,7 +42,6 @@ public :
 
    /**
    * \brief To launch the TMS Monitor
-   * \fn int run()
    * \return raises an exception
    */
   int
@@ -63,7 +62,14 @@ private :
   */
   Database *mdatabaseVishnu;
 
+  /**
+   * \brief The machine identifier
+   */
   std::string mmachineId;
+
+  /**
+   * \brief The batch scheduler type 
+   */
   BatchType mbatchType;
 };
 #endif // MONITORTMS

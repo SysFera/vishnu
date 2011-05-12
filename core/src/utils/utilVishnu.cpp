@@ -325,7 +325,7 @@ long vishnu::convertStringToWallTime(const std::string& walltime) {
 void
 vishnu::checkJobStatus(const int& status) {
 
-  if ((status < -1) || (status > 7)) {
+  if ((status < -1) || (status > 8)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The status value is incorrect");
   }
 }
@@ -417,6 +417,11 @@ time_t vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
   return (localtime-diff);
 }
 
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ * \param file_content The content of the file
+ */
 void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
 
   int  file_descriptor = mkstemp( fileName ) ;
@@ -438,6 +443,10 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
   close(file_descriptor);
 }
 
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ */
 void vishnu::createTmpFile(char* fileName) {
 
   int  file_descriptor = mkstemp( fileName ) ;
@@ -453,6 +462,10 @@ void vishnu::createTmpFile(char* fileName) {
   close(file_descriptor);
 }
 
+/**
+ * \brief Function to delete file
+ * \param fileName The name of the file to create
+ */
 int vishnu::deleteFile(const char* fileName) {
     return unlink(fileName);
 }
