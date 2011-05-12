@@ -24,10 +24,11 @@ mkdir /tmp/prepaRel
 path=/tmp/prepaRel/VISHNU_$NO_VERSION
 mkdir $path
 
-# Copy root cmake list, copyright, README
+# Copy root cmake list, copyright, README, version
 cp CMakeLists.txt $path/
 cp copyright $path/
 cp README $path/
+cp vishnu_version.hpp.in $path/
 
 # Copy doxygen generator
 cp Doxyfile $path/
@@ -134,7 +135,7 @@ mkdir $path/TMS/test/src
 cp -r TMS/test/src/sql $path/TMS/test/src
 cp -r TMS/test/src/scripts $path/TMS/test/src
 cp TMS/test/src/*pp $path/TMS/test/src
-cp TMS/test/src/config.h.in $path/TMS/test/src
+cp TMS/test/src/*.in $path/TMS/test/src
 cp TMS/test/src/CMakeLists.txt $path/TMS/test/src
 
 # Copy man pages

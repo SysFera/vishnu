@@ -55,7 +55,7 @@ add_library(tms-server STATIC
    BatchFactory
    ListQueuesServer
    JobOutputServer
-   BatchConvertor
+   ScriptGenConvertor
 )
 
 target_link_libraries(tms-server

@@ -1871,7 +1871,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_submit_job command submits job on a machine through the use of a script (scriptFilePath). </para>
+        <para>The vishnu_submit_job command submits a job on a machine through the use of a script (scriptFilePath)</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
@@ -1924,56 +1924,56 @@
                 <entry><para>name</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n</para></entry>
-                <entry><para>Assigns a job name. The default is the path of job.</para></entry>
+                <entry><para>Assigns a job name. The default is the path of job</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>queue</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>q</para></entry>
-                <entry><para>Assigns the queue or class of the job.</para></entry>
+                <entry><para>Assigns the queue or class of the job</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>wallTime</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
+                <entry><para>The maximum wall-clock time during which the job can run</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>memory</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>m</para></entry>
-                <entry><para>Is the memory size that the job requires.</para></entry>
+                <entry><para>Is the memory size that the job requires</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nbCpu</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>P</para></entry>
-                <entry><para>The number of cpu that the job requires.</para></entry>
+                <entry><para>The number of cpu that the job requires</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nbNodesAndCpuPerNode</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>N</para></entry>
-                <entry><para>The number of nodes and processors per node.</para></entry>
+                <entry><para>The number of nodes and processors per node</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>outputPath</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>o</para></entry>
-                <entry><para>Assigns the path and file for job output.</para></entry>
+                <entry><para>Assigns the path and file for job output</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>errorPath</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>e</para></entry>
-                <entry><para>Assigns the path and file for job error.</para></entry>
+                <entry><para>Assigns the path and file for job error</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2079,14 +2079,14 @@
                 <entry><para>jobId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>i</para></entry>
-                <entry><para>Represents the id of the job that the user wants to see the progression of.</para></entry>
+                <entry><para>Specifies the id of the job whose progression the user wants to see.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>jobOwner</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>Represents the owner of the job.</para></entry>
+                <entry><para>Specifies the owner of the job.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2103,8 +2103,7 @@
         <para>The vishnu_list_queues command gets queues information</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_queues</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-q <replaceable>queueName</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>queueName</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2138,9 +2137,9 @@
               <row>
                 <entry><para>queueName</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>q</para></entry>
-                <entry><para> if it is given, listQueues gives  information only of this queue</para></entry>
-                <entry><para>NO</para></entry>
+                <entry/>
+                <entry><para>if it is given, listQueues gives information only of this queue</para></entry>
+                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -2199,56 +2198,56 @@
                 <entry><para>jobId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>i</para></entry>
-                <entry><para>To list job which has this id.</para></entry>
+                <entry><para>lists the job with the specified id</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>nbCpu</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>P</para></entry>
-                <entry><para>To list jobs which have this number of cpu.</para></entry>
+                <entry><para>lists the jobs with the specified number of CPUs</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>fromSubmitDate</para></entry>
                 <entry><para>long</para></entry>
                 <entry><para>d</para></entry>
-                <entry><para>List jobs submitted after this date (unix timestamp).</para></entry>
+                <entry><para>lists the jobs submitted after the specified date (UNIX timestamp)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>toSubmitDate</para></entry>
                 <entry><para>long</para></entry>
                 <entry><para>D</para></entry>
-                <entry><para>List jobs submitted before this date (unix timestamp)</para></entry>
+                <entry><para>lists jobs submitted before the specified date (UNIX timestamp)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>owner</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>u</para></entry>
-                <entry><para>To list all jobs submitted by this owner.</para></entry>
+                <entry><para>lists the jobs submitted by the specified owner</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>status</para></entry>
                 <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
                 <entry><para>s</para></entry>
-                <entry><para>To list jobs which have this status.</para></entry>
+                <entry><para>lists the jobs with the specified status</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>priority</para></entry>
                 <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
                 <entry><para>p</para></entry>
-                <entry><para>To list jobs which have this priority</para></entry>
+                <entry><para>lists the jobs with the specified priority</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>queue</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>q</para></entry>
-                <entry><para>To list jobs which have this queue name.</para></entry>
+                <entry><para>the jobs with the specified queue name</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2361,7 +2360,7 @@
                 <entry><para>outDir</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>o</para></entry>
-                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
+                <entry><para>Specifies the output directory where the files will be stored (by default, the current directory).</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -2507,6 +2506,10 @@
             <row>
               <entry><para>CANCELLED</para></entry>
               <entry><para>6</para></entry>
+            </row>
+            <row>
+              <entry><para>ALREADY_DOWNLOADED</para></entry>
+              <entry><para>7</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -2703,7 +2706,8 @@
         <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-s <replaceable>startTime</replaceable></option></arg><arg
               choice="opt"><option>-e <replaceable>endTime</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>metricType</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2735,13 +2739,6 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>metricType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry/>
-                <entry><para>Type of metric</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>startTime</para></entry>
                 <entry><para>long</para></entry>
                 <entry><para>s</para></entry>
@@ -2753,6 +2750,13 @@
                 <entry><para>long</para></entry>
                 <entry><para>e</para></entry>
                 <entry><para>The end time to get the history</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>type</para></entry>
+                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+                <entry><para>t</para></entry>
+                <entry><para>The type of metric searched</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>

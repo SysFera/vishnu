@@ -4228,7 +4228,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob() function submits job on a machine through the use of a script (scriptFilePath). </para>
+        <para>The submitJob() function submits a job on a machine through the use of a script (scriptFilePath)</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -4254,7 +4254,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PARAM</para></entry>
@@ -4270,7 +4270,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
@@ -4291,6 +4291,10 @@
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4375,7 +4379,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
@@ -4391,7 +4395,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
@@ -4587,9 +4591,9 @@
               <row>
                 <entry><para>queueName</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para> if it is given, listQueues gives  information only of this queue</para></entry>
+                <entry><para>if it is given, listQueues gives information only of this queue</para></entry>
                 <entry><para>IN</para></entry>
-                <entry><para>no</para></entry>
+                <entry><para>yes</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4613,7 +4617,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
@@ -4629,7 +4633,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
@@ -4659,7 +4663,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listQueues</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListQueues&amp; <parameter>listofQueues</parameter></paramdef><paramdef>const string&amp; <parameter>queueName</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function TMS::listJobs</title>
@@ -4738,7 +4742,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
@@ -4754,7 +4758,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
@@ -4870,7 +4874,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
@@ -4886,7 +4890,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
@@ -4915,6 +4919,10 @@
               <row>
                 <entry><para>ERRCODE_JOB_IS_NOT_TERMINATED</para></entry>
                 <entry><para>The job is not terminated</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4973,7 +4981,7 @@
               <row>
                 <entry><para>outDir</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The output directory where the files will be stored (default is current directory)</para></entry>
+                <entry><para>Specifies the output directory where the files will be stored (by default, the current directory).</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -4999,7 +5007,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
@@ -5015,7 +5023,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
@@ -5040,6 +5048,10 @@
               <row>
                 <entry><para>ERRCODE_SYSTEM</para></entry>
                 <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5117,7 +5129,7 @@
             <tbody>
               <row>
                 <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
-                <entry><para>Indicates an error caused by the underlying batch scheduler</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
@@ -5133,7 +5145,7 @@
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
-                <entry><para>Indicates that the batch scheduler type is not known</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
@@ -5166,6 +5178,10 @@
               <row>
                 <entry><para>ERRCODE_ALREADY_TERMINATED</para></entry>
                 <entry><para>The job is already terminated</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -5436,42 +5452,42 @@
             <row>
               <entry><para>jobId</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>To list job which has this id.</para></entry>
+              <entry><para>lists the job with the specified id</para></entry>
             </row>
             <row>
               <entry><para>nbCpu</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>To list jobs which have this number of cpu.</para></entry>
+              <entry><para>lists the jobs with the specified number of CPUs</para></entry>
             </row>
             <row>
               <entry><para>fromSubmitDate</para></entry>
               <entry><para>long</para></entry>
-              <entry><para>List jobs submitted after this date (unix timestamp).</para></entry>
+              <entry><para>lists the jobs submitted after the specified date (UNIX timestamp)</para></entry>
             </row>
             <row>
               <entry><para>toSubmitDate</para></entry>
               <entry><para>long</para></entry>
-              <entry><para>List jobs submitted before this date (unix timestamp)</para></entry>
+              <entry><para>lists jobs submitted before the specified date (UNIX timestamp)</para></entry>
             </row>
             <row>
               <entry><para>owner</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>To list all jobs submitted by this owner.</para></entry>
+              <entry><para>lists the jobs submitted by the specified owner</para></entry>
             </row>
             <row>
               <entry><para>status</para></entry>
               <entry><para><link linkend="JobStatus">JobStatus</link></para></entry>
-              <entry><para>To list jobs which have this status.</para></entry>
+              <entry><para>lists the jobs with the specified status</para></entry>
             </row>
             <row>
               <entry><para>priority</para></entry>
               <entry><para><link linkend="JobPriority">JobPriority</link></para></entry>
-              <entry><para>To list jobs which have this priority</para></entry>
+              <entry><para>lists the jobs with the specified priority</para></entry>
             </row>
             <row>
               <entry><para>queue</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>To list jobs which have this queue name.</para></entry>
+              <entry><para>the jobs with the specified queue name</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5559,12 +5575,12 @@
             <row>
               <entry><para>jobId</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Represents the id of the job that the user wants to see the progression of.</para></entry>
+              <entry><para>Specifies the id of the job whose progression the user wants to see.</para></entry>
             </row>
             <row>
               <entry><para>jobOwner</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Represents the owner of the job.</para></entry>
+              <entry><para>Specifies the owner of the job.</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5614,7 +5630,7 @@
             </row>
             <row>
               <entry><para>percent</para></entry>
-              <entry><para>double</para></entry>
+              <entry><para>int</para></entry>
               <entry><para>Represent the job progression. </para></entry>
             </row>
             <row>
@@ -5722,42 +5738,42 @@
             <row>
               <entry><para>name</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns a job name. The default is the path of job.</para></entry>
+              <entry><para>Assigns a job name. The default is the path of job</para></entry>
             </row>
             <row>
               <entry><para>queue</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns the queue or class of the job.</para></entry>
+              <entry><para>Assigns the queue or class of the job</para></entry>
             </row>
             <row>
               <entry><para>wallTime</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>The maximum wall-clock time during which the job can run.</para></entry>
+              <entry><para>The maximum wall-clock time during which the job can run</para></entry>
             </row>
             <row>
               <entry><para>memory</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>Is the memory size that the job requires.</para></entry>
+              <entry><para>Is the memory size that the job requires</para></entry>
             </row>
             <row>
               <entry><para>nbCpu</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>The number of cpu that the job requires.</para></entry>
+              <entry><para>The number of cpu that the job requires</para></entry>
             </row>
             <row>
               <entry><para>nbNodesAndCpuPerNode</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>The number of nodes and processors per node.</para></entry>
+              <entry><para>The number of nodes and processors per node</para></entry>
             </row>
             <row>
               <entry><para>outputPath</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns the path and file for job output.</para></entry>
+              <entry><para>Assigns the path and file for job output</para></entry>
             </row>
             <row>
               <entry><para>errorPath</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>Assigns the path and file for job error.</para></entry>
+              <entry><para>Assigns the path and file for job error</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -5844,6 +5860,10 @@
             <row>
               <entry><para>CANCELLED</para></entry>
               <entry><para>6</para></entry>
+            </row>
+            <row>
+              <entry><para>ALREADY_DOWNLOADED</para></entry>
+              <entry><para>7</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -6060,7 +6080,7 @@
               </row>
               <row>
                 <entry><para>metricValue</para></entry>
-                <entry><para><link linkend="Metric">Metric</link></para></entry>
+                <entry><para><link linkend="ListMetric">ListMetric</link></para></entry>
                 <entry><para>Value of the metric</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
@@ -6108,7 +6128,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>Metric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getMetricHistory</title>
@@ -6148,13 +6168,6 @@
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>The id of the machine</para></entry>
-                <entry><para>IN</para></entry>
-                <entry><para>yes</para></entry>
-              </row>
-              <row>
-                <entry><para>metricType</para></entry>
-                <entry><para><link linkend="MetricType">MetricType</link></para></entry>
-                <entry><para>Type of metric</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -6208,7 +6221,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricHistory</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const MetricType&amp; <parameter>metricType</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValues</parameter></paramdef><paramdef>const MetricHistOp&amp; <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricHistory</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValues</parameter></paramdef><paramdef>const MetricHistOp&amp; <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getProcesses</title>
@@ -7573,6 +7586,11 @@
               <entry><para>endTime</para></entry>
               <entry><para>long</para></entry>
               <entry><para>The end time to get the history</para></entry>
+            </row>
+            <row>
+              <entry><para>type</para></entry>
+              <entry><para><link linkend="MetricType">MetricType</link></para></entry>
+              <entry><para>The type of metric searched</para></entry>
             </row>
           </tbody>
         </tgroup>

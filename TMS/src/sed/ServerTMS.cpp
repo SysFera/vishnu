@@ -36,7 +36,6 @@ ServerTMS::getDatabaseVishnu() {
 
 /**
 * \brief To get the vishnuId
-* \fn int getVishnuId()
 * \return the path of the configuration file
 */
 int
@@ -73,7 +72,6 @@ ServerTMS::getSlaveDirectory() {
 
 /**
 * \brief Constructor (private)
-* \fn ServerTMS()
 */
 ServerTMS::ServerTMS() {
   mprofile = NULL;
@@ -90,6 +88,7 @@ ServerTMS::ServerTMS() {
  * \param machineId the id of the machine
  * \param batchType the type of batch scheduler
  * \param slaveBinDir  the directory that contains the slave binary
+ * \return raises an exception on error
  */
 int
 ServerTMS::init(int vishnuId,
@@ -249,7 +248,6 @@ ServerTMS::init(int vishnuId,
 }
 
 /**
-* \fn ~ServerTMS()
 * \brief Destructor, raises an exception on error
 */
 ServerTMS::~ServerTMS() {

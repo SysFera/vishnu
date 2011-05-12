@@ -46,8 +46,8 @@
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#ad6fa4a9f170c815854162c1e3b3b53f3">QueryProxy</a> (const QueryParameters &amp;params, const <a class="el" href="classSessionProxy.html">SessionProxy</a> &amp;session, const std::string &amp;serviceName)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#ad6fa4a9f170c815854162c1e3b3b53f3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae92822516e13ef06702b563fd7b3b6e8"></a><!-- doxytag: member="QueryProxy::QueryProxy" ref="ae92822516e13ef06702b563fd7b3b6e8" args="(const QueryParameters &amp;params, const SessionProxy &amp;session, const std::string &amp;serviceName, const std::string &amp;machineId)" -->
-&nbsp;</td><td class="memItemRight" valign="bottom"><b>QueryProxy</b> (const QueryParameters &amp;params, const <a class="el" href="classSessionProxy.html">SessionProxy</a> &amp;session, const std::string &amp;serviceName, const std::string &amp;machineId)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#ae92822516e13ef06702b563fd7b3b6e8">QueryProxy</a> (const QueryParameters &amp;params, const <a class="el" href="classSessionProxy.html">SessionProxy</a> &amp;session, const std::string &amp;serviceName, const std::string &amp;machineId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#ae92822516e13ef06702b563fd7b3b6e8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#a78d4f01c14cf9970055099613efa29c6">setMachineId</a> (const std::string &amp;machineId)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to change or reset the machineId.  <a href="#a78d4f01c14cf9970055099613efa29c6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQueryProxy.html#ab4f8c0a551ae3ed4d4fa966c864cf648">getMachineId</a> () const </td></tr>
@@ -129,7 +129,55 @@ template&lt;class QueryParameters , class ListObject &gt; </div>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of queryProxy options </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the service to call</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the service to call </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae92822516e13ef06702b563fd7b3b6e8"></a><!-- doxytag: member="QueryProxy::QueryProxy" ref="ae92822516e13ef06702b563fd7b3b6e8" args="(const QueryParameters &amp;params, const SessionProxy &amp;session, const std::string &amp;serviceName, const std::string &amp;machineId)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class QueryParameters , class ListObject &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classQueryProxy.html">QueryProxy</a>&lt; QueryParameters, ListObject &gt;::<a class="el" href="classQueryProxy.html">QueryProxy</a> </td>
+          <td>(</td>
+          <td class="paramtype">const QueryParameters &amp;&nbsp;</td>
+          <td class="paramname"> <em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classSessionProxy.html">SessionProxy</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>session</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>serviceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor, raises an exception on error. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of queryProxy options </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the service to call </td></tr>
@@ -230,10 +278,11 @@ template&lt;class QueryParameters , class ListObject &gt; </div>
 <div class="memdoc">
 
 <p>Function to change or reset the machineId. </p>
-<p>Function to reset the machineId.</p>
+<p>Function to reset machineId.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>the</em>&nbsp;</td><td>id of the machine used by the query </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>the</em>&nbsp;</td><td>id of the machine used by the query</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>The identifier of the machine in which the query will be done </td></tr>
   </table>
   </dd>
 </dl>
@@ -244,7 +293,7 @@ template&lt;class QueryParameters , class ListObject &gt; </div>
 <li>core/src/utils/<a class="el" href="QueryProxy_8hpp_source.html">QueryProxy.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:27 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Wed May 11 2011 18:43:41 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

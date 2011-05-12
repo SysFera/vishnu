@@ -49,7 +49,6 @@ class JobProxy {
 
   /**
    * \brief Function to get job information
-   * \param options the options to submit job
    * \return raises an exception on error
    */
   TMS_Data::Job  
