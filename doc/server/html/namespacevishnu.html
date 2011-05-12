@@ -27,7 +27,6 @@
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -43,13 +42,9 @@
 Classes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvishnu_1_1param__t.html">param_t</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A convenient data type to store a parameter.  <a href="structvishnu_1_1param__t.html#_details">More...</a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9f7b1a9e7fc3aba12ccdcb3094469ba"></a><!-- doxytag: member="vishnu::CmdType" ref="aa9f7b1a9e7fc3aba12ccdcb3094469ba" args="" -->
-typedef enum <a class="el" href="namespacevishnu.html#a89462b396eca68c9c1a94a06d2f39532">vishnu::CmdType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>CmdType</b></td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><b>c_type_t</b> { <br/>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#ad8abe82f8ea57792411b26b9ed15287e">c_type_t</a> { <br/>
 &nbsp;&nbsp;<b>NONE_PARAMETER</b>, 
 <b>BOOL_PARAMETER</b>, 
 <b>INT_PARAMETER</b>, 
@@ -59,7 +54,9 @@ Enumerations</h2></td></tr>
 <b>ADDRESS_PARAMETER</b>
 <br/>
  }</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><b>param_type_t</b> { <br/>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Define a constant type. </p>
+<br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#afa06c1bb0b3442d83acb7650e8df75d1">param_type_t</a> { <br/>
 &nbsp;&nbsp;<b>DIETCONFIGFILE</b> = 0, 
 <b>VISHNUID</b>, 
 <b>DBTYPE</b>, 
@@ -78,6 +75,8 @@ Enumerations</h2></td></tr>
 &nbsp;&nbsp;<b>INTERVALMONITOR</b>
 <br/>
  }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Define a parameter type. </p>
+<br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1">IdType</a> { <a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1a18985dc599467035432920df9bcb2e8b">MACHINE</a> =  0, 
 <a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ae057d74230de0c43ca6fae4c80cd2898">USER</a> =  1, 
 <a class="el" href="namespacevishnu.html#aff8a694c2bc2b55465a31b4bf00f58c1ac6a371f14311f16f9f476b7db284ac4f">JOB</a> =  2, 
@@ -250,7 +249,8 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ca7d1d1baf7cebd2530d93b9f064bd9"></a><!-- doxytag: member="vishnu::params" ref="a1ca7d1d1baf7cebd2530d93b9f064bd9" args="[]" -->
-<a class="el" href="structvishnu_1_1param__t.html">param_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>params</b> []</td></tr>
+<a class="el" href="structvishnu_1_1param__t.html">param_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevishnu.html#a1ca7d1d1baf7cebd2530d93b9f064bd9">params</a> []</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">An arry to store all paraeters. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This naspace contains utils functions of the vishnu system. </p>
@@ -568,7 +568,7 @@ Variables</h2></td></tr>
 <p>Function to check the job nbNodesAndCpuPerNode. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>nbNodesAndNbCpuPerNode</em>&nbsp;</td><td>the number of nodes and cpu per node </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>nbNodesAndCpuPerNode</em>&nbsp;</td><td>the number of nodes and cpu per node </td></tr>
   </table>
   </dd>
 </dl>
@@ -799,6 +799,12 @@ Variables</h2></td></tr>
 <div class="memdoc">
 
 <p>Function to localtime into UTC (seconds). </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>localtime</em>&nbsp;</td><td>the local time </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the diffence time (seconds) </dd></dl>
 
 </div>
@@ -903,6 +909,12 @@ template&lt;class T &gt; </div>
 <div class="memdoc">
 
 <p>Function to convert UTC time into localtime (seconds). </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>localtime</em>&nbsp;</td><td>the local time </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the correspondant localtime (seconds) </dd></dl>
 
 </div>
@@ -1056,6 +1068,7 @@ template&lt;class T &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 in case of success, another value otherwise </dd></dl>
 
 </div>
 </div>
@@ -2389,7 +2402,7 @@ template&lt;class T &gt; </div>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>src,:</em>&nbsp;</td><td>the path of the file to move </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>dest,:</em>&nbsp;</td><td>the destination where the file will be moved </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>file,:</em>&nbsp;</td><td>the name of the file in dest </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>filename,:</em>&nbsp;</td><td>the name of the file in dest </td></tr>
   </table>
   </dd>
 </dl>
@@ -2524,6 +2537,7 @@ template&lt;class T &gt; </div>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>type,:</em>&nbsp;</td><td>The type of the SeD </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>config,:</em>&nbsp;</td><td>The configuration of the executable </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>0</em>&nbsp;</td><td>if the function succeed or another value otherwise </td></tr>
   </table>
   </dd>
 </dl>
@@ -2943,7 +2957,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed May 11 2011 18:43:42 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:43 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

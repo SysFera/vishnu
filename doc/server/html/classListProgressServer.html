@@ -54,10 +54,10 @@ Inheritance diagram for ListProgressServer:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListProgressServer.html#a49042d8db19b90501711398c913d4b31">ListProgressServer</a> (const <a class="el" href="classSessionServer.html">SessionServer</a> session, const std::string &amp;machineId)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#a49042d8db19b90501711398c913d4b31"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2de6df88e4616749465a398ae3f7c44"></a><!-- doxytag: member="ListProgressServer::ListProgressServer" ref="ab2de6df88e4616749465a398ae3f7c44" args="(TMS_Data::ProgressOptions_ptr params, const SessionServer &amp;session, const std::string &amp;machineId)" -->
-&nbsp;</td><td class="memItemRight" valign="bottom"><b>ListProgressServer</b> (TMS_Data::ProgressOptions_ptr params, const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session, const std::string &amp;machineId)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListProgression *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListProgressServer.html#a5d3eddd164119897299006b9940845ae">list</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list sessions information.  <a href="#a5d3eddd164119897299006b9940845ae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListProgressServer.html#ab2de6df88e4616749465a398ae3f7c44">ListProgressServer</a> (TMS_Data::ProgressOptions_ptr params, const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;session, const std::string &amp;machineId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor, raises an exception on error.  <a href="#ab2de6df88e4616749465a398ae3f7c44"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">TMS_Data::ListProgression *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListProgressServer.html#a638132aca020d8168e5185df47e881f0">list</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to list sessions information.  <a href="#a638132aca020d8168e5185df47e881f0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classListProgressServer.html#a9fefff901176f068962ab31ae42c25aa">getCommandName</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function to get the name of the <a class="el" href="classListProgressServer.html" title="ListProgressServer class implementation.">ListProgressServer</a> command line.  <a href="#a9fefff901176f068962ab31ae42c25aa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61ed79d6958db9b81d298a9e2dce8382"></a><!-- doxytag: member="ListProgressServer::~ListProgressServer" ref="a61ed79d6958db9b81d298a9e2dce8382" args="()" -->
@@ -111,6 +111,49 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a class="anchor" id="ab2de6df88e4616749465a398ae3f7c44"></a><!-- doxytag: member="ListProgressServer::ListProgressServer" ref="ab2de6df88e4616749465a398ae3f7c44" args="(TMS_Data::ProgressOptions_ptr params, const SessionServer &amp;session, const std::string &amp;machineId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ListProgressServer::ListProgressServer </td>
+          <td>(</td>
+          <td class="paramtype">TMS_Data::ProgressOptions_ptr&nbsp;</td>
+          <td class="paramname"> <em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classSessionServer.html">SessionServer</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>session</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>machineId</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor, raises an exception on error. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>params</em>&nbsp;</td><td>The object which encapsulates the information of <a class="el" href="classListProgressServer.html" title="ListProgressServer class implementation.">ListProgressServer</a> options </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session</em>&nbsp;</td><td>The object which encapsulates the session information (ex: identifier of the session) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>machineId</em>&nbsp;</td><td>The identifier of the machine on which the job has been submitted </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a9fefff901176f068962ab31ae42c25aa"></a><!-- doxytag: member="ListProgressServer::getCommandName" ref="a9fefff901176f068962ab31ae42c25aa" args="()" -->
 <div class="memitem">
@@ -134,12 +177,12 @@ std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
-<a class="anchor" id="a5d3eddd164119897299006b9940845ae"></a><!-- doxytag: member="ListProgressServer::list" ref="a5d3eddd164119897299006b9940845ae" args="()" -->
+<a class="anchor" id="a638132aca020d8168e5185df47e881f0"></a><!-- doxytag: member="ListProgressServer::list" ref="a638132aca020d8168e5185df47e881f0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">UMS_Data::ListSessions * ListProgressServer::list </td>
+          <td class="memname">TMS_Data::ListProgression* ListProgressServer::list </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -162,7 +205,7 @@ raises an exception on error </dd></dl>
 <li>TMS/src/server/<a class="el" href="ListProgressServer_8hpp_source.html">ListProgressServer.hpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue May 10 2011 17:10:26 by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu May 12 2011 15:44:42 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
