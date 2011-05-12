@@ -44,6 +44,7 @@ set(ALLCLI
   get_system_threshold
   restart
   stop
+  load_shed
   )
 
 #set the prefix of command
