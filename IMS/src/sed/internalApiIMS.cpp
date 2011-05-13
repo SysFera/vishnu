@@ -21,6 +21,29 @@ using namespace vishnu;
 
 int
 solveExport(diet_profile_t* pb){
+
+  //TODO:cli and api done
+  char* sessionKey = NULL;
+  char* olSessionId = NULL;
+  char* filename  = NULL;
+  char* options  = NULL;
+  char* jobSerialized = NULL;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &olSessionId, NULL);
+  cout << "************olSessionId=" << olSessionId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,2), &filename, NULL);
+  cout << "************filename=" << filename << " ..." << endl;
+  diet_string_get(diet_parameter(pb,3), &options, NULL);
+  cout << "************options=" << options << " ..." << endl;
+
+  string  fileContent = "Paco from server";
+  diet_string_set(diet_parameter(pb,4), strdup(fileContent.c_str()), DIET_VOLATILE);
+
+  string  errorInfo = "";
+  diet_string_set(diet_parameter(pb,5), strdup(errorInfo.c_str()), DIET_VOLATILE);
+
   return 0;
 }
 
@@ -256,7 +279,7 @@ solveSetSysInfo(diet_profile_t* pb){
 
     // Creating the process server with the options
     SysInfoServer sysser(userServer);
-    
+
     // Listing the old metric
     sysser.setSysInfo(sysinf);
     // Setting out diet param
@@ -376,7 +399,7 @@ solveSetThreshold(diet_profile_t* pb){
 
     // Creating the process server with the options
     ThresholdServer treeser(userServer);
-    
+
     // Listing the old metric
     treeser.setThreshold(treeinf);
     // Setting out diet param
