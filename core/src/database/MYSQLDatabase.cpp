@@ -32,8 +32,8 @@ MYSQLDatabase::process(string request){
 int
 MYSQLDatabase::connect(){
   for (unsigned int i=0; i<MPOOLSIZE;i++) {
-    if (!mysql_real_connect(&(mpool[i].mmysql), mhost.c_str(), musername.c_str(), mpwd.c_str(),
-			   mdatabase.c_str (), mport, NULL, 0)){
+    if (mysql_real_connect(&(mpool[i].mmysql), mhost.c_str(), musername.c_str(), mpwd.c_str(),
+			   mdatabase.c_str (), mport, NULL, 0)==NULL){
       throw SystemException(ERRCODE_DBERR, "Connexion problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
     }
   }
@@ -113,12 +113,17 @@ MYSQLDatabase::getResult(string request) {
   vector<vector<string> > results;
   vector<string> attributesNames;
   vector<string> tmp;
-  int        size = mysql_num_fields(res);
+  int        size;
   int        i;
 
+  if ((mysql_real_query(lconn, request.c_str (), request.length())) != 0) {
+    releaseConnexion(reqPos);
+    throw SystemException(ERRCODE_DBERR, "Querry error with code "+convertToString(res));
+  }
   res = mysql_use_result (lconn);
-  while((field = mysql_fetch_field(res))) {
-    attributesNames.push_back(string(field->name));
+  size = mysql_num_fields(res);
+  if (res==NULL) {
+    throw SystemException(ERRCODE_DBERR, "Database problem to get the results with message: "+string(mysql_error(lconn)));
   }
   while ((row=mysql_fetch_row(res))){
     tmp.clear();
@@ -126,6 +131,9 @@ MYSQLDatabase::getResult(string request) {
       tmp.push_back(string(row[i]));
     }
     results.push_back(tmp);
+  }
+  while((field = mysql_fetch_field(res))) {
+    attributesNames.push_back(string(field->name));
   }
   releaseConnexion(reqPos);
 
