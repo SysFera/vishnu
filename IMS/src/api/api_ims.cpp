@@ -17,9 +17,6 @@ vishnu::exportCommands(const string sessionKey,
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   boost::filesystem::path file (filename);
-
-  std::cout << "filename: " << filename << std::endl;
-
   // Check the existence of file
   if (((false== boost::filesystem::exists(file)) || (true== boost::filesystem::is_directory(file)))
     || (false== boost::filesystem::is_regular_file(file))) {
