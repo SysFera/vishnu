@@ -32,7 +32,7 @@ namespace vishnu {
    * \param sessionKey: The session key gotten after connection
    * \param oldSessionId: The session id of the session the user wants to export the commands. This session must be closed.
    * \param filename: The file to export the data
-   * \parap op: The options for the export, currently the export type as shell format is the only possibility
+   * \param op: The options for the export, currently the export type as shell format is the only possibility
    * \return int : an error code
    */
   int
