@@ -6,6 +6,8 @@
 #include "ObjectIdProxy.hpp"
 #include "ThresholdProxy.hpp"
 #include "ProcessCtlProxy.hpp"
+#include "ExporterProxy.hpp"
+#include <boost/filesystem.hpp>
 
 int
 vishnu::exportCommands(const string sessionKey,
@@ -13,6 +15,21 @@ vishnu::exportCommands(const string sessionKey,
 	       string filename,
 	       IMS_Data::ExportOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  boost::filesystem::path file (filename);
+
+  std::cout << "filename: " << filename << std::endl;
+
+  // Check the existence of file
+  if (((false== boost::filesystem::exists(file)) || (true== boost::filesystem::is_directory(file)))
+    || (false== boost::filesystem::is_regular_file(file))) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The file: " + filename +" is a directory or does not exists");
+  }
+
+  SessionProxy sessionProxy(sessionKey);
+  ExporterProxy exporterProxy(sessionProxy);
+  exporterProxy.exportCmd(oldSessionId, filename, op);
+
   return IMS_SUCCESS;
 }
 
