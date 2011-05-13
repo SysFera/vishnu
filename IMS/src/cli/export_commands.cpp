@@ -19,8 +19,8 @@ using namespace std;
 using namespace vishnu;
 
 boost::shared_ptr<Options>
-makeStopOpt(string pgName,
-            boost::function1<void, string>& fDietId,
+makeExportOpt(string pgName,
+            boost::function1<void, IMS_Data::ExportType>& fExportType,
             string& dietConfig) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -32,10 +32,11 @@ makeStopOpt(string pgName,
            dietConfig);
 
     // All cli options
-   opt->add("dietId,d",
-            "The diet id of the process",
+   opt->add("exportType,t",
+            "the type to export\n"
+            "1 for SHELL",
             CONFIG,
-            fDietId);
+            fExportType);
 
   return opt;
 }
@@ -48,14 +49,14 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string sessionKey;
-  string machineId;
-  string processName;
+  string oldSessionId;
+  string filename;
 
    /********** EMF data ************/
-  IMS_Data::Process process;
+  IMS_Data::ExportOp exportOp;
 
   /******** Callback functions ******************/
-  boost::function1<void, string> fDietId (boost::bind(&IMS_Data::Process::setDietId,boost::ref(process),_1));
+  boost::function1<void, IMS_Data::ExportType> fExportType (boost::bind(&IMS_Data::ExportOp::setExportType,boost::ref(exportOp),_1));
 
   /*********** Out parameters *********************/
 
@@ -63,40 +64,36 @@ int main (int argc, char* argv[]){
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fDietId, dietConfig);
+  boost::shared_ptr<Options> opt=makeExportOpt(argv[0], fExportType, dietConfig);
 
-  opt->add( "machineId,i",
-            "represents the id of the machine",
+  opt->add( "oldSessionId,o",
+            "represents the id of the session to export",
             HIDDEN,
-            machineId,1);
+            oldSessionId,1);
 
-  opt->setPosition("machineId",1);
+  opt->setPosition("oldSessionId",1);
 
-  opt->add( "processName,p",
-            "represents the name of the process",
+  opt->add( "filename,f",
+            "represents the file in which the data will be exported",
             HIDDEN,
-            processName,1);
+            filename,1);
 
-  opt->setPosition("processName",1);
-
+  opt->setPosition("filename",1);
 
   CLICmd cmd = CLICmd (argc, argv, opt, dietConfig);
 
   // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
 
-  process.setMachineId(machineId);
-  process.setProcessName(processName);
-
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] processName machineId");
+    helpUsage(*opt,"[options] oldSessionId filename");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] processName machineId");
+    helpUsage(*opt,"[options] oldSessionId filename");
     return 0;
   }
 
@@ -114,7 +111,7 @@ int main (int argc, char* argv[]){
     // DIET call : get job output
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-      stop(sessionKey, process);
+      exportCommands(sessionKey, oldSessionId, filename, exportOp);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
