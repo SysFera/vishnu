@@ -113,12 +113,13 @@ ServerIMS::init(int vishnuId,
 
   /* solveExport */
 
-  mprofile = diet_profile_desc_alloc(SRV[0], 3, 3, 4);
+  mprofile = diet_profile_desc_alloc(SRV[0], 3, 3, 5);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,5),DIET_STRING, DIET_CHAR);
 
   if (diet_service_table_add(mprofile, NULL, solveExport)) {
     return 1;
