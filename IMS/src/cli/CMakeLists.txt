@@ -45,6 +45,7 @@ set(ALLCLI
   restart
   stop
   load_shed
+  export_commands
   )
 
 #set the prefix of command
