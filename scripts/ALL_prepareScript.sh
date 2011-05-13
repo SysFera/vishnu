@@ -185,7 +185,7 @@ for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
 cd ..
 
 # Archive to send
-tar -czvf VISHNU_v${NO_VERSION}.tgz VISHNU_$NO_VERSION
+tar -czvf VISHNU_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
 
 # Moving archive in /tmp
 mv VISHNU_v${NO_VERSION}.tgz /tmp/
