@@ -7,7 +7,7 @@
 # the location and configuration of Diet i.e. the pathes to Diet include
 # directories, library directories, and preprocessor macros... Please read
 # this file, or DietConfig.cmake.in from the Diet source tree, for the full
-# list of CMake variable definitions. 
+# list of CMake variable definitions.
 #
 # In addition to the variables read from DietConfig.cmake, this find
 # module also defines:
@@ -41,7 +41,7 @@ IF( NOT DIET_DIR )
   ENDFOREACH( dir )
 
   ##### Look for an installation or build tree.
-  FIND_PATH( DIET_DIR share/DietConfig.cmake
+  FIND_PATH( DIET_DIR share/cmake/Modules/DietConfig.cmake
     # Look for an environment variable DIET_DIR.
     $ENV{DIET_DIR}
 
@@ -54,7 +54,7 @@ IF( NOT DIET_DIR )
     # Help the user find it if we cannot.
     DOC "The ${DIET_DIR_STRING}"
   )
-  
+
   IF( DIET_DIR )
     SET( DIET_FOUND TRUE CACHE BOOL ${DIET_FOUND_STRING} FORCE )
   ELSE( DIET_DIR )
