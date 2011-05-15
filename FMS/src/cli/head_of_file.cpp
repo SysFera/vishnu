@@ -115,7 +115,10 @@ if (opt->count ("path")) cout << "path: " << path << "\n";
     // DIET call : head_of_file
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
-            headOfFile(sessionKey,path,contentOfFile, hofOptions);
+           
+      headOfFile(sessionKey,path,contentOfFile, hofOptions);
+
+      cout << contentOfFile << "\n";
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
