@@ -4,6 +4,11 @@
  * \date MAY 2011
  */
 
+// C Headers
+#include <cstring>
+
+
+
 // C++ Headers
 #include <string>
 #include <pthread.h>
@@ -17,6 +22,10 @@
 
 //FMS Data Headers
 #include <FMS_Data.hpp>
+
+//FMS client headers
+ 
+#include "FileFactory.hh"
 
 using namespace FMS_Data;
 using namespace std;
@@ -86,7 +95,26 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+
+      File* f = FileFactory::getFileClient(path);
+
+      std::string head;
+
+     int nline=5;
+      try {
+        f->getInfos();
+        head = f->head(nline);
+      } catch (std::runtime_error& err) {
+        std::cerr << "Catch " << err.what() << std::endl;
+        return -1;
+      }
+
+      contentOfFile= strdup(head.c_str());
+    
+      return 0;
+
+    }
 
   /**
    * \brief get the list of files and subdirectories of a directory
@@ -158,7 +186,29 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
+    
+      File* f = FileFactory::getFileClient(path);
+
+      std::string tail;
+
+     int nline=3;
+      try {
+        f->getInfos();
+        tail= f->tail(nline);
+      } catch (std::runtime_error& err) {
+        std::cerr << "Catch " << err.what() << std::endl;
+        return -1;
+      }
+
+      contentOfFile= strdup(tail.c_str());
+    
+      return 0;
+
+
+    
+    
+    }
 
   /**
    * \brief  obtain informations about a file
