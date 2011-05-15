@@ -30,8 +30,8 @@ TARGET_LINK_LIBRARIES(vishnu-fms-api
   emf4cpp-UMS_Data
   exception-vishnu
   ums-client-proxy
-  #  fms-client-proxy
-  emf4cpp-FMS_Data # FIXME when fms-client-proxy will be available
+  fms-client-proxy
+  #  emf4cpp-FMS_Data # FIXME when fms-client-proxy will be available
   utils-vishnu
 )
 
