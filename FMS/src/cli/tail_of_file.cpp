@@ -116,6 +116,7 @@ if (opt->count ("path")) cout << "path: " << path << "\n";
     if(false==sessionKey.empty()){
       cout <<currentSessionKeyMsg << sessionKey <<endl;
             tailOfFile(sessionKey,path,contentOfFile, tofOptions);
+            cout << contentOfFile << "\n";
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";

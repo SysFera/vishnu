@@ -247,8 +247,7 @@ if(COMPILE_IMS)
 endif (COMPILE_IMS)
 
 if(COMPILE_FMS)
-  add_subdirectory(FMS/src/api)
-  add_subdirectory(FMS/src/cli)
+  add_subdirectory(FMS/src)
 endif (COMPILE_FMS)
 
 
