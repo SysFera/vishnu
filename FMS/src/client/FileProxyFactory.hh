@@ -2,7 +2,7 @@
 #define FILEPROXYFACTORY_HH
 
 #include <string>
-
+#include "SessionProxy.hpp"
 #include "FileProxy.hh"
 #include "LocalFileProxy.hh"
 #include "RemoteFileProxy.hh"
@@ -12,7 +12,7 @@
 class FileProxyFactory {
 
   public:
-  static FileProxy* getFileProxy(const std::string& path,
+  static FileProxy* getFileProxy(const SessionProxy& sessionProxy,const std::string& path,
                              const std::string& user="");
   
 };

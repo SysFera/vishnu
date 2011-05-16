@@ -1,11 +1,14 @@
-#ifndef FILE_HH
-#define FILE_HH
+#ifndef FILEPROXY_HH
+#define FILEPROXY_HH
 
 #include <string>
 #include <list>
 
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#include "SessionProxy.hpp"
+  
 
 /* Definition of the system endianness. */
 #define LT_ENDIAN 0
@@ -59,6 +62,7 @@ private:
   mutable time_t ctime;
   mutable file_type_t type;
   mutable bool exist;
+  SessionProxy msessionProxy;
 protected:
   void setPath(const std::string& path);
   void setHost(const std::string& host);
@@ -75,9 +79,11 @@ protected:
   void exists(const bool exist) const;
 public:
   FileProxy();
-  FileProxy(const std::string& path);
+  FileProxy(const SessionProxy& sessionProxy,const std::string& path);
   FileProxy(const FileProxy& file);
   virtual ~FileProxy();
+  
+  const SessionProxy& getSession() const;
   
   const std::string& getPath() const;
   const std::string& getOwner() const;
@@ -103,10 +109,8 @@ public:
   
   virtual int chgrp(const std::string& group) = 0;
   virtual int chmod(const mode_t mode) = 0;
-  virtual FileProxy* cp(const std::string& dest) = 0;
   virtual std::string head(const unsigned int nline) = 0;
   virtual int mkdir(const mode_t mode) = 0;
-  virtual FileProxy* mv(const std::string& dest) = 0;
   virtual int rm() = 0;
   virtual int rmdir() = 0;
   virtual std::string tail(const unsigned int nline) = 0;
