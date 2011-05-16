@@ -236,7 +236,10 @@ if(COMPILE_IMS)
     ADD_DEFINITIONS( -DHAVE_ALT_BATCH )
     ADD_DEFINITIONS( -DHAVE_CORI )
     add_subdirectory(IMS/src)
-    add_subdirectory(IMS/test/src)
+    #if the tests is activated
+    if (BUILD_TESTING)
+      add_subdirectory(IMS/test/src)
+    endif (BUILD_TESTING)
   endif()
 endif (COMPILE_IMS)
 
