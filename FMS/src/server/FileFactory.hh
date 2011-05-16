@@ -24,8 +24,6 @@ public:
   static void setSSHPort(const unsigned int sshPort);
   static void setSSHCommand(const std::string& sshCommand);
   static void setSCPCommand(const std::string& scpCommand);
-  static File* getFileClient(const std::string& path,
-                             const std::string& user="");
   static File* getFileServer(const std::string& path,
                              const std::string& user,
                              const std::string& key);
