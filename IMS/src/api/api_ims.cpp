@@ -21,8 +21,8 @@ vishnu::getMetricCurrentValue(const string sessionKey,
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_getMetricCurentValue";
-  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric>
+  string name = "int_getMetricCurentValue"+machineId;
+  QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric> 
     query(op, sessionProxy, name, machineId);
 
   IMS_Data::ListMetric_ptr li = query.list();
