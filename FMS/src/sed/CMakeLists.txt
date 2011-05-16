@@ -25,14 +25,12 @@ include_directories(
 )
 
 add_executable(fmssed
-  server  
-  Options
+  fmssed
+  ServerFMS
   services
   getInfosSrv
   headSrv
   tailSrv
-  UserTable
-  GrpTable
   )
 
 target_link_libraries(fmssed
