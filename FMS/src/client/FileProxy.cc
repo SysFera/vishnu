@@ -6,67 +6,67 @@
 #include <stdexcept>
 #include <sstream>
 
-#include "File.hh"
+#include "FileProxy.hh"
 
 using namespace std;
 
-void File::setPath(const string& path) {
+void FileProxy::setPath(const string& path) {
   this->path = path;
 }
 
-void File::setHost(const string& host) {
+void FileProxy::setHost(const string& host) {
   this->host = host;
 }
 
-void File::setOwner(const string& owner) const {
+void FileProxy::setOwner(const string& owner) const {
   this->owner = owner;
 }
 
-void File::setGroup(const string& group) const {
+void FileProxy::setGroup(const string& group) const {
   this->group = group;
 }
 
-void File::setPerms(const mode_t perms) const {
+void FileProxy::setPerms(const mode_t perms) const {
   this->perms = perms;
 }
 
-void File::setUid(const uid_t uid) const {
+void FileProxy::setUid(const uid_t uid) const {
   this->uid = uid;
 }
 
-void File::setGid(const gid_t gid) const {
+void FileProxy::setGid(const gid_t gid) const {
   this->gid = gid;
 }
 
-void File::setSize(const file_size_t size) const {
+void FileProxy::setSize(const file_size_t size) const {
   this->size = size;
 }
 
-void File::setAtime(const time_t atime) const {
+void FileProxy::setAtime(const time_t atime) const {
   this->atime = atime;
 }
 
-void File::setMtime(const time_t mtime) const {
+void FileProxy::setMtime(const time_t mtime) const {
   this->mtime = mtime;
 }
 
-void File::setCtime(const time_t ctime) const {
+void FileProxy::setCtime(const time_t ctime) const {
   this->ctime = ctime;
 }
 
-void File::setType(const file_type_t type) const {
+void FileProxy::setType(const file_type_t type) const {
   this->type = type;
 }
 
-void File::exists(const bool exist) const {
+void FileProxy::exists(const bool exist) const {
   this->exist = exist;
 }
 
-File::File() {
+FileProxy::FileProxy() {
   srand(time(NULL));
 }
 
-File::File(const string& path) {
+FileProxy::FileProxy(const string& path) {
   srand(time(NULL));
   size_t pos = path.find(':');
   
@@ -79,80 +79,80 @@ File::File(const string& path) {
   }
 }
 
-File::File(const File& file) {
+FileProxy::FileProxy(const FileProxy& file) {
   srand(time(NULL));
   operator=(file);
 }
 
-const string& File::getPath() const {
+const string& FileProxy::getPath() const {
   return path;
 }
 
-const string& File::getOwner() const {
+const string& FileProxy::getOwner() const {
   if (!isUpToDate()) getInfos();
   return owner;
 }
 
-const string& File::getGroup() const {
+const string& FileProxy::getGroup() const {
   if (!isUpToDate()) getInfos();
   return group;
 }
 
-const string& File::getHost() const {
+const string& FileProxy::getHost() const {
   return host;
 }
 
-mode_t File::getPerms() const {
+mode_t FileProxy::getPerms() const {
   if (!isUpToDate()) getInfos();
   return perms;
 }
 
-uid_t File::getUid() const {
+uid_t FileProxy::getUid() const {
   if (!isUpToDate()) getInfos();
   return uid;
 }
 
-gid_t File::getGid() const {
+gid_t FileProxy::getGid() const {
   if (!isUpToDate()) getInfos();
   return gid;
 }
 
-file_size_t File::getSize() const {
+file_size_t FileProxy::getSize() const {
   if (!isUpToDate()) getInfos();
   return size;
 }
 
-time_t File::getAtime() const {
+time_t FileProxy::getAtime() const {
   if (!isUpToDate()) getInfos();
   return atime;
 }
 
-time_t File::getMtime() const {
+time_t FileProxy::getMtime() const {
   if (!isUpToDate()) getInfos();
   return mtime;
 }
 
-time_t File::getCtime() const {
+time_t FileProxy::getCtime() const {
   if (!isUpToDate()) getInfos();
   return ctime;
 }
 
-file_type_t File::getType() const {
+file_type_t FileProxy::getType() const {
   if (!isUpToDate()) getInfos();
   return type;
 }
 
-file_host_t File::getHostType() const {
+file_host_t FileProxy::getHostType() const {
   if (getHost()=="localhost") return local;
   return remote;
 }
 
-bool File::exists() const {
+bool FileProxy::exists() const {
   if (!isUpToDate()) getInfos();
   return exist;
 }
 
-File& File::operator=(const File& file) {
+FileProxy& FileProxy::operator=(const FileProxy& file) {
   setPath(file.getPath());
   setOwner(file.getOwner());
   setGroup(file.getGroup());
@@ -169,16 +169,16 @@ File& File::operator=(const File& file) {
   return *this;
 }
 
-bool File::operator==(const File& file) {
+bool FileProxy::operator==(const FileProxy& file) {
   return getPath()==file.getPath() && getHost()==file.getHost();
 }
 
-bool File::operator<(const File& file) {
+bool FileProxy::operator<(const FileProxy& file) {
   return getPath()<file.getPath() ||
          (getPath()==file.getPath() && getHost()<file.getHost());
 }
 
-string File::extHost(const string& path) {
+string FileProxy::extHost(const string& path) {
   size_t pos;
   
   pos = path.find_first_of(':');
@@ -186,7 +186,7 @@ string File::extHost(const string& path) {
   return path.substr(0, pos);
 }
 
-string File::extName(const string& path) {
+string FileProxy::extName(const string& path) {
   size_t pos;
   
   pos = path.find_first_of(':');
@@ -194,7 +194,7 @@ string File::extName(const string& path) {
   return path.substr(pos+1);
 }
 
-File::~File() {}
+FileProxy::~FileProxy() {}
 
 string basename(const string& path) {
   size_t pos = path.find_last_of('/');
