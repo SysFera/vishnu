@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <sstream>
 
+#include "SessionProxy.hpp"
+
 #include "FileProxy.hh"
 
 using namespace std;
@@ -66,7 +68,10 @@ FileProxy::FileProxy() {
   srand(time(NULL));
 }
 
-FileProxy::FileProxy(const string& path) {
+FileProxy::FileProxy(const SessionProxy& sessionProxy,const string& path) {
+ 
+  msessionProxy=sessionProxy;
+  
   srand(time(NULL));
   size_t pos = path.find(':');
   
@@ -82,6 +87,10 @@ FileProxy::FileProxy(const string& path) {
 FileProxy::FileProxy(const FileProxy& file) {
   srand(time(NULL));
   operator=(file);
+}
+
+const SessionProxy& FileProxy::getSession() const {
+  return msessionProxy;
 }
 
 const string& FileProxy::getPath() const {

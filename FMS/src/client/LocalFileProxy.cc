@@ -14,6 +14,8 @@
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
 
+#include "SessionProxy.hpp"
+
 #include "LocalFileProxy.hh"
 #include "RemoteFileProxy.hh"
 #include "FileProxy.hh"
@@ -28,7 +30,7 @@ LocalFileProxy::LocalFileProxy() : FileProxy() {
 
 /* Standard constructor.
  * Use the file path as argument. */
-LocalFileProxy::LocalFileProxy(const string& path) : FileProxy(path) {
+LocalFileProxy::LocalFileProxy(const SessionProxy& sessionProxy, const string& path) : FileProxy(sessionProxy,path) {
   setHost("localhost");
   upToDate = false;
 }
@@ -169,82 +171,7 @@ int LocalFileProxy::chmod(const mode_t mode) {
   return result;
 }
 
-/* Copy the local file to a local or remote destination. */
-/* The function proceed to the file copy by itself if the
- * destination is a local path. Otherwise it calls the DIET service.
- */
-FileProxy* LocalFileProxy::cp(const string& dest) {
-  string host = FileProxy::extHost(dest);
-  string path = FileProxy::extName(dest);
-  size_t read;
-  char* dataID, *transferID;
-  LocalFileProxy* localResult;
-  RemoteFileProxy* remoteResult;
- cout << "destination path:"<< dest<<endl;
- cout <<"host is "<< host <<endl;
- cout << "and the path is"<< path<<endl;  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (host=="localhost") {
-    ifstream input(getPath().c_str());
-    ofstream output(path.c_str());
-    char buffer[10240];
-    if (!input.is_open())
-      throw runtime_error("Cannot open "+getPath()+" for reading");
-    if (!output.is_open())
-      throw runtime_error("Cannot open "+path+" for writing");
- cout <<"je suis dans le fichier LocalFileProxy.cc"<<endl;
-   while (!input.eof() && !output.bad() && !output.fail()) {
-      input.read(buffer, 10240);
-      read = input.gcount();
-      output.write(buffer, read);
-    }
-    input.close();
-    output.close();
-    localResult = new LocalFileProxy(path);
-    localResult->chgrp(getGroup());
-    localResult->chmod(getPerms());
-    return localResult;
-  }
-  
-  diet_profile_t* profile;
-  char* errMsg;
-  mode_t mode = getPerms();
-  file_type_t type = getType();
-  transferID = strdup(gen_uuid().c_str());
 
-  sysEndianChg<mode_t>(mode);
-  sysEndianChg<file_type_t>(type);
-  
-  dagda_put_file(const_cast<char*>(getPath().c_str()), DIET_PERSISTENT, &dataID);
-  
-  profile = diet_profile_alloc(CP_GETFILE_SRV(host), 7, 7, 8);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(path.c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getOwner().c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(getGroup().c_str()), DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 4), &mode, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 5), &type, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 6), dataID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 7), transferID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
-
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
-  
-  //dagda_delete_data(dataID);
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  
-  remoteResult = new RemoteFileProxy(dest, getOwner());
-  return remoteResult;
-}
 
 /* Print the head of the local file.*/
 string LocalFileProxy::head(const unsigned int nline) {
@@ -313,74 +240,7 @@ int LocalFileProxy::mkdir(const mode_t mode) {
   return result;
 }
 
-/* Move the file to dest.
- * If the destination is a local file, proceeds itself to the move.
- * Otherwise, call the DIET service to do it.
- */
-FileProxy* LocalFileProxy::mv(const string& dest) {
-  string host = FileProxy::extHost(dest);
-  string path = FileProxy::extName(dest);
-//  LocalFileProxy localResult;
-  RemoteFileProxy* remoteResult;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (host=="localhost") {
-    int result = ::rename(getPath().c_str(), path.c_str());
-    if (result==-1)
-      switch (errno) {
-        case EACCES:
-          throw runtime_error("Access denied to "+getPath());
-        case EDQUOT:
-          throw runtime_error("Quota error");
-        case EFAULT:
-          /* Should never happen because we use the path accessor.
-           This error can traduce previous memory corruption. */
-          throw runtime_error("Internal bug - function: "+string(__FUNCTION__)+" ("+string(__FILE__)+")"+
-                              " please send a mail to contact@sysfera.com"+
-                              " indicating this error message");
-        case EINVAL:
-          throw runtime_error(getPath()+" is a parent directory of "+path+
-                              " or attempt to move \".\" or \"..\"");
-        case EIO:
-          throw runtime_error("IO error accessing to "+getPath()+" or "+path);
-        case EISDIR:
-          throw runtime_error(path+" is a directory but "+getPath()+" is not");
-        case ELOOP:
-          throw runtime_error("Too many symbolic links in the path. There is probably"
-                              "a looping symbolic link in "+path);
-        case ENAMETOOLONG:
-          throw runtime_error("FileProxy path too long: "+path);
-        case ENOENT:
-          throw runtime_error("A component in "+getPath()+" or "+path+" does not exist.");
-        case ENOSPC:
-          throw runtime_error("Not enough space on the device to create "+path);
-        case ENOTDIR:
-          throw runtime_error("A component of the path of "+path+" or "+getPath()+
-                              " prefix is not a directory.");
-        case ENOTEMPTY:
-          throw runtime_error(path+" is a non-empty directory");
-        case EPERM:
-          throw runtime_error("Permission error");
-        case EROFS:
-          throw runtime_error("Requires to write on a read-only file system");
-        case EXDEV:
-          throw runtime_error(path+" and "+getPath()+" are on different devices and the"
-                              "filesystem does not allow cross-device links");
-        default:
-          throw runtime_error("Unknown error while renaming "+getPath() + " to "+path);
-      }
-    setPath(path);
-    upToDate = false;
-    return this;
-  }
-  
-//  cout << "Move "+getPath()+" to "+host+" ("+path+")" << endl;
-  cp(dest);
-  rm();
-  remoteResult = new RemoteFileProxy(dest, getOwner());
-  return remoteResult;
-}
-
+ 
 /* Remove this local file. Uses the C-standard function "unlink". */
 int LocalFileProxy::rm() {
   int result;

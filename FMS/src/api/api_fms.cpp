@@ -15,17 +15,23 @@
 //Boost Headers
 #include <boost/thread.hpp>
 
+//UMS Data Headers
+#include <UMS_Data.hpp>
+
+
 // FMS Headers
 #include <api_fms.hpp>
 
 //FMS Data Headers
 #include <FMS_Data.hpp>
 
+
 //FMS client headers
  
 #include "FileProxyFactory.hh"
 
 using namespace FMS_Data;
+using namespace UMS_Data;
 using namespace std;
 
   /**
@@ -95,7 +101,8 @@ using namespace std;
   int vishnu::headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-      FileProxy* f = FileProxyFactory::getFileProxy(path);
+      SessionProxy sessionProxy(sessionKey);
+      FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
 
       std::string head;
 
@@ -186,9 +193,12 @@ using namespace std;
    */
   int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-    
-      FileProxy* f = FileProxyFactory::getFileProxy(path);
+      
 
+      SessionProxy sessionProxy(sessionKey);
+     
+      FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
+      
       std::string tail;
 
      int nline=3;
@@ -203,9 +213,6 @@ using namespace std;
       contentOfFile= strdup(tail.c_str());
     
       return 0;
-
-
-    
     
     }
 
