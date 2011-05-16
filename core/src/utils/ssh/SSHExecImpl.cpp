@@ -59,8 +59,8 @@ SSHExecImpl::execSSH(string cmd) {
   if (pipe(comPipeErr)==-1) {
     for (unsigned int i=0; i<tokens.size(); ++i)
       free(argv[i]);
-    close(comPipeOut[0]);
-    close(comPipeOut[1]);
+    CHECKSYSCALL(close(comPipeOut[0]));
+    CHECKSYSCALL(close(comPipeOut[1]));
     throw runtime_error("Error creating communication pipe");
   }
   pid = fork();
