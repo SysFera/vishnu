@@ -10,6 +10,7 @@
 
 #include "data/ProcessServer.hpp"
 
+
 class ProcessCtl{
 public:
   /**
@@ -29,7 +30,7 @@ public:
    * \brief To stop a process
    */
   void
-  stop();
+  stop(IMS_Data::Process_ptr p);
   /**
    * To perform load schedding operations
    */
@@ -38,8 +39,9 @@ public:
 protected:
 private:
   ProcessServer mp;
-  //  RestartOp mop;
+  IMS_Data::RestartOp mop;
   string mmid;
 };
 
 #endif
+

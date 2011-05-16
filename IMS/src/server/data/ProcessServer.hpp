@@ -85,12 +85,25 @@ public:
   int
   stopProcess(IMS_Data::Process_ptr proc);
   /**
+   * \brief To set all running processes as stopped on the machine
+   * \param proc: The proc to flag as stopped
+   * \return Success, an error code otherwise
+   */
+  int
+  stopAllProcesses(IMS_Data::Process_ptr proc);
+  /**
    * \brief Return true if the process with a diet name Pname is of type IMS
    * \param Pname: DIET name of the process
    * \return True if Pname represents an IMS SeD
    */
   bool
   isIMSSeD(string Pname);
+  /**
+   * \brief To get the script content from the machineId and dietName
+   * \param p: Process to fill
+   */
+  void
+  fillContent(IMS_Data::Process_ptr p);
 
 protected:
 private:
