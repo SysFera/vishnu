@@ -5,7 +5,7 @@
 
 #include <sys/types.h>
 
-#include "File.hh"
+#include "FileProxy.hh"
 
 /* DIET service name definition macro. */
 /* These macro take the host name of the machine as argument. */
@@ -26,29 +26,29 @@
 #define STATUS_SRV(host)     const_cast<char*>(("TransferStatus"+host).c_str())
 
 /* Class for the remote DIET files. */
-class RemoteFile : public File {
+class RemoteFileProxy : public FileProxy {
 private:
   mutable bool upToDate;
   std::string localUser;
   bool printTrID;
 public:
-  RemoteFile();
-  RemoteFile(const std::string& path,
+  RemoteFileProxy();
+  RemoteFileProxy(const std::string& path,
              const std::string& localUser);
-  RemoteFile(const RemoteFile& file);
-  virtual ~RemoteFile();
+  RemoteFileProxy(const RemoteFileProxy& file);
+  virtual ~RemoteFileProxy();
   
   virtual bool isUpToDate() const;
   virtual void getInfos() const;
   
-  RemoteFile& operator=(const RemoteFile& file);
+  RemoteFileProxy& operator=(const RemoteFileProxy& file);
   
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
-  virtual File* cp(const std::string& dest);
+  virtual FileProxy* cp(const std::string& dest);
   virtual std::string head(const unsigned int nline);
   virtual int mkdir(const mode_t mode);
-  virtual File* mv(const std::string& dest);
+  virtual FileProxy* mv(const std::string& dest);
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline);

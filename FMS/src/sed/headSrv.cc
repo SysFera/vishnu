@@ -5,8 +5,6 @@
 
 #include <sys/types.h>
 
-#include "UserTable.hh"
-#include "GrpTable.hh"
 #include "FileFactory.hh"
 
 #include "DIET_server.h"
@@ -14,14 +12,14 @@
 using namespace std;
 
 /* Global variables defined in the server.cc file. */
-extern UserTable* users;
-extern GroupTable* groups;
-extern string serverHostname;
+//extern UserTable* users;
+//extern GroupTable* groups;
+//extern string serverHostname;
 
 /* DIET profile construction.
  * Use the serverHostname global variable to create the service name. */
 diet_profile_desc_t* getHeadProfile() {
-  diet_profile_desc_t* result = diet_profile_desc_alloc(HEAD_SRV(serverHostname), 3, 3, 5);
+  diet_profile_desc_t* result = diet_profile_desc_alloc("FileHead", 3, 3, 5);
   
   diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
@@ -57,12 +55,16 @@ int headFile(diet_profile_t* profile) {
    
     if (user!=NULL && path!=NULL && nline!=NULL) {
     try {
-      if (path[0]!='/' && users)
-        localPath = users->getHome(user) + "/" + path;
-      else
+      if (path[0]!='/')// && users)
+      {
+       // localPath = users->getHome(user) + "/" + path;
+      }
+      else{
         localPath = path;
-      localUser = users->getLocalID(user);
-      userKey = users->getKey(user);
+      //localUser = users->getLocalID(user);
+      //userKey = users->getKey(user);
+      //
+      }
     } catch (runtime_error& err) {
  
       std::cout << "Dans headFile, catch:  " << "\n";
