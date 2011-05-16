@@ -7,8 +7,6 @@
 // C Headers
 #include <cstring>
 
-
-
 // C++ Headers
 #include <string>
 #include <pthread.h>
@@ -25,7 +23,7 @@
 
 //FMS client headers
  
-#include "FileFactory.hh"
+#include "FileProxyFactory.hh"
 
 using namespace FMS_Data;
 using namespace std;
@@ -97,12 +95,13 @@ using namespace std;
   int vishnu::headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-      File* f = FileFactory::getFileClient(path);
+      FileProxy* f = FileProxyFactory::getFileProxy(path);
 
       std::string head;
 
      int nline=5;
-      try {
+
+     try {
         f->getInfos();
         head = f->head(nline);
       } catch (std::runtime_error& err) {
@@ -188,7 +187,7 @@ using namespace std;
   int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
     
-      File* f = FileFactory::getFileClient(path);
+      FileProxy* f = FileProxyFactory::getFileProxy(path);
 
       std::string tail;
 

@@ -11,43 +11,43 @@
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
 
-#include "RemoteFile.hh"
-#include "LocalFile.hh"
+#include "RemoteFileProxy.hh"
+#include "LocalFileProxy.hh"
 
 using namespace std;
 
 /* Default constructor. */
-RemoteFile::RemoteFile() {
+RemoteFileProxy::RemoteFileProxy() {
   upToDate = false;
 }
 
 /* Standard constructor.
  * Take the file path and user name as parameters.
  */
-RemoteFile::RemoteFile(const string& path,
-                       const string& localUser) : File(path)
+RemoteFileProxy::RemoteFileProxy(const string& path,
+                       const string& localUser) : FileProxy(path)
 {
   upToDate = false;
   this->localUser = localUser;
 }
 
 /* Copy constructor. */
-RemoteFile::RemoteFile(const RemoteFile& file) : File(file) {
+RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file) : FileProxy(file) {
   upToDate = false;
   this->localUser = file.localUser;
 }
 
 /* Standard destructor. */
-RemoteFile::~RemoteFile() {
+RemoteFileProxy::~RemoteFileProxy() {
 }
 
 /* Returns true if the file informations are up to date. */
-bool RemoteFile::isUpToDate() const {
+bool RemoteFileProxy::isUpToDate() const {
   return upToDate;
 }
 
 /* Get the informations about this remote file. Call the DIET service. */
-void RemoteFile::getInfos() const {
+void RemoteFileProxy::getInfos() const {
   diet_profile_t* profile;
   char* owner, * group, * errMsg;
   long* uid, * gid;
@@ -115,8 +115,8 @@ void RemoteFile::getInfos() const {
 }
 
 /* Copy operator. */
-RemoteFile& RemoteFile::operator=(const RemoteFile& file) {
-  File::operator=(file);
+RemoteFileProxy& RemoteFileProxy::operator=(const RemoteFileProxy& file) {
+  FileProxy::operator=(file);
   localUser = file.localUser;
   upToDate = file.isUpToDate();
   return *this;
@@ -126,7 +126,7 @@ RemoteFile& RemoteFile::operator=(const RemoteFile& file) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-int RemoteFile::chgrp(const string& group) {
+int RemoteFileProxy::chgrp(const string& group) {
   diet_profile_t* profile;
   char* errMsg;
   
@@ -160,7 +160,7 @@ int RemoteFile::chgrp(const string& group) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-int RemoteFile::chmod(const mode_t mode) {
+int RemoteFileProxy::chmod(const mode_t mode) {
   diet_profile_t* profile;
   char* errMsg;
   long m = mode;
@@ -197,13 +197,13 @@ int RemoteFile::chmod(const mode_t mode) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-File* RemoteFile::cp(const string& dest) {
-  string host = File::extHost(dest);
-  string path = File::extName(dest);
+FileProxy* RemoteFileProxy::cp(const string& dest) {
+  string host = FileProxy::extHost(dest);
+  string path = FileProxy::extName(dest);
   string transferID;
   diet_profile_t* profile;
-  LocalFile* localResult;
-  RemoteFile* remoteResult;
+  LocalFileProxy* localResult;
+  RemoteFileProxy* remoteResult;
 
   if (!exists()) throw runtime_error(getPath()+" does not exist");
 
@@ -250,7 +250,7 @@ File* RemoteFile::cp(const string& dest) {
   
   if (host=="localhost") {
     dagda_get_file(dataID, &newPath);
-    localResult = new LocalFile(newPath);
+    localResult = new LocalFileProxy(newPath);
     try {
       localResult->chgrp(group);
     } catch (runtime_error& err) {
@@ -289,7 +289,7 @@ File* RemoteFile::cp(const string& dest) {
     throw runtime_error(err);
   }
   dagda_delete_data(dataID);
-  remoteResult = new RemoteFile(dest, localUser);
+  remoteResult = new RemoteFileProxy(dest, localUser);
   return remoteResult;
 }
 
@@ -297,7 +297,7 @@ File* RemoteFile::cp(const string& dest) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-string RemoteFile::head(const unsigned int nline) {
+string RemoteFileProxy::head(const unsigned int nline) {
   string result;
   char* fileHead, * errMsg;
   diet_profile_t* profile;
@@ -338,7 +338,7 @@ string RemoteFile::head(const unsigned int nline) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-int RemoteFile::mkdir(const mode_t mode) {
+int RemoteFileProxy::mkdir(const mode_t mode) {
   diet_profile_t* profile;
   char* errMsg;
   long m = mode;
@@ -376,8 +376,8 @@ int RemoteFile::mkdir(const mode_t mode) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-File* RemoteFile::mv(const string& dest) {
-  File *result = cp(dest);
+FileProxy* RemoteFileProxy::mv(const string& dest) {
+  FileProxy *result = cp(dest);
   rm();
   return result;
 }
@@ -386,7 +386,7 @@ File* RemoteFile::mv(const string& dest) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-int RemoteFile::rm() {
+int RemoteFileProxy::rm() {
   diet_profile_t* profile;
   char* errMsg;
   
@@ -418,7 +418,7 @@ int RemoteFile::rm() {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-int RemoteFile::rmdir() {
+int RemoteFileProxy::rmdir() {
   diet_profile_t* profile;
   char* errMsg;
   
@@ -450,7 +450,7 @@ int RemoteFile::rmdir() {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-string RemoteFile::tail(const unsigned int nline) {
+string RemoteFileProxy::tail(const unsigned int nline) {
   string result;
   char* fileTail, * errMsg;
   diet_profile_t* profile;
@@ -491,7 +491,7 @@ string RemoteFile::tail(const unsigned int nline) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-list<string> RemoteFile::lsDir() const {
+list<string> RemoteFileProxy::lsDir() const {
   list<string> result;
   char* errMsg, *ls;
   diet_profile_t* profile;
@@ -537,7 +537,7 @@ list<string> RemoteFile::lsDir() const {
   return result;
 }
 
-list<string> RemoteFile::lsDirRec() const {
+list<string> RemoteFileProxy::lsDirRec() const {
   list<string> result;
   char* errMsg, *ls;
   diet_profile_t* profile;
@@ -581,7 +581,7 @@ list<string> RemoteFile::lsDirRec() const {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-list<string> RemoteFile::lsDirSimple() const {
+list<string> RemoteFileProxy::lsDirSimple() const {
   list<string> result;
   char* errMsg, *ls;
   diet_profile_t* profile;
@@ -622,6 +622,6 @@ list<string> RemoteFile::lsDirSimple() const {
 }
 
 
-void RemoteFile::printTransferID(const bool printTrID) {
+void RemoteFileProxy::printTransferID(const bool printTrID) {
   this->printTrID=printTrID;
 }

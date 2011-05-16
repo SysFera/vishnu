@@ -20,11 +20,10 @@ include_directories(
   )
 
 add_library(fms-client-proxy STATIC
-  File
-  LocalFile
-  RemoteFile
-  SSHFile
-  FileFactory
+  FileProxy
+  LocalFileProxy
+  RemoteFileProxy
+  FileProxyFactory
   
 )
 
