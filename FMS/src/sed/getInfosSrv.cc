@@ -6,7 +6,6 @@
 
 #include "DIET_server.h"
 #include "RemoteFile.hh"
-#include "UserTable.hh"
 #include "FileFactory.hh"
 #include "File.hh"
 #include "services.hh"
@@ -14,15 +13,15 @@
 using namespace std;
 
 /* Global variables defined in the server.cc file. */
-extern UserTable* users;
-extern string serverHostname;
+//extern UserTable* users;
+//extern string serverHostname;
 
 /* DIET profile construction.
  * Use the serverHostname global variable to create the service name. */
 diet_profile_desc_t* getInfosProfile() {
   diet_profile_desc_t* result;
   
-  result = diet_profile_desc_alloc(GETINFOS_SRV(serverHostname), 2, 2, 13);
+  result = diet_profile_desc_alloc("FileGetInfos", 2, 2, 13);
   diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 2), DIET_PARAMSTRING, DIET_CHAR);
@@ -69,12 +68,14 @@ int get_infos(diet_profile_t* profile) {
 
   if (user!=NULL && path!=NULL) {
     try {
-      if (path[0]!='/')
-        localPath = users->getHome(user) + "/" + path;
-      else
+      if (path[0]!='/'){
+     //   localPath = users->getHome(user) + "/" + path;
+      }
+      else{
         localPath = path;
-      localUser = users->getLocalID(user);
-      userKey = users->getKey(user);
+ //     localUser = users->getLocalID(user);
+   //   userKey = users->getKey(user);
+      }
     } catch (runtime_error& err) {
       localUser = user;
       localPath = path;
