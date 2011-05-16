@@ -193,105 +193,7 @@ int RemoteFile::chmod(const mode_t mode) {
   return 0;
 }
 
-/* Call the copy file DIET server.
- * If something goes wrong, throw a runtime_error containing
- * the error message.
- */
-File* RemoteFile::cp(const string& dest) {
-  string host = File::extHost(dest);
-  string path = File::extName(dest);
-  string transferID;
-  diet_profile_t* profile;
-  LocalFile* localResult;
-  RemoteFile* remoteResult;
 
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-
-  char* newPath, *dataID;
-    
-  char* group, * errMsg;
-  long* perms;
-  int* type;
-  
-  transferID = gen_uuid().c_str();
-  if (printTrID) {
-    string trID = transferID + ":"+getHost()+":"+host;
-    cout << "TransferID: " << trID << endl;
-  }
-  
-  profile = diet_profile_alloc(CP_GETID_SRV(getHost()), 4, 4, 9);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(transferID.c_str()), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(host.c_str()), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 9), NULL, DIET_VOLATILE);
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-    
-  diet_string_get(diet_parameter(profile, 5), &group, NULL);
-  diet_scalar_get(diet_parameter(profile, 6), &perms, NULL);
-
-  diet_scalar_get(diet_parameter(profile, 7), &type, NULL);
-  diet_string_get(diet_parameter(profile, 8), &dataID, NULL);
-  diet_string_get(diet_parameter(profile, 9), &errMsg, NULL);
-
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  
-  if (host=="localhost") {
-    dagda_get_file(dataID, &newPath);
-    localResult = new LocalFile(newPath);
-    try {
-      localResult->chgrp(group);
-    } catch (runtime_error& err) {
-      cout << err.what() << endl;
-    }
-    sysEndianChg<long>(*perms);
-    
-    localResult->chmod(*perms);
-    localResult->mv(path);
-    dagda_delete_data(dataID);
-    return localResult;
-  }
-  
-  diet_profile_free(profile);
-  profile = diet_profile_alloc(CP_GETFILE_SRV(host), 7, 7, 8);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(path.c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), group, DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 4), perms, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 5), type, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 6), dataID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 7), const_cast<char*>(transferID.c_str()), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
-
-
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  dagda_delete_data(dataID);
-  remoteResult = new RemoteFile(dest, localUser);
-  return remoteResult;
-}
 
 /* Call the file head DIET server.
  * If something goes wrong, throw a runtime_error containing
@@ -372,15 +274,7 @@ int RemoteFile::mkdir(const mode_t mode) {
   return 0;  
 }
 
-/* Copy the file and if succeed remove it from the source server.
- * If something goes wrong, throw a runtime_error containing
- * the error message.
- */
-File* RemoteFile::mv(const string& dest) {
-  File *result = cp(dest);
-  rm();
-  return result;
-}
+
 
 /* Call the remove file DIET server.
  * If something goes wrong, throw a runtime_error containing

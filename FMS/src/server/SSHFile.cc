@@ -184,70 +184,6 @@ int SSHFile::chmod(const mode_t mode) {
   return 0;
 }
 
-/* Copy the file through scp. */
-File* SSHFile::cp(const string& dest) {
-  string host = File::extHost(dest);
-  string path = File::extName(dest);
-  SSHFile* localResult;
-  RemoteFile* remoteResult;
-  char* transferID;
-
-  transferID = strdup(gen_uuid().c_str());
-
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (host=="localhost") {
-    SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-                sshPublicKey, sshPrivateKey);
-    pair<string,string> cpResult;
-    
-    cpResult = ssh.exec(CPCMD+getPath()+" "+path);
-    if (cpResult.second.length()!=0) {
-      throw runtime_error("Error copying file: "+cpResult.second);
-    }
-    localResult = new SSHFile(path, sshHost, sshUser, sshPublicKey,
-                              sshPrivateKey, sshPassword, sshPort,
-                              sshCommand, scpCommand);
-    localResult->chgrp(getGroup());
-    localResult->chmod(getPerms());
-    return localResult;
-  }
-  
-  diet_profile_t* profile;
-  char* errMsg, *dataID;
-  mode_t mode = getPerms();
-  file_type_t type = getType();
-  
-  sysEndianChg<mode_t>(mode);
-  sysEndianChg<file_type_t>(type);
-  
-  dagda_put_file(const_cast<char*>(getPath().c_str()), DIET_PERSISTENT, &dataID);
-  profile = diet_profile_alloc(CP_GETFILE_SRV(getHost()), 6, 6, 7);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(getOwner().c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), const_cast<char*>(getGroup().c_str()), DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 4), &mode, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 5), &type, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 6), dataID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 7), transferID, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE);
-  
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 8), &errMsg, NULL);
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  
-  remoteResult = new RemoteFile(dest, getOwner());
-  return remoteResult;
-}
-
 /* Get the file head through ssh. */
 string SSHFile::head(const unsigned int nline) {
   ostringstream os;
@@ -283,36 +219,7 @@ int SSHFile::mkdir(const mode_t mode) {
   return 0;
 }
 
-/* Move a file through ssh and scp. */
-File* SSHFile::mv(const string& dest) {
-  string host = File::extHost(dest);
-  string path = File::extName(dest);
-  RemoteFile* remoteResult;
- cout << "in SSHFile, host :" << host <<endl;
- cout << "dest             :" << dest << endl; 
-  
-if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (host=="localhost") {
-    SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-                sshPublicKey, sshPrivateKey);
-    pair<string,string> mvResult;
-    
-    mvResult = ssh.exec(MVCMD+getPath()+" "+path);
-    if (mvResult.second.length()!=0) {
-      throw runtime_error("Error moving file: "+mvResult.second);
-    }
 
-    setPath(path);
-    upToDate = false;
-    return this;
-  }
-  
-  cout << "Move "+getPath()+" to "+host+" ("+path+")" << endl;
-  cp(dest);
-  rm();
-  remoteResult = new RemoteFile(dest, getOwner());
-  return remoteResult;
-}
 
 /* Remove the file through ssh. */
 int SSHFile::rm() {
