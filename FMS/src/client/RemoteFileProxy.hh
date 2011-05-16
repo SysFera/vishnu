@@ -33,7 +33,7 @@ private:
   bool printTrID;
 public:
   RemoteFileProxy();
-  RemoteFileProxy(const std::string& path,
+  RemoteFileProxy(const SessionProxy& sessionProxy,const std::string& path,
              const std::string& localUser);
   RemoteFileProxy(const RemoteFileProxy& file);
   virtual ~RemoteFileProxy();
@@ -45,10 +45,8 @@ public:
   
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
-  virtual FileProxy* cp(const std::string& dest);
   virtual std::string head(const unsigned int nline);
   virtual int mkdir(const mode_t mode);
-  virtual FileProxy* mv(const std::string& dest);
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline);
