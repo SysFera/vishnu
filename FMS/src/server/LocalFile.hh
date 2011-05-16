@@ -21,10 +21,8 @@ public:
   
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
-  virtual File* cp(const std::string& dest);
   virtual std::string head(const unsigned int nline);
   virtual int mkdir(const mode_t mode);
-  virtual File* mv(const std::string& dest);
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline); 
