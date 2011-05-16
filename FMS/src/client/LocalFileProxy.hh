@@ -1,30 +1,30 @@
-#ifndef LOCALFILE_HH
-#define LOCALFILE_HH
+#ifndef LOCALFILEPROXY_HH
+#define LOCALFILEPROXY_HH
 
 #include <string>
 
-#include "File.hh"
+#include "FileProxy.hh"
 
 /* Local implementation of a DIET file. */
-class LocalFile : public File {
+class LocalFileProxy : public FileProxy {
 private:
   mutable bool upToDate;
 public:
-  LocalFile();
-  LocalFile(const std::string& path);
-  LocalFile(const LocalFile& file);
+  LocalFileProxy();
+  LocalFileProxy(const std::string& path);
+  LocalFileProxy(const LocalFileProxy& file);
   
-  LocalFile& operator=(const LocalFile& file);
+  LocalFileProxy& operator=(const LocalFileProxy& file);
   
   virtual bool isUpToDate() const;
   virtual void getInfos() const;
   
   virtual int chgrp(const std::string& group);
   virtual int chmod(const mode_t mode);
-  virtual File* cp(const std::string& dest);
+  virtual FileProxy* cp(const std::string& dest);
   virtual std::string head(const unsigned int nline);
   virtual int mkdir(const mode_t mode);
-  virtual File* mv(const std::string& dest);
+  virtual FileProxy* mv(const std::string& dest);
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline); 
