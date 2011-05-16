@@ -84,13 +84,6 @@ BOOST_AUTO_TEST_CASE( submit_a_Job_normal_call)
 
     BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************" << "\n ");
 
-    // wait a few seconds and check the success of cancelling job
-
-  // bpt::seconds sleepTime(5);
-
-    //boost::this_thread::sleep(sleepTime);
-
-
   //  Clean up: delete the submitted job
     BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
   } catch (VishnuException& e) {
@@ -242,15 +235,13 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
     // now let cancel the job
 
-  // setting cancel job parameters
-
-
+    // setting cancel job parameters
     BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
 
     // wait a few seconds and check the success of cancelling job
-    //bpt::seconds sleepTime(5);
-    // boost::this_thread::sleep(sleepTime);
-    // FIXME replace me by calling a list job function and checking the status
+    bpt::seconds sleepTime(2);
+    boost::this_thread::sleep(sleepTime);
+
     Job job;
     BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),VishnuException  );
 
@@ -657,9 +648,9 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath,firstJob,options)==0  );
 
     BOOST_TEST_MESSAGE("************ The first job identifier is " << firstJob.getJobId() );
-    
+
     // submit a second job
-    
+
     Job secondJob;
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath,secondJob,options)==0  );
 
@@ -680,14 +671,14 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
   // Check the success of listJobs function
 
     int i=0;
-  
+
     while ( ( false==found ) && ( i < lsJobs.getNbJobs()) ){
 
       if(firstJob==*(lsJobs.getJobs().get(i))){
       foundFisrtJob= true;
       }
-       
-       
+
+
       if(secondJob==*(lsJobs.getJobs().get(i))){
      foundSecondJob=true;
       }
@@ -695,10 +686,10 @@ BOOST_AUTO_TEST_CASE( list_job_normal_call)
       found= (foundSecondJob && foundSecondJob);
 
       i++;
-    }   
+    }
 
 
-    
+
     BOOST_CHECK( found ) ;
 
     BOOST_TEST_MESSAGE("*********************** list a job info: normal call ok!!!!*****************************" << " \n");
@@ -1072,14 +1063,14 @@ BOOST_AUTO_TEST_CASE( get_completed_jobs_output_normal_call)
     ListJobResults listOfResults;
 
     BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, TMSWORKINGDIR),0 );
- 
+
     bool pathExist=false;
 
     if (listOfResults.getNbJobs()>0){
 
       pathExist=bfs::exists(bfs::path(listOfResults.getResults().get(0)->getOutputPath())) &&  bfs::exists(bfs::path(listOfResults.getResults().get(0)->getErrorPath()));
     }
-    
+
     BOOST_CHECK( pathExist );
 
     if (pathExist){
@@ -1238,8 +1229,8 @@ BOOST_AUTO_TEST_CASE( get_jobs_progression_normal_call)
 
     // Check the success of the get jobs progression function
 
-    BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId()); 
-    
+    BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId());
+
     BOOST_TEST_MESSAGE( "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent() << "\n");
 
     Job job;
