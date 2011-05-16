@@ -14,44 +14,44 @@
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
 
-#include "LocalFile.hh"
-#include "RemoteFile.hh"
-#include "File.hh"
+#include "LocalFileProxy.hh"
+#include "RemoteFileProxy.hh"
+#include "FileProxy.hh"
 
 using namespace std;
 
 /* Default constructor. */
-LocalFile::LocalFile() : File() {
+LocalFileProxy::LocalFileProxy() : FileProxy() {
   setHost("localhost");
   upToDate = false;
 }
 
 /* Standard constructor.
  * Use the file path as argument. */
-LocalFile::LocalFile(const string& path) : File(path) {
+LocalFileProxy::LocalFileProxy(const string& path) : FileProxy(path) {
   setHost("localhost");
   upToDate = false;
 }
 
 /* Copy constructor. */
-LocalFile::LocalFile(const LocalFile& file) : File(file) {
+LocalFileProxy::LocalFileProxy(const LocalFileProxy& file) : FileProxy(file) {
   upToDate = file.isUpToDate();
 }
 
 /* Copy operator. */
-LocalFile& LocalFile::operator=(const LocalFile& file) {
-  File::operator=(file);
+LocalFileProxy& LocalFileProxy::operator=(const LocalFileProxy& file) {
+  FileProxy::operator=(file);
   upToDate = file.isUpToDate();
   return *this;
 }
 
 /* Return true if the file informations are up to date. */
-bool LocalFile::isUpToDate() const {
+bool LocalFileProxy::isUpToDate() const {
   return upToDate;
 }
 
 /* Obtain the information of a local file. Uses the POSIX standard functions. */
-void LocalFile::getInfos() const {
+void LocalFileProxy::getInfos() const {
   file_stat_t fileStat;
   struct group* grp;
   struct passwd* usr;
@@ -95,7 +95,7 @@ void LocalFile::getInfos() const {
 }
 
 /* Change the group of a local file. */
-int LocalFile::chgrp(const string& group) {
+int LocalFileProxy::chgrp(const string& group) {
   struct group* grp;
   int result;
 
@@ -119,7 +119,7 @@ int LocalFile::chgrp(const string& group) {
         throw runtime_error("Too many symbolic links in the path. There is probably"
                             "a looping symbolic link in "+getPath());
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOTDIR:
@@ -132,7 +132,7 @@ int LocalFile::chgrp(const string& group) {
 }
 
 /* Change the local file permissions. */
-int LocalFile::chmod(const mode_t mode) {
+int LocalFileProxy::chmod(const mode_t mode) {
   int result;
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
@@ -155,7 +155,7 @@ int LocalFile::chmod(const mode_t mode) {
         throw runtime_error("Too many symbolic links in the path. There is probably"
                             "a looping symbolic link in "+getPath());
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOTDIR:
@@ -173,13 +173,13 @@ int LocalFile::chmod(const mode_t mode) {
 /* The function proceed to the file copy by itself if the
  * destination is a local path. Otherwise it calls the DIET service.
  */
-File* LocalFile::cp(const string& dest) {
-  string host = File::extHost(dest);
-  string path = File::extName(dest);
+FileProxy* LocalFileProxy::cp(const string& dest) {
+  string host = FileProxy::extHost(dest);
+  string path = FileProxy::extName(dest);
   size_t read;
   char* dataID, *transferID;
-  LocalFile* localResult;
-  RemoteFile* remoteResult;
+  LocalFileProxy* localResult;
+  RemoteFileProxy* remoteResult;
  cout << "destination path:"<< dest<<endl;
  cout <<"host is "<< host <<endl;
  cout << "and the path is"<< path<<endl;  
@@ -192,7 +192,7 @@ File* LocalFile::cp(const string& dest) {
       throw runtime_error("Cannot open "+getPath()+" for reading");
     if (!output.is_open())
       throw runtime_error("Cannot open "+path+" for writing");
- cout <<"je suis dans le fichier LocalFile.cc"<<endl;
+ cout <<"je suis dans le fichier LocalFileProxy.cc"<<endl;
    while (!input.eof() && !output.bad() && !output.fail()) {
       input.read(buffer, 10240);
       read = input.gcount();
@@ -200,7 +200,7 @@ File* LocalFile::cp(const string& dest) {
     }
     input.close();
     output.close();
-    localResult = new LocalFile(path);
+    localResult = new LocalFileProxy(path);
     localResult->chgrp(getGroup());
     localResult->chmod(getPerms());
     return localResult;
@@ -242,12 +242,12 @@ File* LocalFile::cp(const string& dest) {
     throw runtime_error(err);
   }
   
-  remoteResult = new RemoteFile(dest, getOwner());
+  remoteResult = new RemoteFileProxy(dest, getOwner());
   return remoteResult;
 }
 
 /* Print the head of the local file.*/
-string LocalFile::head(const unsigned int nline) {
+string LocalFileProxy::head(const unsigned int nline) {
   char buffer[10240];
   ifstream input(getPath().c_str());
   unsigned int count;
@@ -265,8 +265,8 @@ string LocalFile::head(const unsigned int nline) {
   return result;
 }
 
-/* Create the directory represented by this File object. */
-int LocalFile::mkdir(const mode_t mode) {
+/* Create the directory represented by this FileProxy object. */
+int LocalFileProxy::mkdir(const mode_t mode) {
   int result;
   if (exists())
     throw runtime_error(getPath()+ " already exists");
@@ -294,7 +294,7 @@ int LocalFile::mkdir(const mode_t mode) {
       case EMLINK:
         throw runtime_error("Parent directory reaches the maximum number of links");
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOSPC:
@@ -317,11 +317,11 @@ int LocalFile::mkdir(const mode_t mode) {
  * If the destination is a local file, proceeds itself to the move.
  * Otherwise, call the DIET service to do it.
  */
-File* LocalFile::mv(const string& dest) {
-  string host = File::extHost(dest);
-  string path = File::extName(dest);
-//  LocalFile localResult;
-  RemoteFile* remoteResult;
+FileProxy* LocalFileProxy::mv(const string& dest) {
+  string host = FileProxy::extHost(dest);
+  string path = FileProxy::extName(dest);
+//  LocalFileProxy localResult;
+  RemoteFileProxy* remoteResult;
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
   if (host=="localhost") {
@@ -349,7 +349,7 @@ File* LocalFile::mv(const string& dest) {
           throw runtime_error("Too many symbolic links in the path. There is probably"
                               "a looping symbolic link in "+path);
         case ENAMETOOLONG:
-          throw runtime_error("File path too long: "+path);
+          throw runtime_error("FileProxy path too long: "+path);
         case ENOENT:
           throw runtime_error("A component in "+getPath()+" or "+path+" does not exist.");
         case ENOSPC:
@@ -377,12 +377,12 @@ File* LocalFile::mv(const string& dest) {
 //  cout << "Move "+getPath()+" to "+host+" ("+path+")" << endl;
   cp(dest);
   rm();
-  remoteResult = new RemoteFile(dest, getOwner());
+  remoteResult = new RemoteFileProxy(dest, getOwner());
   return remoteResult;
 }
 
 /* Remove this local file. Uses the C-standard function "unlink". */
-int LocalFile::rm() {
+int LocalFileProxy::rm() {
   int result;
   if (!exists()) throw runtime_error(getPath()+" does not exist");
 
@@ -405,7 +405,7 @@ int LocalFile::rm() {
         throw runtime_error("Too many symbolic links in the path. There is probably"
                             "a looping symbolic link in "+getPath());
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOTDIR:
@@ -424,7 +424,7 @@ int LocalFile::rm() {
 }
 
 /* Remove this local directory. Uses the C-standard rmdir function. */
-int LocalFile::rmdir() {
+int LocalFileProxy::rmdir() {
   int result;
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
@@ -447,7 +447,7 @@ int LocalFile::rmdir() {
         throw runtime_error("Too many symbolic links in the path. There is probably"
                             "a looping symbolic link in "+getPath());
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOTDIR:
@@ -468,7 +468,7 @@ int LocalFile::rmdir() {
 }
 
 /* */
-string LocalFile::tail(const unsigned int nline) {
+string LocalFileProxy::tail(const unsigned int nline) {
   string result;
   if (!exists()) throw runtime_error(getPath()+" does not exist");
 
@@ -479,7 +479,7 @@ string LocalFile::tail(const unsigned int nline) {
 }
 
 /* List the files of this local directory. */
-list<string> LocalFile::lsDir() const {
+list<string> LocalFileProxy::lsDir() const {
   list<string> result;
   DIR* dir;
   struct dirent* entry;
@@ -497,7 +497,7 @@ list<string> LocalFile::lsDir() const {
         throw runtime_error("Too many symbolic links in the path. There is probably"
                             "a looping symbolic link in "+getPath());
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOTDIR:
@@ -513,11 +513,11 @@ list<string> LocalFile::lsDir() const {
   return result;  
 }
 
-list<string> LocalFile::lsDirSimple() const {
+list<string> LocalFileProxy::lsDirSimple() const {
   return lsDir();
 }
 
-list<string> LocalFile::lsDirRec() const {
+list<string> LocalFileProxy::lsDirRec() const {
   list<string> result;
   DIR* dir;
   struct dirent* entry;
@@ -535,7 +535,7 @@ list<string> LocalFile::lsDirRec() const {
         throw runtime_error("Too many symbolic links in the path. There is probably"
                             "a looping symbolic link in "+getPath());
       case ENAMETOOLONG:
-        throw runtime_error("File path too long: "+getPath());
+        throw runtime_error("FileProxy path too long: "+getPath());
       case ENOENT:
         throw runtime_error("A component in "+getPath()+" does not exist.");
       case ENOTDIR:
