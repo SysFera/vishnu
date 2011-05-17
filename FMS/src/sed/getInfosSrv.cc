@@ -9,7 +9,7 @@
 #include "FileFactory.hh"
 #include "File.hh"
 #include "services.hh"
-
+#include "UserServer.hpp"
 using namespace std;
 
 /* Global variables defined in the server.cc file. */
@@ -67,25 +67,30 @@ int get_infos(diet_profile_t* profile) {
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
 
+  std::cout << "Service get info, sessionKey : " << sessionKey << " bien recu\n";
+  std:: cout << "path: " << path << "\n";
+  std::cout << "user: "  << user << "\n";
 
-  if (user!=NULL && path!=NULL) {
-    try {
-      if (path[0]!='/'){
+ // if (user!=NULL && path!=NULL) {
+//    try {
+ //     if (path[0]!='/'){
      //   localPath = users->getHome(user) + "/" + path;
-      }
-      else{
-        localPath = path;
+   //   }
+   //   else{
+     //   localPath = path;
  //     localUser = users->getLocalID(user);
    //   userKey = users->getKey(user);
-      }
-    } catch (runtime_error& err) {
+ //     }
+ //   } catch (runtime_error& err) {
       localUser = user;
       localPath = path;
-    }
-  }
+   // }
+ // }
 
   try {
     SessionServer sessionServer (sessionKey);
+   std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+   std::cout << "acLogin: " << acLogin << "\n";
     file = FileFactory::getFileServer(sessionServer,localPath, localUser, userKey);
   } catch (runtime_error& err) {
     errMsg = strdup(err.what());
