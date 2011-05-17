@@ -14,12 +14,6 @@
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
 
-#ifdef LIBSSH2
-#include <netdb.h>
-#include <libssh2.h>
-#include <arpa/inet.h>
-#endif
-
 #include "SSHFile.hh"
 #include "RemoteFile.hh"
 #include "File.hh"
@@ -48,7 +42,8 @@ SSHFile::SSHFile() : File() {
  *   - The path to the ssh executable
  *   - The path to the scp executable
  */
-SSHFile::SSHFile(const string& path,
+SSHFile::SSHFile(const SessionServer& sessionServer,
+                 const string& path,
                  const string& sshHost,
                  const string& sshUser,
                  const string& sshPublicKey,
@@ -56,7 +51,7 @@ SSHFile::SSHFile(const string& path,
                  const string& sshPassword,
                  unsigned int sshPort,
                  const string& sshCommand,
-                 const string& scpCommand) : File(path) {
+                 const string& scpCommand) : File(sessionServer,path) {
   setHost("localhost");
   upToDate = false;
   this->sshHost = sshHost;
@@ -96,7 +91,6 @@ bool SSHFile::isUpToDate() const {
   return upToDate;
 }
 
-#ifndef LIBSSH2
 /* Get the file information through ssh. */
 void SSHFile::getInfos() const {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
@@ -271,95 +265,9 @@ string SSHFile::tail(const unsigned int nline) {
   return tailResult.first;
 }
 
-/* Get the files and subdirectory of this directory through ssh. */
-list<string> SSHFile::lsDir() const {
-  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
-  pair<string,string> lsResult;
-  list<string> result;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (getType()!=directory)
-    throw runtime_error(getPath()+" is not a directory");
-  
-  lsResult = ssh.exec(LSCMD+getPath());
-  
-  if (lsResult.second.length()!=0)
-    throw runtime_error("Error listing directory: "+lsResult.second);
-  
-  istringstream is(lsResult.first);
-  char buffer[1024];
-  string line;
-  
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
-  result.pop_front();
-  return result;
-}
-
-/* Get the files and subdirectory of this directory through ssh. */
-list<string> SSHFile::lsDirSimple() const {
-  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
-  pair<string,string> lsResult;
-  list<string> result;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (getType()!=directory)
-    throw runtime_error(getPath()+" is not a directory");
-  
-  lsResult = ssh.exec(LSSIMPLE+getPath());
-  
-  if (lsResult.second.length()!=0)
-    throw runtime_error("Error listing directory: "+lsResult.second);
-  
-  istringstream is(lsResult.first);
-  char buffer[1024];
-  string line;
-  
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
-  return result;
-}
 
 
-list<string> SSHFile::lsDirRec() const {
-  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
-              sshPublicKey, sshPrivateKey);
-  pair<string,string> lsResult;
-  list<string> result;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  if (getType()!=directory)
-    throw runtime_error(getPath()+" is not a directory");
-  
-  lsResult = ssh.exec(LSRECCMD+getPath());
-  if (lsResult.second.length()!=0)
-    throw runtime_error("Error listing directory: "+lsResult.second);
-  
-  istringstream is(lsResult.first);
-  char buffer[1024];
-  string line;
-  
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
-  result.pop_front();
 
-  return result;
-}
-
-#endif
-
-#ifndef LIBSSH2
 SSHExec::SSHExec(const string& sshCommand, const string& scpCommand,
                  const string& server, unsigned int sshPort,
                  const string& userName,
@@ -405,11 +313,6 @@ vector<string>:: iterator ite;
 cout << endl;
 for (ite=tokens.begin(); ite!=tokens.end();++ite)
 cout << *ite << endl;
-
-
-
-
-
 
 
 
@@ -572,102 +475,5 @@ void SSHExec::copyTo(const string& file, const string& dest) const {
     free(argv[i]);
   lastExecStatus = status;
 }
-#endif
 
-#ifdef LIBSSH2
-void SSHFile::getInfos() const {
-  struct stat fileStat;
-  SSHSession session(sshHost, sshPort, sshUser, sshPassword,
-                     sshPublicKey, sshPrivateKey);
-  LIBSSH2_SESSION* sshSession;
-  LIBSSH2_CHANNEL* channel;
-  
-  sshSession = session.getSession();
-  channel = libssh2_scp_recv(sshSession, getPath().c_str(),
-                             &fileStat);
-  if (!channel)
-    throw runtime_error("Failed to open ssh channel");
-  setPerms(fileStat.st_mode && ACCESSPERMS);
-  setUid(fileStat.st_uid);
-  setGid(fileStat.st_gid);
-  setSize(fileStat.st_size);
-  setAtime(fileStat.st_atime);
-  setMtime(fileStat.st_mtime);
-  setCtime(fileStat.st_ctime);
-  if (S_ISBLK(fileStat.st_mode))
-    setType(block);
-  if (S_ISCHR(fileStat.st_mode))
-    setType(character);
-  if (S_ISDIR(fileStat.st_mode))
-    setType(directory);
-  if (S_ISLNK(fileStat.st_mode))
-    setType(symboliclink);
-  if (S_ISSOCK(fileStat.st_mode))
-    setType(sckt);
-  if (S_ISFIFO(fileStat.st_mode))
-    setType(fifo);
-  if (S_ISREG(fileStat.st_mode))
-    setType(regular);
-  
-  setOwner(sshUser);
-  //  setGroup(grp->gr_name);
-  
-  exists(true);
-  upToDate=true;
-}
 
-SSHSession::SSHSession() {
-}
-
-SSHSession::SSHSession(const std::string& server,
-                       unsigned int port,
-                       const std::string& username,
-                       const std::string& password,
-                       const std::string& publicKey,
-                       const std::string& privateKey) :
-server(server), port(port), username(username), password(password),
-publicKey(publicKey), privateKey(privateKey)
-{
-  int sock = socket(AF_INET, SOCK_STREAM, 0);
-  struct sockaddr_in sin;
-  struct hostent* serverHost = gethostbyname(server.c_str());
-  unsigned long hostaddr;
-  
-  if (serverHost==NULL)
-    throw runtime_error("Cannot resolve "+server);
-  
-  hostaddr = inet_addr(serverHost->h_addr_list[0]);
-  
-  sin.sin_family = AF_INET;
-  sin.sin_port = htons(port);
-  sin.sin_addr.s_addr = hostaddr;
-  if (connect(sock, (struct sockaddr*) &sin, sizeof(sockaddr_in)))
-    throw runtime_error("Failed to connect to "+server);
-  
-  if (!(session = libssh2_session_init()))
-    throw runtime_error("Cannot open SSH session");
-  
-  if (libssh2_session_startup(session, sock))
-    throw runtime_error("Cannot startup SSH2 session");
-  
-  // TODO: control server fingerprint
-  if (libssh2_userauth_publickey_fromfile(session, username.c_str(),
-                                          publicKey.c_str(),
-                                          privateKey.c_str(),
-                                          password.c_str()))
-    throw runtime_error("Authentication failed");
-}
-
-SSHSession::~SSHSession() {
-  close();
-}
-
-void SSHSession::close() {
-  libssh2_session_disconnect(session, "Normal shutdown");
-  libssh2_session_free(session);
-}
-
-LIBSSH2_SESSION* SSHSession::getSession() {
-  return session;
-}
-#endif

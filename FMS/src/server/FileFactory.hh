@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "SessionServer.hpp"
 #include "File.hh"
 #include "LocalFile.hh"
 #include "RemoteFile.hh"
@@ -24,7 +25,8 @@ public:
   static void setSSHPort(const unsigned int sshPort);
   static void setSSHCommand(const std::string& sshCommand);
   static void setSCPCommand(const std::string& scpCommand);
-  static File* getFileServer(const std::string& path,
+  static File* getFileServer(const SessionServer& sessionServer,
+                             const std::string& path,
                              const std::string& user,
                              const std::string& key);
   
