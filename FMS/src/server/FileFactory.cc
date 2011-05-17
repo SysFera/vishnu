@@ -12,6 +12,13 @@
 
 using namespace std;
 
+/*FileFactory::FileFactory()
+
+
+
+FileFactory::FileFactory()
+*/
+
 void FileFactory::setSSHServer(const string& sshServer) {
   FileFactory::sshServer = sshServer;
 }
