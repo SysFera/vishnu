@@ -12,21 +12,19 @@
 using namespace std;
 
 /* Global variables defined in the server.cc file. */
-//extern UserTable* users;
-//extern GroupTable* groups;
-//extern string serverHostname;
 
 /* DIET profile construction.
  * Use the serverHostname global variable to create the service name. */
 diet_profile_desc_t* getTailProfile() {
-  diet_profile_desc_t* result = diet_profile_desc_alloc("FileTail", 3, 3, 5);
+  diet_profile_desc_t* result = diet_profile_desc_alloc("FileTail", 4, 4, 6);
   
   diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 2), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 3), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 4), DIET_SCALAR, DIET_LONGINT);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
   
   return result;
 }
@@ -36,13 +34,14 @@ diet_profile_desc_t* getTailProfile() {
 /* Returns the n last lines of a file to the client application. */
 int tailFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, tail;
-  char* path, *user, *host, *errMsg = NULL, *result = NULL;
+  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
   unsigned long* nline;
   
-  diet_string_get(diet_parameter(profile, 0), &path, NULL);
-  diet_string_get(diet_parameter(profile, 1), &user, NULL);
-  diet_paramstring_get(diet_parameter(profile, 2), &host, NULL);
-  diet_scalar_get(diet_parameter(profile, 3), &nline, NULL);
+  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
+  diet_string_get(diet_parameter(profile, 1), &path, NULL);
+  diet_string_get(diet_parameter(profile, 2), &user, NULL);
+  diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
+  diet_scalar_get(diet_parameter(profile, 4), &nline, NULL);
   
   sysEndianChg<unsigned long>(*nline);
   
@@ -62,7 +61,8 @@ int tailFile(diet_profile_t* profile) {
       localPath = path;
     }
     try {
-      File* file = FileFactory::getFileServer(localPath, localUser, userKey);
+      SessionServer sessionServer (sessionKey);
+      File* file = FileFactory::getFileServer(sessionServer,localPath, localUser, userKey);
       
       tail = file->tail(*nline);
       result = strdup(tail.c_str());
@@ -75,7 +75,7 @@ int tailFile(diet_profile_t* profile) {
     errMsg = strdup("Error transmitting parameters");
     result = strdup("");
   }
-  diet_string_set(diet_parameter(profile, 4), result, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), result, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
   return 0;
 }

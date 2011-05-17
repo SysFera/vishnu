@@ -3,11 +3,7 @@
 
 #include <string>
 #include <utility>
-
-#ifdef LIBSSH2
-#include <libssh2.h>
-#include <unistd.h>
-#endif
+#include "SessionServer.hpp"
 
 /* The stat command uses different syntax depending on the system type. */
 /* BSD and Mac OS X command differs from the Linux one. */
@@ -47,7 +43,8 @@ private:
   std::string scpCommand;
 public:
   SSHFile();
-  SSHFile(const std::string& path,
+  SSHFile(const SessionServer& sessionServer,
+          const std::string& path,
           const std::string& sshHost,
           const std::string& sshUser,
           const std::string& sshPublicKey,
@@ -71,12 +68,9 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline);
-  virtual std::list<std::string> lsDir() const;
-  virtual std::list<std::string> lsDirRec() const;
-  virtual std::list<std::string> lsDirSimple() const;
+
 };
 
-#ifndef LIBSSH2
 /* A class to call command through SSH. */
 class SSHExec {
 private:
@@ -103,30 +97,5 @@ public:
   void copyFrom(const std::string& file, const std::string& src) const;
   void copyTo(const std::string& file, const std::string& dest) const;
 };
-#endif
 
-#ifdef LIBSSH2
-class SSHSession {
-private:
-  LIBSSH2_SESSION *session;
-  LIBSSH2_CHANNEL *channel;
-  std::string server;
-  unsigned int port;
-  std::string username;
-  std::string password;
-  std::string publicKey;
-  std::string privateKey;
-public:
-  SSHSession();
-  SSHSession(const std::string& server, unsigned int port,
-             const std::string& username,
-             const std::string& password,
-             const std::string& publicKey,
-             const std::string& privateKey);
-  ~SSHSession();
-  
-  void close();
-  LIBSSH2_SESSION* getSession();
-};
-#endif
 #endif
