@@ -19,14 +19,15 @@ using namespace std;
 /* DIET profile construction.
  * Use the serverHostname global variable to create the service name. */
 diet_profile_desc_t* getHeadProfile() {
-  diet_profile_desc_t* result = diet_profile_desc_alloc("FileHead", 3, 3, 5);
+  diet_profile_desc_t* result = diet_profile_desc_alloc("FileHead", 4, 4, 6);
   
   diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 2), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 3), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 4), DIET_SCALAR, DIET_LONGINT);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
   
   return result;
 }
@@ -36,13 +37,14 @@ diet_profile_desc_t* getHeadProfile() {
 /* Returns the n first line of the file to the client application. */
 int headFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, head;
-  char* path, *user, *host, *errMsg = NULL, *result = NULL;
+  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
   unsigned long* nline;
   
-  diet_string_get(diet_parameter(profile, 0), &path, NULL);
-  diet_string_get(diet_parameter(profile, 1), &user, NULL);
-  diet_paramstring_get(diet_parameter(profile, 2), &host, NULL);
-  diet_scalar_get(diet_parameter(profile, 3), &nline, NULL);
+  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
+  diet_string_get(diet_parameter(profile, 1), &path, NULL);
+  diet_string_get(diet_parameter(profile, 2), &user, NULL);
+  diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
+  diet_scalar_get(diet_parameter(profile, 4), &nline, NULL);
   
   sysEndianChg<unsigned long>(*nline);
   
@@ -72,15 +74,15 @@ int headFile(diet_profile_t* profile) {
       localPath = path;
     }
     try {
- std::cout << "Dans headFile, dans le try catch:  " << "\n";
-  std::cout << "localPath:  " << localPath <<"\n";  
-  std::cout << "localUser:  " << localUser <<"\n";
-  std::cout << "userKey   " << userKey <<"\n";
+      std::cout << "Dans headFile, dans le try catch:  " << "\n";
+      std::cout << "localPath:  " << localPath <<"\n";  
+      std::cout << "localUser:  " << localUser <<"\n";
+      std::cout << "userKey   " << userKey <<"\n";
 
+      SessionServer sessionServer (sessionKey);
 
+      File* file = FileFactory::getFileServer(sessionServer,localPath, localUser, userKey);
 
-      File* file = FileFactory::getFileServer(localPath, localUser, userKey);
-      
       head = file->head(*nline);
       result = strdup(head.c_str());
     } catch (runtime_error& err) {
@@ -88,11 +90,11 @@ int headFile(diet_profile_t* profile) {
       errMsg = strdup(err.what());
     }
     if (errMsg==NULL) errMsg = strdup("");
-  } else {
-    errMsg = strdup("Error transmitting parameters");
-    result = strdup("");
-  }
-  diet_string_set(diet_parameter(profile, 4), result, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
-  return 0;
+    } else {
+      errMsg = strdup("Error transmitting parameters");
+      result = strdup("");
+    }
+    diet_string_set(diet_parameter(profile, 5), result, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
+    return 0;
 }
