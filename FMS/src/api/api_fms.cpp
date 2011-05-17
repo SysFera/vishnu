@@ -28,7 +28,7 @@
 
 //FMS client headers
  
-#include "FileProxyFactory.hh"
+#include "FileProxyFactory.hpp"
 
 using namespace FMS_Data;
 using namespace UMS_Data;
@@ -107,7 +107,7 @@ using namespace std;
       std::string head;
 
      int nline=5;
-
+// TODO serialize options
      try {
         f->getInfos();
         head = f->head(nline);
@@ -201,6 +201,7 @@ using namespace std;
       
       std::string tail;
 
+// TODO serialize options
      int nline=3;
       try {
         f->getInfos();
