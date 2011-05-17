@@ -8,7 +8,7 @@
 
 #include "SessionProxy.hpp"
 
-#include "FileProxy.hh"
+#include "FileProxy.hpp"
 
 using namespace std;
 

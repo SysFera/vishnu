@@ -29,12 +29,13 @@ void FileFactory::setSCPCommand(const string& scpCommand) {
 }
 
 
-File* FileFactory::getFileServer(const string& path,
+File* FileFactory::getFileServer(const SessionServer& sessionServer,
+                                 const string& path,
                                  const string& user,
                                  const string& key) {
   
   //if (File::extHost(path)=="localhost")
-    return new SSHFile(path, sshServer, user, "", key, "",
+    return new SSHFile(sessionServer,path, sshServer, user, "", key, "",
                        sshPort, sshCommand, scpCommand);
   //return new RemoteFile(path, user);
 }

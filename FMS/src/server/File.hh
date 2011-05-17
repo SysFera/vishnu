@@ -6,6 +6,8 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "SessionServer.hpp"
+
 
 /* Definition of the system endianness. */
 #define LT_ENDIAN 0
@@ -46,6 +48,7 @@ typedef enum {
 /* Defines the common operation on files (local or remote) */
 class File {
 private:
+//TODO Take EFM FileStat type instead of
   std::string path;
   std::string host;
   mutable std::string owner;
@@ -59,6 +62,7 @@ private:
   mutable time_t ctime;
   mutable file_type_t type;
   mutable bool exist;
+  SessionServer msessionServer;
 protected:
   void setPath(const std::string& path);
   void setHost(const std::string& host);
@@ -75,10 +79,12 @@ protected:
   void exists(const bool exist) const;
 public:
   File();
-  File(const std::string& path);
+  File(const SessionServer& sessionServer,const std::string& path);
   File(const File& file);
   virtual ~File();
-  
+
+  const SessionServer& getSession() const;
+
   const std::string& getPath() const;
   const std::string& getOwner() const;
   const std::string& getGroup() const;
@@ -96,11 +102,11 @@ public:
 
   virtual bool isUpToDate() const = 0;
   virtual void getInfos() const = 0;
-  
+
   File& operator=(const File& file);
   bool operator==(const File& file);
   bool operator<(const File& file);
-  
+
   virtual int chgrp(const std::string& group) = 0;
   virtual int chmod(const mode_t mode) = 0;
   virtual std::string head(const unsigned int nline) = 0;
@@ -108,10 +114,7 @@ public:
   virtual int rm() = 0;
   virtual int rmdir() = 0;
   virtual std::string tail(const unsigned int nline) = 0;
-  virtual std::list<std::string> lsDir() const = 0;
-  virtual std::list<std::string> lsDirRec() const = 0;
-  virtual std::list<std::string> lsDirSimple() const = 0;
-  
+
   static std::string extHost(const std::string& path);
   static std::string extName(const std::string& path);
 };

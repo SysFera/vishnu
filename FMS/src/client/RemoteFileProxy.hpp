@@ -5,7 +5,7 @@
 
 #include <sys/types.h>
 
-#include "FileProxy.hh"
+#include "FileProxy.hpp"
 
 /* DIET service name definition macro. */
 /* These macro take the host name of the machine as argument. */
@@ -50,10 +50,7 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline);
-  virtual std::list<std::string> lsDir() const;
-  virtual std::list<std::string> lsDirRec() const;
-  virtual std::list<std::string> lsDirSimple() const;
-  
+ 
   void printTransferID(const bool printTrID);
 };
 
