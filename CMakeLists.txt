@@ -257,6 +257,8 @@ if (BUILD_TESTING)
   set( TEST_ADMIN_SSHKEY "$HOME/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
   set( TEST_BATCH_SERVER_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
   set( TEST_WORKING_DIR ${PROJECT_BINARY_DIR}/test_files CACHE PATH "Tests working directory")
+  set( TEST_LOCAL_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
+
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
   mark_as_advanced(TEST_DB_NAME)
@@ -270,6 +272,8 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_USER_SSHKEY)
   mark_as_advanced(TEST_USER_SSHKEY)
   mark_as_advanced(TEST_BATCH_SERVER_HOSTNAME)
+  mark_as_advanced(TEST_LOCAL_HOSTNAME)
+
 
   add_subdirectory(core/test)
 endif (BUILD_TESTING)
