@@ -32,7 +32,7 @@ target_link_libraries(vishnu-ims-api
   emf4cpp-IMS_Data
   exception-vishnu
   utils-vishnu
-#  ims-client-proxy
+  ims-client-proxy
   ums-client-proxy
 )
 
