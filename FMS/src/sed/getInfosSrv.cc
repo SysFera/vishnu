@@ -70,6 +70,7 @@ int get_infos(diet_profile_t* profile) {
   std::cout << "Service get info, sessionKey : " << sessionKey << " bien recu\n";
   std:: cout << "path: " << path << "\n";
   std::cout << "user: "  << user << "\n";
+  std::cout << "host: "  << host<< "\n";
 
  // if (user!=NULL && path!=NULL) {
 //    try {
@@ -81,7 +82,7 @@ int get_infos(diet_profile_t* profile) {
  //     localUser = users->getLocalID(user);
    //   userKey = users->getKey(user);
  //     }
- //   } catch (runtime_error& err) {
+ //   } catch (std::exception& err) {
       localUser = user;
       localPath = path;
    // }
@@ -90,12 +91,16 @@ int get_infos(diet_profile_t* profile) {
   try {
     SessionServer sessionServer (sessionKey);
    std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-   std::cout << "acLogin: " << acLogin << "\n";
+   //std::cout << "acLogin: " << acLogin << "\n";
     file = FileFactory::getFileServer(sessionServer,localPath, localUser, userKey);
-  } catch (runtime_error& err) {
+ 
+ 
+ 
+  } catch (std::exception& err) {
     errMsg = strdup(err.what());
+    std::cout << " errMsg" << errMsg << "\n";
   }
-  if (file->exists()) {
+  if ( file->exists()) {
     owner = strdup(file->getOwner().c_str());
   
     group = strdup(file->getGroup().c_str());
@@ -119,7 +124,7 @@ int get_infos(diet_profile_t* profile) {
     mtime = timedup(0);
     ctime = timedup(0);
     type = (int*) typedup(regular);
-  }
+ }
 
   if (errMsg==NULL) errMsg = strdup("");
   
