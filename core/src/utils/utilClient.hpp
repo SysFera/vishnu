@@ -19,6 +19,7 @@
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
+#include "IMSVishnuException.hpp"
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program

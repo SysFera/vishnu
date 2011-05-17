@@ -341,10 +341,11 @@ vishnu::checkJobPriority(const int& priority) {
   if ((priority < -1) || (priority > 5)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The priority value is incorrect");
   }
+
 }
 
 /**
- * \brief Function to check the job nbNodesAndCpuPerNode 
+ * \brief Function to check the job nbNodesAndCpuPerNode
  * \param nbNodesAndNbCpuPerNode the number of nodes and cpu per node
  * \return raises an exception on error
  */
@@ -357,10 +358,10 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
     try {
       posNbNodes = nbNodesAndCpuPerNode.find(":");
       if(posNbNodes!=std::string::npos) {
-       
+
         std::string nbNodes = nbNodesAndCpuPerNode.substr(0, posNbNodes);
         isNumericalValue(nbNodes);
-        
+
         std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1, posCpuPerNode);
         isNumericalValue(cpuPerNode);
       } else {
@@ -431,12 +432,12 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH )!=0) {
-     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have" 
+     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have"
                                            " not been change on the path. This can lead to an error");
   }
 
   if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
-    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot write the content int to" 
+    throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: Cannot write the content int to"
                                           "  new created file");
   }
 
@@ -455,7 +456,7 @@ void vishnu::createTmpFile(char* fileName) {
   }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH ) !=0) {
-     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have not been" 
+     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::createTmpFile: reading or writing rights have not been"
                                            "  change on the path. This can lead to an error");
   }
 
@@ -469,4 +470,16 @@ void vishnu::createTmpFile(char* fileName) {
 int vishnu::deleteFile(const char* fileName) {
     return unlink(fileName);
 }
+
+/**
+  * \brief Function to check the metric value
+  * \param value the metric value
+  * \return raises an exception on error
+  */
+  void
+  vishnu::checkMetricHistoryValue(const int& metric) {
+    if ((metric < -1) || (metric > 6)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "The metric value is incorrect");
+    }
+  }
 
