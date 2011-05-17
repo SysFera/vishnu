@@ -63,6 +63,9 @@ vishnu::getMetricHistory(const string sessionKey,
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricHistory";
+  //To check the metric value
+  checkMetricHistoryValue(op.getType());
+
   QueryProxy<IMS_Data::MetricHistOp, IMS_Data::ListMetric>
     query(op, sessionProxy, name, machineId);
 
