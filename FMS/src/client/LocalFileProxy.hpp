@@ -6,7 +6,7 @@
 
 #include "SessionProxy.hpp"
 
-#include "FileProxy.hh"
+#include "FileProxy.hpp"
 
 /* Local implementation of a DIET file. */
 class LocalFileProxy : public FileProxy {
@@ -29,9 +29,7 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline); 
-  virtual std::list<std::string> lsDir() const;
-  virtual std::list<std::string> lsDirRec() const;
-  virtual std::list<std::string> lsDirSimple() const;
+
 };
 
 #endif

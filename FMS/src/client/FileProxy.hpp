@@ -49,6 +49,7 @@ typedef enum {
 /* Defines the common operation on files (local or remote) */
 class FileProxy {
 private:
+//TODO Take EFM FileStat type instead of
   std::string path;
   std::string host;
   mutable std::string owner;
@@ -114,9 +115,6 @@ public:
   virtual int rm() = 0;
   virtual int rmdir() = 0;
   virtual std::string tail(const unsigned int nline) = 0;
-  virtual std::list<std::string> lsDir() const = 0;
-  virtual std::list<std::string> lsDirRec() const = 0;
-  virtual std::list<std::string> lsDirSimple() const = 0;
   
   static std::string extHost(const std::string& path);
   static std::string extName(const std::string& path);

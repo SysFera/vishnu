@@ -33,7 +33,7 @@ private:
   bool printTrID;
 public:
   RemoteFile();
-  RemoteFile(const std::string& path,
+  RemoteFile(const SessionServer& sessionServer,const std::string& path,
              const std::string& localUser);
   RemoteFile(const RemoteFile& file);
   virtual ~RemoteFile();
@@ -50,11 +50,7 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline);
-  virtual std::list<std::string> lsDir() const;
-  virtual std::list<std::string> lsDirRec() const;
-  virtual std::list<std::string> lsDirSimple() const;
-  
-  void printTransferID(const bool printTrID);
+    void printTransferID(const bool printTrID);
 };
 
 #endif
