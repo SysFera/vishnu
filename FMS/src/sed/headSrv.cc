@@ -9,6 +9,9 @@
 
 #include "DIET_server.h"
 #include "UserServer.hpp"
+#include "MachineServer.hpp"
+
+
 using namespace std;
 
 /* Global variables defined in the server.cc file. */
@@ -36,7 +39,7 @@ diet_profile_desc_t* getHeadProfile() {
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
 int headFile(diet_profile_t* profile) {
-  string localPath, localUser, userKey, head;
+  string localPath, localUser, userKey, head, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
   unsigned long* nline;
   
@@ -67,24 +70,32 @@ int headFile(diet_profile_t* profile) {
 
     SessionServer sessionServer (sessionKey);
 
-    std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+    // get the acLogin
+    acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+    // get the machineName
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(host);
+    MachineServer machineServer(machine);
+    machineName = machineServer.getMachineName();
+    delete machine;
 
     std::cout << "acLogin: " << acLogin << "\n";
+    std::cout << "machineName: " << machineName << "\n";
 
-    // get the machineName
-    FileFactory::setSSHServer("sobolev");
+    FileFactory::setSSHServer(machineName);
     File* file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
 
       head = file->head(*nline);
       result = strdup(head.c_str());
-    } catch (runtime_error& err) {
+
+    } catch (std::exception& err) {
       result = strdup("");
       errMsg = strdup(err.what());
     }
     if (errMsg==NULL) errMsg = strdup("");//}
     else {
       errMsg = strdup("Error transmitting parameters");
-      result = strdup("");
+     result = strdup("");
     }
     diet_string_set(diet_parameter(profile, 5), result, DIET_VOLATILE);
     diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
