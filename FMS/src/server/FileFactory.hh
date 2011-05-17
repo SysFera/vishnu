@@ -16,20 +16,27 @@
  *  - A server file is not directly accessible => SSHFile
  */
 class FileFactory {
-  static std::string sshServer;
-  static unsigned int sshPort;
-  static std::string sshCommand;
-  static std::string scpCommand;
-public:
-  static void setSSHServer(const std::string& sshServer);
-  static void setSSHPort(const unsigned int sshPort);
-  static void setSSHCommand(const std::string& sshCommand);
-  static void setSCPCommand(const std::string& scpCommand);
-  static File* getFileServer(const SessionServer& sessionServer,
-                             const std::string& path,
-                             const std::string& user,
-                             const std::string& key);
-  
+  public:
+    /*FileFactory();
+    FileFactory(const string& sshServer,
+                const std::string& sshPort, 
+                const std::string& sshCommand,
+                const std::string&  scpCommand);
+*/
+    static void setSSHServer(const std::string& sshServer);
+    static void setSSHPort(const unsigned int sshPort);
+    static void setSSHCommand(const std::string& sshCommand);
+    static void setSCPCommand(const std::string& scpCommand);
+    static File* getFileServer(const SessionServer& sessionServer,
+                               const std::string& path,
+                               const std::string& user,
+                               const std::string& key);
+ // private :
+   static std::string sshServer;
+   static unsigned int sshPort;
+    static std::string sshCommand;
+   static  std::string scpCommand;
+
 };
 
 #endif
