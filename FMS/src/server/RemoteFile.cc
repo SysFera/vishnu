@@ -24,8 +24,8 @@ RemoteFile::RemoteFile() {
 /* Standard constructor.
  * Take the file path and user name as parameters.
  */
-RemoteFile::RemoteFile(const string& path,
-                       const string& localUser) : File(path)
+RemoteFile::RemoteFile(const SessionServer& sessionServer,const string& path,
+                       const string& localUser) : File(sessionServer,path)
 {
   upToDate = false;
   this->localUser = localUser;
@@ -381,139 +381,7 @@ string RemoteFile::tail(const unsigned int nline) {
   return result;
 }
 
-/* Call the directory listing DIET server.
- * If something goes wrong, throw a runtime_error containing
- * the error message.
- */
-list<string> RemoteFile::lsDir() const {
-  list<string> result;
-  char* errMsg, *ls;
-  diet_profile_t* profile;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
 
-  profile = diet_profile_alloc(LS_SRV(getHost()), 2, 2, 4);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 3), &ls, NULL);
-  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
-
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  
-  istringstream is(ls);
-  char buffer[1024];
-  string line;
-  
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
-  /*while (!is.eof()) {
-    string tmp;
-    is >> tmp;
-    if (tmp!="")
-      result.push_back(tmp);
-  }*/
-
-  return result;
-}
-
-list<string> RemoteFile::lsDirRec() const {
-  list<string> result;
-  char* errMsg, *ls;
-  diet_profile_t* profile;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  
-  profile = diet_profile_alloc(LSREC_SRV(getHost()), 2, 2, 4);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 3), &ls, NULL);
-  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
-  
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  
-  istringstream is(ls);
-  char buffer[1024];
-  string line;
-  
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
-
-  return result;
-}
-
-/* Call the directory listing DIET server.
- * If something goes wrong, throw a runtime_error containing
- * the error message.
- */
-list<string> RemoteFile::lsDirSimple() const {
-  list<string> result;
-  char* errMsg, *ls;
-  diet_profile_t* profile;
-  
-  if (!exists()) throw runtime_error(getPath()+" does not exist");
-  
-  profile = diet_profile_alloc(LSSIMPLE_SRV(getHost()), 2, 2, 4);
-  diet_string_set(diet_parameter(profile, 0), const_cast<char*>(getPath().c_str()),
-                  DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localUser.c_str()),
-                  DIET_VOLATILE);
-  diet_paramstring_set(diet_parameter(profile, 2), const_cast<char*>(getHost().c_str()),
-                       DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
-  if (diet_call(profile))
-    throw runtime_error("Error calling DIET service");
-  diet_string_get(diet_parameter(profile, 3), &ls, NULL);
-  diet_string_get(diet_parameter(profile, 4), &errMsg, NULL);
-  
-  
-  if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
-  }
-  
-  istringstream is(ls);
-  char buffer[1024];
-  string line;
-  
-  while (!is.eof()) {
-    is.getline(buffer, 1024);
-    line = buffer;
-    result.push_back(line);
-  }
-  
-  return result;
-}
 
 
 void RemoteFile::printTransferID(const bool printTrID) {

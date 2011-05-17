@@ -6,10 +6,10 @@
 
 #include "SessionProxy.hpp"
 
-#include "FileProxy.hh"
-#include "LocalFileProxy.hh"
-#include "RemoteFileProxy.hh"
-#include "FileProxyFactory.hh"
+#include "FileProxy.hpp"
+#include "LocalFileProxy.hpp"
+#include "RemoteFileProxy.hpp"
+#include "FileProxyFactory.hpp"
 
 using namespace std;
 
