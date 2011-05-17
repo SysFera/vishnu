@@ -11,7 +11,7 @@ private:
   mutable bool upToDate;
 public:
   LocalFile();
-  LocalFile(const std::string& path);
+  LocalFile(const SessionServer& sessionServer,const std::string& path);
   LocalFile(const LocalFile& file);
   
   LocalFile& operator=(const LocalFile& file);
@@ -26,9 +26,6 @@ public:
   virtual int rm();
   virtual int rmdir();
   virtual std::string tail(const unsigned int nline); 
-  virtual std::list<std::string> lsDir() const;
-  virtual std::list<std::string> lsDirRec() const;
-  virtual std::list<std::string> lsDirSimple() const;
 };
 
 #endif

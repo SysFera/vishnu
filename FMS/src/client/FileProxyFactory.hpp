@@ -3,9 +3,9 @@
 
 #include <string>
 #include "SessionProxy.hpp"
-#include "FileProxy.hh"
-#include "LocalFileProxy.hh"
-#include "RemoteFileProxy.hh"
+#include "FileProxy.hpp"
+#include "LocalFileProxy.hpp"
+#include "RemoteFileProxy.hpp"
 
 /* A factory class for the FileProxys classes. */
 

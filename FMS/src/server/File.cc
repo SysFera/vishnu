@@ -66,7 +66,10 @@ File::File() {
   srand(time(NULL));
 }
 
-File::File(const string& path) {
+File::File(const SessionServer& sessionServer,const string& path) {
+  
+  msessionServer=sessionServer;
+ 
   srand(time(NULL));
   size_t pos = path.find(':');
   
@@ -82,6 +85,10 @@ File::File(const string& path) {
 File::File(const File& file) {
   srand(time(NULL));
   operator=(file);
+}
+
+const SessionServer& File::getSession() const {
+  return msessionServer;
 }
 
 const string& File::getPath() const {
