@@ -370,7 +370,7 @@ class LogServiceFixture : public OmniNamesFixture {
 public:
   LogServiceFixture() : process(NULL) {
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching LogService ==" );
-    BOOST_TEST_MESSAGE( LOGCENTRAL_PATH  << " found: ");
+    BOOST_TEST_MESSAGE( LOGSERVICE_COMMAND  << " found: " << LOGCENTRAL_PATH);
 
     // setup LogService environment
     bp::context ctx;
