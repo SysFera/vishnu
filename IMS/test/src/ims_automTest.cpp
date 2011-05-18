@@ -36,13 +36,9 @@ namespace bfs= boost::filesystem;
 
 BOOST_GLOBAL_FIXTURE(IMSSeDFixture)
 
-
-//Test category 3
-
-// I2 - B : I2 – B: Get metric data normal
-
-BOOST_AUTO_TEST_SUITE(get_metric_data)
-
+BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
+  //Test category 4
+  // I2 - B : I2 – B: Get metric data normal
   // Get metric data : normal call
 
 BOOST_AUTO_TEST_CASE( get_metric_data_normal_call) {
@@ -57,12 +53,11 @@ BOOST_AUTO_TEST_CASE( get_metric_data_normal_call) {
   string machineId="machine_1";
   IMS_Data::ListMetric list;
   IMS_Data::MetricHistOp op;
-  //Set the type of metric to get
+  //Set FREEMOMORY metric
   op.setType(5);
 
   try {
-    //Initialize the databatase: put the update frequency to 10
-    //and cleaning of the database state
+    //Set the update frequency to 10 and clean the table state
     if (restore(sqlPath + "/IMSTestGetMetric.sql") != 0) {
       cout << "Database update failed" << endl;
       return;
@@ -114,12 +109,88 @@ BOOST_AUTO_TEST_CASE( get_metric_data_bad_metric_type) {
 
   IMS_Data::ListMetric list;
   IMS_Data::MetricHistOp op;
+  //Set unknown metric type
   op.setType(15);
 
   BOOST_CHECK_THROW(getMetricHistory(sessionKey, machineId, list, op), VishnuException);
   //BOOST_TEST_MESSAGE("Testing Use case I2 – E2: Get metric data with bad metric type" << "\n");
 }
 
+
+
+// I4 – B: Get data on the infrastructure
+// Get metric data : normal call
+
+BOOST_AUTO_TEST_CASE(get_metric_current_value) {
+
+  BOOST_TEST_MESSAGE("Use case I4 – B: Get data on the infrastructure");
+  VishnuConnexion vc("root","vishnu_user");
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  IMS_Data::ListMetric list;
+  IMS_Data::CurMetricOp op;
+  op.setMetricType(3);
+
+  try {
+    BOOST_CHECK_EQUAL(getMetricCurrentValue(sessionKey, machineId, list, op),0 );
+    //BOOST_TEST_MESSAGE( "list.getMetric().size()" << list.getMetric().size() << "\n");
+    BOOST_REQUIRE(list.getMetric().size() != 0);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+
+// IA2.1 – B : Get a system load threshold
+// Get a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – B: Get a system load threshold");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+  //Set FreeDiskSpace Metric
+  op.setMetricType(3);
+
+  try {
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the threshold is equal to 2000000
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 2000000);
+    //Set the Threshold to 1000000
+    if (restore(sqlPath + "/IMSTestThreshold.sql") != 0) {
+      cout << "Database update failed" << endl;
+      return;
+    }
+
+    list.getThreshold().clear();
+
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the threshold is equal to 1000000
+    BOOST_TEST_MESSAGE("list.getThreshold().get(0)->getValue()" << list.getThreshold().get(0)->getValue());
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 1000000);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
