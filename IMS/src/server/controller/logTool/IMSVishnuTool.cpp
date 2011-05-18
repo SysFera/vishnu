@@ -3,6 +3,7 @@
 #include "SystemException.hpp"
 #include "UserServer.hpp"
 #include "IMSVishnuException.hpp"
+#include "DIET_server.h"
 // For gethostname
 #include <unistd.h>
 
@@ -63,19 +64,27 @@ IMSVishnuTool::disconnect(){
 // TODO IMPLEMENT THE FUNCTION TO PLAY ITS ROLES WITH THE DATABASE
 void
 IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
+  // DIET call parameters
+  int service_number;
+  diet_profile_desc_t **tab;
 
+  // For each message
   for (CORBA::ULong i=0; i<msg.length(); i++){
     string log = "";
     IMS_Data::Process_ptr p = new IMS_Data::Process();
     // componentName
     log.append(msg[i].componentName);
     log.append(":");
+
     // If a connexion message arrive
     if (string(msg[i].tag).compare("IN")==0){
       string hname = getHostnameFromLog(string(msg[i].msg));
-      // If it is on the same machine as the sed
+
+      // If it is on the same machine as the imssed
       if (hname.compare(string(msyshName))==0){
 	log += "Connexion of the component with the name : " + string(msg[i].componentName) + " and the message ->" + string(msg[i].msg) + "<- ";
+
+	// Initializing the corresponding process
 	p->setProcessName(string(msg[i].componentName));
 	try{
 	  string c = getMidFromHost(msyshName);
@@ -88,7 +97,58 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	  continue;
 	}
 	try {
+	  // If it is a not a SeD
+	  if (diet_get_SeD_services(&service_number, &tab, msg[i].componentName)) {
+	    continue;
+	  }
+
+	  // Connect the sed
 	  mproc.connectProcess(p);
+
+	  // Looking in the list of services of the sed to authentify it
+	  for (unsigned int j = 0 ; j < service_number ; j++) {
+	    // If ums sed
+	    if (string(tab[j]->path).compare("sessionConnect")==0){
+	      log.append(msg[i].tag);
+	      log.append(":");
+	      //msg
+	      log.append(string(msg[i].msg)+", with type UMS");
+	      p->setMachineId(getMidFromHost(msyshName));
+	      p->setDietId(string(msg[i].componentName));
+	      p->setProcessName("UMS");
+	      mproc.authentifyProcess(p);
+	      break;
+	    }
+	    // else If tms sed
+	    else if ((string(tab[j]->path)).find("jobSubmit")!=string::npos) {
+	      log.append(msg[i].tag);
+	      log.append(":");
+	      //msg
+	      log.append(string(msg[i].msg)+", with type TMS");
+	      p->setMachineId(getMidFromHost(msyshName));
+	      p->setDietId(string(msg[i].componentName));
+	      p->setProcessName("TMS");
+	      mproc.authentifyProcess(p);
+	      break;
+	    }
+	    // else if IMS sed
+	    else if (string(tab[j]->path).compare("int_getProcesses")==0) {
+	      log.append(msg[i].tag);
+	      log.append(":");
+	      //msg
+	      log.append(string(msg[i].msg)+", with type IMS");
+	      string t = getMidFromHost(msyshName);
+	      p->setMachineId(t);
+	      p->setDietId(string(msg[i].componentName));
+	      p->setProcessName("IMS");
+	      mproc.authentifyProcess(p);
+	      break;
+	    } // End else if ims
+	  }// end for
+	  for (unsigned j = 0 ; j<service_number ; j++) {
+	    diet_profile_desc_free(tab[j]);
+	  }
+	  free(tab);
 	}catch ( SystemException& e){
 	  throw (e);
 	}
@@ -96,7 +156,7 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 	dest << log << endl;
 	dest.close();
       }
-    }
+    } // EDNIF IN
     // If message of disconnexion
     if (string(msg[i].tag).compare("OUT")==0){
       string hname = getHostnameFromLog(string(msg[i].msg));
@@ -116,7 +176,6 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
       // If disconnexion of an IMS sed on an other machine, must set him as out
       else if (mproc.isIMSSeD(string(msg[i].componentName))){
 
-
 	/*******************************************************************************/
 	// TODO ELECT PROCESS
 
@@ -124,68 +183,18 @@ IMSVishnuTool::sendMsg(const log_msg_buf_t& msg){
 
 	// SSH and reconnect
 	/*******************************************************************************/
-
+	
       }
     }// end if disconnexion
-    //tagtype
-    if (string(msg[i].tag).compare("IN")==0){
-//      log.append(msg[i].tag);
-//      log.append(":");
-//      log.append("****************************************");
-//      //msg
-//      log.append(msg[i].msg);    
-    }
-    else {
-      if (string(msg[i].msg).compare("sessionConnect")==0){
-	log.append(msg[i].tag);
-	log.append(":");
-	//msg
-	log.append(string(msg[i].msg)+", with type UMS");
-	p->setMachineId(getMidFromHost(msyshName));
-	p->setDietId(string(msg[i].componentName));
-	p->setProcessName("UMS");
-	mproc.authentifyProcess(p);
-	ofstream dest(mfilename.c_str(),ios::app);
-	dest << log << endl;
-	dest.close();
-      }
-      else if ((string(msg[i].msg)).find("jobSubmit")!=string::npos) {
-	log.append(msg[i].tag);
-	log.append(":");
-	//msg
-	log.append(string(msg[i].msg)+", with type TMS");
-	p->setMachineId(getMidFromHost(msyshName));
-	p->setDietId(string(msg[i].componentName));
-	p->setProcessName("TMS");
-	mproc.authentifyProcess(p);
-	ofstream dest(mfilename.c_str(),ios::app);
-	dest << log << endl;
-	dest.close();
-      }// End else if submit machine
-      else if (string(msg[i].msg).compare("int_getProcesses")==0) {
-	log.append(msg[i].tag);
-	log.append(":");
-	//msg
-	log.append(string(msg[i].msg)+", with type IMS");
-	string t = getMidFromHost(msyshName);
-	p->setMachineId(t);
-	p->setDietId(string(msg[i].componentName));
-	p->setProcessName("IMS");
-	mproc.authentifyProcess(p);
-	ofstream dest(mfilename.c_str(),ios::app);
-	dest << log << endl;
-	dest.close();
-      } // End else if get processes
-    }// End if not IN tag
   }// End for
 }
 
 void
 IMSVishnuTool::setFilter(string description_file){
   mfilter.filterName = CORBA::string_dup("allFilter");
-  mfilter.tagList.length(2);
+  mfilter.tagList.length(1);
   mfilter.tagList[0] = CORBA::string_dup("IN");
-  mfilter.tagList[1] = CORBA::string_dup("ADD_SERVICE");
+  //  mfilter.tagList[1] = CORBA::string_dup("ADD_SERVICE");
   mfilter.componentList.length(1);
   mfilter.componentList[0] = CORBA::string_dup("*");
 }

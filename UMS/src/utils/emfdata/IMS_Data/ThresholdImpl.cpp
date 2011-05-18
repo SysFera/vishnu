@@ -57,8 +57,7 @@ void Threshold::_initialize()
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::toAny(_any,
-                m_value);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_value);
     }
         return _any;
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__MACHINEID:
@@ -73,6 +72,12 @@ void Threshold::_initialize()
                 m_type);
     }
         return _any;
+    case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_handler);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -85,7 +90,7 @@ void Threshold::eSet(::ecore::EInt _featureID,
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EDouble >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
                 m_value);
     }
         return;
@@ -101,6 +106,12 @@ void Threshold::eSet(::ecore::EInt _featureID,
                 _newValue, m_type);
     }
         return;
+    case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_handler);
+    }
+        return;
 
     }
     throw "Error";
@@ -111,13 +122,13 @@ void Threshold::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__VALUE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EDouble >::is_set(
-                m_value);
+        return m_value != 0;
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__MACHINEID:
         return m_machineId != "";
     case ::IMS_Data::IMS_DataPackage::THRESHOLD__TYPE:
-        return ::ecorecpp::mapping::set_traits< ::IMS_Data::MetricType >::is_set(
-                m_type);
+        return m_type != 0;
+    case ::IMS_Data::IMS_DataPackage::THRESHOLD__HANDLER:
+        return m_handler != "";
 
     }
     throw "Error";

@@ -72,12 +72,12 @@ namespace IMS_Data
          * \brief To get the value
          * \return The value attribute value
          **/
-        ::ecore::EDouble getValue() const;
+        ::ecore::ELong getValue() const;
         /**
          * \brief To set the value
          * \param _value The value value
          **/
-        void setValue(::ecore::EDouble _value);
+        void setValue(::ecore::ELong _value);
 
         /**
          * \brief To get the machineId
@@ -100,6 +100,17 @@ namespace IMS_Data
          * \param _type The type value
          **/
         void setType(::IMS_Data::MetricType _type);
+
+        /**
+         * \brief To get the handler
+         * \return The handler attribute value
+         **/
+        ::ecore::EString const& getHandler() const;
+        /**
+         * \brief To set the handler
+         * \param _handler The handler value
+         **/
+        void setHandler(::ecore::EString const& _handler);
 
         // References
 
@@ -126,11 +137,13 @@ namespace IMS_Data
     protected:
         // Attributes
 
-        ::ecore::EDouble m_value;
+        ::ecore::ELong m_value;
 
         ::ecore::EString m_machineId;
 
         ::IMS_Data::MetricType m_type;
+
+        ::ecore::EString m_handler;
 
         // References
 
