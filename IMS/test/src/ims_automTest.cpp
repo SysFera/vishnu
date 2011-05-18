@@ -252,6 +252,148 @@ BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user) {
   BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
 }
 
+
+// IA2.1 – B1 : Define a system load threshold for CPUUSE Metric
+// Define a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE) {
+
+  BOOST_TEST_MESSAGE("Use case IA2 – B1: Define a system load threshold for CPUUSE metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  int currentThreshold;
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  IMS_Data::Threshold systemThreshold;
+
+  op.setMachineId(machineId);
+  //Set CPUUSE Metric
+  op.setMetricType(1);
+
+  //Set handler
+  systemThreshold.setHandler("root");
+  systemThreshold.setMachineId(machineId);
+  //Set CPUUSE Metric
+  systemThreshold.setType(1);
+
+  try {
+    //To set a new value for the CPUUSE Metric
+    systemThreshold.setValue(30);
+    BOOST_CHECK_EQUAL(setSystemThreshold(sessionKey, systemThreshold),0 );
+
+    //To get the current value of the CPUUSE metric
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the new value for the metric CPUUSE is 40
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 30);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+// IA2.1 – B2 : Define a system load threshold for FREEDISKSPACE Metric
+// Define a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_SPACE) {
+
+  BOOST_TEST_MESSAGE("Use case IA2 – B2: Define a system load threshold for FREE DISK SPACE Metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  int currentThreshold;
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  IMS_Data::Threshold systemThreshold;
+
+  //Set FREEDISKSPACE Metric
+  op.setMetricType(3);
+  op.setMachineId(machineId);
+  //Set handler
+  systemThreshold.setHandler("root");
+  systemThreshold.setMachineId(machineId);
+  //Set FREEDISKSPACE Metric
+  systemThreshold.setType(3);
+
+  try {
+    //To set a new value for the FREEDISKSPACE Metric
+    systemThreshold.setValue(2000000);
+    BOOST_CHECK_EQUAL(setSystemThreshold(sessionKey, systemThreshold),0 );
+
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the new value for the metric FREEDISKSPACE is 2000000
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 2000000);
+
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+// IA2.1 – B3 : Define a system load threshold for FREEMEMORY Metric
+// Define a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY) {
+
+  BOOST_TEST_MESSAGE("Use case IA2 – B2: Define a system load threshold for FREE MEMORY Metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  int currentThreshold;
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  IMS_Data::Threshold systemThreshold;
+
+  //Set FREEMEMORY Metric
+  op.setMetricType(5);
+  op.setMachineId(machineId);
+
+  //Set handler
+  systemThreshold.setHandler("root");
+  systemThreshold.setMachineId(machineId);
+  //Set FREEMEMORY Metric
+  systemThreshold.setType(5);
+
+  try {
+
+    //To set a new value for the FREEDISKSPACE Metric
+    systemThreshold.setValue(2);
+    BOOST_CHECK_EQUAL(setSystemThreshold(sessionKey, systemThreshold),0 );
+
+    //To check the new value
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the value for the metric cpuuse is 2
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 2);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
 
