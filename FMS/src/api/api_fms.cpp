@@ -9,6 +9,7 @@
 
 // C++ Headers
 #include <string>
+#include <stdexcept>
 #include <pthread.h>
 
 
@@ -111,7 +112,7 @@ using namespace std;
      try {
         f->getInfos();
         head = f->head(nline);
-      } catch (std::runtime_error& err) {
+      } catch (std::exception& err) {
         std::cerr << "Catch " << err.what() << std::endl;
         return -1;
       }
@@ -206,7 +207,7 @@ using namespace std;
       try {
         f->getInfos();
         tail= f->tail(nline);
-      } catch (std::runtime_error& err) {
+      } catch (std::exception& err) {
         std::cerr << "Catch " << err.what() << std::endl;
         return -1;
       }
