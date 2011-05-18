@@ -98,7 +98,7 @@ int main(int argc, char* argv[], char* envp[]) {
   pid = fork();
 
   if (pid > 0) {
-    
+
     try {
       //Initialize the TMS Server
       boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
@@ -128,6 +128,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }  else if (pid == 0) {
     // Initialize the TMS Monitor (Opens a connection to the database)
     MonitorTMS monitor(interval);
+    dbConfig.setDbPoolSize(1);
     monitor.init(vishnuId, dbConfig, machineId, batchType);
     ppid = getppid();
 
