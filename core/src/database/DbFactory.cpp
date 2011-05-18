@@ -34,6 +34,8 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
     case DbConfiguration::POSTGRESQL :
 #ifdef USE_POSTGRES
       mdb = new POSTGREDatabase(config);
+#else
+      throw SystemException(ERRCODE_DBERR, "PostgreSQL is not enabled (re-compile with ENABLE_POSTGRES)");
 #endif
       break;
     case DbConfiguration::ORACLE:
@@ -41,11 +43,13 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
     case DbConfiguration::MYSQL:
 #ifdef USE_MYSQL
       mdb = new MYSQLDatabase(config.getDbHost(),
-			      config.getDbUserName(),
-			      config.getDbUserPassword(),
-			      config.getDbName(),
-			      config.getDbPort()
-			      );
+                              config.getDbUserName(),
+                              config.getDbUserPassword(),
+                              config.getDbName(),
+                              config.getDbPort()
+            );
+#else
+      throw SystemException(ERRCODE_DBERR, "MySQL is not enabled (re-compile with ENABLE_MYSQL)");
 #endif
       break;
   default:
