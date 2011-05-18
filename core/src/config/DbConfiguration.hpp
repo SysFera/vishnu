@@ -19,13 +19,18 @@ class DbConfiguration {
 public:
 
   /**
-   * \brief The database type 
+   * \brief The database type
    */
   typedef enum {
     POSTGRESQL,
     ORACLE,
     MYSQL
   } db_type_t;
+
+  /**
+   * \brief Default value for the nb of db connections in the pool
+   */
+  static const int defaultDbPoolSize;
 
   /**
    * \brief Constructor
@@ -74,6 +79,19 @@ public:
    */
   const std::string& getDbUserPassword() const { return mdbPassword; }
 
+  /**
+   * \brief Set the nb of connections to open simultaneously to the database
+   * \param nb of connections in the connection pool
+   */
+  void setDbPoolSize(unsigned poolSize) { mdbPoolSize = poolSize; }
+
+  /**
+   * \brief Get the nb of connections to open simultaneously to the database
+   * \brief in order to process parallel requests.
+   * \return nb of connections in the connection pool
+   */
+  int getDbPoolSize() { return mdbPoolSize; }
+
 protected:
 
   /////////////////////////////////
@@ -98,7 +116,7 @@ protected:
   /**
    * \brief Attribute port of the database
    */
-  int mdbPort;
+  unsigned mdbPort;
 
   /**
    * \brief Attribute name of the database
@@ -114,6 +132,11 @@ protected:
    * \brief Attribute user password to connect to the database
    */
   std::string mdbPassword;
+
+  /**
+   * \brief Attribute number of db connections in the pool
+   */
+  unsigned mdbPoolSize;
 
 };
 
