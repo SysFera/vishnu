@@ -89,16 +89,16 @@ int get_infos(diet_profile_t* profile) {
 
     SessionServer sessionServer (sessionKey);
 
+    // check the sessionKey
+
+    sessionServer.check();
+    
     std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
     std::cout << "acLogin: " << acLogin << "\n";
  
     file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
- 
-  } catch (std::exception& err) {
-    errMsg = strdup(err.what());
-    std::cout << " errMsg" << errMsg << "\n";
-  }
+
   if ( file->exists()) {
     owner = strdup(file->getOwner().c_str());
   
@@ -112,7 +112,14 @@ int get_infos(diet_profile_t* profile) {
     ctime = timedup(file->getCtime());
     type = (int*) typedup(file->getType());
   } else {
-    owner = strdup("");
+ throw std::runtime_error("this file does not exist");
+  }
+
+  } catch (std::exception& err) {
+    errMsg = strdup(err.what());
+    std::cout << " errMsg" << errMsg << "\n";
+  
+   owner = strdup("");
     
     group = strdup("");
     uid = uiddup(0);
