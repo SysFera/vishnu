@@ -32,12 +32,14 @@ add_library(ims-server STATIC
   controller/logTool/Watcher.cpp
   controller/logTool/ToolFactory.cpp
   controller/HM/HM.cpp
-  controller/process/Process.cpp
+  controller/process/ProcessCtl.cpp
   data/ProcessServer.cpp
   data/MetricServer.cpp
   data/ExportServer.cpp
   data/ShellExporter.cpp
-
+  data/ObjectIdServer.cpp
+  data/SysInfoServer.cpp
+  data/ThresholdServer.cpp
 )
 
 target_link_libraries(ims-server

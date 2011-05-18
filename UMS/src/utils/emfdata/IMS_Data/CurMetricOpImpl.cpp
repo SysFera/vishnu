@@ -87,8 +87,7 @@ void CurMetricOp::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::IMS_Data::IMS_DataPackage::CURMETRICOP__METRICTYPE:
-        return ::ecorecpp::mapping::set_traits< ::IMS_Data::MetricType >::is_set(
-                m_metricType);
+        return m_metricType != 0;
 
     }
     throw "Error";
