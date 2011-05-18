@@ -1,0 +1,61 @@
+// Paquets que j'ai installé
+mysql-client
+mysql-admin
+mysql-common
+mysql-server
+
+// Creer la table vishnu pour 'root' avec le mdp 'root'
+mysqladmin -u root -p create vishnu
+
+// Pour un user 'root' et un mdp 'root' :
+// Sans le sudo, access denied pour <login>@localhost
+sudo mysql -p
+
+// Utiliser la table vishnu
+mysql> USE vishnu
+
+// Executer un script ../toto.sql
+mysql> \. ../toto.sql
+
+// Pour executer le sed ums
+// Ajout d'un lien :
+ln -s /var/run//mysqld/mysqld.sock /tmp
+
+// Tests rapide :
+connect -> ok
+add_machine -> ok
+add_user -> ok
+add_account -> ok
+delete_user -> ok
+delete_machine -> ok
+list_machine -a -> ok
+list_user -> ok ? manque possible 1 resultat
+update_local_acc -> ok
+delete_local_acc -> ok
+list_history_cmd -> ok
+configure op -> ok
+configure_default_op -> ok
+list_option -> ok
+save_conf -> ok
+reconnect : ok
+
+change_password : error, visible client pas serveur ./vishnu_change_password: Vishnu not available (Database error) [Querry error with code 1]
+reset_password : error, client, ./vishnu_reset_password: Vishnu not available (Database error) [Querry error with code 1]
+update_user -> erreur pas visible sur sed, mais client : './vishnu_update_user: Vishnu not available (Database error) [Querry error with code 1]'
+update_machine -> erreur pas visible sur sed, mais client : '/vishnu_update_machine: Vishnu not available (Database error) [Querry error with code 1]'
+list_session -> non, erreur :
+method 'solve' raised an unexpected
+ std::exception (not a CORBA exception):
+ Day of month value is out of range 1..31
+close : erreur, ./vishnu_close: Vishnu not available (Database error) [Querry error with code 1]
+restore_conf : ./vishnu_restore_configuration: Vishnu not available (Database error) [Querry error with code 1]
+
+
+submit job : ok
+list queue : ok
+cancel : ok
+get job info : ok
+get_job_progress : ok
+get job output : ok
+get completed job : Ok ???
+list job : ok
