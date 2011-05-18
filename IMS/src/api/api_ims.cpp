@@ -63,6 +63,9 @@ vishnu::getMetricHistory(const string sessionKey,
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricHistory";
+  //To check the metric value
+  checkMetricHistoryValue(op.getType());
+
   QueryProxy<IMS_Data::MetricHistOp, IMS_Data::ListMetric>
     query(op, sessionProxy, name, machineId);
 
@@ -137,6 +140,9 @@ vishnu::getSystemThreshold(const string sessionKey,
 		   IMS_Data::ListThreshold& list,
 		   IMS_Data::ThresholdOp op)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+
+  //To check the metric value
+  checkMetricHistoryValue(op.getMetricType());
 
   SessionProxy sessionProxy(sessionKey);
   ThresholdProxy thresholdProxy(sessionProxy);
