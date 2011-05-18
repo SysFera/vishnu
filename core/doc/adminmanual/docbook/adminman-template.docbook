@@ -53,6 +53,14 @@
           <para>Ajout de l'administration de TMS.</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>18/05/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Ajout du parametre de configuration dbConnectionsNb.</para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -518,6 +526,11 @@ pratiques communément admises.
                 <para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
               </listitem>
               <listitem>
+                <para> 'databaseConnectionsNb=5' : Le nombre de connexions ouvertes sur la base de données par le SeD afin de traiter des requêtes en parallèle.
+                  (le nombre par défaut est 10). Si le nombre d'utilisateurs simultané du SeD est grand, cette valeur doit être augmentée dans
+                  la limite du nombre de connections simultanées autorisées par le serveur de base de données.</para>
+              </listitem>
+              <listitem>
                 <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
                   dans le sous-répertoire sbin/ du répertoire d'installation.</para>
               </listitem>
@@ -684,6 +697,7 @@ pratiques communément admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
+        databaseConnectionsNb=5
         sendmailScriptPath=/usr/local/sbin/sendmail.py
       </programlisting>
     </section>
@@ -698,6 +712,7 @@ pratiques communément admises.
 	databaseName=vishnu
 	databaseUserName=vishnu_user
 	databaseUserPassword=vishnu_user
+        databaseConnectionsNb=5
         sendmailScriptPath=/usr/local/sbin/sendmail.py
 	# Configuration propres à TMS
 	batchSchedulerType=TORQUE
