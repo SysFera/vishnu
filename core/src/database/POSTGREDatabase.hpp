@@ -9,6 +9,7 @@
 #define _POSTGREDATABASE_H_
 
 #include "Database.hpp"
+#include "DbConfiguration.hpp"
 #include "libpq-fe.h"
 #include <pthread.h>
 
@@ -37,23 +38,10 @@ public :
   connect();
 
   /**
-   * \fn POSTGREDatabase(std::string hostname,
-   *		         std::string username,
-   * 	 	         std::string pwd,
-   *	 	         std::string database = "",
-   *	 	         unsigned int port = 0)
-   * \param hostname The name of the host to connect
-   * \param username The username to connect to the database
-   * \param pwd      The password to connect to the database
-   * \param database The database to connect
-   * \param port     The port to use
+   * \fn POSTGREDatabase(DbConfiguration dbConfig)
    * \brief Constructor, raises an exception on error
    */
-  POSTGREDatabase(std::string hostname,
-                  std::string username,
-                  std::string pwd,
-                  std::string database = "",
-                  unsigned int port = 0);
+  POSTGREDatabase(DbConfiguration dbConfig);
 
   /**
    * \fn ~POSTGREDatabase()
@@ -62,13 +50,14 @@ public :
   ~POSTGREDatabase();
 
   /**
+   * FIXME obsolete
    * \brief To set the db to use
    * \fn int setDatabase(std::string db)
    * \param db The name of the database to use
    * \return 0 raises an exception on error
    */
   int
-  setDatabase(std::string db);
+  setDatabase(std::string db) {}
 
   /**
   * \brief To get the result of a select request
@@ -81,10 +70,6 @@ public :
 
 
 private :
-  /**
-   * \brief Size of the pool
-   */
-  static const int POOLSIZE = 20;
 
   /**
    * \brief An element of the pool
@@ -124,30 +109,15 @@ private :
   /////////////////////////////////
 
   /**
+   * \brief The configuration of the database server
+   */
+  DbConfiguration mconfig;
+
+  /**
    * \brief The pool of connection
    */
-  pool_t mpool[POOLSIZE];
-  
-  /**
-   * \brief The host of the base
-   */
-  std::string mhost;
-  /**
-   * \brief The username to connect
-   */
-  std::string musername;
-  /**
-   * \brief The password to connect
-   */
-  std::string mpwd;
-  /**
-   * \brief The database to connect
-   */
-  std::string mdatabase;
-  /**
-   * \brief The port to use
-   */
-  int mport;
+  pool_t *mpool;
+
   /**
    * \brief If the connection is right
    */
