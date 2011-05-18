@@ -33,12 +33,7 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
   switch (config.getDbType()){
     case DbConfiguration::POSTGRESQL :
 #ifdef USE_POSTGRES
-      mdb = new POSTGREDatabase(config.getDbHost(),
-                                config.getDbUserName(),
-                                config.getDbUserPassword(),
-                                config.getDbName(),
-                                config.getDbPort()
-                               );
+      mdb = new POSTGREDatabase(config);
 #endif
       break;
     case DbConfiguration::ORACLE:
