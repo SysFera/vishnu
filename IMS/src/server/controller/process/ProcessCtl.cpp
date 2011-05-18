@@ -1,15 +1,18 @@
 #include "ProcessCtl.hpp"
 
-ProcessCtl::ProcessCtl(string mid): mmid(mid),
-				    mp(UserServer(SessionServer(""))) {
+ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
+						     mp(user) {
 }
 
 ProcessCtl::~ProcessCtl() {
 }
 
 void
-ProcessCtl::restart() {
+ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   string type;
+  string cmd ;
+  string dest;
+  mop = *op;
   IMS_Data::Process_ptr proc;
   switch(mop.getSedType()) {
   case 1 : // UMS
@@ -31,8 +34,23 @@ ProcessCtl::restart() {
   proc->setProcessName(type);
   proc->setMachineId(mmid);
   mp.fillContent(proc);
-  // TODO : faire le SSH  pour executer la commande  
+  // Make sure the process is really not running on the machine
+  stop(proc);
 
+  createFile (dest, proc);
+
+  boost::to_lower(type);
+  type += "sed";
+  cmd = type + " " + dest;
+  // If local
+  if (mmid.compare("")==0) {
+    int ret = system(cmd.c_str());
+    if (ret == -1) {
+      throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
+    }
+  } else {
+    // TODO : faire le SSH  pour executer la commande  
+  }
 }
 
 void
@@ -61,13 +79,15 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
     }
   }
   string cmd = "killall -9 "+name;
-  // TODO executer la commande sur la machine distante (ou pas)
 
   // if no machineid : local, else on the distant machine
   if (p->getMachineId().compare("")==0) {
-
+    int res = system(cmd.c_str());
+    if (res == -1) {
+      throw SystemException(ERRCODE_SYSTEM, "Failed to kill process");
+    }
   } else { // Distant stop
-
+  // TODO executer la commande sur la machine distante (ou pas)
   }
 }
 
@@ -75,3 +95,16 @@ void
 ProcessCtl::loadShed() {
 
 }
+
+
+void 
+ProcessCtl::createFile(string& dest, IMS_Data::Process_ptr p) {
+  dest = "/tmp/vishnu_restart";
+  string cmd = "echo \""+p->getScript()+"\" > "+dest;
+  int res = system(cmd.c_str());
+  if (res == -1) {
+    throw SystemException(ERRCODE_SYSTEM, "Error creating restart file");
+  }
+}
+
+
