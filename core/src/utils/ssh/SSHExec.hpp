@@ -35,7 +35,8 @@ public:
    */
   SSHExec(const std::string& sshCommand,
           const std::string& scpCommand,
-          const std::string& server, unsigned int sshPort,
+          const std::string& server, 
+	  unsigned int sshPort,
           const std::string& userName,
           const std::string& password, const std::string& publicKey,
           const std::string& privateKey,

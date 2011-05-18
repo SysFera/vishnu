@@ -16,7 +16,7 @@ public:
   /**
    * \brief Constructor
    */
-  ProcessCtl(string mid);
+  ProcessCtl(string mid, UserServer user);
   /**
    * \brief Destructor
    */
@@ -25,7 +25,7 @@ public:
    * \brief To relaunch a process
    */
   void
-  restart();
+  restart(IMS_Data::RestartOp_ptr op);
   /**
    * \brief To stop a process
    */
@@ -38,8 +38,24 @@ public:
   loadShed();
 protected:
 private:
+  /**
+   * \brief To create the file for the restart function
+   * \param dest: The destination file (inout)
+   * \param p: The process containing the script
+   */
+  void 
+  createFile(string& dest, IMS_Data::Process_ptr p);
+  /**
+   * \brief The process server
+   */
   ProcessServer mp;
+  /**
+   * \brief The option to restart
+   */
   IMS_Data::RestartOp mop;
+  /**
+   * \brief The machine id
+   */
   string mmid;
 };
 
