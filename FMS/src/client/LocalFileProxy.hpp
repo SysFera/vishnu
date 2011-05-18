@@ -9,6 +9,7 @@
 #include "FileProxy.hpp"
 
 /* Local implementation of a DIET file. */
+
 class LocalFileProxy : public FileProxy {
 private:
   mutable bool upToDate;

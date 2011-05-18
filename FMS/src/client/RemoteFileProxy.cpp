@@ -15,6 +15,7 @@
 #include "LocalFileProxy.hpp"
 
 using namespace std;
+using namespace FMS_Data;
 
 /* Default constructor. */
 RemoteFileProxy::RemoteFileProxy() {
@@ -117,7 +118,7 @@ void RemoteFileProxy::getInfos() const {
   sysEndianChg<long>(*ctime);
   setCtime(*ctime);
   sysEndianChg<int>(*type);
-  setType((file_type_t) *type);
+  setType((FileType) *type);
   exists(true);
   upToDate = true;
 }
