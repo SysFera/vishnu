@@ -178,7 +178,7 @@ CREATE TABLE process (
   pstatus INTEGER,
   vishnuname VARCHAR(255),
   dietname VARCHAR(255),
-  machineid VARCHAR(255),	
+  machineid VARCHAR(255),
   uptime TIMESTAMP,
   launchscript TEXT,
   PRIMARY KEY(numprocess)
@@ -201,7 +201,7 @@ PRIMARY KEY(numfiletransferid),
     REFERENCES command(numcommandid));
 
 
-CREATE TABLE fileSub (
+CREATE TABLE filesub (
   numfileid SERIAL  NOT NULL ,
   command_numcommandid INTEGER   NOT NULL ,
   fileid VARCHAR(255)    ,
@@ -213,7 +213,7 @@ PRIMARY KEY(numfileid),
 
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,  
+  vsession_numsessionid INTEGER   NOT NULL ,
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
   jobId VARCHAR(255),
@@ -223,7 +223,7 @@ CREATE TABLE job (
   jobPath VARCHAR(255),
   outputPath VARCHAR(255),
   errorPath VARCHAR(255),
-  scriptContent TEXT,  
+  scriptContent TEXT,
   jobPrio INTEGER,
   nbCpus INTEGER,
   jobWorkingDir VARCHAR(255),
@@ -244,8 +244,8 @@ PRIMARY KEY(numjobid),
 
 -- Role Creation;
 
-CREATE USER vishnu_user WITH PASSWORD 'vishnu_user';
-CREATE USER vishnu_db_admin;
+CREATE USER vishnu_user@'%' IDENTIFIED BY 'vishnu_user';
+CREATE USER vishnu_db_admin@localhost IDENTIFIED BY 'vishnu_db_admin';
 
 grant all
 on  vishnu
@@ -275,9 +275,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
 
 
---CREATE ROLE vishnu_user;
+-- CREATE ROLE vishnu_user;
 
---Grant on right on table
+-- Grant on right on table
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_user";
