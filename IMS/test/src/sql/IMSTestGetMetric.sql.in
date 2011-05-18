@@ -1,0 +1,2 @@
+UPDATE vishnu SET updatefreq=10 where vishnuid=1;
+DELETE FROM state;
