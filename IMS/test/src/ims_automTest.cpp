@@ -113,7 +113,6 @@ BOOST_AUTO_TEST_CASE( get_metric_data_bad_metric_type) {
   op.setType(15);
 
   BOOST_CHECK_THROW(getMetricHistory(sessionKey, machineId, list, op), VishnuException);
-  //BOOST_TEST_MESSAGE("Testing Use case I2 – E2: Get metric data with bad metric type" << "\n");
 }
 
 
@@ -190,6 +189,67 @@ BOOST_AUTO_TEST_CASE(get_system_load_threshold) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
   }
+}
+
+// IA2.1 – E1 : Get a system load threshold with bad machine Id
+// Get a system load threshold : with bad machine Id
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – E1: Get a system load threshold with bad machine Id");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="unknown_name";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+
+  BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
+}
+
+// IA2.1 – E2 : Get a system load threshold with bad metric
+// Get a system load threshold : with bad metric
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with bad metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+  op.setMetricType(15);
+
+  BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
+}
+
+// IA2.1 – E3 : Get a system load threshold for no admin user
+// Get a system load threshold : for no admin user
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with no admin user");
+  VishnuConnexion vc("user_1","toto");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+
+  BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
