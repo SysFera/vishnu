@@ -1,30 +1,30 @@
 INCLUDE_DIRECTORIES(
   ${Boost_INCLUDE_DIRS}
-)
+  )
 
 ADD_LIBRARY(exception-vishnu SHARED
- VishnuException.cpp
- SystemException.cpp
- UserException.cpp
- UMSVishnuException.cpp
- TMSVishnuException.cpp
- IMSVishnuException.cpp
-#  FMSVishnuException.cpp
- InternalVishnuException.cpp
-)
+  VishnuException.cpp
+  SystemException.cpp
+  UserException.cpp
+  UMSVishnuException.cpp
+  TMSVishnuException.cpp
+  IMSVishnuException.cpp
+  FMSVishnuException.cpp
+  InternalVishnuException.cpp
+  )
 SET_TARGET_PROPERTIES(exception-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
 
 INSTALL( FILES
-    VishnuException.hpp
-    UserException.hpp
-    SystemException.hpp
-    UMSVishnuException.hpp
-    TMSVishnuException.hpp
-#     FMSVishnuException.hpp
-    IMSVishnuException.hpp
+  VishnuException.hpp
+  UserException.hpp
+  SystemException.hpp
+  UMSVishnuException.hpp
+  TMSVishnuException.hpp
+  FMSVishnuException.hpp
+  IMSVishnuException.hpp
 
-    DESTINATION
-    include
-)
+  DESTINATION
+  include
+  )
 
 install(TARGETS exception-vishnu DESTINATION lib)
