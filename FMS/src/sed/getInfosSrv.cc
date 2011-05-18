@@ -12,12 +12,9 @@
 #include "UserServer.hpp"
 using namespace std;
 
-/* Global variables defined in the server.cc file. */
-//extern UserTable* users;
-//extern string serverHostname;
 
-/* DIET profile construction.
- * Use the serverHostname global variable to create the service name. */
+/// DIET profile construction.
+
 diet_profile_desc_t* getInfosProfile() {
   diet_profile_desc_t* result;
   
@@ -89,12 +86,14 @@ int get_infos(diet_profile_t* profile) {
  // }
 
   try {
+
     SessionServer sessionServer (sessionKey);
-   std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-   //std::cout << "acLogin: " << acLogin << "\n";
-    file = FileFactory::getFileServer(sessionServer,localPath, localUser, userKey);
+
+    std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+
+    std::cout << "acLogin: " << acLogin << "\n";
  
- 
+    file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
  
   } catch (std::exception& err) {
     errMsg = strdup(err.what());
