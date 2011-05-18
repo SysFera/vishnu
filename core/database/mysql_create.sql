@@ -8,6 +8,8 @@
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : initial version
 
+USE vishnu;
+
 CREATE TABLE optionu (
   numoptionid SERIAL  NOT NULL ,
   optionid INTEGER    ,
@@ -20,8 +22,6 @@ CREATE TABLE clmachine (
   sshkey VARCHAR(255)    ,
   name VARCHAR(255)      ,
 PRIMARY KEY(numclmachineid));
-
-
 
 CREATE TABLE vishnu (
   vishnuid SERIAL  NOT NULL ,
@@ -247,16 +247,9 @@ PRIMARY KEY(numjobid),
 CREATE USER vishnu_user@'%' IDENTIFIED BY 'vishnu_user';
 CREATE USER vishnu_db_admin@localhost IDENTIFIED BY 'vishnu_db_admin';
 
-grant all
-on  vishnu
-to vishnu_user;
+GRANT ALL ON vishnu TO vishnu_user;
+GRANT ALL ON vishnu TO vishnu_db_admin;
 
-grant all
-on  vishnu
-to vishnu_db_admin;
-
-
-GRANT ALL ON vishnu TO "vishnu_db_admin";
 GRANT SELECT ON vishnu TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_db_admin";
