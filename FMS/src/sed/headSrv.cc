@@ -14,13 +14,8 @@
 
 using namespace std;
 
-/* Global variables defined in the server.cc file. */
-//extern UserTable* users;
-//extern GroupTable* groups;
-//extern string serverHostname;
 
-/* DIET profile construction.
- * Use the serverHostname global variable to create the service name. */
+/// DIET profile construction.
 diet_profile_desc_t* getHeadProfile() {
   diet_profile_desc_t* result = diet_profile_desc_alloc("FileHead", 4, 4, 6);
   
