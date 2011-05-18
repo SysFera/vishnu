@@ -24,7 +24,6 @@ add_library(fms-client-proxy STATIC
   LocalFileProxy
   RemoteFileProxy
   FileProxyFactory
-  
 )
 
 SET_TARGET_PROPERTIES(fms-client-proxy PROPERTIES COMPILE_FLAGS "-fPIC")
