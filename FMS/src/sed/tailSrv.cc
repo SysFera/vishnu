@@ -8,6 +8,9 @@
 #include "FileFactory.hh"
 
 #include "DIET_server.h"
+#include "UserServer.hpp"
+#include "MachineServer.hpp"
+
 
 using namespace std;
 
@@ -33,7 +36,7 @@ diet_profile_desc_t* getTailProfile() {
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n last lines of a file to the client application. */
 int tailFile(diet_profile_t* profile) {
-  string localPath, localUser, userKey, tail;
+  string localPath, localUser, userKey, tail, acLogin, machineName;
   char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
   unsigned long* nline;
   
@@ -45,33 +48,54 @@ int tailFile(diet_profile_t* profile) {
   
   sysEndianChg<unsigned long>(*nline);
   
-  if (user!=NULL && path!=NULL && nline!=NULL) {
+  std::cout << "Dans tailFile:  " << "\n"; 
+  std::cout << "path:  " << path <<"\n"; 
+  std::cout << "user:  " << user <<"\n";
+  std::cout << "host:  " << host <<"\n"; 
+
+
+  localUser = user;
+  localPath = path;
+
+
     try {
-      if (path[0]!='/')// && users)
-      {
-        //localPath = users->getHome(user) + "/" + path;
-      }
-        else{
-        localPath = path;
-      //localUser = users->getLocalID(user);
-      //userKey = users->getKey(user);
-        }
-    } catch (runtime_error& err) {
-      localUser = user;
-      localPath = path;
-    }
-    try {
-      SessionServer sessionServer (sessionKey);
-      File* file = FileFactory::getFileServer(sessionServer,localPath, localUser, userKey);
       
+    std::cout << "Dans headFile, dans le try catch:  " << "\n";
+    std::cout << "localPath:  " << localPath <<"\n";  
+    std::cout << "localUser:  " << localUser <<"\n";
+    std::cout << "userKey   " << userKey <<"\n";
+
+    SessionServer sessionServer (sessionKey);
+
+    // check the sessionKey
+    
+    sessionServer.check();
+    
+    // get the acLogin
+    acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+    // get the machineName
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(host);
+    MachineServer machineServer(machine);
+    machineName = machineServer.getMachineName();
+    delete machine;
+
+    std::cout << "acLogin: " << acLogin << "\n";
+    std::cout << "machineName: " << machineName << "\n";
+
+    FileFactory::setSSHServer(machineName);
+    
+    File* file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
+
       tail = file->tail(*nline);
       result = strdup(tail.c_str());
-    } catch (runtime_error& err) {
+    
+    } catch (exception& err) {
       result = strdup("");
       errMsg = strdup(err.what());
     }
     if (errMsg==NULL) errMsg = strdup("");
-  } else {
+    else {
     errMsg = strdup("Error transmitting parameters");
     result = strdup("");
   }

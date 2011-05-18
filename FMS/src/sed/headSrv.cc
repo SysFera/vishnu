@@ -52,7 +52,6 @@ int headFile(diet_profile_t* profile) {
   std::cout << "host:  " << host <<"\n"; 
 
 
-  std::cout << "Dans headFile, catch:  " << "\n";
   localUser = user;
   localPath = path;
 
@@ -65,6 +64,9 @@ int headFile(diet_profile_t* profile) {
 
     SessionServer sessionServer (sessionKey);
 
+    // check the sessionKey
+    
+    sessionServer.check();
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
     // get the machineName
