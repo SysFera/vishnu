@@ -83,23 +83,23 @@ namespace IMS_Data
          * \brief To get the value
          * \return The value attribute value
          **/
-        ::ecore::EDouble getValue() const;
+        ::ecore::ELong getValue() const;
         /**
          * \brief To set the value
          * \param _value The value value
          **/
-        void setValue(::ecore::EDouble _value);
+        void setValue(::ecore::ELong _value);
 
         /**
          * \brief To get the time
          * \return The time attribute value
          **/
-        ::ecore::EInt getTime() const;
+        ::ecore::ELong getTime() const;
         /**
          * \brief To set the time
          * \param _time The time value
          **/
-        void setTime(::ecore::EInt _time);
+        void setTime(::ecore::ELong _time);
 
         // References
 
@@ -128,9 +128,9 @@ namespace IMS_Data
 
         ::IMS_Data::MetricType m_type;
 
-        ::ecore::EDouble m_value;
+        ::ecore::ELong m_value;
 
-        ::ecore::EInt m_time;
+        ::ecore::ELong m_time;
 
         // References
 

@@ -119,6 +119,18 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
   return IMS_SUCCESS;
 }
 
+int
+ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
+  string request = "UPDATE \"process\" SET \"pstatus\"='"+convertToString(PDELETED)+"', \"uptime\"=CURRENT_TIMESTAMP WHERE \"machineid\"='"+proc->getMachineId()+"' AND \"pstatus\"='"+convertToString(PRUNNING)+"'";
+  try{
+    mdatabase->process(request.c_str());
+  }catch(SystemException& e){
+    e.appendMsgComp(" Error stopping the process "+proc->getDietId());
+    throw(e);
+  }
+  return IMS_SUCCESS;
+}
+
 
 bool
 ProcessServer::isIMSSeD(string Pname){
@@ -130,4 +142,20 @@ ProcessServer::isIMSSeD(string Pname){
   vector<string> res;
   res = result->get(0);
   return (res.at(NAMEPOS)=="IMS");
+}
+
+void
+ProcessServer::fillContent(IMS_Data::Process_ptr p) {
+  string req = "SELECT * from process where vishnuname='"+p->getProcessName()+"'";
+  req += " AND machineid='"+p->getMachineId()+"' order by uptime desc";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+  }
+  vector<string> res;
+  res = result->get(0);
+  p->setState(convertToInt(res.at(1)));
+  p->setDietId(res.at(3));
+  p->setTimestamp(convertToInt(res.at(5)));
+  p->setScript(res.at(6));
 }

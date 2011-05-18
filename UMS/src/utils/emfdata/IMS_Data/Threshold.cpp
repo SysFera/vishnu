@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 Threshold::Threshold() :
-    m_machineId("")
+    m_value(0), m_machineId(""), m_type(0), m_handler("")
 {
 
     /*PROTECTED REGION ID(ThresholdImpl__ThresholdImpl) START*/
@@ -51,15 +51,15 @@ Threshold::~Threshold()
 
 // Attributes
 
-::ecore::EDouble Threshold::getValue() const
+::ecore::ELong Threshold::getValue() const
 {
     return m_value;
 }
 
-void Threshold::setValue(::ecore::EDouble _value)
+void Threshold::setValue(::ecore::ELong _value)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EDouble _old_value = m_value;
+    ::ecore::ELong _old_value = m_value;
 #endif
     m_value = _value;
 #ifdef ECORECPP_NOTIFICATION_API
@@ -123,6 +123,32 @@ void Threshold::setType(::IMS_Data::MetricType _type)
                 (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getThreshold__type(),
                 _old_type,
                 m_type
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& Threshold::getHandler() const
+{
+    return m_handler;
+}
+
+void Threshold::setHandler(::ecore::EString const& _handler)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_handler = m_handler;
+#endif
+    m_handler = _handler;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getThreshold__handler(),
+                _old_handler,
+                m_handler
         );
         eNotify(&notification);
     }

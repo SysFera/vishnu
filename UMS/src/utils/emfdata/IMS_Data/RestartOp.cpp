@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 RestartOp::RestartOp() :
-    m_sedType(0)
+    m_vishnuConf(""), m_sedType(0)
 {
 
     /*PROTECTED REGION ID(RestartOpImpl__RestartOpImpl) START*/

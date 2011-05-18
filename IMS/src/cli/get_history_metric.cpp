@@ -69,7 +69,7 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
   boost::function1<void,long> fstart(boost::bind(&IMS_Data::MetricHistOp::setStartTime,boost::ref(op),_1));
   boost::function1<void,long> fend(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
-  boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setEndTime,boost::ref(op),_1));
+  boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setType,boost::ref(op),_1));
 
   /*********** Out parameters *********************/
   IMS_Data::ListMetric met;
@@ -90,14 +90,14 @@ int main (int argc, char* argv[]){
   ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options]");  
+    helpUsage(*opt,"[options] machineId");  
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);  
   if ( opt->count("help")){
-    helpUsage(*opt,"[options]");
+    helpUsage(*opt,"[options] machineId");
     return 0;
   }
 
