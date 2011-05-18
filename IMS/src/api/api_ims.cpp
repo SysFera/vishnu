@@ -127,6 +127,9 @@ vishnu::setSystemThreshold(const string sessionKey,
 		   IMS_Data::Threshold threshold)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
+  //To check the metric value
+  checkMetricHistoryValue(threshold.getType());
+
   SessionProxy sessionProxy(sessionKey);
   ThresholdProxy thresholdProxy(sessionProxy);
   thresholdProxy.setSystemThreshold(threshold);
