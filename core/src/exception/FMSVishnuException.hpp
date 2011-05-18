@@ -1,0 +1,48 @@
+/**
+ * \file FMSVishnuException.hh
+ * \brief This file defines the FMS sub class for the Vishnu exceptions.
+ * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
+ */
+#ifndef __FMSVISHNUEXCEPTION__
+#define __FMSVISHNUEXCEPTION__
+
+#include "UserException.hpp"
+
+// Definitions of FMS specific error codes
+
+
+class FMSVishnuException: public UserException{
+
+  public:
+  /**
+   * \brief Default constructor
+   * \fn FMSVishnuException()
+   */
+  FMSVishnuException();
+  /**
+   * \brief Copy constructor
+   * \fn UMSVishnuException()
+   */
+  FMSVishnuException(const FMSVishnuException& e);
+  /**
+   * \brief Constructor
+   * \fn UMSVishnuException()
+   */
+  FMSVishnuException(int msg, std::string msgComp= "");
+  /**
+   * \brief Default constructor
+   * \fn ~FMSVishnuException()
+   */
+  ~FMSVishnuException() throw (){};
+
+  /**
+   * \brief Function to initialize all UMS generic messages
+   * \fn void initMsg()
+   */
+  void
+  initMsg();
+
+
+};
+
+#endif // FMSVishnuException

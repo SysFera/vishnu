@@ -195,7 +195,7 @@ namespace vishnu {
     * \brief Function to create temporary file
     * \param fileName The name of the file to create
     * \param file_content The content of the file
-    */ 
+    */
    void createTmpFile(char* fileName, const std::string& file_content);
 
    /**
@@ -207,16 +207,24 @@ namespace vishnu {
    /**
     * \brief Function to delete file
     * \param fileName The name of the file to create
-    * \return 0 in case of success, another value otherwise 
+    * \return 0 in case of success, another value otherwise
     */
    int deleteFile(const char* fileName);
 
    /**
-    * \brief Function to print success message 
+    * \brief Function to print success message
     */
    inline void printSuccessMessage() {
      std::cout << "The service was performed successfully" << std::endl;
    }
+
+  /**
+    * \brief Function to check the metric value
+    * \param value the metric value
+    * \return raises an exception on error
+    */
+   void
+   checkMetricHistoryValue(const int& metric);
 
 }
 #endif // _UTILVISHNU_H_
