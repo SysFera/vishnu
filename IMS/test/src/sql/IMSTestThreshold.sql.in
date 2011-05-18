@@ -1,0 +1,2 @@
+UPDATE threshold SET value=1000000 where machine_nummachineid=1;
+
