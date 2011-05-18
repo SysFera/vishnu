@@ -1,0 +1,30 @@
+Pour utiliser le module IMS, voici les éléments nécessaires:
+// LOG SERVICE
+* Récupérer le log service:
+cvs -d <login>@graal.ens-lyon.fr:/home/CVS/graal/ co -d <destination_name> GRAAL/devel/diet/diet-contrib/LogService 
+* Aller dans à la racine, créer un répertoire 'build' et aller dedans
+* Créer le makefile (ccmake ..), la seule option utile peut etre le répertoire d'installation, mettre le même que celui de diet est valable et conseillé
+
+// DIET
+* Aller dans le dépot DIET
+* Recompiler DIET avec les options suivantes:
+ DIET_USE_ALT_BATCH = ON
+ DIET_USE_CORI = ON
+ DIET_USE_LOG = ON
+* Si le log service n'est pas trouvé, remplir $log_include_dir avec le repertoire d'installation et $log_library avec <install>/lib/libLogForwarderUtils.so
+* Compiler et installer DIET
+* Attention, bien utilisé une version de diet plus récente que le 9 mai 2011, un service utilisé par IMS a été ajouté dans l'API server
+
+
+// VISHNU
+* Se mettre dans la branche IMS_dvl:
+git checkout IMS_dvl
+* Compiler avec le flag COMPILE_IMS=ON
+* Regler les librairies si nécessaire
+* Compiler
+* Lancer ims sed, le meme fichier de config que UMS peut etre utilisé
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Attention, bien vérifier que les scripts SQL pour IMS ont été executés ! //
+//////////////////////////////////////////////////////////////////////////////

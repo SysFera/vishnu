@@ -370,16 +370,7 @@ class LogServiceFixture : public OmniNamesFixture {
 public:
   LogServiceFixture() : process(NULL) {
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching LogService ==" );
-
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path(LOGSERVICE_COMMAND, LOGSERVICE_PATH);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find " << LOGSERVICE_COMMAND << ": " << e.what() );
-      return;
-    }
-
-    BOOST_TEST_MESSAGE( LOGSERVICE_COMMAND << " found: " << exec );
+    BOOST_TEST_MESSAGE( LOGSERVICE_COMMAND  << " found: " << LOGCENTRAL_PATH);
 
     // setup LogService environment
     bp::context ctx;
@@ -396,7 +387,7 @@ public:
       (std::string(config));
 
     // launch LogService
-    bp::child c = bp::create_child(exec, args, ctx);
+    bp::child c = bp::create_child(LOGCENTRAL_PATH, args, ctx);
     process.reset(utils::copy_child(c));
     boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
     BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching LogService ==" );
@@ -498,6 +489,8 @@ typedef DietSeDFixture <GRPCAddSeD, GRPCBinDir, ConfigSimpleAddSeDLA, DietLAFixt
 
 #ifdef USE_LOG_SERVICE
 char LogServiceConfig[] = LOGSERVICE_CONFIG;
+typedef LogServiceFixture<LogServiceConfig>  DietLogServfixture;
+typedef DietAgentFixture<ConfigMasterAgent,  DietLogServfixture>  DietLogServiceAndMAFixture;
 typedef DIETLogToolFixture<LogServiceConfig> LogServiceFixtureConf;
 typedef DietAgentFixture<ConfigMasterAgent, LogServiceFixtureConf> DietMAFixtureLog;
 typedef DietAgentFixture<ConfigLocalAgent, DietMAFixtureLog> DietLAFixtureLog;

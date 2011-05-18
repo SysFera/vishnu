@@ -12,21 +12,109 @@
 #include "DIET_server.h"
 #include "data/ProcessServer.hpp"
 #include "data/MetricServer.hpp"
+#include "data/ObjectIdServer.hpp"
+#include "data/SysInfoServer.hpp"
+#include "data/ThresholdServer.hpp"
 
 using namespace std;
 using namespace vishnu;
 
-int 
+int
 solveExport(diet_profile_t* pb){
+
+  //TODO:cli and api done
+  char* sessionKey = NULL;
+  char* olSessionId = NULL;
+  char* filename  = NULL;
+  char* options  = NULL;
+  char* jobSerialized = NULL;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  cout << "************sessionKey=" << sessionKey << " ..." << endl;
+  diet_string_get(diet_parameter(pb,1), &olSessionId, NULL);
+  cout << "************olSessionId=" << olSessionId << " ..." << endl;
+  diet_string_get(diet_parameter(pb,2), &filename, NULL);
+  cout << "************filename=" << filename << " ..." << endl;
+  diet_string_get(diet_parameter(pb,3), &options, NULL);
+  cout << "************options=" << options << " ..." << endl;
+
+  string  fileContent = "Paco from server";
+  diet_string_set(diet_parameter(pb,4), strdup(fileContent.c_str()), DIET_VOLATILE);
+
+  string  errorInfo = "";
+  diet_string_set(diet_parameter(pb,5), strdup(errorInfo.c_str()), DIET_VOLATILE);
+
   return 0;
 }
 
-int 
+// TODO FAIRE CE SERVICE COMME NOMME
+int
 solveCurMetric(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char *curOpSer = NULL;
+  char *mid = NULL;
+  char *curSer   = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &mid,NULL);
+  diet_string_get(diet_parameter(pb,2), &curOpSer,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_current_metric");
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(curOpSer), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Getting options
+    IMS_Data::CurMetricOp_ptr curOp = NULL;
+    if(!parseEmfObject(string(curOpSer), curOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getCurentMetricValue: Curent metric option object is not well built");
+    }
+    // Creating the process server with the options
+    MetricServer met(userServer, curOp);
+
+    // Listing the old metric
+    IMS_Data::ListMetric* res;
+    res = met.getCurMet();
+    // Serializing the results
+    const char* name = "solve_getCurMetric";
+    ::ecorecpp::serializer::serializer _ser(name);
+    curSer = strdup(_ser.serialize(const_cast<IMS_Data::ListMetric_ptr>(res)).c_str());
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,3), curSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,3), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
+
+  }
   return 0;
 }
 
-int 
+int
 solveOldMetric(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *histOpSer = NULL;
@@ -49,17 +137,17 @@ solveOldMetric(diet_profile_t* pb){
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_history_metric");
-    mapper->code(std::string(mid), mapperkey);
-    mapper->code(std::string(histOpSer), mapperkey);
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(histOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
     IMS_Data::MetricHistOp_ptr histOp = NULL;
-    if(!parseEmfObject(std::string(histOpSer), histOp)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_getProcesses: Process option object is not well built");
+    if(!parseEmfObject(string(histOpSer), histOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getMetricHistory: Metric history option object is not well built");
     }
     // Creating the process server with the options
-    MetricServer met(userServer, *histOp);
+    MetricServer met(userServer, histOp);
 
     // Listing the old metric
     IMS_Data::ListMetric* res;
@@ -94,7 +182,7 @@ solveOldMetric(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solvePS(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char *processOpSer = NULL;
@@ -115,12 +203,12 @@ solvePS(diet_profile_t* pb){
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_processes");
-    mapper->code(std::string(processOpSer), mapperkey);
+    mapper->code(string(processOpSer), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // Getting options
     IMS_Data::ProcessOp_ptr processOp = NULL;
-    if(!parseEmfObject(std::string(processOpSer), processOp)) {
+    if(!parseEmfObject(string(processOpSer), processOp)) {
       throw UserException(ERRCODE_INVALID_PARAM, "solve_getProcesses: Process option object is not well built");
     }
 
@@ -160,68 +248,562 @@ solvePS(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetSysInfo(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* sys = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *sysSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &sys,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    // Getting options
+    IMS_Data::SystemInfo_ptr sysinf = NULL;
+    if(!parseEmfObject(string(sys), sysinf)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
+    }
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_set_system_info");
+    mapper->code(string(sys), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    SysInfoServer sysser(userServer);
+
+    // Listing the old metric
+    sysser.setSysInfo(sysinf);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
-solveSetThreshold(diet_profile_t* pb){
-  return 0;
-}
-
-int 
+int
 solveGetThreshold(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char *treeOpSer = NULL;
+  char *treeSer   = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &treeOpSer,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_system_info");
+    mapper->code(string(treeOpSer), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Getting options
+    IMS_Data::ThresholdOp_ptr treeOp = NULL;
+    if(!parseEmfObject(string(treeOpSer), treeOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getThreshold: threshold option object is not well built");
+    }
+
+    // Creating the process server with the options
+    ThresholdServer tree(userServer, *treeOp);
+
+    // Listing the processes
+    IMS_Data::ListThreshold* res;
+    res = tree.getThreshold();
+
+    // Serializing the results
+    const char* name = "solve_getThreshold";
+    ::ecorecpp::serializer::serializer _ser(name);
+    treeSer = strdup(_ser.serialize(const_cast<IMS_Data::ListThreshold_ptr>(res)).c_str());
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), treeSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
+solveSetThreshold(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* tree = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *treeSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &tree,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    // Getting options
+    IMS_Data::Threshold_ptr treeinf = NULL;
+    if(!parseEmfObject(string(tree), treeinf)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_setSysInfo: system info object is not well built");
+    }
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_set_system_info");
+    mapper->code(string(tree), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ThresholdServer treeser(userServer);
+
+    // Listing the old metric
+    treeser.setThreshold(treeinf);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
+  return 0;
+}
+
+int
 solveSetUID(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* fmt = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *fmtSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_define_user_format");
+    mapper->code(string(fmt), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ObjectIdServer ob(userServer);
+
+    // Listing the old metric
+    ob.setUID(fmt);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
 solveSetJID(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* fmt = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *fmtSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_define_user_format");
+    mapper->code(string(fmt), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ObjectIdServer ob(userServer);
+
+    // Listing the old metric
+    ob.setTID(fmt);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
 solveSetTID(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* fmt = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *fmtSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_define_user_format");
+    mapper->code(string(fmt), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ObjectIdServer ob(userServer);
+
+    // Listing the old metric
+    ob.setFID(fmt);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
 solveSetMID(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* fmt = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *fmtSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_define_user_format");
+    mapper->code(string(fmt), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    ObjectIdServer ob(userServer);
+
+    // Listing the old metric
+    ob.setMID(fmt);
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
 solveLoadShed(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveSetUpFreq(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char* freq = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *freqSer   = NULL;
+
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &freq,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_set_update_frequency");
+    mapper->code(string(freq), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    MetricServer met(userServer);
+
+    // Listing the old metric
+    met.setUpFreq(convertToInt(string(freq)));
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
 solveGetUpFreq(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+  char *freqSer   = NULL;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_update_frequency");
+    cmd = mapper->finalize(mapperkey);
+
+    // Creating the process server with the options
+    MetricServer met(userServer);
+
+    // Listing the old metric
+    int res;
+    res = met.checkUpFreq();
+
+    freqSer = new char[convertToString(res).size()+1];
+    memcpy(freqSer, convertToString(res).c_str(), convertToString(res).size());
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,1), freqSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,1), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
-int 
+int
 solveRestart(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveStop(diet_profile_t* pb){
   return 0;
 }
 
-int 
+int
 solveGetSysInfo(diet_profile_t* pb){
+  char *sessionKey   = NULL;
+  char *sysOpSer = NULL;
+  char *sysSer   = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &sysOpSer,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_get_system_info");
+    mapper->code(string(sysOpSer), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Getting options
+    IMS_Data::SysInfoOp_ptr sysOp = NULL;
+    if(!parseEmfObject(string(sysOpSer), sysOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_getSysInfo: sys info option object is not well built");
+    }
+
+    // Creating the process server with the options
+    SysInfoServer sys(userServer, *sysOp);
+
+    // Listing the processes
+    IMS_Data::ListSysInfo* res;
+    res = sys.getSysInfo();
+
+    // Serializing the results
+    const char* name = "solve_getSysInfo";
+    ::ecorecpp::serializer::serializer _ser(name);
+    sysSer = strdup(_ser.serialize(const_cast<IMS_Data::ListSysInfo_ptr>(res)).c_str());
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), sysSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+
+  }catch(VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
+
   return 0;
 }
 

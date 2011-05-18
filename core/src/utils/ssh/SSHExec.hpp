@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 
 #include "SSHResult.hpp"
+class SSHExec;
 #include "SSHExecImpl.hpp"
 
 /**
@@ -38,15 +39,39 @@ public:
           const std::string& userName,
           const std::string& password, const std::string& publicKey,
           const std::string& privateKey,
-	  boost::function1<SSHResult&, string>& func);
+	  boost::function1<SSHResult*, string>& func);
 
   /**
    * \brief Function to execute the command
    *
    */
-  SSHResult&
+  SSHResult*
   exec(const std::string& cmd) const;
-
+  /**
+   * \brief To get the ssh command
+   */
+  string
+  getSSHcmd();
+  /**
+   * \brief To get the private key
+   */
+  string
+  getPrivateKey();
+  /**
+   * \brief To get the username
+   */
+  string
+  getUsername();
+  /**
+   * \brief To get the ssh port
+   */
+  int
+  getSSHPort();
+  /**
+   * \brief To get the server
+   */
+  string
+  getServer();
 private:
   /**
    * \brief The ssh command to use -> /usr/bin/ssh for instance
@@ -83,11 +108,11 @@ private:
   /**
    * \brief The class containing the implementations of the exec function
    */
-  SSHExecImpl  mexec;
+  SSHExecImpl*  mexec;
   /**
    * \brief The functor
    */
-  boost::function1<SSHResult&, string>& mfunc;
+  boost::function1<SSHResult*, string> mfunc;
 
 }; // end class ssh exec
 

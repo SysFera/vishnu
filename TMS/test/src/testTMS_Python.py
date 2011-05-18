@@ -4,38 +4,25 @@ import VISHNU_TMS
 import time
 
 def displayQueue (q):
-  print "Queue number 1:"
-  print "Queue name ", q.getQueues().get(0).getName()
-  print "Queue memory ", q.getQueues().get(0).getMemory()
-  print "Queue desc ", q.getQueues().get(0).getDescription()
-  print "Queue number 2:"
-  print "Queue name ", q.getQueues().get(1).getName()
-  print "Queue memory ", q.getQueues().get(1).getMemory()
-  print "Queue desc ", q.getQueues().get(1).getDescription()
+  for i in range(q.getNbQueues()):
+    print "Queue number ", i,":"
+    print "Queue name ", q.getQueues().get(i).getName()
+    print "Queue memory ", q.getQueues().get(i).getMemory()
+    print "Queue desc ", q.getQueues().get(i).getDescription()
 
-def displayJob(j):
-  print "jobinfo"
-  print "jobinfo id", j.getJobId()
-  print "jobinfo name", j.getJobName()
-  print "jobinfo submit date", j.getSubmitDate()
+def displayJob(j, pos):
+    print "jobinfo", pos,":"
+    print "jobinfo id", j.getJobId()
+    print "jobinfo name", j.getJobName()
+    print "job status", j.getStatus()
+    print "jobinfo submit date", j.getSubmitDate()
 
 def displayProg(li):
-  print "progress number 1:"
-  print "progress jib", li.getProgress().get(0).getJobId()
-  print "progress jname", li.getProgress().get(0).getJobName()
-  print "progress jpercent", li.getProgress().get(0).getPercent()
-#  print "progress number 2:"
-#  print "progress jib", li.getProgress().get(1).getJobId()
-#  print "progress jname", li.getProgress().get(1).getJobName()
-#  print "progress jpercent", li.getProgress().get(1).getPercent()
-#  print "progress number 3:"
-#  print "progress jib", li.getProgress().get(2).getJobId()
-#  print "progress jname", li.getProgress().get(2).getJobName()
-#  print "progress jpercent", li.getProgress().get(2).getPercent()
-#  print "progress number 4:"
-#  print "progress jib", li.getProgress().get(3).getJobId()
-#  print "progress jname", li.getProgress().get(3).getJobName()
-#  print "progress jpercent", li.getProgress().get(3).getPercent()
+  for i in range(li.getNbJobs()):
+    print "progress number ", i, ":"
+    print "progress jib", li.getProgress().get(i).getJobId()
+    print "progress jname", li.getProgress().get(i).getJobName()
+    print "progress jpercent", li.getProgress().get(i).getPercent()
 
 def displayOut(jr):
   print "JobId: ", jr.getJobId()
@@ -43,10 +30,14 @@ def displayOut(jr):
   print "error: ", jr.getErrorPath()
 
 def displayComp(lijr):
-  displayOut(lijr.getResults().get(0))
+  for i in range(lijr.getNbJobs()):
+    displayOut(lijr.getResults().get(i))
+    print " "
 
 def displayListJ(lij):
-  displayJob(lij.getJobs().get(0))
+  for i in range(lij.getNbJobs()):
+    displayJob(lij.getJobs().get(i), i)
+    print " "
 
 VISHNU_UMS.vishnuInitialize("/home/keo/Bureau/depot_git_edf/vishnu/UMS/test/src/sql/client.cfg")
 
@@ -66,25 +57,22 @@ opj = VISHNU_TMS.ListJobsOptions()
 
 try :
   VISHNU_TMS.submitJob(k, mid, path, j, op)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-3"
   VISHNU_TMS.listJobs(k, mid, lij, opj)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-3.1"
   VISHNU_TMS.listQueues(k, mid, q)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-2"
   VISHNU_TMS.getJobInfo(k, mid, j.getJobId(), j)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-1"
+  time.sleep(5)
   VISHNU_TMS.getJobProgress(k, mid, li, opp)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0"
-  print "sleeping to wait for completion"
-  time.sleep(20)
+  #status = 5 => TERMINATED
+  print "waiting for job completion..."
+  while j.getStatus() < 5:
+    time.sleep(2)
+    VISHNU_TMS.getJobInfo(k, mid, j.getJobId(), j)
+  print "*****status=", j.getStatus()
+
   VISHNU_TMS.getJobOutput(k, mid, j.getJobId(), jr, out)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0.1"
   VISHNU_TMS.getCompletedJobsOutput(k, mid, lijr, out)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0.2"
   VISHNU_TMS.submitJob(k, mid, path, j, op)
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0.3"
   VISHNU_TMS.cancelJob(k, mid, j.getJobId())
-  print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0.4"
 except VISHNU_TMS.TMSVishnuException, e:
   print e.what()
 except VISHNU_UMS.UMSVishnuException, e:
@@ -93,18 +81,21 @@ except VISHNU_UMS.SystemException, e:
   print e.what()
 
 
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@1"
+print "@@@@@@@ List of queues @@@@@@@"
 displayQueue(q)
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2"
-displayJob(j)
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@3"
-displayProg(li)
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@4"
+print "@@@@@@@ job information @@@@@@"
+displayJob(j,0)
+print "@@@@@@@ List of jobs progression @@@@@@"
+if li.getNbJobs() > 0:
+  displayProg(li)
+print "@@@@@@@ Result of job @@@@@@@@@@@@@"
 displayOut(jr)
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@5"
-displayComp(lijr)
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@6"
-displayListJ(lij)
+print "@@@@@@@ List of completed jobs @@@@@@@@@"
+if lijr.getNbJobs() > 0:
+  displayComp(lijr)
+print "@@@@@@@@@ List of jobs @@@@@@@@@@"
+if lij.getNbJobs() > 0:
+  displayListJ(lij)
 
 VISHNU_TMS.getJobProgress(k, mid, li, opp)
 

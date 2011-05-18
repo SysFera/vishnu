@@ -347,7 +347,9 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
  */
 long long JobServer::convertToTimeType(std::string date) {
 
-  if(date.size()==0) {
+  if(date.size()==0 || 
+     // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
+     date.find("0000-00-00")!=std::string::npos) {
     return 0;
   }
 
