@@ -117,6 +117,7 @@ int main(int argc, char* argv[], char* envp[]) {
   else if (pid == 0) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
+    dbConfig.setDbPoolSize(1);
     monitor.init(vishnuId, dbConfig);
     ppid = getppid();
 
