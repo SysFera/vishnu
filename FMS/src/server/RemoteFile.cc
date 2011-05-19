@@ -199,7 +199,9 @@ int RemoteFile::chmod(const mode_t mode) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-string RemoteFile::head(const unsigned int nline) {
+string RemoteFile::head(const HeadOfFileOptions& options) {
+  int nline=options.getNline();
+  
   string result;
   char* fileHead, * errMsg;
   diet_profile_t* profile;
@@ -344,7 +346,8 @@ int RemoteFile::rmdir() {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-string RemoteFile::tail(const unsigned int nline) {
+string RemoteFile::tail(const TailOfFileOptions& options) {
+  int nline=options.getNline();
   string result;
   char* fileTail, * errMsg;
   diet_profile_t* profile;
