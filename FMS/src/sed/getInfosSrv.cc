@@ -56,7 +56,7 @@ int get_infos(diet_profile_t* profile) {
   mode_t* perms;
   file_size_t* size;
   time_t* atime, * mtime, * ctime;
-  int* type;
+  FileType* type;
   File* file;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
@@ -89,16 +89,16 @@ int get_infos(diet_profile_t* profile) {
 
     SessionServer sessionServer (sessionKey);
 
+    // check the sessionKey
+
+    sessionServer.check();
+    
     std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
     std::cout << "acLogin: " << acLogin << "\n";
  
     file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
- 
-  } catch (std::exception& err) {
-    errMsg = strdup(err.what());
-    std::cout << " errMsg" << errMsg << "\n";
-  }
+
   if ( file->exists()) {
     owner = strdup(file->getOwner().c_str());
   
@@ -110,9 +110,16 @@ int get_infos(diet_profile_t* profile) {
     atime = timedup(file->getAtime());
     mtime = timedup(file->getMtime());
     ctime = timedup(file->getCtime());
-    type = (int*) typedup(file->getType());
+    type = (FileType*) typedup(file->getType());
   } else {
-    owner = strdup("");
+ throw std::runtime_error("this file does not exist");
+  }
+
+  } catch (std::exception& err) {
+    errMsg = strdup(err.what());
+    std::cout << " errMsg" << errMsg << "\n";
+  
+   owner = strdup("");
     
     group = strdup("");
     uid = uiddup(0);
