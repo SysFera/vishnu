@@ -29,9 +29,9 @@ MetricServer::setUpFreq(unsigned int freq){
   string request = "update \"vishnu\" * set \"updatefreq\"='"+convertToString(freq)+"' where \"vishnuid\"='";
   request += convertToString(mvishnuId);
   request += "'";
-  try{
+  try {
     mdatabase->process(request.c_str());
-  }catch(SystemException& e){
+  }catch(SystemException& e) {
     e.appendMsgComp("Failed to set frequency to "+convertToString(freq));
     throw(e);
   }
@@ -71,7 +71,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   }
 
   // Inserting the value
-  string req = "insert into state(\"machine_nummachineid\", \"memory\", \"diskspace\", \"cpuload\", \"time\") values('"+nmid+"', '"+convertToString(static_cast<int>(mem))+"', '"+convertToString(static_cast<int>(disk))+"', '"+convertToString(static_cast<int>(cpu))+"', CURRENT_TIMESTAMP) ";
+  string req = "insert into state(machine_nummachineid, memory, diskspace, cpuload, time) values('"+nmid+"', '"+convertToString(static_cast<int>(mem))+"', '"+convertToString(static_cast<int>(disk))+"', '"+convertToString(static_cast<int>(cpu))+"', CURRENT_TIMESTAMP) ";
   
   try{
     mdatabase->process(req.c_str());

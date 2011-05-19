@@ -822,6 +822,14 @@ solveStop(diet_profile_t* pb){
     // Creating the process server with the options
     ProcessCtl ctl("", userServer);
 
+    char hname[200];
+    gethostname(hname, 199);
+
+    // If have to stop a local process 
+    if (procObj->getMachineId().compare(getMidFromHost(string(hname)))==0) {
+      procObj->setMachineId("");
+    }
+
     // Listing the old metric
     ctl.stop(procObj);
 
