@@ -7,6 +7,7 @@
 
 #include <boost/scoped_ptr.hpp>
 #include "MonitorUMS.hpp"
+#include "SystemException.hpp"
 
 /**
 * \brief Constructor, raises an exception on error
@@ -97,6 +98,11 @@ MonitorUMS::run() {
 
   } catch (VishnuException& e) {
     string errorInfo =  e.buildExceptionString();
+    if (e.getMsgI() == ERRCODE_DBERR) {
+      cerr << errorInfo << endl;
+      exit(1);
+    }
+    sleep(minterval);
   }
   return 0;
 }
