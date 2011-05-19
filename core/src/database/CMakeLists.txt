@@ -1,6 +1,7 @@
 # DATABASE SOURCES & INCLUDES
 
 SET (DB_SRC
+  DbConfiguration.cpp
   DbFactory.cpp
   Database.cpp
   DatabaseResult.cpp
@@ -71,7 +72,7 @@ ADD_LIBRARY(database-vishnu STATIC
 )
 SET_TARGET_PROPERTIES(database-vishnu PROPERTIES COMPILE_FLAGS "-fPIC")
 
-TARGET_LINK_LIBRARIES(database-vishnu  ${DB_LIBS})
+TARGET_LINK_LIBRARIES(database-vishnu  ${DB_LIBS} config-vishnu)
 
 # Compiler avec oracle :
 # - Recuperer dans le depot svn les libs et les includes du dossier :
