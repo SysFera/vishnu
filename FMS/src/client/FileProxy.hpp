@@ -41,7 +41,6 @@ typedef enum {
 /* Defines the common operation on files (local or remote) */
 class FileProxy {
 private:
-//TODO Take EFM FileStat type instead of
   
   std::string mhost;
   mutable bool exist;
