@@ -67,12 +67,12 @@ ThresholdServer::getThreshold() {
   
   // Adding option to request
   if(mop.getMachineId().compare("")) {
-    req += " AND \"machineid\"='"+mop.getMachineId()+"'";
+    req += " AND machineid='"+mop.getMachineId()+"'";
   }
   if(mop.getMetricType()==1 || // cpuuse
      mop.getMetricType()==3 || // free disk
      mop.getMetricType()==5) { // free memory
-    req += " AND \"typet\"="+mop.getMetricType();
+    req += " AND typet='"+convertToString(mop.getMetricType())+"'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListThreshold_ptr mlistObject = ecoreFactory->createListThreshold();
