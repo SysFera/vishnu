@@ -175,10 +175,11 @@ int LocalFileProxy::chmod(const mode_t mode) {
 
 
 /* Print the head of the local file.*/
-string LocalFileProxy::head(const unsigned int nline) {
+string LocalFileProxy::head(const HeadOfFileOptions& options) {
   char buffer[10240];
   ifstream input(getPath().c_str());
   unsigned int count;
+  int nline=options.getNline();
   string result;
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
@@ -329,7 +330,7 @@ int LocalFileProxy::rmdir() {
 }
 
 /* */
-string LocalFileProxy::tail(const unsigned int nline) {
+string LocalFileProxy::tail(const TailOfFileOptions& options) {
   string result;
   if (!exists()) throw runtime_error(getPath()+" does not exist");
 
