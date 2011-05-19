@@ -9,55 +9,58 @@
 #include "SessionProxy.hpp"
 
 #include "FileProxy.hpp"
+#include "FMS_Data.hpp"
 
 using namespace std;
+using namespace FMS_Data;
 
 void FileProxy::setPath(const string& path) {
-  this->path = path;
+  mfileStat.setPath(path);
 }
 
 void FileProxy::setHost(const string& host) {
-  this->host = host;
+  mhost = host;
 }
 
 void FileProxy::setOwner(const string& owner) const {
-  this->owner = owner;
+  mfileStat.setOwner(owner);
+
 }
 
 void FileProxy::setGroup(const string& group) const {
-  this->group = group;
+  mfileStat.setGroup(group);
 }
 
 void FileProxy::setPerms(const mode_t perms) const {
-  this->perms = perms;
+mfileStat.setPerms(perms);
 }
 
 void FileProxy::setUid(const uid_t uid) const {
-  this->uid = uid;
+  mfileStat.setUid(uid);
 }
 
 void FileProxy::setGid(const gid_t gid) const {
-  this->gid = gid;
+  mfileStat.setGid(gid);
 }
 
 void FileProxy::setSize(const file_size_t size) const {
-  this->size = size;
+  mfileStat.setSize(size);
 }
 
 void FileProxy::setAtime(const time_t atime) const {
-  this->atime = atime;
+  mfileStat.setAtime(atime);
 }
 
 void FileProxy::setMtime(const time_t mtime) const {
-  this->mtime = mtime;
+  mfileStat.setMtime(mtime);
 }
 
 void FileProxy::setCtime(const time_t ctime) const {
-  this->ctime = ctime;
+  mfileStat.setCtime(ctime);
 }
 
-void FileProxy::setType(const file_type_t type) const {
-  this->type = type;
+void FileProxy::setType(const FileType& type) const {
+  mfileStat.setType(type);
 }
 
 void FileProxy::exists(const bool exist) const {
@@ -68,9 +71,9 @@ FileProxy::FileProxy() {
   srand(time(NULL));
 }
 
-FileProxy::FileProxy(const SessionProxy& sessionProxy,const string& path) {
- 
-  msessionProxy=sessionProxy;
+FileProxy::FileProxy(const SessionProxy& sessionProxy,
+                     const string& path)
+                     :msessionProxy(sessionProxy)  {
   
   srand(time(NULL));
   size_t pos = path.find(':');
@@ -93,68 +96,75 @@ const SessionProxy& FileProxy::getSession() const {
   return msessionProxy;
 }
 
+const FileStat& FileProxy::getFileStat() const{
+  return mfileStat;
+}
+
+
 const string& FileProxy::getPath() const {
-  return path;
+  return mfileStat.getPath();
 }
 
 const string& FileProxy::getOwner() const {
   if (!isUpToDate()) getInfos();
-  return owner;
+  return mfileStat.getOwner();
 }
 
 const string& FileProxy::getGroup() const {
   if (!isUpToDate()) getInfos();
-  return group;
+  return mfileStat.getGroup();
 }
 
 const string& FileProxy::getHost() const {
-  return host;
+  return mhost;
 }
 
 mode_t FileProxy::getPerms() const {
   if (!isUpToDate()) getInfos();
-  return perms;
+  return mfileStat.getPerms();
 }
 
 uid_t FileProxy::getUid() const {
   if (!isUpToDate()) getInfos();
-  return uid;
+  return mfileStat.getUid();
 }
 
 gid_t FileProxy::getGid() const {
   if (!isUpToDate()) getInfos();
-  return gid;
+  return mfileStat.getGid();
 }
 
 file_size_t FileProxy::getSize() const {
   if (!isUpToDate()) getInfos();
-  return size;
+  return mfileStat.getSize();
 }
 
 time_t FileProxy::getAtime() const {
   if (!isUpToDate()) getInfos();
-  return atime;
+  return mfileStat.getAtime();
 }
 
 time_t FileProxy::getMtime() const {
   if (!isUpToDate()) getInfos();
-  return mtime;
+  return mfileStat.getMtime();
 }
 
 time_t FileProxy::getCtime() const {
   if (!isUpToDate()) getInfos();
-  return ctime;
+  return mfileStat.getCtime();
 }
 
-file_type_t FileProxy::getType() const {
+ FileType FileProxy::getType() const {
   if (!isUpToDate()) getInfos();
-  return type;
+  return mfileStat.getType();
 }
-
+/*
 file_host_t FileProxy::getHostType() const {
   if (getHost()=="localhost") return local;
   return remote;
 }
+*/
+
 
 bool FileProxy::exists() const {
   if (!isUpToDate()) getInfos();
@@ -162,19 +172,13 @@ bool FileProxy::exists() const {
 }
 
 FileProxy& FileProxy::operator=(const FileProxy& file) {
-  setPath(file.getPath());
-  setOwner(file.getOwner());
-  setGroup(file.getGroup());
+  
+  mfileStat= file.getFileStat();
   setHost(file.getHost());
-  setPerms(file.getPerms());
-  setUid(file.getUid());
-  setGid(file.getGid());
-  setSize(file.getSize());
-  setAtime(file.getAtime());
-  setMtime(file.getMtime());
-  setCtime(file.getCtime());
-  setType(file.getType());
+
   exists(file.exists());
+
+  
   return *this;
 }
 

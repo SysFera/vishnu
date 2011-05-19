@@ -21,6 +21,7 @@
 #include "FileProxy.hpp"
 
 using namespace std;
+using namespace FMS_Data;
 
 /* Default constructor. */
 LocalFileProxy::LocalFileProxy() : FileProxy() {
@@ -70,19 +71,19 @@ void LocalFileProxy::getInfos() const {
   setMtime(fileStat.st_mtime);
   setCtime(fileStat.st_ctime);
   if (S_ISBLK(fileStat.st_mode))
-    setType(block);
+    setType(0); //BLOCK
   if (S_ISCHR(fileStat.st_mode))
-    setType(character);
+    setType(1); // CHARACTER
   if (S_ISDIR(fileStat.st_mode))
-    setType(directory);
+    setType(2);//DIRECTORY
   if (S_ISLNK(fileStat.st_mode))
-    setType(symboliclink);
+    setType(3);//SYMBOLICLINK
   if (S_ISSOCK(fileStat.st_mode))
-    setType(sckt);
+    setType(4);//SCKT
   if (S_ISFIFO(fileStat.st_mode))
-    setType(fifo);
+    setType(5);//FIFO
   if (S_ISREG(fileStat.st_mode))
-    setType(regular);
+    setType(6);//REGULAR
   
   usr = getpwuid(fileStat.st_uid);
   grp = getgrgid(fileStat.st_gid);
