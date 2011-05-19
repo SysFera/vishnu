@@ -17,7 +17,7 @@
 #include "UMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
 #include "utilVishnu.hpp"
-
+#include <sys/types.h>
 //FMS data forward declarations
 #include <FMS_Data_forward.hpp>
 
@@ -56,7 +56,7 @@ namespace vishnu{
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int chMod(const string& sessionKey,const string& path, const ChModOptions& options)
+  int chMod(const string& sessionKey,const string& path, const mode_t& mode)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
