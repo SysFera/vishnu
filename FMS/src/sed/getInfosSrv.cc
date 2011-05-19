@@ -10,6 +10,7 @@
 #include "File.hh"
 #include "services.hh"
 #include "UserServer.hpp"
+#include <boost/scoped_ptr.hpp>
 using namespace std;
 using namespace FMS_Data;
 
@@ -26,19 +27,6 @@ diet_profile_desc_t* getInfosProfile() {
   diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
   
-  
-  
-  /*
-  diet_generic_desc_set(diet_param_desc(result, 6), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 7), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 8), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 9), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 10), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 11), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 12), DIET_SCALAR, DIET_LONGINT);
-  diet_generic_desc_set(diet_param_desc(result, 13), DIET_SCALAR, DIET_INT);
-  diet_generic_desc_set(diet_param_desc(result, 14), DIET_STRING, DIET_CHAR);
-  */
   return result;
 }
 
@@ -52,11 +40,10 @@ diet_profile_desc_t* getInfosProfile() {
  *  - The file type.
  */
 int get_infos(diet_profile_t* profile) {
+ 
   char* path, * user, * host, *sessionKey, *fileStatSerialized=NULL;
   string localPath, localUser, userKey;
   char* errMsg = NULL;
-  File* file;
-  FileStat_ptr fileStat_ptr;
 
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
@@ -85,30 +72,31 @@ int get_infos(diet_profile_t* profile) {
    // }
  // }
 
-  try {
+      try {
 
-    SessionServer sessionServer (sessionKey);
+        SessionServer sessionServer (sessionKey);
 
-    // check the sessionKey
+        // check the sessionKey
 
-    sessionServer.check();
-    
-    std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+        sessionServer.check();
 
-    std::cout << "acLogin: " << acLogin << "\n";
- 
-    file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
+        std::string acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
-    if ( file->exists()) {
+        std::cout << "acLogin: " << acLogin << "\n";
 
-      *fileStat_ptr=file->getFileStat();
-      std::cout << "apres le getFileStat reussi\n";
-      const char* name = "solve_getInfos";
-      ::ecorecpp::serializer::serializer _ser(name);
-      fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr)).c_str());
+        boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
-  } else {
- throw std::runtime_error("this file does not exist");
+        boost::scoped_ptr<FileStat> fileStat_ptr (new FileStat);
+
+        if ( file->exists()) {
+
+          *fileStat_ptr=file->getFileStat();
+          const char* name = "solve_getInfos";
+          ::ecorecpp::serializer::serializer _ser(name);
+          fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
+
+        } else {
+          throw std::runtime_error("this file does not exist");
   }
 
   } catch (std::exception& err) {
