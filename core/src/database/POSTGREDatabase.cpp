@@ -53,22 +53,22 @@ POSTGREDatabase::process(std::string request){
 int
 POSTGREDatabase::connect(){
   int i;
-  for (i=0;i<POOLSIZE;i++) {
+  for (i=0;i<mconfig.getDbPoolSize();i++) {
     if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
       std::ostringstream out;
-      if (mport < 0) {
+      if (mconfig.getDbPort() < 0) {
         throw SystemException(ERRCODE_DBCONN, "The port value is incorrect");
-      } else if (mport != 0) {
-        out << mport;
+      } else if (mconfig.getDbPort() != 0) {
+        out << mconfig.getDbPort();
       }
       // Make a connection to the database
-      mpool[i].mconn = PQsetdbLogin(mhost.c_str(),
+      mpool[i].mconn = PQsetdbLogin(mconfig.getDbHost().c_str(),
                                     out.str().c_str(),
                                     "",
                                     "",
-                                    mdatabase.c_str(),
-                                    musername.c_str(),
-                                    mpwd.c_str());
+                                    mconfig.getDbName().c_str(),
+                                    mconfig.getDbUserName().c_str(),
+                                    mconfig.getDbUserPassword().c_str());
 
       if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
         throw SystemException(ERRCODE_DBCONN, std::string(PQerrorMessage(mpool[i].mconn)));
@@ -86,15 +86,11 @@ POSTGREDatabase::connect(){
  * \fn Database()
  * \brief Constructor
  */
-POSTGREDatabase::POSTGREDatabase(std::string hostname,
-                                 std::string username,
-                                 std::string pwd,
-                                 std::string database,
-                                 unsigned int port)
- : Database(), mhost(hostname), musername(username), mpwd(pwd),
-    mdatabase(database), mport(port), misConnected(false), mSQLtransaction() {
+POSTGREDatabase::POSTGREDatabase(DbConfiguration dbConfig)
+ : Database(), mconfig(dbConfig), misConnected(false), mSQLtransaction() {
   int i;
-  for (i=0;i<POOLSIZE;i++){
+  mpool = new pool_t[mconfig.getDbPoolSize()];
+  for (i=0;i<mconfig.getDbPoolSize();i++){
     pthread_mutex_init(&(mpool[i].mmutex), NULL);
     mpool[i].mused = false;
     mpool[i].mconn = NULL;
@@ -107,6 +103,7 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
  */
 POSTGREDatabase::~POSTGREDatabase(){
   disconnect();
+  delete [] mpool;
 }
 
 
@@ -118,7 +115,7 @@ POSTGREDatabase::~POSTGREDatabase(){
 int
 POSTGREDatabase::disconnect(){
   int i;
-  for (i = 0; i < POOLSIZE; i++){
+  for (i = 0; i < mconfig.getDbPoolSize(); i++){
     if (mpool[i].mconn != NULL) {
       PQfinish(mpool[i].mconn);
     }
@@ -132,12 +129,12 @@ POSTGREDatabase::disconnect(){
  * \param db The name of database to use
  * \return raises an exception on error
  */
-int
-POSTGREDatabase::setDatabase(std::string db){
-
-  mdatabase = db;
-  return SUCCESS;
-}
+// int
+// POSTGREDatabase::setDatabase(std::string db){
+//
+//   mdatabase = db;
+//   return SUCCESS;
+// }
 
 /**
  * \brief To get the result of a select request
@@ -209,7 +206,7 @@ PGconn* POSTGREDatabase::getConnexion(int& id){
     }
     i++;
     // I do not use modulo '%' because i need to be sure i>0
-    if (i==POOLSIZE) {
+    if (i==mconfig.getDbPoolSize()) {
       i=0;
     }
   }

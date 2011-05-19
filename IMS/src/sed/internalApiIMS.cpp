@@ -15,6 +15,7 @@
 #include "data/ObjectIdServer.hpp"
 #include "data/SysInfoServer.hpp"
 #include "data/ThresholdServer.hpp"
+#include "controller/process/ProcessCtl.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -733,11 +734,114 @@ solveGetUpFreq(diet_profile_t* pb){
 
 int
 solveRestart(diet_profile_t* pb){
+  char *sessionKey = NULL;
+  char *mid        = NULL;
+  char *op         = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &mid,NULL);
+  diet_string_get(diet_parameter(pb,2), &op,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_restart");
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(op), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Getting options
+    IMS_Data::RestartOp_ptr reOp = NULL;
+    if(!parseEmfObject(string(op), reOp)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
+    }
+
+    // Creating the process server with the options
+    ProcessCtl ctl(string(mid), userServer);
+
+    // Listing the old metric
+    ctl.restart(reOp);
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
 int
 solveStop(diet_profile_t* pb){
+  char *sessionKey = NULL;
+  char *proc       = NULL;
+  string error;
+  string retErr = "";
+  int mapperkey;
+  string cmd;
+
+  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get(diet_parameter(pb,1), &proc,NULL);
+
+  SessionServer sessionServer = SessionServer(string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_restart");
+    mapper->code(string(proc), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+
+    // Getting options
+    IMS_Data::Process_ptr procObj = NULL;
+    if(!parseEmfObject(string(proc), procObj)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
+    }
+
+    // Creating the process server with the options
+    ProcessCtl ctl("", userServer);
+
+    // Listing the old metric
+    ctl.stop(procObj);
+
+    // Setting out diet param
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, IMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+  }
   return 0;
 }
 
