@@ -11,7 +11,7 @@
 using namespace std;
 using namespace vishnu;
 
-int 
+int
 MYSQLDatabase::process(string request){
   int reqPos;
   MYSQL* conn = getConnexion(reqPos);
@@ -19,7 +19,7 @@ MYSQLDatabase::process(string request){
 
   if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
     releaseConnexion(reqPos);
-    throw SystemException(ERRCODE_DBERR, "Querry error with code "+convertToString(res));
+    throw SystemException(ERRCODE_DBERR, "P-Query error with code "+convertToString(res)+"{" + request + "}");
   }
   releaseConnexion(reqPos);
   return SUCCESS;
@@ -31,30 +31,28 @@ MYSQLDatabase::process(string request){
  */
 int
 MYSQLDatabase::connect(){
-  for (unsigned int i=0; i<MPOOLSIZE;i++) {
-    if (mysql_real_connect(&(mpool[i].mmysql), mhost.c_str(), musername.c_str(), mpwd.c_str(),
-			   mdatabase.c_str (), mport, NULL, 0)==NULL){
-      throw SystemException(ERRCODE_DBERR, "Connexion problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
+  for (unsigned int i=0; i<mconfig.getDbPoolSize();i++) {
+    if (mysql_real_connect(&(mpool[i].mmysql),
+                           mconfig.getDbHost().c_str(),
+                           mconfig.getDbUserName().c_str(),
+                           mconfig.getDbUserPassword().c_str(),
+                           mconfig.getDbName().c_str(),
+                           mconfig.getDbPort(),
+                           NULL,
+                           0) ==NULL) {
+      throw SystemException(ERRCODE_DBERR, "Connection problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
     }
   }
   return SUCCESS;
 }
 /**
- * \fn MYSQLDatabase(string hostname,
- *	             string username,
- *		     string pwd,
- *		     string database = "",
- *		     unsigned int port = 0)
+ * \fn MYSQLDatabase(DbConfiguration dbConfig)
  * \brief Constructor, raises an exception on error
  */
-MYSQLDatabase::MYSQLDatabase(string hostname,
-			     string username,
-			     string pwd,
-			     string database,
-			     unsigned int port)
-  : Database(), mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port) {
-
-  for (unsigned int i=0;i<MPOOLSIZE;i++) {
+MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
+  : Database(), mconfig(dbConfig) {
+  mpool = new pool_t[mconfig.getDbPoolSize()];
+  for (unsigned int i=0;i<mconfig.getDbPoolSize();i++) {
     pthread_mutex_init(&(mpool[i].mmutex), NULL);
     mpool[i].mused = false;
     mysql_init(&(mpool[i].mmysql));
@@ -73,9 +71,9 @@ MYSQLDatabase::~MYSQLDatabase(){
  * \fn disconnect()
  * \return 0 on success, an error code otherwise
  */
-int 
+int
 MYSQLDatabase::disconnect(){
-  for (unsigned int i = 0 ; i < MPOOLSIZE ; i++) {
+  for (unsigned int i = 0 ; i < mconfig.getDbPoolSize() ; i++) {
     mysql_close (&(mpool[i].mmysql));
   }
   return SUCCESS;
@@ -88,16 +86,16 @@ MYSQLDatabase::disconnect(){
  * \param db The database to use
  * \return 0 on success, an error code otherwise
  */
-int
-MYSQLDatabase::setDatabase(string db){
-  mdatabase = db;
-  for (unsigned int i = 0 ; i<MPOOLSIZE ; i++) {
-    if (!mysql_select_db(&(mpool[i].mmysql), db.c_str ())) {
-      throw SystemException(ERRCODE_DBERR, "Database problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
-    }
-  }
-  return SUCCESS;
-}
+// int
+// MYSQLDatabase::setDatabase(string db){
+//   mdatabase = db;
+//   for (unsigned int i = 0 ; i<mconfig.getDbPoolSize(); i++) {
+//     if (!mysql_select_db(&(mpool[i].mmysql), db.c_str ())) {
+//       throw SystemException(ERRCODE_DBERR, "Database problem with message: "+string(mysql_error(&(mpool[i].mmysql))));
+//     }
+//   }
+//   return SUCCESS;
+// }
 /**
  * \brief To get the result of the latest request (if any result)
  * \fn DatabaseResult* getResult(string request)
@@ -118,7 +116,7 @@ MYSQLDatabase::getResult(string request) {
 
   if ((mysql_real_query(lconn, request.c_str (), request.length())) != 0) {
     releaseConnexion(reqPos);
-    throw SystemException(ERRCODE_DBERR, "Querry error with code "+convertToString(res));
+    throw SystemException(ERRCODE_DBERR, "S-Query error with code "+convertToString(res));
   }
   res = mysql_use_result (lconn);
   size = mysql_num_fields(res);
@@ -163,19 +161,19 @@ MYSQLDatabase::getConnexion(int& id){
     }
     i++;
     // I do not use modulo '%' because i need to be sure i>0
-    if (i==MPOOLSIZE) {
+    if (i==mconfig.getDbPoolSize()) {
       i=0;
     }
   }
-  throw SystemException(ERRCODE_DBCONN, "Unknown error, cannot get connexion on database");
+  throw SystemException(ERRCODE_DBCONN, "Unknown error, cannot get connection on database");
 }
 
-void 
+void
 MYSQLDatabase::releaseConnexion(int pos){
   int ret;
   ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
   if (ret) {
-    throw SystemException(ERRCODE_DBCONN, "Fail to release a mutex");
+    throw SystemException(ERRCODE_DBCONN, "Failed to release connection lock");
   }
   mpool[pos].mused = false;
 }
