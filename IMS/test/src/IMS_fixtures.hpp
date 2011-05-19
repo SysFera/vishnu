@@ -1,7 +1,7 @@
 /**
  * IMS_fixtures.hpp
  *
- * Author : Capo-Chichi
+ * Author : E. PAMBA CAPO-CHICHI
  */
 
 #include "diet_fixtures.hpp"

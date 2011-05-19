@@ -34,7 +34,8 @@ namespace vishnu {
     BATCHTYPE,
     MACHINEID,
     REMOTEBINDIR,
-    INTERVALMONITOR
+    INTERVALMONITOR,
+    DBPOOLSIZE
   } param_type_t;
 
   /**
@@ -43,9 +44,9 @@ namespace vishnu {
   struct param_t
   {
     /**
-     * \brief key to retrieve the parameter 
+     * \brief key to retrieve the parameter
      */
-    param_type_t key; 
+    param_type_t key;
 
 
     /**
@@ -57,7 +58,7 @@ namespace vishnu {
     * \brief the type of the parameter
     */
 
-    c_type_t type; 
+    c_type_t type;
 
   };
 
