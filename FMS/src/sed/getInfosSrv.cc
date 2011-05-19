@@ -11,20 +11,24 @@
 #include "services.hh"
 #include "UserServer.hpp"
 using namespace std;
-
+using namespace FMS_Data;
 
 /// DIET profile construction.
 
 diet_profile_desc_t* getInfosProfile() {
   diet_profile_desc_t* result;
   
-  result = diet_profile_desc_alloc("FileGetInfos", 3, 3, 14);
+  result = diet_profile_desc_alloc("FileGetInfos", 3, 3, 5);
   diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
+  
+  
+  
+  /*
   diet_generic_desc_set(diet_param_desc(result, 6), DIET_SCALAR, DIET_LONGINT);
   diet_generic_desc_set(diet_param_desc(result, 7), DIET_SCALAR, DIET_LONGINT);
   diet_generic_desc_set(diet_param_desc(result, 8), DIET_SCALAR, DIET_LONGINT);
@@ -34,7 +38,7 @@ diet_profile_desc_t* getInfosProfile() {
   diet_generic_desc_set(diet_param_desc(result, 12), DIET_SCALAR, DIET_LONGINT);
   diet_generic_desc_set(diet_param_desc(result, 13), DIET_SCALAR, DIET_INT);
   diet_generic_desc_set(diet_param_desc(result, 14), DIET_STRING, DIET_CHAR);
-  
+  */
   return result;
 }
 
@@ -48,17 +52,13 @@ diet_profile_desc_t* getInfosProfile() {
  *  - The file type.
  */
 int get_infos(diet_profile_t* profile) {
-  char* path, * user, * host, *sessionKey;
+  char* path, * user, * host, *sessionKey, *fileStatSerialized=NULL;
   string localPath, localUser, userKey;
-  char* owner, * group, * errMsg = NULL;
-  uid_t* uid;
-  gid_t* gid;
-  mode_t* perms;
-  file_size_t* size;
-  time_t* atime, * mtime, * ctime;
-  FileType* type;
+  char* errMsg = NULL;
   File* file;
-  
+  FileStat_ptr fileStat_ptr;
+
+
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
@@ -99,18 +99,14 @@ int get_infos(diet_profile_t* profile) {
  
     file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
 
-  if ( file->exists()) {
-    owner = strdup(file->getOwner().c_str());
-  
-    group = strdup(file->getGroup().c_str());
-    uid = uiddup(file->getUid());
-    gid = giddup(file->getGid());
-    perms = modedup(file->getPerms());
-    size = sizedup(file->getSize());
-    atime = timedup(file->getAtime());
-    mtime = timedup(file->getMtime());
-    ctime = timedup(file->getCtime());
-    type = (FileType*) typedup(file->getType());
+    if ( file->exists()) {
+
+      *fileStat_ptr=file->getFileStat();
+      std::cout << "apres le getFileStat reussi\n";
+      const char* name = "solve_getInfos";
+      ::ecorecpp::serializer::serializer _ser(name);
+      fileStatSerialized = strdup(_ser.serialize(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr)).c_str());
+
   } else {
  throw std::runtime_error("this file does not exist");
   }
@@ -118,41 +114,13 @@ int get_infos(diet_profile_t* profile) {
   } catch (std::exception& err) {
     errMsg = strdup(err.what());
     std::cout << " errMsg" << errMsg << "\n";
-  
-   owner = strdup("");
-    
-    group = strdup("");
-    uid = uiddup(0);
-    gid = giddup(0);
-    perms = modedup(0);
-    size = sizedup(0);
-    atime = timedup(0);
-    mtime = timedup(0);
-    ctime = timedup(0);
-    type = (int*) typedup(regular);
+  fileStatSerialized=strdup(""); 
  }
 
   if (errMsg==NULL) errMsg = strdup("");
   
-  sysEndianChg<uid_t>(*uid);
-  sysEndianChg<gid_t>(*gid);
-  sysEndianChg<mode_t>(*perms);
-  sysEndianChg<file_size_t>(*size);
-  sysEndianChg<time_t>(*atime);
-  sysEndianChg<time_t>(*mtime);
-  sysEndianChg<time_t>(*ctime);
-  sysEndianChg<int>(*type);
 
-  diet_string_set(diet_parameter(profile, 4), owner, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), group, DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 6), uid, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 7), gid, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 8), perms, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 9), size, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 10), atime, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 11), mtime, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 12), ctime, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 13), type, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 14), errMsg, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4),fileStatSerialized, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
   return 0;
 }
