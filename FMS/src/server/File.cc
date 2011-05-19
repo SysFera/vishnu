@@ -9,53 +9,54 @@
 #include "File.hh"
 
 using namespace std;
+using namespace FMS_Data;
 
 void File::setPath(const string& path) {
-  this->path = path;
+  mfileStat.setPath(path);
 }
 
 void File::setHost(const string& host) {
-  this->host = host;
+  mhost = host;
 }
 
 void File::setOwner(const string& owner) const {
-  this->owner = owner;
+  mfileStat.setOwner(owner);
 }
 
 void File::setGroup(const string& group) const {
-  this->group = group;
+  mfileStat.setGroup(group);
 }
 
 void File::setPerms(const mode_t perms) const {
-  this->perms = perms;
+mfileStat.setPerms(perms);
 }
 
 void File::setUid(const uid_t uid) const {
-  this->uid = uid;
+  mfileStat.setUid(uid);
 }
 
 void File::setGid(const gid_t gid) const {
-  this->gid = gid;
+  mfileStat.setGid(gid);
 }
 
 void File::setSize(const file_size_t size) const {
-  this->size = size;
+  mfileStat.setSize(size);
 }
 
 void File::setAtime(const time_t atime) const {
-  this->atime = atime;
+  mfileStat.setAtime(atime);
 }
 
 void File::setMtime(const time_t mtime) const {
-  this->mtime = mtime;
+  mfileStat.setMtime(mtime);
 }
 
 void File::setCtime(const time_t ctime) const {
-  this->ctime = ctime;
+  mfileStat.setCtime(ctime);
 }
 
 void File::setType(const file_type_t type) const {
-  this->type = type;
+  mfileStat.setType(type);
 }
 
 void File::exists(const bool exist) const {
@@ -66,9 +67,10 @@ File::File() {
   srand(time(NULL));
 }
 
-File::File(const SessionServer& sessionServer,const string& path) {
+File::File(const SessionServer& sessionServer,
+           const string& path)
+           :msessionServer(sessionServer) {
   
-  msessionServer=sessionServer;
  
   srand(time(NULL));
   size_t pos = path.find(':');
@@ -91,62 +93,66 @@ const SessionServer& File::getSession() const {
   return msessionServer;
 }
 
+const FileStat& File::getFileStat() const{
+  return mfileStat;
+}
+
 const string& File::getPath() const {
-  return path;
+  return mfileStat.getPath();
 }
 
 const string& File::getOwner() const {
   if (!isUpToDate()) getInfos();
-  return owner;
+  return mfileStat.getOwner();
 }
 
 const string& File::getGroup() const {
   if (!isUpToDate()) getInfos();
-  return group;
+  return mfileStat.getGroup();
 }
 
 const string& File::getHost() const {
-  return host;
+  return mhost;
 }
 
 mode_t File::getPerms() const {
   if (!isUpToDate()) getInfos();
-  return perms;
+  return mfileStat.getPerms();
 }
 
 uid_t File::getUid() const {
   if (!isUpToDate()) getInfos();
-  return uid;
+  return mfileStat.getUid();
 }
 
 gid_t File::getGid() const {
   if (!isUpToDate()) getInfos();
-  return gid;
+  return mfileStat.getGid();
 }
 
 file_size_t File::getSize() const {
   if (!isUpToDate()) getInfos();
-  return size;
+  return mfileStat.getSize();
 }
 
 time_t File::getAtime() const {
   if (!isUpToDate()) getInfos();
-  return atime;
+  return mfileStat.getAtime();
 }
 
 time_t File::getMtime() const {
   if (!isUpToDate()) getInfos();
-  return mtime;
+  return mfileStat.getMtime();
 }
 
 time_t File::getCtime() const {
   if (!isUpToDate()) getInfos();
-  return ctime;
+  return mfileStat.getCtime();
 }
 
-file_type_t File::getType() const {
+FileType File::getType() const {
   if (!isUpToDate()) getInfos();
-  return type;
+  return mfileStat.getType();
 }
 
 file_host_t File::getHostType() const {
@@ -160,19 +166,12 @@ bool File::exists() const {
 }
 
 File& File::operator=(const File& file) {
-  setPath(file.getPath());
-  setOwner(file.getOwner());
-  setGroup(file.getGroup());
+
+  mfileStat= file.getFileStat();
   setHost(file.getHost());
-  setPerms(file.getPerms());
-  setUid(file.getUid());
-  setGid(file.getGid());
-  setSize(file.getSize());
-  setAtime(file.getAtime());
-  setMtime(file.getMtime());
-  setCtime(file.getCtime());
-  setType(file.getType());
+ 
   exists(file.exists());
+  
   return *this;
 }
 

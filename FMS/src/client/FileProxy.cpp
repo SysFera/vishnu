@@ -172,20 +172,13 @@ bool FileProxy::exists() const {
 }
 
 FileProxy& FileProxy::operator=(const FileProxy& file) {
-  mfileStat.setPath(file.getPath());
-  mfileStat.setOwner(file.getOwner());
-  mfileStat.setGroup(file.getGroup());
+  
+  mfileStat= file.getFileStat();
   setHost(file.getHost());
-  mfileStat.setPerms(file.getPerms());
-  mfileStat.setUid(file.getUid());
- 
-  mfileStat.setGid(file.getGid());
-  mfileStat.setSize(file.getSize());
-  mfileStat.setAtime(file.getAtime());
-  mfileStat.setMtime(file.getMtime());
-  mfileStat.setCtime(file.getCtime());
-  mfileStat.setType(file.getType());
+
   exists(file.exists());
+
+  
   return *this;
 }
 
