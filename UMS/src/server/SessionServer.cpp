@@ -173,6 +173,8 @@ int SessionServer::close() {
       //if no running commands
       if (!commanderServer.isRunning()) {
         sqlCommand.append(msession.getSessionKey()+"';");
+        mdatabaseVishnu->process(sqlCommand.c_str());
+        sqlCommand="";
         sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP"
         " WHERE sessionkey='"+msession.getSessionKey()+"';");
         mdatabaseVishnu->process(sqlCommand.c_str());
@@ -252,10 +254,23 @@ SessionServer::saveConnection() {
 DatabaseResult*
 SessionServer::getSessionToclosebyTimeout() {
   DatabaseResult* result;
+  std::string sqlCommand;
 
-  std::string sqlCommand("SELECT sessionkey from vsession where "
-  " EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 "
-  " and closepolicy=1");
+  switch(mdatabaseVishnu->getDbType()) {
+    case DbConfiguration::MYSQL:
+      sqlCommand = "SELECT sessionkey from vsession where "
+        " unix_timestamp(CURRENT_TIMESTAMP) - unix_timestamp(lastconnect) > timeout and state=1 "
+        " and closepolicy=1";
+      break;
+    case DbConfiguration::POSTGRESQL:
+      sqlCommand = "SELECT sessionkey from vsession where "
+        " EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 "
+        " and closepolicy=1";
+      break;
+    case DbConfiguration::ORACLE:
+      throw SystemException(ERRCODE_DBERR, "SessionServer::getSessionToclosebyTimeout: Oracle query not defined");
+      break;
+  }
 
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
   return result;
