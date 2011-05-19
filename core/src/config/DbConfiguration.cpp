@@ -9,12 +9,14 @@
 
 using namespace std;
 
+const int DbConfiguration::defaultDbPoolSize = 10;
+
 /**
  * \brief Constructor
  * \param execConfig  the configuration of the program
  */
 DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) : mexecConfig(execConfig),
-mdbPort(0)
+mdbPort(0), mdbPoolSize(defaultDbPoolSize)
 {
 }
 
@@ -35,10 +37,11 @@ void DbConfiguration::check() throw (UserException)
     throw UserException(ERRCODE_INVALID_PARAM, "Configuration for database type is invalid (must be 'oracle' or 'postgresql' or 'mysql')");
   }
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBHOST, mdbHost);
-  mexecConfig.getConfigValue<int>(vishnu::DBPORT, mdbPort);
+  mexecConfig.getConfigValue<unsigned>(vishnu::DBPORT, mdbPort);
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBNAME, mdbName);
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBUSERNAME, mdbUserName);
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBPASSWORD, mdbPassword);
+  mexecConfig.getConfigValue<unsigned>(vishnu::DBPOOLSIZE, mdbPoolSize);
 
 }
 
