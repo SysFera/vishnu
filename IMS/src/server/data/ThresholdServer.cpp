@@ -45,7 +45,7 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
 
   //  Create the insert or update sequence
   if (insert) {
-    request = "INSERT INTO threshold (users_numuserid, machine_nummachineid, typet, value) VALUES ('"+nuid+"', '"+nmid+"', '"+convertToString(tree->getType())+"', '"+convertToString(tree->getValue())+"'";
+    request = "INSERT INTO threshold (users_numuserid, machine_nummachineid, typet, value) VALUES ('"+nuid+"', '"+nmid+"', '"+convertToString(tree->getType())+"', '"+convertToString(tree->getValue())+"')";
   } else {
     request = "UPDATE threshold set users_numuserid='"+nuid+"', value='"+convertToString(tree->getValue())+"' WHERE typet='"+convertToString(tree->getType())+"' AND machine_nummachineid='"+nmid+"'";
   }
@@ -100,7 +100,7 @@ ThresholdServer::getThreshold() {
 bool
 ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
   string req = "SELECT * from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
-  req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+convertToString(tree->getType())+",";
+  req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+convertToString(tree->getType())+"'";
   try {
     // Executing the request and getting the results
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
@@ -123,7 +123,7 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid machine id for the threshold");
     }
     iter = result->get(0).begin();
-    nmid = (*(iter+7));
+    nmid = (*(iter));
   } catch (SystemException& e) {
     throw (e);
   }
@@ -135,7 +135,7 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
       throw UserException(ERRCODE_INVALID_PARAM, "Unknown handler for the threshold");
     }
     iter = result->get(0).begin();
-    nuid = (*(iter+2));
+    nuid = (*(iter));
     privil = convertToInt((*(iter+6)));
     // If not an admin
     if (privil == 0) {
