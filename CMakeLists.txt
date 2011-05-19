@@ -25,6 +25,11 @@ option(COMPILE_FMS OFF "compile the module FMS")
 option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support..." OFF)
 option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support..." OFF)
 
+# Options set to ON by default
+option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
+option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
+
+
 # FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
 include(CMakeDependentOption)
 cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
