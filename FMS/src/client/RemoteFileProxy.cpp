@@ -10,7 +10,8 @@
 #include "DIET_data.h"
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
-
+#include "utilClient.hpp"
+#include "utilVishnu.hpp"
 #include "RemoteFileProxy.hpp"
 #include "LocalFileProxy.hpp"
 
@@ -50,16 +51,17 @@ bool RemoteFileProxy::isUpToDate() const {
 /* Get the informations about this remote file. Call the DIET service. */
 void RemoteFileProxy::getInfos() const {
   diet_profile_t* profile;
-  char* owner, * group, * errMsg;
+  char* owner, * group,*fileStatInString, * errMsg;
   long* uid, * gid;
   long* perms, * size;
   long* atime, * mtime, * ctime;
   int* type;
   std::string serviceName("FileGetInfos");
+ 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 14);
+  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
   
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
                   DIET_VOLATILE);
@@ -73,6 +75,8 @@ void RemoteFileProxy::getInfos() const {
                        DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
+  /*
+  diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
   diet_scalar_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE, DIET_LONGINT);
   diet_scalar_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE, DIET_LONGINT);
   diet_scalar_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE, DIET_LONGINT);
@@ -81,11 +85,18 @@ void RemoteFileProxy::getInfos() const {
   diet_scalar_set(diet_parameter(profile, 11), NULL, DIET_VOLATILE, DIET_LONGINT);
   diet_scalar_set(diet_parameter(profile, 12), NULL, DIET_VOLATILE, DIET_LONGINT);
   diet_scalar_set(diet_parameter(profile, 13), NULL, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 14), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 14), NULL, DIET_VOLATILE);*/
   
   if (diet_call(profile))
     throw runtime_error("Error calling DIET service to obtain file informations");
-  diet_string_get(diet_parameter(profile, 4), &owner, NULL);
+
+
+  diet_string_get(diet_parameter(profile, 4), &fileStatInString, NULL);
+
+
+  diet_string_get(diet_parameter(profile, 5), &errMsg, NULL);
+  /*
+   diet_string_get(diet_parameter(profile, 4), &owner, NULL);
   diet_string_get(diet_parameter(profile, 5), &group, NULL);
   diet_scalar_get(diet_parameter(profile, 6), &uid, NULL);
   diet_scalar_get(diet_parameter(profile, 7), &gid, NULL);
@@ -96,11 +107,10 @@ void RemoteFileProxy::getInfos() const {
   diet_scalar_get(diet_parameter(profile, 12), &ctime, NULL);
   diet_scalar_get(diet_parameter(profile, 13), &type, NULL);
   diet_string_get(diet_parameter(profile, 14), &errMsg, NULL);
+  */
 
-  if (strlen(errMsg)!=0 || strlen(owner)==0) {
-    exists(false);
-    return;
-  }
+/*
+  if(strlen(owner)!=0) {
   setOwner(owner);
   setGroup(group);
   sysEndianChg<long>(*perms);
@@ -121,6 +131,22 @@ void RemoteFileProxy::getInfos() const {
   setType((FileType) *type);
   exists(true);
   upToDate = true;
+}
+*/
+  if (strlen(fileStatInString )){
+    FileStat_ptr fileStat_ptr = NULL;
+    parseEmfObject(std::string(fileStatInString), fileStat_ptr);
+    setFileStat(*fileStat_ptr);
+    exists(true);
+    upToDate = true;
+     delete fileStat_ptr;
+  }
+
+else{
+  exists(false);
+  raiseExceptionIfNotEmptyMsg(errMsg);
+}
+
 }
 
 /* Copy operator. */
@@ -242,8 +268,7 @@ string RemoteFileProxy::head(const unsigned int nline) {
   diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
 
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+    raiseExceptionIfNotEmptyMsg(errMsg);
   }
   
   result = fileHead;
@@ -393,10 +418,8 @@ string RemoteFileProxy::tail(const unsigned int nline) {
   diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
   
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+  raiseExceptionIfNotEmptyMsg(errMsg);
   }
-  
   result = fileTail;
   return result;
 }
