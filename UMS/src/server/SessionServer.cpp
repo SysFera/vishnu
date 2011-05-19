@@ -173,8 +173,6 @@ int SessionServer::close() {
       //if no running commands
       if (!commanderServer.isRunning()) {
         sqlCommand.append(msession.getSessionKey()+"';");
-        mdatabaseVishnu->process(sqlCommand.c_str());
-        sqlCommand="";
         sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP"
         " WHERE sessionkey='"+msession.getSessionKey()+"';");
         mdatabaseVishnu->process(sqlCommand.c_str());
