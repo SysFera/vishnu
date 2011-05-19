@@ -23,7 +23,7 @@ public :
   /**
    * \brief Function to process the request in the database
    * \fn    virtual int process(std::string request) = 0
-   * \param request The request to process
+   * \param request The request to process (must contain a SINGLE SQL statement without a semicolumn)
    * \return raises an exception on error
    */
   virtual int
@@ -41,8 +41,8 @@ public :
    * \param db The name of database to use
    * \return raises an exception on error
    */
-  virtual int
-  setDatabase(std::string db) = 0;
+//   virtual int
+//   setDatabase(std::string db) = 0;
   /**
   * \brief To get the result of a select request
   * \fn DatabaseResult* getResult(std::string request)
