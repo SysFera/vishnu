@@ -88,6 +88,13 @@ public :
   DatabaseResult*
   getResult(std::string request);
 
+  /**
+   * \brief To get the type of database
+   * \return An enum identifying the type of database
+   */
+  DbConfiguration::db_type_t
+  getDbType() { return DbConfiguration::ORACLE; };
+
 private :
 
   /////////////////////////////////
