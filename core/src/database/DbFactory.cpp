@@ -42,12 +42,7 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
       break;
     case DbConfiguration::MYSQL:
 #ifdef USE_MYSQL
-      mdb = new MYSQLDatabase(config.getDbHost(),
-                              config.getDbUserName(),
-                              config.getDbUserPassword(),
-                              config.getDbName(),
-                              config.getDbPort()
-            );
+      mdb = new MYSQLDatabase(config);
 #else
       throw SystemException(ERRCODE_DBERR, "MySQL is not enabled (re-compile with ENABLE_MYSQL)");
 #endif
