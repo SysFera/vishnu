@@ -108,7 +108,7 @@ void SSHFile::getInfos() const {
   if (fileStat.second.length()!=0) {
     exists(false);
  cout << "Mais exist n'est pas mis a jour " << endl;
-    return;
+    throw runtime_error (fileStat.second.c_str());
   }
   
   istringstream is(fileStat.first);

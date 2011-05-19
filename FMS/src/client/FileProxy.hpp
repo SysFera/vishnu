@@ -48,6 +48,8 @@ private:
   mutable FileStat mfileStat;
 
 protected:
+
+  void setFileStat(const FileStat& fileStat)const;
   void setPath(const std::string& path);
   void setHost(const std::string& host);
   void setOwner(const std::string& owner) const;

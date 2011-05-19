@@ -63,7 +63,7 @@ using namespace std;
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::chMod(const string& sessionKey,const string& path, const ChModOptions& options)
+  int vishnu::chMod(const string& sessionKey,const string& path, const mode_t& mode)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -107,20 +107,14 @@ using namespace std;
 
       std::string head;
 
-     int nline=5;
+      int nline=5;
 
-// TODO serialize options
-    
-     try {
-        f->getInfos();
-        head = f->head(nline);
-      } catch (std::exception& err) {
-        std::cerr << err.what() << std::endl;
-        return -1;
-      }
+      // TODO serialize options
 
+      f->getInfos();
+      head = f->head(nline);
       contentOfFile= strdup(head.c_str());
-    
+
       return 0;
 
     }
@@ -196,28 +190,26 @@ using namespace std;
    */
   int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-      
+
 
       SessionProxy sessionProxy(sessionKey);
-     
+
       FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
-      
+
       std::string tail;
 
-// TODO serialize options
-     int nline=3;
-      try {
-        f->getInfos();
-        tail= f->tail(nline);
-      } catch (std::exception& err) {
-        std::cerr << "Catch " << err.what() << std::endl;
-        return -1;
-      }
+      // TODO serialize options
+    
+      int nline=3;
+     
+      f->getInfos();
+     
+      tail= f->tail(nline);
 
       contentOfFile= strdup(tail.c_str());
-    
+
       return 0;
-    
+
     }
 
   /**
