@@ -27,7 +27,7 @@ MetricServer::setUpFreq(unsigned int freq){
   // TODO FIX MVISHNU ID
   mvishnuId  = 1;
 
-  if (freq < 0) {
+  if (freq < 1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error invalid frequency.");
   }
 
