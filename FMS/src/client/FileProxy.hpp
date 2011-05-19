@@ -100,11 +100,11 @@ public:
   
   virtual int chgrp(const std::string& group) = 0;
   virtual int chmod(const mode_t mode) = 0;
-  virtual std::string head(const unsigned int nline) = 0;
+  virtual std::string head(const HeadOfFileOptions& options) = 0;
   virtual int mkdir(const mode_t mode) = 0;
   virtual int rm() = 0;
   virtual int rmdir() = 0;
-  virtual std::string tail(const unsigned int nline) = 0;
+  virtual std::string tail(const TailOfFileOptions& options) = 0;
   
   static std::string extHost(const std::string& path);
   static std::string extName(const std::string& path);
