@@ -14,6 +14,11 @@
 using namespace std;
 using namespace FMS_Data;
 
+void FileProxy::setFileStat(const FileStat& fileStat) const {
+  mfileStat=fileStat;
+}
+
+
 void FileProxy::setPath(const string& path) {
   mfileStat.setPath(path);
 }
