@@ -4,7 +4,6 @@
  * References: VISHNU_D5_1b_IMS-PlanTests
  */
 
-
 //UMS forward Headers
 #include "UMS_Data_forward.hpp"
 
@@ -37,20 +36,16 @@ namespace bfs= boost::filesystem;
 
 BOOST_GLOBAL_FIXTURE(IMSSeDFixture)
 
-
-//Test category 3
-
-// I2 - B : I2 – B: Get metric  data
-
-BOOST_AUTO_TEST_SUITE(get_metric_data)
-
+BOOST_AUTO_TEST_SUITE(Information_Managment_System_test)
+  //Test category 4
+  // I2 - B : I2 – B: Get metric data normal
   // Get metric data : normal call
 
 BOOST_AUTO_TEST_CASE( get_metric_data_normal_call) {
 
   string sqlPath = IMSSQLPATH;
 
-  BOOST_TEST_MESSAGE("\n\n Use case I2 – B: Get metric  data" << "\n");
+  BOOST_TEST_MESSAGE("Use case I2 – B: Get metric  data");
   int nbResMetric = 2;
   VishnuConnexion vc("root","vishnu_user");
   // get the session key and the machine identifier
@@ -58,30 +53,347 @@ BOOST_AUTO_TEST_CASE( get_metric_data_normal_call) {
   string machineId="machine_1";
   IMS_Data::ListMetric list;
   IMS_Data::MetricHistOp op;
-  //Set the type of metric to get
+  //Set FREEMOMORY metric
   op.setType(5);
 
-  //Initialize the databatase: put the update frequency to 10
-  //and cleaning of the database state
-  if (restore(sqlPath + "/IMSTestGetMetric.sql") != 0) {
-    cout << "Database update failed" << endl;
-    return;
+  try {
+    //Set the update frequency to 10 and clean the table state
+    if (restore(sqlPath + "/IMSTestGetMetric.sql") != 0) {
+      cout << "Database update failed" << endl;
+      return;
+    }
+    sleep (5);
+    //Wait for metric recording in database
+    //10 represents the update frequency
+    sleep (nbResMetric*10);
+
+    BOOST_CHECK_EQUAL(getMetricHistory(sessionKey, machineId, list, op),0  );
+    //BOOST_TEST_MESSAGE( "list.getMetric().size()" << list.getMetric().size() << "\n");;
+    BOOST_REQUIRE(list.getMetric().size() == nbResMetric);
   }
-  sleep (5);
-  //Wait for metric recording in database
-  //10 represents the update frequency
-  sleep (nbResMetric*10);
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
 
-  BOOST_CHECK_EQUAL(getMetricHistory(sessionKey, machineId, list, op),0  );
-  BOOST_TEST_MESSAGE( "list.getMetric().size()" << list.getMetric().size() << "\n");;
+// I2 – E1: Get metric data with bad machine identifier
+// Get metric data : bad machine Id
 
-  BOOST_REQUIRE(list.getMetric().size() == nbResMetric);
+BOOST_AUTO_TEST_CASE( get_metric_data_bad_machine_Id_call) {
 
- // BOOST_TEST_MESSAGE("\n\n  Testing Use case I2 – B: Get metric  data" << "\n");
+  BOOST_TEST_MESSAGE("Use case I2 – E1: Get metric data with bad machine Id");
+  VishnuConnexion vc("root","vishnu_user");
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="unknown_name";
+
+  IMS_Data::ListMetric list;
+  IMS_Data::MetricHistOp op;
+
+  BOOST_CHECK_THROW(getMetricHistory(sessionKey, machineId, list, op), VishnuException);
+  //BOOST_TEST_MESSAGE("Testing Use case I2 – E1: Get metric data with bad machine Id" << "\n");
+}
+
+// I2 – E2: Get metric data with bad machine identifier
+// Get metric data : bad metric type
+
+BOOST_AUTO_TEST_CASE( get_metric_data_bad_metric_type) {
+
+  BOOST_TEST_MESSAGE("Use case I2 – E2: Get metric data with bad metric type");
+  VishnuConnexion vc("root","vishnu_user");
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="unknown_name";
+
+  IMS_Data::ListMetric list;
+  IMS_Data::MetricHistOp op;
+  //Set unknown metric type
+  op.setType(15);
+
+  BOOST_CHECK_THROW(getMetricHistory(sessionKey, machineId, list, op), VishnuException);
+}
+
+
+
+// I4 – B: Get data on the infrastructure
+// Get metric data : normal call
+
+BOOST_AUTO_TEST_CASE(get_metric_current_value) {
+
+  BOOST_TEST_MESSAGE("Use case I4 – B: Get data on the infrastructure");
+  VishnuConnexion vc("root","vishnu_user");
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  IMS_Data::ListMetric list;
+  IMS_Data::CurMetricOp op;
+  op.setMetricType(3);
+
+  try {
+    BOOST_CHECK_EQUAL(getMetricCurrentValue(sessionKey, machineId, list, op),0 );
+    //BOOST_TEST_MESSAGE( "list.getMetric().size()" << list.getMetric().size() << "\n");
+    BOOST_REQUIRE(list.getMetric().size() != 0);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+
+// IA2.1 – B : Get a system load threshold
+// Get a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – B: Get a system load threshold");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+  //Set FreeDiskSpace Metric
+  op.setMetricType(3);
+
+  try {
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the threshold is equal to 2000000
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 2000000);
+    //Set the Threshold to 1000000
+    if (restore(sqlPath + "/IMSTestThreshold.sql") != 0) {
+      cout << "Database update failed" << endl;
+      return;
+    }
+
+    list.getThreshold().clear();
+
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the threshold is equal to 1000000
+    BOOST_TEST_MESSAGE("list.getThreshold().get(0)->getValue()" << list.getThreshold().get(0)->getValue());
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 1000000);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+// IA2.1 – E1 : Get a system load threshold with bad machine Id
+// Get a system load threshold : with bad machine Id
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – E1: Get a system load threshold with bad machine Id");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="unknown_name";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+
+  BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
+}
+
+// IA2.1 – E2 : Get a system load threshold with bad metric
+// Get a system load threshold : with bad metric
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with bad metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+  op.setMetricType(15);
+
+  BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
+}
+
+// IA2.1 – E3 : Get a system load threshold for no admin user
+// Get a system load threshold : for no admin user
+
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user) {
+
+  BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with no admin user");
+  VishnuConnexion vc("user_1","toto");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  op.setMachineId(machineId);
+
+  BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
+}
+
+
+// IA2.1 – B1 : Define a system load threshold for CPUUSE Metric
+// Define a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE) {
+
+  BOOST_TEST_MESSAGE("Use case IA2 – B1: Define a system load threshold for CPUUSE metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  int currentThreshold;
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  IMS_Data::Threshold systemThreshold;
+
+  op.setMachineId(machineId);
+  //Set CPUUSE Metric
+  op.setMetricType(1);
+
+  //Set handler
+  systemThreshold.setHandler("root");
+  systemThreshold.setMachineId(machineId);
+  //Set CPUUSE Metric
+  systemThreshold.setType(1);
+
+  try {
+    //To set a new value for the CPUUSE Metric
+    systemThreshold.setValue(30);
+    BOOST_CHECK_EQUAL(setSystemThreshold(sessionKey, systemThreshold),0 );
+
+    //To get the current value of the CPUUSE metric
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the new value for the metric CPUUSE is 40
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 30);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+// IA2.1 – B2 : Define a system load threshold for FREEDISKSPACE Metric
+// Define a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_SPACE) {
+
+  BOOST_TEST_MESSAGE("Use case IA2 – B2: Define a system load threshold for FREE DISK SPACE Metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  int currentThreshold;
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  IMS_Data::Threshold systemThreshold;
+
+  //Set FREEDISKSPACE Metric
+  op.setMetricType(3);
+  op.setMachineId(machineId);
+  //Set handler
+  systemThreshold.setHandler("root");
+  systemThreshold.setMachineId(machineId);
+  //Set FREEDISKSPACE Metric
+  systemThreshold.setType(3);
+
+  try {
+    //To set a new value for the FREEDISKSPACE Metric
+    systemThreshold.setValue(2000000);
+    BOOST_CHECK_EQUAL(setSystemThreshold(sessionKey, systemThreshold),0 );
+
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the new value for the metric FREEDISKSPACE is 2000000
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 2000000);
+
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
+// IA2.1 – B3 : Define a system load threshold for FREEMEMORY Metric
+// Define a system load threshold : normal call
+
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY) {
+
+  BOOST_TEST_MESSAGE("Use case IA2 – B2: Define a system load threshold for FREE MEMORY Metric");
+  VishnuConnexion vc("root","vishnu_user");
+
+  string sqlPath = IMSSQLPATH;
+  // get the session key and the machine identifier
+  string sessionKey=vc.getConnexion();
+  string machineId="machine_1";
+  int currentThreshold;
+
+  IMS_Data::ListThreshold list;
+  IMS_Data::ThresholdOp op;
+  IMS_Data::Threshold systemThreshold;
+
+  //Set FREEMEMORY Metric
+  op.setMetricType(5);
+  op.setMachineId(machineId);
+
+  //Set handler
+  systemThreshold.setHandler("root");
+  systemThreshold.setMachineId(machineId);
+  //Set FREEMEMORY Metric
+  systemThreshold.setType(5);
+
+  try {
+
+    //To set a new value for the FREEDISKSPACE Metric
+    systemThreshold.setValue(2);
+    BOOST_CHECK_EQUAL(setSystemThreshold(sessionKey, systemThreshold),0 );
+
+    //To check the new value
+    BOOST_CHECK_EQUAL(getSystemThreshold(sessionKey, list, op),0 );
+    //To check if the list is not empty
+    BOOST_REQUIRE(list.getThreshold().size() != 0);
+    //To check if the value for the metric cpuuse is 2
+    BOOST_REQUIRE(list.getThreshold().get(0)->getValue() == 2);
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
 // THE END
 
