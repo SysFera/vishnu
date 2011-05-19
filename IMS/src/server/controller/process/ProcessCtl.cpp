@@ -79,7 +79,6 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
     }
   }
   string cmd = "killall -9 "+name;
-
   // if no machineid : local, else on the distant machine
   if (p->getMachineId().compare("")==0) {
     int res = system(cmd.c_str());
