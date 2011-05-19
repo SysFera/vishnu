@@ -8,22 +8,14 @@
 #include <sys/stat.h>
 
 #include "SessionProxy.hpp"
-  
+#include "FMS_Data_forward.hpp"
+#include "FMS_Data.hpp"
+
+using namespace FMS_Data;
 
 /* Definition of the system endianness. */
 #define LT_ENDIAN 0
 #define BG_ENDIAN 1
-
-/* FileProxy type enumeration. */
-typedef enum {
-  block,
-  character,
-  directory,
-  symboliclink,
-  sckt,
-  fifo,
-  regular
-} file_type_t;
 
 /* FileProxy "locality" enumeration. */
 typedef enum {
@@ -49,21 +41,12 @@ typedef enum {
 /* Defines the common operation on files (local or remote) */
 class FileProxy {
 private:
-//TODO Take EFM FileStat type instead of
-  std::string path;
-  std::string host;
-  mutable std::string owner;
-  mutable std::string group;
-  mutable mode_t perms;
-  mutable uid_t uid;
-  mutable gid_t gid;
-  mutable file_size_t size;
-  mutable time_t atime;
-  mutable time_t mtime;
-  mutable time_t ctime;
-  mutable file_type_t type;
+  
+  std::string mhost;
   mutable bool exist;
   SessionProxy msessionProxy;
+  mutable FileStat mfileStat;
+
 protected:
   void setPath(const std::string& path);
   void setHost(const std::string& host);
@@ -76,15 +59,20 @@ protected:
   void setAtime(const time_t atime) const;
   void setMtime(const time_t mtime) const;
   void setCtime(const time_t ctime) const;
-  void setType(const file_type_t type) const;
+  void setType(const FileType& type) const;
   void exists(const bool exist) const;
 public:
+ 
   FileProxy();
-  FileProxy(const SessionProxy& sessionProxy,const std::string& path);
+  
+  FileProxy(const SessionProxy& sessionProxy,
+            const std::string& path);
+
   FileProxy(const FileProxy& file);
   virtual ~FileProxy();
   
   const SessionProxy& getSession() const;
+  const FileStat& getFileStat() const;
   
   const std::string& getPath() const;
   const std::string& getOwner() const;
@@ -97,7 +85,7 @@ public:
   time_t getAtime() const;
   time_t getMtime() const;
   time_t getCtime() const;
-  file_type_t getType() const;
+  FileType getType() const;
   file_host_t getHostType() const;
   bool exists() const;
 

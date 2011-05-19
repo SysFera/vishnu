@@ -20,7 +20,7 @@
 #include <UMS_Data.hpp>
 
 
-// FMS Headers
+// FMS API Headers
 #include <api_fms.hpp>
 
 //FMS Data Headers
@@ -108,12 +108,14 @@ using namespace std;
       std::string head;
 
      int nline=5;
+
 // TODO serialize options
+    
      try {
         f->getInfos();
         head = f->head(nline);
       } catch (std::exception& err) {
-        std::cerr << "Catch " << err.what() << std::endl;
+        std::cerr << err.what() << std::endl;
         return -1;
       }
 
