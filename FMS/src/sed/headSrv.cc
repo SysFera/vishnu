@@ -10,7 +10,7 @@
 #include "DIET_server.h"
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
-
+#include <boost/scoped_ptr.hpp>
 
 using namespace std;
 
@@ -23,7 +23,7 @@ diet_profile_desc_t* getHeadProfile() {
   diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(result, 4), DIET_SCALAR, DIET_LONGINT);
+  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(result, 6), DIET_STRING, DIET_CHAR);
   
@@ -35,16 +35,14 @@ diet_profile_desc_t* getHeadProfile() {
 /* Returns the n first line of the file to the client application. */
 int headFile(diet_profile_t* profile) {
   string localPath, localUser, userKey, head, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
-  unsigned long* nline;
+  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL, *optionsSerialized=NULL;
   
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
   diet_string_get(diet_parameter(profile, 2), &user, NULL);
   diet_paramstring_get(diet_parameter(profile, 3), &host, NULL);
-  diet_scalar_get(diet_parameter(profile, 4), &nline, NULL);
+  diet_string_get(diet_parameter(profile, 4), &optionsSerialized, NULL);
 
-  sysEndianChg<unsigned long>(*nline);
 
   std::cout << "Dans headFile:  " << "\n"; 
   std::cout << "path:  " << path <<"\n"; 
@@ -86,18 +84,25 @@ int headFile(diet_profile_t* profile) {
     std::cout << "machineName: " << machineName << "\n";
 
     FileFactory::setSSHServer(machineName);
-    File* file = FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey);
+    boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
-      head = file->head(*nline);
+    HeadOfFileOptions_ptr options_ptr= NULL;
+ if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
+      throw SystemException(ERRCODE_INVDATA, "solve_Head: HeadOfFileOptions object is not well built");
+    }
+
+
+      head = file->head(*options_ptr);
       result = strdup(head.c_str());
 
     } catch (std::exception& err) {
       result = strdup("");
       errMsg = strdup(err.what());
     }
-    if (errMsg==NULL) errMsg = strdup("");
+    if (errMsg==NULL) {
+      errMsg = strdup("");
+    }
     else {
-     // errMsg = strdup("Error transmitting parameters");
      result = strdup("");
     }
     diet_string_set(diet_parameter(profile, 5), result, DIET_VOLATILE);

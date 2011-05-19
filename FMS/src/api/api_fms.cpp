@@ -107,12 +107,7 @@ using namespace std;
 
       std::string head;
 
-      int nline=5;
-
-      // TODO serialize options
-
-      f->getInfos();
-      head = f->head(nline);
+      head = f->head(options);
       contentOfFile= strdup(head.c_str());
 
       return 0;
@@ -198,13 +193,7 @@ using namespace std;
 
       std::string tail;
 
-      // TODO serialize options
-    
-      int nline=3;
-     
-      f->getInfos();
-     
-      tail= f->tail(nline);
+      tail= f->tail(options);
 
       contentOfFile= strdup(tail.c_str());
 
