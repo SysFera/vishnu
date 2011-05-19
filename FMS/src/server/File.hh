@@ -1,5 +1,5 @@
-#ifndef FILE_HH
-#define FILE_HH
+#ifndef FILESERVER_HH
+#define FILESERVER_HH
 
 #include <string>
 #include <list>
@@ -7,6 +7,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "SessionServer.hpp"
+#include "FMS_Data_forward.hpp"
+#include "FMS_Data.hpp"
+
+using namespace FMS_Data;
+
 
 
 /* Definition of the system endianness. */
@@ -48,21 +53,11 @@ typedef enum {
 /* Defines the common operation on files (local or remote) */
 class File {
 private:
-//TODO Take EFM FileStat type instead of
-  std::string path;
-  std::string host;
-  mutable std::string owner;
-  mutable std::string group;
-  mutable mode_t perms;
-  mutable uid_t uid;
-  mutable gid_t gid;
-  mutable file_size_t size;
-  mutable time_t atime;
-  mutable time_t mtime;
-  mutable time_t ctime;
-  mutable file_type_t type;
+  
+  std::string mhost;
   mutable bool exist;
   SessionServer msessionServer;
+  mutable FileStat mfileStat;
 protected:
   void setPath(const std::string& path);
   void setHost(const std::string& host);
@@ -84,6 +79,7 @@ public:
   virtual ~File();
 
   const SessionServer& getSession() const;
+  const FileStat& getFileStat() const;
 
   const std::string& getPath() const;
   const std::string& getOwner() const;
@@ -96,7 +92,7 @@ public:
   time_t getAtime() const;
   time_t getMtime() const;
   time_t getCtime() const;
-  file_type_t getType() const;
+  FileType getType() const;
   file_host_t getHostType() const;
   bool exists() const;
 

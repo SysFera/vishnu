@@ -41,8 +41,8 @@ time_t* timedup(const time_t& time) {
 }
 
 /* Duplicate a file type variable. */
-file_type_t* typedup(const file_type_t& type) {
-  file_type_t* res = (file_type_t*) calloc(sizeof(long), 1);
+FileType* typedup(const FileType& type) {
+  FileType* res = (FileType*) calloc(sizeof(long), 1);
   *res = type;
   return res;
 }
