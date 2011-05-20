@@ -243,7 +243,9 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
     boost::this_thread::sleep(sleepTime);
 
     Job job;
-    BOOST_CHECK_THROW(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),VishnuException  );
+    BOOST_REQUIRE(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job)==0);
+
+    BOOST_CHECK_EQUAL(jobInfo.getStatus(), 6);
 
     BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************" << " \n");
 
