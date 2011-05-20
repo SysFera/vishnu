@@ -90,6 +90,7 @@ UtilsProxy::restore() {
   int READSIZE = 1000;
   diet_profile_t* profile = NULL;
   std::ifstream file(mfilePath.c_str(), std::ios::in);
+  char* errorInfo;
   if(!file) {
     return -1;
   }
@@ -100,11 +101,19 @@ UtilsProxy::restore() {
     if (strcmp(tmp, "")==0){
       break;
     }
-    profile = diet_profile_alloc("restore", 0, 0, 0);
+    profile = diet_profile_alloc("restore", 0, 0, 1);
     //IN Parameters
     diet_string_set(diet_parameter(profile,0), tmp, DIET_VOLATILE);
+    //OUT Parameters
+    diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
     if(!diet_call(profile)){
+      if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
+        raiseDietMsgException("DIET call failure");
+      }
+    } else {
+      raiseDietMsgException("DIET call failure");
     }
+    raiseExceptionIfNotEmptyMsg(errorInfo);
   }
   return 0;
 }
