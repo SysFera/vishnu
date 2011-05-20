@@ -63,7 +63,7 @@ using namespace std;
    * \param options contains the options used to set the new the permission mode  for this file
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::chMod(const string& sessionKey,const string& path, const ChModOptions& options)
+  int vishnu::chMod(const string& sessionKey,const string& path, const mode_t& mode)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /**
@@ -88,7 +88,7 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const MvFileOptions& options)
+      FileTransfer& transferInfo, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /** 
@@ -107,20 +107,9 @@ using namespace std;
 
       std::string head;
 
-     int nline=5;
-
-// TODO serialize options
-    
-     try {
-        f->getInfos();
-        head = f->head(nline);
-      } catch (std::exception& err) {
-        std::cerr << err.what() << std::endl;
-        return -1;
-      }
-
+      head = f->head(options);
       contentOfFile= strdup(head.c_str());
-    
+
       return 0;
 
     }
@@ -160,12 +149,13 @@ using namespace std;
    * \param sessionKey the session key
    * \param src:   the "source" file path using host:path format
    * \param dest:  the "destination" file path using host:path format
+   * \param transferInfo contains different information about the submitted file
+   * transfer (like the transfer identifier) 
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
-   * \param transferInfo 
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      const MvFileOptions& options)
+      FileTransfer& transferInfo, const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /** remove a file
@@ -196,28 +186,20 @@ using namespace std;
    */
   int vishnu::tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ 
-      
+
 
       SessionProxy sessionProxy(sessionKey);
-     
+
       FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
-      
+
       std::string tail;
 
-// TODO serialize options
-     int nline=3;
-      try {
-        f->getInfos();
-        tail= f->tail(nline);
-      } catch (std::exception& err) {
-        std::cerr << "Catch " << err.what() << std::endl;
-        return -1;
-      }
+      tail= f->tail(options);
 
       contentOfFile= strdup(tail.c_str());
-    
+
       return 0;
-    
+
     }
 
   /**
@@ -227,8 +209,23 @@ using namespace std;
    * \param :  a buffer to store the informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
+  int vishnu::getFilesInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+     
+      SessionProxy sessionProxy(sessionKey);
+     
+      FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
+
+
+       f->getInfos();
+
+      fileInfos=f->getFileStat();
+
+      return 0;
+
+
+   
+    }
 
   /**
    * \brief cancel a file transfer

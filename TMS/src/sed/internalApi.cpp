@@ -28,7 +28,6 @@
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
-#include "TorqueServer.hpp"
 #include "ServerTMS.hpp"
 #include "SSHJobExec.hpp"
 #include "JobServer.hpp"

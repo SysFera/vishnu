@@ -80,7 +80,7 @@ public:
     mlistObject = ecoreFactory->createListProgression();
 
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
-            " vsession.numsessionid=job.vsession_numsessionid";
+            " vsession.numsessionid=job.vsession_numsessionid and submitMachineId='"+mmachineId+"'";
 
     if(mparameters->getJobId().size()!=0) {
       std::string jobId = mparameters->getJobId();
@@ -91,7 +91,7 @@ public:
       }
     } else {
       if(mparameters->getJobOwner().size()!=0) {
-        acLogin = mparameters->getJobOwner(); //TODO: check acLogin
+        acLogin = mparameters->getJobOwner(); 
       }
       sqlRequest.append(" and owner='"+acLogin+"'");
     }
