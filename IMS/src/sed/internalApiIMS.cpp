@@ -764,6 +764,7 @@ solveRestart(diet_profile_t* pb){
       throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
     }
 
+
     // Creating the process server with the options
     ProcessCtl ctl(string(mid), userServer);
 
