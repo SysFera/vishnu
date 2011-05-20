@@ -432,6 +432,8 @@ LLServer::listQueues(const std::string& optQueueName) {
 
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
 
+    queue->setState(2);
+
     ll_get_data(queryInfos, LL_ClassName, &className);
     queue->setName(std::string(className));
 
@@ -443,7 +445,7 @@ LLServer::listQueues(const std::string& optQueueName) {
     }
 
     ll_get_data(queryInfos, LL_ClassPriority, &classPriority);
-    queue->setPriority(classPriority);
+    queue->setPriority(convertLLPrioToVishnuPrio(classPriority));
 
     ll_get_data(queryInfos, LL_ClassWallClockLimitSoft, &walltime);
     queue->setWallTime(walltime);
@@ -452,7 +454,15 @@ LLServer::listQueues(const std::string& optQueueName) {
     queue->setMemory(mem);
 
     ll_get_data(queryInfos, LL_ClassComment, &classComment);
-    queue->setDescription(classComment);  
+
+    string description = std::string(classComment);
+    size_t pos = description.find("\"");
+    while(pos!=std::string::npos) {
+      description.replace(pos, 1, " ");
+      pos = description.find("\"");
+    }
+
+    queue->setDescription(description);  
 
     ll_get_data(queryInfos, LL_ClassCpuLimitHard, &maxCpu);
     queue->setMaxProcCpu(maxCpu);
@@ -631,7 +641,7 @@ LLServer::convertLLPrioToVishnuPrio(const int& prio) {
 
   if(prio < -50) {
     return 1;
-  } else if(prio > -50  <= 0) {
+  } else if(prio > -50 && prio  <= 0) {
     return 2;
   } else if(prio > 0 && prio <= 50) {
     return 3;
