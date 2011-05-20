@@ -546,24 +546,18 @@ try {
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, ""       )==0);
   BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
-  if (li->getSessions().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
-  }
-  if ((liu->getUsers().size()>0) && (liu->getUsers()[0]->getUserId()!="admin_1" || liu->getUsers()[1]->getUserId()!="user_1"))
-    BOOST_MESSAGE(" admin: " << liu->getUsers()[0]->getUserId() << " and user: " << liu->getUsers()[1]->getUserId() );
+  BOOST_CHECK (liu->getUsers().size()>0);
+  BOOST_CHECK (liu->getUsers()[0]->getUserId() == "admin_1");
 
   // Test list user option user
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql")==0);
-  BOOST_MESSAGE(" Testing list user with login UA5.2B" );
+  BOOST_MESSAGE(" Testing list user with userid UA5.2B" );
   BOOST_CHECK  (connect  (uid, pwd, sess, cop )==0);
   liu = ecoreFactory->createListUsers();
   BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, "admin_1")==0);
   BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
-  if (li->getSessions().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
-  }
-  if ((liu->getUsers().size()>0) && (liu->getUsers()[0]->getUserId()!="admin_1" || liu->getUsers()[1]))
-    BOOST_MESSAGE(" FAILED " );
+  BOOST_CHECK (liu->getUsers().size()>0);
+  BOOST_CHECK (liu->getUsers()[0]->getUserId()=="admin_1");
 
   // Test list user
   BOOST_REQUIRE(restore  (sqlScript+"/clean_session.sql"  )==0);
@@ -580,9 +574,7 @@ try {
   li = ecoreFactory->createListSessions();
   BOOST_CHECK  (listSessions(sess.getSessionKey() , *li  , opt      )==0);
   BOOST_CHECK  (close      (sess.getSessionKey()                  )==0);
-  if (li->getSessions().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
-  }
+  BOOST_CHECK (li->getSessions().size() > 0);
   if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=sess.getSessionKey()))
     BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
 
@@ -593,9 +585,7 @@ try {
   BOOST_CHECK  (connect    (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
   BOOST_CHECK  (close      (sess.getSessionKey()                )==0);
-  if (li->getSessions().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
-  }
+  BOOST_CHECK  (li->getSessions().size() > 0);
   if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=sess.getSessionKey()))
     BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
 
@@ -618,9 +608,7 @@ try {
   BOOST_CHECK  (listSessions(sess.getSessionKey() , *li 	, opt       )==0);
   BOOST_CHECK  (close      (sess.getSessionKey()                   )==0);
   opt  = *(ecoreFactory->createListSessionOptions());
-  if (li->getSessions().size()==0){
-    BOOST_MESSAGE(" Error empty list returned " );
-  }
+  BOOST_CHECK (li->getSessions().size() > 0);
   if ((li->getSessions().size()>0) && (li->getSessions()[0]->getSessionKey()!=key2))
     BOOST_MESSAGE(" key: " << li->getSessions()[0]->getSessionKey() );
 
