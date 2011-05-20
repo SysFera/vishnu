@@ -13,7 +13,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
   string cmd ;
   string dest;
   mop = *op;
-  IMS_Data::Process_ptr proc;
+  IMS_Data::Process proc;
   switch(mop.getSedType()) {
   case 1 : // UMS
     type = "UMS";
@@ -31,19 +31,32 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op) {
     throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart type");
     break;
   }
-  proc->setProcessName(type);
-  proc->setMachineId(mmid);
-  mp.fillContent(proc);
-  // Make sure the process is really not running on the machine
-  stop(proc);
+  proc.setProcessName(type);
+  proc.setMachineId(mmid);
+  proc.setScript(mop.getVishnuConf());
+  //  mp.fillContent(&proc);
 
-  createFile (dest, proc);
+  char hname[200];
+  gethostname(hname, 199);
+  
+  // If have to stop a local process 
+  if (proc.getMachineId().compare(getMidFromHost(string(hname)))==0) {
+    proc.setMachineId("");
+  }
+
+  // Make sure the process is really not running on the machine
+  stop(&proc);
+
+  //  createFile (dest, &proc);
+  dest = proc.getScript();
 
   boost::to_lower(type);
   type += "sed";
   cmd = type + " " + dest;
   // If local
-  if (mmid.compare("")==0) {
+  cout << "cmd: " << cmd << endl;
+  cout << "mid: " << proc.getMachineId() << endl;
+  if (proc.getMachineId().compare("")==0) {
     int ret = system(cmd.c_str());
     if (ret == -1) {
       throw SystemException(ERRCODE_SYSTEM, "Failed to restart process "+type);
