@@ -28,6 +28,7 @@ include_directories(${Boost_INCLUDE_DIRS}
 
 set(ALLCLI 
   head_of_file
+  get_file_info
   tail_of_file
   create_file
   create_dir
