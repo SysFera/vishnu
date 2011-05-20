@@ -83,7 +83,7 @@ MonitorTMS::run() {
   int state;
   std::string sqlUpdatedRequest;
   std::string sqlRequest = "SELECT jobId, batchJobId from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
-                           " and status > 0 and status < 5";
+                           " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"'";
 
   try {
 
