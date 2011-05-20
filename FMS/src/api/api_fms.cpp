@@ -88,7 +88,7 @@ using namespace std;
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      FileTransfer& transferInfo, const MvFileOptions& options)
+      FileTransfer& transferInfo, const CpFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /** 
@@ -149,12 +149,13 @@ using namespace std;
    * \param sessionKey the session key
    * \param src:   the "source" file path using host:path format
    * \param dest:  the "destination" file path using host:path format
+   * \param transferInfo contains different information about the submitted file
+   * transfer (like the transfer identifier) 
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
-   * \param transferInfo 
    * \return 0 if everything is OK, another value otherwise
    */
   int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
-      const MvFileOptions& options)
+      FileTransfer& transferInfo, const MvFileOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
   /** remove a file
