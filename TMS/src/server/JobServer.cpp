@@ -179,10 +179,12 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
   } else {
     if(!userServer.isAdmin()) {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
-        "where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'"; 
+        "where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'";
+        " and submitMachineId='"+mmachineId+"'" ; 
     } else {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
         "where vsession.numsessionid=job.vsession_numsessionid and status < 5"; 
+        " and submitMachineId='"+mmachineId+"'" ;
     }
   } 
 
