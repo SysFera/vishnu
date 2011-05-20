@@ -104,7 +104,7 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
 }
 
 void
-ProcessCtl::loadShed() {
+ProcessCtl::loadShed(int type) {
 
 }
 
