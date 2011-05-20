@@ -82,7 +82,7 @@ void ListUsersServer::processOptions(UserServer userServer, const std::string& o
 ListUsers* ListUsersServer::list()
 {
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-                              "where not userid='"+ ROOTUSERNAME +"' order by userid";
+                              "where not userid='"+ ROOTUSERNAME +"'";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -96,6 +96,7 @@ ListUsers* ListUsersServer::list()
   if (userServer.exist()) {
 
     processOptions(userServer, moption, sqlListofUsers);
+    sqlListofUsers.append(" order by userid");
     //To get the list of users from the database
     boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlListofUsers.c_str()));
     if (ListofUsers->getNbTuples() != 0){
