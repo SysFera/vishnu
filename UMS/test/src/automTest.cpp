@@ -170,7 +170,6 @@ try {
   cop.setClosePolicy(sct);
 
   // Connect with a temporary password
-  BOOST_REQUIRE(restore    (sqlScript+"/clean_session_tempPwd.sql")==0);
   BOOST_MESSAGE(" Testing temporary pwd U1.1-E4");
   BOOST_CHECK  (connect    (uid, pwd, sess, cop         )==0);
   BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
