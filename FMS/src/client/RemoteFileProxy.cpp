@@ -10,7 +10,8 @@
 #include "DIET_data.h"
 #include "DIET_client.h"
 #include "DIET_Dagda.h"
-
+#include "utilClient.hpp"
+#include "utilVishnu.hpp"
 #include "RemoteFileProxy.hpp"
 #include "LocalFileProxy.hpp"
 
@@ -49,17 +50,17 @@ bool RemoteFileProxy::isUpToDate() const {
 
 /* Get the informations about this remote file. Call the DIET service. */
 void RemoteFileProxy::getInfos() const {
+  
   diet_profile_t* profile;
-  char* owner, * group, * errMsg;
-  long* uid, * gid;
-  long* perms, * size;
-  long* atime, * mtime, * ctime;
-  int* type;
+  
+  char *fileStatInString=NULL, * errMsg=NULL;
+  
   std::string serviceName("FileGetInfos");
+ 
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 14);
+  profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
   
   diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
                   DIET_VOLATILE);
@@ -72,55 +73,33 @@ void RemoteFileProxy::getInfos() const {
   diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 4), NULL, DIET_VOLATILE);
+ 
   diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 8), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 9), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 10), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 11), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 12), NULL, DIET_VOLATILE, DIET_LONGINT);
-  diet_scalar_set(diet_parameter(profile, 13), NULL, DIET_VOLATILE, DIET_INT);
-  diet_string_set(diet_parameter(profile, 14), NULL, DIET_VOLATILE);
   
   if (diet_call(profile))
     throw runtime_error("Error calling DIET service to obtain file informations");
-  diet_string_get(diet_parameter(profile, 4), &owner, NULL);
-  diet_string_get(diet_parameter(profile, 5), &group, NULL);
-  diet_scalar_get(diet_parameter(profile, 6), &uid, NULL);
-  diet_scalar_get(diet_parameter(profile, 7), &gid, NULL);
-  diet_scalar_get(diet_parameter(profile, 8), &perms, NULL);
-  diet_scalar_get(diet_parameter(profile, 9), &size, NULL);
-  diet_scalar_get(diet_parameter(profile, 10), &atime, NULL);
-  diet_scalar_get(diet_parameter(profile, 11), &mtime, NULL);
-  diet_scalar_get(diet_parameter(profile, 12), &ctime, NULL);
-  diet_scalar_get(diet_parameter(profile, 13), &type, NULL);
-  diet_string_get(diet_parameter(profile, 14), &errMsg, NULL);
 
-  if (strlen(errMsg)!=0 || strlen(owner)==0) {
-    exists(false);
-    return;
+
+  diet_string_get(diet_parameter(profile, 4), &fileStatInString, NULL);
+
+
+  diet_string_get(diet_parameter(profile, 5), &errMsg, NULL);
+  
+  if (strlen(fileStatInString )!=0){
+    std::cout << "fileStatInString"<< fileStatInString <<"\n";
+    FileStat_ptr fileStat_ptr = NULL;
+    parseEmfObject(std::string(fileStatInString), fileStat_ptr);
+    setFileStat(*fileStat_ptr);
+    exists(true);
+    upToDate = true;
+    delete fileStat_ptr;
   }
-  setOwner(owner);
-  setGroup(group);
-  sysEndianChg<long>(*perms);
-  setPerms(*perms);
-  sysEndianChg<long>(*uid);
-  setUid(*uid);
-  sysEndianChg<long>(*gid);
-  setGid(*gid);
-  sysEndianChg<long>(*size);
-  setSize(*size);
-  sysEndianChg<long>(*atime);
-  setAtime(*atime);
-  sysEndianChg<long>(*mtime);
-  setMtime(*mtime);
-  sysEndianChg<long>(*ctime);
-  setCtime(*ctime);
-  sysEndianChg<int>(*type);
-  setType((FileType) *type);
-  exists(true);
-  upToDate = true;
+
+else{
+  exists(false);
+  raiseExceptionIfNotEmptyMsg(errMsg);
+}
+
 }
 
 /* Copy operator. */
@@ -206,16 +185,15 @@ int RemoteFileProxy::chmod(const mode_t mode) {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-string RemoteFileProxy::head(const unsigned int nline) {
+string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   string result;
-  char* fileHead, * errMsg;
+  char* fileHead, * errMsg, *optionsToString = NULL;
   diet_profile_t* profile;
-  unsigned long n = nline;
   
   std::string serviceName("FileHead");
+ 
   std::string sessionKey=this->getSession().getSessionKey();
   
-  sysEndianChg<unsigned long>(n);
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
 
@@ -230,8 +208,14 @@ string RemoteFileProxy::head(const unsigned int nline) {
                   DIET_VOLATILE);
   diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 4), &n, DIET_VOLATILE,
-                  DIET_LONGINT);
+
+  const char* name = "head";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::HeadOfFileOptions_ptr>(&options)).c_str());
+
+
+  diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
   
@@ -242,8 +226,7 @@ string RemoteFileProxy::head(const unsigned int nline) {
   diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
 
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+    raiseExceptionIfNotEmptyMsg(errMsg);
   }
   
   result = fileHead;
@@ -357,16 +340,13 @@ int RemoteFileProxy::rmdir() {
  * If something goes wrong, throw a runtime_error containing
  * the error message.
  */
-string RemoteFileProxy::tail(const unsigned int nline) {
+string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   string result;
-  char* fileTail, * errMsg;
+  char* fileTail, * errMsg, *optionsToString = NULL;
   diet_profile_t* profile;
-  unsigned long n = nline;
   
   std::string serviceName("FileTail");
   std::string sessionKey=this->getSession().getSessionKey();
-  
-  sysEndianChg<unsigned long>(n);
   
   if (!exists()) throw runtime_error(getPath()+" does not exist");
   
@@ -381,8 +361,15 @@ string RemoteFileProxy::tail(const unsigned int nline) {
                   DIET_VOLATILE);
   diet_paramstring_set(diet_parameter(profile, 3), const_cast<char*>(getHost().c_str()),
                        DIET_VOLATILE);
-  diet_scalar_set(diet_parameter(profile, 4), &n, DIET_VOLATILE,
-                  DIET_LONGINT);
+ 
+  const char* name = "tail";
+  ::ecorecpp::serializer::serializer _ser(name);
+  //To serialize the options object in to optionsInString
+  optionsToString =  strdup(_ser.serialize(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options)).c_str()); 
+  
+  diet_string_set(diet_parameter(profile, 4), optionsToString, DIET_VOLATILE);
+  
+  
   diet_string_set(diet_parameter(profile, 5), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
   
@@ -393,10 +380,8 @@ string RemoteFileProxy::tail(const unsigned int nline) {
   diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
   
   if (strlen(errMsg)!=0) {
-    string err = errMsg;
-    throw runtime_error(err);
+  raiseExceptionIfNotEmptyMsg(errMsg);
   }
-  
   result = fileTail;
   return result;
 }

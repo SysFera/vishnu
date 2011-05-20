@@ -108,7 +108,7 @@ void SSHFile::getInfos() const {
   if (fileStat.second.length()!=0) {
     exists(false);
  cout << "Mais exist n'est pas mis a jour " << endl;
-    return;
+    throw runtime_error (fileStat.second.c_str());
   }
   
   istringstream is(fileStat.first);
@@ -116,7 +116,8 @@ void SSHFile::getInfos() const {
      >> atime >> mtime >> ctime >> fileType;
   
   transform(fileType.begin(), fileType.end(), fileType.begin(), ::tolower);
-  
+
+ std::cout << "fileType in SSH getInfos: " << fileType << "\n";
   setOwner(owner);
   setGroup(group);
   setPerms(perms);
@@ -179,7 +180,8 @@ int SSHFile::chmod(const mode_t mode) {
 }
 
 /* Get the file head through ssh. */
-string SSHFile::head(const unsigned int nline) {
+string SSHFile::head(const HeadOfFileOptions& options) {
+  int nline= options.getNline();
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
@@ -248,7 +250,9 @@ int SSHFile::rmdir() {
 }
 
 /* Get the file tail through ssh. */
-string SSHFile::tail(const unsigned int nline) {
+string SSHFile::tail(const TailOfFileOptions& options) {
+
+  int nline=options.getNline();
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
