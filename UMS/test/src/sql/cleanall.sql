@@ -1,6 +1,5 @@
 DELETE FROM account;
 DELETE FROM command;
-DELETE FROM cpu;
 DELETE FROM description;
 DELETE FROM filesub;
 DELETE FROM filetransfer;
