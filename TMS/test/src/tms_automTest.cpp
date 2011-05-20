@@ -244,7 +244,9 @@ BOOST_AUTO_TEST_CASE( cancel_a_Job_normal_call)
 
     Job job;
     BOOST_REQUIRE(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job)==0);
-
+   
+    BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
+   
     BOOST_CHECK_EQUAL(job.getStatus(), 6);
 
     BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************" << " \n");
