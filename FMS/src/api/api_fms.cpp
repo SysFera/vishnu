@@ -15,6 +15,7 @@
 
 //Boost Headers
 #include <boost/thread.hpp>
+#include <boost/scoped_ptr.hpp>
 
 //UMS Data Headers
 #include <UMS_Data.hpp>
@@ -103,16 +104,39 @@ using namespace std;
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
       SessionProxy sessionProxy(sessionKey);
-      FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
       std::string head;
 
       head = f->head(options);
+      
       contentOfFile= strdup(head.c_str());
 
       return 0;
 
     }
+/** 
+   * \brief get the content of a file
+   * \param sessionKey the session key
+   * \param path   the file path using host:path format
+   * \param contentOfFile  the content of specified the file
+   * \return 0 if everything is OK, another value otherwise
+   */
+  int vishnu::contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
+    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+   
+      SessionProxy sessionProxy(sessionKey);
+      boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+
+      std::string content= f->getContent();
+
+      contentOfFile= strdup(content.c_str());
+      
+      return 0; 
+
+    }
+
+
 
   /**
    * \brief get the list of files and subdirectories of a directory
@@ -190,7 +214,7 @@ using namespace std;
 
       SessionProxy sessionProxy(sessionKey);
 
-      FileProxy* f = FileProxyFactory::getFileProxy(sessionProxy,path);
+      boost::scoped_ptr<FileProxy> f(FileProxyFactory::getFileProxy(sessionProxy,path));
 
       std::string tail;
 
@@ -241,11 +265,12 @@ using namespace std;
   /**
    * \brief List  file transfers
    * \param sessionKey the session key
+   * \param fileTransferList the file transfer list
    * \param options contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or
    moveAsyncFile)
    \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::listFileTransfers(const string& sessionKey, const LsTransferOptions& options)
+  int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){ }
 
 
