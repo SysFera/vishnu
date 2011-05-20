@@ -15,3 +15,6 @@ INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, 
 INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 2, '@TEST_ADMIN_LOGIN@', '@TEST_ADMIN_SSHKEY@', 'home');
 INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 3, '@TEST_USER_LOGIN@', '@TEST_USER_SSHKEY@', 'home');
 INSERT INTO threshold (thresholdid, users_numuserid, machine_nummachineid, typet, value) values (1, 1, 1, 3, 2000000);
+INSERT INTO threshold (thresholdid, users_numuserid, machine_nummachineid, typet, value) values (2, 1, 1, 1, 30);
+INSERT INTO threshold (thresholdid, users_numuserid, machine_nummachineid, typet, value) values (3, 1, 1, 5, 2);
+
