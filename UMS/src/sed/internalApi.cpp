@@ -1255,11 +1255,12 @@ solveRestore(diet_profile_t* pb) {
 
   DbFactory factory;
   try {
-  Database* db = factory.getDatabaseInstance();
-  db->process(sqlcode);
+    Database* db = factory.getDatabaseInstance();
+    db->process(sqlcode);
   }
   catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
   }
+  diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
   return 0;
 }
